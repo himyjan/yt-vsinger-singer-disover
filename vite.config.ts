@@ -8,8 +8,13 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [
       vue({
-        vapor: true
-      } as any), 
+        vapor: true,
+        template: {
+          compilerOptions: {
+            isCustomElement: (tag: string) => tag === 'iconify-icon'
+          }
+        }
+      } as any),
       tailwindcss()
     ],
     define: {
