@@ -92,19 +92,19 @@ async function startServer() {
 
   const getChannelId = (item: any) => {
     if (!item) return null;
-    return item.secondary_info?.owner?.author?.id || 
-           item.secondary_info?.owner?.id ||
-           item.author?.id || 
-           item.channel?.id || 
-           item.channelId || 
-           item.owner_id ||
-           item.author_id ||
-           (item.type === 'Channel' ? item.id : null);
+    return item.secondary_info?.owner?.author?.id ||
+      item.secondary_info?.owner?.id ||
+      item.author?.id ||
+      item.channel?.id ||
+      item.channelId ||
+      item.owner_id ||
+      item.author_id ||
+      (item.type === 'Channel' ? item.id : null);
   };
 
   const getChannelName = (item: any) => {
     if (!item) return 'Unknown';
-    
+
     // 1. Try secondary info (owner of the video) - most reliable for full video info
     const secondaryName = item.secondary_info?.owner?.author?.name || item.secondary_info?.owner?.name;
     if (secondaryName) {
@@ -142,7 +142,7 @@ async function startServer() {
     // 5. Try byline texts
     const shortByline = item.short_byline_text?.toString();
     if (shortByline && shortByline !== 'Unknown' && shortByline !== '[object Object]') return shortByline;
-    
+
     const longByline = item.long_byline_text?.toString();
     if (longByline && longByline !== 'Unknown' && longByline !== '[object Object]') return longByline;
 
@@ -160,12 +160,12 @@ async function startServer() {
     try {
       const collectedOnly = req.query.collected === "true";
       const sort = req.query.sort || 'name';
-      
+
       let orderBy = "name ASC";
       if (sort === 'newest') orderBy = "last_synced DESC";
       if (sort === 'oldest') orderBy = "last_synced ASC";
 
-      const query = collectedOnly 
+      const query = collectedOnly
         ? `SELECT * FROM channels WHERE is_collected = 1 ORDER BY ${orderBy}`
         : `SELECT * FROM channels ORDER BY ${orderBy}`;
       const channels = db.prepare(query).all();
@@ -181,14 +181,14 @@ async function startServer() {
       const collectedOnly = req.query.collected === "true";
       const type = req.query.type; // 'video' or 'playlist'
       const sort = req.query.sort || 'newest';
-      
+
       let query = `
         SELECT items.*, channels.name as channel_name 
         FROM items 
         LEFT JOIN channels ON items.channel_id = channels.id 
         WHERE 1=1
       `;
-      
+
       const params: any[] = [];
       if (collectedOnly) {
         query += " AND items.is_collected = 1";
@@ -197,14 +197,14 @@ async function startServer() {
         query += " AND items.type = ?";
         params.push(type);
       }
-      
+
       let orderBy = "published_at DESC";
       if (sort === 'oldest') orderBy = "published_at ASC";
       if (sort === 'title') orderBy = "title ASC";
       if (sort === 'channel') orderBy = "channel_name ASC";
 
       query += ` ORDER BY ${orderBy} LIMIT 500`;
-      
+
       const items = db.prepare(query).all(...params);
       res.json(items);
     } catch (error) {
@@ -228,7 +228,7 @@ async function startServer() {
           console.error("Error fetching extra info for video:", e);
         }
       }
-      
+
       // If itemData is provided (from search results), ensure it exists in DB
       if (itemData) {
         if (type === "channel") {
@@ -265,11 +265,11 @@ async function startServer() {
             VALUES (?, ?, ?, ?, ?, ?)
             ON CONFLICT(id) DO UPDATE SET title = excluded.title
           `).run(
-            id, 
-            channelId || null, 
-            itemData.title?.toString() || itemData.title, 
-            type, 
-            thumbUrl, 
+            id,
+            channelId || null,
+            itemData.title?.toString() || itemData.title,
+            type,
+            thumbUrl,
             itemData.published?.toString() || new Date().toISOString()
           );
         }
@@ -288,14 +288,14 @@ async function startServer() {
     if (!q) return res.status(400).json({ error: "Query required" });
     try {
       const search = await youtube.search(q as string);
-      
+
       // Enrich results with database collection status
       const enrichedItems = (search.results || []).map((item: any) => {
         const isChannel = item.type === 'Channel';
         const table = isChannel ? "channels" : "items";
         const dbItem = db.prepare(`SELECT is_collected FROM ${table} WHERE id = ?`).get(item.id) as any;
-        
-        return { 
+
+        return {
           ...item,
           id: item.id,
           name: getChannelName(item),
@@ -308,7 +308,7 @@ async function startServer() {
           type: isChannel ? 'channel' : (item.type === 'Video' ? 'video' : 'playlist')
         };
       });
-      
+
       res.json(enrichedItems);
     } catch (error) {
       console.error("Search error:", error);
@@ -402,10 +402,10 @@ async function startServer() {
 
   app.get("/api/stats", (req, res) => {
     try {
-      const totalChannels = db.prepare("SELECT COUNT(*) as count FROM channels").get().count;
-      const collectedChannels = db.prepare("SELECT COUNT(*) as count FROM channels WHERE is_collected = 1").get().count;
-      const totalItems = db.prepare("SELECT COUNT(*) as count FROM items").get().count;
-      const collectedPlaylists = db.prepare("SELECT COUNT(*) as count FROM items WHERE is_collected = 1 AND type = 'playlist'").get().count;
+      const totalChannels = (db.prepare("SELECT COUNT(*) as count FROM channels").get() as any).count;
+      const collectedChannels = (db.prepare("SELECT COUNT(*) as count FROM channels WHERE is_collected = 1").get() as any).count;
+      const totalItems = (db.prepare("SELECT COUNT(*) as count FROM items").get() as any).count;
+      const collectedPlaylists = (db.prepare("SELECT COUNT(*) as count FROM items WHERE is_collected = 1 AND type = 'playlist'").get() as any).count;
       res.json({ totalChannels, collectedChannels, totalItems, collectedPlaylists });
     } catch (error) {
       console.error("Error fetching stats:", error);
@@ -416,14 +416,14 @@ async function startServer() {
   app.post("/api/sync", async (req, res) => {
     try {
       const keywords = [
-        'vsinger', '歌ってみた', '歌回', '歌枠', '弾き語り', 
+        'vsinger', '歌ってみた', '歌回', '歌枠', '弾き語り',
         '歌い手', 'VTuber 歌', 'Music Video', 'Cover', 'オリジナル曲'
       ];
       console.log("Starting sync with keywords:", keywords);
 
       for (const keyword of keywords) {
         const search = await youtube.search(keyword);
-        
+
         const processItems = (items: any[]) => {
           for (const item of items) {
             if (item.type === 'Channel') {
@@ -463,11 +463,11 @@ async function startServer() {
                 INSERT OR IGNORE INTO items (id, channel_id, title, type, thumbnail, published_at)
                 VALUES (?, ?, ?, ?, ?, ?)
               `).run(
-                item.id, 
-                channelId || null, 
-                item.title?.toString() || item.title, 
-                type, 
-                getThumb(item), 
+                item.id,
+                channelId || null,
+                item.title?.toString() || item.title,
+                type,
+                getThumb(item),
                 publishedAt
               );
             }
