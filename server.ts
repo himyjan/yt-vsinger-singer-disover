@@ -31,6 +31,7 @@ async function startServer() {
       handle TEXT,
       thumbnail TEXT,
       last_synced INTEGER,
+      discovered_at INTEGER,
       is_collected INTEGER DEFAULT 0
     );
     CREATE TABLE IF NOT EXISTS items (
@@ -40,6 +41,7 @@ async function startServer() {
       type TEXT, -- 'video' or 'playlist'
       thumbnail TEXT,
       published_at TEXT,
+      discovered_at INTEGER,
       is_collected INTEGER DEFAULT 0,
       FOREIGN KEY(channel_id) REFERENCES channels(id)
     );
@@ -65,6 +67,65 @@ async function startServer() {
   } catch (e) {
     console.log("Adding handle to channels table...");
     db.exec("ALTER TABLE channels ADD COLUMN handle TEXT");
+  }
+
+  try {
+    db.prepare("SELECT discovered_at FROM channels LIMIT 1").get();
+  } catch (e) {
+    console.log("Adding discovered_at to channels table...");
+    db.exec("ALTER TABLE channels ADD COLUMN discovered_at INTEGER");
+    db.exec("UPDATE channels SET discovered_at = strftime('%s', 'now') * 1000 WHERE discovered_at IS NULL");
+  }
+
+  try {
+    db.prepare("SELECT discovered_at FROM items LIMIT 1").get();
+  } catch (e) {
+    console.log("Adding discovered_at to items table...");
+    db.exec("ALTER TABLE items ADD COLUMN discovered_at INTEGER");
+    db.exec("UPDATE items SET discovered_at = strftime('%s', 'now') * 1000 WHERE discovered_at IS NULL");
+  }
+
+  const parseRelativeDate = (relativeDate: string): string => {
+    if (!relativeDate) return new Date().toISOString();
+    const str = relativeDate.toLowerCase();
+
+    // If it's already an ISO date or similar, return it
+    if (str.includes('t') && !isNaN(Date.parse(str))) return relativeDate;
+
+    const now = new Date();
+    // Match relative time patterns, ignoring prefixes like "Streamed" or "Premiered"
+    const match = str.match(/(\d+)\s+(second|minute|hour|day|week|month|year)s?\s+ago/);
+    if (!match) return relativeDate;
+
+    const amount = parseInt(match[1]);
+    const unit = match[2];
+
+    switch (unit) {
+      case 'second': now.setSeconds(now.getSeconds() - amount); break;
+      case 'minute': now.setMinutes(now.getMinutes() - amount); break;
+      case 'hour': now.setHours(now.getHours() - amount); break;
+      case 'day': now.setDate(now.getDate() - amount); break;
+      case 'week': now.setDate(now.getDate() - amount * 7); break;
+      case 'month': now.setMonth(now.getMonth() - amount); break;
+      case 'year': now.setFullYear(now.getFullYear() - amount); break;
+    }
+    return now.toISOString();
+  };
+
+  // Migration: Convert existing relative dates to ISO
+  try {
+    const itemsWithRelativeDates = db.prepare("SELECT id, published_at FROM items WHERE published_at LIKE '% ago%'").all() as any[];
+    if (itemsWithRelativeDates.length > 0) {
+      console.log(`Converting ${itemsWithRelativeDates.length} relative dates to ISO...`);
+      const updateStmt = db.prepare("UPDATE items SET published_at = ? WHERE id = ?");
+      db.transaction(() => {
+        for (const item of itemsWithRelativeDates) {
+          updateStmt.run(parseRelativeDate(item.published_at), item.id);
+        }
+      })();
+    }
+  } catch (e) {
+    console.error("Migration error (relative dates):", e);
   }
 
   app.use(express.json({ limit: '50mb' }));
@@ -161,9 +222,12 @@ async function startServer() {
       const collectedOnly = req.query.collected === "true";
       const sort = req.query.sort || 'name';
 
-      let orderBy = "name ASC";
-      if (sort === 'newest') orderBy = "last_synced DESC";
-      if (sort === 'oldest') orderBy = "last_synced ASC";
+      let orderBy = "name COLLATE NOCASE ASC";
+      if (sort === 'newest') orderBy = "discovered_at DESC";
+      if (sort === 'oldest') orderBy = "discovered_at ASC";
+      if (sort === 'synced_newest') orderBy = "last_synced DESC";
+      if (sort === 'synced_oldest') orderBy = "last_synced ASC";
+      if (sort === 'name_desc') orderBy = "name COLLATE NOCASE DESC";
 
       const query = collectedOnly
         ? `SELECT * FROM channels WHERE is_collected = 1 ORDER BY ${orderBy}`
@@ -198,10 +262,14 @@ async function startServer() {
         params.push(type);
       }
 
-      let orderBy = "published_at DESC";
-      if (sort === 'oldest') orderBy = "published_at ASC";
-      if (sort === 'title') orderBy = "title ASC";
-      if (sort === 'channel') orderBy = "channel_name ASC";
+      let orderBy = "discovered_at DESC";
+      if (sort === 'oldest') orderBy = "discovered_at ASC";
+      if (sort === 'title') orderBy = "title COLLATE NOCASE ASC";
+      if (sort === 'title_desc') orderBy = "title COLLATE NOCASE DESC";
+      if (sort === 'channel') orderBy = "channel_name COLLATE NOCASE ASC";
+      if (sort === 'channel_desc') orderBy = "channel_name COLLATE NOCASE DESC";
+      if (sort === 'published_newest') orderBy = "published_at DESC";
+      if (sort === 'published_oldest') orderBy = "published_at ASC";
 
       query += ` ORDER BY ${orderBy} LIMIT 500`;
 
@@ -235,13 +303,13 @@ async function startServer() {
           const thumbUrl = getThumb(itemData);
           const channelName = getChannelName(itemData);
           db.prepare(`
-            INSERT INTO channels (id, name, handle, thumbnail, last_synced)
-            VALUES (?, ?, ?, ?, ?)
+            INSERT INTO channels (id, name, handle, thumbnail, last_synced, discovered_at)
+            VALUES (?, ?, ?, ?, ?, ?)
             ON CONFLICT(id) DO UPDATE SET 
               name = CASE WHEN excluded.name != 'Unknown' THEN excluded.name ELSE channels.name END,
               handle = COALESCE(excluded.handle, channels.handle),
               thumbnail = COALESCE(excluded.thumbnail, channels.thumbnail)
-          `).run(id, channelName, itemData.handle || itemData.author?.handle, thumbUrl, Date.now());
+          `).run(id, channelName, itemData.handle || itemData.author?.handle, thumbUrl, Date.now(), Date.now());
         } else {
           // Try to get channel info from secondary_info if available
           const channelId = getChannelId(itemData);
@@ -251,18 +319,19 @@ async function startServer() {
 
           if (channelId && channelId !== id) {
             db.prepare(`
-              INSERT INTO channels (id, name, handle, thumbnail, last_synced) 
-              VALUES (?, ?, ?, ?, ?)
+              INSERT INTO channels (id, name, handle, thumbnail, last_synced, discovered_at) 
+              VALUES (?, ?, ?, ?, ?, ?)
               ON CONFLICT(id) DO UPDATE SET
                 name = CASE WHEN excluded.name != 'Unknown' THEN excluded.name ELSE channels.name END,
                 handle = COALESCE(excluded.handle, channels.handle),
                 thumbnail = COALESCE(excluded.thumbnail, channels.thumbnail)
-            `).run(channelId, channelName, channelHandle, channelThumbUrl, Date.now());
+            `).run(channelId, channelName, channelHandle, channelThumbUrl, Date.now(), Date.now());
           }
           const thumbUrl = getThumb(itemData);
+          const publishedStr = itemData.published?.toString() || itemData.publishedAt?.toString() || new Date().toISOString();
           db.prepare(`
-            INSERT INTO items (id, channel_id, title, type, thumbnail, published_at)
-            VALUES (?, ?, ?, ?, ?, ?)
+            INSERT INTO items (id, channel_id, title, type, thumbnail, published_at, discovered_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
             ON CONFLICT(id) DO UPDATE SET title = excluded.title
           `).run(
             id,
@@ -270,7 +339,8 @@ async function startServer() {
             itemData.title?.toString() || itemData.title,
             type,
             thumbUrl,
-            itemData.published?.toString() || new Date().toISOString()
+            parseRelativeDate(publishedStr),
+            Date.now()
           );
         }
       }
@@ -348,12 +418,12 @@ async function startServer() {
       const items = Array.isArray(body.items) ? body.items : [];
 
       const insertChannel = db.prepare(`
-        INSERT OR IGNORE INTO channels (id, name, handle, thumbnail, last_synced, is_collected)
-        VALUES (?, ?, ?, ?, ?, ?)
+        INSERT OR IGNORE INTO channels (id, name, handle, thumbnail, last_synced, discovered_at, is_collected)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
       `);
       const insertItem = db.prepare(`
-        INSERT OR IGNORE INTO items (id, channel_id, title, type, thumbnail, published_at, is_collected)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
+        INSERT OR IGNORE INTO items (id, channel_id, title, type, thumbnail, published_at, discovered_at, is_collected)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
       `);
 
       let channelsInserted = 0;
@@ -368,6 +438,7 @@ async function startServer() {
             c.handle ?? null,
             c.thumbnail ?? null,
             c.last_synced ?? null,
+            c.discovered_at ?? Date.now(),
             (c.is_collected ?? 0) ? 1 : 0
           ).changes;
         }
@@ -381,6 +452,7 @@ async function startServer() {
             i.type ?? null,
             i.thumbnail ?? null,
             i.published_at ?? null,
+            i.discovered_at ?? Date.now(),
             (i.is_collected ?? 0) ? 1 : 0
           ).changes;
         }
@@ -431,14 +503,14 @@ async function startServer() {
               const channelName = getChannelName(item);
               console.log(`Saving channel ${channelName} (${item.id}) with thumbnail: ${thumbUrl}`);
               db.prepare(`
-                INSERT INTO channels (id, name, handle, thumbnail, last_synced)
-                VALUES (?, ?, ?, ?, ?)
+                INSERT INTO channels (id, name, handle, thumbnail, last_synced, discovered_at)
+                VALUES (?, ?, ?, ?, ?, ?)
                 ON CONFLICT(id) DO UPDATE SET 
                   name = CASE WHEN excluded.name != 'Unknown' THEN excluded.name ELSE channels.name END,
                   handle = COALESCE(excluded.handle, channels.handle),
                   thumbnail = COALESCE(excluded.thumbnail, channels.thumbnail),
                   last_synced = excluded.last_synced
-              `).run(item.id, channelName, item.handle, thumbUrl, Date.now());
+              `).run(item.id, channelName, item.handle, thumbUrl, Date.now(), Date.now());
             } else if (item.type === 'Video' || item.type === 'Playlist') {
               const channelId = getChannelId(item);
               const channelName = getChannelName(item);
@@ -447,28 +519,29 @@ async function startServer() {
                 const channelThumbUrl = getThumb(item.author || item.channel);
                 if (channelThumbUrl) console.log(`Saving channel ${channelName} (${channelId}) from video with thumbnail: ${channelThumbUrl}`);
                 db.prepare(`
-                  INSERT INTO channels (id, name, handle, thumbnail, last_synced)
-                  VALUES (?, ?, ?, ?, ?)
+                  INSERT INTO channels (id, name, handle, thumbnail, last_synced, discovered_at)
+                  VALUES (?, ?, ?, ?, ?, ?)
                   ON CONFLICT(id) DO UPDATE SET 
                     name = CASE WHEN excluded.name != 'Unknown' THEN excluded.name ELSE channels.name END,
                     handle = COALESCE(excluded.handle, channels.handle),
                     thumbnail = COALESCE(excluded.thumbnail, channels.thumbnail)
-                `).run(channelId, channelName, channelHandle, channelThumbUrl, Date.now());
+                `).run(channelId, channelName, channelHandle, channelThumbUrl, Date.now(), Date.now());
               }
 
               const type = item.type === 'Video' ? "video" : "playlist";
-              const publishedAt = item.published?.toString() || new Date().toISOString();
+              const publishedStr = item.published?.toString() || new Date().toISOString();
 
               db.prepare(`
-                INSERT OR IGNORE INTO items (id, channel_id, title, type, thumbnail, published_at)
-                VALUES (?, ?, ?, ?, ?, ?)
+                INSERT OR IGNORE INTO items (id, channel_id, title, type, thumbnail, published_at, discovered_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
               `).run(
                 item.id,
                 channelId || null,
                 item.title?.toString() || item.title,
                 type,
                 getThumb(item),
-                publishedAt
+                parseRelativeDate(publishedStr),
+                Date.now()
               );
             }
           }
