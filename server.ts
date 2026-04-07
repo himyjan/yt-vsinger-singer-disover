@@ -180,6 +180,9 @@ async function startServer() {
     const thumbs = item.secondary_info?.owner?.thumbnails ||
       item.thumbnails ||
       item.thumbnail?.contents ||
+      item.thumbnail?.thumbnail || // PlaylistVideoThumbnail
+      (Array.isArray(item.thumbnail) ? item.thumbnail : null) ||
+      (Array.isArray(item.video_thumbnails) && item.video_thumbnails.length > 0 ? (item.video_thumbnails[0].contents || item.video_thumbnails[0].thumbnail) : null) ||
       item.author?.thumbnails ||
       item.author?.thumbnail?.contents ||
       item.cover?.thumbnails ||
@@ -221,7 +224,7 @@ async function startServer() {
 
   const getChannelId = (item: any) => {
     if (!item) return null;
-    return item.secondary_info?.owner?.author?.id ||
+    let id = item.secondary_info?.owner?.author?.id ||
       item.secondary_info?.owner?.id ||
       item.author?.id ||
       item.channel?.id ||
@@ -229,6 +232,9 @@ async function startServer() {
       item.owner_id ||
       item.author_id ||
       (item.type?.toLowerCase() === 'channel' ? item.id : null);
+
+    if (id && typeof id === 'object') id = id.toString();
+    return id?.toString() || null;
   };
 
   const getChannelName = (item: any) => {
@@ -260,7 +266,7 @@ async function startServer() {
       if (names.length > 0) return names.join(', ');
     }
 
-    const byline = item.short_byline_text?.toString() || item.long_byline_text?.toString();
+    const byline = item.short_byline_text?.toString() || item.long_byline_text?.toString() || item.byline?.toString();
     if (byline && byline !== 'Unknown' && byline !== '[object Object]') return byline;
 
     return 'Unknown';
@@ -514,8 +520,16 @@ async function startServer() {
         const title = getTitle(item);
         const thumb = getThumb(item);
 
+        // If it's a playlist and we still don't have a thumbnail, try to look into video_thumbnails
+        let finalThumb = thumb;
+        if (isPlaylist && !finalThumb && item.video_thumbnails) {
+          if (Array.isArray(item.video_thumbnails) && item.video_thumbnails.length > 0) {
+            finalThumb = getThumb(item.video_thumbnails[0]);
+          }
+        }
+
         if (isPlaylist) {
-          console.log("Playlist search result mapping:", { itemId, type, title, hasThumb: !!thumb });
+          console.log("Playlist search result mapping:", { itemId, type, title, hasThumb: !!finalThumb });
         }
 
         return {
@@ -526,7 +540,7 @@ async function startServer() {
           channel_name: getChannelName(item),
           title,
           published_at: item.published?.toString() || item.publishedAt || item.published,
-          thumbnail: thumb,
+          thumbnail: finalThumb,
           is_collected: dbItem ? dbItem.is_collected : 0,
           type
         };
