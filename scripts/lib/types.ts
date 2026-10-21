@@ -56,7 +56,7 @@ export type ItemCategory =
   | "other";
 
 /** Where a record originally came from. */
-export type RecordSource = "api" | "seed" | "legacy-db" | "manual";
+export type RecordSource = "api" | "seed" | "manual";
 
 /**
  * A subscriber / follower count that may or may not be public.

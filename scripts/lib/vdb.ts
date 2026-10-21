@@ -130,6 +130,11 @@ export interface VdbVTuber {
   platforms: PlatformLink[];
 }
 
+/** Locale keys that vdb sometimes records as the performer's name. */
+const LOCALE_KEYS = new Set([
+  "cn", "jp", "en", "id", "kr", "zh-cn", "zh-hant", "cn+", "cnen",
+]);
+
 export class VdbSource {
   private cache: VdbVTuber[] | null = null;
   private linkSyntax: Record<string, string> = {};
@@ -176,6 +181,10 @@ export class VdbSource {
       names.default ||
       "";
     if (!name || typeof name !== "string") return null;
+
+    // Some vdb entries have the locale key as the name (`name.cn === "cn"`).
+    // Those are malformed records, not performers.
+    if (LOCALE_KEYS.has(name.trim().toLowerCase())) return null;
 
     const aliases = Array.isArray(names.extra)
       ? names.extra.filter((n): n is string => typeof n === "string")

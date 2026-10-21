@@ -99,7 +99,6 @@ scripts/
 ├── sync.ts                  orchestrator: fetch → classify → merge → write
 ├── build-index.ts           builds the inverted search index
 ├── validate.ts              CI gate: structure, consistency, size budgets
-├── import-legacy-db.ts      one-off migration from the old SQLite database
 ├── prepare-public.ts        copies data/ into public/ for the build
 └── lib/
     ├── types.ts             the canonical data model (shared with the app)
@@ -113,6 +112,10 @@ scripts/
     ├── identity.ts          de-duplication registry
     ├── search.ts            tokenizer + inverted index + query engine
     ├── aislist.ts           AI-channel list
+    ├── vdb.ts               the Virtual YouTuber Name List Database
+    ├── taiwan-vtuber-data.ts  the Taiwan VTuber track list
+    ├── roster.ts            builds the channel roster from those sources
+    ├── dedupe.ts            identity-based de-duplication
     ├── music-dataset.ts     curated cover-song metadata
     ├── seeds.ts             curated starting catalogue
     ├── dataset.ts           the on-disk layout and the writers

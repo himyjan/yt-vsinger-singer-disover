@@ -81,7 +81,7 @@ jobs:
           TWITCH_CLIENT_SECRET: ${{ secrets.TWITCH_CLIENT_SECRET }}
           VK_ACCESS_TOKEN: ${{ secrets.VK_ACCESS_TOKEN }}
         run: |
-          ARGS="--budget ${{ inputs.budget || 2500 }}"
+          ARGS="--budget ${{ inputs.budget || 2500 }} --roster"
           if [ "${{ inputs.no-search }}" = "true" ]; then ARGS="$ARGS --no-search"; fi
           if [ "${{ inputs.dry-run }}" = "true" ]; then ARGS="$ARGS --dry-run"; fi
           npm run data:sync -- $ARGS
