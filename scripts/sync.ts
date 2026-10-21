@@ -145,9 +145,16 @@ interface Override {
   role?: Channel["role"];
   region?: Channel["region"];
   agency?: string | null;
+  gender?: Channel["gender"];
+  isAi?: boolean;
   isSinging?: boolean;
   /** Hide a channel from the public dataset. */
   hidden?: boolean;
+  /** Who verified this record, and when. Written by `scripts/verify.ts`. */
+  verifiedBy?: string;
+  verifiedAt?: string;
+  /** Why the correction was made. */
+  note?: string;
 }
 
 type OverrideMap = Record<string, Override>;
@@ -211,6 +218,11 @@ function channelFromApi(
       : undefined,
   });
 
+  // Gender and the AI flag are applied after the classifier, because they are
+  // curated facts rather than inferred ones.
+  const gender = override?.gender ?? classification.gender;
+  const isAi = override?.isAi ?? classification.isAi;
+
   return {
     id: raw.id,
     name: snippet.title ?? "Unknown",
@@ -240,12 +252,16 @@ function channelFromApi(
     uploadsPlaylistId: contentDetails.relatedPlaylists?.uploads ?? null,
     country: branding.country ?? null,
     tags: (snippet.tags ?? []).slice(0, 30),
-    isSinging: classification.isSinging,
-    gender: classification.gender,
-    isAi: classification.isAi,
-    variant: classification.variant,
-    confidence: classification.confidence,
-    source,
+    isSinging: override?.isSinging ?? classification.isSinging,
+    gender,
+    isAi,
+    variant: deriveVariant(
+      override?.role ?? classification.role,
+      gender,
+      isAi,
+    ),
+    confidence: override?.verifiedAt ? 1 : classification.confidence,
+    source: override?.verifiedAt ? "manual" : source,
     addedAt: now,
     updatedAt: now,
 
