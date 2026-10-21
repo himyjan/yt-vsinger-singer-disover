@@ -1,9 +1,5 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
 # VSinger & Singer Tracker
 
-# Run and deploy your AI Studio app
 A discovery and tracking platform for **virtual singers (VTuber / VSinger)** and
 **real human singers / music producers**, across **YouTube, Twitch, Bilibili,
 Niconico and VK**.
@@ -17,7 +13,6 @@ Niconico and VK**.
 - Lets you link your YouTube, Twitch, Bilibili and VK accounts to see the
   VTubers and singers you already follow.
 
-View your app in AI Studio: https://ai.studio/apps/c2f26ca6-d056-4d97-8e93-41a4fa322e91
 ---
 
 ## Quick start
@@ -30,11 +25,6 @@ npm run dev:web             # the web app on :5173
 
 The web app reads the committed dataset in `data/`. To refresh it:
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
 ```bash
 npm run data:sync           # fetch from the platform APIs
 npm run data:index          # rebuild the search index
