@@ -249,47 +249,33 @@ export function languageToRegion(lang: string | null): RegionCode | null {
  */
 export const LOCALE_TOKENS: { region: RegionCode; tokens: string[] }[] = [
   {
-    region: "jp",
-    tokens: [
-      "歌枠",
-      "うた",
-      "歌い手",
-      "読み",
-      "オリジナル曲",
-      "カバー",
-      "初投稿",
-      "生配信",
-      "弾き語り",
-      "歌回",
-      "まもなく",
-      "おしらせ",
-      "チャンネル",
-      "定期配信",
-    ],
-  },
-  {
     region: "cn",
     tokens: [
+      // 「翻唱」 is the strongest Chinese marker there is — a Chinese channel
+      // covers a song, a Japanese one writes 「カバー」.
       "翻唱",
       "原创曲",
       "原创",
       "虚拟主播",
       "虚拟歌姬",
+      "虚拟up主",
       "直播回",
+      "直播预告",
       "点歌",
       "新歌",
-      "直播预告",
       "周年",
       "国语",
+      "自弹自唱",
+      "弹唱",
     ],
   },
   {
     region: "tw",
-    tokens: ["繁體", "台灣", "臺灣", "中文翻唱"],
+    tokens: ["繁體", "台灣", "臺灣", "中文翻唱", "繁中"],
   },
   {
     region: "kr",
-    tokens: ["노래", "커버", "일정", "방송", "고스트", "자기소개"],
+    tokens: ["노래", "커버", "일정", "방송", "고스트", "자기소개", "브이튜버"],
   },
   {
     region: "id",
@@ -298,6 +284,24 @@ export const LOCALE_TOKENS: { region: RegionCode; tokens: string[] }[] = [
   {
     region: "my",
     tokens: ["penyiaran", "jadwal", "lagu"],
+  },
+  {
+    region: "jp",
+    tokens: [
+      // Only tokens that are unambiguously Japanese. 「カバー」, 「歌回」,
+      // 「オリジナル曲」 and 「読み」 are all used in Chinese too, so they
+      // would misattribute Chinese channels.
+      "歌枠",
+      "うた",
+      "初投稿",
+      "生配信",
+      "弾き語り",
+      "定期配信",
+      "まもなく",
+      "おしらせ",
+      "チャンネル",
+      "日本語",
+    ],
   },
 ];
 
@@ -310,11 +314,29 @@ export const LOCALE_TOKENS: { region: RegionCode; tokens: string[] }[] = [
 export function regionFromLocaleHints(hints: string | null): RegionCode | null {
   if (!hints) return null;
   const haystack = hints.toLowerCase();
+
+  // Score every region rather than taking the first match: a Chinese
+  // channel posting a Japanese song title will contain 「初投稿」 as well as
+  // 「翻唱」, and first-match would pick the wrong one.
+  const scores = new Map<RegionCode, number>();
   for (const { region, tokens } of LOCALE_TOKENS) {
+    let score = 0;
     for (const token of tokens) {
-      if (haystack.includes(token.toLowerCase())) return region;
+      if (haystack.includes(token.toLowerCase())) score++;
     }
+    if (score > 0) scores.set(region, score);
   }
+  if (!scores.size) return null;
+
+  const ranked = [...scores.entries()].sort((a, b) => b[1] - a[1]);
+  const [best, bestScore] = ranked[0]!;
+  const runnerUp = ranked[1]?.[1] ?? 0;
+
+  // Require a clear winner: at least two matching tokens, or a margin of one
+  // over the runner-up. Otherwise the hint is not decisive enough to
+  // override what the name and description already told us.
+  if (bestScore >= 2 && bestScore > runnerUp) return best;
+  if (bestScore === 1 && ranked.length === 1) return best;
   return null;
 }
 

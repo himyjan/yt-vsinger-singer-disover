@@ -21,7 +21,7 @@
 
 import path from "node:path";
 import { ROOT, readJson, writeJson } from "./lib/io";
-import { layout } from "./lib/dataset";
+import { layout, readAllChannelRecords } from "./lib/dataset";
 import { Verifier, type VerificationResult } from "./lib/verify";
 import type { Channel, ChannelFile, ItemFile } from "./lib/types";
 import { SCHEMA_VERSION } from "./lib/types";
@@ -107,18 +107,7 @@ async function main(): Promise<void> {
   }
 
   /* --- load the dataset ------------------------------------------------ */
-  const channels: Channel[] = [
-    ...readJson<ChannelFile>(layout.channelsVirtual, {
-      schemaVersion: SCHEMA_VERSION,
-      generatedAt: "",
-      channels: [],
-    }).channels,
-    ...readJson<ChannelFile>(layout.channelsReal, {
-      schemaVersion: SCHEMA_VERSION,
-      generatedAt: "",
-      channels: [],
-    }).channels,
-  ];
+  const channels: Channel[] = readAllChannelRecords();
 
   const overrides: OverrideMap = readJson<OverrideMap>(layout.overrides, {});
 

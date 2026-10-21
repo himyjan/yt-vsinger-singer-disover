@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T14:06:02.708Z",
+  "generatedAt": "2026-10-21T14:37:04.815Z",
   "regions": [
     {
       "code": "jp",
@@ -24,16 +24,22 @@
         "0e",
         "0f"
       ],
-      "items": 1047
+      "items": 1018
     },
     {
       "code": "cn",
       "label": "China",
       "badge": "🇨🇳",
       "buckets": [
-        "00"
+        "03",
+        "06",
+        "07",
+        "08",
+        "0a",
+        "0b",
+        "0c"
       ],
-      "items": 1
+      "items": 13
     },
     {
       "code": "tw",
@@ -47,17 +53,15 @@
         "04",
         "05",
         "06",
-        "07",
         "08",
         "09",
-        "0a",
         "0b",
         "0c",
         "0d",
         "0e",
         "0f"
       ],
-      "items": 26
+      "items": 28
     },
     {
       "code": "kr",
@@ -65,9 +69,10 @@
       "badge": "🇰🇷",
       "buckets": [
         "00",
+        "03",
         "05"
       ],
-      "items": 2
+      "items": 3
     },
     {
       "code": "en",
@@ -91,7 +96,16 @@
         "0e",
         "0f"
       ],
-      "items": 669
+      "items": 440
+    },
+    {
+      "code": "my",
+      "label": "Malaysia",
+      "badge": "🇲🇾",
+      "buckets": [
+        "0b"
+      ],
+      "items": 1
     },
     {
       "code": "unknown",
@@ -109,17 +123,16 @@
         "08",
         "09",
         "0a",
-        "0b",
         "0c",
         "0d",
         "0e",
         "0f"
       ],
-      "items": 53
+      "items": 31
     }
   ],
   "counts": {
-    "total": 1798,
+    "total": 1534,
     "live": 0,
     "upcoming": 0
   }

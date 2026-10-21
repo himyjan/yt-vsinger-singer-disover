@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T14:06:02.708Z",
+  "generatedAt": "2026-10-21T14:37:04.815Z",
   "items": [
     {
       "id": "fOPv3iBPHeg",
@@ -32,7 +32,8 @@
       "concurrentViewers": null,
       "source": "legacy-db",
       "addedAt": "2026-04-07T14:23:09.000Z",
-      "updatedAt": "2026-10-21T14:06:02.708Z"
+      "updatedAt": "2026-10-21T14:32:04.628Z",
+      "confidence": 0
     },
     {
       "id": "AAMw7sS1op0",
@@ -64,7 +65,8 @@
       "concurrentViewers": null,
       "source": "legacy-db",
       "addedAt": "2026-04-07T14:23:09.000Z",
-      "updatedAt": "2026-10-21T14:06:02.708Z"
+      "updatedAt": "2026-10-21T14:32:04.628Z",
+      "confidence": 0
     },
     {
       "id": "enyQ3w5izOY",
@@ -96,71 +98,8 @@
       "concurrentViewers": null,
       "source": "legacy-db",
       "addedAt": "2026-04-07T14:23:09.000Z",
-      "updatedAt": "2026-10-21T14:06:02.708Z"
-    },
-    {
-      "id": "mX8rMMS-MbI",
-      "type": "video",
-      "channelId": "UCBo1hnzxV9rz3WVsv__Rn1g",
-      "channelName": "ROSÉ",
-      "channelKind": "virtual",
-      "region": "unknown",
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "unknown",
-      "title": "ROSÉ - Viva La Vida (Coldplay) Live Studio Cover",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/mX8rMMS-MbI/hq720.jpg?sqp=-oaymwEcCOgCEMoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAF5TVzsAdxc4pMS9zKFIbO7J_i-g",
-      "publishedAt": "2022-04-07T14:23:09.137Z",
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "cover",
-      "songTitle": "ROSÉ",
-      "originalArtist": "Viva La Vida (Coldplay) Live Studio Cover",
-      "isCollab": false,
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "legacy-db",
-      "addedAt": "2026-04-07T14:23:09.000Z",
-      "updatedAt": "2026-10-21T14:06:02.708Z"
-    },
-    {
-      "id": "yjauZQ4XNDA",
-      "type": "video",
-      "channelId": "UCwu15I0KWOI6Xbe2Uziee4A",
-      "channelName": "【MAIN】96NEKO-CHANNEL",
-      "channelKind": "virtual",
-      "region": "unknown",
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "unknown",
-      "title": "太陽系デスコ ／ 96猫×はしやん×天月 【歌ってみた】",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/yjauZQ4XNDA/hq720.jpg?sqp=-oaymwEcCOgCEMoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLArV-PuFOcghA_-u8EoaxmKlGBsaw",
-      "publishedAt": "2018-04-07T14:23:09.134Z",
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "cover",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "legacy-db",
-      "addedAt": "2026-04-07T14:23:09.000Z",
-      "updatedAt": "2026-10-21T14:06:02.708Z"
+      "updatedAt": "2026-10-21T14:32:04.628Z",
+      "confidence": 0
     }
   ]
 }

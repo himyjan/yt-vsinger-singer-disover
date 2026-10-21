@@ -242,20 +242,16 @@ export class Verifier {
       systemInstruction:
         "You verify YouTube channel metadata using web search. You are precise, " +
         "you cite what you found, and you say 'unknown' rather than guessing.",
-      contents: buildPrompt(request),
-      ...(this.useSearch
-        ? { tools: [{ googleSearch: {} }] }
-        : {}),
-      generationConfig: {
-        responseMimeType: "application/json",
-        responseJsonSchema: RESPONSE_SCHEMA,
-        temperature: 0,
-      },
+      ...(this.useSearch ? { tools: [{ googleSearch: {} }] } : {}),
+      responseMimeType: "application/json",
+      responseJsonSchema: RESPONSE_SCHEMA,
+      temperature: 0,
     };
 
     try {
       const response = await this.client.models.generateContent({
         model: this.model,
+        contents: buildPrompt(request),
         config,
       });
 

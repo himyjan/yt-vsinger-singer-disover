@@ -128,6 +128,13 @@ function main(): void {
       description: null,
       tags: [],
       country: null,
+      /**
+       * Upload titles are a good *locale* signal even though they are a
+       * terrible identity signal: 「翻唱」 is Chinese, 「歌枠」 is Japanese.
+       * Only the first few titles are used, and they never influence the
+       * virtual/real decision.
+       */
+      localeHints: titles.slice(0, 8).join(" \n"),
     });
 
     // A cheap extra signal: a channel whose *every* title is a compilation

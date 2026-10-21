@@ -42,6 +42,7 @@ scripts/
 ├── sync.ts            fetch → classify → merge → write
 ├── build-index.ts     build the inverted search index
 ├── validate.ts        CI gate
+├── verify.ts           verify classifications with web-search grounding
 ├── import-legacy-db.ts  one-off SQLite migration
 ├── prepare-public.ts  copy data/ into public/ for the build
 └── lib/               types, youtube, twitch, platforms, classify, regions,
@@ -129,6 +130,7 @@ npm run data:sync -- --dry-run       # fetch and classify, write nothing
 npm run data:sync -- --budget 500    # cap the spend
 npm run data:sync -- --no-search     # refresh known channels only
 npm run data:sync -- --keyword "…"   # run one discovery query
+npm run data:verify                   # verify classifications with search grounding
 npm run data:index                   # rebuild the search index
 npm run data:validate                # structure + budgets
 npm run data:import-legacy           # migrate the old SQLite database
@@ -142,6 +144,7 @@ Task-specific instructions live in `.opencode/skills/`:
 | --- | --- |
 | `sync-dataset` | Running, debugging or extending the sync pipeline |
 | `curate-data` | Fixing classifications, adding seeds, editing overrides |
+| `verify-data` | Verifying records against the web with search grounding |
 | `search-index` | Changing tokenisation, ranking or the index format |
 | `add-platform` | Adding a platform adapter |
 | `web-ui` | Building or changing views, filters or the theme |
