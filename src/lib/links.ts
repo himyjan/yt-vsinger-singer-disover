@@ -66,19 +66,31 @@ export function channelLinks(
   };
 
   // Platform identities.
-  const links = (channel as ChannelSummary).links ?? [];
-  for (const link of links) {
-    const meta = platformMeta(link.p);
-    push({
-      platform: link.p,
-      label: meta.label,
-      url: link.u,
-      handle: link.h,
-    });
-  }
-
-  // A full channel record carries extra external handles.
+  //
+  // A full `Channel` record carries `platforms[]`; a `ChannelSummary` — the
+  // lightweight projection used by list views — carries the same information
+  // as `links[]`. Both shapes must work, because the channel drawer receives
+  // whichever one the caller had to hand.
   const full = channel as Channel;
+  const summary = channel as ChannelSummary;
+
+  const platformLinks: DisplayLink[] = full.platforms?.length
+    ? full.platforms.map((p) => ({
+        platform: p.platform as PlatformId,
+        label: platformMeta(p.platform).label,
+        url: p.url,
+        handle: p.handle,
+      }))
+    : (summary.links ?? []).map((l) => ({
+        platform: l.p as PlatformId,
+        label: platformMeta(l.p).label,
+        url: l.u,
+        handle: l.h,
+      }));
+
+  for (const link of platformLinks) push(link);
+
+  // Extra external handles found in the channel description.
   if (full.externals) {
     for (const [platform, handles] of Object.entries(full.externals)) {
       const meta = EXTERNAL_META[platform] ?? {
