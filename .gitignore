@@ -6,3 +6,23 @@ coverage/
 *.log
 .env*
 !.env.example
+
+# Disposable pipeline cache (HTTP responses, quota state).
+.cache/
+
+# Local secrets for the sync pipeline.
+.env.local
+.env.sync
+
+# Reference repositories — cloned for research only, never committed.
+# They are several GB and would blow past the GitHub repository size limit.
+/reference/
+/src/Musicdex/
+/src/Holodex/
+/src/Holodex-Plus/
+/src/camlisted/
+/src/holodex.js/
+
+# Legacy SQLite database — superseded by the sharded JSON dataset in data/.
+# The file is tracked via Git LFS; see .gitattributes.
+/yt_singers_channel.db

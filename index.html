@@ -3,13 +3,49 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Google AI Studio App</title>
-  <script src="https://cdn.jsdelivr.net/npm/iconify-icon@latest/dist/iconify-icon.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>VSinger &amp; Singer Tracker — VTuber songs, MVs and covers</title>
+  <meta
+    name="description"
+    content="Track VTuber and VSinger singing streams, music videos and covers, alongside real human singers and producers. Live now, upcoming, and searchable — across YouTube, Twitch, Bilibili, Niconico and VK."
+  />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#f6f5f1" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="VSinger &amp; Singer Tracker" />
+  <meta
+    property="og:description"
+    content="VTuber songs, music videos and covers — live now, upcoming, and searchable by region."
+  />
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎵</text></svg>" />
+
+  <script>
+    // Apply the persisted theme before the first paint so the page never
+    // flashes the wrong colour scheme.
+    (function () {
+      try {
+        var stored = localStorage.getItem('vst.theme');
+        var dark =
+          stored === 'dark' ||
+          (stored !== 'light' &&
+            window.matchMedia('(prefers-color-scheme: dark)').matches);
+        document.documentElement.classList.toggle('dark', dark);
+      } catch (e) {
+        /* private mode — fall back to the light theme */
+      }
+    })();
+  </script>
 </head>
 
 <body>
   <div id="root"></div>
+  <noscript>
+    This tracker needs JavaScript to search the dataset. The raw dataset is
+    available as JSON under <code>/data/</code>.
+  </noscript>
   <script type="module" src="/src/main.ts"></script>
 </body>
 

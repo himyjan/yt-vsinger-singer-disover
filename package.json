@@ -1,40 +1,52 @@
 {
-  "name": "react-example",
+  "name": "vsinger-singer-tracker",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "tsx server.ts",
-    "build": "vite build",
+    "dev:web": "vite",
+    "build": "npm run prepare:public && vite build",
     "start": "node server.ts",
     "clean": "rm -rf dist",
-    "lint": "vue-tsc --noEmit"
+    "lint": "vue-tsc --noEmit",
+    "prepare:public": "tsx scripts/prepare-public.ts",
+    "data:sync": "tsx scripts/sync.ts",
+    "data:index": "tsx scripts/build-index.ts",
+    "data:validate": "tsx scripts/validate.ts",
+    "data:import-legacy": "tsx scripts/import-legacy-db.ts",
+    "data:all": "npm run data:sync && npm run data:index && npm run data:validate",
+    "sync": "npm run data:sync",
+    "build:index": "npm run data:index",
+    "validate": "npm run data:validate"
   },
   "dependencies": {
-    "@google/genai": "^1.48.0",
-    "@tailwindcss/vite": "^4.2.2",
-    "@vitejs/plugin-react": "^6.0.1",
-    "@vitejs/plugin-vue": "^6.0.5",
-    "better-sqlite3": "^12.8.0",
-    "dotenv": "^17.4.1",
-    "express": "^5.2.1",
-    "motion": "^12.38.0",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4",
-    "vite": "^8.0.6",
-    "vue": "^3.6.0-beta.9",
-    "youtubei.js": "^17.0.1"
+    "@google/genai": "^2.30.0",
+    "@tailwindcss/vite": "^4.3.3",
+    "@vitejs/plugin-react": "^6.1.2",
+    "@vitejs/plugin-vue": "^6.0.10",
+    "dotenv": "^18.0.8",
+    "express": "^5.3.0",
+    "motion": "^14.5.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "vite": "^8.3.5",
+    "vue": "^3.6.0-rc.12",
+    "youtubei.js": "^18.2.0"
+  },
+  "optionalDependencies": {
+    "better-sqlite3": "^13.0.3"
   },
   "devDependencies": {
-    "@types/better-sqlite3": "^7.6.13",
+    "@types/better-sqlite3": "^9.6.0",
     "@types/express": "^5.0.6",
-    "@types/node": "^25.5.2",
-    "autoprefixer": "^10.4.27",
-    "tailwindcss": "^4.2.2",
-    "tsx": "^4.21.0",
-    "typescript": "~6.0.2",
-    "vite": "^8.0.6",
-    "vue-tsc": "^3.2.6"
+    "@types/node": "^26.6.5",
+    "autoprefixer": "^10.6.1",
+    "tailwindcss": "^4.3.3",
+    "tsx": "^4.23.15",
+    "typescript": "~6.0.3",
+    "vite": "^8.3.5",
+    "vue-tsc": "^3.3.13"
   },
   "overrides": {
     "@vitejs/plugin-vue": {

@@ -1,0 +1,36 @@
+{
+  "$comment": "Tuning knobs for scripts/sync.ts. See docs/YOUTUBE-API.md for the quota maths.",
+  "maxSearchesPerRun": 40,
+  "maxChannelsPerRun": 60,
+  "maxItemsPerChannel": 25,
+  "maxItemsPerChannelRetained": 30,
+  "maxItemAgeDays": 365,
+  "maxLiveChannelsPerRun": 60,
+  "searchResultsPerKeyword": 25,
+  "refreshLiveEveryRun": true,
+  "searches": [
+    { "query": "VTuber 歌い手", "type": "channel", "region": "jp" },
+    { "query": "vsinger 歌い手", "type": "channel", "region": "jp" },
+    { "query": "ホロライブ 歌", "type": "channel", "region": "jp" },
+    { "query": "にじさんじ 歌い手", "type": "channel", "region": "jp" },
+    { "query": "VOCALOID 歌い手", "type": "channel", "region": "jp" },
+    { "query": "vtuber music video original song", "type": "channel", "region": "en" },
+    { "query": "vsinger cover song", "type": "channel", "region": "en" },
+    { "query": "vtuber singer", "type": "channel", "region": "en" },
+    { "query": "hololive EN singer", "type": "channel", "region": "en" },
+    { "query": "nijisanji EN vsinger", "type": "channel", "region": "en" },
+    { "query": "vtuber indonesia nyanyi", "type": "channel", "region": "id" },
+    { "query": "idvtuber singer", "type": "channel", "region": "id" },
+    { "query": "虚拟主播 唱歌", "type": "channel", "region": "cn" },
+    { "query": "中文 虚拟歌姬", "type": "channel", "region": "cn" },
+    { "query": "台灣 VTuber 唱歌", "type": "channel", "region": "tw" },
+    { "query": "VTuber 歌枠", "type": "channel", "region": "jp" },
+
+    { "query": "VTuber 歌ってみた", "type": "video", "region": "jp" },
+    { "query": "vsinger cover", "type": "video", "region": "en" },
+    { "query": "VTuber MV", "type": "video", "region": "jp" },
+    { "query": "vtuber live singing", "type": "video", "region": "en", "eventType": "live" },
+    { "query": "VTuber 歌枠 live", "type": "video", "region": "jp", "eventType": "live" },
+    { "query": "VTuber 歌い定期", "type": "video", "region": "jp" }
+  ]
+}

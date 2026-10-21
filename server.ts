@@ -50,6 +50,7 @@ async function startServer() {
       discovered_at INTEGER,
       is_collected INTEGER DEFAULT 0,
       tags TEXT,
+      video_count TEXT,
       FOREIGN KEY(channel_id) REFERENCES channels(id)
     );
     CREATE TABLE IF NOT EXISTS blacklist (
@@ -74,6 +75,13 @@ async function startServer() {
   } catch (e) {
     console.log("Adding is_collected to items table...");
     db.exec("ALTER TABLE items ADD COLUMN is_collected INTEGER DEFAULT 0");
+  }
+
+  try {
+    db.prepare("SELECT video_count FROM items LIMIT 1").get();
+  } catch (e) {
+    console.log("Adding video_count to items table...");
+    db.exec("ALTER TABLE items ADD COLUMN video_count TEXT");
   }
 
   try {
@@ -398,10 +406,14 @@ async function startServer() {
           const thumbUrl = getThumb(itemData);
           const publishedStr = itemData.published?.toString() || itemData.publishedAt?.toString() || new Date().toISOString();
           const tags = Array.isArray(itemData.tags) ? itemData.tags.join(',') : (itemData.tags || null);
+          const videoCount = itemData.video_count?.toString() || itemData.videoCount?.toString() || null;
           db.prepare(`
-            INSERT INTO items (id, channel_id, title, type, thumbnail, published_at, discovered_at, tags)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-            ON CONFLICT(id) DO UPDATE SET title = excluded.title, tags = COALESCE(excluded.tags, items.tags)
+            INSERT INTO items (id, channel_id, title, type, thumbnail, published_at, discovered_at, tags, video_count)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ON CONFLICT(id) DO UPDATE SET 
+              title = excluded.title, 
+              tags = COALESCE(excluded.tags, items.tags),
+              video_count = COALESCE(excluded.video_count, items.video_count)
           `).run(
             id,
             channelId || null,
@@ -410,7 +422,8 @@ async function startServer() {
             thumbUrl,
             parseRelativeDate(publishedStr),
             Date.now(),
-            tags
+            tags,
+            videoCount
           );
         }
       }
@@ -519,6 +532,7 @@ async function startServer() {
         const type = isChannel ? 'channel' : (isPlaylist ? 'playlist' : (isVideo ? 'video' : 'video'));
         const title = getTitle(item);
         const thumb = getThumb(item);
+        const videoCount = item.video_count?.toString() || item.videoCount?.toString();
 
         // If it's a playlist and we still don't have a thumbnail, try to look into video_thumbnails
         let finalThumb = thumb;
@@ -529,7 +543,7 @@ async function startServer() {
         }
 
         if (isPlaylist) {
-          console.log("Playlist search result mapping:", { itemId, type, title, hasThumb: !!finalThumb });
+          console.log("Playlist search result mapping:", { itemId, type, title, hasThumb: !!finalThumb, videoCount });
         }
 
         return {
@@ -542,7 +556,8 @@ async function startServer() {
           published_at: item.published?.toString() || item.publishedAt || item.published,
           thumbnail: finalThumb,
           is_collected: dbItem ? dbItem.is_collected : 0,
-          type
+          type,
+          video_count: videoCount
         };
       });
 
@@ -764,10 +779,11 @@ async function startServer() {
 
             const publishedStr = item.published?.toString() || new Date().toISOString();
             const tags = Array.isArray(item.tags) ? item.tags.join(',') : (item.tags || null);
+            const videoCount = item.video_count?.toString() || item.videoCount?.toString() || null;
 
             db.prepare(`
-              INSERT OR IGNORE INTO items (id, channel_id, title, type, thumbnail, published_at, discovered_at, tags)
-              VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+              INSERT OR IGNORE INTO items (id, channel_id, title, type, thumbnail, published_at, discovered_at, tags, video_count)
+              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
             `).run(
               itemId,
               channelId || null,
@@ -776,7 +792,8 @@ async function startServer() {
               getThumb(item),
               parseRelativeDate(publishedStr),
               Date.now(),
-              tags
+              tags,
+              videoCount
             );
           }
         }

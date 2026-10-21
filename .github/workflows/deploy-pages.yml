@@ -1,0 +1,65 @@
+name: Deploy site
+
+# Builds the Vue app and publishes it to GitHub Pages.
+#
+# The dataset in `data/` is committed to the repository and copied into the
+# build output by `scripts/prepare-public.ts`, so Pages serves both the app
+# and the data from the same origin — no CORS configuration needed.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Validate dataset
+        run: npm run data:validate
+
+      - name: Build
+        run: npm run build
+        env:
+          # Overrides the default base path. Change this if the project is
+          # served from a sub-path rather than a user/org page.
+          VITE_BASE_PATH: ${{ vars.VITE_BASE_PATH || '/' }}
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,42 @@
+name: CI
+
+# Runs on every push and pull request: validates the dataset and builds the
+# app, so a broken dataset or a broken build never reaches the main branch.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Validate and build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Validate dataset
+        run: npm run data:validate
+
+      - name: Type check
+        run: npm run lint
+
+      - name: Build
+        run: npm run build
+        env:
+          VITE_BASE_PATH: ${{ vars.VITE_BASE_PATH || '/' }}

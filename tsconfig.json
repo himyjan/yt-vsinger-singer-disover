@@ -15,12 +15,28 @@
     "moduleDetection": "force",
     "allowJs": true,
     "jsx": "react-jsx",
+    "types": ["node"],
     "paths": {
       "@/*": [
-        "./*"
+        "./src/*"
+      ],
+      "@shared/*": [
+        "./scripts/*"
       ]
     },
     "allowImportingTsExtensions": true,
     "noEmit": true
-  }
+  },
+  "include": ["src/**/*.ts", "src/**/*.vue", "scripts/**/*.ts", "server.ts"],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "public",
+    "reference",
+    "src/Musicdex",
+    "src/Holodex",
+    "src/Holodex-Plus",
+    "src/camlisted",
+    "src/holodex.js"
+  ]
 }
