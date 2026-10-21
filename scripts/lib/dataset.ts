@@ -121,6 +121,7 @@ export function toSummary(c: Channel): ChannelSummary {
     kind: c.kind,
     role: c.role,
     region: c.region,
+    regionSource: c.regionSource,
     agency: c.agency,
     avatar: c.avatar,
     subscribers: countValue(c.subscribers),

@@ -1,21 +1,21 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T15:45:31.343Z",
+  "generatedAt": "2026-10-21T16:01:24.137Z",
   "regions": [
     {
       "code": "jp",
-      "entries": 1575,
-      "bytes": 1372122
+      "entries": 471,
+      "bytes": 204273
     },
     {
       "code": "cn",
-      "entries": 9312,
-      "bytes": 3498854
+      "entries": 9542,
+      "bytes": 3578158
     },
     {
       "code": "tw",
-      "entries": 3877,
-      "bytes": 1907430
+      "entries": 3685,
+      "bytes": 1650849
     },
     {
       "code": "hk",
@@ -23,30 +23,20 @@
       "bytes": 180923
     },
     {
-      "code": "kr",
-      "entries": 5,
-      "bytes": 6187
-    },
-    {
       "code": "en",
-      "entries": 648,
-      "bytes": 506313
-    },
-    {
-      "code": "id",
-      "entries": 9,
-      "bytes": 2624
+      "entries": 71,
+      "bytes": 24305
     },
     {
       "code": "my",
-      "entries": 202,
-      "bytes": 95052
+      "entries": 197,
+      "bytes": 88754
     },
     {
       "code": "unknown",
-      "entries": 182,
-      "bytes": 109180
+      "entries": 141,
+      "bytes": 54236
     }
   ],
-  "total": 16212
+  "total": 14509
 }

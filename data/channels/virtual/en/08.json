@@ -1,546 +1,7 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T15:45:24.453Z",
+  "generatedAt": "2026-10-21T16:02:13.938Z",
   "channels": [
-    {
-      "id": "bilibili:1195405071",
-      "name": "LuckyCupcake",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "language": "en",
-      "agency": null,
-      "avatar": null,
-      "banner": null,
-      "description": null,
-      "subscribers": {
-        "tag": "hidden"
-      },
-      "videoCount": null,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "confidence": 1,
-      "source": "api",
-      "addedAt": "2026-10-21T15:39:57.594Z",
-      "updatedAt": "2026-10-21T15:39:57.594Z",
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "1195405071",
-          "handle": null,
-          "name": "LuckyCupcake",
-          "url": "https://space.bilibili.com/1195405071",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T15:45:26.502Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null
-    },
-    {
-      "id": "bilibili:1292051980",
-      "name": "Finana的珊瑚礁海",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "language": "ja",
-      "agency": null,
-      "avatar": null,
-      "banner": null,
-      "description": null,
-      "subscribers": {
-        "tag": "hidden"
-      },
-      "videoCount": null,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "confidence": 1,
-      "source": "api",
-      "addedAt": "2026-10-21T15:39:57.594Z",
-      "updatedAt": "2026-10-21T15:39:57.594Z",
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "1292051980",
-          "handle": null,
-          "name": "Finana的珊瑚礁海",
-          "url": "https://space.bilibili.com/1292051980",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T15:45:26.492Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null
-    },
-    {
-      "id": "bilibili:1570624336",
-      "name": "MerryOfficial",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "language": "en",
-      "agency": null,
-      "avatar": null,
-      "banner": null,
-      "description": null,
-      "subscribers": {
-        "tag": "hidden"
-      },
-      "videoCount": null,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "confidence": 1,
-      "source": "api",
-      "addedAt": "2026-10-21T15:39:57.594Z",
-      "updatedAt": "2026-10-21T15:39:57.594Z",
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "1570624336",
-          "handle": null,
-          "name": "MerryOfficial",
-          "url": "https://space.bilibili.com/1570624336",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T15:45:26.505Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null
-    },
-    {
-      "id": "bilibili:15810",
-      "name": "Mr.Quin",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "language": "en",
-      "agency": null,
-      "avatar": null,
-      "banner": null,
-      "description": null,
-      "subscribers": {
-        "tag": "hidden"
-      },
-      "videoCount": null,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "confidence": 1,
-      "source": "api",
-      "addedAt": "2026-10-21T15:39:57.594Z",
-      "updatedAt": "2026-10-21T15:39:57.594Z",
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "15810",
-          "handle": null,
-          "name": "Mr.Quin",
-          "url": "https://space.bilibili.com/15810",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T15:45:26.517Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null
-    },
-    {
-      "id": "bilibili:1795172933",
-      "name": "HEX",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "language": "en",
-      "agency": "NIJISANJI EN",
-      "avatar": null,
-      "banner": null,
-      "description": null,
-      "subscribers": {
-        "tag": "hidden"
-      },
-      "videoCount": null,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "confidence": 1,
-      "source": "api",
-      "addedAt": "2026-10-21T15:39:57.594Z",
-      "updatedAt": "2026-10-21T15:39:57.594Z",
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "1795172933",
-          "handle": null,
-          "name": "HEX",
-          "url": "https://space.bilibili.com/1795172933",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T15:45:26.493Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null
-    },
-    {
-      "id": "bilibili:17977334",
-      "name": "ElskaAsh",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "language": "en",
-      "agency": null,
-      "avatar": null,
-      "banner": null,
-      "description": null,
-      "subscribers": {
-        "tag": "hidden"
-      },
-      "videoCount": null,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "confidence": 1,
-      "source": "api",
-      "addedAt": "2026-10-21T15:39:57.594Z",
-      "updatedAt": "2026-10-21T15:39:57.594Z",
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "17977334",
-          "handle": null,
-          "name": "ElskaAsh",
-          "url": "https://space.bilibili.com/17977334",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T15:45:26.490Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null
-    },
-    {
-      "id": "bilibili:1954549770",
-      "name": "Ver",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "language": "en",
-      "agency": "NIJISANJI EN",
-      "avatar": null,
-      "banner": null,
-      "description": null,
-      "subscribers": {
-        "tag": "hidden"
-      },
-      "videoCount": null,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "confidence": 1,
-      "source": "api",
-      "addedAt": "2026-10-21T15:39:57.594Z",
-      "updatedAt": "2026-10-21T15:39:57.594Z",
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "1954549770",
-          "handle": null,
-          "name": "Ver",
-          "url": "https://space.bilibili.com/1954549770",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T15:45:26.528Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null
-    },
-    {
-      "id": "bilibili:3546699041605816",
-      "name": "Shylily",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "language": "en",
-      "agency": null,
-      "avatar": null,
-      "banner": null,
-      "description": null,
-      "subscribers": {
-        "tag": "hidden"
-      },
-      "videoCount": null,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "confidence": 1,
-      "source": "api",
-      "addedAt": "2026-10-21T15:39:57.594Z",
-      "updatedAt": "2026-10-21T15:39:57.594Z",
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "3546699041605816",
-          "handle": null,
-          "name": "Shylily",
-          "url": "https://space.bilibili.com/3546699041605816",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T15:45:26.522Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null
-    },
-    {
-      "id": "bilibili:410512576",
-      "name": "CANAMETOHARUKY",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "language": "en",
-      "agency": null,
-      "avatar": null,
-      "banner": null,
-      "description": null,
-      "subscribers": {
-        "tag": "hidden"
-      },
-      "videoCount": null,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "confidence": 1,
-      "source": "api",
-      "addedAt": "2026-10-21T15:39:57.594Z",
-      "updatedAt": "2026-10-21T15:39:57.594Z",
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "410512576",
-          "handle": null,
-          "name": "CANAMETOHARUKY",
-          "url": "https://space.bilibili.com/410512576",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T15:45:26.483Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null
-    },
-    {
-      "id": "bilibili:441269942",
-      "name": "Mytholinical",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "language": "en",
-      "agency": null,
-      "avatar": null,
-      "banner": null,
-      "description": null,
-      "subscribers": {
-        "tag": "hidden"
-      },
-      "videoCount": null,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "confidence": 1,
-      "source": "api",
-      "addedAt": "2026-10-21T15:39:57.594Z",
-      "updatedAt": "2026-10-21T15:39:57.594Z",
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "441269942",
-          "handle": null,
-          "name": "Mytholinical",
-          "url": "https://space.bilibili.com/441269942",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T15:45:26.508Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null
-    },
-    {
-      "id": "bilibili:473409",
-      "name": "Monoise",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "language": "en",
-      "agency": null,
-      "avatar": null,
-      "banner": null,
-      "description": null,
-      "subscribers": {
-        "tag": "hidden"
-      },
-      "videoCount": null,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "confidence": 1,
-      "source": "api",
-      "addedAt": "2026-10-21T15:39:57.594Z",
-      "updatedAt": "2026-10-21T15:39:57.594Z",
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "473409",
-          "handle": null,
-          "name": "Monoise",
-          "url": "https://space.bilibili.com/473409",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T15:45:26.507Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null
-    },
     {
       "id": "UC7XCjKxBEct0uAukpQXNFPw",
       "name": "はち",
@@ -548,6 +9,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "en",
+      "regionSource": "declared",
       "language": "ja",
       "agency": null,
       "avatar": null,
@@ -561,14 +23,14 @@
       "uploadsPlaylistId": "UU7XCjKxBEct0uAukpQXNFPw",
       "country": null,
       "tags": [],
-      "isSinging": true,
+      "isSinging": false,
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T15:39:57.594Z",
-      "updatedAt": "2026-10-21T15:39:57.594Z",
+      "addedAt": "2026-10-21T16:00:50.780Z",
+      "updatedAt": "2026-10-21T16:00:50.780Z",
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -584,7 +46,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T15:45:26.493Z"
+          "lastCheckedAt": "2026-10-21T16:02:16.533Z"
         },
         {
           "platform": "bilibili",
@@ -597,7 +59,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T15:45:26.493Z"
+          "lastCheckedAt": "2026-10-21T16:02:16.533Z"
         }
       ],
       "externals": {},
@@ -610,6 +72,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "en",
+      "regionSource": "declared",
       "language": "en",
       "agency": null,
       "avatar": null,
@@ -629,8 +92,8 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T15:39:57.594Z",
-      "updatedAt": "2026-10-21T15:39:57.594Z",
+      "addedAt": "2026-10-21T16:00:50.780Z",
+      "updatedAt": "2026-10-21T16:00:50.780Z",
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -646,7 +109,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T15:45:26.504Z"
+          "lastCheckedAt": "2026-10-21T16:02:16.544Z"
         },
         {
           "platform": "youtube",
@@ -659,7 +122,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T15:45:26.504Z"
+          "lastCheckedAt": "2026-10-21T16:02:16.544Z"
         }
       ],
       "externals": {},
@@ -672,6 +135,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "en",
+      "regionSource": "declared",
       "language": "en",
       "agency": null,
       "avatar": null,
@@ -691,8 +155,8 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T15:39:57.594Z",
-      "updatedAt": "2026-10-21T15:39:57.594Z",
+      "addedAt": "2026-10-21T16:00:50.780Z",
+      "updatedAt": "2026-10-21T16:00:50.780Z",
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,

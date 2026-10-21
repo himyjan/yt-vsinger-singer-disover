@@ -1,287 +1,7 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T15:45:24.453Z",
+  "generatedAt": "2026-10-21T16:02:13.938Z",
   "channels": [
-    {
-      "id": "bilibili:1113185260",
-      "name": "Alban_Official",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "agency": null,
-      "avatar": null,
-      "subscribers": null,
-      "isSinging": false,
-      "activity": "unknown",
-      "subscribersHidden": true,
-      "twitchLogin": null,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "links": [
-        {
-          "p": "bilibili",
-          "u": "https://space.bilibili.com/1113185260",
-          "h": null
-        }
-      ]
-    },
-    {
-      "id": "bilibili:137980431",
-      "name": "98_SSword",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "agency": null,
-      "avatar": null,
-      "subscribers": null,
-      "isSinging": false,
-      "activity": "unknown",
-      "subscribersHidden": true,
-      "twitchLogin": null,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "links": [
-        {
-          "p": "bilibili",
-          "u": "https://space.bilibili.com/137980431",
-          "h": null
-        }
-      ]
-    },
-    {
-      "id": "bilibili:1461919177",
-      "name": "贝莉娅",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "agency": "纸片人计划",
-      "avatar": null,
-      "subscribers": null,
-      "isSinging": false,
-      "activity": "unknown",
-      "subscribersHidden": true,
-      "twitchLogin": null,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "links": [
-        {
-          "p": "bilibili",
-          "u": "https://space.bilibili.com/1461919177",
-          "h": null
-        }
-      ]
-    },
-    {
-      "id": "bilibili:1601895109",
-      "name": "shoto",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "agency": null,
-      "avatar": null,
-      "subscribers": null,
-      "isSinging": false,
-      "activity": "unknown",
-      "subscribersHidden": true,
-      "twitchLogin": null,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "links": [
-        {
-          "p": "bilibili",
-          "u": "https://space.bilibili.com/1601895109",
-          "h": null
-        }
-      ]
-    },
-    {
-      "id": "bilibili:1627747284",
-      "name": "Lita_Official",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "agency": null,
-      "avatar": null,
-      "subscribers": null,
-      "isSinging": false,
-      "activity": "unknown",
-      "subscribersHidden": true,
-      "twitchLogin": null,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "links": [
-        {
-          "p": "bilibili",
-          "u": "https://space.bilibili.com/1627747284",
-          "h": null
-        }
-      ]
-    },
-    {
-      "id": "bilibili:1639389144",
-      "name": "ElevenOfficial_",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "agency": null,
-      "avatar": null,
-      "subscribers": null,
-      "isSinging": false,
-      "activity": "unknown",
-      "subscribersHidden": true,
-      "twitchLogin": null,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "links": [
-        {
-          "p": "bilibili",
-          "u": "https://space.bilibili.com/1639389144",
-          "h": null
-        }
-      ]
-    },
-    {
-      "id": "bilibili:248109460",
-      "name": "SakunoMisaki",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "agency": null,
-      "avatar": null,
-      "subscribers": null,
-      "isSinging": false,
-      "activity": "unknown",
-      "subscribersHidden": true,
-      "twitchLogin": null,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "links": [
-        {
-          "p": "bilibili",
-          "u": "https://space.bilibili.com/248109460",
-          "h": null
-        },
-        {
-          "p": "bilibili",
-          "u": "https://www.acfun.cn/u/36900616",
-          "h": null
-        }
-      ]
-    },
-    {
-      "id": "bilibili:394856061",
-      "name": "VGaming",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "agency": "f91c8cd6-c548-5ff2-a7de-e7d47d92c851",
-      "avatar": null,
-      "subscribers": null,
-      "isSinging": false,
-      "activity": "unknown",
-      "subscribersHidden": true,
-      "twitchLogin": null,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "links": [
-        {
-          "p": "bilibili",
-          "u": "https://space.bilibili.com/394856061",
-          "h": null
-        }
-      ]
-    },
-    {
-      "id": "bilibili:492997998",
-      "name": "Virtual Dove鸽舍",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "agency": "faf257d3-81df-564d-b5ae-2d9fd694675c",
-      "avatar": null,
-      "subscribers": null,
-      "isSinging": false,
-      "activity": "unknown",
-      "subscribersHidden": true,
-      "twitchLogin": null,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "links": [
-        {
-          "p": "bilibili",
-          "u": "https://space.bilibili.com/492997998",
-          "h": null
-        }
-      ]
-    },
-    {
-      "id": "bilibili:49724206",
-      "name": "Fey",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "agency": null,
-      "avatar": null,
-      "subscribers": null,
-      "isSinging": false,
-      "activity": "unknown",
-      "subscribersHidden": true,
-      "twitchLogin": null,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "links": [
-        {
-          "p": "bilibili",
-          "u": "https://space.bilibili.com/49724206",
-          "h": null
-        }
-      ]
-    },
-    {
-      "id": "bilibili:87655975",
-      "name": "Skammy",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "agency": null,
-      "avatar": null,
-      "subscribers": null,
-      "isSinging": false,
-      "activity": "unknown",
-      "subscribersHidden": true,
-      "twitchLogin": null,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "links": [
-        {
-          "p": "bilibili",
-          "u": "https://space.bilibili.com/87655975",
-          "h": null
-        }
-      ]
-    },
     {
       "id": "UC4WvIIAo89_AzGUh1AZ6Dkg",
       "name": "Rosemi Lovelock",
@@ -289,6 +9,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "en",
+      "regionSource": "declared",
       "agency": "NIJISANJI EN",
       "avatar": null,
       "subscribers": null,
@@ -314,6 +35,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "en",
+      "regionSource": "declared",
       "agency": null,
       "avatar": null,
       "subscribers": null,
@@ -344,6 +66,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "en",
+      "regionSource": "declared",
       "agency": "エイレーン一家",
       "avatar": null,
       "subscribers": null,
@@ -374,10 +97,11 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "en",
+      "regionSource": "declared",
       "agency": "NIJISANJI EN",
       "avatar": null,
       "subscribers": null,
-      "isSinging": true,
+      "isSinging": false,
       "activity": "unknown",
       "subscribersHidden": true,
       "twitchLogin": null,
@@ -399,6 +123,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "en",
+      "regionSource": "declared",
       "agency": "fe322361-ebad-52de-8494-089e3205892b",
       "avatar": null,
       "subscribers": null,

@@ -1,557 +1,7 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T15:45:24.453Z",
+  "generatedAt": "2026-10-21T16:02:13.938Z",
   "channels": [
-    {
-      "id": "bilibili:1117407845",
-      "name": "白梅子しらうめこ",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "jp",
-      "agency": null,
-      "avatar": null,
-      "subscribers": null,
-      "isSinging": false,
-      "activity": "unknown",
-      "subscribersHidden": true,
-      "twitchLogin": null,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "links": [
-        {
-          "p": "bilibili",
-          "u": "https://space.bilibili.com/1117407845",
-          "h": null
-        }
-      ]
-    },
-    {
-      "id": "bilibili:1766612829",
-      "name": "梦月真白Official",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "jp",
-      "agency": null,
-      "avatar": null,
-      "subscribers": null,
-      "isSinging": false,
-      "activity": "unknown",
-      "subscribersHidden": true,
-      "twitchLogin": null,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "links": [
-        {
-          "p": "bilibili",
-          "u": "https://space.bilibili.com/1766612829",
-          "h": null
-        }
-      ]
-    },
-    {
-      "id": "bilibili:1813007857",
-      "name": "古乃叶羽留Channel",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "jp",
-      "agency": null,
-      "avatar": null,
-      "subscribers": null,
-      "isSinging": false,
-      "activity": "unknown",
-      "subscribersHidden": true,
-      "twitchLogin": null,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "links": [
-        {
-          "p": "bilibili",
-          "u": "https://space.bilibili.com/1813007857",
-          "h": null
-        }
-      ]
-    },
-    {
-      "id": "bilibili:2061961489",
-      "name": "泰迪熊奴奴丝",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "jp",
-      "agency": null,
-      "avatar": null,
-      "subscribers": null,
-      "isSinging": false,
-      "activity": "unknown",
-      "subscribersHidden": true,
-      "twitchLogin": null,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "links": [
-        {
-          "p": "bilibili",
-          "u": "https://space.bilibili.com/2061961489",
-          "h": null
-        }
-      ]
-    },
-    {
-      "id": "bilibili:2094031249",
-      "name": "火羽ひのめ",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "jp",
-      "agency": null,
-      "avatar": null,
-      "subscribers": null,
-      "isSinging": false,
-      "activity": "unknown",
-      "subscribersHidden": true,
-      "twitchLogin": null,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "links": [
-        {
-          "p": "bilibili",
-          "u": "https://space.bilibili.com/2094031249",
-          "h": null
-        }
-      ]
-    },
-    {
-      "id": "bilibili:2146103492",
-      "name": "雪豹Leo_official",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "jp",
-      "agency": null,
-      "avatar": null,
-      "subscribers": null,
-      "isSinging": false,
-      "activity": "unknown",
-      "subscribersHidden": true,
-      "twitchLogin": null,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "links": [
-        {
-          "p": "bilibili",
-          "u": "https://space.bilibili.com/2146103492",
-          "h": null
-        }
-      ]
-    },
-    {
-      "id": "bilibili:23760783",
-      "name": "JP",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "jp",
-      "agency": "NIJISANJI",
-      "avatar": null,
-      "subscribers": null,
-      "isSinging": false,
-      "activity": "unknown",
-      "subscribersHidden": true,
-      "twitchLogin": null,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "links": [
-        {
-          "p": "bilibili",
-          "u": "https://space.bilibili.com/23760783",
-          "h": null
-        }
-      ]
-    },
-    {
-      "id": "bilibili:24791744",
-      "name": "殺戮の天使",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "jp",
-      "agency": null,
-      "avatar": null,
-      "subscribers": null,
-      "isSinging": false,
-      "activity": "unknown",
-      "subscribersHidden": true,
-      "twitchLogin": null,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "links": [
-        {
-          "p": "bilibili",
-          "u": "https://space.bilibili.com/24791744",
-          "h": null
-        }
-      ]
-    },
-    {
-      "id": "bilibili:263238",
-      "name": "三枝明那搬运组",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "jp",
-      "agency": "NIJISANJI",
-      "avatar": null,
-      "subscribers": null,
-      "isSinging": false,
-      "activity": "unknown",
-      "subscribersHidden": true,
-      "twitchLogin": null,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "links": [
-        {
-          "p": "bilibili",
-          "u": "https://space.bilibili.com/263238",
-          "h": null
-        }
-      ]
-    },
-    {
-      "id": "bilibili:324969506",
-      "name": "VOMS Project",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "jp",
-      "agency": null,
-      "avatar": null,
-      "subscribers": null,
-      "isSinging": false,
-      "activity": "unknown",
-      "subscribersHidden": true,
-      "twitchLogin": null,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "links": [
-        {
-          "p": "bilibili",
-          "u": "https://space.bilibili.com/324969506",
-          "h": null
-        }
-      ]
-    },
-    {
-      "id": "bilibili:3493084635597352",
-      "name": "ケルベロ・メイフ",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "jp",
-      "agency": null,
-      "avatar": null,
-      "subscribers": null,
-      "isSinging": false,
-      "activity": "unknown",
-      "subscribersHidden": true,
-      "twitchLogin": null,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "links": [
-        {
-          "p": "bilibili",
-          "u": "https://space.bilibili.com/3493084635597352",
-          "h": null
-        }
-      ]
-    },
-    {
-      "id": "bilibili:3493109914667413",
-      "name": "风昼wind",
-      "handle": "3493109914667413",
-      "kind": "virtual",
-      "role": "unknown",
-      "region": "jp",
-      "agency": null,
-      "avatar": "https://i1.hdslb.com/bfs/face/88eca8b8293feb7f71f92b985ffe5893a4a9110e.jpg",
-      "subscribers": null,
-      "isSinging": false,
-      "activity": "unknown",
-      "subscribersHidden": true,
-      "twitchLogin": null,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "unknown",
-      "links": [
-        {
-          "p": "bilibili",
-          "u": "https://space.bilibili.com/3493109914667413",
-          "h": "3493109914667413"
-        }
-      ]
-    },
-    {
-      "id": "bilibili:3546589488483041",
-      "name": "鶴河咲雪Vtuber",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "jp",
-      "agency": null,
-      "avatar": null,
-      "subscribers": null,
-      "isSinging": false,
-      "activity": "unknown",
-      "subscribersHidden": true,
-      "twitchLogin": null,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "links": [
-        {
-          "p": "bilibili",
-          "u": "https://space.bilibili.com/3546589488483041",
-          "h": null
-        }
-      ]
-    },
-    {
-      "id": "bilibili:3546684588034989",
-      "name": "真面目喵露_Official",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "jp",
-      "agency": null,
-      "avatar": null,
-      "subscribers": null,
-      "isSinging": false,
-      "activity": "unknown",
-      "subscribersHidden": true,
-      "twitchLogin": null,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "links": [
-        {
-          "p": "bilibili",
-          "u": "https://space.bilibili.com/3546684588034989",
-          "h": null
-        }
-      ]
-    },
-    {
-      "id": "bilibili:49584022",
-      "name": "滄藍メロディ",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "jp",
-      "agency": null,
-      "avatar": null,
-      "subscribers": null,
-      "isSinging": false,
-      "activity": "unknown",
-      "subscribersHidden": true,
-      "twitchLogin": null,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "links": [
-        {
-          "p": "bilibili",
-          "u": "https://space.bilibili.com/49584022",
-          "h": null
-        }
-      ]
-    },
-    {
-      "id": "bilibili:543931452",
-      "name": "古泽源",
-      "handle": "543931452",
-      "kind": "virtual",
-      "role": "unknown",
-      "region": "jp",
-      "agency": null,
-      "avatar": "https://i0.hdslb.com/bfs/face/f4da9d1c49cf0ed138dd23997c93e596657016d1.jpg",
-      "subscribers": null,
-      "isSinging": false,
-      "activity": "unknown",
-      "subscribersHidden": true,
-      "twitchLogin": null,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "unknown",
-      "links": [
-        {
-          "p": "bilibili",
-          "u": "https://space.bilibili.com/543931452",
-          "h": "543931452"
-        }
-      ]
-    },
-    {
-      "id": "bilibili:569885690",
-      "name": "P丸様",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "jp",
-      "agency": null,
-      "avatar": null,
-      "subscribers": null,
-      "isSinging": false,
-      "activity": "unknown",
-      "subscribersHidden": true,
-      "twitchLogin": null,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "links": [
-        {
-          "p": "bilibili",
-          "u": "https://space.bilibili.com/569885690",
-          "h": null
-        }
-      ]
-    },
-    {
-      "id": "bilibili:633523853",
-      "name": "妖娆的胖虎阿权",
-      "handle": "633523853",
-      "kind": "virtual",
-      "role": "unknown",
-      "region": "jp",
-      "agency": null,
-      "avatar": "https://i2.hdslb.com/bfs/face/99a7825871b491a00ba7e4ed67ca3a28b52c2685.jpg",
-      "subscribers": null,
-      "isSinging": false,
-      "activity": "unknown",
-      "subscribersHidden": true,
-      "twitchLogin": null,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "unknown",
-      "links": [
-        {
-          "p": "bilibili",
-          "u": "https://space.bilibili.com/633523853",
-          "h": "633523853"
-        }
-      ]
-    },
-    {
-      "id": "bilibili:6433651",
-      "name": "弥栄クアム_YaSaka",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "jp",
-      "agency": null,
-      "avatar": null,
-      "subscribers": null,
-      "isSinging": false,
-      "activity": "unknown",
-      "subscribersHidden": true,
-      "twitchLogin": null,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "links": [
-        {
-          "p": "bilibili",
-          "u": "https://space.bilibili.com/6433651",
-          "h": null
-        }
-      ]
-    },
-    {
-      "id": "bilibili:660057880",
-      "name": "赵得福啊",
-      "handle": "660057880",
-      "kind": "virtual",
-      "role": "unknown",
-      "region": "jp",
-      "agency": null,
-      "avatar": "https://i1.hdslb.com/bfs/face/aad386ad0ffd6ea11e095974d5cdb6dc1822aa65.jpg",
-      "subscribers": null,
-      "isSinging": false,
-      "activity": "unknown",
-      "subscribersHidden": true,
-      "twitchLogin": null,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "unknown",
-      "links": [
-        {
-          "p": "bilibili",
-          "u": "https://space.bilibili.com/660057880",
-          "h": "660057880"
-        }
-      ]
-    },
-    {
-      "id": "bilibili:68439967",
-      "name": "萧枭同学",
-      "handle": "68439967",
-      "kind": "virtual",
-      "role": "unknown",
-      "region": "jp",
-      "agency": null,
-      "avatar": "https://i1.hdslb.com/bfs/face/048bdff2b19e39da8f1aba04a3bd595a073130c8.jpg",
-      "subscribers": null,
-      "isSinging": false,
-      "activity": "unknown",
-      "subscribersHidden": true,
-      "twitchLogin": null,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "unknown",
-      "links": [
-        {
-          "p": "bilibili",
-          "u": "https://space.bilibili.com/68439967",
-          "h": "68439967"
-        }
-      ]
-    },
-    {
-      "id": "bilibili:693417899",
-      "name": "JP",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "jp",
-      "agency": "20df03a2-9fa6-5560-b42a-7f35e70b9278",
-      "avatar": null,
-      "subscribers": null,
-      "isSinging": false,
-      "activity": "unknown",
-      "subscribersHidden": true,
-      "twitchLogin": null,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "links": [
-        {
-          "p": "bilibili",
-          "u": "https://space.bilibili.com/693417899",
-          "h": null
-        }
-      ]
-    },
     {
       "id": "UC_s4osux7nPvJnISWjpJpTg",
       "name": "木暮",
@@ -559,6 +9,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
+      "regionSource": "declared",
       "agency": "WACTOR",
       "avatar": null,
       "subscribers": null,
@@ -594,6 +45,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
+      "regionSource": "declared",
       "agency": "Hololive",
       "avatar": null,
       "subscribers": null,
@@ -624,6 +76,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
+      "regionSource": "declared",
       "agency": null,
       "avatar": null,
       "subscribers": null,
@@ -649,6 +102,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
+      "regionSource": "declared",
       "agency": null,
       "avatar": null,
       "subscribers": null,
@@ -679,6 +133,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
+      "regionSource": "declared",
       "agency": "ZEROproject",
       "avatar": null,
       "subscribers": null,
@@ -709,6 +164,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
+      "regionSource": "declared",
       "agency": "Unlimited",
       "avatar": null,
       "subscribers": null,
@@ -739,6 +195,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
+      "regionSource": "declared",
       "agency": "NIJISANJI",
       "avatar": null,
       "subscribers": null,
@@ -769,6 +226,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
+      "regionSource": "declared",
       "agency": null,
       "avatar": null,
       "subscribers": null,
@@ -799,6 +257,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
+      "regionSource": "declared",
       "agency": null,
       "avatar": null,
       "subscribers": null,
@@ -829,6 +288,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
+      "regionSource": "declared",
       "agency": null,
       "avatar": null,
       "subscribers": null,
@@ -854,6 +314,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
+      "regionSource": "declared",
       "agency": null,
       "avatar": null,
       "subscribers": null,
@@ -884,6 +345,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
+      "regionSource": "declared",
       "agency": "ENTUM",
       "avatar": null,
       "subscribers": null,
@@ -914,6 +376,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
+      "regionSource": "declared",
       "agency": null,
       "avatar": null,
       "subscribers": null,
@@ -944,6 +407,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
+      "regionSource": "declared",
       "agency": null,
       "avatar": null,
       "subscribers": null,
@@ -963,47 +427,13 @@
       ]
     },
     {
-      "id": "UCNdXImom_pZmsPyxNdTVFIw",
-      "name": "JP",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "jp",
-      "agency": null,
-      "avatar": null,
-      "subscribers": null,
-      "isSinging": false,
-      "activity": "unknown",
-      "subscribersHidden": true,
-      "twitchLogin": null,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "links": [
-        {
-          "p": "bilibili",
-          "u": "https://space.bilibili.com/3546862887897818",
-          "h": null
-        },
-        {
-          "p": "youtube",
-          "u": "https://www.youtube.com/channel/UCNdXImom_pZmsPyxNdTVFIw",
-          "h": null
-        },
-        {
-          "p": "twitch",
-          "u": "https://www.twitch.tv/sushimekabu",
-          "h": null
-        }
-      ]
-    },
-    {
       "id": "UCo8wxkKqef8AFSn4VMe7wcA",
       "name": "みなみのみこと",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
+      "regionSource": "declared",
       "agency": null,
       "avatar": null,
       "subscribers": null,
@@ -1029,6 +459,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
+      "regionSource": "declared",
       "agency": null,
       "avatar": null,
       "subscribers": null,
@@ -1059,6 +490,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
+      "regionSource": "declared",
       "agency": "NIJISANJI",
       "avatar": null,
       "subscribers": null,
@@ -1084,11 +516,12 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
+      "regionSource": "declared",
       "agency": null,
       "avatar": null,
       "subscribers": null,
-      "isSinging": true,
-      "activity": "graduated",
+      "isSinging": false,
+      "activity": "unknown",
       "subscribersHidden": true,
       "twitchLogin": null,
       "gender": "unknown",
@@ -1114,6 +547,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
+      "regionSource": "declared",
       "agency": "コーロンサス学園",
       "avatar": null,
       "subscribers": null,
@@ -1144,6 +578,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
+      "regionSource": "declared",
       "agency": null,
       "avatar": null,
       "subscribers": null,
@@ -1174,6 +609,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
+      "regionSource": "declared",
       "agency": null,
       "avatar": null,
       "subscribers": null,
@@ -1199,6 +635,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
+      "regionSource": "declared",
       "agency": null,
       "avatar": null,
       "subscribers": null,
@@ -1218,42 +655,13 @@
       ]
     },
     {
-      "id": "youtube:RinRinne39",
-      "name": "JP",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "jp",
-      "agency": null,
-      "avatar": null,
-      "subscribers": null,
-      "isSinging": false,
-      "activity": "unknown",
-      "subscribersHidden": true,
-      "twitchLogin": null,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "links": [
-        {
-          "p": "bilibili",
-          "u": "https://space.bilibili.com/1206012073",
-          "h": null
-        },
-        {
-          "p": "youtube",
-          "u": "https://www.youtube.com/@RinRinne39",
-          "h": "RinRinne39"
-        }
-      ]
-    },
-    {
       "id": "youtube:Unifee_oda",
       "name": "織田詩信",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
+      "regionSource": "declared",
       "agency": "ゆにふぃ！",
       "avatar": null,
       "subscribers": null,

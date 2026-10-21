@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T15:45:24.453Z",
+  "generatedAt": "2026-10-21T16:02:13.938Z",
   "channels": [
     {
       "id": "UC0JF2Qp4GCa2-lyJJ5huJMg",
@@ -9,6 +9,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "my",
+      "regionSource": "roster",
       "language": "en",
       "agency": null,
       "avatar": null,
@@ -28,8 +29,8 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T15:39:57.594Z",
-      "updatedAt": "2026-10-21T15:39:57.594Z",
+      "addedAt": "2026-10-21T16:00:50.780Z",
+      "updatedAt": "2026-10-21T16:00:50.780Z",
       "activity": "unknown",
       "debutDate": "2020-10-10",
       "graduateDate": null,
@@ -45,7 +46,7 @@
           },
           "avatar": null,
           "activity": "active",
-          "lastCheckedAt": "2026-10-21T15:45:24.524Z"
+          "lastCheckedAt": "2026-10-21T16:02:14.002Z"
         }
       ],
       "externals": {},
@@ -58,7 +59,8 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "my",
-      "language": "ja",
+      "regionSource": "roster",
+      "language": "zh-Hant",
       "agency": null,
       "avatar": "https://yt3.ggpht.com/iojyck2klx0QELJaJuMW-Lunu26XcD1ksUw7q_3iYPh59HUiO8gQESMXCZJ78H0Vi7VIMglbY-U=s88-c-k-c0x00ffffff-no-rj",
       "banner": null,
@@ -78,8 +80,8 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T15:39:57.594Z",
-      "updatedAt": "2026-10-21T15:39:57.594Z",
+      "addedAt": "2026-10-21T16:00:50.780Z",
+      "updatedAt": "2026-10-21T16:00:50.780Z",
       "activity": "unknown",
       "debutDate": "2021-07-09",
       "graduateDate": null,
@@ -96,7 +98,7 @@
           },
           "avatar": "https://yt3.ggpht.com/iojyck2klx0QELJaJuMW-Lunu26XcD1ksUw7q_3iYPh59HUiO8gQESMXCZJ78H0Vi7VIMglbY-U=s88-c-k-c0x00ffffff-no-rj",
           "activity": "active",
-          "lastCheckedAt": "2026-10-21T15:45:24.524Z"
+          "lastCheckedAt": "2026-10-21T16:02:14.002Z"
         }
       ],
       "externals": {},
@@ -109,6 +111,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "my",
+      "regionSource": "roster",
       "language": "ja",
       "agency": null,
       "avatar": "https://static-cdn.jtvnw.net/jtv_user_pictures/7dcb69a5-d862-4b4a-80cb-a1b954c12865-profile_image-300x300.png",
@@ -129,8 +132,8 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T15:39:57.594Z",
-      "updatedAt": "2026-10-21T15:39:57.594Z",
+      "addedAt": "2026-10-21T16:00:50.780Z",
+      "updatedAt": "2026-10-21T16:00:50.780Z",
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -147,7 +150,7 @@
           },
           "avatar": "https://static-cdn.jtvnw.net/jtv_user_pictures/7dcb69a5-d862-4b4a-80cb-a1b954c12865-profile_image-300x300.png",
           "activity": "active",
-          "lastCheckedAt": "2026-10-21T15:45:24.524Z"
+          "lastCheckedAt": "2026-10-21T16:02:14.002Z"
         },
         {
           "platform": "twitch",
@@ -160,7 +163,7 @@
           },
           "avatar": "https://static-cdn.jtvnw.net/jtv_user_pictures/7dcb69a5-d862-4b4a-80cb-a1b954c12865-profile_image-300x300.png",
           "activity": "active",
-          "lastCheckedAt": "2026-10-21T15:45:24.524Z"
+          "lastCheckedAt": "2026-10-21T16:02:14.002Z"
         }
       ],
       "externals": {},
@@ -173,6 +176,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "my",
+      "regionSource": "roster",
       "language": "zh-Hant",
       "agency": null,
       "avatar": "https://static-cdn.jtvnw.net/jtv_user_pictures/4f1eafdd-eb1b-4adf-8f1e-367c3503c121-profile_image-300x300.jpeg",
@@ -193,8 +197,8 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T15:39:57.594Z",
-      "updatedAt": "2026-10-21T15:39:57.594Z",
+      "addedAt": "2026-10-21T16:00:50.780Z",
+      "updatedAt": "2026-10-21T16:00:50.780Z",
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -211,7 +215,7 @@
           },
           "avatar": "https://static-cdn.jtvnw.net/jtv_user_pictures/4f1eafdd-eb1b-4adf-8f1e-367c3503c121-profile_image-300x300.jpeg",
           "activity": "active",
-          "lastCheckedAt": "2026-10-21T15:45:24.524Z"
+          "lastCheckedAt": "2026-10-21T16:02:14.002Z"
         },
         {
           "platform": "twitch",
@@ -224,7 +228,7 @@
           },
           "avatar": "https://static-cdn.jtvnw.net/jtv_user_pictures/4f1eafdd-eb1b-4adf-8f1e-367c3503c121-profile_image-300x300.jpeg",
           "activity": "active",
-          "lastCheckedAt": "2026-10-21T15:45:24.524Z"
+          "lastCheckedAt": "2026-10-21T16:02:14.002Z"
         }
       ],
       "externals": {},
@@ -237,6 +241,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "my",
+      "regionSource": "roster",
       "language": "en",
       "agency": null,
       "avatar": null,
@@ -256,8 +261,8 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T15:39:57.594Z",
-      "updatedAt": "2026-10-21T15:39:57.594Z",
+      "addedAt": "2026-10-21T16:00:50.780Z",
+      "updatedAt": "2026-10-21T16:00:50.780Z",
       "activity": "unknown",
       "debutDate": "2022-11-22",
       "graduateDate": null,
@@ -273,7 +278,7 @@
           },
           "avatar": null,
           "activity": "active",
-          "lastCheckedAt": "2026-10-21T15:45:24.524Z"
+          "lastCheckedAt": "2026-10-21T16:02:14.002Z"
         }
       ],
       "externals": {},
@@ -286,6 +291,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "my",
+      "regionSource": "roster",
       "language": "ja",
       "agency": null,
       "avatar": "https://yt3.ggpht.com/IfgBxJYMslldoPsNl0bgauOF3eMzwyJpbGKmy7t_mdACpbYpXW5UfmTS_QoL4CooaAf35SDJuw=s88-c-k-c0x00ffffff-no-rj",
@@ -306,8 +312,8 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T15:39:57.594Z",
-      "updatedAt": "2026-10-21T15:39:57.594Z",
+      "addedAt": "2026-10-21T16:00:50.780Z",
+      "updatedAt": "2026-10-21T16:00:50.780Z",
       "activity": "unknown",
       "debutDate": "2021-06-26",
       "graduateDate": null,
@@ -324,7 +330,7 @@
           },
           "avatar": "https://yt3.ggpht.com/IfgBxJYMslldoPsNl0bgauOF3eMzwyJpbGKmy7t_mdACpbYpXW5UfmTS_QoL4CooaAf35SDJuw=s88-c-k-c0x00ffffff-no-rj",
           "activity": "active",
-          "lastCheckedAt": "2026-10-21T15:45:24.524Z"
+          "lastCheckedAt": "2026-10-21T16:02:14.002Z"
         }
       ],
       "externals": {},
@@ -337,6 +343,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "my",
+      "regionSource": "roster",
       "language": "en",
       "agency": "SweabsMY",
       "avatar": "https://yt3.ggpht.com/jcmZc5H9YPK1aFv0YLewYQ8ZDnlxn8O_djamCWeo-RYiKJPuC_rSqTfmJ6M6hXb4ymCovyaLWg=s88-c-k-c0x00ffffff-no-rj",
@@ -357,8 +364,8 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T15:39:57.594Z",
-      "updatedAt": "2026-10-21T15:39:57.594Z",
+      "addedAt": "2026-10-21T16:00:50.780Z",
+      "updatedAt": "2026-10-21T16:00:50.780Z",
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -375,7 +382,7 @@
           },
           "avatar": "https://yt3.ggpht.com/jcmZc5H9YPK1aFv0YLewYQ8ZDnlxn8O_djamCWeo-RYiKJPuC_rSqTfmJ6M6hXb4ymCovyaLWg=s88-c-k-c0x00ffffff-no-rj",
           "activity": "active",
-          "lastCheckedAt": "2026-10-21T15:45:24.524Z"
+          "lastCheckedAt": "2026-10-21T16:02:14.002Z"
         }
       ],
       "externals": {},
@@ -388,6 +395,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "my",
+      "regionSource": "roster",
       "language": "ja",
       "agency": null,
       "avatar": null,
@@ -407,8 +415,8 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T15:39:57.594Z",
-      "updatedAt": "2026-10-21T15:39:57.594Z",
+      "addedAt": "2026-10-21T16:00:50.780Z",
+      "updatedAt": "2026-10-21T16:00:50.780Z",
       "activity": "unknown",
       "debutDate": "2020-12-30",
       "graduateDate": null,
@@ -424,7 +432,7 @@
           },
           "avatar": null,
           "activity": "active",
-          "lastCheckedAt": "2026-10-21T15:45:24.524Z"
+          "lastCheckedAt": "2026-10-21T16:02:14.002Z"
         }
       ],
       "externals": {},
@@ -437,6 +445,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "my",
+      "regionSource": "roster",
       "language": "en",
       "agency": null,
       "avatar": "https://yt3.ggpht.com/8VfyuCPJkUm7TSf2evevnEobNHgSaHiNGCe8PcaiqaqHZSAmVmbR-misER_wDn2cBQGaAAKOYw=s88-c-k-c0x00ffffff-no-rj",
@@ -457,8 +466,8 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T15:39:57.594Z",
-      "updatedAt": "2026-10-21T15:39:57.594Z",
+      "addedAt": "2026-10-21T16:00:50.780Z",
+      "updatedAt": "2026-10-21T16:00:50.780Z",
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -475,7 +484,7 @@
           },
           "avatar": "https://yt3.ggpht.com/8VfyuCPJkUm7TSf2evevnEobNHgSaHiNGCe8PcaiqaqHZSAmVmbR-misER_wDn2cBQGaAAKOYw=s88-c-k-c0x00ffffff-no-rj",
           "activity": "active",
-          "lastCheckedAt": "2026-10-21T15:45:24.524Z"
+          "lastCheckedAt": "2026-10-21T16:02:14.002Z"
         }
       ],
       "externals": {},

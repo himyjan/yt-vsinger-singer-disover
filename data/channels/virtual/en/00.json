@@ -1,399 +1,7 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T15:45:24.453Z",
+  "generatedAt": "2026-10-21T16:02:13.938Z",
   "channels": [
-    {
-      "id": "bilibili:1027793592",
-      "name": "听世",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "language": "ja",
-      "agency": "e2e54677-6608-5996-9976-464cfd4ed739",
-      "avatar": null,
-      "banner": null,
-      "description": null,
-      "subscribers": {
-        "tag": "hidden"
-      },
-      "videoCount": null,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "confidence": 1,
-      "source": "api",
-      "addedAt": "2026-10-21T15:39:57.594Z",
-      "updatedAt": "2026-10-21T15:39:57.594Z",
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "1027793592",
-          "handle": null,
-          "name": "听世",
-          "url": "https://space.bilibili.com/1027793592",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T15:45:26.525Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null
-    },
-    {
-      "id": "bilibili:1071993421",
-      "name": "Ako_official",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "language": "en",
-      "agency": null,
-      "avatar": null,
-      "banner": null,
-      "description": null,
-      "subscribers": {
-        "tag": "hidden"
-      },
-      "videoCount": null,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "confidence": 1,
-      "source": "api",
-      "addedAt": "2026-10-21T15:39:57.594Z",
-      "updatedAt": "2026-10-21T15:39:57.594Z",
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "1071993421",
-          "handle": null,
-          "name": "Ako_official",
-          "url": "https://space.bilibili.com/1071993421",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T15:45:26.478Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null
-    },
-    {
-      "id": "bilibili:171272634",
-      "name": "BiBiDao",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "language": "en",
-      "agency": null,
-      "avatar": null,
-      "banner": null,
-      "description": null,
-      "subscribers": {
-        "tag": "hidden"
-      },
-      "videoCount": null,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "confidence": 1,
-      "source": "api",
-      "addedAt": "2026-10-21T15:39:57.594Z",
-      "updatedAt": "2026-10-21T15:39:57.594Z",
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "171272634",
-          "handle": null,
-          "name": "BiBiDao",
-          "url": "https://space.bilibili.com/171272634",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T15:45:26.482Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null
-    },
-    {
-      "id": "bilibili:315298331",
-      "name": "小林",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "language": "ja",
-      "agency": null,
-      "avatar": null,
-      "banner": null,
-      "description": null,
-      "subscribers": {
-        "tag": "hidden"
-      },
-      "videoCount": null,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "confidence": 1,
-      "source": "api",
-      "addedAt": "2026-10-21T15:39:57.594Z",
-      "updatedAt": "2026-10-21T15:39:57.594Z",
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "315298331",
-          "handle": null,
-          "name": "小林",
-          "url": "https://space.bilibili.com/315298331",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T15:45:26.500Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null
-    },
-    {
-      "id": "bilibili:3537119901387660",
-      "name": "红魔姬",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "language": "ja",
-      "agency": null,
-      "avatar": null,
-      "banner": null,
-      "description": null,
-      "subscribers": {
-        "tag": "hidden"
-      },
-      "videoCount": null,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "confidence": 1,
-      "source": "api",
-      "addedAt": "2026-10-21T15:39:57.594Z",
-      "updatedAt": "2026-10-21T15:39:57.594Z",
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "3537119901387660",
-          "handle": null,
-          "name": "红魔姬",
-          "url": "https://space.bilibili.com/3537119901387660",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T15:45:26.922Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null
-    },
-    {
-      "id": "bilibili:681358851",
-      "name": "P-Hephaestus",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "language": "en",
-      "agency": "P-Hephaestus",
-      "avatar": null,
-      "banner": null,
-      "description": null,
-      "subscribers": {
-        "tag": "hidden"
-      },
-      "videoCount": null,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "confidence": 1,
-      "source": "api",
-      "addedAt": "2026-10-21T15:39:57.594Z",
-      "updatedAt": "2026-10-21T15:39:57.594Z",
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "681358851",
-          "handle": null,
-          "name": "P-Hephaestus",
-          "url": "https://space.bilibili.com/681358851",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T15:45:26.514Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null
-    },
-    {
-      "id": "bilibili:690053754",
-      "name": "Neo Hertz",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "language": "en",
-      "agency": "81d136a4-1fc0-590e-a041-fe5afffc7873",
-      "avatar": null,
-      "banner": null,
-      "description": null,
-      "subscribers": {
-        "tag": "hidden"
-      },
-      "videoCount": null,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "confidence": 1,
-      "source": "api",
-      "addedAt": "2026-10-21T15:39:57.594Z",
-      "updatedAt": "2026-10-21T15:39:57.594Z",
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "690053754",
-          "handle": null,
-          "name": "Neo Hertz",
-          "url": "https://space.bilibili.com/690053754",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T15:45:26.509Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null
-    },
-    {
-      "id": "bilibili:7498906",
-      "name": "Yu-u-mi",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "language": null,
-      "agency": null,
-      "avatar": null,
-      "banner": null,
-      "description": null,
-      "subscribers": {
-        "tag": "hidden"
-      },
-      "videoCount": null,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "confidence": 1,
-      "source": "api",
-      "addedAt": "2026-10-21T15:39:57.594Z",
-      "updatedAt": "2026-10-21T15:39:57.594Z",
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "7498906",
-          "handle": null,
-          "name": "Yu-u-mi",
-          "url": "https://space.bilibili.com/7498906",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T15:45:26.531Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null
-    },
     {
       "id": "twitch:vedal987",
       "name": "neuro_sama",
@@ -401,6 +9,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "en",
+      "regionSource": "declared",
       "language": "en",
       "agency": null,
       "avatar": null,
@@ -420,8 +29,8 @@
       "variant": "ai_vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T15:39:57.594Z",
-      "updatedAt": "2026-10-21T15:39:57.594Z",
+      "addedAt": "2026-10-21T16:00:50.780Z",
+      "updatedAt": "2026-10-21T16:00:50.780Z",
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -437,7 +46,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T15:45:26.537Z"
+          "lastCheckedAt": "2026-10-21T16:02:16.577Z"
         }
       ],
       "externals": {},
@@ -450,6 +59,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "en",
+      "regionSource": "declared",
       "language": "en",
       "agency": "NIJISANJI EN",
       "avatar": null,
@@ -469,8 +79,8 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T15:39:57.594Z",
-      "updatedAt": "2026-10-21T15:39:57.594Z",
+      "addedAt": "2026-10-21T16:00:50.780Z",
+      "updatedAt": "2026-10-21T16:00:50.780Z",
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -486,7 +96,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T15:45:26.500Z"
+          "lastCheckedAt": "2026-10-21T16:02:16.540Z"
         }
       ],
       "externals": {},
@@ -499,6 +109,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "en",
+      "regionSource": "declared",
       "language": "ja",
       "agency": "4bb946b7-6b9d-5b28-8975-f23291cba191",
       "avatar": null,
@@ -518,8 +129,8 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T15:39:57.594Z",
-      "updatedAt": "2026-10-21T15:39:57.594Z",
+      "addedAt": "2026-10-21T16:00:50.780Z",
+      "updatedAt": "2026-10-21T16:00:50.780Z",
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -534,6 +145,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "en",
+      "regionSource": "declared",
       "language": "en",
       "agency": "ce23afd2-6f1a-5106-b1d6-09980187f549",
       "avatar": null,
@@ -553,8 +165,8 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T15:39:57.594Z",
-      "updatedAt": "2026-10-21T15:39:57.594Z",
+      "addedAt": "2026-10-21T16:00:50.780Z",
+      "updatedAt": "2026-10-21T16:00:50.780Z",
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -569,6 +181,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "en",
+      "regionSource": "declared",
       "language": "en",
       "agency": "20a14bd8-50b1-5613-96c9-191eef51b689",
       "avatar": null,
@@ -588,8 +201,8 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T15:39:57.594Z",
-      "updatedAt": "2026-10-21T15:39:57.594Z",
+      "addedAt": "2026-10-21T16:00:50.780Z",
+      "updatedAt": "2026-10-21T16:00:50.780Z",
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -605,7 +218,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T15:45:26.508Z"
+          "lastCheckedAt": "2026-10-21T16:02:16.548Z"
         },
         {
           "platform": "youtube",
@@ -618,7 +231,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T15:45:26.508Z"
+          "lastCheckedAt": "2026-10-21T16:02:16.548Z"
         },
         {
           "platform": "twitch",
@@ -631,7 +244,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T15:45:26.508Z"
+          "lastCheckedAt": "2026-10-21T16:02:16.548Z"
         }
       ],
       "externals": {},
@@ -644,6 +257,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "en",
+      "regionSource": "declared",
       "language": "en",
       "agency": null,
       "avatar": null,
@@ -663,8 +277,8 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T15:39:57.594Z",
-      "updatedAt": "2026-10-21T15:39:57.594Z",
+      "addedAt": "2026-10-21T16:00:50.780Z",
+      "updatedAt": "2026-10-21T16:00:50.780Z",
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -680,7 +294,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T15:45:26.519Z"
+          "lastCheckedAt": "2026-10-21T16:02:16.558Z"
         },
         {
           "platform": "youtube",
@@ -693,7 +307,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T15:45:26.519Z"
+          "lastCheckedAt": "2026-10-21T16:02:16.558Z"
         },
         {
           "platform": "youtube",
@@ -706,7 +320,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T15:45:26.519Z"
+          "lastCheckedAt": "2026-10-21T16:02:16.558Z"
         },
         {
           "platform": "twitch",
@@ -719,7 +333,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T15:45:26.519Z"
+          "lastCheckedAt": "2026-10-21T16:02:16.558Z"
         }
       ],
       "externals": {},

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T15:45:24.453Z",
+  "generatedAt": "2026-10-21T16:02:13.938Z",
   "channels": [
     {
       "id": "UC05KJAWI1kIfaI2JG9NWZrA",
@@ -9,6 +9,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "unknown",
+      "regionSource": "roster",
       "language": "ja",
       "agency": null,
       "avatar": null,
@@ -28,8 +29,8 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T15:39:57.594Z",
-      "updatedAt": "2026-10-21T15:39:57.594Z",
+      "addedAt": "2026-10-21T16:00:50.780Z",
+      "updatedAt": "2026-10-21T16:00:50.780Z",
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -45,7 +46,7 @@
           },
           "avatar": null,
           "activity": "active",
-          "lastCheckedAt": "2026-10-21T15:45:24.524Z"
+          "lastCheckedAt": "2026-10-21T16:02:14.002Z"
         },
         {
           "platform": "twitch",
@@ -58,7 +59,7 @@
           },
           "avatar": null,
           "activity": "active",
-          "lastCheckedAt": "2026-10-21T15:45:24.524Z"
+          "lastCheckedAt": "2026-10-21T16:02:14.002Z"
         }
       ],
       "externals": {},
@@ -71,6 +72,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "unknown",
+      "regionSource": "roster",
       "language": "ja",
       "agency": "BBMs",
       "avatar": null,
@@ -90,8 +92,8 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T15:39:57.594Z",
-      "updatedAt": "2026-10-21T15:39:57.594Z",
+      "addedAt": "2026-10-21T16:00:50.780Z",
+      "updatedAt": "2026-10-21T16:00:50.780Z",
       "activity": "unknown",
       "debutDate": "2023-10-14",
       "graduateDate": null,
@@ -107,7 +109,7 @@
           },
           "avatar": null,
           "activity": "active",
-          "lastCheckedAt": "2026-10-21T15:45:24.524Z"
+          "lastCheckedAt": "2026-10-21T16:02:14.002Z"
         }
       ],
       "externals": {},
@@ -120,6 +122,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "unknown",
+      "regionSource": "roster",
       "language": "ja",
       "agency": "書",
       "avatar": null,
@@ -139,8 +142,8 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T15:39:57.594Z",
-      "updatedAt": "2026-10-21T15:39:57.594Z",
+      "addedAt": "2026-10-21T16:00:50.780Z",
+      "updatedAt": "2026-10-21T16:00:50.780Z",
       "activity": "unknown",
       "debutDate": "2023-03-05",
       "graduateDate": null,
@@ -156,7 +159,7 @@
           },
           "avatar": null,
           "activity": "graduated",
-          "lastCheckedAt": "2026-10-21T15:45:24.524Z"
+          "lastCheckedAt": "2026-10-21T16:02:14.002Z"
         }
       ],
       "externals": {},
@@ -169,6 +172,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "unknown",
+      "regionSource": "roster",
       "language": "ja",
       "agency": null,
       "avatar": null,
@@ -188,8 +192,8 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T15:39:57.594Z",
-      "updatedAt": "2026-10-21T15:39:57.594Z",
+      "addedAt": "2026-10-21T16:00:50.780Z",
+      "updatedAt": "2026-10-21T16:00:50.780Z",
       "activity": "unknown",
       "debutDate": "2024-07-07",
       "graduateDate": null,
@@ -205,7 +209,7 @@
           },
           "avatar": null,
           "activity": "active",
-          "lastCheckedAt": "2026-10-21T15:45:24.524Z"
+          "lastCheckedAt": "2026-10-21T16:02:14.002Z"
         }
       ],
       "externals": {},
@@ -218,6 +222,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "unknown",
+      "regionSource": "roster",
       "language": "ja",
       "agency": "子午計畫",
       "avatar": null,
@@ -231,14 +236,14 @@
       "uploadsPlaylistId": "UUjv4bfP_67WLuPheS-Z8Ekg",
       "country": null,
       "tags": [],
-      "isSinging": true,
+      "isSinging": false,
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T15:39:57.594Z",
-      "updatedAt": "2026-10-21T15:39:57.594Z",
+      "addedAt": "2026-10-21T16:00:50.780Z",
+      "updatedAt": "2026-10-21T16:00:50.780Z",
       "activity": "unknown",
       "debutDate": "2021-08-28",
       "graduateDate": null,
@@ -254,7 +259,7 @@
           },
           "avatar": null,
           "activity": "active",
-          "lastCheckedAt": "2026-10-21T15:45:24.524Z"
+          "lastCheckedAt": "2026-10-21T16:02:14.002Z"
         },
         {
           "platform": "twitch",
@@ -267,7 +272,7 @@
           },
           "avatar": null,
           "activity": "active",
-          "lastCheckedAt": "2026-10-21T15:45:24.524Z"
+          "lastCheckedAt": "2026-10-21T16:02:14.002Z"
         }
       ],
       "externals": {},
@@ -280,6 +285,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "unknown",
+      "regionSource": "roster",
       "language": "ja",
       "agency": null,
       "avatar": null,
@@ -299,8 +305,8 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T15:39:57.594Z",
-      "updatedAt": "2026-10-21T15:39:57.594Z",
+      "addedAt": "2026-10-21T16:00:50.780Z",
+      "updatedAt": "2026-10-21T16:00:50.780Z",
       "activity": "unknown",
       "debutDate": "2024-04-27",
       "graduateDate": null,
@@ -316,7 +322,7 @@
           },
           "avatar": null,
           "activity": "active",
-          "lastCheckedAt": "2026-10-21T15:45:24.524Z"
+          "lastCheckedAt": "2026-10-21T16:02:14.002Z"
         }
       ],
       "externals": {},
@@ -329,6 +335,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "unknown",
+      "regionSource": "roster",
       "language": "ja",
       "agency": "爍雲科技SCT",
       "avatar": null,
@@ -348,8 +355,8 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T15:39:57.594Z",
-      "updatedAt": "2026-10-21T15:39:57.594Z",
+      "addedAt": "2026-10-21T16:00:50.780Z",
+      "updatedAt": "2026-10-21T16:00:50.780Z",
       "activity": "unknown",
       "debutDate": "2024-01-15",
       "graduateDate": null,
@@ -365,7 +372,7 @@
           },
           "avatar": null,
           "activity": "active",
-          "lastCheckedAt": "2026-10-21T15:45:24.524Z"
+          "lastCheckedAt": "2026-10-21T16:02:14.002Z"
         },
         {
           "platform": "twitch",
@@ -378,7 +385,7 @@
           },
           "avatar": null,
           "activity": "active",
-          "lastCheckedAt": "2026-10-21T15:45:24.524Z"
+          "lastCheckedAt": "2026-10-21T16:02:14.002Z"
         }
       ],
       "externals": {},
@@ -391,6 +398,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "unknown",
+      "regionSource": "roster",
       "language": "ja",
       "agency": "超異界通信+",
       "avatar": null,
@@ -410,8 +418,8 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T15:39:57.594Z",
-      "updatedAt": "2026-10-21T15:39:57.594Z",
+      "addedAt": "2026-10-21T16:00:50.780Z",
+      "updatedAt": "2026-10-21T16:00:50.780Z",
       "activity": "unknown",
       "debutDate": "2021-01-16",
       "graduateDate": null,
@@ -427,7 +435,7 @@
           },
           "avatar": null,
           "activity": "active",
-          "lastCheckedAt": "2026-10-21T15:45:24.524Z"
+          "lastCheckedAt": "2026-10-21T16:02:14.002Z"
         },
         {
           "platform": "twitch",
@@ -440,7 +448,7 @@
           },
           "avatar": null,
           "activity": "active",
-          "lastCheckedAt": "2026-10-21T15:45:24.524Z"
+          "lastCheckedAt": "2026-10-21T16:02:14.002Z"
         }
       ],
       "externals": {},
@@ -453,6 +461,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "unknown",
+      "regionSource": "roster",
       "language": "ja",
       "agency": null,
       "avatar": null,
@@ -472,8 +481,8 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T15:39:57.594Z",
-      "updatedAt": "2026-10-21T15:39:57.594Z",
+      "addedAt": "2026-10-21T16:00:50.780Z",
+      "updatedAt": "2026-10-21T16:00:50.780Z",
       "activity": "unknown",
       "debutDate": "2023-05-28",
       "graduateDate": null,
@@ -489,7 +498,7 @@
           },
           "avatar": null,
           "activity": "active",
-          "lastCheckedAt": "2026-10-21T15:45:24.524Z"
+          "lastCheckedAt": "2026-10-21T16:02:14.002Z"
         },
         {
           "platform": "twitch",
@@ -502,7 +511,7 @@
           },
           "avatar": null,
           "activity": "active",
-          "lastCheckedAt": "2026-10-21T15:45:24.524Z"
+          "lastCheckedAt": "2026-10-21T16:02:14.002Z"
         }
       ],
       "externals": {},
@@ -515,6 +524,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "unknown",
+      "regionSource": "roster",
       "language": "ja",
       "agency": null,
       "avatar": null,
@@ -534,8 +544,8 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T15:39:57.594Z",
-      "updatedAt": "2026-10-21T15:39:57.594Z",
+      "addedAt": "2026-10-21T16:00:50.780Z",
+      "updatedAt": "2026-10-21T16:00:50.780Z",
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -551,7 +561,7 @@
           },
           "avatar": null,
           "activity": "active",
-          "lastCheckedAt": "2026-10-21T15:45:24.524Z"
+          "lastCheckedAt": "2026-10-21T16:02:14.002Z"
         },
         {
           "platform": "twitch",
@@ -564,7 +574,7 @@
           },
           "avatar": null,
           "activity": "active",
-          "lastCheckedAt": "2026-10-21T15:45:24.524Z"
+          "lastCheckedAt": "2026-10-21T16:02:14.002Z"
         }
       ],
       "externals": {},
@@ -577,7 +587,8 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "unknown",
-      "language": "ja",
+      "regionSource": "roster",
+      "language": "zh-Hant",
       "agency": null,
       "avatar": null,
       "banner": null,
@@ -596,8 +607,8 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T15:39:57.594Z",
-      "updatedAt": "2026-10-21T15:39:57.594Z",
+      "addedAt": "2026-10-21T16:00:50.780Z",
+      "updatedAt": "2026-10-21T16:00:50.780Z",
       "activity": "unknown",
       "debutDate": "2023-07-01",
       "graduateDate": null,
@@ -613,7 +624,7 @@
           },
           "avatar": null,
           "activity": "active",
-          "lastCheckedAt": "2026-10-21T15:45:24.524Z"
+          "lastCheckedAt": "2026-10-21T16:02:14.002Z"
         }
       ],
       "externals": {},

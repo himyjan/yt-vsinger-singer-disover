@@ -43,6 +43,23 @@ function keysFor(channel: Channel): string[] {
 }
 
 /**
+ * The region implied by a channel's platform identities.
+ *
+ * A performer who is on Bilibili is mainland Chinese by definition, and one
+ * on Niconico is Japanese. This has to survive a merge: a Chinese VTuber who
+ * also has a YouTube channel should stay in China, even if their YouTube
+ * name happens to be written in Japanese.
+ */
+function platformRegionOf(channel: Channel): RegionCode | null {
+  const platforms = new Set(channel.platforms.map((p) => p.platform));
+  if (platforms.size !== 1) return null;
+  const only = [...platforms][0];
+  if (only === "bilibili") return "cn";
+  if (only === "niconico") return "jp";
+  return null;
+}
+
+/**
  * Merges two channel records.
  *
  * The record that survives is the one with the more complete data; the
@@ -60,10 +77,28 @@ function mergeChannels(target: Channel, other: Channel): Channel {
     handle: target.handle ?? other.handle,
     kind: target.kind === "virtual" ? target.kind : other.kind,
     role: target.role === "unknown" ? other.role : target.role,
-    region:
-      target.region !== "unknown"
+    regionSource: (() => {
+      // The source has to match whichever region won.
+      const fromTarget = platformRegionOf(target);
+      const fromOther = platformRegionOf(other);
+      if (fromTarget && !fromOther) return "platform";
+      if (fromOther && !fromTarget) return "platform";
+      if (target.regionSource && target.regionSource !== "unknown") {
+        return target.regionSource;
+      }
+      return other.regionSource ?? "unknown";
+    })(),
+    region: (() => {
+      // A platform-implied region wins over a name-derived one.
+      const fromTarget = platformRegionOf(target);
+      const fromOther = platformRegionOf(other);
+      if (fromTarget && fromOther) return fromTarget;
+      if (fromTarget) return fromTarget;
+      if (fromOther) return fromOther;
+      return target.region !== "unknown"
         ? target.region
-        : (other.region as RegionCode),
+        : (other.region as RegionCode);
+    })(),
     language: target.language ?? other.language,
     agency: target.agency ?? other.agency,
     avatar: target.avatar ?? other.avatar,

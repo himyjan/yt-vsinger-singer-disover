@@ -120,6 +120,8 @@ export interface VdbVTuber {
   kind: ArtistKind;
   /** The region, from the performer's own language listing. */
   region: RegionCode;
+  /** How the region was determined. */
+  regionSource: "declared" | "platform" | "script";
   /** Agency or group. */
   group: string | null;
   /** True for AI / bot accounts. */
@@ -224,17 +226,59 @@ export class VdbSource {
         : `vdb:${record.uuid}`;
 
     /* --- region ---------------------------------------------------------- */
+    /**
+     * Three sources, in order of authority:
+     *
+     * 1. `name.default` — the performer's own listing of their language.
+     *    This is authoritative.
+     * 2. The platform the performer is on — a channel that only exists on
+     *    Bilibili is mainland Chinese, one that only exists on Niconico is
+     *    Japanese. This matters because a Chinese name written entirely in
+     *    characters shared with Japanese (「樱咲奈央」, 「川烈」) would
+     *    otherwise be read as Japanese.
+     * 3. Script detection on the name — the weakest signal.
+     */
     const defaultLanguage =
       typeof names.default === "string" ? names.default : "";
-    let region = REGION_BY_LANGUAGE[defaultLanguage] ?? "unknown";
+    let region: RegionCode = "unknown";
+    let regionSource: "declared" | "platform" | "script" = "declared";
+
+    /**
+     * The platform comes **first**.
+     *
+     * `name.default` says which of the performer's name variants to display,
+     * which is a good proxy for their primary language — but a Chinese
+     * performer who uses a Japanese stage name would be listed as `jp`, and
+     * would then be filed in the wrong region.
+     *
+     * A performer who *only* exists on Bilibili is a mainland Chinese
+     * VTuber, and one who only exists on Niconico is Japanese. That is a
+     * statement about where they stream, which is what the region means.
+     */
+    const platformSet = new Set(platforms.map((p) => p.platform));
+    if (platformSet.size === 1) {
+      const only = [...platformSet][0];
+      if (only === "bilibili") {
+        region = "cn";
+        regionSource = "platform";
+      } else if (only === "niconico") {
+        region = "jp";
+        regionSource = "platform";
+      }
+    }
+
     if (region === "unknown") {
-      // Fall back to script detection on the name.
+      region = REGION_BY_LANGUAGE[defaultLanguage] ?? "unknown";
+    }
+
+    if (region === "unknown") {
       const lang = detectLanguage(name);
       if (lang === "ja") region = "jp";
       else if (lang === "ko") region = "kr";
       else if (lang === "zh-Hans") region = "cn";
       else if (lang === "zh-Hant") region = "tw";
       else if (lang === "en") region = "en";
+      regionSource = "script";
     }
 
     /* --- kind and role --------------------------------------------------- */
@@ -252,6 +296,7 @@ export class VdbSource {
       aliases,
       kind: "virtual",
       region,
+      regionSource,
       group: record.group_name ?? record.group ?? null,
       isAi: record.bot === true,
       isAggregator: record.type === "fan" || record.type === "misc",

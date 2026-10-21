@@ -1,182 +1,7 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T15:45:24.453Z",
+  "generatedAt": "2026-10-21T16:02:13.938Z",
   "channels": [
-    {
-      "id": "bilibili:13743308",
-      "name": "Maria的玩具后宫",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "agency": null,
-      "avatar": null,
-      "subscribers": null,
-      "isSinging": false,
-      "activity": "unknown",
-      "subscribersHidden": true,
-      "twitchLogin": null,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "links": [
-        {
-          "p": "bilibili",
-          "u": "https://space.bilibili.com/13743308",
-          "h": null
-        }
-      ]
-    },
-    {
-      "id": "bilibili:1947753519",
-      "name": "EN",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "agency": "NIJISANJI EN",
-      "avatar": null,
-      "subscribers": null,
-      "isSinging": false,
-      "activity": "unknown",
-      "subscribersHidden": true,
-      "twitchLogin": null,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "links": [
-        {
-          "p": "bilibili",
-          "u": "https://space.bilibili.com/1947753519",
-          "h": null
-        }
-      ]
-    },
-    {
-      "id": "bilibili:1958912868",
-      "name": "EN",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "agency": "NIJISANJI EN",
-      "avatar": null,
-      "subscribers": null,
-      "isSinging": false,
-      "activity": "unknown",
-      "subscribersHidden": true,
-      "twitchLogin": null,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "links": [
-        {
-          "p": "bilibili",
-          "u": "https://space.bilibili.com/1958912868",
-          "h": null
-        }
-      ]
-    },
-    {
-      "id": "bilibili:21974189",
-      "name": "暮光-梦想",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "agency": null,
-      "avatar": null,
-      "subscribers": null,
-      "isSinging": false,
-      "activity": "unknown",
-      "subscribersHidden": true,
-      "twitchLogin": null,
-      "gender": "male",
-      "isAi": false,
-      "variant": "male_vtuber",
-      "links": [
-        {
-          "p": "bilibili",
-          "u": "https://space.bilibili.com/21974189",
-          "h": null
-        }
-      ]
-    },
-    {
-      "id": "bilibili:3706962250303984",
-      "name": "ch",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "agency": "GravityS Project",
-      "avatar": null,
-      "subscribers": null,
-      "isSinging": false,
-      "activity": "unknown",
-      "subscribersHidden": true,
-      "twitchLogin": null,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "links": [
-        {
-          "p": "bilibili",
-          "u": "https://space.bilibili.com/3706962250303984",
-          "h": null
-        }
-      ]
-    },
-    {
-      "id": "bilibili:449786865",
-      "name": "MochiPro",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "agency": "MochiPro",
-      "avatar": null,
-      "subscribers": null,
-      "isSinging": false,
-      "activity": "unknown",
-      "subscribersHidden": true,
-      "twitchLogin": null,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "links": [
-        {
-          "p": "bilibili",
-          "u": "https://space.bilibili.com/449786865",
-          "h": null
-        }
-      ]
-    },
-    {
-      "id": "bilibili:521070071",
-      "name": "Ayamy",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "agency": null,
-      "avatar": null,
-      "subscribers": null,
-      "isSinging": false,
-      "activity": "unknown",
-      "subscribersHidden": true,
-      "twitchLogin": null,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "links": [
-        {
-          "p": "bilibili",
-          "u": "https://space.bilibili.com/521070071",
-          "h": null
-        }
-      ]
-    },
     {
       "id": "UCFgXWZOUZA2oYHNr6qDmsTQ",
       "name": "Scarle Yonaguni",
@@ -184,6 +9,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "en",
+      "regionSource": "declared",
       "agency": "NIJISANJI EN",
       "avatar": null,
       "subscribers": null,
@@ -209,6 +35,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "en",
+      "regionSource": "declared",
       "agency": "upd8",
       "avatar": null,
       "subscribers": null,
@@ -239,6 +66,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "en",
+      "regionSource": "declared",
       "agency": null,
       "avatar": null,
       "subscribers": null,
@@ -264,6 +92,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "en",
+      "regionSource": "declared",
       "agency": "4d66bbfb-bee8-59ec-88f6-495507330f10",
       "avatar": null,
       "subscribers": null,

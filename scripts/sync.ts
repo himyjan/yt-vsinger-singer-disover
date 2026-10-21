@@ -235,6 +235,7 @@ function channelFromApi(
     description,
     tags: snippet.tags ?? [],
     country: branding.country ?? null,
+    platform: "youtube",
     override: override
       ? {
           kind: override.kind,
@@ -258,6 +259,7 @@ function channelFromApi(
     kind: classification.kind,
     role: classification.role,
     region: classification.region,
+    regionSource: classification.regionSource,
     language: classification.language,
     agency: classification.agency,
     avatar: pickThumbnail(snippet.thumbnails, "high"),
@@ -292,6 +294,7 @@ function channelFromApi(
     source: override?.verifiedAt ? "manual" : source,
     addedAt: now,
     updatedAt: now,
+    lastItemsFetchedAt: null,
 
     activity: detectActivity(snippet.title, description, null),
     debutDate: null,
@@ -415,6 +418,7 @@ function itemFromApi(
     source,
     addedAt: now,
     updatedAt: now,
+    lastItemsFetchedAt: null,
   };
 }
 
@@ -821,8 +825,10 @@ async function main(): Promise<void> {
       const record = tracked.get(channel.id);
       if (!record) continue;
 
-      // The tracked roster is authoritative for the region and the activity.
+      // The tracked roster is authoritative for the region and the activity:
+      // its nationality column is the performer's own country.
       channel.region = record.region;
+      channel.regionSource = "roster";
       channel.activity = record.activity;
       channel.debutDate = record.debutDate ?? channel.debutDate;
       if (record.group && !channel.agency) channel.agency = record.group;
@@ -987,13 +993,44 @@ async function main(): Promise<void> {
    * go stale for every channel whose `isSinging` flag is still unknown.
    */
   const channelsWithItems = new Set(items.map((i) => i.channelId));
-  const refreshable = channels.filter(
-    (c) => c.isSinging || channelsWithItems.has(c.id),
-  );
+
+  /**
+   * The channels to fetch uploads for, in rotation order.
+   *
+   * The catalogue is far larger than a single run can afford, so each run
+   * takes the slice that needs it most:
+   *
+   * 1. channels that publish singing content and have never been fetched;
+   * 2. channels that have never been fetched;
+   * 3. the rest, oldest fetch first.
+   *
+   * That way a 14,000-channel catalogue fills in over a few days of
+   * scheduled runs without any channel being starved.
+   */
+  const neverFetched = (c: Channel) => !c.lastItemsFetchedAt;
+  const refreshable = channels
+    .filter((c) => c.isSinging || channelsWithItems.has(c.id) || neverFetched(c))
+    .sort((a, b) => {
+      // Singing channels first — they are the point of the project.
+      const aSinging = a.isSinging ? 0 : 1;
+      const bSinging = b.isSinging ? 0 : 1;
+      if (aSinging !== bSinging) return aSinging - bSinging;
+
+      // Then never-fetched channels.
+      const aNew = neverFetched(a) ? 0 : 1;
+      const bNew = neverFetched(b) ? 0 : 1;
+      if (aNew !== bNew) return aNew - bNew;
+
+      // Then the least recently fetched.
+      return (a.lastItemsFetchedAt ?? "").localeCompare(
+        b.lastItemsFetchedAt ?? "",
+      );
+    });
+
   const channelList =
     args.limitChannels !== null
       ? refreshable.slice(0, args.limitChannels)
-      : refreshable;
+      : refreshable.slice(0, config.maxChannelsPerRun);
 
   let fetchedVideos = 0;
   let fetchedDetails = 0;
@@ -1024,6 +1061,7 @@ async function main(): Promise<void> {
           addedAt: prev?.addedAt ?? item.addedAt,
         });
       }
+      channel.lastItemsFetchedAt = now;
     } catch (err) {
       if (err instanceof QuotaExceededError) {
         log("quota exhausted while fetching items — stopping");
@@ -1092,6 +1130,7 @@ async function main(): Promise<void> {
           source: "api",
           addedAt: now,
           updatedAt: now,
+          lastItemsFetchedAt: null,
         };
         const prev = itemById.get(item.id);
         itemById.set(item.id, { ...item, addedAt: prev?.addedAt ?? item.addedAt });
@@ -1356,6 +1395,7 @@ export function platformUploadToItem(
     source: "api",
     addedAt: now,
     updatedAt: now,
+    lastItemsFetchedAt: null,
   };
 }
 
@@ -1402,6 +1442,7 @@ export function channelFromPlatform(
     description: channel.description,
     tags: channel.tags,
     country: null,
+    platform: adapter.id,
   });
 
   return {
@@ -1411,6 +1452,7 @@ export function channelFromPlatform(
     kind: classification.kind,
     role: classification.role,
     region: classification.region,
+    regionSource: classification.regionSource,
     language: classification.language,
     agency: classification.agency,
     avatar: channel.avatar,
@@ -1430,6 +1472,7 @@ export function channelFromPlatform(
     source: "api",
     addedAt: now,
     updatedAt: now,
+    lastItemsFetchedAt: null,
 
     activity: "unknown",
     debutDate: null,

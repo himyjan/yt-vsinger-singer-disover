@@ -114,6 +114,8 @@ scripts/
     ├── aislist.ts           AI-channel list
     ├── vdb.ts               the Virtual YouTuber Name List Database
     ├── taiwan-vtuber-data.ts  the Taiwan VTuber track list
+    ├── chinese-scripts.ts   simplified vs. traditional character sets
+    ├── dedupe.ts            identity-based de-duplication
     ├── roster.ts            builds the channel roster from those sources
     ├── dedupe.ts            identity-based de-duplication
     ├── music-dataset.ts     curated cover-song metadata
@@ -179,7 +181,7 @@ segmenter, because `歌い手` is indexed as `歌い` + `い手`.
 | --- | --- |
 | `kind` (virtual / real) | weighted score over strong and weak markers, with the channel name weighted highest and the opening of the description next |
 | `role` | the strongest matching role marker, unless the channel looks like an aggregator |
-| `region` | agency → country → script detection → explicit markers → locale hints from the channel's own uploads |
+| `region` | platform → agency → country → script detection → explicit markers → locale hints. The winning source is stored in `regionSource` |
 | `gender` | explicit self-description first; honorifics only as a fallback |
 | `isAi` | the AiSList blocklist and warnlist, plus keyword heuristics as a fallback |
 | `category` | cover / mv / original / live / premiere / performance, from the title, description and tags |

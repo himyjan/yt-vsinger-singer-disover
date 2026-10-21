@@ -115,6 +115,36 @@ API, which gets it right.
 
 `jp` · `cn` · `tw` · `hk` · `kr` · `en` · `id` · `my` · `sea` · `unknown`
 
+**`regionSource`** — which source decided the region. The region is inferred
+from sources of very different quality, so the provenance is stored with it
+and shown in the channel drawer.
+
+| Source | Meaning | Reliability |
+| --- | --- | --- |
+| `override` | Curated by hand in `data/overrides.json` | certain |
+| `roster` | The **Taiwan VTuber Tracking Data** nationality column | authoritative |
+| `declared` | The performer listed their own language (vdb `name.default`) | authoritative |
+| `platform` | The platform they are on — Bilibili → China, Niconico → Japan | strong |
+| `country` | The channel's published country | strong |
+| `agency` | Their agency's branch | strong |
+| `script` | The characters in the name | a guess |
+| `unknown` | | |
+
+The platform rule matters more than it looks: a Chinese VTuber whose name is
+written in characters shared with Japanese (「樱咲奈央」, 「川烈」) would
+otherwise be filed in Japan. A performer who *only* exists on Bilibili is
+mainland Chinese by definition, and one who only exists on Niconico is
+Japanese.
+
+The current split, with the provenance:
+
+```
+platform   9310   cn
+declared    753   cn 212 · en 70 · jp 471
+roster     4425   tw 3685 · hk 402 · my 197 · unknown 141
+script        1   en 1
+```
+
 **`variant`** — the combined label, derived from `role` + `gender` + `isAi`:
 
 `female_vtuber` · `male_vtuber` · `ai_vtuber` · `female_vsinger` ·

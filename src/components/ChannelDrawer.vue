@@ -74,6 +74,24 @@ const activityLabel = computed(() => {
   }
 });
 
+/**
+ * How the region was decided.
+ *
+ * The region comes from sources of very different quality, so the drawer
+ * shows which one was used — a roster entry is authoritative, a script
+ * detection is a guess.
+ */
+const REGION_SOURCE_LABELS: Record<string, string> = {
+  override: "from a manual override",
+  roster: "from the Taiwan VTuber roster",
+  declared: "from the performer's own listing",
+  platform: "from the platform they are on",
+  country: "from the channel's published country",
+  agency: "from their agency",
+  script: "guessed from the characters in the name",
+  unknown: "unknown",
+};
+
 const saved = computed(() =>
   props.channel ? state.saved.some((s) => s.id === props.channel!.id) : false,
 );
@@ -191,6 +209,18 @@ const saved = computed(() =>
                   </dd>
                 </div>
               </dl>
+
+              <!-- How the region was decided -->
+              <p
+                v-if="channel.regionSource"
+                class="flex items-center gap-1.5 text-[11px] text-neutral-500"
+              >
+                <span class="font-semibold text-neutral-600 dark:text-neutral-300">
+                  {{ channel.region.toUpperCase() }}
+                </span>
+                <span aria-hidden="true">·</span>
+                <span>{{ REGION_SOURCE_LABELS[channel.regionSource] ?? channel.regionSource }}</span>
+              </p>
 
               <!-- All links -->
               <section>

@@ -1,132 +1,7 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T15:45:24.453Z",
+  "generatedAt": "2026-10-21T16:02:13.938Z",
   "channels": [
-    {
-      "id": "bilibili:1399272173",
-      "name": "PorcelainMaid",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "agency": null,
-      "avatar": null,
-      "subscribers": null,
-      "isSinging": false,
-      "activity": "unknown",
-      "subscribersHidden": true,
-      "twitchLogin": null,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "links": [
-        {
-          "p": "bilibili",
-          "u": "https://space.bilibili.com/1399272173",
-          "h": null
-        }
-      ]
-    },
-    {
-      "id": "bilibili:1502985222",
-      "name": "Sunao_desu",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "agency": null,
-      "avatar": null,
-      "subscribers": null,
-      "isSinging": false,
-      "activity": "unknown",
-      "subscribersHidden": true,
-      "twitchLogin": null,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "links": [
-        {
-          "p": "bilibili",
-          "u": "https://space.bilibili.com/1502985222",
-          "h": null
-        }
-      ]
-    },
-    {
-      "id": "bilibili:3546699035315021",
-      "name": "filian_菲莲",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "agency": null,
-      "avatar": null,
-      "subscribers": null,
-      "isSinging": false,
-      "activity": "unknown",
-      "subscribersHidden": true,
-      "twitchLogin": null,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "links": [
-        {
-          "p": "bilibili",
-          "u": "https://space.bilibili.com/3546699035315021",
-          "h": null
-        }
-      ]
-    },
-    {
-      "id": "bilibili:3546839806642734",
-      "name": "EN",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "agency": null,
-      "avatar": null,
-      "subscribers": null,
-      "isSinging": false,
-      "activity": "unknown",
-      "subscribersHidden": true,
-      "twitchLogin": null,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "links": [
-        {
-          "p": "bilibili",
-          "u": "https://space.bilibili.com/3546839806642734",
-          "h": null
-        }
-      ]
-    },
-    {
-      "id": "bilibili:3546957345720976",
-      "name": "EN",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "agency": "HOLOSTARS_EN",
-      "avatar": null,
-      "subscribers": null,
-      "isSinging": false,
-      "activity": "unknown",
-      "subscribersHidden": true,
-      "twitchLogin": null,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "links": [
-        {
-          "p": "bilibili",
-          "u": "https://space.bilibili.com/3546957345720976",
-          "h": null
-        }
-      ]
-    },
     {
       "id": "UC-JSeFfovhNsEhftt1WHMvg",
       "name": "NIJISANJI EN",
@@ -134,11 +9,12 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "en",
+      "regionSource": "declared",
       "agency": "745fdb2e-e624-5852-804f-7493f9b4f56b",
       "avatar": null,
       "subscribers": null,
-      "isSinging": true,
-      "activity": "graduated",
+      "isSinging": false,
+      "activity": "unknown",
       "subscribersHidden": true,
       "twitchLogin": null,
       "gender": "unknown",
@@ -159,6 +35,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "en",
+      "regionSource": "declared",
       "agency": "NIJISANJI EN",
       "avatar": null,
       "subscribers": null,
@@ -184,6 +61,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "en",
+      "regionSource": "declared",
       "agency": "神椿工作室",
       "avatar": null,
       "subscribers": null,
@@ -214,6 +92,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "en",
+      "regionSource": "declared",
       "agency": "NIJISANJI EN",
       "avatar": null,
       "subscribers": null,
@@ -239,6 +118,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "en",
+      "regionSource": "declared",
       "agency": "f0f6db36-c594-50bd-ae6a-5032878a8ce6",
       "avatar": null,
       "subscribers": null,
@@ -258,6 +138,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "en",
+      "regionSource": "declared",
       "agency": "fa86cc75-0288-55e4-a6f9-e1c4134a8ec0",
       "avatar": null,
       "subscribers": null,
@@ -277,6 +158,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "en",
+      "regionSource": "declared",
       "agency": null,
       "avatar": null,
       "subscribers": null,

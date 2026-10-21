@@ -97,6 +97,29 @@ export type PlatformId =
  * it means the channel never said. It is stored as a real field rather than
  * inferred at display time so the dataset can be filtered on it.
  */
+/**
+ * How a channel's region was determined.
+ *
+ * | Source | Reliability |
+ * | --- | --- |
+ * | `override` | Curated by hand in `data/overrides.json` — certain |
+ * | `roster` | The Taiwan VTuber track list's nationality column — authoritative |
+ * | `declared` | The performer listed their own language (vdb) — authoritative |
+ * | `platform` | The platform they are on (Bilibili → China, Niconico → Japan) — strong |
+ * | `country` | The channel's published country — strong |
+ * | `agency` | Their agency's branch — strong |
+ * | `script` | The characters in the name — a guess |
+ */
+export type RegionSource =
+  | "override"
+  | "roster"
+  | "declared"
+  | "platform"
+  | "country"
+  | "agency"
+  | "script"
+  | "unknown";
+
 export type Gender = "female" | "male" | "unknown";
 
 export const ALL_GENDERS: Gender[] = ["female", "male", "unknown"];
@@ -219,6 +242,14 @@ export interface Channel {
   role: ArtistRole;
   /** Region the artist primarily belongs to. */
   region: RegionCode;
+  /**
+   * Which source decided the region.
+   *
+   * The region is inferred from several sources of very different quality, so
+   * the provenance is stored alongside it: a reader can tell an authoritative
+   * roster entry from a guess.
+   */
+  regionSource: RegionSource;
   /** BCP-47 language tag detected from the description/tags. */
   language: string | null;
   /** Agency / group, e.g. `hololive`, `nijisanji`, `kmvs`. */
@@ -263,6 +294,15 @@ export interface Channel {
   addedAt: string;
   /** ISO timestamp of the last successful refresh. */
   updatedAt: string;
+  /**
+   * ISO timestamp of the last time this channel's uploads were fetched.
+   *
+   * The sync uses it to rotate through the catalogue: a channel that has
+   * never been fetched comes first, and one that was fetched recently comes
+   * last. That is what lets a 14,000-channel catalogue fill in over a few
+   * days of scheduled runs.
+   */
+  lastItemsFetchedAt: string | null;
 
   /* --- lifecycle (from the reference tracking dataset) ------------------ */
 
@@ -313,6 +353,8 @@ export interface ChannelSummary {
   kind: ArtistKind;
   role: ArtistRole;
   region: RegionCode;
+  /** Which source decided the region. */
+  regionSource: RegionSource;
   agency: string | null;
   avatar: string | null;
   subscribers: number | null;
@@ -407,6 +449,15 @@ export interface Item {
   addedAt: string;
   /** ISO timestamp of the last successful refresh. */
   updatedAt: string;
+  /**
+   * ISO timestamp of the last time this channel's uploads were fetched.
+   *
+   * The sync uses it to rotate through the catalogue: a channel that has
+   * never been fetched comes first, and one that was fetched recently comes
+   * last. That is what lets a 14,000-channel catalogue fill in over a few
+   * days of scheduled runs.
+   */
+  lastItemsFetchedAt: string | null;
 }
 
 /** Compact projection used by list views and the search index. */

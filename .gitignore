@@ -26,3 +26,7 @@ coverage/
 # Legacy SQLite database — superseded by the sharded JSON dataset in data/.
 # The file is tracked via Git LFS; see .gitattributes.
 /yt_singers_channel.db
+
+# The dataset is copied into public/ by `npm run prepare:public` for the
+# build. It is generated, not authored — the source of truth is data/.
+/public/data/
