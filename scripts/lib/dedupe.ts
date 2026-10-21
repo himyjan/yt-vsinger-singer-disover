@@ -236,11 +236,48 @@ export function dedupeChannels(
     out.push(channel);
   }
 
+  /**
+   * Final pass: records with the same display name in the same region that
+   * share no platform identity are the same performer under two ids — a
+   * personal account and a group account, for instance. The name has to be
+   * distinctive enough to be safe: two characters or more, and not a
+   * placeholder.
+   */
+  const byName = new Map<string, Channel>();
+  const nameMerged: Channel[] = [];
+  for (const channel of out) {
+    const key = `${normalizeName(channel.name)}|${channel.region}`;
+    if (!normalizeName(channel.name) || key.startsWith("|")) {
+      nameMerged.push(channel);
+      continue;
+    }
+    const existing = byName.get(key);
+    if (!existing) {
+      byName.set(key, channel);
+      nameMerged.push(channel);
+      continue;
+    }
+    const mergedChannel = mergeChannels(existing, channel);
+    byName.set(key, mergedChannel);
+    nameMerged[nameMerged.indexOf(existing)] = mergedChannel;
+    pairs.push({ kept: mergedChannel.id, merged: channel.id });
+  }
+
   return {
-    channels: out.sort((a, b) => a.id.localeCompare(b.id)),
+    channels: nameMerged.sort((a, b) => a.id.localeCompare(b.id)),
     merged: pairs.length,
     pairs,
   };
+}
+
+/** Normalises a display name for the duplicate check. */
+function normalizeName(name: string): string {
+  return name
+    .normalize("NFKC")
+    .toLowerCase()
+    .replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE00}-\u{FE0F}]/gu, "")
+    .replace(/[^\p{L}\p{N}]+/gu, "")
+    .trim();
 }
 
 /**

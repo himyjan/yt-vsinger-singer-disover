@@ -160,6 +160,8 @@ function pruneStale(dir: string, keep: Set<string>): string[] {
 export interface ChannelRegionMeta {
   code: RegionCode;
   channels: number;
+  /** The shard files that hold this region's records. */
+  buckets: string[];
 }
 
 export interface ChannelsManifest {
@@ -270,6 +272,7 @@ export function writeDataset(
     const dir = path.join(summariesDir, region);
     ensureDir(dir);
     const byBucket = new Map<string, ChannelSummary[]>();
+    const regionBuckets: string[] = [];
     for (const summary of list) {
       const bucket = bucketFor(summary.id);
       const bucketList = byBucket.get(bucket) ?? [];
@@ -281,6 +284,7 @@ export function writeDataset(
     for (const [bucket, bucketList] of byBucket) {
       const file = `${bucket}.json`;
       keep.add(file);
+      regionBuckets.push(bucket);
       writeJson(layout.channelsSummary(region, bucket), {
         schemaVersion: SCHEMA_VERSION,
         generatedAt: now,
@@ -292,7 +296,11 @@ export function writeDataset(
       });
     }
     removed.push(...pruneStale(dir, keep));
-    channelRegionMeta.push({ code: region, channels: list.length });
+    channelRegionMeta.push({
+      code: region,
+      channels: list.length,
+      buckets: regionBuckets.sort(),
+    });
   }
 
   // These roots now hold only sub-directories; any stray JSON file left

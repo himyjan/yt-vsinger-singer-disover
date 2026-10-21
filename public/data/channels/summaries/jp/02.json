@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T15:40:58.538Z",
+  "generatedAt": "2026-10-21T15:45:24.453Z",
   "channels": [
     {
       "id": "bilibili:1201709465",
@@ -149,6 +149,31 @@
           "p": "bilibili",
           "u": "https://space.bilibili.com/3546746235914440",
           "h": null
+        }
+      ]
+    },
+    {
+      "id": "bilibili:3546760901298502",
+      "name": "-布凡",
+      "handle": "3546760901298502",
+      "kind": "virtual",
+      "role": "unknown",
+      "region": "jp",
+      "agency": null,
+      "avatar": "https://i1.hdslb.com/bfs/face/9cdf00ca6be1abf4dfbc985cb69e2a8ac374b6aa.jpg",
+      "subscribers": null,
+      "isSinging": false,
+      "activity": "unknown",
+      "subscribersHidden": true,
+      "twitchLogin": null,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "unknown",
+      "links": [
+        {
+          "p": "bilibili",
+          "u": "https://space.bilibili.com/3546760901298502",
+          "h": "3546760901298502"
         }
       ]
     },

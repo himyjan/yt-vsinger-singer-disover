@@ -66,7 +66,9 @@ async function fetchJson<T>(path: string): Promise<T | null> {
  */
 const cache = {
   manifest: null as Manifest | null,
-  channelManifest: null as { code: RegionCode; channels: number }[] | null,
+  channelManifest: null as
+    | { code: RegionCode; channels: number; buckets: string[] }[]
+    | null,
   summaries: null as ChannelSummary[] | null,
   summariesByRegion: new Map<RegionCode, ChannelSummary[]>(),
   channelsByKind: new Map<string, Channel[]>(),
@@ -133,34 +135,30 @@ export async function loadSummaries(
 
 /** The region list for the channel dataset. */
 export async function loadChannelManifest(): Promise<
-  { code: RegionCode; channels: number }[]
+  { code: RegionCode; channels: number; buckets: string[] }[]
 > {
   if (cache.channelManifest) return cache.channelManifest;
   const parsed = await fetchJson<{
-    regions?: { code: RegionCode; channels: number }[];
+    regions?: { code: RegionCode; channels: number; buckets: string[] }[];
   }>("data/channels/manifest.json");
   cache.channelManifest = parsed?.regions ?? [];
   return cache.channelManifest!;
 }
 
-/** Lists the shard files available for a directory. */
+/**
+ * The shard files that hold a region's records.
+ *
+ * The manifest lists them, so the browser never has to probe for files that
+ * do not exist — which would fill the console with 404s.
+ */
 async function loadShards(dir: string, region: RegionCode): Promise<string[]> {
   const key = `${dir}:${region}`;
   const cached = cache.shards.get(key);
   if (cached) return cached;
 
-  // The directory listing is not available over HTTP, so the shards are
-  // discovered by probing the fixed bucket names.
-  const buckets: string[] = [];
-  await Promise.all(
-    Array.from({ length: 16 }, (_, i) => {
-      const name = i.toString(16).padStart(2, "0");
-      return fetchJson(`data/${dir}/${region}/${name}.json`).then((parsed) => {
-        if (parsed) buckets.push(name);
-      });
-    }),
-  );
-  buckets.sort();
+  const manifest = await loadChannelManifest();
+  const entry = manifest.find((r) => r.code === region);
+  const buckets = entry?.buckets ?? [];
   cache.shards.set(key, buckets);
   return buckets;
 }

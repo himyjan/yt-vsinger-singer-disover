@@ -51,8 +51,11 @@ Every record carries `source`:
 | ------------- | ---------------------------------------------- |
 | `api`         | Fetched from a platform API                    |
 | `seed`        | From the curated seed catalogue                |
-| `legacy-db`   | Imported from the old SQLite database          |
 | `manual`      | Curated by hand in `data/overrides.json`       |
+
+> The legacy SQLite database has been **removed**. The dataset is now built
+> from authoritative public sources (below), so no record is ever carried over
+> from the old, unreliable classification.
 
 ---
 

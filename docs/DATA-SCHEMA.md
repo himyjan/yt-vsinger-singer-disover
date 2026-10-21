@@ -11,10 +11,11 @@ data/
 ├── overrides.json              manual corrections (input, not output)
 ├── identities.json             the de-duplication registry
 ├── channels/
-│   ├── index.json              ChannelSummary[] — every channel, lightweight
-│   ├── virtual.json            Channel[] — the virtual performer dataset
-│   ├── real.json               Channel[] — the real artist dataset
-│   └── regions/<region>.json   ChannelSummary[] — one region
+│   ├── manifest.json           the region list, with the shard names
+│   ├── summaries/<region>/<bucket>.json   ChannelSummary[] — list views
+│   ├── regions/<region>/<bucket>.json      Channel[] — full records
+│   ├── virtual/<region>/<bucket>.json      Channel[] — virtual dataset
+│   └── real/<region>/<bucket>.json         Channel[] — real dataset
 ├── items/
 │   ├── manifest.json           shard map and counts
 │   ├── <region>/<bucket>.json  Item[] — sharded by region, then id bucket
@@ -29,6 +30,12 @@ data/
     ├── manifest.json           which regions have a pack
     └── <region>.json           SearchPack — the inverted index
 ```
+
+Every channel dataset is sharded by **region and then by id bucket** (16
+buckets). With a roster of more than 14,000 performers a single file would
+overflow the per-file budget, and the browser would have to download the whole
+catalogue to show one region. The manifests list the shards that exist, so
+the browser never requests a file that is not there.
 
 Every file has the same envelope:
 
@@ -68,7 +75,7 @@ The record for one performer.
 | `isAi` | boolean | AI-generated performer (AI VTuber, AI singer) |
 | `variant` | see below | The combined label |
 | `confidence` | number | 0–1; `1` for curated records |
-| `source` | `"api"` \| `"seed"` \| `"legacy-db"` \| `"manual"` | Provenance |
+| `source` | `"api"` \| `"seed"` \| `"manual"` | Provenance |
 | `addedAt` | string | ISO timestamp of first sighting |
 | `updatedAt` | string | ISO timestamp of last refresh |
 | `activity` | `"active"` \| `"preparing"` \| `"graduated"` \| `"unknown"` | Streaming status |
