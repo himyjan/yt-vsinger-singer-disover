@@ -376,6 +376,13 @@ export interface Item {
   /** True when the upload is a collaboration. */
   isCollab: boolean;
   /**
+   * Everyone who performed on this upload, including the uploader.
+   *
+   * A collaborative MV belongs to several channels at once, so the item is
+   * indexed and filtered by all of them.
+   */
+  collaborators: Collaborator[];
+  /**
    * True when the performer is singing while playing an instrument —
    * 弾き語り / 彈唱 / 自弹自唱 / acoustic performance.
    *
@@ -461,6 +468,13 @@ export interface SongRecord {
   category: ItemCategory;
   /** True when the upload is a collaboration. */
   isCollab: boolean;
+  /**
+   * Everyone who performed on this upload, including the uploader.
+   *
+   * A collaborative MV belongs to several channels at once, so the item is
+   * indexed and filtered by all of them.
+   */
+  collaborators: Collaborator[];
   /** True when the performer is singing while playing an instrument. */
   isAcoustic: boolean;
   /** ISO publish timestamp. */
@@ -479,6 +493,29 @@ export interface SongFile {
   schemaVersion: number;
   generatedAt: string;
   songs: SongRecord[];
+}
+
+/* -------------------------------------------------------------------------- */
+/* Collaborations                                                             */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * One performer on a collaborative upload.
+ *
+ * A song can be performed by three or more VTubers — a duet, a group cover,
+ * an anniversary MV. The uploader is the channel that published it
+ * (`Item.channelId`); the others are recorded here, so the same performance
+ * is discoverable from every participating channel.
+ */
+export interface Collaborator {
+  /** The performing channel's id, when it is known. */
+  channelId: string | null;
+  /** The performer's display name. */
+  name: string;
+  /** `virtual` | `real` | `unknown`. */
+  kind: ArtistKind | "unknown";
+  /** The performer's region, when known. */
+  region: RegionCode | "unknown";
 }
 
 /* -------------------------------------------------------------------------- */
