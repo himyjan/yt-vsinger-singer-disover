@@ -66,7 +66,11 @@ async function fetchJson<T>(path: string): Promise<T | null> {
  */
 const cache = {
   manifest: null as Manifest | null,
+  channelManifest: null as { code: RegionCode; channels: number }[] | null,
   summaries: null as ChannelSummary[] | null,
+  summariesByRegion: new Map<RegionCode, ChannelSummary[]>(),
+  channelsByKind: new Map<string, Channel[]>(),
+  shards: new Map<string, string[]>(),
   virtual: null as Channel[] | null,
   real: null as Channel[] | null,
   live: null as Item[] | null,
@@ -88,38 +92,119 @@ export async function loadManifest(): Promise<Manifest | null> {
   return manifest;
 }
 
-export async function loadSummaries(): Promise<ChannelSummary[]> {
-  if (cache.summaries) return cache.summaries;
-  const parsed = await fetchJson<{ channels?: ChannelSummary[] }>(
-    "data/channels/index.json",
+/**
+ * Loads the channel summaries for the given regions.
+ *
+ * The summaries are sharded by region and then by id bucket, so only the
+ * regions the user is actually looking at are downloaded. With a roster of
+ * more than 14,000 performers, loading everything up front would be a waste.
+ */
+export async function loadSummaries(
+  regions: RegionCode[] | "all" = "all",
+): Promise<ChannelSummary[]> {
+  if (regions === "all" && cache.summaries) return cache.summaries;
+
+  const targets =
+    regions === "all"
+      ? (await loadChannelManifest()).map((r) => r.code)
+      : regions;
+
+  const results = await Promise.all(
+    targets.map(async (region) => {
+      const cached = cache.summariesByRegion.get(region);
+      if (cached) return cached;
+      const buckets = await loadShards("channels/summaries", region);
+      const list: ChannelSummary[] = [];
+      for (const bucket of buckets) {
+        const parsed = await fetchJson<{ channels?: ChannelSummary[] }>(
+          `data/channels/summaries/${region}/${bucket}.json`,
+        );
+        list.push(...(parsed?.channels ?? []));
+      }
+      cache.summariesByRegion.set(region, list);
+      return list;
+    }),
   );
-  cache.summaries = parsed?.channels ?? [];
-  return cache.summaries!;
+
+  const all = results.flat();
+  if (regions === "all") cache.summaries = all;
+  return all;
 }
 
-/** Full channel records for one artist kind. */
-export async function loadChannels(kind: "virtual" | "real"): Promise<Channel[]> {
-  if (kind === "virtual") {
-    if (cache.virtual) return cache.virtual;
-    const parsed = await fetchJson<{ channels?: Channel[] }>(
-      "data/channels/virtual.json",
-    );
-    cache.virtual = parsed?.channels ?? [];
-    return cache.virtual!;
-  }
-  if (cache.real) return cache.real;
-  const parsed = await fetchJson<{ channels?: Channel[] }>(
-    "data/channels/real.json",
+/** The region list for the channel dataset. */
+export async function loadChannelManifest(): Promise<
+  { code: RegionCode; channels: number }[]
+> {
+  if (cache.channelManifest) return cache.channelManifest;
+  const parsed = await fetchJson<{
+    regions?: { code: RegionCode; channels: number }[];
+  }>("data/channels/manifest.json");
+  cache.channelManifest = parsed?.regions ?? [];
+  return cache.channelManifest!;
+}
+
+/** Lists the shard files available for a directory. */
+async function loadShards(dir: string, region: RegionCode): Promise<string[]> {
+  const key = `${dir}:${region}`;
+  const cached = cache.shards.get(key);
+  if (cached) return cached;
+
+  // The directory listing is not available over HTTP, so the shards are
+  // discovered by probing the fixed bucket names.
+  const buckets: string[] = [];
+  await Promise.all(
+    Array.from({ length: 16 }, (_, i) => {
+      const name = i.toString(16).padStart(2, "0");
+      return fetchJson(`data/${dir}/${region}/${name}.json`).then((parsed) => {
+        if (parsed) buckets.push(name);
+      });
+    }),
   );
-  cache.real = parsed?.channels ?? [];
-  return cache.real!;
+  buckets.sort();
+  cache.shards.set(key, buckets);
+  return buckets;
+}
+
+/** Full channel records for one artist kind, in the given regions. */
+export async function loadChannels(
+  kind: "virtual" | "real",
+  regions: RegionCode[] | "all" = "all",
+): Promise<Channel[]> {
+  const targets =
+    regions === "all"
+      ? (await loadChannelManifest()).map((r) => r.code)
+      : regions;
+
+  const results = await Promise.all(
+    targets.map(async (region) => {
+      const cached = cache.channelsByKind.get(`${kind}:${region}`);
+      if (cached) return cached;
+      const buckets = await loadShards(`channels/${kind}`, region);
+      const list: Channel[] = [];
+      for (const bucket of buckets) {
+        const parsed = await fetchJson<{ channels?: Channel[] }>(
+          `data/channels/${kind}/${region}/${bucket}.json`,
+        );
+        list.push(...(parsed?.channels ?? []));
+      }
+      cache.channelsByKind.set(`${kind}:${region}`, list);
+      return list;
+    }),
+  );
+
+  const all = results.flat();
+  if (kind === "virtual") cache.virtual = all;
+  else cache.real = all;
+  return all;
 }
 
 /** Every channel record, both kinds. */
-export async function loadAllChannels(): Promise<Channel[]> {
+export async function loadAllChannels(
+  regions: RegionCode[] | "all" = "all",
+): Promise<Channel[]> {
   const [virtual, real] = await Promise.all([
-    loadChannels("virtual"),
-    loadChannels("real"),
+    loadChannels("virtual", regions),
+    loadChannels("real", regions),
   ]);
   return [...virtual, ...real];
 }

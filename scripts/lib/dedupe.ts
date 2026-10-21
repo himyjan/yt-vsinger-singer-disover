@@ -1,0 +1,261 @@
+/**
+ * Channel de-duplication.
+ *
+ * The same performer arrives from several sources under different
+ * identifiers:
+ *
+ *   - vdb knows them by their Bilibili space id and their YouTube channel id;
+ *   - the Taiwan track list knows them by YouTube channel id and Twitch id;
+ *   - the curated seeds know them by `@handle`;
+ *   - the YouTube API knows them by channel id, and by handle when it
+ *     resolves one.
+ *
+ * A performer with a YouTube channel *and* a Bilibili space therefore arrives
+ * as two records with two ids. Left alone, the dataset would list them
+ * twice, and a search would return both.
+ *
+ * The fix is the identity registry (`scripts/lib/identity.ts`): every record
+ * is reduced to a set of **identity keys** — a YouTube channel id, a handle,
+ * a platform-native id — and records that share a key are merged. The
+ * registry is committed, so the merges are stable across runs and reviewable
+ * in a diff.
+ */
+
+import { IdentityRegistry, type Candidate } from "./identity";
+import type { Channel, RegionCode } from "./types";
+
+/** The identity keys a channel contributes. */
+function keysFor(channel: Channel): string[] {
+  const keys: string[] = [];
+
+  // The canonical YouTube channel id.
+  if (channel.id.startsWith("UC")) keys.push(`yt:${channel.id}`);
+
+  // Every platform identity, by its platform-native id.
+  for (const link of channel.platforms) {
+    keys.push(`${link.platform}:${link.id}`);
+    if (link.handle) keys.push(`handle:${link.handle.replace(/^@/, "")}`);
+  }
+
+  if (channel.handle) keys.push(`handle:${channel.handle.replace(/^@/, "")}`);
+
+  return keys;
+}
+
+/**
+ * Merges two channel records.
+ *
+ * The record that survives is the one with the more complete data; the
+ * other's facts fill in its gaps. The canonical id is the one that looks
+ * like a real channel id (`UC…` for YouTube) rather than a namespaced one.
+ */
+function mergeChannels(target: Channel, other: Channel): Channel {
+  const preferOther =
+    !target.id.startsWith("UC") && other.id.startsWith("UC");
+
+  const merged: Channel = {
+    ...target,
+    ...(preferOther ? { id: other.id } : {}),
+    name: target.name || other.name,
+    handle: target.handle ?? other.handle,
+    kind: target.kind === "virtual" ? target.kind : other.kind,
+    role: target.role === "unknown" ? other.role : target.role,
+    region:
+      target.region !== "unknown"
+        ? target.region
+        : (other.region as RegionCode),
+    language: target.language ?? other.language,
+    agency: target.agency ?? other.agency,
+    avatar: target.avatar ?? other.avatar,
+    banner: target.banner ?? other.banner,
+    description: target.description ?? other.description,
+    subscribers:
+      target.subscribers.tag === "hidden"
+        ? other.subscribers
+        : target.subscribers,
+    videoCount: target.videoCount ?? other.videoCount,
+    viewCount: target.viewCount ?? other.viewCount,
+    uploadsPlaylistId:
+      target.uploadsPlaylistId ?? other.uploadsPlaylistId,
+    country: target.country ?? other.country,
+    tags: [...new Set([...target.tags, ...other.tags])].slice(0, 30),
+    isSinging: target.isSinging || other.isSinging,
+    gender: target.gender !== "unknown" ? target.gender : other.gender,
+    isAi: target.isAi || other.isAi,
+    confidence: Math.max(target.confidence, other.confidence),
+    source:
+      target.source === "seed" || other.source === "seed"
+        ? "seed"
+        : target.source === "manual" || other.source === "manual"
+          ? "manual"
+          : target.source,
+    addedAt:
+      target.addedAt < other.addedAt ? target.addedAt : other.addedAt,
+    updatedAt:
+      target.updatedAt > other.updatedAt ? target.updatedAt : other.updatedAt,
+    activity:
+      target.activity !== "unknown" ? target.activity : other.activity,
+    debutDate: target.debutDate ?? other.debutDate,
+    graduateDate: target.graduateDate ?? other.graduateDate,
+    platforms: mergePlatforms(target.platforms, other.platforms),
+    externals: { ...other.externals, ...target.externals },
+    popularVideoId: target.popularVideoId ?? other.popularVideoId,
+  };
+
+  return merged;
+}
+
+/** Unions two platform lists, keeping one link per platform. */
+function mergePlatforms(
+  a: Channel["platforms"],
+  b: Channel["platforms"],
+): Channel["platforms"] {
+  const out = [...a];
+  for (const link of b) {
+    const existing = out.find((p) => p.platform === link.platform);
+    if (!existing) {
+      out.push(link);
+      continue;
+    }
+    // Fill in whatever the other link knows.
+    existing.id = existing.id || link.id;
+    existing.handle = existing.handle ?? link.handle;
+    existing.name = existing.name ?? link.name;
+    existing.url = existing.url || link.url;
+    existing.avatar = existing.avatar ?? link.avatar;
+    if (existing.subscribers.tag === "hidden") {
+      existing.subscribers = link.subscribers;
+    }
+    if (existing.activity === "unknown") existing.activity = link.activity;
+  }
+  return out;
+}
+
+export interface DedupeResult {
+  channels: Channel[];
+  /** How many records were merged away. */
+  merged: number;
+  /** The merged pairs, for the log and for review. */
+  pairs: { kept: string; merged: string }[];
+}
+
+/**
+ * Removes duplicate channels.
+ *
+ * Two records are the same performer when they share an identity key. The
+ * registry is consulted first, so a merge that was established in an earlier
+ * run is honoured even if one of the source records has since changed.
+ */
+export function dedupeChannels(
+  channels: Channel[],
+  registry?: IdentityRegistry,
+): DedupeResult {
+  const byKey = new Map<string, Channel>();
+  const mergedKeys = new Map<string, string>();
+  const pairs: { kept: string; merged: string }[] = [];
+
+  // First pass: the identity keys each record claims.
+  const keyOwners = new Map<string, Channel>();
+  for (const channel of channels) {
+    for (const key of keysFor(channel)) {
+      const owner = keyOwners.get(key);
+      if (!owner) {
+        keyOwners.set(key, channel);
+        continue;
+      }
+      // Two records claim the same identity — they are the same performer.
+      const keep = preferChannel(owner, channel);
+      const drop = keep === owner ? channel : owner;
+      const mergedChannel = mergeChannels(keep, drop);
+      keyOwners.set(key, mergedChannel);
+      byKey.set(mergedChannel.id, mergedChannel);
+      pairs.push({ kept: mergedChannel.id, merged: drop.id });
+    }
+  }
+
+  // Second pass: the registry knows about merges that the current data
+  // cannot express — for instance a record that was renamed on YouTube.
+  const result = new Map<string, Channel>();
+  for (const channel of channels) {
+    const candidate: Candidate = {
+      id: channel.id.startsWith("UC") ? channel.id : undefined,
+      name: channel.name,
+      handle: channel.handle,
+      region: channel.region,
+      affiliation: channel.agency,
+      externals: Object.fromEntries(
+        channel.platforms.map((p) => [p.platform, [p.id]]),
+      ),
+      source: channel.source,
+    };
+
+    const registryMatch = registry?.findByKey(
+      keysFor(channel)[0] ?? "",
+    );
+    if (registryMatch && registryMatch.id !== channel.id) {
+      const existing = result.get(registryMatch.id);
+      if (existing) {
+        result.set(registryMatch.id, mergeChannels(existing, channel));
+        pairs.push({ kept: registryMatch.id, merged: channel.id });
+        continue;
+      }
+    }
+
+    const existing = result.get(channel.id);
+    if (existing) {
+      result.set(channel.id, mergeChannels(existing, channel));
+      pairs.push({ kept: channel.id, merged: channel.id });
+      continue;
+    }
+    result.set(channel.id, channel);
+  }
+
+  // Third pass: one more sweep for keys that only became apparent after the
+  // merges above.
+  const finalByKey = new Map<string, string>();
+  const out: Channel[] = [];
+  for (const channel of result.values()) {
+    const claimed = keysFor(channel).filter((key) => {
+      const owner = finalByKey.get(key);
+      if (owner === undefined) return true;
+      if (owner === channel.id) return false;
+      return false;
+    });
+    const conflict = claimed.some((key) => finalByKey.has(key));
+    if (conflict) {
+      const ownerId = claimed.map((k) => finalByKey.get(k)).find(Boolean)!;
+      const owner = out.find((c) => c.id === ownerId);
+      if (owner) {
+        const mergedChannel = mergeChannels(owner, channel);
+        out[out.indexOf(owner)] = mergedChannel;
+        pairs.push({ kept: owner.id, merged: channel.id });
+        continue;
+      }
+    }
+    for (const key of claimed) finalByKey.set(key, channel.id);
+    out.push(channel);
+  }
+
+  return {
+    channels: out.sort((a, b) => a.id.localeCompare(b.id)),
+    merged: pairs.length,
+    pairs,
+  };
+}
+
+/**
+ * Picks the record to keep.
+ *
+ * A record with a real channel id beats a namespaced one; a curated record
+ * beats an inferred one; otherwise the one with more platform links wins.
+ */
+function preferChannel(a: Channel, b: Channel): Channel {
+  const score = (c: Channel) =>
+    (c.id.startsWith("UC") ? 4 : 0) +
+    (c.source === "seed" || c.source === "manual" ? 2 : 0) +
+    c.platforms.length +
+    (c.subscribers.tag === "has" ? 1 : 0) +
+    (c.avatar ? 1 : 0);
+
+  return score(b) > score(a) ? b : a;
+}

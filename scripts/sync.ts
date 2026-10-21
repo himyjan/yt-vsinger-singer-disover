@@ -25,7 +25,13 @@ import {
   uploadsPlaylistId,
   API_COST,
 } from "./lib/youtube";
-import { classifyChannel, classifyItem, detectActivity, isShortItem } from "./lib/classify";
+import {
+  classifyChannel,
+  classifyItem,
+  detectActivity,
+  extractCollaboratorNames,
+  isShortItem,
+} from "./lib/classify";
 import { ALL_SEEDS, type SeedEntry } from "./lib/seeds";
 import {
   extractExternalLinks,
@@ -36,6 +42,8 @@ import { createAdapters } from "./lib/platform-registry";
 import { fetchAiList, isOnAiList } from "./lib/aislist";
 import { fetchTrackedVtubers } from "./lib/taiwan-vtuber-data";
 import { buildRoster } from "./lib/roster";
+import { dedupeChannels } from "./lib/dedupe";
+import { IdentityRegistry } from "./lib/identity";
 import { fetchMusicDataset, indexMusicDataset } from "./lib/music-dataset";
 import { deriveVariant } from "./lib/classify";
 import type {
@@ -67,7 +75,7 @@ import type {
   RecordSource,
 } from "./lib/types";
 import { SCHEMA_VERSION, toCountRef } from "./lib/types";
-import type { PlatformLink } from "./lib/types";
+import type { Collaborator, PlatformLink } from "./lib/types";
 
 /* -------------------------------------------------------------------------- */
 /* CLI                                                                        */
@@ -302,9 +310,6 @@ function channelFromApi(
         lastCheckedAt: now,
       },
     ],
-    twitchId: null,
-    twitchLogin: extractTwitchLogin(description),
-    twitchFollowers: { tag: "hidden" },
     externals: extractExternalLinks(description),
 
     popularVideoId: null,
@@ -353,6 +358,24 @@ function itemFromApi(
     channelRegion: channel?.region ?? "unknown",
   });
 
+  /**
+   * Everyone who performed on this upload.
+   *
+   * The uploader comes first; the other performers are read from the title
+   * and, when the curated music dataset knows them, from its `collabVTuber`
+   * and `memo` columns.
+   */
+  const collaborators: Collaborator[] = channel
+    ? [
+        {
+          channelId: channel.id,
+          name: channel.name,
+          kind: channel.kind,
+          region: channel.region,
+        },
+      ]
+    : [];
+
   const type: Item["type"] =
     status === "live" || status === "upcoming"
       ? "live"
@@ -383,6 +406,7 @@ function itemFromApi(
     songTitle: classification.songTitle,
     originalArtist: classification.originalArtist,
     isCollab: classification.isCollab,
+    collaborators: collaborators,
     isAcoustic: classification.isAcoustic,
     tags: (snippet.tags ?? []).slice(0, 25),
     viewCount: toNumber(stats.viewCount),
@@ -633,8 +657,6 @@ async function main(): Promise<void> {
         debutDate: channel.debutDate ?? existing.debutDate,
         graduateDate: channel.graduateDate ?? existing.graduateDate,
         avatar: channel.avatar ?? existing.avatar,
-        twitchId: channel.twitchId ?? existing.twitchId,
-        twitchLogin: channel.twitchLogin ?? existing.twitchLogin,
         platforms: channel.platforms.length ? channel.platforms : existing.platforms,
         source: channel.source === "seed" ? "seed" : existing.source,
         confidence: Math.max(existing.confidence, channel.confidence),
@@ -720,16 +742,42 @@ async function main(): Promise<void> {
   const itemById = new Map<string, Item>();
   for (const i of items) itemById.set(i.id, i);
 
+  /* --- de-duplicate ---------------------------------------------------- */
+  /**
+   * The same performer arrives from several sources under different ids — a
+   * YouTube channel id and a Bilibili space id for the same person, for
+   * example. Records that share an identity key are merged, so the dataset
+   * lists every performer exactly once.
+   */
+  {
+    const registry = IdentityRegistry.loadFromDisk();
+    const result = dedupeChannels(channels, registry);
+    channels = result.channels;
+    log(
+      `dedupe: ${result.merged} duplicate record(s) merged ` +
+        `(${channels.length} unique channels)`,
+    );
+    for (const pair of result.pairs.slice(0, 5)) {
+      log(`  merged ${pair.merged} → ${pair.kept}`);
+    }
+  }
+
   /* --- Twitch enrichment (optional) ------------------------------------ */
   const twitch = TwitchClient.fromEnv(
     process.env,
     path.join(CACHE_DIR, "twitch"),
   );
   if (twitch) {
+    /**
+     * The Twitch identity lives in `platforms[]`, so the enrichment updates
+     * the link in place rather than a separate field.
+     */
     const logins = [
       ...new Set(
         channels
-          .map((c) => c.twitchLogin)
+          .map((c) =>
+            c.platforms.find((p) => p.platform === "twitch")?.handle,
+          )
           .filter((l): l is string => !!l),
       ),
     ];
@@ -740,18 +788,21 @@ async function main(): Promise<void> {
         users.map((u) => [String(u.login).toLowerCase(), u]),
       );
       for (const channel of channels) {
-        if (!channel.twitchLogin) continue;
-        const user = byLogin.get(channel.twitchLogin.toLowerCase());
+        const link = channel.platforms.find((p) => p.platform === "twitch");
+        if (!link?.handle) continue;
+        const user = byLogin.get(link.handle.toLowerCase());
         if (!user) continue;
-        channel.twitchId = user.id ?? null;
-        channel.externals = {
-          ...channel.externals,
-          ...(user.viewable_roles?.length ? {} : {}),
-        };
+
+        link.id = user.id ?? link.id;
+        link.handle = user.login ?? link.handle;
+        link.name = user.display_name ?? link.name;
+        link.avatar = user.profile_image_url ?? link.avatar;
+        link.url = `https://www.twitch.tv/${link.handle}`;
+
         try {
-          channel.twitchFollowers = await twitch.followers(user.id);
+          link.subscribers = await twitch.followers(user.id);
         } catch {
-          channel.twitchFollowers = { tag: "no" };
+          link.subscribers = { tag: "no" };
         }
       }
       log(`twitch: enriched ${users.length} user(s)`);
@@ -775,7 +826,25 @@ async function main(): Promise<void> {
       channel.activity = record.activity;
       channel.debutDate = record.debutDate ?? channel.debutDate;
       if (record.group && !channel.agency) channel.agency = record.group;
-      if (record.twitchId) channel.twitchId = record.twitchId;
+      if (record.twitchId) {
+        const link = channel.platforms.find((p) => p.platform === "twitch");
+        if (link) {
+          link.id = record.twitchId;
+          link.handle = record.twitchId;
+        } else {
+          channel.platforms.push({
+            platform: "twitch",
+            id: record.twitchId,
+            handle: record.twitchId,
+            name: channel.name,
+            url: `https://www.twitch.tv/${record.twitchId}`,
+            subscribers: { tag: "hidden" },
+            avatar: null,
+            activity: channel.activity,
+            lastCheckedAt: now,
+          });
+        }
+      }
 
       // Subscriber counts: prefer the tracked figure when it is public.
       if (record.subscribers.tag === "has") {
@@ -1007,6 +1076,14 @@ async function main(): Promise<void> {
           songTitle: null,
           originalArtist: null,
           isCollab: false,
+          collaborators: [
+            {
+              channelId: channel.id,
+              name: channel.name,
+              kind: channel.kind,
+              region: channel.region,
+            },
+          ],
           isAcoustic: false,
           tags: [],
           viewCount: null,
@@ -1270,6 +1347,7 @@ export function platformUploadToItem(
     songTitle: upload.songTitle ?? null,
     originalArtist: upload.originalArtist ?? null,
     isCollab: false,
+    collaborators: [],
     isAcoustic: false,
     tags: [],
     viewCount: upload.viewCount ?? null,
@@ -1370,9 +1448,6 @@ export function channelFromPlatform(
         lastCheckedAt: now,
       },
     ],
-    twitchId: null,
-    twitchLogin: null,
-    twitchFollowers: { tag: "hidden" },
     externals: {},
 
     popularVideoId: null,

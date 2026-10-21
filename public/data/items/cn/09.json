@@ -1,7 +1,40 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T15:13:50.909Z",
+  "generatedAt": "2026-10-21T15:40:58.538Z",
   "items": [
+    {
+      "id": "iUWLddW8kzQ",
+      "type": "video",
+      "channelId": "UCE7gtjLeZKNXLp5YURzYYeg",
+      "channelName": "春猿火 / Harusaruhi",
+      "channelKind": "virtual",
+      "region": "cn",
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "【歌ってみた】「シャル・ウィ・ダンス？ / ReoNa 」covered by 春猿火",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/iUWLddW8kzQ/hq720.jpg?sqp=-oaymwEcCOgCEMoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAX63tVCutCiOmLlx-u10-wBTItuA",
+      "publishedAt": "2026-04-05T14:23:09.136Z",
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "cover",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "legacy-db",
+      "addedAt": "2026-04-07T14:23:09.000Z",
+      "updatedAt": "2026-10-21T14:32:04.628Z",
+      "confidence": 0
+    },
     {
       "id": "BV1rCnq6cEZa",
       "type": "live",
@@ -32,8 +65,9 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-21T15:12:17.427Z",
-      "updatedAt": "2026-10-21T15:13:50.909Z",
-      "confidence": 0
+      "updatedAt": "2026-10-21T15:40:58.538Z",
+      "confidence": 0,
+      "collaborators": []
     }
   ]
 }

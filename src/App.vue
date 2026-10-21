@@ -220,6 +220,25 @@ const visibleSaved = computed(() => {
 /* Search                                                                     */
 /* -------------------------------------------------------------------------- */
 
+/**
+ * Reloads the channel data when the region filter changes.
+ *
+ * The channel datasets are sharded by region, so only the selected region is
+ * downloaded — which keeps a 14,000-performer roster cheap to browse.
+ */
+watch(
+  () => state.region,
+  async (region) => {
+    const regions = region === "all" ? "all" : [region];
+    const [s, c] = await Promise.all([
+      loadSummaries(regions),
+      loadAllChannels(regions),
+    ]);
+    summaries.value = s;
+    channels.value = c;
+  },
+);
+
 let searchTimer: number | undefined;
 
 watch(

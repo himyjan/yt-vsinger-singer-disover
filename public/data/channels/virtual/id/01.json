@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-21T15:40:58.538Z",
+  "channels": [
+    {
+      "id": "bilibili:1829466798",
+      "name": "ID",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "id",
+      "language": "en",
+      "agency": "Hololive ID (印尼分部)",
+      "avatar": null,
+      "banner": null,
+      "description": null,
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": false,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "confidence": 1,
+      "source": "api",
+      "addedAt": "2026-10-21T15:39:57.594Z",
+      "updatedAt": "2026-10-21T15:39:57.594Z",
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "bilibili",
+          "id": "1829466798",
+          "handle": null,
+          "name": "ID",
+          "url": "https://space.bilibili.com/1829466798",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "activity": "unknown",
+          "lastCheckedAt": "2026-10-21T15:41:01.242Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
+    }
+  ]
+}

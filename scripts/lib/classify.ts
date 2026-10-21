@@ -825,6 +825,53 @@ export function isShortItem(
   return false;
 }
 
+/**
+ * Patterns that introduce a second performer in a title.
+ *
+ * A collaborative MV names its performers in the title, so the second and
+ * third names can be read straight off it.
+ */
+const COLLAB_TITLE_PATTERNS: RegExp[] = [
+  // "A & B", "A x B", "A × B", "A and B"
+  /^(.{1,40}?)\s*[&×✕xX]\s*(.{1,40})$/,
+  // "A feat. B", "A ft. B", "A with B"
+  /^(.{1,40}?)\s+(?:feat\.?|ft\.?|with)\s+(.{1,40})$/i,
+  // "A vs B", "A vs. B"
+  /^(.{1,40}?)\s+vs\.?\s+(.{1,40})$/i,
+  // "A ＆ B" (full width)
+  /^(.{1,40}?)\s*[＆]\s*(.{1,40})$/,
+];
+
+/**
+ * Extracts the names of the other performers on a collaborative upload.
+ *
+ * The uploader is not included — the caller adds them.
+ */
+export function extractCollaboratorNames(
+  title: string | null | undefined,
+): string[] {
+  if (!title) return [];
+  const cleaned = title
+    .replace(/[【】\[\]（）()]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  const out: string[] = [];
+  for (const re of COLLAB_TITLE_PATTERNS) {
+    const m = re.exec(cleaned);
+    if (!m) continue;
+    const first = stripNoise(m[1] ?? "");
+    const second = stripNoise(m[2] ?? "");
+    // Both halves must look like names, not like a description.
+    if (first.length < 2 || second.length < 2) continue;
+    if (first.length > 40 || second.length > 40) continue;
+    if (/(cover|song|mv|歌|曲|動画|初投稿|配信)/i.test(second)) continue;
+    out.push(second);
+    break;
+  }
+  return out;
+}
+
 /** Exposed for tests. */
 export const MARKERS = {
   VIRTUAL_STRONG,

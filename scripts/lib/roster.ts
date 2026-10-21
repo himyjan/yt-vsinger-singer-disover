@@ -19,6 +19,7 @@
 
 import { ALL_SEEDS } from "./seeds";
 import { fetchTrackedVtubers } from "./taiwan-vtuber-data";
+import { VdbSource } from "./vdb";
 import { createAdapters } from "./platform-registry";
 import { classifyChannel, deriveVariant } from "./classify";
 import { toCountRef } from "./types";
@@ -127,9 +128,6 @@ export async function buildRoster(
             ]
           : []),
       ],
-      twitchId: record.twitchId,
-      twitchLogin: record.twitchId,
-      twitchFollowers: { tag: "hidden" },
       externals: {},
 
       popularVideoId: null,
@@ -200,15 +198,92 @@ export async function buildRoster(
           lastCheckedAt: now,
         },
       ],
-      twitchId: null,
-      twitchLogin: null,
-      twitchFollowers: { tag: "hidden" },
       externals: {},
 
       popularVideoId: null,
     });
   }
   log(`roster: ${ALL_SEEDS.length} curated seeds applied`);
+
+  /* --- vdb: the Virtual YouTuber Name List Database --------------------- */
+  const vdb = new VdbSource();
+  const vdbList = await vdb.fetch();
+  let vdbAdded = 0;
+  for (const entry of vdbList) {
+    if (byId.has(entry.id)) {
+      // Merge the platform identities into the existing record.
+      const existing = byId.get(entry.id)!;
+      for (const link of entry.platforms) {
+        if (!existing.platforms.some((p) => p.platform === link.platform)) {
+          existing.platforms.push(link);
+        }
+      }
+      if (entry.isAi) {
+        existing.isAi = true;
+        existing.variant = deriveVariant(
+          existing.role,
+          existing.gender,
+          true,
+        );
+      }
+      if (entry.region !== "unknown" && existing.region === "unknown") {
+        existing.region = entry.region;
+      }
+      continue;
+    }
+
+    const classification = classifyChannel({
+      name: entry.name,
+      description: null,
+      tags: entry.aliases,
+      country: null,
+    });
+
+    byId.set(entry.id, {
+      id: entry.id,
+      name: entry.name,
+      handle: null,
+      kind: entry.kind,
+      role: classification.role === "unknown" ? "vtuber" : classification.role,
+      region: entry.region,
+      language: classification.language,
+      agency: entry.group,
+      avatar: null,
+      banner: null,
+      description: null,
+      subscribers: toCountRef(null),
+      videoCount: null,
+      viewCount: null,
+      uploadsPlaylistId: entry.id.startsWith("UC")
+        ? `UU${entry.id.slice(2)}`
+        : null,
+      country: null,
+      tags: entry.aliases,
+      isSinging: false,
+      gender: classification.gender,
+      isAi: entry.isAi,
+      variant: deriveVariant(
+        classification.role === "unknown" ? "vtuber" : classification.role,
+        classification.gender,
+        entry.isAi,
+      ),
+      confidence: entry.region === "unknown" ? 0.6 : 1,
+      source: "api",
+      addedAt: now,
+      updatedAt: now,
+
+      activity: "unknown",
+      debutDate: null,
+      graduateDate: null,
+
+      platforms: entry.platforms,
+      externals: {},
+
+      popularVideoId: null,
+    });
+    vdbAdded++;
+  }
+  log(`roster: ${vdbList.length} vdb performers, ${vdbAdded} new`);
 
   /* --- other platforms -------------------------------------------------- */
   if (options.includeOtherPlatforms !== false) {
@@ -274,9 +349,6 @@ export async function buildRoster(
                 lastCheckedAt: now,
               },
             ],
-            twitchId: null,
-            twitchLogin: null,
-            twitchFollowers: { tag: "hidden" },
             externals: {},
 
             popularVideoId: null,
