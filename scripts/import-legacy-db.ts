@@ -189,9 +189,6 @@ function main(): void {
           lastCheckedAt: now,
         },
       ],
-      twitchId: null,
-      twitchLogin: null,
-      twitchFollowers: { tag: "hidden" },
       externals: {},
 
       popularVideoId: null,
@@ -243,6 +240,16 @@ function main(): void {
       songTitle: classification.songTitle,
       originalArtist: classification.originalArtist,
       isCollab: classification.isCollab,
+      collaborators: channel
+        ? [
+            {
+              channelId: channel.id,
+              name: channel.name,
+              kind: channel.kind,
+              region: channel.region,
+            },
+          ]
+        : [],
       isAcoustic: classification.isAcoustic,
       tags,
       viewCount: null,

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T15:13:50.909Z",
+  "generatedAt": "2026-10-21T15:44:12.217Z",
   "items": [
     {
       "id": "BV1nsnw64EFL",
@@ -65,7 +65,41 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-21T15:12:17.427Z",
-      "updatedAt": "2026-10-21T15:13:50.909Z",
+      "updatedAt": "2026-10-21T15:44:12.217Z",
+      "confidence": 0,
+      "collaborators": []
+    },
+    {
+      "id": "o0CVVvG_t5g",
+      "type": "video",
+      "channelId": "UCt5-0i4AVHXaWJrL8Wql3mw",
+      "channelName": "緑仙 / Ryushen",
+      "channelKind": "virtual",
+      "region": "cn",
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "プロポーズ / 緑仙 Cover",
+      "description": null,
+      "thumbnail": "https://i9.ytimg.com/vi/o0CVVvG_t5g/hq720_custom_1.jpg?sqp=CMjikM0G-oaymwEcCOgCEMoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCy2Lie_N3yEuY_h4IdMsT_jEkdQw",
+      "publishedAt": "2026-04-07T12:23:09.135Z",
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "cover",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "legacy-db",
+      "addedAt": "2026-04-07T14:23:09.000Z",
+      "updatedAt": "2026-10-21T14:32:04.628Z",
       "confidence": 0
     }
   ]

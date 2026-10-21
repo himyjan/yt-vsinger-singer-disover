@@ -280,13 +280,15 @@ export interface Channel {
    * primary platform (usually YouTube).
    */
   platforms: PlatformLink[];
-  /** Twitch user id, when the performer also streams there. */
-  twitchId: string | null;
-  /** Twitch login / channel name. */
-  twitchLogin: string | null;
-  /** Twitch follower count, with the same hidden/unknown distinction. */
-  twitchFollowers: CountRef;
-  /** Other platform handles keyed by platform name. */
+  /**
+   * Other platform handles keyed by platform name, harvested from the
+   * channel description (`x`, `instagram`, `tiktok`, `discord`, …).
+   *
+   * Platform *identities* live in `platforms[]` — the Twitch user id, the
+   * Bilibili space id and so on are all `PlatformLink`s. Keeping a separate
+   * field per platform here would duplicate that state and let the two drift
+   * apart.
+   */
   externals: Record<string, string>;
 
   /** A representative upload, handy for profile cards. */

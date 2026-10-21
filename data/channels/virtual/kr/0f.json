@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-21T15:44:12.217Z",
+  "channels": [
+    {
+      "id": "bilibili:1404424740",
+      "name": "kr",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "kr",
+      "language": "en",
+      "agency": null,
+      "avatar": null,
+      "banner": null,
+      "description": null,
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": false,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "confidence": 1,
+      "source": "api",
+      "addedAt": "2026-10-21T15:39:57.594Z",
+      "updatedAt": "2026-10-21T15:39:57.594Z",
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "bilibili",
+          "id": "1404424740",
+          "handle": null,
+          "name": "kr",
+          "url": "https://space.bilibili.com/1404424740",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "activity": "unknown",
+          "lastCheckedAt": "2026-10-21T15:44:14.784Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
+    }
+  ]
+}
