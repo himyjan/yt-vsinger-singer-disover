@@ -1,0 +1,188 @@
+/**
+ * Curated seed catalogue.
+ *
+ * These are hand-verified starting points for the sync. They are *not* the
+ * dataset — the dataset is produced by `scripts/sync.ts` from the YouTube API
+ * and committed under `data/`. Seeds exist so that:
+ *
+ *   - the project has useful data on day one, before any quota is spent;
+ *   - high-confidence region / virtual-vs-real labels exist for well-known
+ *     channels, which anchors the automatic classifier;
+ *   - a "real singer / producer" dataset exists at all, since YouTube search
+ *     alone is dominated by virtual content.
+ *
+ * Every entry may carry either a `handle` (resolved through
+ * `channels.list?forHandle=`) or a `channelId` (used verbatim). Unresolvable
+ * handles are skipped silently by the sync — a bad handle never breaks a run.
+ */
+
+import type { ArtistKind, ArtistRole, RegionCode } from "./types";
+
+export interface SeedEntry {
+  /** YouTube handle without `@`. Resolved at sync time. */
+  handle?: string;
+  /** Canonical channel id. Used when known. */
+  channelId?: string;
+  /** Display name (only used as a fallback when the API is unavailable). */
+  name: string;
+  kind: ArtistKind;
+  role: ArtistRole;
+  region: RegionCode;
+  /** Agency / group, e.g. `hololive`. */
+  agency?: string | null;
+  /** Whether the channel is known to publish singing content. */
+  isSinging?: boolean;
+  /** Free-text note surfaced in the UI. */
+  note?: string;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Virtual performers — Japan                                                 */
+/* -------------------------------------------------------------------------- */
+
+export const VIRTUAL_JP: SeedEntry[] = [
+  { handle: "Ao_0728", name: "富士葵", kind: "virtual", role: "vsinger", region: "jp", agency: "hololive", isSinging: true },
+  { handle: "HIMEHINA_Official", name: "HIMEHINA", kind: "virtual", role: "vsinger", region: "jp", agency: "hololive", isSinging: true },
+  { handle: "otodamaT_", name: "天神子兎音", kind: "virtual", role: "vsinger", region: "jp", agency: "hololive", isSinging: true },
+  { handle: "doumaiko", name: "道明寺ここあ", kind: "virtual", role: "vtuber", region: "jp", agency: "hololive", isSinging: true },
+  { handle: "higuchikaze", name: "樋口楓", kind: "virtual", role: "vsinger", region: "jp", agency: "hololive", isSinging: true },
+  { handle: "kano_kaminashi", name: "鹿乃", kind: "virtual", role: "vsinger", region: "jp", agency: "hololive", isSinging: true },
+  { handle: "yumeoi", name: "夢追翔", kind: "virtual", role: "vsinger", region: "jp", agency: "hololive", isSinging: true },
+  { handle: "galaxyalice", name: "銀河アリス", kind: "virtual", role: "vtuber", region: "jp", agency: "hololive", isSinging: true },
+  { handle: "nekomiya_hinata", name: "猫宮ひなた", kind: "virtual", role: "vsinger", region: "jp", agency: "hololive", isSinging: true },
+  { handle: "AZKi_VDiVA", name: "AZKi", kind: "virtual", role: "vsinger", region: "jp", agency: null, isSinging: true },
+  { handle: "tsumugi_usu", name: "紡", kind: "virtual", role: "vsinger", region: "jp", agency: "hololive", isSinging: true },
+  { handle: "amagase_ri_a", name: "甘城 리 RAN", kind: "virtual", role: "vsinger", region: "jp", agency: "hololive", isSinging: true },
+  { handle: "ten_sei_ringo", name: "転生林檎", kind: "virtual", role: "vsinger", region: "jp", agency: "hololive", isSinging: true },
+  { handle: "kousaki_hou", name: "香椎ほい", kind: "virtual", role: "vtuber", region: "jp", agency: "hololive", isSinging: true },
+  { handle: "kohei_tachibana", name: "橘公司", kind: "virtual", role: "vsinger", region: "jp", agency: "hololive", isSinging: true },
+  { handle: "himemori_luna", name: "姫森ルーナ", kind: "virtual", role: "vtuber", region: "jp", agency: "hololive", isSinging: true },
+  { handle: "UsadaPareo_US", name: "兎田ぺろ", kind: "virtual", role: "vtuber", region: "jp", agency: "hololive", isSinging: true },
+  { handle: "HoushouMarine", name: "宝鐘マリン", kind: "virtual", role: "vtuber", region: "jp", agency: "hololive", isSinging: true },
+  { handle: "Suisei_Hoshimachi", name: "星街すい", kind: "virtual", role: "vtuber", region: "jp", agency: "hololive", isSinging: true },
+  { handle: "shirakamifubuki", name: "白上フブキ", kind: "virtual", role: "vtuber", region: "jp", agency: "hololive", isSinging: true },
+  { handle: "natsuiro_matsuri", name: "夏色natsuiro", kind: "virtual", role: "vtuber", region: "jp", agency: "hololive", isSinging: true },
+  { handle: "tsunomakiwatame", name: "角巻わため", kind: "virtual", role: "vtuber", region: "jp", agency: "hololive", isSinging: true },
+  { handle: "NekomataOkayu", name: "猫又おかゆ", kind: "virtual", role: "vtuber", region: "jp", agency: "hololive", isSinging: true },
+  { handle: "InugamiKorone", name: "戌神ころね", kind: "virtual", role: "vtuber", region: "jp", agency: "hololive", isSinging: true },
+  { handle: "OmaruPolka", name: "おまるポリカ", kind: "virtual", role: "vtuber", region: "jp", agency: "hololive", isSinging: true },
+  { handle: "MinatoAquaOfficial", name: "湊あくあ", kind: "virtual", role: "vtuber", region: "jp", agency: "hololive", isSinging: true },
+  { handle: "momotsunene", name: "桃 momo", kind: "virtual", role: "vtuber", region: "jp", agency: "hololive", isSinging: true },
+  { handle: "YuNi_VSinger", name: "YuNi", kind: "virtual", role: "vsinger", region: "jp", agency: null, isSinging: true, note: "Virtual singer, former VOMS" },
+  { handle: "KAF_CHANNEL", name: "KAF", kind: "virtual", role: "vsinger", region: "en", agency: "nijisanji", isSinging: true },
+  { handle: "MIMI__JP", name: "MIMI", kind: "virtual", role: "vsinger", region: "jp", agency: null, isSinging: true },
+  { handle: "RIZIN_UTA", name: "RIZIN", kind: "virtual", role: "vsinger", region: "jp", agency: null, isSinging: true },
+];
+
+/* -------------------------------------------------------------------------- */
+/* Virtual performers — English / SEA                                         */
+/* -------------------------------------------------------------------------- */
+
+export const VIRTUAL_EN: SeedEntry[] = [
+  { handle: "CalliopeMori", name: "Mori Calliope", kind: "virtual", role: "vtuber", region: "en", agency: "hololive", isSinging: true },
+  { handle: "IRyS_En", name: "IRyS", kind: "virtual", role: "vsinger", region: "en", agency: "hololive", isSinging: true },
+  { handle: "GawrGura", name: "Gawr Gura", kind: "virtual", role: "vtuber", region: "en", agency: "hololive", isSinging: true },
+  { handle: "AmeliaWatson", name: "Amelia Watson", kind: "virtual", role: "vtuber", region: "en", agency: "hololive", isSinging: true },
+  { handle: "Ironmouse", name: "Ironmouse", kind: "virtual", role: "vtuber", region: "en", agency: "vshojo", isSinging: true },
+  { handle: "Nyanners", name: "Nyanners", kind: "virtual", role: "vtuber", region: "en", agency: "vshojo", isSinging: true },
+  { handle: "shylily_official", name: "Shylily", kind: "virtual", role: "vtuber", region: "en", agency: "vshojo", isSinging: true },
+  { handle: "CeresFauna", name: "Ceres Fauna", kind: "virtual", role: "vtuber", region: "en", agency: "vshojo", isSinging: true },
+  { handle: "Veibae", name: "Veibae", kind: "virtual", role: "vtuber", region: "en", agency: "vshojo", isSinging: true },
+  { handle: "AkiRosenthalVT", name: "Aki Rosenthal", kind: "virtual", role: "vtuber", region: "en", agency: "hololive", isSinging: true },
+  { handle: "KoboKanaeru", name: "Kobo Kanaeru", kind: "virtual", role: "vtuber", region: "en", agency: "hololive", isSinging: true },
+  { handle: "Raora", name: "Raora Panthera", kind: "virtual", role: "vtuber", region: "en", agency: "hololive", isSinging: true },
+  { handle: "KuzuichiVT", name: "Kuzuichi", kind: "virtual", role: "vtuber", region: "en", agency: "vshojo", isSinging: true },
+  { handle: "sinderia", name: "Sinderia", kind: "virtual", role: "vtuber", region: "sea", agency: null, isSinging: false },
+  { handle: "Mikenakajima", name: "Mikenakajima", kind: "virtual", role: "vtuber", region: "id", agency: null, isSinging: false },
+];
+
+export const VIRTUAL_ID: SeedEntry[] = [
+  { handle: "AyundaRisu", name: "Ayunda Risu", kind: "virtual", role: "vtuber", region: "id", agency: "hololive", isSinging: true },
+  { handle: "MoonaHoshinova", name: "Moona Hoshinova", kind: "virtual", role: "vtuber", region: "id", agency: "hololive", isSinging: true },
+  { handle: "AiraniIroha", name: "Airani Iroha", kind: "virtual", role: "vtuber", region: "id", agency: "hololive", isSinging: true },
+  { handle: "KureijiOllie", name: "Kureiji Ollie", kind: "virtual", role: "vtuber", region: "id", agency: "hololive", isSinging: true },
+];
+
+export const VIRTUAL_CN: SeedEntry[] = [
+  { handle: "rikka_lu", name: "鹿鸣", kind: "virtual", role: "vtuber", region: "cn", agency: "hololivecn", isSinging: true },
+  { handle: "Lumi_Ch", name: "A-SOUL 珈乐", kind: "virtual", role: "vtuber", region: "cn", agency: null, isSinging: true },
+  { handle: "ShigureUi", name: "時雨 Shigure Ui", kind: "virtual", role: "vsinger", region: "cn", agency: null, isSinging: true },
+];
+
+/* -------------------------------------------------------------------------- */
+/* Real (human) singers, songwriters and producers                           */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * The "real" dataset. These are human performers and music producers — the
+ * dataset counterpart to the VTuber set. They are kept in a completely
+ * separate file in `data/` so the web UI can switch between
+ * *virtual / real / both* without any cross-contamination.
+ */
+export const REAL_ARTISTS: SeedEntry[] = [
+  /* --- Japanese producers / composers --- */
+  { handle: "deco27", name: "DECO*27", kind: "real", role: "producer", region: "jp", agency: null, isSinging: false },
+  { handle: "camellia", name: "かめりあ (Camellia)", kind: "real", role: "producer", region: "jp", agency: null, isSinging: false },
+  { handle: "kanaria", name: "Kanaria.", kind: "real", role: "producer", region: "jp", agency: null, isSinging: false },
+  { handle: "teddyloid", name: "TeddyLoid", kind: "real", role: "producer", region: "jp", agency: null, isSinging: false },
+  { handle: "sakuzyo", name: "Sakuzyo", kind: "real", role: "producer", region: "jp", agency: null, isSinging: false },
+  { handle: "plight_official", name: "P*Light", kind: "real", role: "producer", region: "jp", agency: null, isSinging: false },
+  { handle: "sawanoHiroyuki", name: "澤野弘之", kind: "real", role: "composer", region: "jp", agency: null, isSinging: false },
+  { handle: "yukiKaji", name: "梶浦由記", kind: "real", role: "composer", region: "jp", agency: null, isSinging: false },
+  { handle: "livetune", name: "kz (livetune)", kind: "real", role: "producer", region: "jp", agency: null, isSinging: false },
+  { handle: "M2U_Maker", name: "M2U", kind: "real", role: "producer", region: "kr", agency: null, isSinging: false },
+  { handle: "AKIHABARA_backstreet", name: "BACK-ON", kind: "real", role: "musician", region: "jp", agency: null, isSinging: true },
+
+  /* --- Japanese singers / songwriters --- */
+  { handle: "KenshiYonezu", name: "米津玄師", kind: "real", role: "singer", region: "jp", agency: null, isSinging: true },
+  { handle: "yoasobi", name: "YOASOBI", kind: "real", role: "singer", region: "jp", agency: null, isSinging: true },
+  { handle: "radwimps", name: "RADWIMPS", kind: "real", role: "musician", region: "jp", agency: null, isSinging: true },
+  { handle: "aimyon", name: "あいみょん", kind: "real", role: "singer", region: "jp", agency: null, isSinging: true },
+  { handle: "Ado_voice", name: "Ado", kind: "real", role: "singer", region: "jp", agency: null, isSinging: true },
+  { handle: "Vaundy", name: "Vaundy", kind: "real", role: "singer", region: "jp", agency: null, isSinging: true },
+  { handle: "Mrs_GREEN_APPLE", name: "Mrs. GREEN APPLE", kind: "real", role: "musician", region: "jp", agency: null, isSinging: true },
+  { handle: "AimerOfficial", name: "Aimer", kind: "real", role: "singer", region: "jp", agency: null, isSinging: true },
+  { handle: "unvelope_mkb", name: "小林未郁", kind: "real", role: "singer", region: "jp", agency: null, isSinging: true },
+  { handle: "hitsuji_bungaku", name: "羊文学", kind: "real", role: "musician", region: "jp", agency: null, isSinging: true },
+  { handle: "chelmico", name: "chelmico", kind: "real", role: "musician", region: "jp", agency: null, isSinging: true },
+  { handle: "suda_agenai", name: "須田景凪", kind: "real", role: "singer", region: "jp", agency: null, isSinging: true },
+  { handle: "suda_masaki", name: "菅田将暉", kind: "real", role: "singer", region: "jp", agency: null, isSinging: true },
+  { handle: "Yorushika_official", name: "ヨルシカ", kind: "real", role: "musician", region: "jp", agency: null, isSinging: true },
+  { handle: "Omoinotake", name: "尾張のんきゅ", kind: "real", role: "musician", region: "jp", agency: null, isSinging: true },
+  { handle: "mikenakajima2", name: "三森すずこ", kind: "real", role: "singer", region: "jp", agency: null, isSinging: true },
+
+  /* --- Western / international --- */
+  { handle: "taylorswift", name: "Taylor Swift", kind: "real", role: "singer", region: "en", agency: null, isSinging: true },
+  { handle: "childishgambino", name: "Childish Gambino", kind: "real", role: "singer", region: "en", agency: null, isSinging: true },
+  { handle: "iann_dior", name: "iann dior", kind: "real", role: "singer", region: "en", agency: null, isSinging: true },
+  { handle: "EDENofficial", name: "EDEN", kind: "real", role: "producer", region: "en", agency: null, isSinging: false },
+  { handle: "brakence", name: "brakence", kind: "real", role: "musician", region: "en", agency: null, isSinging: true },
+  { handle: "mushroom", name: "Mushroom", kind: "real", role: "producer", region: "en", agency: null, isSinging: false },
+  { handle: "Powerless__music", name: "Powerless", kind: "real", role: "producer", region: "en", agency: null, isSinging: false },
+  { handle: "s3rl", name: "S3RL", kind: "real", role: "producer", region: "en", agency: null, isSinging: false },
+  { handle: "TrippyTurtle", name: "Trippy Turtle", kind: "real", role: "musician", region: "en", agency: null, isSinging: true },
+  { handle: "DPRLIVE", name: "DPR Live", kind: "real", role: "musician", region: "kr", agency: null, isSinging: true },
+];
+
+/* -------------------------------------------------------------------------- */
+/* Aggregates                                                                */
+/* -------------------------------------------------------------------------- */
+
+export const ALL_SEEDS: SeedEntry[] = [
+  ...VIRTUAL_JP,
+  ...VIRTUAL_EN,
+  ...VIRTUAL_ID,
+  ...VIRTUAL_CN,
+  ...REAL_ARTISTS,
+];
+
+/** Seeds that belong to the "real human artist" dataset. */
+export const REAL_SEEDS = REAL_ARTISTS;
+
+/** Seeds that belong to the "virtual performer" dataset. */
+export const VIRTUAL_SEEDS = [
+  ...VIRTUAL_JP,
+  ...VIRTUAL_EN,
+  ...VIRTUAL_ID,
+  ...VIRTUAL_CN,
+];

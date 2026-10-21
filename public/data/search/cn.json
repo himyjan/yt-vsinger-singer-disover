@@ -1,0 +1,116 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-21T14:06:03.370Z",
+  "region": "cn",
+  "count": 2,
+  "tokens": [
+    "2017",
+    "channel",
+    "live",
+    "vsinger",
+    "から",
+    "は中",
+    "シユ",
+    "ユは",
+    "中国",
+    "国か",
+    "天下",
+    "御天",
+    "权御"
+  ],
+  "postings": [
+    [
+      1
+    ],
+    [
+      0
+    ],
+    [
+      1
+    ],
+    [
+      1
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      1
+    ],
+    [
+      1
+    ],
+    [
+      1
+    ]
+  ],
+  "idf": [
+    1.0986122886681096,
+    1.0986122886681096,
+    1.0986122886681096,
+    1.0986122886681096,
+    0.6931471805599453,
+    0.6931471805599453,
+    0.6931471805599453,
+    0.6931471805599453,
+    0.6931471805599453,
+    0.6931471805599453,
+    1.0986122886681096,
+    1.0986122886681096,
+    1.0986122886681096
+  ],
+  "entries": [
+    {
+      "k": "c",
+      "id": "UC4twdnrbafrix9QCZ9Cn2iw",
+      "n": "シユは中国から",
+      "g": "virtual",
+      "r": "cn",
+      "ts": 1792591562708,
+      "cn": "シユは中国から",
+      "th": "https://yt3.ggpht.com/ytc/AIdro_mh_Jr4u5GX5Qib1R0i8Br1tOhQls5XU0PjkTHvGsMMLQ=s68-c-k-c0x00ffffff-no-rj",
+      "sb": null
+    },
+    {
+      "k": "i",
+      "id": "Y2x14Ez6hV8",
+      "n": "Vsinger Live 2017 权御天下",
+      "g": "virtual",
+      "r": "cn",
+      "c": "live",
+      "ts": 1523110989136,
+      "ch": "UC4twdnrbafrix9QCZ9Cn2iw",
+      "cn": "シユは中国から",
+      "th": "https://i.ytimg.com/vi/Y2x14Ez6hV8/hq720.jpg?sqp=-oaymwEcCOgCEMoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBwy0qnywUVT3DzOXKIcAbseKM0Tg",
+      "s": null,
+      "o": null,
+      "st": "past",
+      "d": null,
+      "ac": 0,
+      "gd": "unknown",
+      "ai": 0,
+      "vr": "unknown"
+    }
+  ]
+}

@@ -1,779 +1,1272 @@
-<script setup lang="ts" vapor>
-import { ref, onMounted, computed } from 'vue';
+<script setup lang="ts">
+/**
+ * VSinger & Singer Tracker — main application shell.
+ *
+ * Layout:
+ *   • Desktop — a sticky header with the global scope switch, region filter,
+ *     search bar and view tabs, then a responsive card grid.
+ *   • Mobile — the same header, condensed, plus a fixed bottom tab bar.
+ *
+ * Every view is filtered through `filterItems` / `filterChannels`, which apply
+ * the global scope switch (Virtual / Real / Both) and the region filter. That
+ * is why the switch works in every part of the app without each view having
+ * to know about it.
+ */
+import { computed, onMounted, ref, watch } from "vue";
+import type {
+  Channel,
+  ChannelSummary,
+  Item,
+  RegionCode,
+} from "@shared/lib/types";
+import {
+  loadAllChannels,
+  loadItems,
+  loadLive,
+  loadManifest,
+  loadSummaries,
+  loadUpcoming,
+  filterChannels,
+  filterItems,
+  formatCount,
+  search,
+} from "@/lib/dataset";
+import {
+  activeAccount,
+  addAccount,
+  type LinkedAccount,
+  allAccounts,
+  allSubscriptions,
+  initTheme,
+  removeAccount,
+  setActiveAccount,
+  setRegion,
+  setScope,
+  setSubscriptions,
+  setView,
+  state,
+  subscriptionKey,
+  toggleSaved,
+  toggleTheme,
+  showToast,
+  type Scope,
+  type Subscription,
+  type ViewId,
+} from "@/lib/store";
+import {
+  AUTH_PROVIDERS,
+  normalizeForMatch,
+  type AuthProvider,
+} from "@/lib/auth";
+import { channelLinks, itemUrl, platformMeta } from "@/lib/links";
+import LiveCard from "@/components/LiveCard.vue";
+import ChannelDrawer from "@/components/ChannelDrawer.vue";
 
-const DARK_KEY = 'yt_sing_dark';
-const isDark = ref(false);
+/* -------------------------------------------------------------------------- */
+/* State                                                                      */
+/* -------------------------------------------------------------------------- */
 
-const toggleDark = () => {
-  isDark.value = !isDark.value;
-  try {
-    localStorage.setItem(DARK_KEY, isDark.value ? '1' : '0');
-  } catch (_) { }
-  document.documentElement.classList.toggle('dark', isDark.value);
-};
-
-interface Channel {
-  id: string;
-  name: string;
-  handle?: string;
-  thumbnail: string;
-  thumbnails?: { url: string }[];
-  last_synced: number;
-  is_collected: number;
-}
-
-interface Item {
-  id: string;
-  channel_id: string;
-  channel_name: string;
-  title: string;
-  type: 'video' | 'playlist';
-  thumbnail: string;
-  published_at: string;
-  is_collected: number;
-}
-
+const manifest = ref<Awaited<ReturnType<typeof loadManifest>>>(null);
+const summaries = ref<ChannelSummary[]>([]);
 const channels = ref<Channel[]>([]);
-const items = ref<Item[]>([]);
-const searchResults = ref<any[]>([]);
-const stats = ref({
-  totalChannels: 0,
-  collectedChannels: 0,
-  totalItems: 0,
-  collectedPlaylists: 0,
-  discoveryVideos: 0,
-  discoveryPlaylists: 0
+const live = ref<Item[]>([]);
+const upcoming = ref<Item[]>([]);
+const allItems = ref<Item[]>([]);
+const loading = ref(true);
+const searchHits = ref<any[]>([]);
+const searching = ref(false);
+
+const drawerChannel = ref<Channel | null>(null);
+const drawerItem = ref<Item | null>(null);
+
+const channelById = computed(() => {
+  const map = new Map<string, Channel>();
+  for (const channel of channels.value) map.set(channel.id, channel);
+  return map;
 });
-const isSyncing = ref(false);
-const isSearching = ref(false);
-const searchQuery = ref('');
-const searchType = ref<'all' | 'video' | 'playlist' | 'channel'>('all');
-const activeTab = ref<'items' | 'discovery_playlists' | 'channels' | 'collected_channels' | 'collected_playlists' | 'search' | 'blacklist'>('items');
-const itemSort = ref('newest');
-const channelSort = ref('name');
-const KEYWORDS_KEY = 'yt_discovery_keywords';
-const discoveryKeywords = ref<string[]>([]);
-const newKeyword = ref('');
 
-const loadKeywords = () => {
-  try {
-    const saved = localStorage.getItem(KEYWORDS_KEY);
-    if (saved) {
-      discoveryKeywords.value = JSON.parse(saved);
-    } else {
-      discoveryKeywords.value = [
-        'vsinger', '歌ってみた', '歌回', '歌枠', '弾き語り',
-        '歌い手', 'VTuber 歌', 'Music Video', 'Cover', 'オリジナル曲'
-      ];
+const summaryById = computed(() => {
+  const map = new Map<string, ChannelSummary>();
+  for (const summary of summaries.value) map.set(summary.id, summary);
+  return map;
+});
+
+/* -------------------------------------------------------------------------- */
+/* Filtering                                                                  */
+/* -------------------------------------------------------------------------- */
+
+const CATEGORIES = [
+  { id: "cover", label: "Covers" },
+  { id: "mv", label: "MVs" },
+  { id: "original", label: "Originals" },
+  { id: "live", label: "Live" },
+  { id: "premiere", label: "Premieres" },
+  { id: "performance", label: "Performances" },
+] as const;
+
+const SUB_FILTERS = [
+  { id: "all", label: "All", countKey: "all" },
+  { id: "tracked", label: "Tracked", countKey: "tracked" },
+  { id: "untracked", label: "Not tracked", countKey: "untracked" },
+] as const;
+
+const GENDERS = [
+  { id: "all", label: "Any gender" },
+  { id: "female", label: "♀ Female" },
+  { id: "male", label: "♂ Male" },
+] as const;
+
+const visibleLive = computed(() =>
+  filterItems(live.value, {
+    kind: state.scope,
+    region: state.region,
+    categories: state.categories,
+    gender: state.gender,
+    ai: state.ai,
+    limit: 300,
+  }),
+);
+
+const visibleUpcoming = computed(() =>
+  filterItems(upcoming.value, {
+    kind: state.scope,
+    region: state.region,
+    gender: state.gender,
+    ai: state.ai,
+    limit: 300,
+  }),
+);
+
+const visibleSongs = computed(() =>
+  filterItems(
+    allItems.value.filter((i) =>
+      ["cover", "mv", "original", "performance"].includes(i.category),
+    ),
+    {
+      kind: state.scope,
+      region: state.region,
+      categories: state.categories,
+      acoustic: state.acousticOnly,
+      gender: state.gender,
+      ai: state.ai,
+      limit: 400,
+    },
+  ),
+);
+
+const visibleChannels = computed(() =>
+  filterChannels(summaries.value, {
+    kind: state.scope,
+    region: state.region,
+    gender: state.gender,
+    ai: state.ai,
+    text: state.query.trim() || undefined,
+    limit: 400,
+  }),
+);
+
+const linkedProviders = computed(() =>
+  AUTH_PROVIDERS.filter((provider) => (state.accounts[provider.id] ?? []).length > 0),
+);
+
+const hasAnyAccount = computed(() => allAccounts().length > 0);
+
+/** The account popover. */
+const showAccountMenu = ref(false);
+
+/** Short random id for a newly linked account. */
+function randomId(): string {
+  return Math.random().toString(36).slice(2, 10);
+}
+
+const visibleSubscriptions = computed(() =>
+  allSubscriptions().filter((sub) => {
+    if (state.scope !== "both" && sub.kind !== state.scope) return false;
+    if (state.region !== "all" && sub.region && sub.region !== state.region) {
+      return false;
     }
-  } catch (_) {
-    discoveryKeywords.value = ['vsinger', 'Cover'];
+    if (state.subsTracked === "tracked" && !sub.known) return false;
+    if (state.subsTracked === "untracked" && sub.known) return false;
+    return true;
+  }),
+);
+
+const subscriptionCounts = computed(() => {
+  const all = allSubscriptions();
+  return {
+    all: all.length,
+    tracked: all.filter((s) => s.known).length,
+    untracked: all.filter((s) => !s.known).length,
+  };
+});
+
+const visibleSaved = computed(() => {
+  const items: Item[] = [];
+  for (const entry of state.saved) {
+    if (entry.kind !== "item") continue;
+    const found = allItems.value.find((i) => i.id === entry.id);
+    if (found) items.push(found);
   }
-};
+  return filterItems(items, {
+    kind: state.scope,
+    region: state.region,
+    gender: state.gender,
+    ai: state.ai,
+    limit: 200,
+  });
+});
 
-const saveKeywords = () => {
-  try {
-    localStorage.setItem(KEYWORDS_KEY, JSON.stringify(discoveryKeywords.value));
-  } catch (_) { }
-};
+/* -------------------------------------------------------------------------- */
+/* Search                                                                     */
+/* -------------------------------------------------------------------------- */
 
-const addKeyword = () => {
-  const kw = newKeyword.value.trim();
-  if (kw && !discoveryKeywords.value.includes(kw)) {
-    discoveryKeywords.value.push(kw);
-    saveKeywords();
-    newKeyword.value = '';
+let searchTimer: number | undefined;
+
+watch(
+  () => [state.query, state.scope, state.region],
+  () => {
+    window.clearTimeout(searchTimer);
+    searchTimer = window.setTimeout(runSearch, 180);
+  },
+);
+
+async function runSearch(): Promise<void> {
+  const query = state.query.trim();
+  if (!query) {
+    searchHits.value = [];
+    return;
   }
-};
-
-const removeKeyword = (kw: string) => {
-  discoveryKeywords.value = discoveryKeywords.value.filter(k => k !== kw);
-  selectedKeywords.value = selectedKeywords.value.filter(k => k !== kw);
-  saveKeywords();
-  fetchData();
-};
-
-const selectedKeywords = ref<string[]>([]);
-const blacklist = ref<any[]>([]);
-const isBlacklisting = ref(new Set<string>());
-
-const isAuthReady = ref(false);
-const isServerReady = ref(false);
-const serverError = ref<string | null>(null);
-
-const checkServer = async (retries = 10) => {
+  searching.value = true;
   try {
-    const res = await fetch('/api/health');
-    if (res.ok) {
-      isServerReady.value = true;
-      fetchData();
-      return;
-    }
-  } catch (e) {
-    console.warn('Server not ready yet, retrying...', e);
-  }
-
-  if (retries > 0) {
-    setTimeout(() => checkServer(retries - 1), 2000);
-  } else {
-    serverError.value = 'Server failed to start. Please try refreshing the page.';
-  }
-};
-
-const handleReload = () => {
-  window.location.reload();
-};
-
-const fetchData = async (retries = 3) => {
-  if (!isServerReady.value) return;
-  try {
-    const keywordQuery = selectedKeywords.value.length > 0 ? `&keywords=${encodeURIComponent(selectedKeywords.value.join(','))}` : '';
-    const urls = [
-      `/api/vsingers?sort=${channelSort.value}`,
-      `/api/items?type=video&collected=false&sort=${itemSort.value}${keywordQuery}`,
-      `/api/vsingers?collected=true&sort=${channelSort.value}`,
-      `/api/items?collected=true&type=playlist&sort=${itemSort.value}`,
-      '/api/summary',
-      `/api/items?type=playlist&collected=false&sort=${itemSort.value}${keywordQuery}`
-    ];
-
-    const results = await Promise.allSettled(urls.map(url => fetch(url)));
-
-    // Check if any request failed completely (network error)
-    const failedNetwork = results.filter(r => r.status === 'rejected');
-    if (failedNetwork.length > 0) {
-      throw new Error('Network error: ' + (failedNetwork[0] as PromiseRejectedResult).reason);
-    }
-
-    // Check if any request returned non-ok status
-    const failedStatus = results.filter(r => r.status === 'fulfilled' && !r.value.ok);
-    if (failedStatus.length > 0) {
-      throw new Error('API error: ' + (failedStatus[0] as PromiseFulfilledResult<Response>).value.statusText);
-    }
-
-    // All good, parse JSON
-    const [channelsData, discoveryVideosData, collectedChannelsData, collectedPlaylistsData, statsData, discoveryPlaylistsData] = await Promise.all(
-      results.map(r => (r as PromiseFulfilledResult<Response>).value.json())
-    );
-
-    stats.value = statsData;
-
-    if (activeTab.value === 'items') {
-      items.value = discoveryVideosData;
-    } else if (activeTab.value === 'discovery_playlists') {
-      items.value = discoveryPlaylistsData;
-    } else if (activeTab.value === 'channels') {
-      channels.value = channelsData;
-    } else if (activeTab.value === 'collected_channels') {
-      channels.value = collectedChannelsData;
-    } else if (activeTab.value === 'collected_playlists') {
-      items.value = collectedPlaylistsData;
-    } else if (activeTab.value === 'blacklist') {
-      const res = await fetch('/api/blacklist');
-      if (res.ok) blacklist.value = await res.json();
-    }
-  } catch (e) {
-    console.error('Fetch error:', e);
-    if (retries > 0) {
-      console.log(`Retrying... (${retries} attempts left)`);
-      setTimeout(() => fetchData(retries - 1), 2000);
-    } else {
-      // If all retries fail, maybe the server restarted. Let's re-check health.
-      isServerReady.value = false;
-      checkServer();
-    }
-  }
-};
-
-const handleSearch = async () => {
-  if (!searchQuery.value.trim()) return;
-  isSearching.value = true;
-  activeTab.value = 'search';
-  try {
-    const typeParam = searchType.value !== 'all' ? `&type=${searchType.value}` : '';
-    const res = await fetch(`/api/search?q=${encodeURIComponent(searchQuery.value)}${typeParam}`);
-    searchResults.value = await res.json();
-  } catch (e) {
-    console.error(e);
-  } finally {
-    isSearching.value = false;
-  }
-};
-
-const isCollecting = ref(new Set<string>());
-
-const toggleCollect = async (item: any, type: 'channel' | 'video' | 'playlist') => {
-  if (isCollecting.value.has(item.id)) return;
-
-  const currentStatus = item.is_collected || 0;
-  isCollecting.value.add(item.id);
-
-  try {
-    // Sanitize itemData to avoid circular references or too much data
-    let sanitizedItemData = null;
-    if (activeTab.value === 'search') {
-      const getItemId = (obj: any) => {
-        let id = obj.id || obj.playlist_id || obj.video_id;
-        if (typeof id === 'object' && id !== null) id = id.toString();
-        return id?.toString();
-      };
-
-      const itemId = getItemId(item);
-
-      sanitizedItemData = {
-        id: itemId,
-        title: getTitle(item),
-        type: (item.type || 'video').toLowerCase(),
-        thumbnail: getThumbnailUrl(item),
-        published: item.published?.toString() || item.publishedAt?.toString(),
-        author: item.author ? {
-          id: getItemId(item.author) || item.author.id?.toString(),
-          name: item.author.name?.toString() || item.author.name,
-          handle: item.author.handle,
-          thumbnails: item.author.thumbnails
-        } : null,
-        channel: item.channel ? {
-          id: getItemId(item.channel) || item.channel.id?.toString(),
-          name: item.channel.name?.toString() || item.channel.name,
-          handle: item.channel.handle
-        } : null
-      };
-    }
-
-    const res = await fetch('/api/toggle-favorite', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        id: item.id,
-        type,
-        collected: !currentStatus,
-        itemData: sanitizedItemData
-      })
+    const hits = await search(query, {
+      kind: state.scope,
+      region: state.region,
+      limit: 120,
     });
-
-    if (!res.ok) {
-      const errData = await res.json().catch(() => ({}));
-      throw new Error(errData.error || 'Failed to update collection status');
-    }
-
-    // Update local state immediately for better UX
-    const newStatus = !currentStatus ? 1 : 0;
-    if (activeTab.value === 'search') {
-      searchResults.value = searchResults.value.map(res => {
-        if (res.id === item.id) return { ...res, is_collected: newStatus };
-        return res;
-      });
-    } else if (activeTab.value === 'items' || activeTab.value === 'discovery_playlists' || activeTab.value === 'collected_playlists') {
-      // If we are in a discovery tab and just collected, remove it from the list
-      if (newStatus === 1 && (activeTab.value === 'items' || activeTab.value === 'discovery_playlists')) {
-        items.value = items.value.filter(i => i.id !== item.id);
-      } else {
-        items.value = items.value.map(i => {
-          if (i.id === item.id) return { ...i, is_collected: newStatus };
-          return i;
-        });
-      }
-    } else if (activeTab.value === 'channels' || activeTab.value === 'collected_channels') {
-      // If we are in a discovery tab and just collected, remove it from the list
-      if (newStatus === 1 && activeTab.value === 'channels') {
-        channels.value = channels.value.filter(c => c.id !== item.id);
-      } else {
-        channels.value = channels.value.map(c => {
-          if (c.id === item.id) return { ...c, is_collected: newStatus };
-          return c;
-        });
-      }
-    }
-
-    // Refresh stats in background
-    fetch('/api/summary').then(r => r.json()).then(data => stats.value = data).catch(() => { });
-
-    // If we are in a "collected" tab and just uncollected, we should probably refresh the list
-    if (currentStatus === 1 && (activeTab.value === 'collected_channels' || activeTab.value === 'collected_playlists')) {
-      await fetchData();
-    }
-  } catch (e) {
-    console.error('Collect error:', e);
-    alert(e instanceof Error ? e.message : 'Failed to update collection status');
-  } finally {
-    isCollecting.value.delete(item.id);
-  }
-};
-
-const addToBlacklist = async (channel: any) => {
-  if (isBlacklisting.value.has(channel.id)) return;
-  if (!confirm(`Are you sure you want to blacklist "${channel.name}"? This will remove all their content from your feed.`)) return;
-
-  isBlacklisting.value.add(channel.id);
-  try {
-    const res = await fetch('/api/blacklist', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        id: channel.id,
-        name: channel.name,
-        handle: channel.handle,
-        thumbnail: getThumbnailUrl(channel)
-      })
-    });
-    if (res.ok) {
-      // Remove from local lists
-      channels.value = channels.value.filter(c => c.id !== channel.id);
-      items.value = items.value.filter(i => i.channel_id !== channel.id);
-      searchResults.value = searchResults.value.filter(r => {
-        const cid = r.type === 'channel' ? r.id : (r.author?.id || r.channel?.id);
-        return cid !== channel.id;
-      });
-      fetch('/api/summary').then(r => r.json()).then(data => stats.value = data);
-    }
-  } catch (e) {
-    console.error(e);
-  } finally {
-    isBlacklisting.value.delete(channel.id);
-  }
-};
-
-const removeFromBlacklist = async (id: string) => {
-  try {
-    const res = await fetch(`/api/blacklist/${id}`, { method: 'DELETE' });
-    if (res.ok) {
-      blacklist.value = blacklist.value.filter(b => b.id !== id);
-    }
-  } catch (e) {
-    console.error(e);
-  }
-};
-
-const syncData = async () => {
-  isSyncing.value = true;
-  try {
-    await fetch('/api/sync', { method: 'POST' });
-    await fetchData();
-  } catch (e) {
-    console.error(e);
-  } finally {
-    isSyncing.value = false;
-  }
-};
-
-const handleExport = async () => {
-  try {
-    const response = await fetch('/api/export');
-    if (!response.ok) throw new Error('Export failed');
-    const blob = await response.blob();
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `vsinger_tracker_export_${new Date().toISOString().split('T')[0]}.json`;
-    document.body.appendChild(a);
-    a.click();
-    window.URL.revokeObjectURL(url);
-    document.body.removeChild(a);
-  } catch (e) {
-    console.error('Export failed:', e);
-  }
-};
-
-const importFileRef = ref<HTMLInputElement | null>(null);
-const isImporting = ref(false);
-const importMessage = ref<{ type: 'success' | 'error'; text: string } | null>(null);
-
-const handleImportClick = () => {
-  importMessage.value = null;
-  importFileRef.value?.click();
-};
-
-const handleImportFile = async (e: Event) => {
-  const input = e.target as HTMLInputElement;
-  const file = input.files?.[0];
-  input.value = '';
-  if (!file) return;
-  isImporting.value = true;
-  importMessage.value = null;
-  try {
-    const text = await file.text();
-    const data = JSON.parse(text) as { channels?: unknown[]; items?: unknown[]; blacklist?: unknown[] };
-    const channels = Array.isArray(data.channels) ? data.channels : [];
-    const items = Array.isArray(data.items) ? data.items : [];
-    const blacklistData = Array.isArray(data.blacklist) ? data.blacklist : [];
-
-    if (channels.length === 0 && items.length === 0 && blacklistData.length === 0) {
-      importMessage.value = { type: 'error', text: 'No channels, items, or blacklist in file.' };
-      return;
-    }
-    const res = await fetch('/api/import', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ channels, items, blacklist: blacklistData })
-    });
-    const result = await res.json();
-    if (!res.ok) {
-      importMessage.value = { type: 'error', text: result.error || 'Import failed.' };
-      return;
-    }
-    const { imported, skipped } = result;
-    importMessage.value = {
-      type: 'success',
-      text: `Imported ${imported.channels} channels, ${imported.items} items, ${imported.blacklist || 0} blacklist. Skipped ${skipped.channels} channels, ${skipped.items} items.`
-    };
-    await fetchData();
-    setTimeout(() => { importMessage.value = null; }, 5000);
+    searchHits.value = hits.map((h) => h.entry);
   } catch (err) {
-    importMessage.value = { type: 'error', text: err instanceof Error ? err.message : 'Invalid file or import failed.' };
+    console.error(err);
   } finally {
-    isImporting.value = false;
+    searching.value = false;
   }
-};
+}
 
-onMounted(() => {
+/* -------------------------------------------------------------------------- */
+/* Actions                                                                    */
+/* -------------------------------------------------------------------------- */
+
+const VIEWS: { id: ViewId; label: string; short: string }[] = [
+  { id: "live", label: "Live now", short: "Live" },
+  { id: "upcoming", label: "Upcoming", short: "Upcoming" },
+  { id: "songs", label: "Songs", short: "Songs" },
+  { id: "channels", label: "Channels", short: "Channels" },
+  { id: "subs", label: "My subscriptions", short: "Subs" },
+  { id: "saved", label: "Saved", short: "Saved" },
+];
+
+function selectScope(scope: Scope): void {
+  setScope(scope);
+}
+
+/**
+ * Toggles a content category. Several can be active at once — "MVs" and
+ * "Covers" together is a query people actually want.
+ */
+function toggleCategory(id: string): void {
+  const index = state.categories.indexOf(id as never);
+  if (index >= 0) state.categories.splice(index, 1);
+  else state.categories.push(id as never);
+}
+
+function openChannel(channel: Channel | ChannelSummary | null | undefined): void {
+  if (!channel) return;
+  const full = channelById.value.get(channel.id);
+  drawerChannel.value = full ?? (channel as Channel);
+  drawerItem.value = null;
+}
+
+function openItem(item: Item): void {
+  drawerItem.value = item;
+  drawerChannel.value = channelById.value.get(item.channelId) ?? null;
+}
+
+/**
+ * Links a platform account and loads its subscriptions.
+ *
+ * The subscriptions are matched against the local dataset: an exact channel
+ * id wins, otherwise the display name is compared — which is how a YouTube
+ * subscription of a VTuber who also streams on Twitch gets recognised.
+ */
+async function linkProvider(provider: AuthProvider): Promise<void> {
+  if (!provider.isConfigured()) {
+    showToast("error", provider.unavailableReason() ?? "Not configured.", 6000);
+    return;
+  }
+
+  state.subscriptionsLoading = true;
   try {
-    isDark.value = localStorage.getItem(DARK_KEY) === '1';
-  } catch (_) { }
-  document.documentElement.classList.toggle('dark', isDark.value);
-  loadKeywords();
-  checkServer();
+    const linked = await provider.link();
+    if (!linked) {
+      showToast("info", "Linking cancelled.");
+      return;
+    }
+    const account: LinkedAccount = {
+      ...linked,
+      id: `${linked.provider}:${randomId()}`,
+    };
+    addAccount(account);
+
+    const remote = await provider.subscriptions(account);
+    const byName = new Map<string, ChannelSummary>();
+    for (const summary of summaries.value) {
+      byName.set(normalizeForMatch(summary.name), summary);
+    }
+
+    const mapped: Subscription[] = remote.map((entry) => {
+      const exact = summaries.value.find((s) => s.id === entry.channelId);
+      const match = exact ?? byName.get(normalizeForMatch(entry.name));
+      return {
+        provider: provider.id,
+        channelId: entry.channelId,
+        title: entry.name,
+        handle: entry.handle,
+        thumbnail: entry.thumbnail,
+        description: entry.description,
+        kind: match?.kind ?? "unknown",
+        region: match?.region ?? null,
+        known: !!match,
+      };
+    });
+
+    setSubscriptions(subscriptionKey(provider.id, account.id), mapped);
+    showToast(
+      "success",
+      `${provider.label}: ${mapped.length} subscription(s) linked, ${mapped.filter((m) => m.known).length} already tracked.`,
+      6000,
+    );
+  } catch (err) {
+    showToast(
+      "error",
+      `${provider.label}: ${(err as Error).message}`,
+      6000,
+    );
+  } finally {
+    state.subscriptionsLoading = false;
+  }
+}
+
+function unlinkProvider(provider: AuthProvider, accountId: string): void {
+  const account = (state.accounts[provider.id] ?? []).find(
+    (a) => a.id === accountId,
+  );
+  if (account) provider.unlink(account as unknown as LinkedAccount);
+  removeAccount(provider.id, accountId);
+  showToast("info", `${provider.label} account unlinked.`);
+}
+
+async function reloadSubscriptions(): Promise<void> {
+  for (const provider of linkedProviders.value) {
+    const account = activeAccount(provider.id);
+    if (!account) continue;
+    try {
+      const remote = await provider.subscriptions(account as unknown as LinkedAccount);
+      const byName = new Map<string, ChannelSummary>();
+      for (const summary of summaries.value) {
+        byName.set(normalizeForMatch(summary.name), summary);
+      }
+      setSubscriptions(
+        subscriptionKey(provider.id, account.id),
+        remote.map((entry) => {
+          const exact = summaries.value.find((s) => s.id === entry.channelId);
+          const match = exact ?? byName.get(normalizeForMatch(entry.name));
+          return {
+            provider: provider.id,
+            channelId: entry.channelId,
+            title: entry.name,
+            handle: entry.handle,
+            thumbnail: entry.thumbnail,
+            description: entry.description,
+            kind: match?.kind ?? "unknown",
+            region: match?.region ?? null,
+            known: !!match,
+          };
+        }),
+      );
+    } catch {
+      /* keep the previous list */
+    }
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* Boot                                                                       */
+/* -------------------------------------------------------------------------- */
+
+onMounted(async () => {
+  initTheme();
+  loading.value = true;
+  try {
+    const [m, s, c, l, u] = await Promise.all([
+      loadManifest(),
+      loadSummaries(),
+      loadAllChannels(),
+      loadLive(),
+      loadUpcoming(),
+    ]);
+    manifest.value = m;
+    summaries.value = s;
+    channels.value = c;
+    live.value = l;
+    upcoming.value = u;
+
+    // The full item set is large; it is only needed for the Songs view.
+    allItems.value = await loadItems("all");
+
+    if (hasAnyAccount.value) await reloadSubscriptions();
+  } catch (err) {
+    console.error(err);
+    showToast("error", "Could not load the dataset.");
+  } finally {
+    loading.value = false;
+  }
 });
-
-const formatDate = (dateStr: any) => {
-  if (!dateStr) return '';
-  const str = typeof dateStr === 'object' && dateStr.toString ? dateStr.toString() : dateStr;
-  if (!str || str === 'undefined') return '';
-  const date = new Date(str);
-  if (isNaN(date.getTime())) {
-    return typeof str === 'string' ? str : '';
-  }
-  return date.toLocaleDateString();
-};
-
-const getTitle = (item: any) => {
-  if (!item) return 'Untitled';
-  const t = item.title?.text || item.title?.toString() || item.title;
-  if (t && typeof t === 'string' && t !== '[object Object]') return t;
-  return 'Untitled';
-};
-
-const getThumbnailUrl = (item: any) => {
-  let url = '';
-  if (item.thumbnail) {
-    url = typeof item.thumbnail === 'string' ? item.thumbnail : item.thumbnail.url;
-  } else if (item.thumbnails && Array.isArray(item.thumbnails) && item.thumbnails.length > 0) {
-    url = item.thumbnails[item.thumbnails.length - 1].url;
-  } else if (item.author?.thumbnails && Array.isArray(item.author.thumbnails) && item.author.thumbnails.length > 0) {
-    url = item.author.thumbnails[item.author.thumbnails.length - 1].url;
-  }
-
-  if (!url) return `https://www.gstatic.com/youtube/img/channels/default_avatar.png`;
-  // Ensure absolute URL
-  return url.startsWith('//') ? `https:${url}` : url;
-};
-
-const getYoutubeUrl = (item: any) => {
-  if (!item) return '#';
-  const type = (item.type || '').toLowerCase();
-  const isPlaylist = type === 'playlist';
-  let id = item.id || item.playlist_id;
-
-  if (id && typeof id === 'object') {
-    id = id.toString();
-  }
-
-  if (!id || id === 'undefined' || id === '[object Object]') return '#';
-
-  return isPlaylist
-    ? `https://www.youtube.com/playlist?list=${id}`
-    : `https://www.youtube.com/watch?v=${id}`;
-};
-
-const setTab = (tab: typeof activeTab.value) => {
-  activeTab.value = tab;
-  if (tab !== 'search') {
-    fetchData();
-  }
-};
 </script>
 
 <template>
-  <div class="h-screen flex flex-col bg-[#F5F5F0] dark:bg-gray-900 text-[#141414] dark:text-gray-100 font-sans selection:bg-[#5A5A40] dark:selection:bg-amber-600 selection:text-white overflow-hidden">
-    <!-- Server Loading State -->
-    <div v-if="!isServerReady" class="fixed inset-0 z-[100] bg-[#F5F5F0] dark:bg-gray-900 flex flex-col items-center justify-center p-6 text-center">
-      <div v-if="serverError" class="max-w-md">
-        <iconify-icon icon="lucide:alert-circle" width="48" class="text-red-500 mb-4"></iconify-icon>
-        <h2 class="text-2xl font-serif italic mb-2">{{ serverError }}</h2>
-        <p class="text-sm opacity-60 mb-6">The application server is taking longer than expected to start.</p>
-        <button @click="handleReload()" class="px-6 py-2.5 bg-[#5A5A40] dark:bg-amber-600 text-white rounded-full hover:bg-[#4A4A30] dark:hover:bg-amber-700 transition-all text-sm font-medium">
-          Reload Page
-        </button>
-      </div>
-      <div v-else class="flex flex-col items-center">
-        <div class="w-16 h-16 bg-[#5A5A40] dark:bg-amber-600 rounded-full flex items-center justify-center text-white mb-6 animate-bounce">
-          <iconify-icon icon="lucide:music" width="32"></iconify-icon>
-        </div>
-        <h2 class="text-2xl font-serif italic mb-2">Starting Application...</h2>
-        <p class="text-sm opacity-60">Initializing database and YouTube services.</p>
-        <div class="mt-8 flex gap-1">
-          <div class="w-2 h-2 bg-[#5A5A40] dark:bg-amber-600 rounded-full animate-bounce" style="animation-delay: 0s"></div>
-          <div class="w-2 h-2 bg-[#5A5A40] dark:bg-amber-600 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
-          <div class="w-2 h-2 bg-[#5A5A40] dark:bg-amber-600 rounded-full animate-bounce" style="animation-delay: 0.4s"></div>
-        </div>
-      </div>
-    </div>
+  <div
+    class="min-h-screen bg-[#f6f5f1] text-neutral-900 transition-colors duration-200 dark:bg-neutral-950 dark:text-neutral-100"
+  >
+    <!-- ───────────────────────── Header ───────────────────────── -->
+    <header
+      class="sticky top-0 z-40 border-b border-black/8 bg-[#f6f5f1]/90 backdrop-blur-xl dark:border-white/10 dark:bg-neutral-950/90"
+    >
+      <div class="mx-auto max-w-[1600px] px-3 sm:px-5">
+        <!-- Top row -->
+        <div class="flex items-center gap-2 py-2.5 sm:gap-3 sm:py-3">
+          <button
+            type="button"
+            class="flex shrink-0 items-center gap-2"
+            @click="setView('live')"
+          >
+            <span
+              class="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 text-base font-black text-white shadow-sm"
+              aria-hidden="true"
+            >
+              ♪
+            </span>
+            <span class="hidden text-lg font-bold tracking-tight sm:block">
+              VSinger<span class="text-purple-500">&amp;</span>Singer
+            </span>
+          </button>
 
-    <!-- Header -->
-    <header class="border-b border-[#141414]/10 dark:border-gray-700 bg-white/80 dark:bg-gray-900/90 backdrop-blur-md z-50 shrink-0">
-      <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between gap-8">
-        <div class="flex items-center gap-3 shrink-0">
-          <div class="w-10 h-10 bg-[#5A5A40] dark:bg-amber-600 rounded-full flex items-center justify-center text-white">
-            <iconify-icon icon="lucide:music" width="20"></iconify-icon>
+          <!-- Search -->
+          <div class="relative min-w-0 flex-1">
+            <input
+              v-model="state.query"
+              type="search"
+              placeholder="Search channels, songs, covers, MVs…"
+              class="w-full rounded-full border border-black/10 bg-white py-2 pr-9 pl-9 text-sm outline-none transition placeholder:text-neutral-400 focus:border-purple-400 focus:ring-2 focus:ring-purple-500/20 dark:border-white/12 dark:bg-neutral-900 dark:placeholder:text-neutral-500"
+              aria-label="Search"
+            />
+            <svg
+              class="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-neutral-400"
+              viewBox="0 0 20 20"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <circle cx="9" cy="9" r="6" />
+              <path d="m14 14 4 4" stroke-linecap="round" />
+            </svg>
+            <span
+              v-if="searching"
+              class="absolute top-1/2 right-3 h-3.5 w-3.5 -translate-y-1/2 animate-spin rounded-full border-2 border-neutral-300 border-t-purple-500"
+            />
           </div>
-          <h1 class="text-2xl font-serif italic font-medium tracking-tight hidden sm:block">VSinger & Singer Tracker</h1>
-        </div>
 
-        <!-- Search Bar -->
-        <div class="flex-1 max-w-2xl relative flex items-center gap-2">
-          <div class="relative flex-1">
-            <input v-model="searchQuery" @keyup.enter="handleSearch" type="text" placeholder="Search YouTube for Singers & VSingers..." class="w-full bg-[#F5F5F0] dark:bg-gray-800 border-none rounded-full py-2.5 pl-12 pr-4 focus:ring-2 focus:ring-[#5A5A40] dark:focus:ring-amber-500 transition-all text-sm dark:placeholder-gray-400" />
-            <iconify-icon icon="lucide:search" class="absolute left-4 top-1/2 -translate-y-1/2 text-[#141414]/40 dark:text-gray-400" width="18"></iconify-icon>
+          <!-- Scope switch -->
+          <div
+            class="hidden shrink-0 items-center rounded-full border border-black/10 bg-white p-0.5 md:flex dark:border-white/12 dark:bg-neutral-900"
+            role="group"
+            aria-label="Artist scope"
+          >
+            <button
+              v-for="option in (['virtual', 'real', 'both'] as Scope[])"
+              :key="option"
+              type="button"
+              class="rounded-full px-3 py-1.5 text-xs font-semibold transition"
+              :class="
+                state.scope === option
+                  ? 'bg-purple-600 text-white shadow-sm'
+                  : 'text-neutral-500 hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-100'
+              "
+              @click="selectScope(option)"
+            >
+              {{
+                option === "virtual"
+                  ? "Virtual"
+                  : option === "real"
+                    ? "Real"
+                    : "Both"
+              }}
+            </button>
           </div>
-          <select v-model="searchType" class="bg-[#F5F5F0] dark:bg-gray-800 border-none rounded-full px-4 py-2.5 text-xs focus:ring-2 focus:ring-[#5A5A40] dark:focus:ring-amber-500 outline-none transition-all">
-            <option value="all">All</option>
-            <option value="video">Videos</option>
-            <option value="playlist">Playlists</option>
-            <option value="channel">Channels</option>
-          </select>
+
+          <!-- Theme -->
+          <button
+            type="button"
+            class="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-black/10 bg-white text-neutral-600 transition hover:bg-neutral-100 dark:border-white/12 dark:bg-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800"
+            :aria-label="state.theme === 'dark' ? 'Switch to light' : 'Switch to dark'"
+            @click="toggleTheme"
+          >
+            <span v-if="state.theme === 'dark'" aria-hidden="true">☀</span>
+            <span v-else aria-hidden="true">☾</span>
+          </button>
+
+          <!-- Account -->
+          <div class="relative shrink-0">
+            <button
+              type="button"
+              class="grid h-9 w-9 place-items-center overflow-hidden rounded-full border border-black/10 bg-white text-neutral-600 transition hover:bg-neutral-100 dark:border-white/12 dark:bg-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800"
+              title="Linked accounts"
+              aria-label="Linked accounts"
+              :aria-expanded="showAccountMenu"
+              @click="showAccountMenu = !showAccountMenu"
+            >
+              <img
+                v-if="activeAccount('youtube')?.picture"
+                :src="activeAccount('youtube')!.picture!"
+                alt="Your account"
+                class="h-full w-full object-cover"
+              />
+              <span v-else-if="hasAnyAccount" aria-hidden="true">✓</span>
+              <span v-else aria-hidden="true">👤</span>
+            </button>
+
+            <!-- Account menu -->
+            <Transition
+              enter-active-class="transition duration-150 ease-out"
+              enter-from-class="scale-95 opacity-0"
+              leave-active-class="transition duration-100 ease-in"
+              leave-to-class="scale-95 opacity-0"
+            >
+              <div
+                v-if="showAccountMenu"
+                class="absolute top-11 right-0 z-50 w-72 overflow-hidden rounded-xl border border-black/10 bg-white shadow-xl dark:border-white/12 dark:bg-neutral-900"
+              >
+                <p
+                  class="border-b border-black/8 px-3 py-2 text-[11px] font-bold tracking-wide text-neutral-500 uppercase dark:border-white/10"
+                >
+                  Linked accounts
+                </p>
+
+                <!-- Linked accounts, with switch + logout -->
+                <div
+                  v-for="provider in AUTH_PROVIDERS"
+                  :key="provider.id"
+                  class="border-b border-black/5 last:border-b-0 dark:border-white/5"
+                >
+                  <p
+                    class="flex items-center gap-1.5 px-3 pt-2 pb-1 text-[10px] font-bold tracking-wide text-neutral-400 uppercase"
+                  >
+                    <span
+                      class="inline-block h-2 w-2 rounded-full"
+                      :style="{ backgroundColor: provider.color }"
+                      aria-hidden="true"
+                    />
+                    {{ provider.label }}
+                  </p>
+
+                  <div
+                    v-for="account in state.accounts[provider.id] ?? []"
+                    :key="account.id"
+                    class="flex items-center gap-2 px-3 py-1.5"
+                  >
+                    <button
+                      type="button"
+                      class="flex min-w-0 flex-1 items-center gap-2 text-left"
+                      @click="
+                        setActiveAccount(provider.id, account.id);
+                        reloadSubscriptions();
+                      "
+                    >
+                      <img
+                        v-if="account.picture"
+                        :src="account.picture"
+                        alt=""
+                        class="h-6 w-6 shrink-0 rounded-full object-cover"
+                      />
+                      <span
+                        v-else
+                        class="grid h-6 w-6 shrink-0 place-items-center rounded-full text-[10px] font-bold text-white"
+                        :style="{ backgroundColor: provider.color }"
+                        aria-hidden="true"
+                      >
+                        {{ (account.name ?? provider.label)[0] }}
+                      </span>
+                      <span class="min-w-0 flex-1">
+                        <span class="block truncate text-xs font-semibold">
+                          {{ account.name ?? provider.label }}
+                        </span>
+                        <span
+                          v-if="
+                            activeAccount(provider.id)?.id === account.id
+                          "
+                          class="block text-[10px] text-emerald-600 dark:text-emerald-400"
+                        >
+                          Active
+                        </span>
+                      </span>
+                    </button>
+
+                    <!-- Switch -->
+                    <button
+                      v-if="activeAccount(provider.id)?.id !== account.id"
+                      type="button"
+                      class="shrink-0 rounded px-1.5 py-0.5 text-[10px] font-semibold text-neutral-500 transition hover:bg-black/5 hover:text-neutral-800 dark:hover:bg-white/10 dark:hover:text-neutral-100"
+                      title="Switch to this account"
+                      @click="
+                        setActiveAccount(provider.id, account.id);
+                        reloadSubscriptions();
+                      "
+                    >
+                      Switch
+                    </button>
+
+                    <!-- Logout -->
+                    <button
+                      type="button"
+                      class="shrink-0 rounded px-1.5 py-0.5 text-[10px] font-semibold text-red-500 transition hover:bg-red-500/10"
+                      title="Sign out of this account"
+                      @click="unlinkProvider(provider, account.id)"
+                    >
+                      Sign out
+                    </button>
+                  </div>
+
+                  <!-- Link another -->
+                  <button
+                    type="button"
+                    class="w-full px-3 py-2 text-left text-[11px] font-semibold text-neutral-500 transition hover:bg-black/5 hover:text-neutral-800 dark:hover:bg-white/10 dark:hover:text-neutral-100"
+                    @click="linkProvider(provider)"
+                  >
+                    + Link another {{ provider.label }} account
+                  </button>
+                </div>
+
+                <button
+                  type="button"
+                  class="w-full border-t border-black/8 px-3 py-2 text-left text-[11px] font-semibold text-neutral-500 transition hover:bg-black/5 hover:text-neutral-800 dark:border-white/10 dark:hover:bg-white/10 dark:hover:text-neutral-100"
+                  @click="showAccountMenu = false"
+                >
+                  Close
+                </button>
+              </div>
+            </Transition>
+          </div>
         </div>
 
-        <input ref="importFileRef" type="file" accept=".json,application/json" class="hidden" @change="handleImportFile" />
-        <div class="flex items-center gap-2 shrink-0">
-          <button @click="toggleDark" :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'" class="p-2.5 rounded-full border border-[#141414]/10 dark:border-gray-600 bg-white dark:bg-gray-800 text-[#141414] dark:text-amber-400 hover:bg-[#F5F5F0] dark:hover:bg-gray-700 transition-all">
-            <iconify-icon v-if="isDark" icon="lucide:sun" width="18"></iconify-icon>
-            <iconify-icon v-else icon="lucide:moon" width="18"></iconify-icon>
+        <!-- View tabs -->
+        <nav
+          class="-mx-3 flex gap-1 overflow-x-auto px-3 pb-2 sm:-mx-5 sm:px-5"
+          aria-label="Views"
+        >
+          <button
+            v-for="view in VIEWS"
+            :key="view.id"
+            type="button"
+            class="shrink-0 rounded-full px-3 py-1.5 text-xs font-semibold whitespace-nowrap transition"
+            :class="
+              state.view === view.id
+                ? 'bg-neutral-900 text-white dark:bg-white dark:text-neutral-900'
+                : 'text-neutral-500 hover:bg-black/5 hover:text-neutral-800 dark:text-neutral-400 dark:hover:bg-white/8 dark:hover:text-neutral-100'
+            "
+            @click="setView(view.id)"
+          >
+            {{ view.label }}
+            <span
+              v-if="view.id === 'live' && visibleLive.length"
+              class="ml-1 rounded-full bg-red-500/15 px-1.5 text-[10px] font-bold text-red-500"
+            >
+              {{ visibleLive.length }}
+            </span>
           </button>
-          <button @click="handleImportClick" :disabled="isImporting" class="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-gray-800 border border-[#141414]/10 dark:border-gray-600 text-[#141414] dark:text-gray-100 rounded-full hover:bg-[#F5F5F0] dark:hover:bg-gray-700 transition-all text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed">
-            <iconify-icon icon="lucide:upload" width="16" :class="{ 'animate-pulse': isImporting }"></iconify-icon>
-            <span class="hidden lg:inline">{{ isImporting ? 'Importing...' : 'Import' }}</span>
-          </button>
-          <button @click="handleExport" class="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-gray-800 border border-[#141414]/10 dark:border-gray-600 text-[#141414] dark:text-gray-100 rounded-full hover:bg-[#F5F5F0] dark:hover:bg-gray-700 transition-all text-sm font-medium">
-            <iconify-icon icon="lucide:download" width="16"></iconify-icon>
-            <span class="hidden lg:inline">Export</span>
-          </button>
-          <button @click="syncData" :disabled="isSyncing" class="flex items-center gap-2 px-6 py-2.5 bg-[#5A5A40] dark:bg-amber-600 text-white rounded-full hover:bg-[#4A4A30] dark:hover:bg-amber-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium">
-            <iconify-icon icon="lucide:refresh-cw" width="16" :class="{ 'animate-spin': isSyncing }"></iconify-icon>
-            <span class="hidden md:inline">{{ isSyncing ? 'Syncing...' : 'Sync Now' }}</span>
-          </button>
-        </div>
+        </nav>
       </div>
     </header>
 
-    <!-- Import result message -->
-    <div v-if="importMessage" :class="[
-      'px-6 py-2 text-sm font-medium text-center shrink-0',
-      importMessage.type === 'success'
-        ? 'bg-green-100 dark:bg-green-900/40 text-green-800 dark:text-green-200'
-        : 'bg-red-100 dark:bg-red-900/40 text-red-800 dark:text-red-200'
-    ]">
-      {{ importMessage.text }}
-    </div>
+    <!-- ───────────────────────── Filters ───────────────────────── -->
+    <div
+      class="sticky top-[104px] z-30 border-b border-black/6 bg-[#f6f5f1]/95 backdrop-blur-xl dark:border-white/8 dark:bg-neutral-950/95 sm:top-[112px]"
+    >
+      <div
+        class="mx-auto flex max-w-[1600px] items-center gap-2 overflow-x-auto px-3 py-2 sm:px-5"
+      >
+        <!-- Region -->
+        <label class="shrink-0">
+          <span class="sr-only">Region</span>
+          <select
+            :value="state.region"
+            class="rounded-full border border-black/10 bg-white px-3 py-1.5 text-xs font-semibold outline-none dark:border-white/12 dark:bg-neutral-900"
+            @change="
+              setRegion(($event.target as HTMLSelectElement).value as RegionCode | 'all')
+            "
+          >
+            <option value="all">🌐 All regions</option>
+            <option
+              v-for="region in manifest?.regions ?? []"
+              :key="region.code"
+              :value="region.code"
+            >
+              {{ region.badge }} {{ region.label }} ({{ region.channels }})
+            </option>
+          </select>
+        </label>
 
-    <main class="flex-1 overflow-y-auto px-6 py-12">
-      <div class="max-w-7xl mx-auto">
-        <!-- Database Stats Summary -->
-        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-12">
-          <div class="bg-white dark:bg-gray-800 p-6 rounded-3xl border border-[#141414]/5 dark:border-gray-700">
-            <div class="text-[10px] uppercase tracking-widest font-bold text-[#141414]/40 dark:text-gray-400 mb-1">Total Channels</div>
-            <div class="text-2xl font-serif italic">{{ stats.totalChannels }}</div>
-          </div>
-          <div class="bg-white dark:bg-gray-800 p-6 rounded-3xl border border-[#141414]/5 dark:border-gray-700">
-            <div class="text-[10px] uppercase tracking-widest font-bold text-[#5A5A40] dark:text-amber-400 mb-1">Collected Channels</div>
-            <div class="text-2xl font-serif italic">{{ stats.collectedChannels }}</div>
-          </div>
-          <div class="bg-white dark:bg-gray-800 p-6 rounded-3xl border border-[#141414]/5 dark:border-gray-700">
-            <div class="text-[10px] uppercase tracking-widest font-bold text-[#141414]/40 dark:text-gray-400 mb-1">Discovery Videos</div>
-            <div class="text-2xl font-serif italic">{{ stats.discoveryVideos }}</div>
-          </div>
-          <div class="bg-white dark:bg-gray-800 p-6 rounded-3xl border border-[#141414]/5 dark:border-gray-700">
-            <div class="text-[10px] uppercase tracking-widest font-bold text-[#141414]/40 dark:text-gray-400 mb-1">Discovery Playlists</div>
-            <div class="text-2xl font-serif italic">{{ stats.discoveryPlaylists }}</div>
-          </div>
-          <div class="bg-white dark:bg-gray-800 p-6 rounded-3xl border border-[#141414]/5 dark:border-gray-700">
-            <div class="text-[10px] uppercase tracking-widest font-bold text-[#5A5A40] dark:text-amber-400 mb-1">Collected Playlists</div>
-            <div class="text-2xl font-serif italic">{{ stats.collectedPlaylists }}</div>
-          </div>
-          <div class="bg-white dark:bg-gray-800 p-6 rounded-3xl border border-[#141414]/5 dark:border-gray-700">
-            <div class="text-[10px] uppercase tracking-widest font-bold text-[#141414]/40 dark:text-gray-400 mb-1">Total Items</div>
-            <div class="text-2xl font-serif italic">{{ stats.totalItems }}</div>
-          </div>
-        </div>
+        <!-- Categories — multi-select, so MV + Covers can be combined -->
+        <button
+          v-if="state.categories.length"
+          type="button"
+          class="shrink-0 rounded-full border border-purple-500 bg-purple-500/12 px-3 py-1.5 text-xs font-semibold whitespace-nowrap text-purple-700 transition dark:text-purple-300"
+          @click="state.categories.splice(0)"
+        >
+          Clear filters
+        </button>
+        <button
+          v-for="category in CATEGORIES"
+          :key="category.id"
+          type="button"
+          class="shrink-0 rounded-full border px-3 py-1.5 text-xs font-semibold whitespace-nowrap transition"
+          :class="
+            state.categories.includes(category.id)
+              ? 'border-purple-500 bg-purple-500/12 text-purple-700 dark:text-purple-300'
+              : 'border-black/10 bg-white text-neutral-500 hover:text-neutral-800 dark:border-white/12 dark:bg-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100'
+          "
+          :aria-pressed="state.categories.includes(category.id)"
+          @click="toggleCategory(category.id)"
+        >
+          {{ category.label }}
+          <span
+            v-if="state.categories.includes(category.id)"
+            class="ml-1 opacity-70"
+            aria-hidden="true"
+            >✓</span
+          >
+        </button>
 
-        <!-- Navigation Tabs & Sort -->
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
-          <nav class="flex flex-wrap gap-2 p-1 bg-white/50 dark:bg-gray-800/50 rounded-2xl border border-[#141414]/5 dark:border-gray-700 w-fit">
-            <button v-for="tab in [
-              { id: 'items', label: 'Discovery Videos', icon: 'lucide:video', count: stats.discoveryVideos },
-              { id: 'discovery_playlists', label: 'Discovery Playlists', icon: 'lucide:list-video', count: stats.discoveryPlaylists },
-              { id: 'channels', label: 'All Channels', icon: 'lucide:users', count: stats.totalChannels },
-              { id: 'collected_channels', label: 'Collected Channels', icon: 'lucide:heart', count: stats.collectedChannels },
-              { id: 'collected_playlists', label: 'Collected Playlists', icon: 'lucide:list-music', count: stats.collectedPlaylists },
-              { id: 'blacklist', label: 'Blacklist', icon: 'lucide:ban', count: blacklist.length },
-            ]" :key="tab.id" @click="setTab(tab.id as any)" :class="[
-              'px-6 py-2.5 rounded-xl transition-all flex items-center gap-2 text-sm font-medium',
-              activeTab === tab.id
-                ? 'bg-white dark:bg-gray-700 text-[#141414] dark:text-gray-100 shadow-sm border border-[#141414]/10 dark:border-gray-600'
-                : 'text-[#141414]/60 dark:text-gray-400 hover:text-[#141414] dark:hover:text-gray-100 hover:bg-white/50 dark:hover:bg-gray-700/50'
-            ]">
-              <iconify-icon :icon="tab.icon" width="16"></iconify-icon>
-              {{ tab.label }}
-              <span v-if="tab.count !== undefined" class="ml-1 px-1.5 py-0.5 bg-[#141414]/5 dark:bg-gray-600 rounded-md text-[10px] font-bold">
-                {{ tab.count }}
-              </span>
-            </button>
-          </nav>
+        <!-- Acoustic / 弾き語り -->
+        <button
+          type="button"
+          class="shrink-0 rounded-full border px-3 py-1.5 text-xs font-semibold whitespace-nowrap transition"
+          :class="
+            state.acousticOnly
+              ? 'border-amber-500 bg-amber-500/15 text-amber-700 dark:text-amber-400'
+              : 'border-black/10 bg-white text-neutral-500 hover:text-neutral-800 dark:border-white/12 dark:bg-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100'
+          "
+          :aria-pressed="state.acousticOnly"
+          title="Singing while playing an instrument — 弾き語り / 彈唱 / acoustic"
+          @click="state.acousticOnly = !state.acousticOnly"
+        >
+          🎸 Acoustic / 弾き語り
+        </button>
 
-          <!-- Sort Options -->
-          <div v-if="activeTab !== 'search'" class="flex items-center gap-3">
-            <span class="text-[10px] uppercase tracking-widest font-bold text-[#141414]/40 dark:text-gray-400">Sort By</span>
-            <select v-if="activeTab === 'items' || activeTab === 'discovery_playlists' || activeTab === 'collected_playlists'" v-model="itemSort" @change="fetchData()" class="bg-white dark:bg-gray-800 border border-[#141414]/10 dark:border-gray-600 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-[#5A5A40] dark:focus:ring-amber-500 outline-none">
-              <option value="newest">Discovered (Newest)</option>
-              <option value="oldest">Discovered (Oldest)</option>
-              <option value="published_newest">Published (Newest)</option>
-              <option value="published_oldest">Published (Oldest)</option>
-              <option value="title">Title (A-Z)</option>
-              <option value="title_desc">Title (Z-A)</option>
-              <option value="channel">Channel (A-Z)</option>
-              <option value="channel_desc">Channel (Z-A)</option>
-            </select>
-            <select v-else v-model="channelSort" @change="fetchData()" class="bg-white dark:bg-gray-800 border border-[#141414]/10 dark:border-gray-600 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-[#5A5A40] dark:focus:ring-amber-500 outline-none">
-              <option value="name">Name (A-Z)</option>
-              <option value="name_desc">Name (Z-A)</option>
-              <option value="newest">Discovered (Newest)</option>
-              <option value="oldest">Discovered (Oldest)</option>
-              <option value="synced_newest">Recently Synced</option>
-              <option value="synced_oldest">Oldest Synced</option>
-            </select>
-          </div>
-        </div>
+        <!-- Gender -->
+        <button
+          v-for="option in GENDERS"
+          :key="option.id"
+          type="button"
+          class="shrink-0 rounded-full border px-3 py-1.5 text-xs font-semibold whitespace-nowrap transition"
+          :class="
+            state.gender === option.id
+              ? 'border-sky-500 bg-sky-500/15 text-sky-700 dark:text-sky-400'
+              : 'border-black/10 bg-white text-neutral-500 hover:text-neutral-800 dark:border-white/12 dark:bg-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100'
+          "
+          :aria-pressed="state.gender === option.id"
+          @click="state.gender = option.id"
+        >
+          {{ option.label }}
+        </button>
 
-        <!-- Keyword Filters -->
-        <div v-if="activeTab === 'items' || activeTab === 'discovery_playlists'" class="mb-8 space-y-4">
-          <div class="flex flex-wrap items-center gap-2">
-            <span class="text-[10px] uppercase tracking-widest font-bold text-[#141414]/40 dark:text-gray-400 mr-2">Filter Keywords</span>
-            <div v-for="kw in discoveryKeywords" :key="kw" class="group flex items-center gap-1 px-3 py-1.5 rounded-full text-[11px] font-medium transition-all border" :class="selectedKeywords.includes(kw)
-              ? 'bg-[#5A5A40] dark:bg-amber-600 text-white border-transparent shadow-sm'
-              : 'bg-white dark:bg-gray-800 text-[#141414]/60 dark:text-gray-400 border-[#141414]/10 dark:border-gray-700 hover:border-[#5A5A40] dark:hover:border-amber-500'">
-              <button @click="() => {
-                if (selectedKeywords.includes(kw)) {
-                  selectedKeywords = selectedKeywords.filter(k => k !== kw);
-                } else {
-                  selectedKeywords.push(kw);
-                }
-                fetchData();
-              }">
-                {{ kw }}
-              </button>
-              <button @click.stop="removeKeyword(kw)" class="opacity-0 group-hover:opacity-100 hover:text-red-500 transition-opacity ml-1" title="Remove Keyword">
-                <iconify-icon icon="lucide:x" width="12"></iconify-icon>
-              </button>
-            </div>
-            <button v-if="selectedKeywords.length > 0" @click="() => { selectedKeywords = []; fetchData(); }" class="text-[10px] uppercase tracking-widest font-bold text-red-500 hover:text-red-600 ml-2">
-              Clear All
-            </button>
-          </div>
+        <!-- AI -->
+        <button
+          type="button"
+          class="shrink-0 rounded-full border px-3 py-1.5 text-xs font-semibold whitespace-nowrap transition"
+          :class="
+            state.ai === 'ai'
+              ? 'border-fuchsia-500 bg-fuchsia-500/15 text-fuchsia-700 dark:text-fuchsia-400'
+              : 'border-black/10 bg-white text-neutral-500 hover:text-neutral-800 dark:border-white/12 dark:bg-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100'
+          "
+          :aria-pressed="state.ai === 'ai'"
+          title="Show only AI-generated performers (AI VTuber, AI singer)"
+          @click="state.ai = state.ai === 'ai' ? 'all' : 'ai'"
+        >
+          🤖 AI performers
+        </button>
 
-          <!-- Add Keyword UI -->
-          <div class="flex items-center gap-2">
-            <input v-model="newKeyword" @keyup.enter="addKeyword" type="text" placeholder="Add new filter keyword..." class="bg-white dark:bg-gray-800 border border-[#141414]/10 dark:border-gray-700 rounded-lg px-3 py-1.5 text-xs focus:ring-2 focus:ring-[#5A5A40] dark:focus:ring-amber-500 outline-none w-48" />
-            <button @click="addKeyword" class="p-1.5 bg-[#5A5A40] dark:bg-amber-600 text-white rounded-lg hover:bg-[#4A4A30] dark:hover:bg-amber-700 transition-all">
-              <iconify-icon icon="lucide:plus" width="16"></iconify-icon>
-            </button>
-          </div>
-        </div>
-
-        <!-- Search Results Title -->
-        <div v-if="activeTab === 'search'" class="mb-8 flex items-center justify-between">
-          <h2 class="text-2xl font-serif italic">Search Results for "{{ searchQuery }}"</h2>
-          <button @click="setTab('items')" class="text-sm text-[#5A5A40] dark:text-amber-400 hover:underline">Back to Discovery</button>
-        </div>
-
-        <!-- Content Grid -->
-        <div v-if="activeTab === 'items' || activeTab === 'discovery_playlists' || activeTab === 'collected_playlists' || activeTab === 'search'" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <!-- Display Items (Videos/Playlists) -->
-          <div v-for="item in (activeTab === 'search' ? searchResults.filter(r => (r.type || '').toLowerCase() !== 'channel') : items)" :key="item.id" class="group bg-white dark:bg-gray-800 rounded-3xl overflow-hidden border border-[#141414]/5 dark:border-gray-700 hover:border-[#141414]/20 dark:hover:border-gray-600 transition-all hover:shadow-2xl hover:shadow-black/5 dark:hover:shadow-black/20">
-            <div class="aspect-video relative overflow-hidden">
-              <img :src="getThumbnailUrl(item)" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" referrerpolicy="no-referrer" />
-              <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6 gap-2">
-                <a :href="getYoutubeUrl(item)" target="_blank" class="flex-1 py-3 bg-white dark:bg-gray-700 text-black dark:text-white rounded-xl text-center font-medium flex items-center justify-center gap-2">
-                  Watch <iconify-icon icon="lucide:external-link" width="14"></iconify-icon>
-                </a>
-                <button @click.stop="toggleCollect(item, (item.type || 'video').toLowerCase() as any)" class="w-12 h-12 bg-white/20 backdrop-blur-md text-white rounded-xl flex items-center justify-center hover:bg-white/40 transition-colors disabled:opacity-50" :disabled="isCollecting.has(item.id)">
-                  <iconify-icon :icon="isCollecting.has(item.id) ? 'lucide:loader-2' : 'lucide:bookmark'" width="20" :class="{ 'animate-spin': isCollecting.has(item.id), 'text-amber-400': item.is_collected }"></iconify-icon>
-                </button>
-              </div>
-              <div class="absolute top-4 right-4 px-3 py-1 bg-black/50 backdrop-blur-md text-white text-[10px] uppercase tracking-widest rounded-full">
-                {{ item.type || 'video' }}
-              </div>
-            </div>
-            <div class="p-6">
-              <div class="flex items-center gap-2 mb-3">
-                <span class="text-[10px] uppercase tracking-widest font-bold text-[#5A5A40] dark:text-amber-400">
-                  {{ item.channel?.name || item.channel_name || 'Unknown' }}
-                </span>
-                <span class="w-1 h-1 bg-[#141414]/20 dark:bg-gray-500 rounded-full"></span>
-                <span class="text-[10px] uppercase tracking-widest text-[#141414]/40 dark:text-gray-400">
-                  {{ formatDate(item.published_at || item.published || item.publishedAt) }}
-                </span>
-              </div>
-              <h3 class="text-lg font-serif italic leading-tight group-hover:text-[#5A5A40] dark:group-hover:text-amber-400 transition-colors line-clamp-2">
-                {{ item.title }}
-              </h3>
-            </div>
-          </div>
-        </div>
-
-        <!-- Channels Grid -->
-        <div v-if="activeTab === 'channels' || activeTab === 'collected_channels' || activeTab === 'search'" :class="['grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6', activeTab === 'search' ? 'mt-12 border-t border-[#141414]/10 dark:border-gray-700 pt-12' : '']">
-          <div v-if="activeTab === 'search'" class="col-span-full mb-4">
-            <h3 class="text-xl font-serif italic text-[#141414] dark:text-gray-100">Channels</h3>
-          </div>
-          <div v-for="channel in (activeTab === 'search' ? searchResults.filter(r => r.type === 'channel') : channels)" :key="channel.id" class="group bg-white dark:bg-gray-800 p-6 rounded-3xl border border-[#141414]/5 dark:border-gray-700 flex flex-col items-center text-center hover:shadow-xl transition-all relative">
-            <button @click.stop="toggleCollect(channel, 'channel')" class="absolute top-4 right-4 transition-colors disabled:opacity-50" :class="channel.is_collected ? 'text-red-500' : 'text-[#141414]/20 dark:text-gray-500 hover:text-red-500'" :disabled="isCollecting.has(channel.id)">
-              <iconify-icon :icon="isCollecting.has(channel.id) ? 'lucide:loader-2' : 'lucide:heart'" width="18" :class="{ 'animate-spin': isCollecting.has(channel.id) }"></iconify-icon>
-            </button>
-            <button @click.stop="addToBlacklist(channel)" class="absolute top-4 left-4 text-[#141414]/20 dark:text-gray-500 hover:text-red-600 transition-colors" title="Blacklist Channel" :disabled="isBlacklisting.has(channel.id)">
-              <iconify-icon :icon="isBlacklisting.has(channel.id) ? 'lucide:loader-2' : 'lucide:ban'" width="18" :class="{ 'animate-spin': isBlacklisting.has(channel.id) }"></iconify-icon>
-            </button>
-            <img :src="getThumbnailUrl(channel)" class="w-20 h-20 rounded-full mb-4 object-cover border-2 border-[#5A5A40]/20 dark:border-amber-500/30" referrerpolicy="no-referrer" />
-            <h3 class="font-serif italic text-sm leading-tight mb-1">{{ channel.name }}</h3>
-            <p v-if="channel.handle" class="text-[10px] text-[#141414]/40 dark:text-gray-400 font-mono mb-2">{{ channel.handle }}</p>
-            <a :href="`https://www.youtube.com/channel/${channel.id}`" target="_blank" class="text-[10px] uppercase tracking-widest font-bold text-[#5A5A40] dark:text-amber-400 hover:underline">
-              View Channel
-            </a>
-          </div>
-        </div>
-
-        <!-- Blacklist Grid -->
-        <div v-if="activeTab === 'blacklist'" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
-          <div v-for="b in blacklist" :key="b.id" class="group bg-white dark:bg-gray-800 p-6 rounded-3xl border border-red-100 dark:border-red-900/30 flex flex-col items-center text-center hover:shadow-xl transition-all relative">
-            <button @click.stop="removeFromBlacklist(b.id)" class="absolute top-4 right-4 text-red-600 hover:text-red-700 transition-colors" title="Remove from Blacklist">
-              <iconify-icon icon="lucide:trash-2" width="18"></iconify-icon>
-            </button>
-            <img :src="b.thumbnail" class="w-20 h-20 rounded-full mb-4 object-cover border-2 border-red-500/20 grayscale" referrerpolicy="no-referrer" />
-            <h3 class="font-serif italic text-sm leading-tight mb-1 text-gray-500">{{ b.name }}</h3>
-            <p v-if="b.handle" class="text-[10px] text-[#141414]/40 dark:text-gray-400 font-mono mb-2">{{ b.handle }}</p>
-            <div class="text-[9px] uppercase tracking-widest text-red-500 font-bold">Blacklisted</div>
-          </div>
-        </div>
-
-        <!-- Empty States -->
-        <div v-if="!isSearching && ((activeTab === 'items' && items.length === 0) || (activeTab === 'channels' && channels.length === 0) || (activeTab === 'search' && searchResults.length === 0) || (activeTab === 'blacklist' && blacklist.length === 0))" class="flex flex-col items-center justify-center py-20 opacity-40 dark:opacity-60">
-          <iconify-icon icon="lucide:music" width="48" class="mb-4"></iconify-icon>
-          <p class="font-serif italic text-xl">Nothing found here.</p>
-          <p class="text-sm">Try syncing or searching for something else.</p>
-        </div>
-
-        <div v-if="isSearching" class="flex flex-col items-center justify-center py-20">
-          <iconify-icon icon="lucide:refresh-cw" width="48" class="animate-spin text-[#5A5A40] dark:text-amber-400 mb-4"></iconify-icon>
-          <p class="font-serif italic text-xl">Searching YouTube...</p>
+        <!-- Scope switch (mobile) -->
+        <div
+          class="ml-auto flex shrink-0 items-center rounded-full border border-black/10 bg-white p-0.5 md:hidden dark:border-white/12 dark:bg-neutral-900"
+          role="group"
+          aria-label="Artist scope"
+        >
+          <button
+            v-for="option in (['virtual', 'real', 'both'] as Scope[])"
+            :key="option"
+            type="button"
+            class="rounded-full px-2.5 py-1 text-[11px] font-semibold transition"
+            :class="
+              state.scope === option
+                ? 'bg-purple-600 text-white'
+                : 'text-neutral-500'
+            "
+            @click="selectScope(option)"
+          >
+            {{
+              option === "virtual"
+                ? "Virtual"
+                : option === "real"
+                  ? "Real"
+                  : "Both"
+            }}
+          </button>
         </div>
       </div>
+    </div>
+
+    <!-- ───────────────────────── Content ───────────────────────── -->
+    <main class="mx-auto max-w-[1600px] px-3 pt-4 pb-24 sm:px-5 sm:pb-8">
+      <!-- Loading -->
+      <div v-if="loading" class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
+        <div
+          v-for="n in 12"
+          :key="n"
+          class="aspect-[3/4] animate-pulse rounded-xl bg-black/5 dark:bg-white/5"
+        />
+      </div>
+
+      <!-- Search results -->
+      <section v-else-if="state.query.trim()" aria-label="Search results">
+        <h2 class="mb-3 text-sm font-semibold text-neutral-500">
+          {{ searchHits.length }} result{{ searchHits.length === 1 ? "" : "s" }} for
+          “{{ state.query }}”
+        </h2>
+        <div
+          v-if="searchHits.length"
+          class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6"
+        >
+          <article
+            v-for="hit in searchHits"
+            :key="`${hit.k}:${hit.id}`"
+            class="group overflow-hidden rounded-xl border border-black/8 bg-white shadow-sm transition hover:shadow-md dark:border-white/10 dark:bg-neutral-900"
+          >
+            <a
+              :href="
+                hit.k === 'c'
+                  ? `https://www.youtube.com/channel/${hit.id}`
+                  : `https://www.youtube.com/watch?v=${hit.id}`
+              "
+              target="_blank"
+              rel="noopener noreferrer"
+              class="block aspect-video w-full overflow-hidden bg-neutral-200 dark:bg-neutral-800"
+            >
+              <img
+                :src="hit.th ?? ''"
+                :alt="hit.n"
+                loading="lazy"
+                decoding="async"
+                class="h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]"
+              />
+            </a>
+            <div class="space-y-1 p-2.5">
+              <h3 class="line-clamp-2 text-xs leading-snug font-semibold">
+                {{ hit.n }}
+              </h3>
+              <p v-if="hit.cn && hit.k === 'i'" class="truncate text-[11px] text-neutral-500">
+                {{ hit.cn }}
+              </p>
+              <div class="flex flex-wrap items-center gap-1">
+                <span
+                  class="rounded px-1.5 py-0.5 text-[10px] font-semibold text-white"
+                  :class="hit.g === 'virtual' ? 'bg-purple-600' : 'bg-emerald-600'"
+                >
+                  {{ hit.g === "virtual" ? "Virtual" : "Real" }}
+                </span>
+                <span
+                  class="rounded bg-black/5 px-1.5 py-0.5 text-[10px] font-semibold text-neutral-600 dark:bg-white/10 dark:text-neutral-300"
+                >
+                  {{ hit.r.toUpperCase() }}
+                </span>
+                <span
+                  v-if="hit.c"
+                  class="rounded bg-black/5 px-1.5 py-0.5 text-[10px] font-semibold text-neutral-600 dark:bg-white/10 dark:text-neutral-300"
+                >
+                  {{ hit.c }}
+                </span>
+              </div>
+            </div>
+          </article>
+        </div>
+        <p v-else class="py-16 text-center text-sm text-neutral-500">
+          No matches. Try a different spelling, or switch the scope to
+          <strong>Both</strong>.
+        </p>
+      </section>
+
+      <!-- Live -->
+      <section v-else-if="state.view === 'live'" aria-label="Live now">
+        <div class="mb-3 flex items-baseline justify-between">
+          <h2 class="text-lg font-bold">
+            Live now
+            <span class="ml-1 text-sm font-normal text-neutral-500">
+              {{ visibleLive.length }}
+            </span>
+          </h2>
+          <span class="text-xs text-neutral-500">refreshes every 6 hours</span>
+        </div>
+        <div
+          v-if="visibleLive.length"
+          class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"
+        >
+          <LiveCard
+            v-for="item in visibleLive"
+            :key="item.id"
+            :item="item"
+            :channel="summaryById.get(item.channelId) ?? null"
+            live
+            @open="openItem"
+          />
+        </div>
+        <p v-else class="py-16 text-center text-sm text-neutral-500">
+          No live streams right now for this filter. Check the
+          <strong>Upcoming</strong> tab.
+        </p>
+      </section>
+
+      <!-- Upcoming -->
+      <section v-else-if="state.view === 'upcoming'" aria-label="Upcoming">
+        <h2 class="mb-3 text-lg font-bold">
+          Upcoming
+          <span class="ml-1 text-sm font-normal text-neutral-500">
+            {{ visibleUpcoming.length }}
+          </span>
+        </h2>
+        <div
+          v-if="visibleUpcoming.length"
+          class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"
+        >
+          <LiveCard
+            v-for="item in visibleUpcoming"
+            :key="item.id"
+            :item="item"
+            :channel="summaryById.get(item.channelId) ?? null"
+            @open="openItem"
+          />
+        </div>
+        <p v-else class="py-16 text-center text-sm text-neutral-500">
+          Nothing scheduled.
+        </p>
+      </section>
+
+      <!-- Songs -->
+      <section v-else-if="state.view === 'songs'" aria-label="Songs">
+        <h2 class="mb-3 text-lg font-bold">
+          Songs &amp; covers
+          <span class="ml-1 text-sm font-normal text-neutral-500">
+            {{ visibleSongs.length }}
+          </span>
+        </h2>
+        <div
+          v-if="visibleSongs.length"
+          class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"
+        >
+          <LiveCard
+            v-for="item in visibleSongs"
+            :key="item.id"
+            :item="item"
+            :channel="summaryById.get(item.channelId) ?? null"
+            @open="openItem"
+          />
+        </div>
+        <p v-else class="py-16 text-center text-sm text-neutral-500">
+          No songs for this filter yet.
+        </p>
+      </section>
+
+      <!-- Channels -->
+      <section v-else-if="state.view === 'channels'" aria-label="Channels">
+        <h2 class="mb-3 text-lg font-bold">
+          Channels
+          <span class="ml-1 text-sm font-normal text-neutral-500">
+            {{ visibleChannels.length }}
+          </span>
+        </h2>
+        <div
+          class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6"
+        >
+          <button
+            v-for="channel in visibleChannels"
+            :key="channel.id"
+            type="button"
+            class="group flex flex-col items-center gap-2 rounded-xl border border-black/8 bg-white p-3 text-center shadow-sm transition hover:shadow-md dark:border-white/10 dark:bg-neutral-900"
+            @click="openChannel(channel)"
+          >
+            <img
+              :src="channel.avatar ?? ''"
+              :alt="channel.name"
+              loading="lazy"
+              class="h-16 w-16 rounded-full object-cover ring-2 ring-black/5 transition group-hover:ring-purple-400 dark:ring-white/10"
+            />
+            <span class="line-clamp-2 text-xs leading-tight font-semibold">
+              {{ channel.name }}
+            </span>
+            <span class="text-[11px] text-neutral-500">
+              {{ formatCount(channel.subscribers) }} subs
+            </span>
+            <span class="flex flex-wrap justify-center gap-1">
+              <span
+                class="rounded px-1.5 py-0.5 text-[10px] font-semibold text-white"
+                :class="channel.kind === 'virtual' ? 'bg-purple-600' : 'bg-emerald-600'"
+              >
+                {{ channel.kind === "virtual" ? "Virtual" : "Real" }}
+              </span>
+              <span
+                class="rounded bg-black/5 px-1.5 py-0.5 text-[10px] font-semibold text-neutral-600 dark:bg-white/10 dark:text-neutral-300"
+              >
+                {{ channel.region.toUpperCase() }}
+              </span>
+              <span
+                v-if="channel.activity === 'graduated'"
+                class="rounded bg-amber-500/15 px-1.5 py-0.5 text-[10px] font-semibold text-amber-600 dark:text-amber-400"
+              >
+                Graduated
+              </span>
+            </span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Subscriptions -->
+      <section v-else-if="state.view === 'subs'" aria-label="My subscriptions">
+        <div class="mb-3 flex items-baseline justify-between gap-3">
+          <h2 class="text-lg font-bold">
+            My subscriptions
+            <span class="ml-1 text-sm font-normal text-neutral-500">
+              {{ visibleSubscriptions.length }}
+            </span>
+          </h2>
+          <div class="flex items-center gap-2">
+            <!-- Tracked / untracked filter -->
+            <div
+              class="flex shrink-0 items-center rounded-full border border-black/10 bg-white p-0.5 dark:border-white/12 dark:bg-neutral-900"
+              role="group"
+              aria-label="Subscription status"
+            >
+              <button
+                v-for="option in SUB_FILTERS"
+                :key="option.id"
+                type="button"
+                class="rounded-full px-2.5 py-1 text-[11px] font-semibold whitespace-nowrap transition"
+                :class="
+                  state.subsTracked === option.id
+                    ? 'bg-purple-600 text-white'
+                    : 'text-neutral-500 hover:text-neutral-800 dark:hover:text-neutral-100'
+                "
+                @click="state.subsTracked = option.id"
+              >
+                {{ option.label }}
+                <span class="opacity-70">{{
+                  subscriptionCounts[option.countKey]
+                }}</span>
+              </button>
+            </div>
+
+            <button
+              v-if="hasAnyAccount"
+              type="button"
+              class="shrink-0 rounded-full border border-black/10 bg-white px-3 py-1.5 text-xs font-semibold dark:border-white/12 dark:bg-neutral-900"
+              @click="reloadSubscriptions"
+            >
+              Refresh
+            </button>
+          </div>
+        </div>
+
+        <div
+          v-if="!hasAnyAccount"
+          class="mx-auto max-w-md rounded-xl border border-black/8 bg-white p-6 text-center shadow-sm dark:border-white/10 dark:bg-neutral-900"
+        >
+          <p class="text-sm font-semibold">Link your accounts</p>
+          <p class="mt-2 text-xs text-neutral-500">
+            See every VTuber and singer you subscribe to on YouTube, Twitch,
+            Bilibili and VK, matched against the dataset. Your token stays in
+            this browser.
+          </p>
+          <div class="mt-4 flex flex-wrap justify-center gap-2">
+            <button
+              v-for="provider in AUTH_PROVIDERS"
+              :key="provider.id"
+              type="button"
+              class="rounded-full px-3 py-2 text-xs font-bold text-white transition hover:opacity-85"
+              :style="{ backgroundColor: provider.color }"
+              :title="provider.unavailableReason() ?? ''"
+              @click="linkProvider(provider)"
+            >
+              {{ provider.label }}
+            </button>
+          </div>
+        </div>
+
+        <div
+          v-else-if="visibleSubscriptions.length"
+          class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6"
+        >
+          <button
+            v-for="sub in visibleSubscriptions"
+            :key="sub.channelId"
+            type="button"
+            class="group flex flex-col items-center gap-2 rounded-xl border border-black/8 bg-white p-3 text-center shadow-sm transition hover:shadow-md dark:border-white/10 dark:bg-neutral-900"
+            @click="openChannel(summaryById.get(sub.channelId) ?? null)"
+          >
+            <img
+              :src="sub.thumbnail ?? ''"
+              :alt="sub.title"
+              loading="lazy"
+              class="h-16 w-16 rounded-full object-cover ring-2 ring-black/5 dark:ring-white/10"
+            />
+            <span class="line-clamp-2 text-xs leading-tight font-semibold">
+              {{ sub.title }}
+            </span>
+            <span class="flex flex-wrap justify-center gap-1">
+              <span
+                class="rounded px-1.5 py-0.5 text-[10px] font-semibold text-white"
+                :style="{
+                  backgroundColor:
+                    AUTH_PROVIDERS.find((p) => p.id === sub.provider)?.color ??
+                    '#6b7280',
+                }"
+              >
+                {{
+                  AUTH_PROVIDERS.find((p) => p.id === sub.provider)?.label ??
+                  sub.provider
+                }}
+              </span>
+              <span
+                class="rounded px-1.5 py-0.5 text-[10px] font-semibold"
+                :class="
+                  sub.known
+                    ? 'bg-purple-600/15 text-purple-700 dark:text-purple-300'
+                    : 'bg-amber-500/15 text-amber-700 dark:text-amber-400'
+                "
+              >
+                {{ sub.known ? "In dataset" : "Not tracked yet" }}
+              </span>
+            </span>
+          </button>
+        </div>
+
+        <p v-else class="py-16 text-center text-sm text-neutral-500">
+          No subscriptions match this filter.
+        </p>
+      </section>
+
+      <!-- Saved -->
+      <section v-else-if="state.view === 'saved'" aria-label="Saved">
+        <h2 class="mb-3 text-lg font-bold">
+          Saved
+          <span class="ml-1 text-sm font-normal text-neutral-500">
+            {{ visibleSaved.length }}
+          </span>
+        </h2>
+        <div
+          v-if="visibleSaved.length"
+          class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"
+        >
+          <LiveCard
+            v-for="item in visibleSaved"
+            :key="item.id"
+            :item="item"
+            :channel="summaryById.get(item.channelId) ?? null"
+            @open="openItem"
+          />
+        </div>
+        <p v-else class="py-16 text-center text-sm text-neutral-500">
+          Nothing saved yet — use the bookmark button on any card.
+        </p>
+      </section>
     </main>
+
+    <!-- ───────────────────────── Mobile nav ───────────────────────── -->
+    <nav
+      class="fixed inset-x-0 bottom-0 z-40 grid grid-cols-6 border-t border-black/8 bg-[#f6f5f1]/95 backdrop-blur-xl md:hidden dark:border-white/10 dark:bg-neutral-950/95"
+      aria-label="Primary"
+    >
+      <button
+        v-for="view in VIEWS"
+        :key="view.id"
+        type="button"
+        class="flex flex-col items-center gap-0.5 py-2 text-[10px] font-semibold transition"
+        :class="
+          state.view === view.id
+            ? 'text-purple-600 dark:text-purple-400'
+            : 'text-neutral-500'
+        "
+        @click="setView(view.id)"
+      >
+        <span class="text-base leading-none" aria-hidden="true">
+          {{
+            view.id === "live"
+              ? "🔴"
+              : view.id === "upcoming"
+                ? "📅"
+                : view.id === "songs"
+                  ? "🎵"
+                  : view.id === "channels"
+                    ? "👥"
+                    : view.id === "subs"
+                      ? "👤"
+                      : "🔖"
+          }}
+        </span>
+        {{ view.short }}
+      </button>
+    </nav>
+
+    <!-- ───────────────────────── Drawer ───────────────────────── -->
+    <ChannelDrawer
+      :channel="drawerChannel"
+      :item="drawerItem"
+      :items="allItems"
+      :summaries="summaries"
+      @close="
+        drawerChannel = null;
+        drawerItem = null;
+      "
+      @open-item="openItem"
+      @open-channel="openChannel"
+    />
+
+    <!-- ───────────────────────── Toast ───────────────────────── -->
+    <Transition
+      enter-active-class="transition duration-200 ease-out"
+      enter-from-class="translate-y-2 opacity-0"
+      leave-active-class="transition duration-150 ease-in"
+      leave-to-class="translate-y-2 opacity-0"
+    >
+      <div
+        v-if="state.toast"
+        class="fixed bottom-20 left-1/2 z-50 -translate-x-1/2 rounded-full px-4 py-2 text-xs font-semibold shadow-lg md:bottom-6"
+        :class="
+          state.toast.type === 'error'
+            ? 'bg-red-600 text-white'
+            : state.toast.type === 'success'
+              ? 'bg-emerald-600 text-white'
+              : 'bg-neutral-900 text-white dark:bg-white dark:text-neutral-900'
+        "
+        role="status"
+      >
+        {{ state.toast.text }}
+      </div>
+    </Transition>
   </div>
 </template>

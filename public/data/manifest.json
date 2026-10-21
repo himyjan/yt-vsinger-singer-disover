@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-21T14:06:02.708Z",
+  "counts": {
+    "channels": 1000,
+    "channelsVirtual": 991,
+    "channelsReal": 9,
+    "channelsSinging": 80,
+    "items": 1798,
+    "itemsLive": 0,
+    "itemsUpcoming": 0,
+    "itemsVideo": 1798,
+    "itemsPlaylist": 0,
+    "itemsCover": 648,
+    "itemsMv": 217,
+    "itemsOriginal": 145
+  },
+  "regions": [
+    {
+      "code": "jp",
+      "label": "Japan",
+      "badge": "🇯🇵",
+      "channels": 518,
+      "items": 1047
+    },
+    {
+      "code": "cn",
+      "label": "China",
+      "badge": "🇨🇳",
+      "channels": 1,
+      "items": 1
+    },
+    {
+      "code": "tw",
+      "label": "Taiwan",
+      "badge": "🇹🇼",
+      "channels": 20,
+      "items": 26
+    },
+    {
+      "code": "hk",
+      "label": "Hong Kong",
+      "badge": "🇭🇰",
+      "channels": 0,
+      "items": 0
+    },
+    {
+      "code": "kr",
+      "label": "Korea",
+      "badge": "🇰🇷",
+      "channels": 2,
+      "items": 2
+    },
+    {
+      "code": "en",
+      "label": "English",
+      "badge": "🌐",
+      "channels": 426,
+      "items": 669
+    },
+    {
+      "code": "id",
+      "label": "Indonesia",
+      "badge": "🇮🇩",
+      "channels": 0,
+      "items": 0
+    },
+    {
+      "code": "my",
+      "label": "Malaysia",
+      "badge": "🇲🇾",
+      "channels": 0,
+      "items": 0
+    },
+    {
+      "code": "sea",
+      "label": "SEA",
+      "badge": "🌏",
+      "channels": 0,
+      "items": 0
+    },
+    {
+      "code": "unknown",
+      "label": "Unknown",
+      "badge": "❔",
+      "channels": 33,
+      "items": 53
+    }
+  ],
+  "quota": {
+    "used": 0,
+    "limit": 0,
+    "remaining": 0
+  },
+  "notes": "Imported from the legacy yt_singers_channel.db. Run `npm run sync` to refresh from the YouTube Data API."
+}

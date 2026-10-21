@@ -1,0 +1,115 @@
+name: Sync dataset
+
+# Refreshes the committed dataset from the YouTube Data API (and, when
+# configured, Twitch / Bilibili / Niconico / VK).
+#
+# The YouTube Data API free tier allows 10,000 units per day. Each run spends
+# at most `--budget` units and the remaining balance is cached between runs,
+# so several runs a day can never exceed the daily allowance.
+#
+# Required repository secrets:
+#   YOUTUBE_API_KEY       — YouTube Data API v3 key (required)
+#   TWITCH_CLIENT_ID      — Twitch application client id     (optional)
+#   TWITCH_CLIENT_SECRET  — Twitch application client secret (optional)
+#   VK_ACCESS_TOKEN       — VK service token                 (optional)
+
+on:
+  schedule:
+    # Every 6 hours, off the hour so the shared GitHub cron pool is happy.
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+    inputs:
+      budget:
+        description: "Quota units this run may spend (max 10000)"
+        required: false
+        default: "2500"
+      no-search:
+        description: "Skip discovery searches (refresh known channels only)"
+        required: false
+        default: "false"
+      dry-run:
+        description: "Fetch and classify but do not write anything"
+        required: false
+        default: "false"
+
+concurrency:
+  group: sync-dataset
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    name: Sync and commit dataset
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          lfs: true
+
+      - name: Install Git LFS
+        run: |
+          git lfs install --skip-repo
+          git lfs pull || true
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Restore quota state
+        uses: actions/cache@v4
+        with:
+          path: .cache
+          key: yt-quota-${{ github.run_number }}
+          restore-keys: |
+            yt-quota-
+
+      - name: Sync dataset
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          TWITCH_CLIENT_ID: ${{ secrets.TWITCH_CLIENT_ID }}
+          TWITCH_CLIENT_SECRET: ${{ secrets.TWITCH_CLIENT_SECRET }}
+          VK_ACCESS_TOKEN: ${{ secrets.VK_ACCESS_TOKEN }}
+        run: |
+          ARGS="--budget ${{ inputs.budget || 2500 }}"
+          if [ "${{ inputs.no-search }}" = "true" ]; then ARGS="$ARGS --no-search"; fi
+          if [ "${{ inputs.dry-run }}" = "true" ]; then ARGS="$ARGS --dry-run"; fi
+          npm run data:sync -- $ARGS
+
+      - name: Build search index
+        run: npm run data:index
+
+      - name: Validate dataset
+        run: npm run data:validate
+
+      - name: Commit dataset
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_user_name: github-actions[bot]
+          commit_user_email: github-actions[bot]@users.noreply.github.com
+          commit_message: "data: sync from YouTube Data API (${{ github.run_number }})"
+          file_pattern: "data/*"
+          branch: ${{ github.ref_name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Summary
+        run: |
+          {
+            echo "### Dataset sync"
+            echo ""
+            echo "| Metric | Value |"
+            echo "| --- | --- |"
+            echo "| Quota used | ${{ steps.quota.outputs.used || 'n/a' }} |"
+            echo "| Committed | \`data/\` |"
+          } >> "$GITHUB_STEP_SUMMARY"
