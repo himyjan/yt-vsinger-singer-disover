@@ -18,7 +18,8 @@
     "data:all": "npm run data:sync && npm run data:index && npm run data:validate",
     "sync": "npm run data:sync",
     "build:index": "npm run data:index",
-    "validate": "npm run data:validate"
+    "validate": "npm run data:validate",
+    "data:verify": "tsx scripts/verify.ts"
   },
   "dependencies": {
     "@google/genai": "^2.30.0",
