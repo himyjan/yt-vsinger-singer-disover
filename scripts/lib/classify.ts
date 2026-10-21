@@ -16,7 +16,9 @@ import type {
   ArtistRole,
   Gender,
   ItemCategory,
+  PlatformId,
   RegionCode,
+  RegionSource,
   Variant,
 } from "./types";
 import {
@@ -249,6 +251,15 @@ export interface ChannelSignals {
   tags: string[];
   country: string | null;
   /**
+   * The platform the channel was found on.
+   *
+   * This is a strong region signal: a channel that only exists on Bilibili
+   * is mainland Chinese, and one that only exists on Niconico is Japanese —
+   * regardless of whether its name happens to use characters shared between
+   * the two scripts.
+   */
+  platform?: PlatformId | null;
+  /**
    * A short sample of the channel's own uploads, used **only** for region
    * detection. It is deliberately excluded from the virtual/real decision,
    * because upload titles mention "vsinger" so often that they drown out
@@ -275,6 +286,8 @@ export interface ChannelClassification {
   confidence: number;
   /** True when the channel looks like an aggregator rather than a performer. */
   isAggregator: boolean;
+  /** Which source decided the region. */
+  regionSource: RegionSource;
   /** Self-described gender. */
   gender: Gender;
   /** True when the performer is AI-generated. */
@@ -387,16 +400,40 @@ export function classifyChannel(signals: ChannelSignals): ChannelClassification 
   /* --- region ------------------------------------------------------------ */
   let region: RegionCode = "unknown";
   let regionScore = 0;
+  let regionSource: RegionSource = "unknown";
 
   if (agencyRegion) {
     region = agencyRegion;
     regionScore = 0.9;
+    regionSource = "agency";
+  }
+
+  /**
+   * The platform a performer comes from is a strong region prior.
+   *
+   * Bilibili's VTuber partition is mainland Chinese, and Niconico is
+   * Japanese. Without this, a Chinese name written entirely in characters
+   * shared with Japanese (「樱咲奈央」, 「川烈」) would be classified as
+   * Japanese — and the Chinese scene is large enough for that to matter.
+   */
+  const platformRegion: Record<string, RegionCode> = {
+    bilibili: "cn",
+    niconico: "jp",
+  };
+  const fromPlatform = signals.platform
+    ? platformRegion[signals.platform]
+    : undefined;
+  if (fromPlatform && regionScore < 0.9) {
+    region = fromPlatform;
+    regionScore = 0.88;
+    regionSource = "platform";
   }
 
   const country = signals.country?.toUpperCase() ?? null;
   if (regionScore < 0.75 && country && COUNTRY_REGION[country]) {
     region = COUNTRY_REGION[country];
     regionScore = 0.8;
+    regionSource = "country";
   }
 
   const lang = detectLanguage(
@@ -406,12 +443,14 @@ export function classifyChannel(signals: ChannelSignals): ChannelClassification 
   if (langRegion && regionScore < 0.7) {
     region = langRegion;
     regionScore = 0.65;
+    regionSource = "script";
   }
 
   const strongRegion = detectStrongRegion(all(name, intro, body, tags));
   if (strongRegion) {
     region = strongRegion.code;
     regionScore = strongRegion.score;
+    regionSource = "declared";
   }
 
   // Locale hints from the channel's own uploads disambiguate kanji-only
@@ -420,6 +459,7 @@ export function classifyChannel(signals: ChannelSignals): ChannelClassification 
   if (hintRegion && regionScore < 0.85) {
     region = hintRegion;
     regionScore = 0.85;
+    regionSource = "script";
   }
 
   /* --- singing ----------------------------------------------------------- */
@@ -437,6 +477,7 @@ export function classifyChannel(signals: ChannelSignals): ChannelClassification 
   if (ov.region) {
     region = ov.region;
     regionScore = 1;
+    regionSource = "override";
   }
   if (ov.agency !== undefined) agency = ov.agency;
 
@@ -462,6 +503,7 @@ export function classifyChannel(signals: ChannelSignals): ChannelClassification 
     kind,
     role,
     region,
+    regionSource,
     language: lang,
     agency,
     isSinging,

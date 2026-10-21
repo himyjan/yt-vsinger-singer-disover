@@ -7,6 +7,10 @@
  */
 
 import type { RegionCode, RegionMeta } from "./types";
+import {
+  SIMPLIFIED_ONLY_CHARS,
+  TRADITIONAL_ONLY_CHARS,
+} from "./chinese-scripts";
 
 export const REGION_META: Record<
   RegionCode,
@@ -188,12 +192,15 @@ Object.assign(AGENCY_REGION, EXTRA_AGENCY_REGION);
 const JP_RE = /[\u3040-\u309F\u30A0-\u30FF]/; // hiragana + katakana
 const HANT_RE = /[\u4E00-\u9FFF]/; // CJK ideographs (needs a second check for simplified)
 const HANGUL_RE = /[\uAC00-\uD7AF\u1100-\u11FF]/;
-const SIMPLIFIED_ONLY = new Set(
-  "国这会说时间开关产业东车马鸟长门问间见贝贝证动务员华齐书乐龙飞产习买乱争于亏云亚仅从众",
-);
-
-const TRAD_MARKERS =
-  /[臺灣國語歌單誰們來過時間開關產業東車馬鳥長門問間見動務員華齊書樂龍飛產習買亂爭於虧雲亞僅從眾體點網頁線灣們愛學國會說對開關點樂聽風飛雲馬鳥魚]/;
+/**
+ * Characters that exist only in one of the two Chinese scripts.
+ *
+ * The sets are large — they cover the high-frequency simplified and
+ * traditional forms — because a single discriminating character is what
+ * separates a Chinese name from a Japanese one.
+ */
+const SIMPLIFIED_ONLY = SIMPLIFIED_ONLY_CHARS;
+const TRAD_MARKERS = TRADITIONAL_ONLY_CHARS;
 
 /**
  * Guesses the primary language of a blob of text.
@@ -210,7 +217,7 @@ export function detectLanguage(text: string | null | undefined): string | null {
     let traditional = 0;
     let simplified = 0;
     for (const ch of text) {
-      if (TRAD_MARKERS.test(ch)) traditional++;
+      if (TRAD_MARKERS.has(ch)) traditional++;
       if (SIMPLIFIED_ONLY.has(ch)) simplified++;
     }
     if (traditional > simplified) return "zh-Hant";

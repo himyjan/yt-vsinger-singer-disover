@@ -68,6 +68,7 @@ export async function buildRoster(
       kind: "virtual",
       role: classification.role === "unknown" ? "vtuber" : classification.role,
       region: record.region,
+      regionSource: "roster",
       language: classification.language,
       agency: record.group,
       avatar: record.avatar,
@@ -95,6 +96,7 @@ export async function buildRoster(
       source: "api",
       addedAt: now,
       updatedAt: now,
+      lastItemsFetchedAt: null,
 
       activity: record.activity,
       debutDate: record.debutDate,
@@ -159,6 +161,7 @@ export async function buildRoster(
       kind: seed.kind,
       role: seed.role,
       region: seed.region,
+      regionSource: "override",
       language: null,
       agency: seed.agency ?? null,
       avatar: null,
@@ -180,6 +183,7 @@ export async function buildRoster(
       source: "seed",
       addedAt: now,
       updatedAt: now,
+      lastItemsFetchedAt: null,
 
       activity: "unknown",
       debutDate: null,
@@ -237,6 +241,8 @@ export async function buildRoster(
       description: null,
       tags: entry.aliases,
       country: null,
+      // The platform the performer is on is a strong region signal.
+      platform: entry.platforms[0]?.platform ?? null,
     });
 
     byId.set(entry.id, {
@@ -246,6 +252,12 @@ export async function buildRoster(
       kind: entry.kind,
       role: classification.role === "unknown" ? "vtuber" : classification.role,
       region: entry.region,
+      regionSource:
+        entry.regionSource === "declared"
+          ? "declared"
+          : entry.regionSource === "platform"
+            ? "platform"
+            : "script",
       language: classification.language,
       agency: entry.group,
       avatar: null,
@@ -271,6 +283,7 @@ export async function buildRoster(
       source: "api",
       addedAt: now,
       updatedAt: now,
+      lastItemsFetchedAt: null,
 
       activity: "unknown",
       debutDate: null,
@@ -300,6 +313,9 @@ export async function buildRoster(
             description: channel.description,
             tags: channel.tags,
             country: null,
+            // A performer found on Bilibili is mainland Chinese, and one
+            // found on Niconico is Japanese.
+            platform: adapter.id,
           });
           byId.set(id, {
             id,
@@ -308,6 +324,7 @@ export async function buildRoster(
             kind: classification.kind,
             role: classification.role,
             region: classification.region,
+            regionSource: classification.regionSource,
             language: classification.language,
             agency: null,
             avatar: channel.avatar,
@@ -331,6 +348,7 @@ export async function buildRoster(
             source: "api",
             addedAt: now,
             updatedAt: now,
+            lastItemsFetchedAt: null,
 
             activity: "unknown",
             debutDate: null,
