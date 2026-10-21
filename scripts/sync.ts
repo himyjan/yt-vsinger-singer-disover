@@ -34,11 +34,14 @@ import {
 } from "./lib/twitch";
 import { createAdapters } from "./lib/platform-registry";
 import { fetchAiList, isOnAiList } from "./lib/aislist";
+import { fetchTrackedVtubers } from "./lib/taiwan-vtuber-data";
+import { buildRoster } from "./lib/roster";
 import { fetchMusicDataset, indexMusicDataset } from "./lib/music-dataset";
 import { deriveVariant } from "./lib/classify";
 import type {
   PlatformAdapter,
   PlatformChannel,
+  PlatformUpload,
 } from "./lib/platforms";
 import {
   CACHE_DIR,
@@ -47,7 +50,12 @@ import {
   mergeById,
   ROOT,
 } from "./lib/io";
-import { layout, writeDataset, describeDatasetSize } from "./lib/dataset";
+import {
+  layout,
+  writeDataset,
+  describeDatasetSize,
+  readAllChannelRecords,
+} from "./lib/dataset";
 import { buildRegionMeta } from "./lib/regions";
 import type {
   Channel,
@@ -68,6 +76,14 @@ import type { PlatformLink } from "./lib/types";
 interface Args {
   dryRun: boolean;
   noSearch: boolean;
+  /** Skip every YouTube API call; only apply the external enrichments. */
+  offline: boolean;
+  /**
+   * Rebuild the channel roster from the authoritative public sources
+   * (the Taiwan VTuber track list, the curated seeds and the other
+   * platforms) before syncing.
+   */
+  roster: boolean;
   budget: number;
   quotaLimit: number;
   limitChannels: number | null;
@@ -79,6 +95,8 @@ function parseArgs(argv: string[]): Args {
   const args: Args = {
     dryRun: false,
     noSearch: false,
+    offline: false,
+    roster: false,
     budget: 10_000,
     quotaLimit: 10_000,
     limitChannels: null,
@@ -89,6 +107,8 @@ function parseArgs(argv: string[]): Args {
     const a = argv[i];
     if (a === "--dry-run") args.dryRun = true;
     else if (a === "--no-search") args.noSearch = true;
+    else if (a === "--offline") args.offline = true;
+    else if (a === "--roster") args.roster = true;
     else if (a === "--force") args.force = true;
     else if (a === "--budget") args.budget = Number(argv[++i]);
     else if (a === "--quota") args.quotaLimit = Number(argv[++i]);
@@ -438,9 +458,16 @@ async function main(): Promise<void> {
 
   const apiKey =
     process.env.YOUTUBE_API_KEY ?? process.env.YT_API_KEY ?? "";
-  if (!apiKey) {
+
+  /**
+   * Offline mode applies the external enrichment sources — the Taiwan VTuber
+   * roster, AiSList and the music dataset — to the existing dataset without
+   * touching the YouTube API. It needs no API key and spends no quota.
+   */
+  if (!apiKey && !args.offline) {
     console.error(
-      "[sync] YOUTUBE_API_KEY is not set. Get a free key at https://console.cloud.google.com/apis/credentials and enable 'YouTube Data API v3'.",
+      "[sync] YOUTUBE_API_KEY is not set. Get a free key at https://console.cloud.google.com/apis/credentials and enable 'YouTube Data API v3'.\n" +
+        "       (Use --offline to apply the external enrichments only, without an API key.)",
     );
     process.exit(1);
   }
@@ -449,30 +476,19 @@ async function main(): Promise<void> {
   const budget = new QuotaBudget(quotaPath, args.quotaLimit);
   if (args.force) budget.overrideUsed(0);
 
-  const client = new YouTubeClient({
-    apiKey,
-    cacheDir: path.join(CACHE_DIR, "youtube"),
-    budget,
-    onLog: (m) => log(m),
-  });
+  const client = apiKey
+    ? new YouTubeClient({
+        apiKey,
+        cacheDir: path.join(CACHE_DIR, "youtube"),
+        budget,
+        onLog: (m) => log(m),
+      })
+    : null;
 
   const now = nowIso();
 
   /* --- load current dataset ------------------------------------------- */
-  const existingChannelsFile = readJson<ChannelFile>(layout.channelsVirtual, {
-    schemaVersion: SCHEMA_VERSION,
-    generatedAt: now,
-    channels: [],
-  });
-  const existingRealFile = readJson<ChannelFile>(layout.channelsReal, {
-    schemaVersion: SCHEMA_VERSION,
-    generatedAt: now,
-    channels: [],
-  });
-  const existingChannels = [
-    ...(existingChannelsFile.channels ?? []),
-    ...(existingRealFile.channels ?? []),
-  ];
+  const existingChannels = readAllChannelRecords();
 
   const existingItems: Item[] = [];
   const itemsRoot = path.join(ROOT, "data", "items");
@@ -496,6 +512,10 @@ async function main(): Promise<void> {
   let items = existingItems;
   log(`loaded ${channels.length} channels / ${items.length} items from disk`);
 
+  if (!client) {
+    log("offline mode — skipping every YouTube API call");
+  }
+
   /* --- resolve seeds --------------------------------------------------- */
   const seedByChannelId = new Map<string, SeedEntry>();
   const seedHandles: SeedEntry[] = [];
@@ -506,10 +526,10 @@ async function main(): Promise<void> {
 
   const seedIds = [...seedByChannelId.keys()];
   const resolvedSeeds: any[] = [];
-  if (seedIds.length) {
+  if (client && seedIds.length) {
     resolvedSeeds.push(...(await client.channels(seedIds)));
   }
-  if (seedHandles.length) {
+  if (client && seedHandles.length) {
     try {
       resolvedSeeds.push(...(await client.resolveHandles(seedHandles.map((s) => s.handle!))));
     } catch (err) {
@@ -537,7 +557,7 @@ async function main(): Promise<void> {
       : config.searches
   ).slice(0, config.maxSearchesPerRun);
 
-  if (!args.noSearch) {
+  if (!args.noSearch && client) {
     for (const spec of searchSpecs) {
       if (!budget.canAfford(API_COST.search)) {
         log("search budget exhausted — skipping remaining searches");
@@ -579,6 +599,51 @@ async function main(): Promise<void> {
   const channelById = new Map<string, Channel>();
   for (const c of channels) channelById.set(c.id, c);
 
+  /* --- rebuild the channel roster -------------------------------------- */
+  /**
+   * The roster comes from the authoritative public sources rather than from
+   * the legacy SQLite database, which has been removed: the Taiwan VTuber
+   * track list publishes YouTube ids, aliases, debut and graduation dates,
+   * activity status, nationality and Twitch ids for ~4,400 performers, and
+   * the curated seeds cover the virtual and real artists outside that scene.
+   */
+  if (args.roster || !client) {
+    const roster = await buildRoster({
+      onLog: (m) => log(m),
+    });
+    for (const channel of roster) {
+      const existing = channelById.get(channel.id);
+      if (!existing) {
+        channelById.set(channel.id, channel);
+        continue;
+      }
+      // The roster wins on the facts it owns; anything it does not know is
+      // kept from the existing record.
+      channelById.set(channel.id, {
+        ...existing,
+        name: channel.name || existing.name,
+        kind: channel.kind,
+        role: channel.role,
+        region: channel.region,
+        agency: channel.agency ?? existing.agency,
+        subscribers: channel.subscribers.tag === "hidden"
+          ? existing.subscribers
+          : channel.subscribers,
+        activity: channel.activity !== "unknown" ? channel.activity : existing.activity,
+        debutDate: channel.debutDate ?? existing.debutDate,
+        graduateDate: channel.graduateDate ?? existing.graduateDate,
+        avatar: channel.avatar ?? existing.avatar,
+        twitchId: channel.twitchId ?? existing.twitchId,
+        twitchLogin: channel.twitchLogin ?? existing.twitchLogin,
+        platforms: channel.platforms.length ? channel.platforms : existing.platforms,
+        source: channel.source === "seed" ? "seed" : existing.source,
+        confidence: Math.max(existing.confidence, channel.confidence),
+      });
+    }
+    log(`roster: ${roster.length} channels, ${channelById.size} total`);
+  }
+
+
   // 1. Seeded channels (highest priority for provenance).
   for (const raw of resolvedSeeds) {
     const seed =
@@ -602,7 +667,7 @@ async function main(): Promise<void> {
     .filter((id) => !channelById.has(id) || args.force)
     .slice(0, config.maxChannelsPerRun);
 
-  if (toRefresh.length) {
+  if (client && toRefresh.length) {
     try {
       const raws = await client.channels(toRefresh);
       for (const raw of raws) {
@@ -617,7 +682,7 @@ async function main(): Promise<void> {
 
   // 3. Refresh details of known channels (cheap: 1 unit per 50).
   const knownIds = [...channelById.keys()];
-  if (knownIds.length) {
+  if (client && knownIds.length) {
     try {
       const raws = await client.channels(knownIds);
       for (const raw of raws) {
@@ -650,6 +715,10 @@ async function main(): Promise<void> {
 
   channels = [...channelById.values()].filter((c) => !overrides[c.id]?.hidden);
   log(`channel set: ${channels.length}`);
+
+  /** Every known item, keyed by id — the working set for this run. */
+  const itemById = new Map<string, Item>();
+  for (const i of items) itemById.set(i.id, i);
 
   /* --- Twitch enrichment (optional) ------------------------------------ */
   const twitch = TwitchClient.fromEnv(
@@ -691,6 +760,41 @@ async function main(): Promise<void> {
     }
   } else {
     log("twitch: skipped (TWITCH_CLIENT_ID / TWITCH_CLIENT_SECRET not set)");
+  }
+
+  /* --- Taiwan VTuber Tracking Data: authoritative region + lifecycle --- */
+  const tracked = await fetchTrackedVtubers();
+  if (tracked.size) {
+    let enriched = 0;
+    for (const channel of channels) {
+      const record = tracked.get(channel.id);
+      if (!record) continue;
+
+      // The tracked roster is authoritative for the region and the activity.
+      channel.region = record.region;
+      channel.activity = record.activity;
+      channel.debutDate = record.debutDate ?? channel.debutDate;
+      if (record.group && !channel.agency) channel.agency = record.group;
+      if (record.twitchId) channel.twitchId = record.twitchId;
+
+      // Subscriber counts: prefer the tracked figure when it is public.
+      if (record.subscribers.tag === "has") {
+        channel.subscribers = record.subscribers;
+      }
+      if (!channel.avatar && record.avatar) channel.avatar = record.avatar;
+
+      channel.variant = deriveVariant(
+        channel.role,
+        channel.gender,
+        channel.isAi,
+      );
+      enriched++;
+    }
+    log(
+      `taiwan vtuber data: ${tracked.size} tracked performers, ${enriched} channel(s) enriched`,
+    );
+  } else {
+    log("taiwan vtuber data: unavailable — using heuristic region detection");
   }
 
   /* --- AiSList: authoritative AI-channel detection --------------------- */
@@ -752,6 +856,25 @@ async function main(): Promise<void> {
       log(`${adapter.id}: discovered ${found} channel(s)`);
     }
 
+    /**
+     * Collect the uploads the adapters found while discovering channels.
+     *
+     * Bilibili's live list is partition-wide, so the adapter hands back the
+     * live streams it saw; they become dataset items like any other upload.
+     */
+    for (const { adapter, channel } of platformCandidates) {
+      const liveUploads = (adapter as unknown as { liveUploads?: any[] })
+        .liveUploads;
+      if (Array.isArray(liveUploads)) {
+        for (const upload of liveUploads) {
+          const item = platformUploadToItem(upload, now);
+          if (!item) continue;
+          const prev = itemById.get(item.id);
+          itemById.set(item.id, { ...item, addedAt: prev?.addedAt ?? item.addedAt });
+        }
+      }
+    }
+
     // Store the discovered channels as platform links on matching YouTube
     // channels when the name matches, otherwise record them as standalone
     // entries in the dataset.
@@ -784,20 +907,30 @@ async function main(): Promise<void> {
   }
 
   /* --- fetch items ----------------------------------------------------- */
-  const itemById = new Map<string, Item>();
-  for (const i of items) itemById.set(i.id, i);
-
   const singingChannels = channels.filter((c) => c.isSinging);
+
+  /**
+   * Channels to refresh uploads for.
+   *
+   * Not only the channels the classifier believes are singing: a channel that
+   * already has items in the dataset must keep them fresh even if its
+   * description has not been fetched yet. Otherwise the dataset would slowly
+   * go stale for every channel whose `isSinging` flag is still unknown.
+   */
+  const channelsWithItems = new Set(items.map((i) => i.channelId));
+  const refreshable = channels.filter(
+    (c) => c.isSinging || channelsWithItems.has(c.id),
+  );
   const channelList =
     args.limitChannels !== null
-      ? singingChannels.slice(0, args.limitChannels)
-      : singingChannels;
+      ? refreshable.slice(0, args.limitChannels)
+      : refreshable;
 
   let fetchedVideos = 0;
   let fetchedDetails = 0;
 
   for (const channel of channelList) {
-    if (!budget.canAfford(2)) break;
+    if (!client || !budget.canAfford(2)) break;
     try {
       const rawVideos = await fetchChannelVideos(
         client,
@@ -833,7 +966,7 @@ async function main(): Promise<void> {
   log(`fetched ${fetchedVideos} videos / ${fetchedDetails} details`);
 
   /* --- live + upcoming broadcasts -------------------------------------- */
-  if (config.refreshLiveEveryRun && budget.canAfford(API_COST.liveBroadcasts)) {
+  if (client && config.refreshLiveEveryRun && budget.canAfford(API_COST.liveBroadcasts)) {
     const liveTargets = singingChannels
       .slice(0, config.maxLiveChannelsPerRun)
       .map((c) => c.id);
@@ -894,7 +1027,7 @@ async function main(): Promise<void> {
   }
 
   /* --- discovered videos ------------------------------------------------ */
-  if (discoveredVideoIds.size && budget.canAfford(API_COST.videos)) {
+  if (client && discoveredVideoIds.size && budget.canAfford(API_COST.videos)) {
     const ids = [...discoveredVideoIds].slice(0, 200);
     try {
       const details = await fetchVideoDetails(client, ids);
@@ -920,7 +1053,7 @@ async function main(): Promise<void> {
   const missingDuration = items.filter(
     (i) => i.duration === null && i.type === "video" && i.status !== "upcoming",
   );
-  if (missingDuration.length && budget.canAfford(API_COST.videos)) {
+  if (client && missingDuration.length && budget.canAfford(API_COST.videos)) {
     const ids = missingDuration.slice(0, 500).map((i) => i.id);
     try {
       const details = await fetchVideoDetails(client, ids);
@@ -997,16 +1130,59 @@ async function main(): Promise<void> {
     );
   }
 
-  /* --- retention ------------------------------------------------------ */
+  /* --- merge with the on-disk dataset ---------------------------------- */
+  channels = mergeById(existingChannels, channels);
+  items = mergeById(existingItems, items);
+
+  /**
+   * Items carry denormalised copies of their channel's classification, so
+   * they can be filtered without a join. When a channel's region, kind,
+   * gender or AI flag changes — which happens whenever the roster or the
+   * verifier corrects it — the items have to follow.
+   */
+  for (const item of items) {
+    const channel = channelById.get(item.channelId);
+    if (!channel) continue;
+    item.region = channel.region;
+    item.channelKind = channel.kind;
+    item.gender = channel.gender;
+    item.isAi = channel.isAi;
+    item.variant = channel.variant;
+    if (!item.channelName) item.channelName = channel.name;
+  }
+
+  /**
+   * Whether a channel publishes singing content is discovered from its
+   * uploads, not assumed. A channel with a cover, an MV, an original song or
+   * a live performance is a singing channel.
+   */
+  const singingChannelsFound = new Set(
+    items
+      .filter((i) =>
+        ["cover", "mv", "original", "performance", "live"].includes(i.category),
+      )
+      .map((i) => i.channelId),
+  );
+  for (const channel of channels) {
+    if (singingChannelsFound.has(channel.id)) channel.isSinging = true;
+  }
+
+  /**
+   * Retention runs *after* the merge, not before.
+   *
+   * The merge is a union with what is already on disk, so trimming before it
+   * would simply re-add the trimmed records on the next pass — retention
+   * would never take effect.
+   */
+  const beforeRetention = items.length;
   items = applyRetention(items, {
     maxPerChannel: config.maxItemsPerChannelRetained,
     maxAgeDays: config.maxItemAgeDays,
   });
-  log(`after retention: ${items.length} items`);
-
-  /* --- merge with the on-disk dataset ---------------------------------- */
-  channels = mergeById(existingChannels, channels);
-  items = mergeById(existingItems, items);
+  log(
+    `retention: ${beforeRetention} → ${items.length} items ` +
+      `(max ${config.maxItemsPerChannelRetained}/channel, max age ${config.maxItemAgeDays}d)`,
+  );
 
   /* --- write ------------------------------------------------------------ */
   const counts = computeCounts(channels, items);
@@ -1058,6 +1234,52 @@ async function main(): Promise<void> {
 /* -------------------------------------------------------------------------- */
 /* Multi-platform helpers                                                     */
 /* -------------------------------------------------------------------------- */
+
+/**
+ * Converts a platform upload into a dataset item.
+ *
+ * Items from other platforms are stored alongside the YouTube ones — a
+ * Bilibili MV and its YouTube upload are the same performance, and the
+ * dataset should not hide one because it came from a different site.
+ */
+export function platformUploadToItem(
+  upload: PlatformUpload,
+  now: string,
+): Item | null {
+  if (!upload?.id) return null;
+  return {
+    id: upload.id,
+    type: upload.status === "live" ? "live" : "video",
+    channelId: upload.channelId,
+    channelName: "",
+    channelKind: "virtual",
+    region: "cn",
+    gender: "unknown",
+    isAi: false,
+    variant: "unknown",
+    title: upload.title ?? "Untitled",
+    description: upload.description ?? null,
+    thumbnail: upload.thumbnail ?? null,
+    publishedAt: upload.publishedAt ?? null,
+    scheduledStart: upload.scheduledStart ?? null,
+    actualStart: null,
+    actualEnd: null,
+    duration: upload.duration ?? null,
+    status: upload.status,
+    category: upload.category,
+    songTitle: upload.songTitle ?? null,
+    originalArtist: upload.originalArtist ?? null,
+    isCollab: false,
+    isAcoustic: false,
+    tags: [],
+    viewCount: upload.viewCount ?? null,
+    likeCount: null,
+    concurrentViewers: null,
+    source: "api",
+    addedAt: now,
+    updatedAt: now,
+  };
+}
 
 /**
  * Finds a YouTube channel that corresponds to a performer found on another

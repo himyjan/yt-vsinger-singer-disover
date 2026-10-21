@@ -105,6 +105,61 @@ Every record carries `source`:
 
 ---
 
+## 5b. Verification before publishing
+
+The keyword classifier is fast and free but wrong often enough to matter. A
+verification step checks uncertain records against the web **before** the data
+is published.
+
+- `[x]` Web-search grounding — a model that actually looks the channel up,
+      rather than answering from memory.
+- `[x]` Verifies: virtual vs. real, role, region, gender, AI-generated,
+      and whether the channel is a fan/clip aggregator at all.
+- `[x]` Corrections are written as **overrides**, never as direct edits, so
+      every change is reviewable in a diff and can be reverted by deleting
+      one entry.
+- `[x]` The sources the model read are recorded next to each answer.
+- `[x]` Confidence thresholds: corrections below `--min-confidence` are
+      discarded, because a wrong correction is worse than none.
+- `[x]` The model is instructed never to guess a gender from a name or a
+      photo, and to answer "unknown" rather than guess.
+- `[x]` Runs daily in GitHub Actions, then re-applies the corrections,
+      rebuilds the index and validates.
+
+## 5c. Gender, AI and the combined variant
+
+- `[x]` `gender` — `female` · `male` · `unknown`. Explicit self-descriptions
+      win; honorifics are only a fallback.
+- `[x]` `isAi` — AI VTubers, AI singers and synthesised voices. The
+      community-maintained [AiSList](https://github.com/Override92/AiSList)
+      blocklist and warnlist are the authoritative source; the keyword
+      heuristics are only the fallback.
+- `[x]` `variant` — the combined label stored on every channel and item:
+      `female_vtuber`, `male_vtuber`, `ai_vtuber`, `female_vsinger`,
+      `ai_vsinger`, … AI takes precedence over gender.
+- `[x]` Filters for gender, AI and the combined variant, applied by the same
+      data-layer funnel as every other filter.
+
+## 5d. Acoustic / 弾き語り
+
+- `[x]` `isAcoustic` — "singing while playing an instrument": 弾き語り, 彈唱,
+      自弹自唱, acoustic, fingerstyle, unplugged.
+- `[x]` A **flag**, not a category, because these uploads are usually covers
+      as well — filtering for them must not remove them from the cover bucket.
+- `[x]` A quick filter chip in the web app.
+
+## 5e. The songs dataset
+
+- `[x]` `data/songs/` — a music-centric projection of the dataset: one record
+      per performance, carrying the song, the original artist, the
+      collaboration flag, the acoustic flag and the duration.
+- `[x]` Sharded by region and by category, so "every cover" is one cheap
+      fetch.
+- `[x]` Song metadata from the
+      [VTuber Music Dataset](https://github.com/meihei3/VTuber-music-dataset)
+      overrides the heuristic extraction, because the curated data is
+      authoritative.
+
 ## 6. Live page (modelled on the `camlisted` reference)
 
 - `[x]` A dedicated **Live** view listing every currently-live VTuber / singer.
@@ -155,6 +210,18 @@ Every record carries `source`:
 - `[x]` Client-side Google OAuth via Google Identity Services — works on a
       static site, no backend.
 - `[x]` Scope: `https://www.googleapis.com/auth/youtube.readonly`.
+- `[x]` **Twitch** — OAuth 2.0 with PKCE, so no client secret is needed in
+      the browser.
+- `[x]` **Bilibili** — the user pastes their `SESSDATA` cookie, because
+      Bilibili offers no public OAuth for a follow list.
+- `[x]` **VK** — implicit OAuth. VK has no channel-subscription concept, so
+      the provider surfaces the user's friend list.
+- `[x]` **Several accounts per platform** — a user can link two Twitch
+      accounts, or two Google profiles.
+- `[x]` **Switch account** — the active account is stored per platform, so
+      switching is instant and needs no re-authentication.
+- `[x]` **Sign out** — per account, revoking it locally and dropping its
+      subscriptions.
 - `[x]` After linking:
       - list the user's **YouTube subscriptions**,
       - match each subscription against the local dataset,
@@ -165,6 +232,11 @@ Every record carries `source`:
 - `[x]` Sign-out clears the token and the subscription list.
 - `[x]` Failures (denied consent, expired token, missing client id) degrade to
       a clear message instead of breaking the app.
+- `[x]` A **tracked / not tracked** filter on the subscription list, so the
+      user can see which subscriptions the dataset does not cover yet.
+- `[x]` Subscriptions are matched by channel id first, then by normalised
+      display name, so a YouTube subscription of a VTuber who also streams on
+      Twitch is recognised.
 
 ---
 
@@ -264,4 +336,13 @@ maximum for a single Git LFS file.
 - `[x]` `docs/DEPLOY.md` — GitHub Actions, Pages, secrets, LFS.
 - `[x]` `docs/CONTRIBUTING.md` — how to add a channel, a region, a platform.
 - `[x]` `AGENTS.md` — repository guide for AI agents.
-- `[x]` `.opencode/skills/*` — task-specific agent skills.
+- `[x]` `.opencode/skills/*` — task-specific agent skills:
+
+| Skill | Purpose |
+| --- | --- |
+| `sync-dataset` | Run, debug and extend the sync pipeline |
+| `curate-data` | Fix classifications, add seeds, edit overrides |
+| `verify-data` | Verify records against the web with search grounding |
+| `search-index` | Tokenisation, ranking and the index format |
+| `add-platform` | Add a platform adapter |
+| `web-ui` | Views, filters, theme and the account menu |

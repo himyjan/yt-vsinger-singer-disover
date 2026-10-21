@@ -69,9 +69,11 @@ export const SHARD_COUNT = 16;
 export const layout = {
   manifest: path.join(DATA_DIR, "manifest.json"),
   channelsIndex: path.join(DATA_DIR, "channels", "index.json"),
-  channelsVirtual: path.join(DATA_DIR, "channels", "virtual.json"),
-  channelsReal: path.join(DATA_DIR, "channels", "real.json"),
-  channelRegion: (r: string) => path.join(DATA_DIR, "channels", "regions", `${r}.json`),
+  channelsVirtual: (r: string) =>
+    path.join(DATA_DIR, "channels", "virtual", `${r}.json`),
+  channelsReal: (r: string) => path.join(DATA_DIR, "channels", "real", `${r}.json`),
+  channelRegion: (r: string) =>
+    path.join(DATA_DIR, "channels", "regions", `${r}.json`),
   itemsManifest: path.join(DATA_DIR, "items", "manifest.json"),
   itemsRegion: (r: string, b: string) =>
     path.join(DATA_DIR, "items", r, `${b}.json`),
@@ -201,18 +203,51 @@ export function writeDataset(
     channels: ChannelSummary[];
   });
 
-  const virtual = channels.filter((c) => c.kind === "virtual");
-  const real = channels.filter((c) => c.kind === "real");
-  writeJson(layout.channelsVirtual, {
-    schemaVersion: SCHEMA_VERSION,
-    generatedAt: now,
-    channels: virtual,
-  } satisfies ChannelFile);
-  writeJson(layout.channelsReal, {
-    schemaVersion: SCHEMA_VERSION,
-    generatedAt: now,
-    channels: real,
-  } satisfies ChannelFile);
+  /**
+   * The full channel records are sharded by **kind and region**.
+   *
+   * A single `virtual.json` holding every VTuber in the catalogue overflows
+   * the per-file budget as soon as the roster grows past a few thousand
+   * channels, so the datasets are split the same way the items are.
+   */
+  const channelDirs: { dir: string; keep: Set<string> }[] = [
+    { dir: path.join(DATA_DIR, "channels", "virtual"), keep: new Set() },
+    { dir: path.join(DATA_DIR, "channels", "real"), keep: new Set() },
+  ];
+  for (const { dir } of channelDirs) ensureDir(dir);
+
+  for (const [kind, dir] of [
+    ["virtual", channelDirs[0]!.dir],
+    ["real", channelDirs[1]!.dir],
+  ] as const) {
+    const list = channels.filter((c) => c.kind === kind);
+    const byRegion = new Map<RegionCode, Channel[]>();
+    for (const channel of list) {
+      const region = channel.region ?? "unknown";
+      const bucket = byRegion.get(region) ?? [];
+      bucket.push(channel);
+      byRegion.set(region, bucket);
+    }
+
+    const target = channelDirs.find((d) => d.dir === dir)!;
+    for (const region of ALL_REGIONS) {
+      const bucket = byRegion.get(region);
+      if (!bucket?.length) continue;
+      const file = `${region}.json`;
+      target.keep.add(file);
+      writeJson(
+        kind === "virtual"
+          ? layout.channelsVirtual(region)
+          : layout.channelsReal(region),
+        {
+          schemaVersion: SCHEMA_VERSION,
+          generatedAt: now,
+          channels: bucket,
+        } satisfies ChannelFile,
+      );
+    }
+    removed.push(...pruneStale(dir, target.keep));
+  }
 
   const regionSummaryDir = path.join(DATA_DIR, "channels", "regions");
   ensureDir(regionSummaryDir);
@@ -427,6 +462,26 @@ function countFiles(dir: string): number {
 /* -------------------------------------------------------------------------- */
 /* Readers                                                                    */
 /* -------------------------------------------------------------------------- */
+
+/**
+ * Reads every full channel record, from both kind datasets.
+ */
+export function readAllChannelRecords(): Channel[] {
+  const out: Channel[] = [];
+  for (const kind of ["virtual", "real"] as const) {
+    const dir = path.join(DATA_DIR, "channels", kind);
+    if (!fs.existsSync(dir)) continue;
+    for (const file of fs.readdirSync(dir)) {
+      if (!file.endsWith(".json")) continue;
+      const parsed = readJson<{ channels?: Channel[] }>(
+        path.join(dir, file),
+        {},
+      );
+      out.push(...(parsed.channels ?? []));
+    }
+  }
+  return out;
+}
 
 export function readChannelSummaries(): ChannelSummary[] {
   const file = readJson<{ channels?: ChannelSummary[] }>(

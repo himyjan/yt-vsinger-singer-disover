@@ -1,0 +1,91 @@
+name: Verify dataset
+
+# Checks uncertain classifications against the web using Google Search
+# grounding, and records the answers as overrides.
+#
+# The keyword classifier is fast and free but wrong often enough to matter.
+# This job asks a search-grounded model to verify the channels it is least
+# sure about, and writes the corrections to `data/overrides.json` — which the
+# normal sync then applies.
+#
+# Because the corrections land in a normal file, every change is reviewable
+# in a diff and can be reverted by deleting one entry.
+#
+# Required repository secret:
+#   GEMINI_API_KEY — a key from https://aistudio.google.com/apikey
+#
+# The free tier is enough: the default model is `gemini-2.5-flash`.
+
+on:
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: "How many channels to verify in this run"
+        required: false
+        default: "40"
+      max-confidence:
+        description: "Only verify channels at or below this confidence"
+        required: false
+        default: "1"
+      min-confidence:
+        description: "Only accept corrections at or above this confidence"
+        required: false
+        default: "0.7"
+  schedule:
+    # Daily, at an odd minute to avoid the shared cron pool's peak.
+    - cron: "43 4 * * *"
+
+concurrency:
+  group: verify-dataset
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  verify:
+    name: Verify and commit corrections
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          lfs: true
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Verify channels
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          npm run data:verify -- \
+            --limit ${{ inputs.limit || 40 }} \
+            --confidence ${{ inputs.max-confidence || 1 }} \
+            --min-confidence ${{ inputs.min-confidence || 0.7 }}
+
+      - name: Re-apply corrections and rebuild the index
+        run: |
+          npm run data:sync -- --no-search
+          npm run data:index
+          npm run data:validate
+
+      - name: Commit corrections
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_user_name: github-actions[bot]
+          commit_user_email: github-actions[bot]@users.noreply.github.com
+          commit_message: "data: verify classifications (${{ github.run_number }})"
+          file_pattern: "data/*"
+          branch: ${{ github.ref_name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

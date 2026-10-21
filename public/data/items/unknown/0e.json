@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T14:06:02.708Z",
+  "generatedAt": "2026-10-21T14:37:04.815Z",
   "items": [
     {
       "id": "xqjSmwjz3h8",
@@ -32,7 +32,8 @@
       "concurrentViewers": null,
       "source": "legacy-db",
       "addedAt": "2026-04-07T15:06:26.565Z",
-      "updatedAt": "2026-10-21T14:06:02.708Z"
+      "updatedAt": "2026-10-21T14:32:04.628Z",
+      "confidence": 0
     },
     {
       "id": "ahwOMHiOH8M",
@@ -64,39 +65,8 @@
       "concurrentViewers": null,
       "source": "legacy-db",
       "addedAt": "2026-04-07T14:23:09.000Z",
-      "updatedAt": "2026-10-21T14:06:02.708Z"
-    },
-    {
-      "id": "0VIlN5GeT6g",
-      "type": "video",
-      "channelId": "UCCM3JLYqkvODaPo3DUTHuOg",
-      "channelName": "ilove88miki88",
-      "channelKind": "virtual",
-      "region": "unknown",
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "unknown",
-      "title": "人生かくれんぼ／五木ひろし　弦哲也　弾き語り",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/0VIlN5GeT6g/hq720.jpg?sqp=-oaymwEcCOgCEMoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDnTeE3Kc5fBgmDtPrOH7Om7gfi4g",
-      "publishedAt": "2025-04-07T14:23:09.136Z",
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "live",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "isAcoustic": true,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "legacy-db",
-      "addedAt": "2026-04-07T14:23:09.000Z",
-      "updatedAt": "2026-10-21T14:06:02.708Z"
+      "updatedAt": "2026-10-21T14:32:04.628Z",
+      "confidence": 0
     },
     {
       "id": "8ybFkTEbyLY",
@@ -128,7 +98,8 @@
       "concurrentViewers": null,
       "source": "legacy-db",
       "addedAt": "2026-04-07T14:23:09.000Z",
-      "updatedAt": "2026-10-21T14:06:02.708Z"
+      "updatedAt": "2026-10-21T14:32:04.628Z",
+      "confidence": 0
     }
   ]
 }

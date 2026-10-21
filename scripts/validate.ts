@@ -12,7 +12,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { DATA_DIR, ROOT, SIZE_BUDGET, directorySize, formatBytes } from "./lib/io";
-import { layout } from "./lib/dataset";
+import { layout, readAllChannelRecords } from "./lib/dataset";
 import { ALL_REGIONS, SCHEMA_VERSION } from "./lib/types";
 import type {
   Channel,
@@ -73,19 +73,14 @@ function validateManifest(): Manifest | null {
 function validateChannels(): Channel[] {
   const all: Channel[] = [];
 
-  for (const file of [layout.channelsVirtual, layout.channelsReal]) {
-    if (!fs.existsSync(file)) {
-      fail(`${path.relative(ROOT, file)} is missing`);
-      continue;
-    }
-    const parsed = JSON.parse(fs.readFileSync(file, "utf8")) as {
-      channels?: Channel[];
-    };
-    for (const channel of parsed.channels ?? []) {
-      check(
-        !!channel.id,
-        `channel with empty id in ${path.basename(file)}`,
-      );
+  const records = readAllChannelRecords();
+  if (!records.length) {
+    fail("data/channels/ is empty — run `npm run data:sync -- --roster`");
+  }
+
+  {
+    for (const channel of records) {
+      check(!!channel.id, "channel with empty id");
       check(
         channel.kind === "virtual" || channel.kind === "real",
         `channel ${channel.id} has invalid kind "${channel.kind}"`,
@@ -110,14 +105,6 @@ function validateChannels(): Channel[] {
       }
       all.push(channel);
     }
-  }
-
-  // The virtual dataset must contain only virtual performers, and vice versa.
-  for (const channel of all) {
-    if (channel.id.startsWith("twitch:")) continue;
-    if (channel.id.startsWith("bilibili:")) continue;
-    if (channel.id.startsWith("niconico:")) continue;
-    if (channel.id.startsWith("vk:")) continue;
   }
 
   const ids = new Set<string>();
