@@ -59,6 +59,7 @@ import {
   canonicalizeChannelIds,
   dedupeChannels,
   mergeChannels,
+  REGION_TRUST,
 } from "./lib/dedupe";
 import { IdentityRegistry } from "./lib/identity";
 import { fetchMusicDataset, indexMusicDataset } from "./lib/music-dataset";
@@ -1427,6 +1428,58 @@ async function main(): Promise<void> {
       log(
         `singing: ${markedSinging} channel(s) marked as singing from their description`,
       );
+    }
+
+    /**
+     * The region is read again for **every** channel, with the same trust
+     * order the merge uses.
+     *
+     * A region can be wrong for a reason the record cannot remember: a
+     * Japanese channel that lists its Bilibili account in its description
+     * used to be classified `cn` from the word "bilibili" alone, and a record
+     * whose region came from vdb's display language is a guess dressed up as
+     * a fact. Re-reading the stored name, description, tags and country with
+     * the current classifier fixes those without a single request — and a
+     * more trusted source never replaces a less trusted one, so an override,
+     * a roster and an agency are safe.
+     */
+    let regionsFixed = 0;
+    for (const channel of channels) {
+      const fresh = classifyChannel({
+        name: channel.name,
+        description: channel.description,
+        tags: channel.tags,
+        country: channel.country,
+        platform: primaryPlatformOf(channel) ?? undefined,
+      });
+      if (
+        REGION_TRUST[fresh.regionSource] <=
+        REGION_TRUST[channel.regionSource ?? "unknown"]
+      ) {
+        continue;
+      }
+      if (fresh.region === channel.region) {
+        // The source got stronger but the answer is the same.
+        channel.regionSource = fresh.regionSource;
+        continue;
+      }
+      log(
+        `region: ${channel.name} ${channel.region} (${channel.regionSource}) → ` +
+          `${fresh.region} (${fresh.regionSource})`,
+      );
+      channel.region = fresh.region;
+      channel.regionSource = fresh.regionSource;
+      // The language follows the region, unless the performer stated one.
+      if (!channel.statedLanguages.length) {
+        const current = Array.isArray(channel.languages)
+          ? channel.languages
+          : [channel.languages].filter(Boolean);
+        channel.languages = languagesForRegion(fresh.region, current);
+      }
+      regionsFixed++;
+    }
+    if (regionsFixed) {
+      log(`region: ${regionsFixed} channel(s) corrected`);
     }
 
     let reclassified = 0;

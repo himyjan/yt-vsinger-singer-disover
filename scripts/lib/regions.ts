@@ -164,6 +164,80 @@ export const COUNTRY_REGION: Record<string, RegionCode> = {
 };
 
 /**
+ * The country names YouTube publishes, in the languages the pipeline asks for.
+ *
+ * The Data API returns an ISO code, but InnerTube's about page returns the
+ * country **as a label in the session's language** — 「日本」, "Japan",
+ * "일본". Without this table the only country a record could ever carry is
+ * one the Data API supplied, and the API needs a key.
+ *
+ * Only the countries in `COUNTRY_REGION` are listed: a country nobody has a
+ * region for is not worth guessing at.
+ */
+const COUNTRY_LABELS: Record<string, string[]> = {
+  JP: ["japan", "日本", "일본"],
+  CN: ["china", "中国", "中國", "중국"],
+  TW: ["taiwan", "台湾", "台灣", "대만"],
+  HK: ["hong kong", "香港", "홍콩"],
+  MO: ["macao", "macau", "マカオ", "澳门", "澳門", "마카오"],
+  KR: ["south korea", "korea", "韓国", "韩国", "韓國", "대한민국", "한국"],
+  US: [
+    "united states",
+    "united states of america",
+    "アメリカ合衆国",
+    "アメリカ",
+    "美国",
+    "美國",
+    "미국",
+  ],
+  GB: ["united kingdom", "イギリス", "英国", "英國", "영국"],
+  AU: ["australia", "オーストラリア", "澳大利亚", "澳洲", "오스트레일리아"],
+  CA: ["canada", "カナダ", "加拿大", "캐나다"],
+  SG: ["singapore", "シンガポール", "新加坡", "싱가포르"],
+  MY: ["malaysia", "マレーシア", "马来西亚", "馬來西亞", "말레이시아"],
+  ID: ["indonesia", "インドネシア", "印度尼西亚", "印尼", "인도네시아"],
+  TH: ["thailand", "タイ", "泰国", "泰國", "태국"],
+  VN: ["vietnam", "ベトナム", "越南", "베트남"],
+  PH: ["philippines", "フィリピン", "菲律宾", "菲律賓", "필리핀"],
+  IN: ["india", "インド", "印度", "인도"],
+};
+
+const COUNTRY_LABEL_INDEX: Record<string, string> = Object.fromEntries(
+  Object.entries(COUNTRY_LABELS).flatMap(([code, labels]) =>
+    labels.map((label) => [label.toLowerCase(), code] as const),
+  ),
+);
+
+/**
+ * Reads a country however a source wrote it.
+ *
+ * The Data API writes `JP`; InnerTube's about page writes 「日本」. Both mean
+ * the same thing, and both are facts, so both are accepted — anything else
+ * is `null` rather than a guess.
+ */
+export function normalizeCountry(
+  value: string | null | undefined,
+): string | null {
+  const trimmed = (value ?? "").trim();
+  if (!trimmed) return null;
+  if (/^[A-Za-z]{2}$/.test(trimmed)) return trimmed.toUpperCase();
+  return COUNTRY_LABEL_INDEX[trimmed.toLowerCase()] ?? null;
+}
+
+/**
+ * True when the text contains kana — Japanese, and nothing else.
+ *
+ * Two characters, not one: a single の or め in an otherwise Chinese name is
+ * a stylisation (「猫の神様」, 「屁屁桃も」), not a Japanese name, and there
+ * are enough of them to matter. Two kana in a row are a word — 「るる」,
+ * 「なっつ」, 「イリス」 — and a word is evidence.
+ */
+export function hasKana(text: string | null | undefined): boolean {
+  const kana = (text ?? "").match(/[\u3040-\u309F\u30A0-\u30FF]/g);
+  return (kana?.length ?? 0) >= 2;
+}
+
+/**
  * Additional agency branches, merged into `AGENCY_REGION` below.
  *
  * Kept separate so the main map above stays readable; the classifier matches

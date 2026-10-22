@@ -155,10 +155,35 @@ is published.
       filed under China, including 「巫てんり / Kannagi Tenri」, 「博衣こより」
       and 「獅白ぼたん」.
 - `[x]` The region sources are **ranked**: an override, then the Taiwan track
-      list's nationality, then the channel's published country, then the
-      agency's branch, then kana in the Japanese name, then the platform,
+      list's nationality, then the agency's branch, then the channel's
+      published country, then kana in the Japanese name, then the platform,
       then vdb's display language, then a script guess. A merge keeps the
-      more trusted one.
+      more trusted one. The agency outranks the country because a branch is
+      the scene the performer works in — a Hololive EN member stays `en`
+      even if the channel's about page says Japan.
+- `[x]` The channel's **published country** is read from YouTube's about page
+      (`"country":"日本"`), which the InnerTube client did not fetch before —
+      so every record had `country: null` unless the Data API supplied one,
+      and a country could never outrank a mirror. 「向葵 / あおい」 publishes
+      Japan, has a Bilibili account, and was stored as `cn`; it is now `jp`.
+- `[x]` **A link is not a statement.** The word "bilibili" in a description
+      used to be an explicit `cn` marker, so any Japanese channel that listed
+      its Bilibili account was filed under China. It is no longer a marker:
+      only a channel that exists *only* on Bilibili gets the platform prior.
+      49 records were sitting in `cn` because of their own Bilibili link.
+- `[x]` **A channel publishes a name per language.** YouTube answers with a
+      different title for each `hl` — `Aoi / Vtuber` in English,
+      「向葵 / あおい」 in Japanese — and the pipeline only ever asked in
+      English. The profile is now requested in the language of the record's
+      region, so the Japanese name is the one stored and the English
+      localization becomes an alias; when the region is corrected the
+      profile is fetched again in the new language.
+- `[x]` A region is re-read for **every** record on every sync, from the
+      stored name, description, tags and country, and only a more trusted
+      source replaces a less trusted one — an override, a roster and an
+      agency are never overwritten. `npm run data:details -- --weak-region`
+      does the networked half: it fetches the country and the localized
+      name for the records whose region is still a guess.
 - `[x]` vdb's `name.default` is **not** a statement of origin — it is the
       language the Chinese wiki *displays*, so it lists 「巫てんり」 under the
       Chinese rendition of her name. It is the second-weakest signal.
