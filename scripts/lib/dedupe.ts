@@ -29,8 +29,51 @@ import type {
   RegionCode,
   RegionSource,
 } from "./types";
-import { pickAvatar } from "./platforms";
+import { normalizeChannelId, pickAvatar } from "./platforms";
 import { mergeLanguages } from "./regions";
+
+/**
+ * Strips the URL tabs out of channel ids, and merges the records that clash.
+ *
+ * A channel id that came from a **link** can carry the tab it was copied
+ * from — `UC…/featured`, `UC…/videos`. That string is not the id: asking
+ * YouTube for it resolves to nothing, so the record is never enriched, and
+ * the clean id for the same channel is a second record that is. Both arrive
+ * from the same sources, so this runs before anything is matched.
+ *
+ * The rename is returned rather than only applied, because a caller with
+ * items keyed by the old id has to remap them.
+ */
+export function canonicalizeChannelIds(channels: Channel[]): {
+  channels: Channel[];
+  renamed: { from: string; to: string }[];
+  merged: number;
+} {
+  const renamed: { from: string; to: string }[] = [];
+  const byId = new Map<string, Channel>();
+  let merged = 0;
+
+  for (const channel of channels) {
+    const before = channel.id;
+    channel.id = normalizeChannelId(channel.id);
+    for (const link of channel.platforms ?? []) {
+      if (link.platform === "youtube" && link.id) {
+        link.id = normalizeChannelId(link.id);
+      }
+    }
+    if (channel.id !== before) renamed.push({ from: before, to: channel.id });
+
+    const seen = byId.get(channel.id);
+    if (seen) {
+      byId.set(channel.id, mergeChannels(seen, channel));
+      merged++;
+    } else {
+      byId.set(channel.id, channel);
+    }
+  }
+
+  return { channels: [...byId.values()], renamed, merged };
+}
 
 /** The identity keys a channel contributes. */
 function keysFor(channel: Channel): string[] {

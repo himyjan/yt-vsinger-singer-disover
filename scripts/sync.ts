@@ -46,7 +46,6 @@ import { checkUpstreams, writeRevisions } from "./lib/upstream";
 import { TwitchGqlSource } from "./lib/twitch-gql";
 import {
   isPlaceholderName,
-  normalizeChannelId,
   orderPlatformLinks,
   pickAvatar,
   pickSubscribers,
@@ -56,7 +55,11 @@ import { languagesForRegion, mergeLanguages } from "./lib/regions";
 import { fetchAiList, isOnAiList } from "./lib/aislist";
 import { fetchTrackedVtubers } from "./lib/taiwan-vtuber-data";
 import { buildRoster } from "./lib/roster";
-import { dedupeChannels, mergeChannels } from "./lib/dedupe";
+import {
+  canonicalizeChannelIds,
+  dedupeChannels,
+  mergeChannels,
+} from "./lib/dedupe";
 import { IdentityRegistry } from "./lib/identity";
 import { fetchMusicDataset, indexMusicDataset } from "./lib/music-dataset";
 import { deriveVariant } from "./lib/classify";
@@ -624,21 +627,20 @@ async function main(): Promise<void> {
   }
 
   /* --- load current dataset ------------------------------------------- */
-  const existingChannels = readAllChannelRecords();
-
   /**
    * The ids are cleaned once, here.
    *
    * A record whose id carries a tab — `UC…/featured` — never resolves to a
-   * channel, so it can never be enriched, renamed or verified.
+   * channel, so it can never be enriched, renamed or verified. The clean id
+   * may already belong to another record for the same channel, so the two are
+   * merged rather than left as a pair.
    */
-  for (const channel of existingChannels) {
-    const clean = normalizeChannelId(channel.id);
-    if (clean !== channel.id) {
-      log(`ids: ${channel.id} → ${clean}`);
-      channel.id = clean;
-    }
+  const loaded = canonicalizeChannelIds(readAllChannelRecords());
+  for (const { from, to } of loaded.renamed) log(`ids: ${from} → ${to}`);
+  if (loaded.merged) {
+    log(`ids: merged ${loaded.merged} duplicate record(s) with the same channel`);
   }
+  const existingChannels = loaded.channels;
 
   const existingItems: Item[] = [];
   const itemsRoot = path.join(ROOT, "data", "items");
@@ -742,42 +744,6 @@ async function main(): Promise<void> {
         }
         log(`warn: search "${spec.query}" failed: ${(err as Error).message}`);
       }
-    }
-  }
-
-  /* --- canonical ids --------------------------------------------------- */
-  /**
-   * An id that arrived as a **URL** is not an id.
-   *
-   * `UC…/featured` and `UC…/videos` were built from a channel link, and each
-   * one became a second record for a channel that was already in the
-   * dataset: the roster knows the clean id, so the tab-carrying copy was
-   * never matched and never updated. The tab is stripped here, before
-   * anything is looked up, and the two copies are merged.
-   */
-  {
-    let collapsed = 0;
-    const byId = new Map<string, Channel>();
-    for (const channel of channels) {
-      const before = channel.id;
-      channel.id = normalizeChannelId(channel.id);
-      for (const link of channel.platforms ?? []) {
-        if (link.platform === "youtube" && link.id) {
-          link.id = normalizeChannelId(link.id);
-        }
-      }
-      if (channel.id !== before) log(`id: ${before} → ${channel.id}`);
-      const seen = byId.get(channel.id);
-      if (seen) {
-        byId.set(channel.id, mergeChannels(seen, channel));
-        collapsed++;
-      } else {
-        byId.set(channel.id, channel);
-      }
-    }
-    if (collapsed) {
-      log(`ids: merged ${collapsed} duplicate record(s) with the same channel`);
-      channels = [...byId.values()];
     }
   }
 
@@ -2059,6 +2025,38 @@ async function main(): Promise<void> {
         newestByChannel.get(channel.id) ?? null,
       ),
     );
+  }
+
+  /* --- canonical ids, once more ---------------------------------------- */
+  /**
+   * A record is re-added after the load pass all the time: a roster or a
+   * platform adapter that only knows a channel's **link** builds
+   * `UC…/featured` from it, and that string is not the channel's id. The
+   * complete set is canonicalised here, just before it is merged with what is
+   * on disk — otherwise the copy the sources created is written beside the
+   * record that was already there.
+   */
+  {
+    const canonical = canonicalizeChannelIds(channels);
+    for (const { from, to } of canonical.renamed) log(`ids: ${from} → ${to}`);
+    if (canonical.merged) {
+      log(
+        `ids: merged ${canonical.merged} duplicate record(s) with the same channel`,
+      );
+    }
+    if (canonical.renamed.length) {
+      // Items point at their channel by id, and the id just changed.
+      const remap = new Map(canonical.renamed.map((r) => [r.from, r.to]));
+      for (const item of items) {
+        const to = remap.get(item.channelId);
+        if (to) item.channelId = to;
+      }
+      channelById.clear();
+      for (const channel of canonical.channels) {
+        channelById.set(channel.id, channel);
+      }
+    }
+    channels = canonical.channels;
   }
 
   /* --- merge with the on-disk dataset ---------------------------------- */

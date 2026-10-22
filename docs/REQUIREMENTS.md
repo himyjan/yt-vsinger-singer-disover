@@ -298,6 +298,12 @@ is published.
 - `[x]` A performer whose **name or description** says they have finished —
       「已停播」, 「已畢業」, 「畢業」, 「卒業」, 「活動終了」, 「retired»,
       «закрыт», 「은퇴」 — is marked `"activity": "graduated"`.
+- `[x]` The phrase is matched with its **inflections** too, in the name *and*
+      the description: 「活動を終了しました」, 「活動は終了」, 「活動終えました」,
+      and the Chinese forms of the same message 「停止活動」/「停止活动」
+      (「目前停止活動中」, 「无限期停止活动」) and 「活动终了」. The bare 「活動終了」
+      was recognised but 「活動を終了」 was not, so 14 channels that had
+      announced a retirement were still `unknown` or `active`.
 - `[x]` The markers are multilingual, because the performers are.
 - `[x]` The status is a fact about the **performer**, not about one account:
       the record carries one `activity` and the platform links carry none.

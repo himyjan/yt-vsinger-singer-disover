@@ -103,7 +103,21 @@ sample as `localeHints` so that a kanji-only name can be disambiguated
 | `category` | cover / mv / original / live / premiere / performance |
 | `isAcoustic` | a **flag**, not a category, so acoustic covers stay in the cover bucket |
 | `variant` | the combined label: `female_vtuber`, `ai_vsinger`, … |
-| `activity` | active / preparing / graduated / unknown |
+| `activity` | active / preparing / graduated / unknown — a graduation marker in the **name or the description** wins over anything a roster says |
+
+### A graduation is a phrase, not a word
+
+`GRADUATED_MARKERS` in `scripts/lib/classify.ts` is matched against the name
+*and* the description, with the inflections the scene actually writes — not
+only the dictionary form:
+
+- Japanese: 「卒業」, 「活動終了」, 「活動を終了しました」, 「活動終えました」,
+  「活動休止」, 「最終配信」, 「配信終了」;
+- Chinese: 「已畢業」, 「已停播」, 「停止活動」/「停止活动」, 「活动终了」;
+- English, Korean and Russian as well.
+
+A channel that says it has retired is graduated even if a tracker still lists
+it as `active`: `mergeActivity()` never downgrades a graduation.
 
 ### Aggregators are not performers
 
