@@ -138,6 +138,35 @@ of InnerTube. Two pieces:
   key file names must be taken *without their extensions*, or every signed
   request is rejected with `-412 request was banned`.
 
+### Filling in the missing data
+
+Most of the catalogue starts as a **name and a channel id** — the rosters give
+identities, not pictures. The descriptions, avatars and follower counts come
+from the platform APIs, one channel at a time, and that work is **cumulative**:
+each run fills in a slice, and the filled-in data is committed.
+
+The details pass sorts the channels so the ones missing the most visible
+fields go first:
+
+| Field | Where it comes from |
+| --- | --- |
+| the **description** | InnerTube (YouTube), GQL (Twitch), the Bilibili `card` endpoint |
+| the **avatar** | the same three sources |
+| the **follower count** | InnerTube, GQL, `x/relation/stat` (Bilibili) |
+| the **links** | the channel's own published links |
+
+The free sources cost no quota, so the pass can afford to be generous — it is
+limited by politeness rather than by the budget, and the adaptive limiter
+keeps it that way. A channel that has been resolved once is not resolved
+again until every channel has had a turn.
+
+**The dataset is therefore a work in progress**: run the sync a few times and
+the coverage climbs. The progress is visible in the summary:
+
+```
+channels 14500 · with an avatar 3356 · with a description 347
+```
+
 ### Rate limiting
 
 The free sources have no published quota, but they do push back. All three go
@@ -165,6 +194,7 @@ are not in the pipeline.
 | [PVC.moe](https://pvc.moe) | The data is only in the client bundle |
 | [VTuber.hk](https://vtuber.hk) | Server-rendered, but with no documented data format |
 | [Streams Charts](https://streamscharts.com/vtubers) | Blocks automated requests |
+| [JustOneAPI](https://github.com/justoneapi/justoneapi-python) | A token-based proxy for the protected platforms — a paid service, so the free sources are preferred. Its generated resources are a useful catalogue of which endpoints exist |
 
 If any of them publishes a JSON or CSV file, adding it is one adapter and
 one line in the registry.

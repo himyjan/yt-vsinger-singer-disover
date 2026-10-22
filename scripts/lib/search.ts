@@ -137,7 +137,7 @@ export interface SearchEntryRecord {
   ch?: string;
   /** Channel name (items only). */
   cn?: string;
-  /** Thumbnail URL. */
+  /** Thumbnail URL — may be absent, in which case the UI shows initials. */
   th?: string | null;
   /** Song title for covers / MVs. */
   s?: string | null;

@@ -210,6 +210,22 @@ Whatever a channel's description links to is harvested into
 
 These are rendered in the "all links" block next to the platform identities.
 
+## CHZZK and KICK
+
+Two more platforms where VTubers now stream, both with public APIs that need
+no credentials.
+
+| Platform | Endpoint | Gives |
+| --- | --- | --- |
+| **CHZZK** (Naver) | `GET api.chzzk.naver.com/service/v1/channels/{id}` | name, image, description, follower count, live state |
+| | `GET api.chzzk.naver.com/service/v3/channels/{id}/live-detail` | the live stream |
+| **KICK** | `GET kick.com/api/v2/channels/{login}` | slug, follower count, bio, the live stream |
+
+CHZZK is the biggest Korean VTuber scene and KICK is where a lot of the
+Western scene has moved, so both are in the dataset. Neither has a public
+*search*, so the channels come from the rosters and from account linking
+rather than from discovery.
+
 ## The source registry
 
 `scripts/lib/sources.ts` lists every data source the project knows about,
@@ -247,6 +263,8 @@ honest about the well-known databases it *cannot* read.
 | YouTube | Data API v3 | **InnerTube** (`youtubei.js`) | none |
 | Twitch | Helix | **GQL** (`gql.twitch.tv/gql`) | the public web client id |
 | Bilibili | — | the WBI-signed public API | the visitor id (`buvid3`) |
+| CHZZK | — | the public API | none |
+| KICK | — | the public API | none |
 
 All three go through `scripts/lib/rate-limit.ts`, which keeps a minimum gap
 between requests, doubles it when a source pushes back, and relaxes it again

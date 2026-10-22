@@ -101,6 +101,10 @@ Every record carries `source`:
 - `[x]` Niconico — public search API v2, no credentials needed.
 - `[x]` VK — official API with `VK_ACCESS_TOKEN`; degrades to profile-only
       without it.
+- `[x]` **CHZZK** (Naver) — the public API, no credentials. The biggest Korean
+      VTuber scene.
+- `[x]` **KICK** — the public API, no credentials. Where a lot of the
+      Western scene has moved.
 - `[x]` A common `PlatformAdapter` interface so adding a platform is one file.
 - `[x]` A channel record carries a **list** of platform identities
       (`platforms[]`), so one performer can be present on YouTube *and*
@@ -216,6 +220,59 @@ is published.
       recently resolved. 120 per run by default.
 - `[x]` The description then feeds back into the classification: it can
       reveal the affiliation (「个人势」) and the activity (「已毕业」).
+
+## 5h2. Upstream revision tracking
+
+- `[x]` The commit SHA of every upstream is recorded in `data/upstream.json`
+      and committed, so the dataset can be traced to the exact revision it
+      was built from.
+- `[x]` Each run compares the recorded revision with the current one and
+      reports what moved — so a change in the data can be explained by the
+      upstream commit that caused it.
+- `[x]` A sync that finds nothing new upstream does not redo the work.
+- `[x]` The upstreams tracked: **vdb**, the **Taiwan VTuber Tracking Data**,
+      **AiSList**, the **VTuber Music Dataset** and **YouTube.js**.
+
+## 5i. Twitch link correctness
+
+- `[x]` The Taiwan track list stores the Twitch **numeric id** and the
+      **login** in two columns, and its logins go stale when a performer
+      renames their channel.
+- `[x]` The numeric id is the stable identifier, so it is what the Twitch API
+      is asked about; the API answers with the *current* login, which
+      corrects the stale one.
+- `[x]` The track list's login is only the fallback, for when the API cannot
+      be reached.
+- `[x]` The resolution is budgeted per run, so a run stays bounded and the
+      rest are corrected on later runs.
+
+## 5j. isSinging
+
+- `[x]` True when the channel publishes singing **content** — a cover, an MV,
+      an original song or a performance.
+- `[x]` A live stream alone is not evidence — every channel streams — so it
+      counts only on a channel that is already a singing one.
+- `[x]` The channel's own **description** counts: a channel that says
+      「VTuber / VSinger」 or 「歌い手」 in its bio is a singing channel. The
+      description is fetched by the details pass, and the channel is
+      re-classified once it arrives.
+- `[x]` Filterable in the web app, and shown as a 🎤 badge on the card.
+
+## 5h. Enrichment from the quota-free sources
+
+- `[x]` The descriptions, avatars and follower counts are filled in from the
+      platform APIs, one channel at a time, cumulatively across runs.
+- `[x]` **InnerTube** (`youtubei.js`) for YouTube — no API quota.
+- `[x]` **Twitch GQL** (`gql.twitch.tv/gql`) — the public web client id, so
+      no secret and no quota.
+- `[x]` **Bilibili's WBI-signed public API** — with the visitor id, which is
+      what stops the risk-control system answering with HTTP 412.
+- `[x]` An adaptive **rate limiter** shared by the three: the gap widens when
+      a source pushes back and relaxes when it goes quiet.
+- `[x]` The channels missing the most visible fields are resolved first.
+- `[x]` With **no YouTube API key at all** the dataset still fills up.
+- `[x]` A record without an avatar shows the performer's initials on a
+      stable colour, never a broken image.
 
 ## 6. Live page (modelled on the `camlisted` reference)
 

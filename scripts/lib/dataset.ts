@@ -141,10 +141,12 @@ export function toSummary(c: Channel): ChannelSummary {
       u: p.url,
       h: p.handle,
     })),
+    addedAt: c.addedAt,
     followers: c.platforms.map((p) => ({
       p: p.platform,
       n: p.subscribers.tag === "has" ? p.subscribers.count : null,
       hidden: p.subscribers.tag === "hidden",
+      v: p.videoCount ?? null,
     })),
   };
 }

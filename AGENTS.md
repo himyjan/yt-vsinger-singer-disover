@@ -188,6 +188,8 @@ Load one with the `skill` tool, e.g. `skill({ id: "sync-dataset" })`.
 | Wikipedia | `en.wikipedia.org/api/rest_v1/` | A sourced description and the infobox image |
 | VocaDB | `vocadb.net` | Artists with their platform links, and their songs |
 | Bilibili | `api.bilibili.com` | Chinese VTuber channels |
+| CHZZK | `api.chzzk.naver.com` | The Korean VTuber scene |
+| KICK | `kick.com/api/v2` | The growing Western scene on KICK |
 | Niconico | `api.search.nicovideo.jp/api/v2` | Japanese original songs and covers |
 | VK | `api.vk.com/method` | Russian VTuber channels |
 

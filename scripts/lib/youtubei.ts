@@ -110,6 +110,7 @@ export class InnerTubeSource {
 
   /** Waits between requests so InnerTube does not rate-limit us. */
   private async throttle(): Promise<void> {
+    if (this.limiter.isTripped()) return;
     await this.limiter.wait();
   }
 

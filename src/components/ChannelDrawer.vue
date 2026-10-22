@@ -130,6 +130,22 @@ const REGION_SOURCE_LABELS: Record<string, string> = {
 };
 
 /**
+ * The number of published videos.
+ *
+ * The channel record carries the count when the YouTube API supplied it, but
+ * most of the catalogue comes from the rosters, which do not publish one —
+ * so the platform's own count is used when the channel has one.
+ */
+const videoCount = computed(() => {
+  const own = (props.channel as Channel | null)?.videoCount;
+  if (own) return own;
+  for (const entry of followers.value) {
+    if (entry.n !== null) return entry.n;
+  }
+  return null;
+});
+
+/**
  * The follower count of each platform.
  *
  * A performer on several platforms has several counts, and they are not the
@@ -138,12 +154,13 @@ const REGION_SOURCE_LABELS: Record<string, string> = {
  */
 const followers = computed(() => {
   const source = props.channel as unknown as {
-    followers?: { p: string; n: number | null; hidden: boolean }[];
+    followers?: { p: string; n: number | null; hidden: boolean; v?: number | null }[];
   };
   const list = source.followers ?? [];
-  return list
-    .filter((entry) => entry.n !== null || !entry.hidden)
-    .sort((a, b) => (b.n ?? -1) - (a.n ?? -1));
+  // Every platform is listed, even one that hides its count — "Bilibili:
+  // hidden" is information too, and a performer on four platforms should
+  // show all four.
+  return list.sort((a, b) => (b.n ?? -1) - (a.n ?? -1));
 });
 
 /** The languages, whether the field holds one code or a list. */
@@ -262,7 +279,7 @@ const saved = computed(() =>
                     Videos
                   </dt>
                   <dd class="text-sm font-bold">
-                    {{ formatCount((channel as Channel).videoCount) }}
+                    {{ formatCount(videoCount) }}
                   </dd>
                 </div>
                 <div>
@@ -383,7 +400,7 @@ const saved = computed(() =>
                       </span>
                       {{ platformMeta(entry.p).label }}
                     </span>
-                    <span class="font-semibold text-neutral-700 dark:text-neutral-200">
+                    <span class="text-right font-semibold text-neutral-700 dark:text-neutral-200">
                       {{
                         entry.n === null
                           ? entry.hidden
@@ -391,6 +408,12 @@ const saved = computed(() =>
                             : "—"
                           : formatCount(entry.n)
                       }}
+                      <span
+                        v-if="entry.v"
+                        class="ml-1.5 font-normal text-neutral-400"
+                      >
+                        {{ formatCount(entry.v) }} videos
+                      </span>
                     </span>
                   </li>
                 </ul>

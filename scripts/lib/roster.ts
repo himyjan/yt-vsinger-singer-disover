@@ -90,9 +90,9 @@ export async function buildRoster(
         : null,
       country: null,
       tags: [],
-      // Whether they publish singing content is discovered from their
-      // uploads, not assumed.
-      isSinging: false,
+      // Whether they publish singing content: the classifier's reading of the
+      // name and the upload titles, refined by the uploads themselves later.
+      isSinging: classification.isSinging,
       gender: classification.gender,
       isAi: classification.isAi,
       variant: deriveVariant(
@@ -308,7 +308,7 @@ export async function buildRoster(
         : null,
       country: null,
       tags: entry.aliases,
-      isSinging: false,
+      isSinging: classification.isSinging,
       gender: classification.gender,
       isAi: entry.isAi,
       variant: deriveVariant(
@@ -384,7 +384,7 @@ export async function buildRoster(
             uploadsPlaylistId: null,
             country: null,
             tags: channel.tags,
-            isSinging: false,
+            isSinging: classification.isSinging,
             gender: classification.gender,
             isAi: classification.isAi,
             variant: deriveVariant(

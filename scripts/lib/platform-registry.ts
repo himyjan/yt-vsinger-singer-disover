@@ -14,6 +14,8 @@ import { TwitchClient, extractTwitchLogin } from "./twitch";
 import { BilibiliAdapter } from "./platforms/bilibili";
 import { NiconicoAdapter } from "./platforms/niconico";
 import { VkAdapter } from "./platforms/vk";
+import { ChzzkAdapter } from "./platforms/chzzk";
+import { KickAdapter } from "./platforms/kick";
 import { classifyItem } from "./classify";
 import { pickThumbnail, parseIsoDuration } from "./youtube";
 import type { CountRef, PlatformId } from "./types";
@@ -269,6 +271,14 @@ export function createAdapters(opts: RegistryOptions): PlatformAdapter[] {
   const vk = new VkAdapter();
   if (vk.isConfigured()) adapters.push(vk);
 
+  // CHZZK — Naver's platform, and the biggest Korean VTuber scene.
+  const chzzk = new ChzzkAdapter();
+  if (chzzk.isConfigured()) adapters.push(chzzk);
+
+  // KICK.
+  const kick = new KickAdapter();
+  if (kick.isConfigured()) adapters.push(kick);
+
   return adapters;
 }
 
@@ -279,4 +289,6 @@ export const PLATFORM_LABELS: Record<PlatformId, string> = {
   bilibili: "Bilibili",
   niconico: "Niconico",
   vk: "VK",
+  chzzk: "CHZZK",
+  kick: "KICK",
 };

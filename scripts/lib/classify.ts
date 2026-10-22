@@ -202,6 +202,9 @@ const AGGREGATOR_NAME_PATTERNS: RegExp[] = [
 
 const SINGING_MARKERS = [
   "歌",
+  "vsinger",
+  "v singer",
+  "virtual singer",
   "singer",
   "singing",
   "sing",

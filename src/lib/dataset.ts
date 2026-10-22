@@ -315,6 +315,8 @@ export interface ItemQuery {
   gender?: Gender | "all";
   /** Independent or signed to a business group. */
   affiliation?: Affiliation | "all";
+  /** Only the channels that publish singing content. */
+  singing?: "all" | "singing" | "not-singing";
   /** A language the performer streams in. */
   language?: string | "all";
   /** `ai` shows only AI performers, `human` hides them, `all` shows both. */
@@ -383,6 +385,7 @@ export function filterChannels(
   const ai = query.ai ?? "all";
   const affiliation = query.affiliation ?? "all";
   const language = query.language ?? "all";
+  const singing = query.singing ?? "all";
   const text = query.text?.trim().toLowerCase() ?? "";
 
   return channels.filter((channel) => {
@@ -400,6 +403,8 @@ export function filterChannels(
     ) {
       return false;
     }
+    if (singing === "singing" && !channel.isSinging) return false;
+    if (singing === "not-singing" && channel.isSinging) return false;
     if (text) {
       const haystack = `${channel.name} ${channel.handle ?? ""} ${
         channel.agency ?? ""
@@ -432,6 +437,79 @@ export async function search(
     region: options.region ?? "all",
     limit: options.limit ?? 200,
   });
+}
+
+/* -------------------------------------------------------------------------- */
+/* Sorting                                                                    */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * Sorts the items for a view.
+ *
+ * Each tab has its own natural order — the live tab by how long the stream
+ * has been running, the songs tab by when the cover was published — and the
+ * user can override it.
+ */
+export function sortItems(
+  items: Item[],
+  order: string,
+): Item[] {
+  const byTime = (a: Item, b: Item) =>
+    (b.scheduledStart ?? b.publishedAt ?? "").localeCompare(
+      a.scheduledStart ?? a.publishedAt ?? "",
+    );
+
+  const sorted = [...items];
+  switch (order) {
+    case "oldest":
+      return sorted.sort((a, b) => -byTime(a, b));
+    case "title":
+      return sorted.sort((a, b) => a.title.localeCompare(b.title));
+    case "views":
+      return sorted.sort((a, b) => (b.viewCount ?? 0) - (a.viewCount ?? 0));
+    case "duration":
+      return sorted.sort((a, b) => (b.duration ?? 0) - (a.duration ?? 0));
+    case "viewers":
+      return sorted.sort(
+        (a, b) => (b.concurrentViewers ?? 0) - (a.concurrentViewers ?? 0),
+      );
+    case "subscribers":
+      // The item does not carry the channel's subscriber count, so this
+      // falls back to the item's own view count.
+      return sorted.sort((a, b) => (b.viewCount ?? 0) - (a.viewCount ?? 0));
+    case "soon":
+      return sorted.sort((a, b) =>
+        (a.scheduledStart ?? "9999").localeCompare(b.scheduledStart ?? "9999"),
+      );
+    case "recent":
+    default:
+      return sorted.sort(byTime);
+  }
+}
+
+/**
+ * Sorts the channels for a view.
+ */
+export function sortChannels(
+  channels: ChannelSummary[],
+  order: string,
+): ChannelSummary[] {
+  const sorted = [...channels];
+  switch (order) {
+    case "name":
+      return sorted.sort((a, b) => a.name.localeCompare(b.name));
+    case "recent":
+      return sorted.sort((a, b) =>
+        (b.addedAt ?? "").localeCompare(a.addedAt ?? ""),
+      );
+    case "region":
+      return sorted.sort(
+        (a, b) => a.region.localeCompare(b.region) || a.name.localeCompare(b.name),
+      );
+    case "subscribers":
+    default:
+      return sorted.sort((a, b) => (b.subscribers ?? 0) - (a.subscribers ?? 0));
+  }
 }
 
 /* -------------------------------------------------------------------------- */

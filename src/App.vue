@@ -30,6 +30,8 @@ import {
   filterItems,
   formatCount,
   search,
+  sortChannels,
+  sortItems,
 } from "@/lib/dataset";
 import {
   activeAccount,
@@ -120,6 +122,45 @@ const LANGUAGES = [
   { id: "en", label: "🌐 English", title: "Performers who stream in English" },
 ] as const;
 
+/** The sort options for each tab. */
+const SORTS: Record<
+  ViewId,
+  { id: string; label: string }[]
+> = {
+  live: [
+    { id: "recent", label: "Newest" },
+    { id: "viewers", label: "Most viewers" },
+    { id: "title", label: "Title" },
+  ],
+  upcoming: [
+    { id: "soon", label: "Soonest" },
+    { id: "title", label: "Title" },
+  ],
+  songs: [
+    { id: "recent", label: "Newest" },
+    { id: "oldest", label: "Oldest" },
+    { id: "views", label: "Most viewed" },
+    { id: "duration", label: "Longest" },
+    { id: "title", label: "Title" },
+  ],
+  channels: [
+    { id: "subscribers", label: "Most followers" },
+    { id: "name", label: "Name" },
+    { id: "region", label: "Region" },
+    { id: "recent", label: "Recently added" },
+  ],
+  subs: [
+    { id: "name", label: "Name" },
+    { id: "platform", label: "Platform" },
+    { id: "tracked", label: "Tracked first" },
+  ],
+  saved: [
+    { id: "recent", label: "Newest" },
+    { id: "oldest", label: "Oldest" },
+    { id: "title", label: "Title" },
+  ],
+};
+
 const AFFILIATION_FILTERS = [
   { id: "all", label: "Any affiliation", title: "Every performer" },
   {
@@ -139,6 +180,20 @@ const AFFILIATION_FILTERS = [
   },
 ] as const;
 
+const SINGING_FILTERS = [
+  { id: "all", label: "Any content", title: "Every performer" },
+  {
+    id: "singing",
+    label: "🎤 Singing",
+    title: "Performers who publish covers, MVs, original songs or live singing",
+  },
+  {
+    id: "not-singing",
+    label: "Not singing",
+    title: "Performers whose content is not singing",
+  },
+] as const;
+
 const GENDERS = [
   { id: "all", label: "Any gender" },
   { id: "female", label: "♀ Female" },
@@ -146,7 +201,7 @@ const GENDERS = [
 ] as const;
 
 const visibleLive = computed(() =>
-  filterItems(live.value, {
+  sortItems(filterItems(live.value, {
     kind: state.scope,
     region: state.region,
     categories: state.categories,
@@ -155,11 +210,11 @@ const visibleLive = computed(() =>
     affiliation: state.affiliation,
     language: state.language,
     limit: 300,
-  }),
+  }), state.sort.live),
 );
 
 const visibleUpcoming = computed(() =>
-  filterItems(upcoming.value, {
+  sortItems(filterItems(upcoming.value, {
     kind: state.scope,
     region: state.region,
     gender: state.gender,
@@ -167,36 +222,46 @@ const visibleUpcoming = computed(() =>
     affiliation: state.affiliation,
     language: state.language,
     limit: 300,
-  }),
+  }), state.sort.upcoming),
 );
 
 const visibleSongs = computed(() =>
-  filterItems(
-    allItems.value.filter((i) =>
-      ["cover", "mv", "original", "performance"].includes(i.category),
+  sortItems(
+    filterItems(
+      allItems.value.filter((i) =>
+        ["cover", "mv", "original", "performance"].includes(i.category),
+      ),
+      {
+        kind: state.scope,
+        region: state.region,
+        categories: state.categories,
+        acoustic: state.acousticOnly,
+        gender: state.gender,
+        ai: state.ai,
+        affiliation: state.affiliation,
+        language: state.language,
+        limit: 400,
+      },
     ),
-    {
-      kind: state.scope,
-      region: state.region,
-      categories: state.categories,
-      acoustic: state.acousticOnly,
-      gender: state.gender,
-      ai: state.ai,
-      limit: 400,
-    },
+    state.sort.songs,
   ),
 );
 
 const visibleChannels = computed(() =>
-  filterChannels(summaries.value, {
-    kind: state.scope,
-    region: state.region,
-    gender: state.gender,
-    ai: state.ai,
-    affiliation: state.affiliation,
-    text: state.query.trim() || undefined,
-    limit: 400,
-  }),
+  sortChannels(
+    filterChannels(summaries.value, {
+      kind: state.scope,
+      region: state.region,
+      gender: state.gender,
+      ai: state.ai,
+      affiliation: state.affiliation,
+      language: state.language,
+      singing: state.singing,
+      text: state.query.trim() || undefined,
+      limit: 400,
+    }),
+    state.sort.channels,
+  ),
 );
 
 const linkedProviders = computed(() =>
@@ -241,15 +306,18 @@ const visibleSaved = computed(() => {
     const found = allItems.value.find((i) => i.id === entry.id);
     if (found) items.push(found);
   }
-  return filterItems(items, {
-    kind: state.scope,
-    region: state.region,
-    gender: state.gender,
-    ai: state.ai,
-    affiliation: state.affiliation,
-    language: state.language,
-    limit: 200,
-  });
+  return sortItems(
+    filterItems(items, {
+      kind: state.scope,
+      region: state.region,
+      gender: state.gender,
+      ai: state.ai,
+      affiliation: state.affiliation,
+      language: state.language,
+      limit: 200,
+    }),
+    state.sort.saved,
+  );
 });
 
 /* -------------------------------------------------------------------------- */
@@ -327,6 +395,11 @@ function selectScope(scope: Scope): void {
  * Toggles a content category. Several can be active at once — "MVs" and
  * "Covers" together is a query people actually want.
  */
+/** Sets the sort order of a view. */
+function setSort(view: ViewId, order: string): void {
+  (state.sort as Record<string, string>)[view] = order;
+}
+
 function toggleCategory(id: string): void {
   const index = state.categories.indexOf(id as never);
   if (index >= 0) state.categories.splice(index, 1);
@@ -748,6 +821,27 @@ onMounted(async () => {
             </span>
           </button>
         </nav>
+
+        <!-- The sort control, for the current tab -->
+        <div class="flex items-center justify-end gap-2 pb-2">
+          <label class="flex items-center gap-1.5 text-[11px] font-semibold text-neutral-500">
+            <span class="hidden sm:inline">Sort</span>
+            <select
+              :value="state.sort[state.view]"
+              class="rounded-full border border-black/10 bg-white px-2.5 py-1 text-[11px] font-semibold outline-none dark:border-white/12 dark:bg-neutral-900"
+              :aria-label="`Sort the ${state.view} view`"
+              @change="setSort(state.view, ($event.target as HTMLSelectElement).value)"
+            >
+              <option
+                v-for="option in SORTS[state.view]"
+                :key="option.id"
+                :value="option.id"
+              >
+                {{ option.label }}
+              </option>
+            </select>
+          </label>
+        </div>
       </div>
     </header>
 
@@ -875,6 +969,24 @@ onMounted(async () => {
           :aria-pressed="state.language === option.id"
           :title="option.title"
           @click="state.language = option.id"
+        >
+          {{ option.label }}
+        </button>
+
+        <!-- Singing content -->
+        <button
+          v-for="option in SINGING_FILTERS"
+          :key="option.id"
+          type="button"
+          class="shrink-0 rounded-full border px-3 py-1.5 text-xs font-semibold whitespace-nowrap transition"
+          :class="
+            state.singing === option.id
+              ? 'border-rose-500 bg-rose-500/15 text-rose-700 dark:text-rose-400'
+              : 'border-black/10 bg-white text-neutral-500 hover:text-neutral-800 dark:border-white/12 dark:bg-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100'
+          "
+          :aria-pressed="state.singing === option.id"
+          :title="option.title"
+          @click="state.singing = option.id"
         >
           {{ option.label }}
         </button>
@@ -1125,6 +1237,13 @@ onMounted(async () => {
                 class="rounded bg-black/5 px-1.5 py-0.5 text-[10px] font-semibold text-neutral-600 dark:bg-white/10 dark:text-neutral-300"
               >
                 {{ channel.region.toUpperCase() }}
+              </span>
+              <span
+                v-if="channel.isSinging"
+                class="rounded bg-rose-500/15 px-1.5 py-0.5 text-[10px] font-semibold text-rose-600 dark:text-rose-400"
+                title="Publishes covers, MVs, original songs or live singing"
+              >
+                🎤 Singing
               </span>
               <span
                 v-if="channel.activity === 'graduated'"
