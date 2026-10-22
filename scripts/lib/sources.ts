@@ -1,0 +1,262 @@
+/**
+ * The registry of data sources.
+ *
+ * Every source the project can consume is listed here with what it provides
+ * and whether the pipeline actually reads it. It exists for three reasons:
+ *
+ * 1. **Discoverability.** A new source is one adapter plus one line here.
+ * 2. **Honesty.** Some of the well-known VTuber databases are JavaScript
+ *    applications with no public data endpoint, and it is worth saying so
+ *    rather than silently ignoring them.
+ * 3. **Provenance.** The `source` field of a record says where it came from,
+ *    and this is where those values are defined.
+ */
+
+export type SourceId =
+  | "youtube"
+  | "twitch"
+  | "bilibili"
+  | "niconico"
+  | "vk"
+  | "vdb"
+  | "taiwan-tracker"
+  | "vocadb"
+  | "aislist"
+  | "music-dataset"
+  | "wikidata"
+  | "wikipedia"
+  | "virtual-youtuber-wiki"
+  | "hololist"
+  | "bacharu"
+  | "vtubie"
+  | "aivtuberdb"
+  | "pvc-moe"
+  | "vtuber-hk"
+  | "streamscharts";
+
+export interface SourceInfo {
+  id: SourceId;
+  label: string;
+  url: string;
+  /** What the source provides. */
+  provides: string;
+  /**
+   * How the pipeline reaches it.
+   *
+   * `api` — a public JSON API.
+   * `raw` — a plain-text or CSV file.
+   * `sparql` — a query endpoint.
+   * `html` — the page has to be parsed.
+   * `none` — no public data endpoint; the site is a JavaScript application.
+   */
+  access: "api" | "raw" | "sparql" | "html" | "none";
+  /** True when the pipeline actually reads it. */
+  used: boolean;
+  /** What it is used for. */
+  usedFor?: string;
+}
+
+/**
+ * The sources.
+ *
+ * The `used: false` entries are the well-known databases that are worth
+ * knowing about but that the pipeline cannot read: they are client-side
+ * applications with no public JSON, or they block automated requests.
+ */
+export const SOURCES: SourceInfo[] = [
+  {
+    id: "youtube",
+    label: "YouTube Data API v3",
+    url: "https://developers.google.com/youtube/v3",
+    provides: "Channels, uploads, live streams, statistics, descriptions",
+    access: "api",
+    used: true,
+    usedFor: "The primary dataset: channel details, uploads, live and upcoming streams",
+  },
+  {
+    id: "twitch",
+    label: "Twitch Helix",
+    url: "https://dev.twitch.tv/docs/api/reference",
+    provides: "Channels, live streams, follower counts, followed channels",
+    access: "api",
+    used: true,
+    usedFor: "Live streams and follower counts; account linking",
+  },
+  {
+    id: "bilibili",
+    label: "Bilibili",
+    url: "https://api.bilibili.com",
+    provides: "VTuber channels, uploads, live streams, follower counts",
+    access: "api",
+    used: true,
+    usedFor: "The Chinese VTuber scene — channels, uploads and follower counts",
+  },
+  {
+    id: "niconico",
+    label: "Niconico",
+    url: "https://api.search.nicovideo.jp/api/v2",
+    provides: "Original songs, covers, channels",
+    access: "api",
+    used: true,
+    usedFor: "Japanese original songs and covers",
+  },
+  {
+    id: "vk",
+    label: "VK",
+    url: "https://api.vk.com/method",
+    provides: "Channels, videos, follower counts",
+    access: "api",
+    used: true,
+    usedFor: "The Russian VTuber scene",
+  },
+  {
+    id: "vdb",
+    label: "vdb — the Virtual YouTuber Name List Database",
+    url: "https://vdb.vtbs.moe/json/list.json",
+    provides:
+      "~10,100 performers with their accounts on 35 platforms, their group and their language",
+    access: "api",
+    used: true,
+    usedFor: "The channel roster, the platform identities and the region",
+  },
+  {
+    id: "taiwan-tracker",
+    label: "Taiwan VTuber Tracking Data",
+    url: "https://taiwanvtuberdata.github.io/",
+    provides:
+      "YouTube and Twitch ids, aliases, nationality, debut and graduation dates, activity status",
+    access: "api",
+    used: true,
+    usedFor: "The region, the lifecycle dates and the activity status",
+  },
+  {
+    id: "vocadb",
+    label: "VocaDB",
+    url: "https://vocadb.net",
+    provides:
+      "Artists with their platform links, their songs and their album releases",
+    access: "api",
+    used: true,
+    usedFor: "Cross-platform links and the music side of the catalogue",
+  },
+  {
+    id: "aislist",
+    label: "AiSList",
+    url: "https://github.com/Override92/AiSList",
+    provides: "A community list of channels that use AI-generated content",
+    access: "raw",
+    used: true,
+    usedFor: "The `isAi` flag",
+  },
+  {
+    id: "music-dataset",
+    label: "VTuber Music Dataset",
+    url: "https://github.com/meihei3/VTuber-music-dataset",
+    provides: "The song and the original artist for each cover, and the collaborators",
+    access: "raw",
+    used: true,
+    usedFor: "Authoritative song metadata and the collaboration lists",
+  },
+  {
+    id: "wikidata",
+    label: "Wikidata",
+    url: "https://query.wikidata.org/sparql",
+    provides:
+      "The YouTube channel id, the agency, the gender, the country and the inception date",
+    access: "sparql",
+    used: true,
+    usedFor: "Authoritative verification — a channel-id match is a fact, not an estimate",
+  },
+  {
+    id: "wikipedia",
+    label: "Wikipedia REST API",
+    url: "https://en.wikipedia.org/api/rest_v1/",
+    provides: "A one-line description, the lead paragraph and the infobox image",
+    access: "api",
+    used: true,
+    usedFor: "A human-written description and a verified avatar",
+  },
+  {
+    id: "virtual-youtuber-wiki",
+    label: "Virtual YouTuber Wiki",
+    url: "https://virtualyoutuber.fandom.com/api.php",
+    provides: "Wiki identities, debut dates, agencies",
+    access: "api",
+    used: false,
+    usedFor: "Available through the debut discovery; not wired into the roster yet",
+  },
+  {
+    id: "hololist",
+    label: "Hololist",
+    url: "https://hololist.net",
+    provides: "A list of Hololive talents",
+    access: "api",
+    used: false,
+    usedFor: "Agency-limited, so it adds little over vdb and the Taiwan tracker",
+  },
+  {
+    id: "bacharu",
+    label: "bacharu",
+    url: "https://bacharu.io",
+    provides: "A Japanese VTuber directory",
+    access: "none",
+    used: false,
+    usedFor: "A client-side application with no public data endpoint",
+  },
+  {
+    id: "vtubie",
+    label: "Vtubie",
+    url: "https://vtubie.com",
+    provides: "A VTuber directory with follower counts",
+    access: "none",
+    used: false,
+    usedFor: "Blocks automated requests",
+  },
+  {
+    id: "aivtuberdb",
+    label: "AI VTuber Database",
+    url: "https://aivtuberdb.com",
+    provides: "A list of AI-generated VTubers",
+    access: "none",
+    used: false,
+    usedFor:
+      "Worth reading for the AI flag, but it publishes no machine-readable file",
+  },
+  {
+    id: "pvc-moe",
+    label: "PVC.moe",
+    url: "https://pvc.moe",
+    provides: "VTuber profile data",
+    access: "none",
+    used: false,
+    usedFor: "The data is only in the client bundle",
+  },
+  {
+    id: "vtuber-hk",
+    label: "VTuber.hk",
+    url: "https://vtuber.hk",
+    provides: "Hong Kong VTubers",
+    access: "none",
+    used: false,
+    usedFor: "The page is server-rendered but has no documented data format",
+  },
+  {
+    id: "streamscharts",
+    label: "Streams Charts",
+    url: "https://streamscharts.com/vtubers",
+    provides: "Channel statistics and follower counts",
+    access: "none",
+    used: false,
+    usedFor: "Blocks automated requests",
+  },
+];
+
+/** The sources the pipeline reads. */
+export const ACTIVE_SOURCES = SOURCES.filter((s) => s.used);
+
+/** A short summary, for the CLI and the docs. */
+export function describeSources(): string {
+  const used = ACTIVE_SOURCES.length;
+  const known = SOURCES.length;
+  return `${used} of ${known} known sources are read by the pipeline`;
+}

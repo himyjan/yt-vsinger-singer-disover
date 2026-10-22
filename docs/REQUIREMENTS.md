@@ -129,6 +129,17 @@ is published.
 - `[x]` Runs daily in GitHub Actions, then re-applies the corrections,
       rebuilds the index and validates.
 
+## 5b2. The region is authoritative; the language follows it
+
+- `[x]` The `language` is derived from the **region**, not from the name.
+      Before this was fixed, 5,895 mainland Chinese channels were recorded as
+      Japanese because their stage names use kana.
+- `[x]` Hong Kong is Cantonese — `yue`, its own language rather than
+      `zh-Hant`.
+- `[x]` Cantonese markers (粵語 · 廣東話 · 廣州話) identify the Cantonese
+      performers in the mainland scene too.
+- `[x]` `regionSource` records which source decided the region.
+
 ## 5c. Gender, AI and the combined variant
 
 - `[x]` `gender` — `female` · `male` · `unknown`. Explicit self-descriptions
@@ -174,6 +185,27 @@ is published.
       not the same as the performer being a solo act.
 - `[x]` The affiliation is re-evaluated when a description arrives, because
       that is where a performer states it.
+
+## 5f2. Verification, not a confidence score
+
+- `[x]` There is **no** `confidence` field. A computed number is a guess
+      dressed up as a measurement.
+- `[x]` A `verification` record instead: what was looked up, by what, when,
+      and the URLs that were read.
+- `[x]` The verification queue is ordered by **what is not known** — an
+      unknown region, an unknown role, no description — not by a score.
+- `[x]` **Wikidata**, queried by the YouTube channel id. A hit is a fact:
+      the id in Wikidata either is the same performer or is not. The same
+      query returns the agency, the gender, the country and the inception
+      date.
+- `[x]` **Wikipedia**, through the REST API: a human-written description, the
+      lead paragraph and the infobox image.
+- `[x]` The Wikipedia text and image are only used when the article is
+      actually *about the performer* — an article about someone who later
+      became a VTuber often leads with their pre-fame career, and its
+      infobox image is a photograph of them.
+- `[x]` A search-grounded model remains the fallback for the performers
+      neither of them covers.
 
 ## 5g. Channel details from the source
 
@@ -360,6 +392,8 @@ maximum for a single Git LFS file.
 - `[x]` `docs/PLATFORMS.md` — the five platform adapters.
 - `[x]` `docs/DEPLOY.md` — GitHub Actions, Pages, secrets, LFS.
 - `[x]` `docs/CONTRIBUTING.md` — how to add a channel, a region, a platform.
+- `[x]` `docs/SOURCES.md` — every data source, what it provides, and which
+      ones the pipeline actually reads.
 - `[x]` `AGENTS.md` — repository guide for AI agents.
 - `[x]` `.opencode/skills/*` — task-specific agent skills:
 

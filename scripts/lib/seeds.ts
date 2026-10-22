@@ -119,6 +119,34 @@ export const VIRTUAL_CN: SeedEntry[] = [
  * separate file in `data/` so the web UI can switch between
  * *virtual / real / both* without any cross-contamination.
  */
+/**
+ * The seeds whose YouTube channel ids were resolved through Wikidata.
+ *
+ * A wrong channel id in a seed is worse than no seed at all — it would
+ * point the dataset at somebody else's channel. So these were resolved by
+ * querying Wikidata for the channel id (`P2397`) rather than copied from
+ * memory.
+ */
+export const WIKIDATA_VERIFIED: SeedEntry[] = [
+  { channelId: "UCgmPnx-EEeOrZSg5Tiw7ZRQ", name: "Hakos Baelz", kind: "virtual", role: "vtuber", region: "en", agency: "hololive", isSinging: true },
+  { channelId: "UC8rcEBzJSleTkf_-agPM20g", name: "IRyS", kind: "virtual", role: "vsinger", region: "en", agency: "hololive", isSinging: true },
+  { channelId: "UCoSrY_IQQVpmIRZ9Xf-y93g", name: "Gawr Gura", kind: "virtual", role: "vtuber", region: "en", agency: "hololive", isSinging: true },
+  { channelId: "UCp6993wxpyDPHUpavwDFqgg", name: "Tokino Sora", kind: "virtual", role: "vtuber", region: "jp", agency: "hololive", isSinging: true },
+  { channelId: "UCCzUftO8KOVkV4wQG1vkUvg", name: "Houshou Marine", kind: "virtual", role: "vtuber", region: "jp", agency: "hololive", isSinging: true },
+  { channelId: "UC1DCedRgGHBdm81E1llLhOQ", name: "Usada Pekora", kind: "virtual", role: "vtuber", region: "jp", agency: "hololive", isSinging: true },
+  { channelId: "UC5CwaMl1eIgY8h02uZw7u8A", name: "Hoshimachi Suisei", kind: "virtual", role: "vsinger", region: "jp", agency: "hololive", isSinging: true },
+  { channelId: "UCqm3BQLlJfvkTsX_hvm0UmA", name: "Tsunomaki Watame", kind: "virtual", role: "vtuber", region: "jp", agency: "hololive", isSinging: true },
+  { channelId: "UCKnvC2XMqiXatNTK0N50LqA", name: "Nekomata Okayu", kind: "virtual", role: "vtuber", region: "jp", agency: "hololive", isSinging: true },
+  { channelId: "UC1opHUrw8rvnsadT-iGp7Cg", name: "Minato Aqua", kind: "virtual", role: "vtuber", region: "jp", agency: "hololive", isSinging: true },
+  { channelId: "UCK9V2B22uJYu3N7eR_BT9QA", name: "Omaru Polka", kind: "virtual", role: "vtuber", region: "jp", agency: "hololive", isSinging: true },
+  { channelId: "UCdn5BQ06XqgXoAxIhbqw5Rg", name: "Shirakami Fubuki", kind: "virtual", role: "vtuber", region: "jp", agency: "hololive", isSinging: true },
+  { channelId: "UCQ0UDLQCjY0rmuxCDE38FGg", name: "Natsuiro Matsuri", kind: "virtual", role: "vtuber", region: "jp", agency: "hololive", isSinging: true },
+  { channelId: "UChAnqc_AY5_I3Px5dig3X1Q", name: "Inugami Korone", kind: "virtual", role: "vtuber", region: "jp", agency: "hololive", isSinging: true },
+  { channelId: "UCGmO0S4S-AunjRdmxA6TQYg", name: "DECO*27", kind: "real", role: "producer", region: "jp", isSinging: false },
+  { channelId: "UCR1zT1s524Hbc85bdvno_8w", name: "Aimer", kind: "real", role: "singer", region: "jp", isSinging: true },
+  { channelId: "UCUCeZaZeJbEYAAzvMgrKOPQ", name: "Kenshi Yonezu", kind: "real", role: "singer", region: "jp", isSinging: true },
+];
+
 export const REAL_ARTISTS: SeedEntry[] = [
   /* --- Japanese producers / composers --- */
   { handle: "deco27", name: "DECO*27", kind: "real", role: "producer", region: "jp", agency: null, isSinging: false },
@@ -169,6 +197,7 @@ export const REAL_ARTISTS: SeedEntry[] = [
 /* -------------------------------------------------------------------------- */
 
 export const ALL_SEEDS: SeedEntry[] = [
+  ...WIKIDATA_VERIFIED,
   ...VIRTUAL_JP,
   ...VIRTUAL_EN,
   ...VIRTUAL_ID,

@@ -19,6 +19,7 @@
 
 import { ALL_SEEDS } from "./seeds";
 import { fetchTrackedVtubers } from "./taiwan-vtuber-data";
+import { languageForRegion } from "./regions";
 import { VdbSource } from "./vdb";
 import { createAdapters } from "./platform-registry";
 import { classifyChannel, deriveVariant, detectAffiliation } from "./classify";
@@ -69,7 +70,9 @@ export async function buildRoster(
       role: classification.role === "unknown" ? "vtuber" : classification.role,
       region: record.region,
       regionSource: "roster",
-      language: classification.language,
+      // The language follows the region, not the name: a Taiwanese performer
+      // with a Japanese-style stage name still performs in Chinese.
+      language: languageForRegion(record.region, classification.language),
       agency: record.group,
       // The track list states "no group" positively for a solo act.
       affiliation: record.isIndependent
@@ -97,14 +100,7 @@ export async function buildRoster(
         classification.isAi,
       ),
       // The track list states the nationality and that they are a VTuber.
-      confidence: {
-        kind: 1,
-        region: record.region === "unknown" ? 0.4 : 1,
-        role: 0.85,
-        gender: 0.2,
-        ai: 0.5,
-        overall: record.region === "unknown" ? 0.4 : 1,
-      },
+      verification: null,
       source: "api",
       addedAt: now,
       updatedAt: now,
@@ -169,14 +165,6 @@ export async function buildRoster(
       if (seed.agency !== undefined) existing.agency = seed.agency;
       if (seed.isSinging !== undefined) existing.isSinging = seed.isSinging;
       existing.source = "seed";
-      existing.confidence = {
-        kind: 1,
-        region: 1,
-        role: 1,
-        gender: existing.gender === "unknown" ? 0.2 : 0.9,
-        ai: existing.isAi ? 0.9 : 0.5,
-        overall: 1,
-      };
       continue;
     }
 
@@ -210,14 +198,7 @@ export async function buildRoster(
       gender: "unknown",
       isAi: false,
       variant: deriveVariant(seed.role, "unknown", false),
-      confidence: {
-        kind: 1,
-        region: 1,
-        role: 1,
-        gender: 0.2,
-        ai: 0.5,
-        overall: 1,
-      },
+      verification: null,
       source: "seed",
       addedAt: now,
       updatedAt: now,
@@ -297,7 +278,7 @@ export async function buildRoster(
           : entry.regionSource === "platform"
             ? "platform"
             : "script",
-      language: classification.language,
+      language: languageForRegion(entry.region, classification.language),
       agency: entry.group,
       affiliation: detectAffiliation(entry.name, null, entry.group),
       avatar: null,
@@ -321,15 +302,7 @@ export async function buildRoster(
       ),
       // vdb states the kind and the region outright, so both are certain;
       // the role, the gender and the AI flag are not.
-      confidence: {
-        kind: 1,
-        region: entry.regionSource === "script" ? 0.6 : 1,
-        role: classification.role === "unknown" ? 0.3 : 0.85,
-        gender: classification.gender === "unknown" ? 0.2 : 0.9,
-        ai: entry.isAi ? 0.9 : 0.5,
-        overall:
-          entry.regionSource === "script" ? 0.6 : 1,
-      },
+      verification: null,
       source: "api",
       addedAt: now,
       updatedAt: now,
@@ -372,6 +345,7 @@ export async function buildRoster(
             id,
             name: channel.name ?? channel.handle ?? channel.id,
             handle: channel.handle,
+            verification: null,
             kind: classification.kind,
             role: classification.role,
             region: classification.region,
@@ -400,7 +374,6 @@ export async function buildRoster(
               classification.gender,
               classification.isAi,
             ),
-            confidence: classification.confidence,
             source: "api",
             addedAt: now,
             updatedAt: now,

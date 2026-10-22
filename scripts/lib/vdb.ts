@@ -255,13 +255,24 @@ export class VdbSource {
      * VTuber, and one who only exists on Niconico is Japanese. That is a
      * statement about where they stream, which is what the region means.
      */
+    /**
+     * The platform prior.
+     *
+     * A performer with a **Bilibili account and no YouTube account** presents
+     * to a mainland Chinese audience — that is where their audience is, and
+     * the region records where they stream. The same goes for Niconico and
+     * Japan.
+     *
+     * A performer who *also* has a YouTube account is presenting to a global
+     * audience, so the language they listed in vdb is the better signal.
+     */
     const platformSet = new Set(platforms.map((p) => p.platform));
-    if (platformSet.size === 1) {
-      const only = [...platformSet][0];
-      if (only === "bilibili") {
+    const hasYouTube = platformSet.has("youtube");
+    if (!hasYouTube) {
+      if (platformSet.has("bilibili")) {
         region = "cn";
         regionSource = "platform";
-      } else if (only === "niconico") {
+      } else if (platformSet.has("niconico")) {
         region = "jp";
         regionSource = "platform";
       }

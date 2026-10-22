@@ -219,6 +219,14 @@ export class BilibiliAdapter implements PlatformAdapter {
   private readonly maxUploads: number;
   private readonly onLog: (message: string) => void;
 
+  /**
+   * The Bilibili account ids that belong to VTubers.
+   *
+   * The live endpoint does not honour the partition, so this set is what
+   * separates a VTuber stream from the general live feed.
+   */
+  knownMids: Set<string> | null = null;
+
   constructor(options: BilibiliOptions = {}) {
     this.partition = options.partition ?? VTUBER_PARTITION;
     this.maxUploads = options.maxUploads ?? 30;
@@ -334,7 +342,10 @@ export class BilibiliAdapter implements PlatformAdapter {
    * Bilibili's risk-control wall, so it is the source of the subscriber
    * count.
    */
-  async followers(uid: string): Promise<CountRef | null> {
+  async followers(
+    channel: PlatformChannel | string,
+  ): Promise<CountRef | null> {
+    const uid = typeof channel === "string" ? channel : channel.id;
     const json = await this.getJson<{
       code: number;
       data?: { follower?: number };
@@ -406,19 +417,26 @@ export class BilibiliAdapter implements PlatformAdapter {
    * Two endpoints are used:
    *   • `ranking/v2?rid=160` — the popular videos in the VTuber partition,
    *     which reveals the channels that publish there;
-   *   • `online/list?rid=160` — the VTuber streams that are live right now.
+   *   • `online/list?rid=160` — the streams that are live right now.
+   *
+   * **The live endpoint is not filtered by partition.** Asked for the VTuber
+   * partition it still returns the general live feed — gaming, news, tech
+   * reviews — so the streams are matched against the known VTuber roster
+   * instead. `knownMids` is that roster.
    */
   async search(query: string, limit: number): Promise<PlatformChannel[]> {
     const byId = new Map<string, PlatformChannel>();
     const uploads: PlatformUpload[] = [];
 
-    /* --- the live VTuber partition ------------------------------------- */
+    /* --- the live feed -------------------------------------------------- */
     const live = await this.getJson<{ data?: BiliLive[] }>(
       `${API}/x/web-interface/online/list?rid=${this.partition}&page=1`,
     );
     for (const stream of live?.data ?? []) {
       const owner = stream.owner;
       if (!owner?.mid) continue;
+      // Only keep the streams that belong to a known VTuber.
+      if (this.knownMids && !this.knownMids.has(String(owner.mid))) continue;
       if (!byId.has(String(owner.mid))) {
         byId.set(String(owner.mid), {
           platform: "bilibili",

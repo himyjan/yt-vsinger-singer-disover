@@ -210,6 +210,36 @@ Whatever a channel's description links to is harvested into
 
 These are rendered in the "all links" block next to the platform identities.
 
+## The source registry
+
+`scripts/lib/sources.ts` lists every data source the project knows about,
+what it provides, and whether the pipeline actually reads it. It exists so
+that adding a source is one adapter plus one line, and so the project is
+honest about the well-known databases it *cannot* read.
+
+| Source | Read? | Provides |
+| --- | --- | --- |
+| YouTube Data API v3 | ✅ | Channels, uploads, live streams, statistics |
+| Twitch Helix | ✅ | Live streams, follower counts, followed channels |
+| Bilibili | ✅ | Chinese VTuber channels, uploads, follower counts |
+| Niconico | ✅ | Japanese original songs and covers |
+| VK | ✅ | The Russian VTuber scene |
+| [vdb](https://vdb.vtbs.moe/json/list.json) | ✅ | ~10,100 performers on 35 platforms, their group and language |
+| [Taiwan VTuber Tracking Data](https://taiwanvtuberdata.github.io/) | ✅ | YouTube and Twitch ids, aliases, nationality, debut and graduation dates |
+| [VocaDB](https://vocadb.net) | ✅ | Artists with their platform links, their songs and their releases |
+| [AiSList](https://github.com/Override92/AiSList) | ✅ | The channels that use AI-generated content |
+| [VTuber Music Dataset](https://github.com/meihei3/VTuber-music-dataset) | ✅ | The song and the original artist for each cover |
+| [Wikidata](https://query.wikidata.org/sparql) | ✅ | The YouTube id, the agency, the gender, the country, the inception |
+| [Wikipedia REST](https://en.wikipedia.org/api/rest_v1/) | ✅ | A one-line description, the lead paragraph, the infobox image |
+| [Virtual YouTuber Wiki](https://virtualyoutuber.fandom.com/) | — | Wiki identities and debut dates |
+| [Hololist](https://hololist.net) | — | Hololive talents — agency-limited, so it adds little |
+| [bacharu](https://bacharu.io) | — | A Japanese directory — a client-side app with no public data |
+| [Vtubie](https://vtubie.com) | — | A directory with follower counts — blocks automated requests |
+| [AI VTuber DB](https://aivtuberdb.com) | — | A list of AI VTubers — no machine-readable file |
+| [PVC.moe](https://pvc.moe) | — | Profile data — only in the client bundle |
+| [VTuber.hk](https://vtuber.hk) | — | Hong Kong VTubers — no documented format |
+| [Streams Charts](https://streamscharts.com/vtubers) | — | Channel statistics — blocks automated requests |
+
 ## The Bilibili risk-control wall
 
 Bilibili protects its per-user profile endpoint

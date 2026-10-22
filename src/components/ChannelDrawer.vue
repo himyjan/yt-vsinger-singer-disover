@@ -128,30 +128,6 @@ const REGION_SOURCE_LABELS: Record<string, string> = {
   unknown: "unknown",
 };
 
-/**
- * A one-line summary of how sure the classification is.
- *
- * The weakest axis is what matters — a record with the wrong region is in the
- * wrong place — so the summary names the uncertain fields.
- */
-function describeConfidence(confidence: {
-  kind: number;
-  region: number;
-  role: number;
-  gender: number;
-  ai: number;
-  overall: number;
-}): string {
-  if (confidence.overall >= 0.99) return "curated";
-  const weak: string[] = [];
-  if (confidence.kind < 0.7) weak.push("kind");
-  if (confidence.region < 0.7) weak.push("region");
-  if (confidence.role < 0.5) weak.push("role");
-  if (confidence.gender < 0.5) weak.push("gender");
-  if (confidence.ai < 0.5) weak.push("AI");
-  return weak.length ? `uncertain: ${weak.join(", ")}` : "confident";
-}
-
 const saved = computed(() =>
   props.channel ? state.saved.some((s) => s.id === props.channel!.id) : false,
 );
@@ -307,10 +283,19 @@ const saved = computed(() =>
                     {{ REGION_SOURCE_LABELS[channel.regionSource] ?? channel.regionSource }}
                   </dd>
                 </div>
-                <div v-if="channel.confidence" class="flex justify-between gap-3">
-                  <dt class="text-neutral-500">Confidence</dt>
+                <div v-if="channel.verification" class="flex justify-between gap-3">
+                  <dt class="text-neutral-500">Verified</dt>
                   <dd class="text-right text-neutral-500">
-                    {{ describeConfidence(channel.confidence) }}
+                    {{ channel.verification.source }}
+                    <span class="opacity-70">
+                      ({{ channel.verification.checked.join(", ") || "confirmed" }})
+                    </span>
+                  </dd>
+                </div>
+                <div v-else class="flex justify-between gap-3">
+                  <dt class="text-neutral-500">Verified</dt>
+                  <dd class="text-right text-amber-600 dark:text-amber-400">
+                    not verified yet
                   </dd>
                 </div>
               </dl>
