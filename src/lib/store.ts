@@ -145,6 +145,12 @@ export const state = reactive({
    * the dataset, or only the ones that are not tracked yet.
    */
   subsTracked: "all" as "all" | "tracked" | "untracked",
+  /**
+   * Subscription filter for the **channels** view: every channel, only the
+   * ones the linked accounts follow, or only the ones they do not — the
+   * discovery direction.
+   */
+  channelSubs: "all" as "all" | "subscribed" | "not-subscribed",
   /** Active view. */
   view: readStorage<ViewId>(VIEW_KEY, "live"),
   /** Current search query. */
@@ -176,6 +182,11 @@ export const state = reactive({
   ),
   /** True while a subscription list is loading. */
   subscriptionsLoading: false,
+  /**
+   * Progress of a paginated subscription fetch while it runs: how many pages
+   * have arrived and what Google says the account has in total.
+   */
+  subscriptionsProgress: null as { loaded: number; total: number | null } | null,
   /** Error message shown in a toast. */
   toast: null as { type: "info" | "error" | "success"; text: string } | null,
 });

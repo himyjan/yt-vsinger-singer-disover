@@ -45,6 +45,7 @@ state.acousticOnly // boolean
 state.gender       // Gender | "all"
 state.ai           // "ai" | "human" | "all"
 state.subsTracked  // "all" | "tracked" | "untracked"
+state.channelSubs   // "all" | "subscribed" | "not-subscribed" (Channels view)
 state.accounts     // Record<provider, LinkedAccount[]>
 state.activeAccount// Record<provider, accountId | null>
 ```
@@ -104,6 +105,14 @@ account, grouped by platform. Each entry has:
 
 `+ Link another <platform> account` adds a second account on the same
 platform. The active account is stored per platform, so switching is instant.
+
+**A failed request must say why.** `AuthProvider.subscriptions()` throws the
+platform's reason rather than returning `[]` — an empty list and a broken one
+look identical to the user. For YouTube, `accessNotConfigured` means the
+YouTube Data API v3 is not enabled in the Cloud project,
+`insufficientPermissions` means the token lacks `youtube.readonly`, and a
+401 means the token expired. After a successful link the app switches to the
+`subs` view, so a link that produced nothing is never silent.
 
 ## Data loading
 
