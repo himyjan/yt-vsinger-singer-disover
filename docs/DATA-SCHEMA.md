@@ -143,7 +143,7 @@ It is set from three places, and a graduation always wins:
 
 | Source | Example |
 | --- | --- |
-| A **name or a description** | 「已停播」, 「已畢業」, 「卒業」, 「活動終了」, 「retired」, «закрыт» |
+| A **name or a description** | 「已停播」, 「已畢業」, 「卒業」, 「活動終了」, 「活動を終了」, 「停止活動」, 「retired」, «закрыт» |
 | A **roster** | the Taiwan tracker publishes `active` / `preparing` / `graduated` |
 | **Recency** | no upload for a year |
 
@@ -151,6 +151,11 @@ The markers are multilingual, because the performers are — see
 `GRADUATED_MARKERS` in `scripts/lib/classify.ts`. The Chinese ones matter
 most here: 「已停播」 and 「已畢業」 are what the Chinese scene writes, and
 neither contains the Japanese 「卒業」.
+
+Both fields are searched, and a phrase is matched with its inflections, not
+just its bare form: 「活動終了」 alone missed 「活動を終了しました」, which is how
+a Japanese channel usually announces it, and 「停止活動」/「停止活动」 is the
+Chinese way of saying the same thing (「目前停止活動中」, 「无限期停止活动」).
 
 ### `CountRef`
 
@@ -186,6 +191,14 @@ the numeric user id is the identity; the login is the handle.
 A record that some source published as a handle — vdb lists YouTube accounts
 as `youtubeAt` — is re-keyed the first time its profile is fetched, which is
 what `npm run data:details -- --normalize-ids` does in bulk.
+
+An id that was built from a **link** carries the tab it was copied from:
+`UC…/featured`, `UC…/videos`. That is not an id — YouTube resolves it to
+nothing, so the record can never be enriched — and the same channel usually
+exists beside it under the clean id. `canonicalizeChannelIds()` in
+`scripts/lib/dedupe.ts` strips the tab and merges the pair; the sync runs it
+when it loads the dataset and again before it writes, because the rosters and
+the platform adapters can re-add a tab-carrying copy mid-run.
 
 ### `nameSource` and `aliases` — whose name is it?
 

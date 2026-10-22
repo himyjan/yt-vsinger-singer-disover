@@ -1790,6 +1790,17 @@ const GRADUATED_MARKERS = [
   "卒業",
   "活動終了",
   "活動終了のお知らせ",
+  /**
+   * 「活動終了」 with its particles.
+   *
+   * A channel announces it as 「活動を終了しました」 as often as with the bare
+   * noun, and the particle forms were the ones that slipped through: the
+   * exact string was there, the inflected one was not.
+   */
+  "活動を終了",
+  "活動は終了",
+  "活動を終え",
+  "活動終え",
   "休眠",
   "最終配信",
   "卒業のお知らせ",
@@ -1806,6 +1817,9 @@ const GRADUATED_MARKERS = [
   "已停更",
   "停更",
   "停止更新",
+  /* 活動終了 is written in Chinese too — 停止活動 is the same message. */
+  "停止活動",
+  "停止活动",
   "已結束",
   "結束直播",
   "最後一次直播",
@@ -1820,6 +1834,8 @@ const GRADUATED_MARKERS = [
   "停播了",
   "停更了",
   "停止更新",
+  /* The simplified form of 「活動終了」: 活动终了. */
+  "活动终了",
   "已结束",
   "结束直播",
   "最后一次直播",
