@@ -188,9 +188,36 @@ export class VdbSource {
     // Those are malformed records, not performers.
     if (LOCALE_KEYS.has(name.trim().toLowerCase())) return null;
 
-    const aliases = Array.isArray(names.extra)
-      ? names.extra.filter((n): n is string => typeof n === "string")
-      : [];
+    /**
+     * Every name the performer is listed under.
+     *
+     * vdb keeps a name per locale — `cn`, `jp`, `en` — and the ones that do
+     * not fit a locale in `extra`. The record shows one of them; the rest
+     * are **aliases**, so a channel is findable under the name it is known
+     * by in each language.
+     *
+     * 「空星きらめ」 and 「Sorahoshi Kirame」 are one performer, and a search
+     * for either has to find them.
+     */
+    const aliases: string[] = [];
+    for (const key of ["cn", "jp", "en", "extra"]) {
+      const value = (names as Record<string, unknown>)[key];
+      if (typeof value === "string") {
+        if (value.trim()) aliases.push(value.trim());
+        continue;
+      }
+      if (Array.isArray(value)) {
+        for (const item of value) {
+          if (typeof item === "string" && item.trim()) {
+            aliases.push(item.trim());
+          }
+        }
+      }
+    }
+    // The name the record shows is not an alias of itself.
+    const uniqueAliases = aliases.filter(
+      (a) => a.toLowerCase() !== name.trim().toLowerCase(),
+    );
 
     /* --- platform identities ------------------------------------------- */
     const platforms: PlatformLink[] = [];
@@ -317,7 +344,7 @@ export class VdbSource {
       uuid: record.uuid,
       id,
       name,
-      aliases,
+      aliases: uniqueAliases,
       kind: "virtual",
       region,
       regionSource,

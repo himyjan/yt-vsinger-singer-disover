@@ -46,6 +46,7 @@ import { checkUpstreams, writeRevisions } from "./lib/upstream";
 import { TwitchGqlSource } from "./lib/twitch-gql";
 import {
   isPlaceholderName,
+  normalizeChannelId,
   orderPlatformLinks,
   pickAvatar,
   pickSubscribers,
@@ -615,6 +616,20 @@ async function main(): Promise<void> {
 
   /* --- load current dataset ------------------------------------------- */
   const existingChannels = readAllChannelRecords();
+
+  /**
+   * The ids are cleaned once, here.
+   *
+   * A record whose id carries a tab — `UC…/featured` — never resolves to a
+   * channel, so it can never be enriched, renamed or verified.
+   */
+  for (const channel of existingChannels) {
+    const clean = normalizeChannelId(channel.id);
+    if (clean !== channel.id) {
+      log(`ids: ${channel.id} → ${clean}`);
+      channel.id = clean;
+    }
+  }
 
   const existingItems: Item[] = [];
   const itemsRoot = path.join(ROOT, "data", "items");
@@ -1311,6 +1326,36 @@ async function main(): Promise<void> {
       // The subscriber count is the best one any of the linked platforms
       // publishes — the primary platform's, then YouTube's, then any other.
       channel.subscribers = pickSubscribers(channel);
+    }
+
+    /**
+     * The singing flag is read again for **every** channel.
+     *
+     * The description is where a performer states what they do, and it
+     * arrives long after the record was first classified: 「歌勢」, 「翻唱」,
+     * "song covers", «кавер» — any of them means the channel sings. The
+     * details pass can only re-read the descriptions it fetched this run, so
+     * without this pass a channel would keep the wrong flag until the next
+     * time it happened to be fetched.
+     */
+    let markedSinging = 0;
+    for (const channel of channels) {
+      if (!channel.description) continue;
+      const fresh = classifyChannel({
+        name: channel.name,
+        description: channel.description,
+        tags: channel.tags,
+        country: null,
+      });
+      if (fresh.isSinging && !channel.isSinging) {
+        channel.isSinging = true;
+        markedSinging++;
+      }
+    }
+    if (markedSinging) {
+      log(
+        `singing: ${markedSinging} channel(s) marked as singing from their description`,
+      );
     }
 
     let reclassified = 0;

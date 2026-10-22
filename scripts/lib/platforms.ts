@@ -365,3 +365,19 @@ export function isPlaceholderName(name: string | null | undefined): boolean {
   if (!trimmed) return true;
   return PLACEHOLDER_NAMES.has(trimmed.toLowerCase());
 }
+
+/**
+ * Cleans a channel id.
+ *
+ * A few records were built from a channel **URL**, so their id carries the
+ * tab: `UC…/featured`, `UC…/videos`. The tab is not part of the id, and an
+ * id with a slash in it never resolves to a channel.
+ */
+export function normalizeChannelId(id: string): string {
+  const trimmed = id.trim();
+  const slash = trimmed.indexOf("/");
+  if (slash < 0) return trimmed;
+  const head = trimmed.slice(0, slash);
+  // Only a YouTube channel id can carry a tab.
+  return head.startsWith("UC") ? head : trimmed;
+}
