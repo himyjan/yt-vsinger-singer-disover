@@ -1,7 +1,244 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T12:03:11.077Z",
+  "generatedAt": "2026-10-22T12:45:03.106Z",
   "channels": [
+    {
+      "id": "bilibili:1206440560",
+      "name": "桃音诗おん",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "name",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://i0.hdslb.com/bfs/face/member/noface.jpg",
+      "banner": null,
+      "description": null,
+      "subscribers": {
+        "tag": "has",
+        "count": 14885
+      },
+      "videoCount": 515,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": false,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-22T12:45:03.106Z",
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "bilibili",
+          "id": "1206440560",
+          "handle": "1206440560",
+          "name": "桃音诗おん",
+          "url": "https://space.bilibili.com/1206440560",
+          "subscribers": {
+            "tag": "has",
+            "count": 14885
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-22T12:45:07.853Z",
+          "videoCount": 515
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": []
+    },
+    {
+      "id": "bilibili:1296113267",
+      "name": "しらたまOfficial",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "name",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://i2.hdslb.com/bfs/face/a58b67c1959b333c44e510b0610caca7217251f6.jpg",
+      "banner": null,
+      "description": "我是来自日本的画师しらたま，请各位多多关照！",
+      "subscribers": {
+        "tag": "has",
+        "count": 185279
+      },
+      "videoCount": 41,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": false,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "bilibili",
+          "id": "1296113267",
+          "handle": "1296113267",
+          "name": "しらたまOfficial",
+          "url": "https://space.bilibili.com/1296113267",
+          "subscribers": {
+            "tag": "has",
+            "count": 185279
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-22T12:45:07.486Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": []
+    },
+    {
+      "id": "bilibili:1354255177",
+      "name": "咲花なる",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "name",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://i1.hdslb.com/bfs/face/24af224d8997c9ce0cb85fc53c03329fc1f3e448.jpg",
+      "banner": null,
+      "description": "naru是郁金香的妖精哦~~请满怀着爱意来培育我吧！ 字幕组审核群524207721　粉丝的QQ群 515013284",
+      "subscribers": {
+        "tag": "has",
+        "count": 58506
+      },
+      "videoCount": 2460,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": false,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "bilibili",
+          "id": "1354255177",
+          "handle": "1354255177",
+          "name": "咲花なる",
+          "url": "https://space.bilibili.com/1354255177",
+          "subscribers": {
+            "tag": "has",
+            "count": 58506
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-22T12:45:07.618Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": []
+    },
+    {
+      "id": "bilibili:153869",
+      "name": "温珀子ねんねOfficial",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "name",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://i2.hdslb.com/bfs/face/8c7b2943701b313afc97de0764767b9abfc77555.jpg",
+      "banner": null,
+      "description": "i am 忍犬. 修行中！请多多关照！ ",
+      "subscribers": {
+        "tag": "has",
+        "count": 2708
+      },
+      "videoCount": 0,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": false,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "bilibili",
+          "id": "153869",
+          "handle": null,
+          "name": "温珀子ねんねOfficial",
+          "url": "https://space.bilibili.com/153869",
+          "subscribers": {
+            "tag": "has",
+            "count": 2708
+          },
+          "avatar": "https://i2.hdslb.com/bfs/face/8c7b2943701b313afc97de0764767b9abfc77555.jpg",
+          "lastCheckedAt": "2026-10-22T12:45:07.916Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": []
+    },
     {
       "id": "bilibili:1570133561",
       "name": "兔美咪奈-星辰计划",
@@ -35,7 +272,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -53,7 +290,7 @@
             "count": 9435
           },
           "avatar": "https://i2.hdslb.com/bfs/face/5dc2ca535052d665089f8e4b094e556397d3519e.jpg",
-          "lastCheckedAt": "2026-10-22T12:03:17.282Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.556Z"
         }
       ],
       "externals": {},
@@ -62,6 +299,543 @@
       "aliases": [
         "兔美咪奈-官方WACTOR"
       ]
+    },
+    {
+      "id": "bilibili:165809775",
+      "name": "コーロンサス学園",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "name",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": "a43eee3d-839d-54ff-90cb-d9045437de30",
+      "affiliation": "group",
+      "avatar": "http://i0.hdslb.com/bfs/face/6425f3a1cc72f0dd0320e29de97baa329fe3e90b.jpg",
+      "banner": null,
+      "description": "VTuber（虚拟Youtuber）事务所 【コーロンサス学園】官方帐号 合作请联系：861585446",
+      "subscribers": {
+        "tag": "has",
+        "count": 538
+      },
+      "videoCount": 351,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": false,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "bilibili",
+          "id": "165809775",
+          "handle": null,
+          "name": "コーロンサス学園",
+          "url": "https://space.bilibili.com/165809775",
+          "subscribers": {
+            "tag": "has",
+            "count": 538
+          },
+          "avatar": "http://i0.hdslb.com/bfs/face/6425f3a1cc72f0dd0320e29de97baa329fe3e90b.jpg",
+          "lastCheckedAt": "2026-10-22T12:45:07.493Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": []
+    },
+    {
+      "id": "bilibili:1889516",
+      "name": "紫咲さとり",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "name",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://i2.hdslb.com/bfs/face/2572d765be0b721b27701ff6e04079ddd8f2c0eb.jpg",
+      "banner": null,
+      "description": "臭画画的皮套人，约稿请见置顶或私信（",
+      "subscribers": {
+        "tag": "has",
+        "count": 2511
+      },
+      "videoCount": 230,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": false,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "bilibili",
+          "id": "1889516",
+          "handle": null,
+          "name": "紫咲さとり",
+          "url": "https://space.bilibili.com/1889516",
+          "subscribers": {
+            "tag": "has",
+            "count": 2511
+          },
+          "avatar": "https://i2.hdslb.com/bfs/face/2572d765be0b721b27701ff6e04079ddd8f2c0eb.jpg",
+          "lastCheckedAt": "2026-10-22T12:45:08.035Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": []
+    },
+    {
+      "id": "bilibili:2098510762",
+      "name": "綾鞠ぺこOfficial",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "name",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": "MarbleCreators",
+      "affiliation": "group",
+      "avatar": "http://i1.hdslb.com/bfs/face/c5fcd39f1815dab0aabfe62bedd65a8580643264.jpg",
+      "banner": null,
+      "description": "唤来不幸之人  绫鞠peco MarbleCreators所属 审核群长期招新：864631323",
+      "subscribers": {
+        "tag": "has",
+        "count": 2316
+      },
+      "videoCount": 10,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": false,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "bilibili",
+          "id": "2098510762",
+          "handle": null,
+          "name": "綾鞠ぺこOfficial",
+          "url": "https://space.bilibili.com/2098510762",
+          "subscribers": {
+            "tag": "has",
+            "count": 2316
+          },
+          "avatar": "http://i1.hdslb.com/bfs/face/c5fcd39f1815dab0aabfe62bedd65a8580643264.jpg",
+          "lastCheckedAt": "2026-10-22T12:45:08.039Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": []
+    },
+    {
+      "id": "bilibili:212553",
+      "name": "星見ユギ",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "name",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://i0.hdslb.com/bfs/face/66bae7b6645509c9a559552277509e500f8cc2d2.jpg",
+      "banner": null,
+      "description": "认真对待每一个人",
+      "subscribers": {
+        "tag": "has",
+        "count": 884
+      },
+      "videoCount": 5,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": false,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "bilibili",
+          "id": "212553",
+          "handle": null,
+          "name": "星見ユギ",
+          "url": "https://space.bilibili.com/212553",
+          "subscribers": {
+            "tag": "has",
+            "count": 884
+          },
+          "avatar": "https://i0.hdslb.com/bfs/face/66bae7b6645509c9a559552277509e500f8cc2d2.jpg",
+          "lastCheckedAt": "2026-10-22T12:45:07.793Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": []
+    },
+    {
+      "id": "bilibili:23885819",
+      "name": "夕舞しずくRua",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "name",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://i2.hdslb.com/bfs/face/6a436ca1b867ee9e7100e5650b858b67d6cf8eda.jpg",
+      "banner": null,
+      "description": "性格が悪い\n可能会心血来潮可能会做点视频\n不喜欢打赏\n平常播播游戏\n姑且有个群638356232",
+      "subscribers": {
+        "tag": "has",
+        "count": 2143
+      },
+      "videoCount": 33,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": false,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "bilibili",
+          "id": "23885819",
+          "handle": null,
+          "name": "夕舞るあ",
+          "url": "https://space.bilibili.com/23885819",
+          "subscribers": {
+            "tag": "has",
+            "count": 2143
+          },
+          "avatar": "https://i2.hdslb.com/bfs/face/6a436ca1b867ee9e7100e5650b858b67d6cf8eda.jpg",
+          "lastCheckedAt": "2026-10-22T12:45:07.645Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "platform",
+      "aliases": [
+        "夕舞るあ"
+      ]
+    },
+    {
+      "id": "bilibili:30688252",
+      "name": "早季ちゃん",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "name",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://i0.hdslb.com/bfs/face/member/noface.jpg",
+      "banner": null,
+      "description": null,
+      "subscribers": {
+        "tag": "has",
+        "count": 25989
+      },
+      "videoCount": 13,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": false,
+      "gender": "female",
+      "isAi": false,
+      "variant": "female_vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "bilibili",
+          "id": "30688252",
+          "handle": null,
+          "name": "早季ちゃん",
+          "url": "https://space.bilibili.com/30688252",
+          "subscribers": {
+            "tag": "has",
+            "count": 25989
+          },
+          "avatar": "https://i0.hdslb.com/bfs/face/member/noface.jpg",
+          "lastCheckedAt": "2026-10-22T12:45:07.775Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": []
+    },
+    {
+      "id": "bilibili:313248263",
+      "name": "宇佐紀ノノ_usagi",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "name",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": "赋生计划",
+      "affiliation": "group",
+      "avatar": "https://i2.hdslb.com/bfs/face/13e52574fda0d629178713c8aca464d3cc4631a9.jpg",
+      "banner": null,
+      "description": "赋生计划所属  要做一直陪伴你的小狗               妈妈：しらたま  喜欢的人是@月见 @棉花糖ame  ",
+      "subscribers": {
+        "tag": "has",
+        "count": 132121
+      },
+      "videoCount": 1122,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": false,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "bilibili",
+          "id": "313248263",
+          "handle": null,
+          "name": "宇佐紀ノノ_usagi",
+          "url": "https://space.bilibili.com/313248263",
+          "subscribers": {
+            "tag": "has",
+            "count": 132121
+          },
+          "avatar": "https://i2.hdslb.com/bfs/face/13e52574fda0d629178713c8aca464d3cc4631a9.jpg",
+          "lastCheckedAt": "2026-10-22T12:45:07.682Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": []
+    },
+    {
+      "id": "bilibili:3448258",
+      "name": "熊くま喵",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "name",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://i1.hdslb.com/bfs/face/9fc7b516982f8bcb1e8ba63916d4144f412108f9.jpg",
+      "banner": null,
+      "description": "　个人摸鱼势VUP，CCTV前员工，山东FM前员工，精通三系语言，裙号：1041124043，喜欢鲨人，挖脑浆.....，",
+      "subscribers": {
+        "tag": "has",
+        "count": 2708
+      },
+      "videoCount": 961,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [
+        "kumaneko"
+      ],
+      "isSinging": false,
+      "gender": "male",
+      "isAi": false,
+      "variant": "male_vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "bilibili",
+          "id": "3448258",
+          "handle": null,
+          "name": "熊くま喵",
+          "url": "https://space.bilibili.com/3448258",
+          "subscribers": {
+            "tag": "has",
+            "count": 2708
+          },
+          "avatar": "https://i1.hdslb.com/bfs/face/9fc7b516982f8bcb1e8ba63916d4144f412108f9.jpg",
+          "lastCheckedAt": "2026-10-22T12:45:07.928Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": [
+        "kumaneko"
+      ]
+    },
+    {
+      "id": "bilibili:3493278408247937",
+      "name": "白雨ゆうや",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "name",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://i2.hdslb.com/bfs/face/2e1f816a384a3eb8469bea0e156c831dffb3aff5.jpg",
+      "banner": null,
+      "description": "4星唱歌画画系主包捏~现在15级满级1000！qq群号是636121008~",
+      "subscribers": {
+        "tag": "has",
+        "count": 1401
+      },
+      "videoCount": 35,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": true,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "bilibili",
+          "id": "3493278408247937",
+          "handle": null,
+          "name": "白雨ゆうや",
+          "url": "https://space.bilibili.com/3493278408247937",
+          "subscribers": {
+            "tag": "has",
+            "count": 1401
+          },
+          "avatar": "https://i2.hdslb.com/bfs/face/2e1f816a384a3eb8469bea0e156c831dffb3aff5.jpg",
+          "lastCheckedAt": "2026-10-22T12:45:07.982Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": []
     },
     {
       "id": "bilibili:353448885",
@@ -96,7 +870,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -114,7 +888,121 @@
             "count": 2156
           },
           "avatar": "http://i0.hdslb.com/bfs/face/7a4302d1b5ea6ed3e35ea91072e147b434c99307.jpg",
-          "lastCheckedAt": "2026-10-22T12:03:17.843Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.951Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": []
+    },
+    {
+      "id": "bilibili:396316042",
+      "name": "羽咲らびOfficial",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "name",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": null,
+      "banner": null,
+      "description": null,
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": false,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "bilibili",
+          "id": "396316042",
+          "handle": null,
+          "name": "羽咲らびOfficial",
+          "url": "https://space.bilibili.com/396316042",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-22T12:45:08.059Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": []
+    },
+    {
+      "id": "bilibili:408231448",
+      "name": "米莎ミサ",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "name",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": null,
+      "banner": null,
+      "description": null,
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": false,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "bilibili",
+          "id": "408231448",
+          "handle": null,
+          "name": "米莎ミサ",
+          "url": "https://space.bilibili.com/408231448",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-22T12:45:08.028Z"
         }
       ],
       "externals": {},
@@ -154,7 +1042,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -171,7 +1059,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:18.019Z"
+          "lastCheckedAt": "2026-10-22T12:45:08.105Z"
         }
       ],
       "externals": {},
@@ -211,7 +1099,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -228,7 +1116,64 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.552Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.746Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": []
+    },
+    {
+      "id": "bilibili:455868077",
+      "name": "神楽すず-official",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "name",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": ".Live",
+      "affiliation": "group",
+      "avatar": null,
+      "banner": null,
+      "description": null,
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": false,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "bilibili",
+          "id": "455868077",
+          "handle": null,
+          "name": "神楽すず-official",
+          "url": "https://space.bilibili.com/455868077",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-22T12:45:08.004Z"
         }
       ],
       "externals": {},
@@ -268,7 +1213,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -285,7 +1230,121 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:18.082Z"
+          "lastCheckedAt": "2026-10-22T12:45:08.167Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": []
+    },
+    {
+      "id": "bilibili:506261257",
+      "name": "甘城なつきOfficial",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "name",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": null,
+      "banner": null,
+      "description": null,
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": false,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "bilibili",
+          "id": "506261257",
+          "handle": null,
+          "name": "甘城なつきOfficial",
+          "url": "https://space.bilibili.com/506261257",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-22T12:45:07.964Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": []
+    },
+    {
+      "id": "bilibili:510758097",
+      "name": "環さんご",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "name",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": null,
+      "banner": null,
+      "description": null,
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": false,
+      "gender": "female",
+      "isAi": false,
+      "variant": "female_vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "bilibili",
+          "id": "510758097",
+          "handle": null,
+          "name": "環さんご",
+          "url": "https://space.bilibili.com/510758097",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-22T12:45:07.964Z"
         }
       ],
       "externals": {},
@@ -325,7 +1384,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -342,7 +1401,178 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:18.092Z"
+          "lastCheckedAt": "2026-10-22T12:45:08.179Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": []
+    },
+    {
+      "id": "bilibili:674862953",
+      "name": "梨泥くれはOfficial",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "name",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": null,
+      "banner": null,
+      "description": null,
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": false,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "bilibili",
+          "id": "674862953",
+          "handle": null,
+          "name": "梨泥くれはOfficial",
+          "url": "https://space.bilibili.com/674862953",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-22T12:45:07.860Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": []
+    },
+    {
+      "id": "bilibili:86280736",
+      "name": "水立方乱城です",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "name",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": null,
+      "banner": null,
+      "description": null,
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": false,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "bilibili",
+          "id": "86280736",
+          "handle": null,
+          "name": "水立方乱城です",
+          "url": "https://space.bilibili.com/86280736",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-22T12:45:07.880Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": []
+    },
+    {
+      "id": "bilibili:91155414",
+      "name": "焔ヨンゴ_hmryg",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "name",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": null,
+      "banner": null,
+      "description": null,
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": false,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "bilibili",
+          "id": "91155414",
+          "handle": null,
+          "name": "焔ヨンゴ_hmryg",
+          "url": "https://space.bilibili.com/91155414",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-22T12:45:07.927Z"
         }
       ],
       "externals": {},
@@ -384,7 +1614,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -401,7 +1631,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_lSKtnq1fRJH-om5Pbg4ob1avtD83-LWmF5RdFSucDVy1Q=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.721Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.864Z"
         },
         {
           "platform": "bilibili",
@@ -413,7 +1643,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.721Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.864Z"
         }
       ],
       "externals": {},
@@ -458,7 +1688,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "graduated",
@@ -475,7 +1705,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_l7wERJKCy_LB_mYsrvYgjVK4iwoR0I_O0RyZM2_3TY8w=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.058Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.431Z"
         },
         {
           "platform": "bilibili",
@@ -487,7 +1717,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.058Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.431Z"
         }
       ],
       "externals": {},
@@ -505,7 +1735,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
-      "regionSource": "name",
+      "regionSource": "agency",
       "languages": [
         "ja"
       ],
@@ -532,7 +1762,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -549,7 +1779,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/2j1Cr_bmqOzCXFJU8UE4CM5Jxg6PVG70PDAWEC74uQuZasdEDxKgsBgZf1Dk6v6VXcBAkF3QOg=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.217Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.497Z"
         },
         {
           "platform": "bilibili",
@@ -561,7 +1791,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.217Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.497Z"
         }
       ],
       "externals": {},
@@ -604,7 +1834,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -621,7 +1851,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_lfKd6AaTynmQhwFARlDVWNaWO-9_iEjPj2Ago_2E4Yieo=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.862Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.970Z"
         }
       ],
       "externals": {},
@@ -661,7 +1891,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -678,7 +1908,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_nj84qkUwpqNHWJxZaOpTqFjvwRg2BjTAXSQLloMM9N-ZM=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:18.084Z"
+          "lastCheckedAt": "2026-10-22T12:45:08.169Z"
         },
         {
           "platform": "bilibili",
@@ -690,7 +1920,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:18.084Z"
+          "lastCheckedAt": "2026-10-22T12:45:08.169Z"
         }
       ],
       "externals": {},
@@ -735,7 +1965,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -752,7 +1982,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_nHPsjV8KMncrIzZh7NPGaG8xzAgzN8Vf9YAj12dRN7sCc=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:18.122Z"
+          "lastCheckedAt": "2026-10-22T12:45:08.212Z"
         },
         {
           "platform": "bilibili",
@@ -764,7 +1994,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:18.122Z"
+          "lastCheckedAt": "2026-10-22T12:45:08.212Z"
         }
       ],
       "externals": {},
@@ -808,7 +2038,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -825,7 +2055,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/lC64zv-DoPNhfe7DfDYyOYdKMrm4HRPPHZj-TUxD8pMDeMOgFj0j-kXAyMpRM3xYYcg0cuhldDY=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:18.084Z"
+          "lastCheckedAt": "2026-10-22T12:45:08.169Z"
         },
         {
           "platform": "bilibili",
@@ -837,7 +2067,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:18.084Z"
+          "lastCheckedAt": "2026-10-22T12:45:08.169Z"
         }
       ],
       "externals": {},
@@ -879,7 +2109,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -896,7 +2126,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/23BF849HrJjJHBv_OLvwXW-EA6zstadqaOD94KoBmhsG5BGAKeyZCN0GwDMLjRwba-eQRnC94A=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.980Z"
+          "lastCheckedAt": "2026-10-22T12:45:08.067Z"
         }
       ],
       "externals": {},
@@ -940,7 +2170,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -957,7 +2187,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/-53QD4OOcQUJHk7RYSdIhUxA0kYzrtVzc9Xj4pVBnW3dJSMQnFGTpT_CS71x1og-PaUlwgU9KQ=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.381Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.622Z"
         },
         {
           "platform": "bilibili",
@@ -969,7 +2199,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.381Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.622Z"
         }
       ],
       "externals": {},
@@ -977,6 +2207,79 @@
       "nameSource": "platform",
       "aliases": [
         "唯茉瑠"
+      ]
+    },
+    {
+      "id": "UCJSzxbt4Acel9JdeLiY7tJQ",
+      "name": "DUSTCELL",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "country",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": "神椿工作室",
+      "affiliation": "group",
+      "avatar": "https://yt3.googleusercontent.com/cPF6Lgh_WLVg2G3Ag58jZVnpavZBsgLuC_EYa0fiaJIfX-HFo4Cnrbr8aakry0XsMFiF1u4V=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "ボーカルのEMAとコンポーザーのMisumiによる2人組音楽ユニット、DUSTCELL。 それぞれ歌い手とボカロPとしてキャリアを積んできた2人は、DUSTCELLの結成から注目を集め、以降、精力的に作品リリースとライブを行っている。 ダークで退廃的な世界に深く踏み込み、傷、痛み、命、孤独といったテーマに寄り添い...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": "UUJSzxbt4Acel9JdeLiY7tJQ",
+      "country": "JP",
+      "tags": [
+        "DUSTCELL"
+      ],
+      "isSinging": true,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCJSzxbt4Acel9JdeLiY7tJQ",
+          "handle": "DUSTCELL",
+          "name": "DUST_CELL",
+          "url": "https://www.youtube.com/channel/UCJSzxbt4Acel9JdeLiY7tJQ",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/cPF6Lgh_WLVg2G3Ag58jZVnpavZBsgLuC_EYa0fiaJIfX-HFo4Cnrbr8aakry0XsMFiF1u4V=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T12:45:07.409Z"
+        },
+        {
+          "platform": "bilibili",
+          "id": "488979186",
+          "handle": null,
+          "name": "DUST_CELL",
+          "url": "https://space.bilibili.com/488979186",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-22T12:45:07.409Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "platform",
+      "aliases": [
+        "DUST_CELL"
       ]
     },
     {
@@ -1014,7 +2317,7 @@
       "verification": null,
       "source": "seed",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "preparing",
@@ -1031,7 +2334,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/oD8ISaA35737mg-lt5mYSfOIXmjCeHYcSFFpTQn4AVMkqiyzrMle_THvX6NdfSxbjUO6fQ6_wg=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:13.027Z"
+          "lastCheckedAt": "2026-10-22T12:45:04.953Z"
         }
       ],
       "externals": {},
@@ -1075,7 +2378,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1092,7 +2395,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/pwE0ehqdPfQ1w3NvTkDd-giRddK4NjKt5k5RYvHOpA0VVDQTsvdmJBjYheoWuNMxDk7z-EU9gg=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.424Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.647Z"
         },
         {
           "platform": "bilibili",
@@ -1104,7 +2407,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.424Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.647Z"
         }
       ],
       "externals": {},
@@ -1147,7 +2450,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1164,7 +2467,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/6V73qtyZz-IjuKnr43AWhTWJ_IrZ7q-Y1AW77ZeNjeYxYTRjwg-r1LMBLWjgNkSEY5zjX3vUwtw=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.199Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.492Z"
         },
         {
           "platform": "bilibili",
@@ -1176,7 +2479,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.199Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.492Z"
         }
       ],
       "externals": {},
@@ -1193,7 +2496,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
-      "regionSource": "declared",
+      "regionSource": "country",
       "languages": [
         "ja"
       ],
@@ -1209,7 +2512,7 @@
       "videoCount": null,
       "viewCount": null,
       "uploadsPlaylistId": "UUN3L41COcrsDsqTKa7Pgczg",
-      "country": null,
+      "country": "JP",
       "tags": [
         "Kochou Momiji"
       ],
@@ -1220,7 +2523,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1230,14 +2533,14 @@
         {
           "platform": "youtube",
           "id": "UCN3L41COcrsDsqTKa7Pgczg",
-          "handle": null,
+          "handle": "KochouMomiji",
           "name": "胡蝶椛",
           "url": "https://www.youtube.com/channel/UCN3L41COcrsDsqTKa7Pgczg",
           "subscribers": {
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_nfIV1FCtGbMr8ZYf1xib33pR9J_pcF_Ob0KRQI_luL8w=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.979Z"
+          "lastCheckedAt": "2026-10-22T12:45:08.066Z"
         },
         {
           "platform": "twitch",
@@ -1249,7 +2552,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.979Z"
+          "lastCheckedAt": "2026-10-22T12:45:08.066Z"
         },
         {
           "platform": "bilibili",
@@ -1261,7 +2564,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.979Z"
+          "lastCheckedAt": "2026-10-22T12:45:08.066Z"
         }
       ],
       "externals": {},
@@ -1304,7 +2607,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1321,7 +2624,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_kIVqRXFxcKiB7Hca4zk2zyjvMJwylfVKNfOYjpU3ht-DQ=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:18.104Z"
+          "lastCheckedAt": "2026-10-22T12:45:08.192Z"
         }
       ],
       "externals": {},
@@ -1364,7 +2667,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1381,7 +2684,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_nkm-sSYukJz-qaYsxBoYCoaoAVrKtH3nqkCSlCb0riR10=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:18.144Z"
+          "lastCheckedAt": "2026-10-22T12:45:08.229Z"
         },
         {
           "platform": "bilibili",
@@ -1393,7 +2696,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:18.144Z"
+          "lastCheckedAt": "2026-10-22T12:45:08.229Z"
         }
       ],
       "externals": {},
@@ -1437,7 +2740,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1454,7 +2757,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.199Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.491Z"
         }
       ],
       "externals": {},
@@ -1494,7 +2797,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1511,7 +2814,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_lkjb3dDC9jE19aD_wcJxCXn2Bn4AgWV2KPfhp6Zos-qnk=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.428Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.649Z"
         },
         {
           "platform": "bilibili",
@@ -1523,7 +2826,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.428Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.649Z"
         }
       ],
       "externals": {},
@@ -1563,7 +2866,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1580,7 +2883,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/dDxwoOXbmmqwlnt8MMon3wPQdy5pX-vt-x8Eyqf38Yk8Zi2CIbJDXpzkA2YxZ1yUeOUhkweqYg=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.184Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.484Z"
         },
         {
           "platform": "bilibili",
@@ -1592,7 +2895,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.184Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.484Z"
         }
       ],
       "externals": {},
@@ -1636,7 +2939,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1653,7 +2956,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_kZEuPSoymRt23AJbwV-amsCvz83W8zo1wPhM6oQWzhGQ=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.199Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.492Z"
         },
         {
           "platform": "bilibili",
@@ -1665,7 +2968,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.199Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.492Z"
         }
       ],
       "externals": {},
@@ -1710,7 +3013,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1727,7 +3030,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/mt0LiORExLVMPfBMjTYIgyc34GZeM5mdJdP3aCfrWFJoHyHknO0FCgG24wDESHqFAn8Jedq5=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.584Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.773Z"
         },
         {
           "platform": "bilibili",
@@ -1739,7 +3042,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.584Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.773Z"
         }
       ],
       "externals": {},
@@ -1782,7 +3085,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1799,7 +3102,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/fpsCrd1L8b0NfKVA6vwLOqu_HIgONrPLhGqs2G7OXK7cyMHLdrz7klI3Hd4ys_gehiY9it8QFwY=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.196Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.490Z"
         }
       ],
       "externals": {},
@@ -1843,7 +3146,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1860,7 +3163,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/rG4P8QzXoE5M0x8N8241tx11kfsY-9zZYutqued4_7aodzHNKaCMS2IDD-Hn_9UcupWi7PBYXg=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.207Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.494Z"
         }
       ],
       "externals": {},
@@ -1903,7 +3206,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1920,7 +3223,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_nPEV1O9GOcUEYB23ZC8UrfjEpcUX92gdyi1EzpP5Stqw=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.859Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.967Z"
         }
       ],
       "externals": {},
@@ -1962,7 +3265,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1979,7 +3282,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/yLvYYlP83j5mcstZKWjQlpnx0QazqkM1s1JyN9r5qqBRwxJ7KoI4AANXLW1MsvVNuDbOho_Dl1M=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.892Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.991Z"
         },
         {
           "platform": "bilibili",
@@ -1991,7 +3294,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.892Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.991Z"
         }
       ],
       "externals": {},
@@ -2034,7 +3337,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -2051,7 +3354,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.551Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.745Z"
         },
         {
           "platform": "bilibili",
@@ -2063,7 +3366,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.551Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.745Z"
         }
       ],
       "externals": {},
@@ -2103,7 +3406,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -2120,7 +3423,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/0VNtcZRrB9dRFK-aaPpY79gNmX8exXqiSiKNV5KNme-s3kWXUF5O104mPlNcdXrexZ9V35JxzQ=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.907Z"
+          "lastCheckedAt": "2026-10-22T12:45:08.005Z"
         }
       ],
       "externals": {},
@@ -2165,7 +3468,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -2182,7 +3485,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.101Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.462Z"
         },
         {
           "platform": "bilibili",
@@ -2194,7 +3497,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.101Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.462Z"
         }
       ],
       "externals": {},

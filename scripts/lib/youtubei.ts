@@ -27,6 +27,7 @@
 import { Innertube } from "youtubei.js";
 import { RateLimiter } from "./rate-limit";
 import { REQUEST_TIMEOUT_MS } from "./io";
+import { normalizeCountry } from "./regions";
 
 export interface InnerTubeProfile {
   /**
@@ -50,6 +51,35 @@ export interface InnerTubeProfile {
   handle: string | null;
   /** The links the channel publishes. */
   links: string[];
+  /**
+   * The country the channel publishes, as an ISO code.
+   *
+   * Read from the about page, which is the only place YouTube states it. It
+   * is the one region fact a **mirror** cannot corrupt: a Japanese channel
+   * with a Bilibili account still says `JP` here.
+   */
+  country: string | null;
+}
+
+/** Options for one profile fetch. */
+export interface InnerTubeProfileOptions {
+  /**
+   * The language to ask YouTube in.
+   *
+   * A channel publishes a **localized** title and description per language,
+   * and the default (`en`) is the wrong one for most of this dataset: a
+   * Japanese channel shows its English alias — `Aoi / Vtuber` — while the
+   * Japanese name is 「向葵 / あおい」. Asking in `ja` returns the name the
+   * performer actually uses.
+   */
+  lang?: string;
+  /**
+   * Whether to read the about page for the country.
+   *
+   * It costs one extra request, so it is opt-in: only the details pass needs
+   * it.
+   */
+  about?: boolean;
 }
 
 export interface InnerTubeUpload {
@@ -80,9 +110,13 @@ export interface InnerTubeOptions {
  * about the request rate. Penalising the limiter for it makes the whole run
  * crawl for no reason — a catalogue of 14,000 channels has hundreds of dead
  * ones in it, and a malformed id is the client's fault, not the server's.
+ *
+ * The message comes back in the **session's language**, so a `ja` client
+ * says 「このチャンネルは存在しません」 where an `en` one says "This channel
+ * does not exist" — and a Japanese channel is fetched in Japanese.
  */
 function isNotRateLimited(message: string): boolean {
-  return /does not exist|not found|404|removed|terminated|status code 400/i.test(
+  return /does not exist|not found|404|removed|terminated|status code 400|存在しません|削除されました|停止しました|利用できません|不存在|已被删除|已删除|不存在该用户|존재하지 않습니다|삭제되었습니다/i.test(
     message,
   );
 }
@@ -110,6 +144,14 @@ export class InnerTubeSource {
   private readonly limiter: RateLimiter;
   /** Resolved `@handle` → channel id. */
   private readonly handleCache = new Map<string, string | null>();
+  /**
+   * One client per language.
+   *
+   * InnerTube keeps the language in its session, so a localized title needs
+   * a client created with that language. The clients are cheap to hold and
+   * expensive to build, so each language is built once.
+   */
+  private readonly clientsByLang = new Map<string, any>();
 
   constructor(options: InnerTubeOptions = {}) {
     this.enabled = options.enabled ?? true;
@@ -193,14 +235,46 @@ export class InnerTubeSource {
   }
 
   /**
-   * The channel's profile: description, avatar, subscriber count and links.
+   * The client for a language.
+   *
+   * `en` is the default client; every other language gets its own, built on
+   * first use. A failure falls back to English rather than failing the run.
    */
-  async profile(channelId: string): Promise<InnerTubeProfile | null> {
+  private async clientFor(lang: string): Promise<any> {
+    if (!lang || lang === "en") return this.client;
+    const cached = this.clientsByLang.get(lang);
+    if (cached) return cached;
+    try {
+      const client = await Innertube.create({ lang } as any);
+      this.clientsByLang.set(lang, client);
+      return client;
+    } catch (err) {
+      this.onLog(
+        `innertube: no ${lang} client — ${(err as Error).message}`,
+      );
+      return this.client;
+    }
+  }
+
+  /**
+   * The channel's profile: description, avatar, subscriber count and links.
+   *
+   * `options.lang` asks YouTube for a **localization**: a channel publishes
+   * a title and a description per language, and the English one is often an
+   * alias — 「向葵 / あおい」 is the Japanese name of the channel whose English
+   * title is `Aoi / Vtuber`. `options.about` adds the country from the about
+   * page, at the cost of one extra request.
+   */
+  async profile(
+    channelId: string,
+    options: InnerTubeProfileOptions = {},
+  ): Promise<InnerTubeProfile | null> {
     if (!this.client) return null;
+    const client = await this.clientFor(options.lang ?? "en");
     try {
       await this.throttle();
       const channel: any = await withTimeout(
-        this.client.getChannel(channelId),
+        client.getChannel(channelId),
         REQUEST_TIMEOUT_MS,
       );
       if (!channel) return null;
@@ -232,6 +306,32 @@ export class InnerTubeSource {
         if (url) links.push(url);
       }
 
+      /**
+       * The country, from the about page.
+       *
+       * It is the one region fact a **mirror** cannot corrupt: a Japanese
+       * channel that also posts on Bilibili still says 「日本」 here. The
+       * label is in the session's language, so it is normalized to an ISO
+       * code; an unreadable about page is not a reason to fail the profile.
+       */
+      let country: string | null = null;
+      if (options.about) {
+        try {
+          await this.throttle();
+          const about: any = await withTimeout(
+            channel.getAbout(),
+            REQUEST_TIMEOUT_MS,
+          );
+          const label =
+            about?.metadata?.country ?? about?.country ?? null;
+          country = normalizeCountry(
+            typeof label === "string" ? label : (label?.text ?? null),
+          );
+        } catch {
+          /* the country is optional */
+        }
+      }
+
       this.limiter.reward();
       /**
        * The header of a channel response carries the canonical identity in
@@ -253,6 +353,7 @@ export class InnerTubeSource {
         subscribers,
         handle,
         links,
+        country,
       };
     } catch (err) {
       const message = (err as Error).message;

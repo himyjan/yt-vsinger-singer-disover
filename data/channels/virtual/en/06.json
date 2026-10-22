@@ -1,7 +1,68 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T12:03:11.077Z",
+  "generatedAt": "2026-10-22T12:45:03.106Z",
   "channels": [
+    {
+      "id": "bilibili:1976789987",
+      "name": "Mysta的狐狸侦探纪念馆",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "en",
+      "regionSource": "agency",
+      "languages": [
+        "en"
+      ],
+      "statedLanguages": [],
+      "agency": "nijisanji en",
+      "affiliation": "group",
+      "avatar": "https://i2.hdslb.com/bfs/face/2bf6175f1edf70e22180d5a6efa24bf39ee730df.jpg",
+      "banner": null,
+      "description": "NIJISANJI EN四期生Mysta Rias已于2023.8.27启程前往下一个城市，天高海阔，后会无期",
+      "subscribers": {
+        "tag": "has",
+        "count": 241190
+      },
+      "videoCount": 692,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": false,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "bilibili",
+          "id": "1976789987",
+          "handle": "1976789987",
+          "name": "Mysta的狐狸侦探事务所",
+          "url": "https://space.bilibili.com/1976789987",
+          "subscribers": {
+            "tag": "has",
+            "count": 241190
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-22T12:45:07.438Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "platform",
+      "aliases": [
+        "Mysta的狐狸侦探事务所"
+      ]
+    },
     {
       "id": "UC47rNmkDcNgbOcM-2BwzJTQ",
       "name": "Millie Parfait【NIJISANJI EN】",
@@ -34,7 +95,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -51,7 +112,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/GcJnnN4V4LniF65ErgzJy9kBjoufC7UDn_5kA4JctojGjfAxRX0VyJspNLEJux5AI8EpFg-tog=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.065Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.436Z"
         }
       ],
       "externals": {},
@@ -93,7 +154,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -110,7 +171,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/so6GdSOoQiJkq4PpfCivWlGQYw0Dl83ONFRIez9BuA5O6QZBKyxMwbJUvh-wvyyyQw0WpYZxPg=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.041Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.413Z"
         }
       ],
       "externals": {},
@@ -118,82 +179,6 @@
       "nameSource": "platform",
       "aliases": [
         "Enna Alouette"
-      ]
-    },
-    {
-      "id": "UCwKirAYzzWUQRTC-aAB-aRQ",
-      "name": "暁月夢 / Akatsuki Yume",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "regionSource": "declared",
-      "languages": [
-        "en"
-      ],
-      "statedLanguages": [],
-      "agency": null,
-      "affiliation": "unknown",
-      "avatar": "https://yt3.googleusercontent.com/Kh9HAwoYYH6PhA4StADON0kCyHs-InMbRcByBWFxDL9Em2bz1ZWoVE3LfbxixVm2zZb1FOKIzg=s900-c-k-c0x00ffffff-no-rj",
-      "banner": null,
-      "description": "Hello there! This is your cute idol in the day, magical girl in the night! Always the shiniest star in the universe☆ I love anime, comics, and games even tho...",
-      "subscribers": {
-        "tag": "hidden"
-      },
-      "videoCount": null,
-      "viewCount": null,
-      "uploadsPlaylistId": "UUwKirAYzzWUQRTC-aAB-aRQ",
-      "country": null,
-      "tags": [
-        "暁月夢",
-        "AkatsukiYume"
-      ],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "verification": null,
-      "source": "api",
-      "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "youtube",
-          "id": "UCwKirAYzzWUQRTC-aAB-aRQ",
-          "handle": null,
-          "name": "晓月梦",
-          "url": "https://www.youtube.com/channel/UCwKirAYzzWUQRTC-aAB-aRQ",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": "https://yt3.googleusercontent.com/Kh9HAwoYYH6PhA4StADON0kCyHs-InMbRcByBWFxDL9Em2bz1ZWoVE3LfbxixVm2zZb1FOKIzg=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.031Z"
-        },
-        {
-          "platform": "twitch",
-          "id": "akatsukiyumerin",
-          "handle": null,
-          "name": "晓月梦",
-          "url": "https://www.twitch.tv/akatsukiyumerin",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.031Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null,
-      "nameSource": "platform",
-      "aliases": [
-        "暁月夢",
-        "AkatsukiYume",
-        "晓月梦"
       ]
     },
     {
@@ -231,7 +216,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -248,7 +233,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/WrANARkFwg4mlLa7SonZpwhS9_wiepSBhVGH90pIaXQsKCoBNiu3zyWVqW3nfBlbLTgOiOFO=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.757Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.887Z"
         },
         {
           "platform": "bilibili",
@@ -260,7 +245,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.757Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.887Z"
         }
       ],
       "externals": {},

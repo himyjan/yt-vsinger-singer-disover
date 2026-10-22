@@ -1,7 +1,66 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T12:03:11.077Z",
+  "generatedAt": "2026-10-22T12:45:03.106Z",
   "channels": [
+    {
+      "id": "bilibili:1278419509",
+      "name": "Sonny_Official",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "en",
+      "regionSource": "agency",
+      "languages": [
+        "en"
+      ],
+      "statedLanguages": [],
+      "agency": "nijisanji en",
+      "affiliation": "group",
+      "avatar": "https://i1.hdslb.com/bfs/face/e2b7b5076d37888efa2f55268a0bddbcd27e2fa1.jpg",
+      "banner": null,
+      "description": "Special Forces Officer from NIJISANJI EN's Noctyx!",
+      "subscribers": {
+        "tag": "has",
+        "count": 124860
+      },
+      "videoCount": 42,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": false,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "bilibili",
+          "id": "1278419509",
+          "handle": "1278419509",
+          "name": "Sonny_Official",
+          "url": "https://space.bilibili.com/1278419509",
+          "subscribers": {
+            "tag": "has",
+            "count": 124860
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-22T12:45:07.458Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": []
+    },
     {
       "id": "bilibili:2129870539",
       "name": "Uki的捕星网",
@@ -35,9 +94,9 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": "2026-10-22T12:03:11.077Z",
+      "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -53,8 +112,7 @@
             "count": 141133
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.100Z",
-          "videoCount": 504
+          "lastCheckedAt": "2026-10-22T12:45:07.462Z"
         }
       ],
       "externals": {},
@@ -94,7 +152,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -111,7 +169,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.043Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.416Z"
         }
       ],
       "externals": {},
@@ -151,7 +209,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -168,7 +226,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/pubqT6sYLzsAsAj8tNh8rLwZwtfvZHQybIhOpu97MkCqDPbaq4T-DApLqFgtCatXjPS3BmtHaF4=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.043Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.416Z"
         },
         {
           "platform": "bilibili",
@@ -180,7 +238,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.043Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.416Z"
         }
       ],
       "externals": {},
@@ -188,6 +246,77 @@
       "nameSource": "platform",
       "aliases": [
         "Fulgur-Official"
+      ]
+    },
+    {
+      "id": "UCoLHE6uhg5lNqTM4q8l4bqw",
+      "name": "SideHigh",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "en",
+      "regionSource": "country",
+      "languages": [
+        "en"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://yt3.googleusercontent.com/fjiLjH83q2xADZ50UtzQiteiUC3aeERE-GgSax-shiX0D9sNMy93rUfTrrMNXqMIs3_1QTfhSA8=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "Anything contact me via email: lchader721@gmail.com",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": "UUoLHE6uhg5lNqTM4q8l4bqw",
+      "country": "GB",
+      "tags": [],
+      "isSinging": false,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCoLHE6uhg5lNqTM4q8l4bqw",
+          "handle": "NozzleKid_DWF912",
+          "name": "达莲Darlen",
+          "url": "https://www.youtube.com/channel/UCoLHE6uhg5lNqTM4q8l4bqw",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/fjiLjH83q2xADZ50UtzQiteiUC3aeERE-GgSax-shiX0D9sNMy93rUfTrrMNXqMIs3_1QTfhSA8=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T12:45:08.164Z"
+        },
+        {
+          "platform": "bilibili",
+          "id": "2067739276",
+          "handle": null,
+          "name": "达莲Darlen",
+          "url": "https://space.bilibili.com/2067739276",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-22T12:45:08.164Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "platform",
+      "aliases": [
+        "达莲Darlen"
       ]
     },
     {
@@ -222,7 +351,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -239,7 +368,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/Cn3yTxP-Q6Fx6FX-1B5S1zljPiewlVzOeC4UoDV_I2AFTD6yI883az0YKSIUmuwbBuYJ42xJkFw=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.033Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.402Z"
         }
       ],
       "externals": {},
@@ -281,7 +410,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -298,7 +427,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/seL5IxcrXydLiLrqoJdZ1ShXJyQh5yjtRU8sr69K_lEXMfOvRV0XCkwgEhOl9snpoe3wwb_N=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.032Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.399Z"
         }
       ],
       "externals": {},
@@ -340,7 +469,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "preparing",
@@ -350,14 +479,14 @@
         {
           "platform": "youtube",
           "id": "UCSXOBKJSKfNsVy_nUqew03g",
-          "handle": null,
+          "handle": "Dadidabest",
           "name": "Dadi",
           "url": "https://www.youtube.com/channel/UCSXOBKJSKfNsVy_nUqew03g",
           "subscribers": {
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/2sAxZj5IAU1_ig8wLmTB4S-TKqJ5atc0-tQ6x8RNyHO6gyio4peZSuS71FvSxQVKb9UJ6VvwRw=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.039Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.409Z"
         }
       ],
       "externals": {},

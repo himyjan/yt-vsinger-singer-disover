@@ -1,7 +1,66 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T12:03:11.077Z",
+  "generatedAt": "2026-10-22T12:45:03.106Z",
   "channels": [
+    {
+      "id": "bilibili:1620495323",
+      "name": "Luca的Augustus饲养所",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "en",
+      "regionSource": "agency",
+      "languages": [
+        "en"
+      ],
+      "statedLanguages": [],
+      "agency": "nijisanji en",
+      "affiliation": "group",
+      "avatar": "https://i2.hdslb.com/bfs/face/55291920e3fe13e58d604d5c66384f7487bfc06d.jpg",
+      "banner": null,
+      "description": "Nijisanji En四期生Luca Kaneshiro搬运组 审核群：347045506  POG:D",
+      "subscribers": {
+        "tag": "has",
+        "count": 219388
+      },
+      "videoCount": 300,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": false,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "bilibili",
+          "id": "1620495323",
+          "handle": null,
+          "name": "Luca的Augustus饲养所",
+          "url": "https://space.bilibili.com/1620495323",
+          "subscribers": {
+            "tag": "has",
+            "count": 219388
+          },
+          "avatar": "https://i2.hdslb.com/bfs/face/55291920e3fe13e58d604d5c66384f7487bfc06d.jpg",
+          "lastCheckedAt": "2026-10-22T12:45:07.428Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": []
+    },
     {
       "id": "twitch:vedal987",
       "name": "vedal987",
@@ -35,7 +94,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -53,7 +112,7 @@
             "count": 1017531
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.177Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.479Z"
         }
       ],
       "externals": {},
@@ -95,7 +154,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -112,7 +171,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/OHmBLB6NIfKLqa_37QAcpeProgNCenthnC4HZFt3tI9olcR-CfQIbI9bZ377KPmDwv2n_rQH=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.054Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.425Z"
         },
         {
           "platform": "bilibili",
@@ -124,7 +183,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.054Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.425Z"
         }
       ],
       "externals": {},
@@ -166,7 +225,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -183,7 +242,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/Ox0CfbHFejnp2R9tbSpi0WwFKHj6MQIlBTJfyqinX8s16Blb7IFjmFBIi91oaMd5_EbKS3edrg=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.055Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.425Z"
         }
       ],
       "externals": {},
@@ -191,54 +250,6 @@
       "nameSource": "platform",
       "aliases": [
         "Kyo Kaneko"
-      ]
-    },
-    {
-      "id": "vdb:4bb946b7-6b9d-5b28-8975-f23291cba191",
-      "name": "ゆにクリエイト",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "regionSource": "declared",
-      "languages": [
-        "en"
-      ],
-      "statedLanguages": [],
-      "agency": "4bb946b7-6b9d-5b28-8975-f23291cba191",
-      "affiliation": "group",
-      "avatar": null,
-      "banner": null,
-      "description": null,
-      "subscribers": {
-        "tag": "hidden"
-      },
-      "videoCount": null,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [
-        "Unicreate"
-      ],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "verification": null,
-      "source": "api",
-      "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [],
-      "externals": {},
-      "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": [
-        "Unicreate"
       ]
     },
     {
@@ -273,7 +284,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",

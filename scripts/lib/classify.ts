@@ -31,7 +31,9 @@ import {
   REGION_LANGUAGE,
   detectLanguage,
   detectLanguageStatements,
+  hasKana,
   languageToRegion,
+  normalizeCountry,
   regionFromLocaleHints,
 } from "./regions";
 import {
@@ -570,23 +572,70 @@ export function classifyChannel(signals: ChannelSignals): ChannelClassification 
   }
 
   /* --- region ------------------------------------------------------------ */
+  /**
+   * The region, in the order of what each source actually knows.
+   *
+   * The order is not the order the sources are tried in — it is what each
+   * one is allowed to override:
+   *
+   * 1. **The agency branch.** Hololive EN is English and VirtuaReal is
+   *    Chinese, whatever the name looks like and wherever the person lives.
+   * 2. **The channel's own published country.** A stated fact, and the one
+   *    source a **mirror** cannot corrupt: a Japanese performer with a
+   *    Bilibili account is still Japanese.
+   * 3. **Kana in the name.** Evidence, never proof — kana occur in Japanese
+   *    and nowhere else, but a Taiwanese performer can use a Japanese stage
+   *    name, which is why a country or an agency outranks it.
+   * 4. **An explicit region statement** — 「台灣」, 「香港」, 「한국」.
+   * 5. **The platform the channel lives on.** A channel that exists *only*
+   *    on Bilibili is mainland Chinese. A **link** to Bilibili is not a
+   *    statement about origin, which is why the word "bilibili" is not one
+   *    of the explicit statements below.
+   * 6. **The script of the name and of the uploads.** The weakest guess, and
+   *    only used when nothing else is known.
+   */
   let region: RegionCode = "unknown";
   let regionScore = 0;
   let regionSource: RegionSource = "unknown";
 
   if (agencyRegion) {
     region = agencyRegion;
-    regionScore = 0.9;
+    regionScore = 0.92;
     regionSource = "agency";
   }
 
   /**
-   * The platform a performer comes from is a strong region prior.
+   * The country the channel publishes, as an ISO code.
    *
-   * Bilibili's VTuber partition is mainland Chinese, and Niconico is
-   * Japanese. Without this, a Chinese name written entirely in characters
-   * shared with Japanese (「樱咲奈央」, 「川烈」) would be classified as
-   * Japanese — and the Chinese scene is large enough for that to matter.
+   * The Data API supplies an ISO code and InnerTube's about page supplies a
+   * label in the session's language (「日本」, "Japan"), so both are read.
+   */
+  const country = normalizeCountry(signals.country);
+  if (country && COUNTRY_REGION[country] && regionScore < 0.88) {
+    region = COUNTRY_REGION[country];
+    regionScore = 0.88;
+    regionSource = "country";
+  }
+
+  /**
+   * Kana in the channel's **own name**.
+   *
+   * Only the name: a description can quote Japanese without the performer
+   * being Japanese, and a Chinese channel frequently does.
+   */
+  if (hasKana(signals.name) && regionScore < 0.82) {
+    region = "jp";
+    regionScore = 0.82;
+    regionSource = "name";
+  }
+
+  /**
+   * The platform a performer is hosted on is a region prior, not a fact.
+   *
+   * Bilibili's VTuber partition is mostly mainland Chinese and Niconico is
+   * Japanese, so a channel that exists *only* there is a reasonable guess.
+   * It is deliberately the weakest of the positive signals, because the same
+   * Bilibili account can be a mirror of a Japanese channel.
    */
   const platformRegion: Record<string, RegionCode> = {
     bilibili: "cn",
@@ -595,17 +644,10 @@ export function classifyChannel(signals: ChannelSignals): ChannelClassification 
   const fromPlatform = signals.platform
     ? platformRegion[signals.platform]
     : undefined;
-  if (fromPlatform && regionScore < 0.9) {
+  if (fromPlatform && regionScore < 0.7) {
     region = fromPlatform;
-    regionScore = 0.88;
+    regionScore = 0.7;
     regionSource = "platform";
-  }
-
-  const country = signals.country?.toUpperCase() ?? null;
-  if (regionScore < 0.75 && country && COUNTRY_REGION[country]) {
-    region = COUNTRY_REGION[country];
-    regionScore = 0.8;
-    regionSource = "country";
   }
 
   /**
@@ -622,9 +664,9 @@ export function classifyChannel(signals: ChannelSignals): ChannelClassification 
     `${signals.name ?? ""} ${signals.description ?? ""} ${signals.tags.join(" ")}`,
   );
   const langRegion = languageToRegion(scriptLang);
-  if (langRegion && regionScore < 0.7) {
+  if (langRegion && regionScore < 0.6) {
     region = langRegion;
-    regionScore = 0.65;
+    regionScore = 0.6;
     regionSource = "script";
   }
   /**
@@ -647,7 +689,7 @@ export function classifyChannel(signals: ChannelSignals): ChannelClassification 
   // otherwise known belongs to the Hong Kong scene.
   if (statedLangs.includes("yue") && region === "unknown") {
     region = "hk";
-    regionScore = 0.85;
+    regionScore = 0.8;
     regionSource = "declared";
   }
 
@@ -659,7 +701,7 @@ export function classifyChannel(signals: ChannelSignals): ChannelClassification 
       );
 
   const strongRegion = detectStrongRegion(all(name, intro, body, tags));
-  if (strongRegion) {
+  if (strongRegion && strongRegion.score > regionScore) {
     region = strongRegion.code;
     regionScore = strongRegion.score;
     regionSource = "declared";
@@ -668,9 +710,9 @@ export function classifyChannel(signals: ChannelSignals): ChannelClassification 
   // Locale hints from the channel's own uploads disambiguate kanji-only
   // names, which are otherwise guessed from the description alone.
   const hintRegion = regionFromLocaleHints(signals.localeHints ?? null);
-  if (hintRegion && regionScore < 0.85) {
+  if (hintRegion && regionScore < 0.55) {
     region = hintRegion;
-    regionScore = 0.85;
+    regionScore = 0.55;
     regionSource = "script";
   }
 
@@ -767,21 +809,31 @@ function countHits(haystack: string, needles: string[]): number {
   return hits;
 }
 
-/** Very explicit region markers that should win over inference. */
+/**
+ * Very explicit region markers that should win over inference.
+ *
+ * A **link** is not a region statement: a Japanese channel that also posts
+ * on Bilibili lists `bilibili.com/…` in its description, so "bilibili" is
+ * deliberately not here. A mirror is not an origin — only a channel that
+ * exists *only* on Bilibili gets the platform prior.
+ *
+ * The score sits below a published country and below kana, because both are
+ * closer to the performer than a word in a bio.
+ */
 function detectStrongRegion(
   all: string,
 ): { code: RegionCode; score: number } | null {
   const explicit: [RegionCode, string[]][] = [
     ["jp", ["hololive jp", "ホロライブ", "にじさんじ", "nijisanji jp", "日本", "vspo"]],
-    ["cn", ["hololivecn", "哔哩哔哩", "bilibili", "中国"]],
+    ["cn", ["hololivecn", "中国"]],
     ["tw", ["台灣", "taiwan", "台湾", "繁体"]],
     ["hk", ["香港", "hong kong"]],
     ["kr", ["한국", "korea", "한국어", "버추얼"]],
-    ["id", ["indonesia", "indonesian", "Indonesia", " holomorphic"]],
+    ["id", ["indonesia", "indonesian"]],
     ["my", ["malaysia", "malaysian"]],
   ];
   for (const [code, needles] of explicit) {
-    if (has(all, needles)) return { code, score: 0.92 };
+    if (has(all, needles)) return { code, score: 0.78 };
   }
   return null;
 }

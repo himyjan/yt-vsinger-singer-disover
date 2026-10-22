@@ -1,7 +1,66 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T12:03:11.077Z",
+  "generatedAt": "2026-10-22T12:45:03.106Z",
   "channels": [
+    {
+      "id": "bilibili:1292051980",
+      "name": "Finana的珊瑚礁海",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "en",
+      "regionSource": "agency",
+      "languages": [
+        "en"
+      ],
+      "statedLanguages": [],
+      "agency": "nijisanji en",
+      "affiliation": "group",
+      "avatar": "https://i1.hdslb.com/bfs/face/3f7218eb8f8b85ccddce748a44ad09f6185b5f21.jpg",
+      "banner": null,
+      "description": "这里是NIJISANJI EN所属LazuLight成员Finana Ryugu的非公式搬运组 审核：559716573 长期招剪轴翻校转美",
+      "subscribers": {
+        "tag": "has",
+        "count": 47604
+      },
+      "videoCount": 166,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": false,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "bilibili",
+          "id": "1292051980",
+          "handle": "1292051980",
+          "name": "Finana的珊瑚礁海",
+          "url": "https://space.bilibili.com/1292051980",
+          "subscribers": {
+            "tag": "has",
+            "count": 47604
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-22T12:45:07.415Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": []
+    },
     {
       "id": "bilibili:1795172933",
       "name": "Hex_EN_Official",
@@ -35,7 +94,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -53,7 +112,7 @@
             "count": 30145
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.044Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.417Z"
         }
       ],
       "externals": {},
@@ -96,7 +155,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -114,7 +173,7 @@
             "count": 35447
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.126Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.464Z"
         }
       ],
       "externals": {},
@@ -158,7 +217,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -175,7 +234,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/hJ45UDEa_rKtqxjNcIcYYJ_3eBvl9Jj2H-gXHBwNDwKOcSvDLjSwgOVbU9tEbUQmpGnyGwQFLQ=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.219Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.498Z"
         },
         {
           "platform": "bilibili",
@@ -187,7 +246,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.219Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.498Z"
         }
       ],
       "externals": {},
@@ -232,7 +291,7 @@
       "verification": null,
       "source": "seed",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "graduated",
@@ -249,7 +308,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/6BCfAqi9yIpZbHLbw9BAWySvB3XZf9r8jFqudO5nSOsHoGzLhlKrm1M1uuMCRabi_pXGDzl7=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:13.027Z"
+          "lastCheckedAt": "2026-10-22T12:45:04.953Z"
         },
         {
           "platform": "bilibili",
@@ -261,7 +320,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.396Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.630Z"
         }
       ],
       "externals": {},
@@ -270,75 +329,6 @@
       "aliases": [
         "Gawr Gura"
       ]
-    },
-    {
-      "id": "UCyZoDBhW8cLrzZ-dqKdQqEg",
-      "name": "Maya Putri",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "regionSource": "declared",
-      "languages": [
-        "en"
-      ],
-      "statedLanguages": [],
-      "agency": null,
-      "affiliation": "unknown",
-      "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_kdvkU3SQGwWUcDVTszaHbQFkUpsyQ98iG47mVNXeVLoA=s900-c-k-c0x00ffffff-no-rj",
-      "banner": null,
-      "description": "Halo! My name is Maya Putri, I’m a Virtual Youtuber from Indonesia. I sing, play games, and do things! Hope you enjoy your stay٩(๑❛ᴗ❛๑)۶ ◼Twitter https://twi...",
-      "subscribers": {
-        "tag": "hidden"
-      },
-      "videoCount": null,
-      "viewCount": null,
-      "uploadsPlaylistId": "UUyZoDBhW8cLrzZ-dqKdQqEg",
-      "country": null,
-      "tags": [],
-      "isSinging": true,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "verification": null,
-      "source": "api",
-      "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "youtube",
-          "id": "UCyZoDBhW8cLrzZ-dqKdQqEg",
-          "handle": null,
-          "name": "Maya Putri",
-          "url": "https://www.youtube.com/channel/UCyZoDBhW8cLrzZ-dqKdQqEg",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_kdvkU3SQGwWUcDVTszaHbQFkUpsyQ98iG47mVNXeVLoA=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.064Z"
-        },
-        {
-          "platform": "bilibili",
-          "id": "455888811",
-          "handle": null,
-          "name": "Maya Putri",
-          "url": "https://space.bilibili.com/455888811",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.064Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
     },
     {
       "id": "vdb:003565db-c2db-5968-ac49-b755c548a91b",
@@ -372,7 +362,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",

@@ -1,7 +1,125 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T12:03:11.077Z",
+  "generatedAt": "2026-10-22T12:45:03.106Z",
   "channels": [
+    {
+      "id": "bilibili:1328491215",
+      "name": "Shu的香蕉种植园",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "en",
+      "regionSource": "agency",
+      "languages": [
+        "en"
+      ],
+      "statedLanguages": [],
+      "agency": "nijisanji en",
+      "affiliation": "group",
+      "avatar": "https://i0.hdslb.com/bfs/face/d5616c82ee5aa6edb96e50064e651f449a8c11b0.jpg",
+      "banner": null,
+      "description": "NIJISANJI EN所属Shu Yamino搬运组，审核群:730260263。生肉号@Shu的纸人收集录。粉丝群: 284655354",
+      "subscribers": {
+        "tag": "has",
+        "count": 243386
+      },
+      "videoCount": 507,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": false,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "bilibili",
+          "id": "1328491215",
+          "handle": "1328491215",
+          "name": "Shu的香蕉种植园",
+          "url": "https://space.bilibili.com/1328491215",
+          "subscribers": {
+            "tag": "has",
+            "count": 243386
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-22T12:45:07.457Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": []
+    },
+    {
+      "id": "bilibili:345800862",
+      "name": "Elira的龙之宝库",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "en",
+      "regionSource": "agency",
+      "languages": [
+        "en"
+      ],
+      "statedLanguages": [],
+      "agency": "nijisanji en",
+      "affiliation": "group",
+      "avatar": "https://i0.hdslb.com/bfs/face/97035306436cf1450bfff6b81cf164b6cbefa772.jpg",
+      "banner": null,
+      "description": "这里是Nijisanji EN所属Elira Pendora的非公式搬运组~审核群号:559716573",
+      "subscribers": {
+        "tag": "has",
+        "count": 71877
+      },
+      "videoCount": 168,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": false,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "bilibili",
+          "id": "345800862",
+          "handle": null,
+          "name": "Elira的龙之宝库",
+          "url": "https://space.bilibili.com/345800862",
+          "subscribers": {
+            "tag": "has",
+            "count": 71877
+          },
+          "avatar": "https://i0.hdslb.com/bfs/face/97035306436cf1450bfff6b81cf164b6cbefa772.jpg",
+          "lastCheckedAt": "2026-10-22T12:45:07.412Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": []
+    },
     {
       "id": "UCu6IFOMX4F8xn1NIc0DQ2Mg",
       "name": "Note: - Vsinger -",
@@ -34,7 +152,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -44,14 +162,14 @@
         {
           "platform": "youtube",
           "id": "UCu6IFOMX4F8xn1NIc0DQ2Mg",
-          "handle": null,
+          "handle": "note-vsinger-6744",
           "name": "Note",
           "url": "https://www.youtube.com/channel/UCu6IFOMX4F8xn1NIc0DQ2Mg",
           "subscribers": {
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_lE-S2rcccQu9UF-DiTriX1tu-YKW9GMOXozxqTA3hNzQ=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.073Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.443Z"
         },
         {
           "platform": "bilibili",
@@ -63,7 +181,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.073Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.443Z"
         }
       ],
       "externals": {},
@@ -80,7 +198,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "en",
-      "regionSource": "declared",
+      "regionSource": "country",
       "languages": [
         "en"
       ],
@@ -96,7 +214,7 @@
       "videoCount": null,
       "viewCount": null,
       "uploadsPlaylistId": "UUYKX4HL54erXdCyMj7TpFyg",
-      "country": null,
+      "country": "US",
       "tags": [],
       "isSinging": false,
       "gender": "unknown",
@@ -105,7 +223,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -115,14 +233,14 @@
         {
           "platform": "youtube",
           "id": "UCYKX4HL54erXdCyMj7TpFyg",
-          "handle": null,
+          "handle": "Shizukou",
           "name": "Shizukou",
           "url": "https://www.youtube.com/channel/UCYKX4HL54erXdCyMj7TpFyg",
           "subscribers": {
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/fl6drXs6XMS5CGK7QH6IWi_shSAB1dZndPgZpScoy768Of6giVBbBoeV3UuiT5Q4JaWklRAp=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.093Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.456Z"
         },
         {
           "platform": "bilibili",
@@ -134,7 +252,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.093Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.456Z"
         },
         {
           "platform": "twitch",
@@ -146,7 +264,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.093Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.456Z"
         }
       ],
       "externals": {},
@@ -186,7 +304,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",

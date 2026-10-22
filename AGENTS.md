@@ -90,6 +90,11 @@ Two rules follow:
   account must not rename a Japanese YouTube channel.
 - **A placeholder is not a name.** 「账号已注销」 and 「(알 수 없음)」 are
   tombstones, and they are rejected.
+- **The platform's name has a language too.** YouTube publishes a title per
+  localization, so the profile is fetched in the language of the record's
+  region — `ja` for a Japanese channel. The English localization of
+  「向葵 / あおい」 is `Aoi / Vtuber`, and storing that as the name is how a
+  Japanese channel looks Chinese: the other localizations become aliases.
 
 A rename is **recorded**: the old name goes into `aliases`, and the aliases
 are indexed for search, so a channel that renamed is still findable under
@@ -121,7 +126,12 @@ wrong:
   It never outranks kana, an agency branch or a published country.
 - **Kana mean Japanese.** They occur in Japanese and nowhere else — but only
   as evidence, never as proof: a performer whose own country is published,
-  or who belongs to a known agency, is decided by that instead.
+  or who belongs to a known agency, is decided by that instead. Two kana,
+  not one: a single の or め is a Chinese stylisation.
+- **A link is not a statement.** A channel that cross-posts to Bilibili lists
+  `space.bilibili.com` in its description; that does not make the performer
+  Chinese. Only a channel that exists **only** on Bilibili gets the platform
+  prior, and the country YouTube publishes outranks it.
 
 ### 4. The id is the immutable platform id
 

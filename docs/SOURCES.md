@@ -160,6 +160,18 @@ richest field in the project: it is where a performer states their own
 language, their agency and their links. It also gives the avatar, the
 subscriber count and the upload list.
 
+Two things about it are easy to miss, and both were wrong for a long time:
+
+- **A channel publishes a title and a description per language.** The
+  default answer is the English localization, which for a Japanese channel
+  is an alias — `Aoi / Vtuber` for 「向葵 / あおい」. `profile(id, { lang })`
+  asks in the language of the record's region, and the other localizations
+  become aliases.
+- **The about page is the only place the channel states its country.**
+  `profile(id, { about: true })` reads it (`"country":"日本"`) and normalizes
+  the localized label to an ISO code, because the country is the one region
+  fact a mirror cannot corrupt.
+
 **Twitch GQL** (`scripts/lib/twitch-gql.ts`) — the same GraphQL endpoint the
 Twitch website itself uses. It needs only the **public web client id** that
 every Twitch page ships with, so there is no secret to manage and no quota.
@@ -188,6 +200,7 @@ fields go first:
 | the **description** | InnerTube (YouTube), GQL (Twitch), the Bilibili `card` endpoint, the CHZZK and KICK profile endpoints |
 | the **avatar** | the same three sources |
 | the **follower count** | InnerTube, GQL, `x/relation/stat` (Bilibili) |
+| the **country** | YouTube's about page — the record's own statement of where it belongs |
 | the **links** | the channel's own published links |
 
 The free sources cost no quota, so the pass can afford to be generous — it is

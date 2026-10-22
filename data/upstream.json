@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T12:17:29.153Z",
+  "generatedAt": "2026-10-22T12:45:03.106Z",
   "sources": [
     {
       "id": "vdb",
@@ -8,15 +8,15 @@
       "sha": "a80ccd053e4df27158ebc7006c573dcb43cc3ed7",
       "committedAt": "2026-10-22T02:01:44Z",
       "message": "Merge pull request #26766 from dd-center/submit-26765",
-      "checkedAt": "2026-10-22T12:17:29.153Z"
+      "checkedAt": "2026-10-22T12:45:03.106Z"
     },
     {
       "id": "taiwan-tracker",
       "label": "Taiwan VTuber Tracking Data",
-      "sha": "43dd7577da3cbf498458eadfef851abf567a209e",
-      "committedAt": "2026-10-22T11:58:34Z",
-      "message": "Automatic update at 2026/10/22 19:58",
-      "checkedAt": "2026-10-22T12:17:29.153Z"
+      "sha": "12cdc87f0129c2aef5efaf7f1c818acb41ab6e67",
+      "committedAt": "2026-10-22T12:33:27Z",
+      "message": "Automatic update at 2026/10/22 20:33",
+      "checkedAt": "2026-10-22T12:45:03.106Z"
     },
     {
       "id": "music-dataset",
@@ -24,7 +24,7 @@
       "sha": "8fa1ef8c1ab54cfd0ef858b3942ac8acee5863b1",
       "committedAt": "2022-06-23T16:05:50Z",
       "message": "Merge pull request #2 from meihei3/dependabot/pip/httplib2-0.19.0",
-      "checkedAt": "2026-10-22T12:17:29.153Z"
+      "checkedAt": "2026-10-22T12:45:03.106Z"
     }
   ]
 }

@@ -65,13 +65,15 @@ import {
   normalizeChannelId,
   primaryPlatformOf,
 } from "./lib/platforms";
-import { dedupePlatformLinks, mergeChannels } from "./lib/dedupe";
+import { dedupePlatformLinks, mergeChannels, REGION_TRUST } from "./lib/dedupe";
 import {
+  classifyChannel,
   detectActivity,
   detectAffiliation,
   extractAgency,
   mergeActivity,
 } from "./lib/classify";
+import { REGION_LANGUAGE } from "./lib/regions";
 import { pickAvatar, pickSubscribers } from "./lib/platforms";
 import type { Channel, PlatformId } from "./lib/types";
 
@@ -109,6 +111,16 @@ interface Options {
    * those records are resolved and re-keyed.
    */
   normalizeIds: boolean;
+  /**
+   * Re-read the region of every YouTube record whose region is a guess.
+   *
+   * A record whose region came from a **mirror** — vdb's display language,
+   * the script of a name — sits in the wrong shard, and the shard is what
+   * the app downloads. This pass asks YouTube for the channel's published
+   * country and the name in its own language, so a Japanese channel with a
+   * Bilibili account is stored as `jp` under its Japanese name.
+   */
+  weakRegion: boolean;
 }
 
 /**
@@ -134,6 +146,7 @@ function parseArgs(argv: string[]): Options {
     nameOnly: false,
     force: false,
     normalizeIds: false,
+    weakRegion: false,
   };
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i];
@@ -150,6 +163,12 @@ function parseArgs(argv: string[]): Options {
       arg === "--ids-only"
     ) {
       options.normalizeIds = true;
+    } else if (
+      arg === "--weak-region" ||
+      arg === "--weak-regions" ||
+      arg === "--regions"
+    ) {
+      options.weakRegion = true;
     }
     else if (NAME_ONLY_FLAGS.has(arg.toLowerCase())) {
       const value = argv[i + 1];
@@ -175,6 +194,8 @@ let filled = 0;
 let renamed = 0;
 let grouped = 0;
 let rekeyed = 0;
+/** Records whose region was corrected from the channel's published country. */
+let regionFixed = 0;
 let failed = 0;
 
 function log(message: string): void {
@@ -207,6 +228,34 @@ interface Profile {
   id?: string | null;
   /** The channel's current `@handle`, when the platform publishes one. */
   handle?: string | null;
+  /**
+   * The country the channel publishes, as an ISO code.
+   *
+   * Only YouTube states one, and it is the fact a mirror cannot corrupt.
+   */
+  country?: string | null;
+}
+
+/** The language YouTube should answer in, from the region. */
+function profileLanguage(region: string | null | undefined): string {
+  switch (region) {
+    case "jp":
+      return "ja";
+    case "cn":
+      return "zh-CN";
+    case "tw":
+      return "zh-TW";
+    case "hk":
+      return "zh-HK";
+    case "kr":
+      return "ko";
+    case "id":
+      return "id";
+    case "my":
+      return "ms";
+    default:
+      return "en";
+  }
 }
 
 /**
@@ -249,7 +298,17 @@ async function fetchProfile(
             raw.replace(/^youtube:(user-)?/, ""),
           );
       if (!youtubeId) return null;
-      const profile = await ctx.innertube.profile(youtubeId);
+      /**
+       * The profile is asked for in the record's **own language**, so the
+       * name that comes back is the one the performer uses. YouTube's
+       * default answer is the English localization, which for a Japanese
+       * channel is often an alias: `Aoi / Vtuber` instead of
+       * 「向葵 / あおい」.
+       */
+      const profile = await ctx.innertube.profile(youtubeId, {
+        lang: profileLanguage(channel.region),
+        about: true,
+      });
       if (!profile) return null;
       return {
         name: profile.title,
@@ -259,6 +318,7 @@ async function fetchProfile(
         videoCount: null,
         id: profile.id,
         handle: profile.handle,
+        country: profile.country,
       };
     }
 
@@ -508,6 +568,39 @@ function applyProfile(
     );
   }
 
+  /**
+   * The country the channel publishes, and the region it implies.
+   *
+   * YouTube states it on the about page — 「日本」 for a channel that also
+   * has a Bilibili account, which is exactly the case a **mirror** breaks.
+   * Only a more trusted source may replace the region that is already there,
+   * so a roster's nationality, an agency and an override are never
+   * overwritten.
+   */
+  if (profile.country) {
+    channel.country = profile.country;
+    const fresh = classifyChannel({
+      name: channel.name,
+      description: channel.description,
+      tags: channel.tags,
+      country: channel.country,
+      platform: primaryPlatformOf(channel) ?? undefined,
+    });
+    if (
+      REGION_TRUST[fresh.regionSource] >
+      REGION_TRUST[channel.regionSource ?? "unknown"]
+    ) {
+      channel.region = fresh.region;
+      channel.regionSource = fresh.regionSource;
+      // The language follows the region, unless the performer stated one.
+      if (!(channel.statedLanguages?.length ?? 0)) {
+        const language = REGION_LANGUAGE[fresh.region];
+        if (language) channel.languages = [language];
+      }
+      regionFixed++;
+    }
+  }
+
   // The avatar and the follower count follow the primary platform.
   channel.avatar = pickAvatar(channel);
   channel.subscribers = pickSubscribers(channel);
@@ -552,6 +645,21 @@ async function main(): Promise<void> {
        * handle — everything else is already keyed by a permanent id.
        */
       if (options.normalizeIds) return needsStableId(c);
+      /**
+       * `--weak-region` touches only the records whose region is a guess.
+       *
+       * `override` and `roster` are facts, an agency is a fact and kana is
+       * good evidence; `declared` (vdb's display language), `script` and
+       * `unknown` are the ones a mirror can get wrong.
+       */
+      if (options.weakRegion) {
+        return (
+          primaryPlatformOf(c) === "youtube" &&
+          ["declared", "script", "unknown"].includes(
+            c.regionSource ?? "unknown",
+          )
+        );
+      }
       // In name-only mode every channel is a candidate: the point is to
       // correct the name, whether or not the avatar is already there.
       if (!options.nameOnly && c.avatar) return false;
@@ -581,9 +689,11 @@ async function main(): Promise<void> {
   log(
     options.normalizeIds
       ? `${pending.length} channel(s) are keyed by a handle`
-      : options.nameOnly
-        ? `${pending.length} channel(s) to rename`
-        : `${pending.length} channel(s) need an avatar`,
+      : options.weakRegion
+        ? `${pending.length} channel(s) have a guessed region`
+        : options.nameOnly
+          ? `${pending.length} channel(s) to rename`
+          : `${pending.length} channel(s) need an avatar`,
   );
 
   const innertube = new InnerTubeSource({
@@ -636,7 +746,25 @@ async function main(): Promise<void> {
 
     const before = channel.avatar;
     const originalId = channel.id;
+    const beforeRegion = channel.region;
     applyProfile(channel, platform, profile, overrides, options.nameOnly);
+    /**
+     * A record whose region just moved is asked again, in the language of
+     * its **new** region.
+     *
+     * The first request was answered in the language of the old — possibly
+     * wrong — one, which is how `Aoi / Vtuber` was stored for a Japanese
+     * channel: the English localization is not the name the performer uses.
+     */
+    if (platform === "youtube" && channel.region !== beforeRegion) {
+      const localized = await fetchProfile(channel, platform, ctx);
+      if (localized) {
+        applyProfile(channel, platform, localized, overrides, options.nameOnly);
+        log(
+          `region: ${beforeRegion} → ${channel.region} (${channel.regionSource}) · ${channel.name}`,
+        );
+      }
+    }
     if (channel.avatar && channel.avatar !== before) filled++;
     /**
      * Keyed by the id the record **had** when it was read: a profile can
@@ -650,7 +778,8 @@ async function main(): Promise<void> {
       log(
         `${fetched}/${pending.length} fetched · ` +
           (options.nameOnly ? "" : `${filled} avatar(s) filled · `) +
-          `${renamed} renamed · ${grouped} grouped · ${rekeyed} re-keyed · ${failed} failed`,
+          `${renamed} renamed · ${regionFixed} region(s) fixed · ` +
+          `${grouped} grouped · ${rekeyed} re-keyed · ${failed} failed`,
       );
     }
     await sleep(options.intervalMs);
@@ -659,7 +788,8 @@ async function main(): Promise<void> {
   log(
     `${fetched} fetched · ` +
       (options.nameOnly ? "" : `${filled} avatar(s) filled · `) +
-      `${renamed} renamed · ${grouped} grouped · ${rekeyed} re-keyed · ${failed} failed`,
+      `${renamed} renamed · ${regionFixed} region(s) fixed · ` +
+      `${grouped} grouped · ${rekeyed} re-keyed · ${failed} failed`,
   );
   const struggling = [...consecutiveFailures.entries()].filter(
     ([, streak]) => streak >= 20,
@@ -711,6 +841,15 @@ async function main(): Promise<void> {
     record.activity = updated.activity;
     record.affiliation = updated.affiliation;
     record.agency = updated.agency;
+    /**
+     * The region is a field this run can correct: the country is fetched
+     * with the profile, and a record whose region was a guess moves to the
+     * shard its own country names.
+     */
+    record.region = updated.region;
+    record.regionSource = updated.regionSource;
+    record.country = updated.country;
+    record.languages = updated.languages;
     record.isSinging = updated.isSinging;
     record.subscribers = updated.subscribers;
     record.videoCount = updated.videoCount;

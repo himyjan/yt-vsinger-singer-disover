@@ -1,7 +1,66 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T12:03:11.077Z",
+  "generatedAt": "2026-10-22T12:45:03.106Z",
   "channels": [
+    {
+      "id": "bilibili:13743308",
+      "name": "Maria的玩具后宫",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "en",
+      "regionSource": "agency",
+      "languages": [
+        "en"
+      ],
+      "statedLanguages": [],
+      "agency": "nijisanji en",
+      "affiliation": "group",
+      "avatar": "https://i2.hdslb.com/bfs/face/d200ca1b4f32e164db53184ddb1174737ea78340.jpg",
+      "banner": null,
+      "description": "NIJISANJI EN所属liver Maria Marionette的非公式搬运组 审核群：542473485",
+      "subscribers": {
+        "tag": "has",
+        "count": 110019
+      },
+      "videoCount": 182,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": false,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "bilibili",
+          "id": "13743308",
+          "handle": "13743308",
+          "name": "Maria的玩具后宫",
+          "url": "https://space.bilibili.com/13743308",
+          "subscribers": {
+            "tag": "has",
+            "count": 110019
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-22T12:45:07.433Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": []
+    },
     {
       "id": "UCFgXWZOUZA2oYHNr6qDmsTQ",
       "name": "Scarle Yonaguni 【NIJISANJI EN】",
@@ -34,7 +93,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -51,7 +110,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/2CVK0cKnt9xYLol27q9gmPGmDrL67w0BKvcvHmelALnWLl3EDS6YssvuE2-UTlF9UKiA_E7LPw=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.089Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.454Z"
         }
       ],
       "externals": {},
@@ -59,65 +118,6 @@
       "nameSource": "platform",
       "aliases": [
         "Scarle Yonaguni"
-      ]
-    },
-    {
-      "id": "UCWhv732tk4DAQ7X32qHKrfA",
-      "name": "Marpril Channel",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "regionSource": "declared",
-      "languages": [
-        "en"
-      ],
-      "statedLanguages": [],
-      "agency": null,
-      "affiliation": "unknown",
-      "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_mi7D14qgSlpwNZI7_E1tVCS76rTSbkpKhuy6L_tqxRYrY=s900-c-k-c0x00ffffff-no-rj",
-      "banner": null,
-      "description": "【What is Marpril？】 谷田透佳・立花鈴の2名によるバーチャル・デュオ・アーティスト。 2019年の活動開始からクラブカルチャーにフォーカスした楽曲をリリースし続けており 界隈でも名高いトラックメイカー達と多数のコラボレーションを果たす。 「ダンスミュージック」と共に「踊る」という聴覚・視覚を同時に...",
-      "subscribers": {
-        "tag": "hidden"
-      },
-      "videoCount": null,
-      "viewCount": null,
-      "uploadsPlaylistId": "UUWhv732tk4DAQ7X32qHKrfA",
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "verification": null,
-      "source": "api",
-      "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "youtube",
-          "id": "UCWhv732tk4DAQ7X32qHKrfA",
-          "handle": null,
-          "name": "Marpril",
-          "url": "https://www.youtube.com/channel/UCWhv732tk4DAQ7X32qHKrfA",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_mi7D14qgSlpwNZI7_E1tVCS76rTSbkpKhuy6L_tqxRYrY=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.064Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null,
-      "nameSource": "platform",
-      "aliases": [
-        "Marpril"
       ]
     },
     {
@@ -152,7 +152,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",

@@ -1,7 +1,66 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T12:03:11.077Z",
+  "generatedAt": "2026-10-22T12:45:03.106Z",
   "channels": [
+    {
+      "id": "bilibili:1512759879",
+      "name": "Uki_Official",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "en",
+      "regionSource": "agency",
+      "languages": [
+        "en"
+      ],
+      "statedLanguages": [],
+      "agency": "nijisanji en",
+      "affiliation": "group",
+      "avatar": "https://i0.hdslb.com/bfs/face/7672cfd636f4c4592f43f71611ff864915ff50f9.jpg",
+      "banner": null,
+      "description": "Psychic from NIJISANJI EN's NOCTYX",
+      "subscribers": {
+        "tag": "has",
+        "count": 196615
+      },
+      "videoCount": 56,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": false,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "bilibili",
+          "id": "1512759879",
+          "handle": "1512759879",
+          "name": "Uki_Official",
+          "url": "https://space.bilibili.com/1512759879",
+          "subscribers": {
+            "tag": "has",
+            "count": 196615
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-22T12:45:07.462Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": []
+    },
     {
       "id": "UCAmmiJa9_hWOnd5vntPoPrA",
       "name": "HalO",
@@ -9,7 +68,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "en",
-      "regionSource": "declared",
+      "regionSource": "country",
       "languages": [
         "en"
       ],
@@ -25,7 +84,7 @@
       "videoCount": null,
       "viewCount": null,
       "uploadsPlaylistId": null,
-      "country": null,
+      "country": "US",
       "tags": [],
       "isSinging": false,
       "gender": "unknown",
@@ -34,7 +93,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -51,7 +110,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/JQFdlKXMAZxYwj5a5asCq5u18VLoF6Par1o4UHO5ItCL3rqxuKgJAxGsd8F6m7qMz0FHtqUnfag=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.044Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.417Z"
         },
         {
           "platform": "twitch",
@@ -63,7 +122,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.044Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.417Z"
         }
       ],
       "externals": {},
@@ -103,7 +162,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -120,7 +179,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/GMGrguAyJ7owIQ8_Z6S_gdiN0vcFoogRjo93JRHSc2qdaXdXYZ1FUNlSgAt8KltmedNtC7dF=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.149Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.465Z"
         },
         {
           "platform": "bilibili",
@@ -132,7 +191,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.149Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.465Z"
         }
       ],
       "externals": {},
@@ -176,7 +235,7 @@
       "verification": null,
       "source": "seed",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -193,7 +252,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/sFBVGkudEnu_MCH23nJdS2oTnOzd9M7e6Mgki5JBhbj4PnjWGgG2hNmW2Vozw5rr8-K0s-DpaPs=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:13.027Z"
+          "lastCheckedAt": "2026-10-22T12:45:04.953Z"
         }
       ],
       "externals": {},
@@ -235,7 +294,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -252,7 +311,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/CHKODAgX2VALXv5pIgCCJDtGO3Fgc56yJsUaQtt3wgPiDaRiehOc6dZwsQmH3pIgRdXdUzoM=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.070Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.442Z"
         }
       ],
       "externals": {},
@@ -294,7 +353,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -311,7 +370,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/ZvpWDidOvm_9UnejMCODc3culF4kl6S5habu5ZcO6beczmcYE2kkcB6JEjOQOCOp_0_fV1_5HA=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.082Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.451Z"
         }
       ],
       "externals": {},
@@ -353,7 +412,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -370,7 +429,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/AW09fec2lzfHVhATzNB71RTUFeCsyOE9POjgLVbo6Brlsx3KFcalpFmf7-i5zds4PSD1ZALKZTM=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.180Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.481Z"
         },
         {
           "platform": "bilibili",
@@ -382,7 +441,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.180Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.481Z"
         }
       ],
       "externals": {},
@@ -422,7 +481,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -439,7 +498,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/Q2fKA6MbNRvVzMKcM4BoJvoOBH73hIbt1FrK8BBHsrzraMel514sP_9IcW3MBOsfZOO6qNd_EA=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.063Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.433Z"
         },
         {
           "platform": "bilibili",
@@ -451,7 +510,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.063Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.433Z"
         }
       ],
       "externals": {},

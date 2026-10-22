@@ -239,6 +239,26 @@ Two rules follow from it:
   profile endpoint, but with 「账号已注销」 instead of a name. That is
   rejected, and the record keeps the name it had.
 
+#### A channel publishes more than one name
+
+YouTube does not have *one* title for a channel: it has a **localization**
+per language. The same channel answers
+
+| `hl` | `title` |
+| --- | --- |
+| `en` | `Aoi / Vtuber` |
+| `ja` | 「向葵 / あおい」 |
+| `zh-TW` | 「向葵 / XiangKui」 |
+
+so asking in the wrong language is how a Japanese channel ends up stored
+under its English alias. The profile is therefore requested in the language
+of the record's **region** (`jp` → `ja`, `cn` → `zh-CN`, `tw` → `zh-TW`,
+`kr` → `ko`), and every other localization the record already had becomes an
+**alias** — so `Aoi / Vtuber` still finds 「向葵 / あおい」.
+
+When a region is corrected, the profile is fetched **again** in the new
+language: the first answer was in the language of the old, wrong region.
+
 Every rename is **recorded**: the old name goes into `aliases`, and the
 aliases are indexed for search. A channel that renamed is still findable
 under the name someone remembers.
@@ -374,11 +394,11 @@ provenance is stored with it.
 | --- | --- | --- |
 | `override` | Curated by hand in `data/overrides.json` | certain |
 | `roster` | The **Taiwan VTuber Tracking Data** nationality column | authoritative |
-| `declared` | The language vdb lists for display (`name.default`) | weak — a display choice, not an origin |
-| `platform` | The platform they are on — Bilibili → China, Niconico → Japan | strong |
-| `agency` | Their agency's branch | strong |
+| `agency` | Their agency's branch | strong — the scene they perform in |
 | `country` | The channel's published country | a stated fact |
-| `name` | Kana in a Japanese name — they occur in Japanese and nowhere else | decisive for Japanese |
+| `name` | Kana in a Japanese name — they occur in Japanese and nowhere else | decisive for Japanese, still evidence |
+| `platform` | The platform they are on — Bilibili → China, Niconico → Japan | a prior — a mirror breaks it |
+| `declared` | The language vdb lists for display (`name.default`) | weak — a display choice, not an origin |
 | `script` | The characters in the name | a guess |
 
 The platform prior applies when a performer has a Bilibili account and **no
@@ -395,10 +415,22 @@ where each account is hosted. The order of authority:
    a VirtuaReal member is `cn`, whatever language their name is written in.
    「安堂いなり」 is Chinese — she is VirtuaReal Link — and
    「小鳥遊キアラ」 is English — she is Hololive EN.
-2. **A Japanese name and a YouTube channel.** Kana occur in Japanese and
-   nowhere else, so a `jp` variant containing them belongs to a Japanese
-   performer — 「巫てんり / Kannagi Tenri」, 「博衣こより」, 「獅白ぼたん」.
-3. **`name.default` is the weakest signal.** It is the language vdb
+2. **The channel's published country.** YouTube's about page states it —
+   `"country":"日本"` — and it is the only region fact a mirror cannot
+   corrupt. 「向葵 / あおい」 lists a Bilibili account and a Japanese
+   description, and publishes Japan.
+3. **A Japanese name.** Kana occur in Japanese and nowhere else, so a
+   channel whose name contains them belongs to a Japanese performer —
+   「巫てんり / Kannagi Tenri」, 「博衣こより」, 「獅白ぼたん」. Two kana, not
+   one: a single の or め in an otherwise Chinese name is a stylisation
+   (「猫の神様」, 「屁屁桃も」), not a Japanese name.
+4. **The platform — but only as a prior.** A channel that exists *only* on
+   Bilibili is probably mainland Chinese. A **link** to Bilibili is not a
+   statement about origin, which is why the word "bilibili" is no longer a
+   region marker: a Japanese channel that cross-posts lists
+   `space.bilibili.com/…` in its description, and reading that as "this
+   performer is Chinese" is how 49 Japanese channels ended up in `cn`.
+5. **`name.default` is the weakest signal.** It is the language vdb
    *displays*, and vdb is a Chinese wiki: it lists 「巫てんり」 with
    `default: "cn"` because the Chinese rendition of the name
    (「巫天翼」) is the one it shows. A performer listed that way is not
@@ -411,12 +443,18 @@ and a tie goes to the fresher record:
 | --- | --- | --- |
 | 1 | `override` | a human decided |
 | 2 | `roster` | the Taiwan track list's nationality column |
-| 3 | `country` | the channel's own published country |
-| 4 | `agency` | the group's branch — Hololive EN, VirtuaReal |
+| 3 | `agency` | the group's branch — Hololive EN, VirtuaReal |
+| 4 | `country` | the channel's own published country |
 | 5 | `name` | kana: Japanese, and nothing else |
 | 6 | `platform` | where the account is hosted — a mirror breaks this |
 | 7 | `declared` | the language vdb *displays* |
 | 8 | `script` | a guess from shared characters |
+
+An agency outranks a country because a branch is about the **scene**, not the
+passport: a member of Hololive EN performs in English even if the channel's
+about page says Japan. The country outranks kana because it is stated and
+kana are evidence — which is why a Taiwanese performer with a Japanese stage
+name stays `tw`.
 
 `declared` sits that low because it is not a statement of origin: vdb is a
 Chinese wiki, so 「巫てんり」 — a Japanese VTuber — is listed under the

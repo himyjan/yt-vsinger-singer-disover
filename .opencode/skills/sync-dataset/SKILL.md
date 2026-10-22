@@ -51,6 +51,21 @@ Always finish with `npm run data:index && npm run data:validate`.
 10. **Retain** — apply the age and per-channel caps.
 11. **Merge and write** — `scripts/lib/dataset.ts` writes every shard.
 
+Two passes near the end are worth knowing about because they change records
+without any request:
+
+- **Activity** — `detectActivity()` re-reads every name and description for a
+  graduation marker (「卒業」, 「活動を終了しました」, 「停止活動」), and a
+  graduation always wins over a roster's `active`.
+- **Region** — `classifyChannel()` re-reads every record's stored name,
+  description, tags and country, and a more trusted source replaces a less
+  trusted one; an override, a roster and an agency are never overwritten.
+  This is how 49 Japanese channels that listed their Bilibili link in their
+  description stopped being `cn` without a single request.
+
+The networked half is `npm run data:details -- --weak-region`, which fetches
+the published country and the profile in the record's own language.
+
 ## Quota rules — do not bypass these
 
 | Request | Units |

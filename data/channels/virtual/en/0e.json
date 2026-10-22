@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T12:03:11.077Z",
+  "generatedAt": "2026-10-22T12:45:03.106Z",
   "channels": [
     {
       "id": "bilibili:1730051024",
@@ -35,7 +35,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "graduated",
@@ -53,7 +53,7 @@
             "count": 33302
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.047Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.421Z"
         }
       ],
       "externals": {},
@@ -93,7 +93,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -110,7 +110,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/S5_mU5n-KM_2UXod45MyjlUB21awI_jyc2zb1cmGZ6Mb-sYq-49mAsncaI6R0IdIUomqEKfI=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.159Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.469Z"
         },
         {
           "platform": "twitch",
@@ -122,7 +122,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.159Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.469Z"
         }
       ],
       "externals": {},
@@ -162,7 +162,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -172,14 +172,14 @@
         {
           "platform": "youtube",
           "id": "UCMCAh6rwRtoGDtF7lXj0gNw",
-          "handle": null,
+          "handle": "nekumavt984",
           "name": "草莓猫Taffy",
           "url": "https://www.youtube.com/channel/UCMCAh6rwRtoGDtF7lXj0gNw",
           "subscribers": {
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/WoTBjhDEq83n6PgYbgDnXy30iSgzelUxDOIertGS8Cyi2I37WtppzTK51YbJ6ec-E0_GblmRMQ=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:18.016Z"
+          "lastCheckedAt": "2026-10-22T12:45:08.102Z"
         },
         {
           "platform": "bilibili",
@@ -191,7 +191,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:18.016Z"
+          "lastCheckedAt": "2026-10-22T12:45:08.102Z"
         },
         {
           "platform": "twitch",
@@ -203,7 +203,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:18.016Z"
+          "lastCheckedAt": "2026-10-22T12:45:08.102Z"
         }
       ],
       "externals": {},
@@ -211,6 +211,77 @@
       "nameSource": "platform",
       "aliases": [
         "草莓猫Taffy"
+      ]
+    },
+    {
+      "id": "UCnYhIk9aGEx_bIgheVjs53w",
+      "name": "Luto Araka / 新火ると",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "en",
+      "regionSource": "country",
+      "languages": [
+        "en"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://yt3.googleusercontent.com/AO9vPByJgA2hVTYqV-H28FtXQU_3Z4zUUDx38ysplUjYQAP2w1z7OtZ_yiPqP8Sy2dDf377Raw=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "Konhalloo!!!!!! I’m your FAVOURITE IDOL AND AKUMA SAMA DAYOOOOO!!!!!!! Whalec00m to the ORPHANAGE! :3 JOIN MY KALUTO NAO TO DOMINATE THE WORLD WITH MEEEE Mam...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": "UUnYhIk9aGEx_bIgheVjs53w",
+      "country": "AU",
+      "tags": [],
+      "isSinging": false,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCnYhIk9aGEx_bIgheVjs53w",
+          "handle": "LutoAraka",
+          "name": "新火ると_Official",
+          "url": "https://www.youtube.com/channel/UCnYhIk9aGEx_bIgheVjs53w",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/AO9vPByJgA2hVTYqV-H28FtXQU_3Z4zUUDx38ysplUjYQAP2w1z7OtZ_yiPqP8Sy2dDf377Raw=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T12:45:07.771Z"
+        },
+        {
+          "platform": "bilibili",
+          "id": "1523207400",
+          "handle": null,
+          "name": "新火ると_Official",
+          "url": "https://space.bilibili.com/1523207400",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-22T12:45:07.771Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "platform",
+      "aliases": [
+        "新火ると_Official"
       ]
     }
   ]

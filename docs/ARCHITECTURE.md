@@ -182,7 +182,7 @@ segmenter, because `歌い手` is indexed as `歌い` + `い手`.
 | --- | --- |
 | `kind` (virtual / real) | weighted score over strong and weak markers, with the channel name weighted highest and the opening of the description next |
 | `role` | the strongest matching role marker, unless the channel looks like an aggregator |
-| `region` | platform → agency → country → script detection → explicit markers → locale hints. The winning source is stored in `regionSource` |
+| `region` | agency → published country → kana in the name → explicit region markers → platform prior → script detection → locale hints. A link to another platform is not a signal, and the winning source is stored in `regionSource` |
 | `gender` | explicit self-description first; honorifics only as a fallback |
 | `isAi` | the AiSList blocklist and warnlist, plus keyword heuristics as a fallback |
 | `category` | cover / mv / original / live / premiere / performance, from the title, description and tags |

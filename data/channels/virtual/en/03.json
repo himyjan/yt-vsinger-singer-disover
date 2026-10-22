@@ -1,7 +1,66 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T12:03:11.077Z",
+  "generatedAt": "2026-10-22T12:45:03.106Z",
   "channels": [
+    {
+      "id": "bilibili:1113185260",
+      "name": "Alban_Official",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "en",
+      "regionSource": "agency",
+      "languages": [
+        "en"
+      ],
+      "statedLanguages": [],
+      "agency": "nijisanji en",
+      "affiliation": "group",
+      "avatar": "https://i1.hdslb.com/bfs/face/29baa152b1d4622260e5dcbc14e550a206bf1db5.jpg",
+      "banner": null,
+      "description": "Phantom Thief from NIJISANJI EN's Noctyx!",
+      "subscribers": {
+        "tag": "has",
+        "count": 152828
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": false,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "bilibili",
+          "id": "1113185260",
+          "handle": "1113185260",
+          "name": "Alban_Official",
+          "url": "https://space.bilibili.com/1113185260",
+          "subscribers": {
+            "tag": "has",
+            "count": 152828
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-22T12:45:07.399Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": []
+    },
     {
       "id": "UC4WvIIAo89_AzGUh1AZ6Dkg",
       "name": "Rosemi Lovelock【NIJISANJI EN】",
@@ -34,7 +93,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -51,7 +110,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/4Ay8lJB9IAcN9YF0xH5k_NywDJi2OJsxqIdtSj9qA7V8CYIOpf7P7Py0sRuZIxVCgaKyCg4MOUE=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.083Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.452Z"
         }
       ],
       "externals": {},
@@ -96,7 +155,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -113,7 +172,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.069Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.440Z"
         },
         {
           "platform": "bilibili",
@@ -125,7 +184,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.069Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.440Z"
         }
       ],
       "externals": {},
@@ -143,7 +202,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "en",
-      "regionSource": "declared",
+      "regionSource": "country",
       "languages": [
         "en"
       ],
@@ -159,7 +218,7 @@
       "videoCount": null,
       "viewCount": null,
       "uploadsPlaylistId": null,
-      "country": null,
+      "country": "US",
       "tags": [],
       "isSinging": false,
       "gender": "unknown",
@@ -168,7 +227,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -185,7 +244,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/ZY7zs2YGhTzvN-le5kUi8ckpJsP_fjaicEp8scIlHG4rsghPmiDtY5JN3pSnGJkEEa7bVbApGRQ=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.068Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.439Z"
         },
         {
           "platform": "bilibili",
@@ -197,7 +256,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.068Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.439Z"
         },
         {
           "platform": "twitch",
@@ -209,7 +268,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.068Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.439Z"
         }
       ],
       "externals": {},
@@ -224,7 +283,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "en",
-      "regionSource": "declared",
+      "regionSource": "country",
       "languages": [
         "en"
       ],
@@ -240,7 +299,7 @@
       "videoCount": null,
       "viewCount": null,
       "uploadsPlaylistId": null,
-      "country": null,
+      "country": "US",
       "tags": [],
       "isSinging": false,
       "gender": "unknown",
@@ -249,7 +308,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -266,7 +325,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/Z26kUjXxJ24ots7xAt_8kOl3kwxvGpfm99RuTlh32GP403NK-M-HG2dvq05rTJQZT8vdfAuCYA=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.082Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.451Z"
         },
         {
           "platform": "bilibili",
@@ -278,7 +337,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.082Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.451Z"
         },
         {
           "platform": "twitch",
@@ -290,7 +349,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.082Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.451Z"
         }
       ],
       "externals": {},
@@ -332,7 +391,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -349,7 +408,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/f9e1apz6Pgrbx9tD0EEKDDmSCMo7Zcopq2lo-_snLXG6Al-i63HsWxa1WHWBiUJ3iih8fK_5xk0=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.095Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.458Z"
         }
       ],
       "externals": {},
@@ -391,7 +450,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",

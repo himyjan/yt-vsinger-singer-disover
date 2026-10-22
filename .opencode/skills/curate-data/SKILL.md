@@ -97,13 +97,40 @@ sample as `localeHints` so that a kanji-only name can be disambiguated
 | --- | --- |
 | `kind` | virtual vs. real |
 | `role` | vtuber / vsinger / singer / musician / producer / composer |
-| `region` | agency → country → script detection → explicit markers → locale hints |
+| `region` | agency → published country → kana in the name → explicit markers → platform prior → script detection → locale hints |
 | `gender` | explicit self-description first, honorifics only as a fallback |
 | `isAi` | heuristics; the AiSList overrides it |
 | `category` | cover / mv / original / live / premiere / performance |
 | `isAcoustic` | a **flag**, not a category, so acoustic covers stay in the cover bucket |
 | `variant` | the combined label: `female_vtuber`, `ai_vsinger`, … |
 | `activity` | active / preparing / graduated / unknown — a graduation marker in the **name or the description** wins over anything a roster says |
+
+### The region is never decided by a link
+
+`detectStrongRegion()` looks for explicit statements — 「台灣」, 「香港」,
+「한국」, 「にじさんじ」. It deliberately does **not** look for "bilibili":
+a Japanese channel that cross-posts to Bilibili lists
+`space.bilibili.com/…` in its description, and reading that as "this
+performer is Chinese" is how Japanese channels ended up in `cn`. Only a
+channel that exists **only** on Bilibili gets the platform prior, and the
+country from YouTube's about page outranks it.
+
+Kana count as evidence only when there are **two** of them: a single の or
+め in an otherwise Chinese name is a stylisation (「猫の神様」), not a
+Japanese name.
+
+A region is re-read for every record on every sync, but only a more trusted
+source replaces a less trusted one. To do the networked half — the country
+and the name in the channel's own language:
+
+```bash
+npm run data:details -- --weak-region --limit 500
+```
+
+It selects the YouTube records whose `regionSource` is `declared`, `script`
+or `unknown`, re-reads the region, and re-fetches the profile in the new
+region's language (so 「向葵 / あおい」 replaces `Aoi / Vtuber`, which becomes
+an alias).
 
 ### A graduation is a phrase, not a word
 

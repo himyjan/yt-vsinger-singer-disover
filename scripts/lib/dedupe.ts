@@ -109,9 +109,11 @@ function keysFor(channel: Channel): string[] {
  *
  * - `override` is a human's final word.
  * - `roster` is the Taiwan track list's nationality column: a stated fact.
- * - `country` is the channel's own published country: also a stated fact.
  * - `agency` is the branch the performer belongs to — Hololive EN is English,
- *   VirtuaReal is Chinese, whatever the name looks like.
+ *   VirtuaReal is Chinese, whatever the name looks like. A branch outranks a
+ *   country: an English-speaking member of a Japanese company still belongs
+ *   to the English scene.
+ * - `country` is the channel's own published country: also a stated fact.
  * - `name` is kana in a Japanese name, which occur in Japanese and nowhere
  *   else.
  * - `platform` is where the account is hosted, which a *mirror* breaks.
@@ -119,11 +121,11 @@ function keysFor(channel: Channel): string[] {
  *   performer under their Chinese name, so it says little about origin.
  * - `script` is a guess from characters shared between languages.
  */
-const REGION_TRUST: Record<RegionSource, number> = {
+export const REGION_TRUST: Record<RegionSource, number> = {
   override: 8,
   roster: 7,
-  country: 6,
-  agency: 5,
+  agency: 6,
+  country: 5,
   name: 4,
   platform: 3,
   declared: 2,

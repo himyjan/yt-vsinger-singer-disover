@@ -62,6 +62,7 @@ import {
 } from "@/lib/auth";
 import { channelLinks, itemUrl, platformMeta } from "@/lib/links";
 import LiveCard from "@/components/LiveCard.vue";
+import ChannelCard from "@/components/ChannelCard.vue";
 import ChannelDrawer from "@/components/ChannelDrawer.vue";
 
 /* -------------------------------------------------------------------------- */
@@ -299,6 +300,29 @@ const subscriptionCounts = computed(() => {
   };
 });
 
+/**
+ * The saved channels.
+ *
+ * A bookmark can name a channel that is not in the **currently loaded**
+ * region: the shards are downloaded per region, so a `cn` channel saved
+ * while browsing `jp` would resolve to nothing. Those records are fetched
+ * once and kept in their own cache, which the region watcher cannot replace.
+ */
+const savedChannelCache = ref(new Map<string, ChannelSummary>());
+
+const savedChannels = computed<ChannelSummary[]>(() => {
+  const out: ChannelSummary[] = [];
+  for (const entry of state.saved) {
+    if (entry.kind !== "channel") continue;
+    const channel =
+      summaryById.value.get(entry.id) ?? savedChannelCache.value.get(entry.id);
+    if (!channel) continue;
+    if (state.scope !== "both" && channel.kind !== state.scope) continue;
+    out.push(channel);
+  }
+  return sortChannels(out, state.sort.saved);
+});
+
 const visibleSaved = computed(() => {
   const items: Item[] = [];
   for (const entry of state.saved) {
@@ -307,18 +331,35 @@ const visibleSaved = computed(() => {
     if (found) items.push(found);
   }
   return sortItems(
-    filterItems(items, {
-      kind: state.scope,
-      region: state.region,
-      gender: state.gender,
-      ai: state.ai,
-      affiliation: state.affiliation,
-      language: state.language,
-      limit: 200,
-    }),
+    state.scope === "both"
+      ? items
+      : items.filter((item) => item.channelKind === state.scope),
     state.sort.saved,
   );
 });
+
+/**
+ * Loads the saved channels that the current region has not downloaded.
+ *
+ * It is a no-op when the region filter is `all` — that is the default, and
+ * the set is already in memory.
+ */
+async function loadSavedChannels(): Promise<void> {
+  const ids = state.saved
+    .filter((entry) => entry.kind === "channel")
+    .map((entry) => entry.id);
+  const missing = ids.filter(
+    (id) =>
+      !summaryById.value.has(id) && !savedChannelCache.value.has(id),
+  );
+  if (!missing.length) return;
+  const all = await loadSummaries("all");
+  const next = new Map(savedChannelCache.value);
+  for (const summary of all) {
+    if (missing.includes(summary.id)) next.set(summary.id, summary);
+  }
+  savedChannelCache.value = next;
+}
 
 /* -------------------------------------------------------------------------- */
 /* Search                                                                     */
@@ -341,6 +382,18 @@ watch(
     summaries.value = s;
     channels.value = c;
   },
+);
+
+/**
+ * The Saved tab may name a channel from a region that is not loaded, so the
+ * bookmarks are resolved whenever the tab is opened or a bookmark changes.
+ */
+watch(
+  () => [state.view, state.saved.length],
+  () => {
+    if (state.view === "saved") void loadSavedChannels();
+  },
+  { immediate: true },
 );
 
 let searchTimer: number | undefined;
@@ -1207,52 +1260,12 @@ onMounted(async () => {
         <div
           class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6"
         >
-          <button
+          <ChannelCard
             v-for="channel in visibleChannels"
             :key="channel.id"
-            type="button"
-            class="group flex flex-col items-center gap-2 rounded-xl border border-black/8 bg-white p-3 text-center shadow-sm transition hover:shadow-md dark:border-white/10 dark:bg-neutral-900"
-            @click="openChannel(channel)"
-          >
-            <img
-              :src="channel.avatar ?? ''"
-              :alt="channel.name"
-              loading="lazy"
-              class="h-16 w-16 rounded-full object-cover ring-2 ring-black/5 transition group-hover:ring-purple-400 dark:ring-white/10"
-            />
-            <span class="line-clamp-2 text-xs leading-tight font-semibold">
-              {{ channel.name }}
-            </span>
-            <span class="text-[11px] text-neutral-500">
-              {{ formatCount(channel.subscribers) }} subs
-            </span>
-            <span class="flex flex-wrap justify-center gap-1">
-              <span
-                class="rounded px-1.5 py-0.5 text-[10px] font-semibold text-white"
-                :class="channel.kind === 'virtual' ? 'bg-purple-600' : 'bg-emerald-600'"
-              >
-                {{ channel.kind === "virtual" ? "Virtual" : "Real" }}
-              </span>
-              <span
-                class="rounded bg-black/5 px-1.5 py-0.5 text-[10px] font-semibold text-neutral-600 dark:bg-white/10 dark:text-neutral-300"
-              >
-                {{ channel.region.toUpperCase() }}
-              </span>
-              <span
-                v-if="channel.isSinging"
-                class="rounded bg-rose-500/15 px-1.5 py-0.5 text-[10px] font-semibold text-rose-600 dark:text-rose-400"
-                title="Publishes covers, MVs, original songs or live singing"
-              >
-                🎤 Singing
-              </span>
-              <span
-                v-if="channel.activity === 'graduated'"
-                class="rounded bg-amber-500/15 px-1.5 py-0.5 text-[10px] font-semibold text-amber-600 dark:text-amber-400"
-              >
-                Graduated
-              </span>
-            </span>
-          </button>
+            :channel="channel"
+            @open="openChannel"
+          />
         </div>
       </section>
 
@@ -1385,23 +1398,38 @@ onMounted(async () => {
         <h2 class="mb-3 text-lg font-bold">
           Saved
           <span class="ml-1 text-sm font-normal text-neutral-500">
-            {{ visibleSaved.length }}
+            {{ savedChannels.length + visibleSaved.length }}
           </span>
         </h2>
-        <div
-          v-if="visibleSaved.length"
-          class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"
-        >
-          <LiveCard
-            v-for="item in visibleSaved"
-            :key="item.id"
-            :item="item"
-            :channel="summaryById.get(item.channelId) ?? null"
-            @open="openItem"
-          />
-        </div>
+        <template v-if="savedChannels.length || visibleSaved.length">
+          <!-- Channels are the common case: the drawer's Save button -->
+          <div
+            v-if="savedChannels.length"
+            class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6"
+          >
+            <ChannelCard
+              v-for="channel in savedChannels"
+              :key="channel.id"
+              :channel="channel"
+              @open="openChannel"
+            />
+          </div>
+          <!-- Items (videos) are saved from the player view -->
+          <div
+            v-if="visibleSaved.length"
+            class="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"
+          >
+            <LiveCard
+              v-for="item in visibleSaved"
+              :key="item.id"
+              :item="item"
+              :channel="summaryById.get(item.channelId) ?? null"
+              @open="openItem"
+            />
+          </div>
+        </template>
         <p v-else class="py-16 text-center text-sm text-neutral-500">
-          Nothing saved yet — use the bookmark button on any card.
+          Nothing saved yet — open a channel and use “Save channel”.
         </p>
       </section>
     </main>

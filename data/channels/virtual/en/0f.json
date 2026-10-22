@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T12:03:11.077Z",
+  "generatedAt": "2026-10-22T12:45:03.106Z",
   "channels": [
     {
       "id": "UC-JSeFfovhNsEhftt1WHMvg",
@@ -9,7 +9,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "en",
-      "regionSource": "declared",
+      "regionSource": "agency",
       "languages": [
         "en"
       ],
@@ -25,7 +25,7 @@
       "videoCount": null,
       "viewCount": null,
       "uploadsPlaylistId": "UU-JSeFfovhNsEhftt1WHMvg",
-      "country": null,
+      "country": "JP",
       "tags": [],
       "isSinging": false,
       "gender": "unknown",
@@ -34,7 +34,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -44,14 +44,14 @@
         {
           "platform": "youtube",
           "id": "UC-JSeFfovhNsEhftt1WHMvg",
-          "handle": null,
+          "handle": "nijisanji_en",
           "name": "NIJISANJI EN",
           "url": "https://www.youtube.com/channel/UC-JSeFfovhNsEhftt1WHMvg",
           "subscribers": {
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/V5evyc53-Fc2Vp_hjO2oHyaQ7mzPKG1_m1z7-Jgi0ghaZOnjko1tvGTsm2Qu-LLf_YsFJdQe=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.068Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.439Z"
         }
       ],
       "externals": {},
@@ -93,7 +93,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -110,7 +110,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/CmjALbJAoRNLxzKeFfTguncybte4R5GXG7Nj_QPi7aGsEHvxSCBePEbSbyT_cpLDvLr153Gt=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.077Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.446Z"
         }
       ],
       "externals": {},
@@ -154,7 +154,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -171,7 +171,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/LYO40yqUG6y_YiIND-FCD_MSPOeREAoLSVdVLL0UDmFSuwbbblBDNpRx5CAKlO75NrtLo6CnsnQ=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.720Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.863Z"
         },
         {
           "platform": "bilibili",
@@ -183,7 +183,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.720Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.863Z"
         }
       ],
       "externals": {},
@@ -192,80 +192,6 @@
       "aliases": [
         "Mori Calliope",
         "森美声"
-      ]
-    },
-    {
-      "id": "UCqG0skCM-dky7KGazl9bLqA",
-      "name": "teresaAI",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "regionSource": "declared",
-      "languages": [
-        "en"
-      ],
-      "statedLanguages": [],
-      "agency": "神椿工作室",
-      "affiliation": "group",
-      "avatar": "https://yt3.googleusercontent.com/JkADJo27APz6g8YEQjrvIL5RZJFYWOEKEmMouqB_9zuWzru2dyrvzGDf2M1BSaJM3Zq5eU95=s900-c-k-c0x00ffffff-no-rj",
-      "banner": null,
-      "description": "KAMITSUBAKI STUDIO / SINSEKAI STUDIO",
-      "subscribers": {
-        "tag": "hidden"
-      },
-      "videoCount": null,
-      "viewCount": null,
-      "uploadsPlaylistId": "UUqG0skCM-dky7KGazl9bLqA",
-      "country": null,
-      "tags": [
-        "te'resa"
-      ],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "verification": null,
-      "source": "api",
-      "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "youtube",
-          "id": "UCqG0skCM-dky7KGazl9bLqA",
-          "handle": null,
-          "name": "特雷莎",
-          "url": "https://www.youtube.com/channel/UCqG0skCM-dky7KGazl9bLqA",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": "https://yt3.googleusercontent.com/JkADJo27APz6g8YEQjrvIL5RZJFYWOEKEmMouqB_9zuWzru2dyrvzGDf2M1BSaJM3Zq5eU95=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.181Z"
-        },
-        {
-          "platform": "bilibili",
-          "id": "586849155",
-          "handle": null,
-          "name": "特雷莎",
-          "url": "https://space.bilibili.com/586849155",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.181Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null,
-      "nameSource": "platform",
-      "aliases": [
-        "te'resa",
-        "特雷莎"
       ]
     },
     {
@@ -300,7 +226,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -317,7 +243,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/8UbZ3BY2YnMbu8iNjJXggwbF9gOrM_uANbEJ28_XyxX8z9ZbhBVvsG0Rr93aP5-pExBCL6DmgA=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.089Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.455Z"
         }
       ],
       "externals": {},
@@ -361,7 +287,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -407,7 +333,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",

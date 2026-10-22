@@ -1,7 +1,125 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T12:03:11.077Z",
+  "generatedAt": "2026-10-22T12:45:03.106Z",
   "channels": [
+    {
+      "id": "bilibili:1004638374",
+      "name": "Petra的寒霜之海",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "en",
+      "regionSource": "agency",
+      "languages": [
+        "en"
+      ],
+      "statedLanguages": [],
+      "agency": "nijisanji en",
+      "affiliation": "group",
+      "avatar": "https://i0.hdslb.com/bfs/face/eaf6778834a7b7c5d51a15e2268209468df2445d.jpg",
+      "banner": null,
+      "description": "这里是NIJISANJI EN所属OBSYDIA成员Petra Gurin的非公式搬运组 审核：914751971",
+      "subscribers": {
+        "tag": "has",
+        "count": 55453
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": false,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "bilibili",
+          "id": "1004638374",
+          "handle": "1004638374",
+          "name": "Petra的寒霜之海",
+          "url": "https://space.bilibili.com/1004638374",
+          "subscribers": {
+            "tag": "has",
+            "count": 55453
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-22T12:45:07.446Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": []
+    },
+    {
+      "id": "bilibili:1841441900",
+      "name": "Millie的地狱搏击馆",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "en",
+      "regionSource": "agency",
+      "languages": [
+        "en"
+      ],
+      "statedLanguages": [],
+      "agency": "nijisanji en",
+      "affiliation": "group",
+      "avatar": "https://i2.hdslb.com/bfs/face/15ed90ada8d050e9021896c8ad128dd1423742a5.jpg",
+      "banner": null,
+      "description": "这里是NIJISANJI EN所属Ethyria成员Millie Parfait的非公式搬运组，审核群：559716573",
+      "subscribers": {
+        "tag": "has",
+        "count": 34368
+      },
+      "videoCount": 98,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": false,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "bilibili",
+          "id": "1841441900",
+          "handle": "1841441900",
+          "name": "Millie的地狱搏击馆",
+          "url": "https://space.bilibili.com/1841441900",
+          "subscribers": {
+            "tag": "has",
+            "count": 34368
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-22T12:45:07.436Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": []
+    },
     {
       "id": "UC7Gb7Uawe20QyFibhLl1lzA",
       "name": "Luca Kaneshiro【NIJISANJI EN】",
@@ -34,7 +152,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -51,7 +169,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/103XpMqHLYhBZRaJCR05-ioI8c70ZeTFTebb-22u9s88UYbki4WJIFOes6VY7X62Y8-St0_CGUU=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.057Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.428Z"
         },
         {
           "platform": "bilibili",
@@ -63,7 +181,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.057Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.428Z"
         }
       ],
       "externals": {},
@@ -71,80 +189,6 @@
       "nameSource": "platform",
       "aliases": [
         "Luca_EN_Official"
-      ]
-    },
-    {
-      "id": "UC7jFoGjZQrax3rgd3SB6WmQ",
-      "name": "Rinfair Official",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "regionSource": "declared",
-      "languages": [
-        "en"
-      ],
-      "statedLanguages": [],
-      "agency": null,
-      "affiliation": "unknown",
-      "avatar": "https://yt3.googleusercontent.com/k9C_GHcjZvOysCEtstO_hPj7j_THIMGzY9qwqLnTxTiHu_aQFwUQOBlvyuB5zaQdlQF5MMNqL-k=s900-c-k-c0x00ffffff-no-rj",
-      "banner": null,
-      "description": "Hello! This is Rinfair's official channel on YouTube! A dandelion-based fox! From the ProbleKids group in China! I'll randomly upload my tutorial video or br...",
-      "subscribers": {
-        "tag": "hidden"
-      },
-      "videoCount": null,
-      "viewCount": null,
-      "uploadsPlaylistId": "UU7jFoGjZQrax3rgd3SB6WmQ",
-      "country": null,
-      "tags": [
-        "Rinfair"
-      ],
-      "isSinging": false,
-      "gender": "male",
-      "isAi": false,
-      "variant": "vtuber",
-      "verification": null,
-      "source": "api",
-      "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "youtube",
-          "id": "UC7jFoGjZQrax3rgd3SB6WmQ",
-          "handle": null,
-          "name": "翎澈",
-          "url": "https://www.youtube.com/channel/UC7jFoGjZQrax3rgd3SB6WmQ",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": "https://yt3.googleusercontent.com/k9C_GHcjZvOysCEtstO_hPj7j_THIMGzY9qwqLnTxTiHu_aQFwUQOBlvyuB5zaQdlQF5MMNqL-k=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.975Z"
-        },
-        {
-          "platform": "bilibili",
-          "id": "35892690",
-          "handle": null,
-          "name": "翎澈",
-          "url": "https://space.bilibili.com/35892690",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.975Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null,
-      "nameSource": "platform",
-      "aliases": [
-        "Rinfair",
-        "翎澈"
       ]
     },
     {
@@ -179,7 +223,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -196,7 +240,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/w2LaS4ankJlkf3FdjHJVSWBOTAHYfsC-RcEi95NOrgcChjJG6Lz3x_b7UPQBiZ_1HJt_GemBeR8=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.093Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.456Z"
         },
         {
           "platform": "bilibili",
@@ -208,7 +252,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.093Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.456Z"
         }
       ],
       "externals": {},
@@ -250,7 +294,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -260,14 +304,14 @@
         {
           "platform": "youtube",
           "id": "UCGZz3jSTHO8VP17BZ6MeitQ",
-          "handle": null,
+          "handle": "%EC%84%A0%EC%97%AC%EC%A7%84-b8f",
           "name": "sunyeojin",
           "url": "https://www.youtube.com/channel/UCGZz3jSTHO8VP17BZ6MeitQ",
           "subscribers": {
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_k1A0_eKZSqS6nr5PrZbZdBgLhRwBBYy08zh6y-_6jXAA=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.181Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.481Z"
         },
         {
           "platform": "bilibili",
@@ -279,7 +323,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.181Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.481Z"
         },
         {
           "platform": "twitch",
@@ -291,7 +335,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:03:17.181Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.481Z"
         }
       ],
       "externals": {},
@@ -333,7 +377,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:03:13.027Z",
+      "updatedAt": "2026-10-22T12:45:04.953Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -350,7 +394,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/JCyRLd80Znc5g28VztowNaT537HODqR_MbIVvwp_QfFials0GWjNXTrEI7HqqtJdmLe2s7iPKg=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:03:17.041Z"
+          "lastCheckedAt": "2026-10-22T12:45:07.412Z"
         }
       ],
       "externals": {},
