@@ -163,7 +163,6 @@ export function mergeById<
     id: string;
     addedAt?: string;
     source?: string;
-    confidence?: number;
   },
 >(existing: T[], incoming: T[]): T[] {
   const map = new Map<string, T>();
@@ -183,7 +182,6 @@ export function mergeById<
         prev.source === "seed" || prev.source === "manual"
           ? prev.source
           : rec.source,
-      confidence: Math.max(prev.confidence ?? 0, rec.confidence ?? 0),
     } as T);
   }
 

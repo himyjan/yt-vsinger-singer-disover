@@ -204,7 +204,22 @@ const TRAD_MARKERS = TRADITIONAL_ONLY_CHARS;
 
 /**
  * Guesses the primary language of a blob of text.
- * Returns an IETF tag or `null` when the text is mostly latin/ambiguous.
+ *
+ * ## Language code vs. region code
+ *
+ * These are two different standards and the project keeps them apart:
+ *
+ * | | Standard | Japanese | Chinese (Simplified) | Korean |
+ * | --- | --- | --- | --- | --- |
+ * | **Language** | ISO 639-1 | `ja` | `zh-Hans` | `ko` |
+ * | **Country/region** | ISO 3166-1 alpha-2 | `jp` | `cn` | `kr` |
+ *
+ * `ja` is the language code — it appears in a `lang` attribute, a locale tag
+ * or a subtitle track. `jp` is the country code — it appears in a domain
+ * suffix (`.jp`) or a country field. A Japanese VTuber is `language: "ja"`
+ * and `region: "jp"`.
+ *
+ * Returns `null` when the text is mostly latin or otherwise ambiguous.
  */
 export function detectLanguage(text: string | null | undefined): string | null {
   if (!text) return null;
@@ -234,7 +249,12 @@ export function detectLanguage(text: string | null | undefined): string | null {
   return null;
 }
 
-/** Maps a detected language to a region. */
+/**
+ * Maps an ISO 639-1 language code to the project's region code.
+ *
+ * The two vocabularies are deliberately separate: `ja` (language) becomes
+ * `jp` (country), `ko` becomes `kr`, `zh-Hans` becomes `cn`.
+ */
 export function languageToRegion(lang: string | null): RegionCode | null {
   if (!lang) return null;
   if (lang === "ja") return "jp";

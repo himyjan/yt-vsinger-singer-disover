@@ -81,6 +81,42 @@ const activityLabel = computed(() => {
  * shows which one was used — a roster entry is authoritative, a script
  * detection is a guess.
  */
+/** Role names, in the vocabulary the community uses. */
+const ROLE_LABELS: Record<string, string> = {
+  vtuber: "VTuber",
+  vsinger: "VSinger",
+  singer: "Singer",
+  musician: "Musician",
+  producer: "Producer",
+  composer: "Composer",
+  unknown: "Unknown",
+};
+
+/** Region names, so the UI never shows a bare code. */
+const REGION_LABELS: Record<string, string> = {
+  jp: "Japan",
+  cn: "China",
+  tw: "Taiwan",
+  hk: "Hong Kong",
+  kr: "Korea",
+  en: "English-speaking",
+  id: "Indonesia",
+  my: "Malaysia",
+  sea: "Southeast Asia",
+  unknown: "Unknown",
+};
+
+/** Language names, so the UI never shows a bare code. */
+const LANGUAGE_LABELS: Record<string, string> = {
+  ja: "Japanese",
+  en: "English",
+  ko: "Korean",
+  "zh-Hans": "Simplified Chinese",
+  "zh-Hant": "Traditional Chinese",
+  id: "Indonesian",
+  ms: "Malay",
+};
+
 const REGION_SOURCE_LABELS: Record<string, string> = {
   override: "from a manual override",
   roster: "from the Taiwan VTuber roster",
@@ -91,6 +127,30 @@ const REGION_SOURCE_LABELS: Record<string, string> = {
   script: "guessed from the characters in the name",
   unknown: "unknown",
 };
+
+/**
+ * A one-line summary of how sure the classification is.
+ *
+ * The weakest axis is what matters — a record with the wrong region is in the
+ * wrong place — so the summary names the uncertain fields.
+ */
+function describeConfidence(confidence: {
+  kind: number;
+  region: number;
+  role: number;
+  gender: number;
+  ai: number;
+  overall: number;
+}): string {
+  if (confidence.overall >= 0.99) return "curated";
+  const weak: string[] = [];
+  if (confidence.kind < 0.7) weak.push("kind");
+  if (confidence.region < 0.7) weak.push("region");
+  if (confidence.role < 0.5) weak.push("role");
+  if (confidence.gender < 0.5) weak.push("gender");
+  if (confidence.ai < 0.5) weak.push("AI");
+  return weak.length ? `uncertain: ${weak.join(", ")}` : "confident";
+}
 
 const saved = computed(() =>
   props.channel ? state.saved.some((s) => s.id === props.channel!.id) : false,
@@ -212,23 +272,48 @@ const saved = computed(() =>
                   <dt class="text-[10px] tracking-wide text-neutral-500 uppercase">
                     Role
                   </dt>
-                  <dd class="text-sm font-bold capitalize">
-                    {{ channel.role }}
+                  <dd class="text-sm font-bold">
+                    {{ ROLE_LABELS[channel.role] ?? channel.role }}
                   </dd>
                 </div>
               </dl>
 
-              <!-- How the region was decided -->
-              <p
-                v-if="channel.regionSource"
-                class="flex items-center gap-1.5 text-[11px] text-neutral-500"
+              <!-- Region and language, labelled so they are not confused -->
+              <dl
+                v-if="channel.regionSource || channel.language"
+                class="space-y-1 border-t border-black/5 pt-2 text-[11px] dark:border-white/8"
               >
-                <span class="font-semibold text-neutral-600 dark:text-neutral-300">
-                  {{ channel.region.toUpperCase() }}
-                </span>
-                <span aria-hidden="true">·</span>
-                <span>{{ REGION_SOURCE_LABELS[channel.regionSource] ?? channel.regionSource }}</span>
-              </p>
+                <div class="flex justify-between gap-3">
+                  <dt class="text-neutral-500">Region</dt>
+                  <dd class="text-right font-semibold text-neutral-700 dark:text-neutral-200">
+                    {{ REGION_LABELS[channel.region] ?? channel.region }}
+                    <span class="font-normal text-neutral-400">
+                      ({{ channel.region }})
+                    </span>
+                  </dd>
+                </div>
+                <div v-if="channel.language" class="flex justify-between gap-3">
+                  <dt class="text-neutral-500">Language</dt>
+                  <dd class="text-right font-semibold text-neutral-700 dark:text-neutral-200">
+                    {{ LANGUAGE_LABELS[channel.language] ?? channel.language }}
+                    <span class="font-normal text-neutral-400">
+                      ({{ channel.language }})
+                    </span>
+                  </dd>
+                </div>
+                <div v-if="channel.regionSource" class="flex justify-between gap-3">
+                  <dt class="text-neutral-500">Region from</dt>
+                  <dd class="text-right text-neutral-500">
+                    {{ REGION_SOURCE_LABELS[channel.regionSource] ?? channel.regionSource }}
+                  </dd>
+                </div>
+                <div v-if="channel.confidence" class="flex justify-between gap-3">
+                  <dt class="text-neutral-500">Confidence</dt>
+                  <dd class="text-right text-neutral-500">
+                    {{ describeConfidence(channel.confidence) }}
+                  </dd>
+                </div>
+              </dl>
 
               <!-- Business and lifecycle -->
               <section v-if="channel.affiliation !== 'unknown' || channel.debutDate || channel.graduateDate">
@@ -241,10 +326,12 @@ const saved = computed(() =>
                     <dd class="text-right font-semibold text-neutral-800 dark:text-neutral-200">
                       {{
                         channel.affiliation === "independent"
-                          ? "Independent"
+                          ? "Independent (個人勢)"
                           : channel.affiliation === "group"
-                            ? channel.agency || "Business group"
-                            : "Unknown"
+                            ? channel.agency || "Business group (企業勢)"
+                            : channel.affiliation === "community"
+                              ? "Community (社團勢)"
+                              : "Unknown"
                       }}
                     </dd>
                   </div>

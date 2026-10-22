@@ -230,18 +230,49 @@ export class BilibiliAdapter implements PlatformAdapter {
     return true;
   }
 
-  private async getJson<T>(url: string, headers: Record<string, string> = {}) {
+  /**
+   * Fetches JSON from the Bilibili API.
+   *
+   * ## The 412 wall
+   *
+   * Bilibili answers a burst of requests with **HTTP 412** — a risk-control
+   * response, not an error. It lifts again after a pause, so the request is
+   * retried with a backoff instead of being treated as "no data".
+   *
+   * A response that is HTML rather than JSON is the same 412 in disguise, so
+   * it is detected by content type as well as by status.
+   */
+  private async getJson<T>(
+    url: string,
+    headers: Record<string, string> = {},
+    attempt = 0,
+  ): Promise<T | null> {
     try {
       const res = await fetch(url, {
         headers: {
           "User-Agent": USER_AGENT,
+          Accept: "application/json, text/plain, */*",
           Referer: "https://www.bilibili.com/",
           ...headers,
         },
       });
-      if (!res.ok) return null;
+
       const contentType = res.headers.get("content-type") ?? "";
-      if (!contentType.includes("json")) return null;
+      const blocked = res.status === 412 || !contentType.includes("json");
+
+      if (blocked) {
+        if (attempt < 2) {
+          const wait = 5_000 * 2 ** attempt;
+          this.onLog(
+            `bilibili: rate limited (${res.status}), waiting ${wait / 1000}s`,
+          );
+          await new Promise((r) => setTimeout(r, wait));
+          return this.getJson<T>(url, headers, attempt + 1);
+        }
+        return null;
+      }
+
+      if (!res.ok) return null;
       return (await res.json()) as T;
     } catch {
       return null;
@@ -256,7 +287,16 @@ export class BilibiliAdapter implements PlatformAdapter {
     const uid = fromUrl?.[1] ?? (/^\d+$/.test(handle) ? handle : null);
     if (!uid) return null;
 
-    const json = await this.getJson<{
+    /**
+     * The profile endpoint carries the name, avatar and signature, but it is
+     * the one endpoint Bilibili protects with a captcha wall: a request
+     * without a session cookie is answered with HTTP 412.
+     *
+     * The follower count comes from `x/relation/stat`, which is not
+     * protected, so the count still lands. The signature is best-effort —
+     * when it is unavailable the record simply has no description.
+     */
+    const profile = await this.getJson<{
       code: number;
       data?: {
         card?: { name?: string; sign?: string; face?: string; mid?: number };
@@ -264,24 +304,44 @@ export class BilibiliAdapter implements PlatformAdapter {
       };
     }>(`${API}/x/web-interface/card?mid=${uid}&photo=false`);
 
-    if (json?.code !== 0 || !json?.data) return null;
+    const card = profile?.code === 0 ? profile.data : undefined;
+    const info = card?.card ?? {};
 
-    const card = json.data.card ?? {};
-    const followers = json.data.follower ?? 0;
-    const subscribers: CountRef =
-      followers > 0 ? { tag: "has", count: followers } : { tag: "no" };
+    const followers =
+      card?.follower && card.follower > 0
+        ? ({ tag: "has", count: card.follower } satisfies CountRef)
+        : ((await this.followers(uid)) ?? { tag: "hidden" as const });
+
+    if (!card && followers.tag === "hidden") return null;
 
     return {
       platform: "bilibili",
       id: uid,
-      handle: String(card.mid ?? uid),
-      name: card.name ?? null,
+      handle: String(info.mid ?? uid),
+      name: info.name ?? null,
       url: `https://space.bilibili.com/${uid}`,
-      subscribers,
-      avatar: absoluteUrl(card.face),
-      description: card.sign ?? null,
+      subscribers: followers,
+      avatar: absoluteUrl(info.face),
+      description: info.sign ?? null,
       tags: [],
     };
+  }
+
+  /**
+   * The follower count.
+   *
+   * `x/relation/stat` is the one per-user endpoint that is not behind
+   * Bilibili's risk-control wall, so it is the source of the subscriber
+   * count.
+   */
+  async followers(uid: string): Promise<CountRef | null> {
+    const json = await this.getJson<{
+      code: number;
+      data?: { follower?: number };
+    }>(`${API}/x/relation/stat?vmid=${uid}`);
+    if (json?.code !== 0 || !json?.data) return null;
+    const count = json.data.follower ?? 0;
+    return count > 0 ? { tag: "has", count } : { tag: "no" };
   }
 
   async uploads(

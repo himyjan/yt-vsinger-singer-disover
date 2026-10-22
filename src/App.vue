@@ -120,7 +120,12 @@ const AFFILIATION_FILTERS = [
   {
     id: "group",
     label: "🏢 Agency",
-    title: "Performers signed to a business group",
+    title: "Performers signed to a business group — 企業勢",
+  },
+  {
+    id: "community",
+    label: "👥 Community",
+    title: "Performers in a fan circle rather than a company — 社團勢",
   },
 ] as const;
 

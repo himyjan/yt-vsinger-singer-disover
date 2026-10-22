@@ -171,6 +171,7 @@ Load one with the `skill` tool, e.g. `skill({ id: "sync-dataset" })`.
 | AiSList | `github.com/Override92/AiSList` | Which channels are AI-generated |
 | VTuber Music Dataset | `github.com/meihei3/VTuber-music-dataset` | Curated song and original-artist metadata |
 | Virtual YouTuber Wiki | `virtualyoutuber.fandom.com/api.php` | Debut dates, graduation dates, wiki identities |
+| Moegirl encyclopedia | `zh.moegirl.org.cn/zh-tw/虚拟UP主用语与梗` | Chinese VTuber terminology — the 勢 (camp) system, 歌勢, 中之人, 切片 |
 | Bilibili | `api.bilibili.com` | Chinese VTuber channels |
 | Niconico | `api.search.nicovideo.jp/api/v2` | Japanese original songs and covers |
 | VK | `api.vk.com/method` | Russian VTuber channels |

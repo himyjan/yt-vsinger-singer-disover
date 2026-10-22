@@ -115,13 +115,14 @@ async function main(): Promise<void> {
   let candidates = channels.filter((c) => {
     if (args.ids.length) return args.ids.includes(c.id);
     if (c.source === "seed") return false; // already curated by hand
-    if (c.confidence > args.maxConfidence) return false;
+    if (c.confidence.overall > args.maxConfidence) return false;
     if (overrides[c.id]?.verifiedAt) return false; // already verified
     return true;
   });
 
   // The ones the classifier is least sure about go first.
-  candidates.sort((a, b) => a.confidence - b.confidence);
+  // The least certain records first — the ones worth checking.
+  candidates.sort((a, b) => a.confidence.overall - b.confidence.overall);
   candidates = candidates.slice(0, args.limit);
 
   console.log(
@@ -147,7 +148,7 @@ async function main(): Promise<void> {
   for (const [index, channel] of candidates.entries()) {
     console.log(
       `[verify] ${index + 1}/${candidates.length} ${channel.name} ` +
-        `(${channel.kind}/${channel.role}/${channel.region}, conf ${channel.confidence.toFixed(2)})`,
+        `(${channel.kind}/${channel.role}/${channel.region}, conf ${channel.confidence.overall.toFixed(2)})`,
     );
 
     const result = await verifier.verify({
@@ -162,7 +163,7 @@ async function main(): Promise<void> {
         region: channel.region,
         gender: channel.gender,
         isAi: channel.isAi,
-        confidence: channel.confidence,
+        confidence: channel.confidence.overall,
       },
     });
 
@@ -178,7 +179,7 @@ async function main(): Promise<void> {
       region: channel.region,
       gender: channel.gender,
       isAi: channel.isAi,
-      confidence: channel.confidence,
+      confidence: channel.confidence.overall,
     });
 
     if (override) {
