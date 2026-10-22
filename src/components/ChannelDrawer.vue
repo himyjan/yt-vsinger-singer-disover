@@ -114,6 +114,7 @@ const LANGUAGE_LABELS: Record<string, string> = {
   ko: "Korean",
   "zh-Hans": "Simplified Chinese",
   "zh-Hant": "Traditional Chinese",
+  yue: "Cantonese",
   id: "Indonesian",
   ms: "Malay",
 };

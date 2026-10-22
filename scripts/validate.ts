@@ -117,6 +117,91 @@ function validateChannels(): Channel[] {
 }
 
 /* -------------------------------------------------------------------------- */
+/* Layout                                                                     */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * The channel store is exactly `virtual/` and `real/`.
+ *
+ * It used to be four copies — `regions/` and `summaries/` beside the two
+ * datasets — and every writer had to remember all of them. One of them
+ * forgetting is how a platform-confirmed name reverted to the roster's. There
+ * is one copy per channel now, and this check keeps it that way: a stray
+ * directory is a layout that has drifted back.
+ */
+function validateChannelLayout(): void {
+  const root = path.join(DATA_DIR, "channels");
+  if (!fs.existsSync(root)) return;
+
+  for (const entry of fs.readdirSync(root)) {
+    const full = path.join(root, entry);
+    if (!fs.statSync(full).isDirectory()) continue;
+    if (entry === "virtual" || entry === "real") continue;
+    fail(
+      `data/channels/${entry}/ is not part of the layout — a channel lives in virtual/ or real/ only`,
+    );
+  }
+
+  // The manifest's shard map must name the files that actually exist, and
+  // every file must be named: a missing bucket is a region the app silently
+  // shows half of.
+  const manifestFile = path.join(root, "manifest.json");
+  if (!fs.existsSync(manifestFile)) {
+    fail("data/channels/manifest.json is missing");
+    return;
+  }
+  const manifest = JSON.parse(fs.readFileSync(manifestFile, "utf8")) as {
+    regions?: {
+      code: string;
+      channels: number;
+      virtual?: { channels: number; buckets: string[] };
+      real?: { channels: number; buckets: string[] };
+    }[];
+  };
+
+  const declared = new Map<string, Set<string>>();
+  let declaredChannels = 0;
+  for (const region of manifest.regions ?? []) {
+    declaredChannels += region.channels;
+    for (const kind of ["virtual", "real"] as const) {
+      const meta = region[kind];
+      if (!meta) {
+        fail(`channels manifest: ${region.code} has no ${kind} entry`);
+        continue;
+      }
+      for (const bucket of meta.buckets) {
+        declared.set(`${kind}/${region.code}/${bucket}.json`, new Set());
+      }
+    }
+  }
+  check(
+    declaredChannels > 0,
+    "channels manifest lists no regions — run `npm run data:sync`",
+  );
+
+  for (const kind of ["virtual", "real"] as const) {
+    const kindRoot = path.join(root, kind);
+    if (!fs.existsSync(kindRoot)) continue;
+    for (const region of fs.readdirSync(kindRoot)) {
+      const dir = path.join(kindRoot, region);
+      if (!fs.statSync(dir).isDirectory()) continue;
+      for (const file of fs.readdirSync(dir)) {
+        if (!file.endsWith(".json")) continue;
+        const key = `${kind}/${region}/${file}`;
+        if (!declared.has(key)) {
+          fail(`data/channels/${key} is not in the manifest — run \`npm run data:sync\``);
+        }
+      }
+    }
+  }
+  for (const key of declared.keys()) {
+    if (!fs.existsSync(path.join(root, key))) {
+      fail(`data/channels/${key} is in the manifest but missing`);
+    }
+  }
+}
+
+/* -------------------------------------------------------------------------- */
 /* Items                                                                      */
 /* -------------------------------------------------------------------------- */
 
@@ -315,6 +400,7 @@ function trackedRepoSize(): number {
 function main(): void {
   const manifest = validateManifest();
   const channels = validateChannels();
+  validateChannelLayout();
   const items = validateItems();
   validateSearchPacks(items.length, channels.length);
   validateSizes();

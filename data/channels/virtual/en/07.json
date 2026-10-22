@@ -1,24 +1,24 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T06:58:03.071Z",
+  "generatedAt": "2026-10-22T11:36:05.933Z",
   "channels": [
     {
       "id": "UCBURM8S4LH7cRZ0Clea9RDA",
-      "name": "Reimu Endou",
+      "name": "Reimu Endou【NIJISANJI EN】",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
       "region": "en",
-      "regionSource": "declared",
+      "regionSource": "agency",
       "languages": [
         "en"
       ],
       "statedLanguages": [],
       "agency": "NIJISANJI EN",
       "affiliation": "group",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/Fw6qR6eyTMQMn8dqHO0mecsNm8PzTQ9pqNZNFnfmlVvN4sd84yJfl8-ohvjt_ZA2Ouu_8wfG=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "Reimu Endou, NIJISANJI’s EN ghost trying to find my way back home in the darkness I succumbed to. 過去の思い出がなくて、暗闇で帰り道を探してる幽霊です！にじさんじEN所属、霊夢遠藤♡。よろしくお願いします！ 一緒にた...",
       "subscribers": {
         "tag": "hidden"
       },
@@ -28,13 +28,13 @@
       "country": null,
       "tags": [],
       "isSinging": false,
-      "gender": "unknown",
+      "gender": "female",
       "isAi": false,
       "variant": "vtuber",
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -50,174 +50,20 @@
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.111Z"
+          "avatar": "https://yt3.googleusercontent.com/Fw6qR6eyTMQMn8dqHO0mecsNm8PzTQ9pqNZNFnfmlVvN4sd84yJfl8-ohvjt_ZA2Ouu_8wfG=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.062Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
-    },
-    {
-      "id": "UCdpUojq0KWZCN9bxXnZwz5w",
-      "name": "阿露丝•阿尔玛",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "regionSource": "declared",
-      "languages": [
-        "en"
-      ],
-      "statedLanguages": [],
-      "agency": "NIJISANJI",
-      "affiliation": "group",
-      "avatar": null,
-      "banner": null,
-      "description": null,
-      "subscribers": {
-        "tag": "hidden"
-      },
-      "videoCount": null,
-      "viewCount": null,
-      "uploadsPlaylistId": "UUdpUojq0KWZCN9bxXnZwz5w",
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "verification": null,
-      "source": "api",
-      "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "youtube",
-          "id": "UCdpUojq0KWZCN9bxXnZwz5w",
-          "handle": null,
-          "name": "阿露丝•阿尔玛",
-          "url": "https://www.youtube.com/channel/UCdpUojq0KWZCN9bxXnZwz5w",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.148Z"
-        },
-        {
-          "platform": "bilibili",
-          "id": "452100632",
-          "handle": null,
-          "name": "阿露丝•阿尔玛",
-          "url": "https://space.bilibili.com/452100632",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.148Z"
-        },
-        {
-          "platform": "bilibili",
-          "id": "628292888",
-          "handle": null,
-          "name": "阿露丝•阿尔玛",
-          "url": "https://space.bilibili.com/628292888",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.148Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
-    },
-    {
-      "id": "UCMYtONm441rBogWK_xPH9HA",
-      "name": "未来明",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "regionSource": "declared",
-      "languages": [
-        "en"
-      ],
-      "statedLanguages": [],
-      "agency": "ENTUM",
-      "affiliation": "group",
-      "avatar": null,
-      "banner": null,
-      "description": null,
-      "subscribers": {
-        "tag": "hidden"
-      },
-      "videoCount": null,
-      "viewCount": null,
-      "uploadsPlaylistId": "UUMYtONm441rBogWK_xPH9HA",
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "verification": null,
-      "source": "api",
-      "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "youtube",
-          "id": "UCMYtONm441rBogWK_xPH9HA",
-          "handle": null,
-          "name": "未来明",
-          "url": "https://www.youtube.com/channel/UCMYtONm441rBogWK_xPH9HA",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.093Z"
-        },
-        {
-          "platform": "bilibili",
-          "id": "238537745",
-          "handle": null,
-          "name": "未来明",
-          "url": "https://space.bilibili.com/238537745",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.093Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "Reimu Endou"
+      ]
     },
     {
       "id": "UCoO6PIMIwatyMWRp7l6CvKQ",
-      "name": "A.I.D",
+      "name": "Project A.I.D 公式チャンネル",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -229,9 +75,9 @@
       "statedLanguages": [],
       "agency": null,
       "affiliation": "unknown",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/itFKgYHBkWdgLBdPvDJLBKeIk9RLNZoZ2PvNnAHqL7yMmaVwC7KS_y2gYs-gI9KsxBhBXejujQ=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "Project A.I.D ■HP https://www.projectaid.net ■Twitter https://twitter.com/Project_AID_ ■YouTube https://www.youtube.com/channel/UCoO6PIMIwatyMWRp7l6CvKQ ■ニコニ...",
       "subscribers": {
         "tag": "hidden"
       },
@@ -247,13 +93,25 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
       "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCoO6PIMIwatyMWRp7l6CvKQ",
+          "handle": null,
+          "name": "A.I.D",
+          "url": "https://www.youtube.com/channel/UCoO6PIMIwatyMWRp7l6CvKQ",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/itFKgYHBkWdgLBdPvDJLBKeIk9RLNZoZ2PvNnAHqL7yMmaVwC7KS_y2gYs-gI9KsxBhBXejujQ=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.021Z"
+        },
         {
           "platform": "bilibili",
           "id": "333325107",
@@ -264,21 +122,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.064Z"
-        },
-        {
-          "platform": "youtube",
-          "id": "UCoO6PIMIwatyMWRp7l6CvKQ",
-          "handle": null,
-          "name": "A.I.D",
-          "url": "https://www.youtube.com/channel/UCoO6PIMIwatyMWRp7l6CvKQ",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.064Z"
+          "lastCheckedAt": "2026-10-22T11:36:11.021Z"
         },
         {
           "platform": "niconico",
@@ -290,32 +134,33 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.064Z"
+          "lastCheckedAt": "2026-10-22T11:36:11.021Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "A.I.D"
+      ]
     },
     {
       "id": "UCP4nMSTdwU1KqYWu3UH5DHQ",
-      "name": "Pomu Rainpuff",
+      "name": "Pomu Rainpuff 【NIJISANJI EN】",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
       "region": "en",
-      "regionSource": "declared",
+      "regionSource": "agency",
       "languages": [
         "en"
       ],
       "statedLanguages": [],
       "agency": "NIJISANJI EN",
       "affiliation": "group",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/X3-ixFj01m3luT5_OohYuf-UH0b-WYA-t0b-C0nWVV0tXL6lof2NxZDwESRH4v_BOC30Qdda0vc=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "NIJISANJI EN's super sunny fairy virtual liver, Pomu Rainpuff! にじさんじEN所属ぽむ＊れいんぱふです！ I'll be doing my best in becoming the world's strongest fairy!!! It's nic...",
       "subscribers": {
         "tag": "hidden"
       },
@@ -324,14 +169,14 @@
       "uploadsPlaylistId": "UUP4nMSTdwU1KqYWu3UH5DHQ",
       "country": null,
       "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
+      "isSinging": true,
+      "gender": "female",
       "isAi": false,
       "variant": "vtuber",
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -347,19 +192,20 @@
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.106Z"
+          "avatar": "https://yt3.googleusercontent.com/X3-ixFj01m3luT5_OohYuf-UH0b-WYA-t0b-C0nWVV0tXL6lof2NxZDwESRH4v_BOC30Qdda0vc=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.059Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "Pomu Rainpuff"
+      ]
     },
     {
       "id": "UCTbFf0IcWd9XE5HxBuYTt1w",
-      "name": "Hiiro",
+      "name": "Hiiro VTuber",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -371,9 +217,9 @@
       "statedLanguages": [],
       "agency": null,
       "affiliation": "unknown",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_ngDjeMOcX9B3N-542LMFjwhVibFguKW7HKI6NTdMKfSAk=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "Hello, I'm Hiiro, an English VTuber! Please treat me kindly! Not a debucat..!!!!!! 901 IQ yes!!!!!! Primarily streams on Bilibili in English.",
       "subscribers": {
         "tag": "hidden"
       },
@@ -389,13 +235,25 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
       "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCTbFf0IcWd9XE5HxBuYTt1w",
+          "handle": null,
+          "name": "Hiiro",
+          "url": "https://www.youtube.com/channel/UCTbFf0IcWd9XE5HxBuYTt1w",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_ngDjeMOcX9B3N-542LMFjwhVibFguKW7HKI6NTdMKfSAk=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.038Z"
+        },
         {
           "platform": "bilibili",
           "id": "508963009",
@@ -406,8 +264,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.081Z"
+          "lastCheckedAt": "2026-10-22T11:36:11.038Z"
         },
         {
           "platform": "twitch",
@@ -419,27 +276,15 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.081Z"
-        },
-        {
-          "platform": "youtube",
-          "id": "UCTbFf0IcWd9XE5HxBuYTt1w",
-          "handle": null,
-          "name": "Hiiro",
-          "url": "https://www.youtube.com/channel/UCTbFf0IcWd9XE5HxBuYTt1w",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.081Z"
+          "lastCheckedAt": "2026-10-22T11:36:11.038Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "Hiiro"
+      ]
     },
     {
       "id": "vdb:1689a361-899d-5037-bd95-c45c3adaae15",
@@ -473,265 +318,13 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
       "platforms": [],
-      "externals": {},
-      "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
-    },
-    {
-      "id": "youtube:KitsuiAkira",
-      "name": "狐井アキラ",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "regionSource": "declared",
-      "languages": [
-        "en"
-      ],
-      "statedLanguages": [],
-      "agency": null,
-      "affiliation": "unknown",
-      "avatar": null,
-      "banner": null,
-      "description": null,
-      "subscribers": {
-        "tag": "hidden"
-      },
-      "videoCount": null,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "verification": null,
-      "source": "api",
-      "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "1885060547",
-          "handle": null,
-          "name": "狐井アキラ",
-          "url": "https://space.bilibili.com/1885060547",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.132Z"
-        },
-        {
-          "platform": "youtube",
-          "id": "KitsuiAkira",
-          "handle": "KitsuiAkira",
-          "name": "狐井アキラ",
-          "url": "https://www.youtube.com/@KitsuiAkira",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.132Z"
-        },
-        {
-          "platform": "twitch",
-          "id": "kiichan",
-          "handle": null,
-          "name": "狐井アキラ",
-          "url": "https://www.twitch.tv/kiichan",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.132Z"
-        },
-        {
-          "platform": "youtube",
-          "id": "KiichanYT",
-          "handle": null,
-          "name": "狐井アキラ",
-          "url": "https://www.youtube.com/channel/KiichanYT",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.132Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
-    },
-    {
-      "id": "youtube:KiwimiYT",
-      "name": "Kiwimi_alien",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "regionSource": "declared",
-      "languages": [
-        "en"
-      ],
-      "statedLanguages": [],
-      "agency": null,
-      "affiliation": "unknown",
-      "avatar": null,
-      "banner": null,
-      "description": null,
-      "subscribers": {
-        "tag": "hidden"
-      },
-      "videoCount": null,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "verification": null,
-      "source": "api",
-      "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "3707070712908035",
-          "handle": null,
-          "name": "Kiwimi_alien",
-          "url": "https://space.bilibili.com/3707070712908035",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.085Z"
-        },
-        {
-          "platform": "youtube",
-          "id": "KiwimiYT",
-          "handle": "KiwimiYT",
-          "name": "Kiwimi_alien",
-          "url": "https://www.youtube.com/@KiwimiYT",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.085Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
-    },
-    {
-      "id": "youtube:YUY_IX",
-      "name": "YUY",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "regionSource": "declared",
-      "languages": [
-        "en"
-      ],
-      "statedLanguages": [],
-      "agency": null,
-      "affiliation": "unknown",
-      "avatar": null,
-      "banner": null,
-      "description": null,
-      "subscribers": {
-        "tag": "hidden"
-      },
-      "videoCount": null,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "verification": null,
-      "source": "api",
-      "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "youtube",
-          "id": "YUY_IX",
-          "handle": "YUY_IX",
-          "name": "YUY",
-          "url": "https://www.youtube.com/@YUY_IX",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.125Z"
-        },
-        {
-          "platform": "youtube",
-          "id": "YUY_VOD",
-          "handle": "YUY_VOD",
-          "name": "YUY",
-          "url": "https://www.youtube.com/@YUY_VOD",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.125Z"
-        },
-        {
-          "platform": "twitch",
-          "id": "yuy_ix",
-          "handle": null,
-          "name": "YUY",
-          "url": "https://www.twitch.tv/yuy_ix",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.125Z"
-        }
-      ],
       "externals": {},
       "popularVideoId": null,
       "nameSource": "roster",

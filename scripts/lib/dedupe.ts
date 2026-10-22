@@ -304,6 +304,19 @@ export function mergeChannels(target: Channel, other: Channel): Channel {
 }
 
 /** Unions two platform lists, keeping one link per platform. */
+/**
+ * One link per platform, for a list that is already merged.
+ *
+ * Exposed because the details fill writes the platform list it fetched, and a
+ * record can arrive with two YouTube entries — the channel id and the handle
+ * a roster called it by.
+ */
+export function dedupePlatformLinks(
+  links: Channel["platforms"],
+): Channel["platforms"] {
+  return mergePlatforms(links, []);
+}
+
 function mergePlatforms(
   a: Channel["platforms"],
   b: Channel["platforms"],
@@ -325,7 +338,34 @@ function mergePlatforms(
       existing.subscribers = link.subscribers;
     }
   }
-  return out;
+  /**
+   * One link per platform.
+   *
+   * The loop above already matches by platform, but it copies the target's
+   * list as-is — so two YouTube links in the target stay two. That is how a
+   * record ended up holding both its `UC…` channel and the handle the roster
+   * called it by. The stable id wins, and the handle it displaces is kept on
+   * the link that survives.
+   */
+  const kept: Channel["platforms"] = [];
+  for (const link of out) {
+    const first = kept.find((p) => p.platform === link.platform);
+    if (!first) {
+      kept.push(link);
+      continue;
+    }
+    const better =
+      link.id?.startsWith("UC") && !first.id?.startsWith("UC") ? link : first;
+    const worse = better === link ? first : link;
+    better.handle = better.handle ?? worse.handle;
+    better.avatar = better.avatar ?? worse.avatar;
+    better.name = better.name ?? worse.name;
+    if (better.subscribers.tag === "hidden") {
+      better.subscribers = worse.subscribers;
+    }
+    if (better !== first) kept[kept.indexOf(first)] = better;
+  }
+  return kept;
 }
 
 export interface DedupeResult {

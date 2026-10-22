@@ -234,6 +234,17 @@ export class VdbSource {
   }
 
   private buildUrl(platform: string, id: string): string {
+    /**
+     * A `youtube` account that is not a `UC…` channel id is a handle.
+     *
+     * vdb files one performer under both `youtubeAt` (a handle) and `youtube`
+     * (a channel id), and the second value is sometimes another handle —
+     * `youtube.com/channel/KiichanYT` is not a page, `youtube.com/@KiichanYT`
+     * is.
+     */
+    if (platform === "youtube" && !id.startsWith("UC")) {
+      return `https://www.youtube.com/@${encodeURIComponent(id)}`;
+    }
     const template = this.linkSyntax[platform];
     if (!template) return `https://${platform}/${id}`;
     return template.replace("{id}", encodeURIComponent(id));
@@ -294,20 +305,53 @@ export class VdbSource {
 
     /* --- platform identities ------------------------------------------- */
     const platforms: PlatformLink[] = [];
+    /** How good a YouTube identity is: a channel id, then a handle. */
+    const youtubeRank = (account: VdbAccount): number =>
+      account.platform === "youtubeAt"
+        ? 2
+        : account.id.startsWith("UC")
+          ? 3
+          : 1;
+    let youtubeAccount: VdbAccount | null = null;
     for (const account of record.accounts ?? []) {
       if (!account?.id) continue;
       const mapped = PLATFORM_MAP[account.platform];
       if (mapped === undefined || mapped === "other") continue;
 
+      /**
+       * One YouTube identity per performer.
+       *
+       * vdb lists the same channel twice — once as `youtubeAt` and once as
+       * `youtube` — so taking both would give the record two links to the
+       * same channel, and the weaker one is usually a handle stored where a
+       * `UC…` id belongs.
+       */
+      if (mapped === "youtube") {
+        if (!youtubeAccount || youtubeRank(account) > youtubeRank(youtubeAccount)) {
+          youtubeAccount = account;
+        }
+        continue;
+      }
+
       const url = this.buildUrl(account.platform, account.id);
       platforms.push({
         platform: mapped,
         id: account.id,
-        // A `youtube` account id is a channel id; a `youtubeAt` one is a
-        // handle.
-        handle: account.platform === "youtubeAt" ? account.id : null,
+        handle: null,
         name,
         url,
+        subscribers: { tag: "hidden" },
+        avatar: null,
+        lastCheckedAt: new Date().toISOString(),
+      });
+    }
+    if (youtubeAccount) {
+      platforms.unshift({
+        platform: "youtube",
+        id: youtubeAccount.id,
+        handle: youtubeAccount.platform === "youtubeAt" ? youtubeAccount.id : null,
+        name,
+        url: this.buildUrl(youtubeAccount.platform, youtubeAccount.id),
         subscribers: { tag: "hidden" },
         avatar: null,
         lastCheckedAt: new Date().toISOString(),

@@ -745,6 +745,42 @@ async function main(): Promise<void> {
     }
   }
 
+  /* --- canonical ids --------------------------------------------------- */
+  /**
+   * An id that arrived as a **URL** is not an id.
+   *
+   * `UC…/featured` and `UC…/videos` were built from a channel link, and each
+   * one became a second record for a channel that was already in the
+   * dataset: the roster knows the clean id, so the tab-carrying copy was
+   * never matched and never updated. The tab is stripped here, before
+   * anything is looked up, and the two copies are merged.
+   */
+  {
+    let collapsed = 0;
+    const byId = new Map<string, Channel>();
+    for (const channel of channels) {
+      const before = channel.id;
+      channel.id = normalizeChannelId(channel.id);
+      for (const link of channel.platforms ?? []) {
+        if (link.platform === "youtube" && link.id) {
+          link.id = normalizeChannelId(link.id);
+        }
+      }
+      if (channel.id !== before) log(`id: ${before} → ${channel.id}`);
+      const seen = byId.get(channel.id);
+      if (seen) {
+        byId.set(channel.id, mergeChannels(seen, channel));
+        collapsed++;
+      } else {
+        byId.set(channel.id, channel);
+      }
+    }
+    if (collapsed) {
+      log(`ids: merged ${collapsed} duplicate record(s) with the same channel`);
+      channels = [...byId.values()];
+    }
+  }
+
   /* --- assemble the channel set --------------------------------------- */
   const channelById = new Map<string, Channel>();
   for (const c of channels) channelById.set(c.id, c);
@@ -761,10 +797,51 @@ async function main(): Promise<void> {
     const roster = await buildRoster({
       onLog: (m) => log(m),
     });
+    /**
+     * The roster knows handles, the dataset knows channel ids.
+     *
+     * vdb lists a YouTube account as `@handle` — a name the performer can
+     * change — while the record on disk is keyed by the permanent `UC…` id
+     * once the details pass has resolved it. Matching on the id alone would
+     * create a second record for the same channel on every run, so an
+     * identity index is built from both the ids and the handles, and a
+     * roster entry is merged into whichever record already holds it.
+     */
+    const identity = (channel: Channel): string[] => {
+      const keys: string[] = [`id:${channel.id}`];
+      for (const link of channel.platforms ?? []) {
+        const ids = [link.id, link.handle].filter(
+          (v): v is string => !!v && v.length > 0,
+        );
+        for (const value of ids) {
+          keys.push(`${link.platform}:${value.toLowerCase()}`);
+        }
+        if (link.platform === "youtube") {
+          keys.push(`youtube:user-${(link.handle ?? link.id).toLowerCase()}`);
+        }
+      }
+      return keys;
+    };
+    const byIdentity = new Map<string, string>();
+    for (const channel of channelById.values()) {
+      for (const key of identity(channel)) {
+        if (!byIdentity.has(key)) byIdentity.set(key, channel.id);
+      }
+    }
+
     for (const channel of roster) {
-      const existing = channelById.get(channel.id);
+      const knownId =
+        channelById.has(channel.id)
+          ? channel.id
+          : identity(channel)
+              .map((key) => byIdentity.get(key))
+              .find((id): id is string => !!id);
+      const existing = knownId ? channelById.get(knownId) : undefined;
       if (!existing) {
         channelById.set(channel.id, channel);
+        for (const key of identity(channel)) {
+          if (!byIdentity.has(key)) byIdentity.set(key, channel.id);
+        }
         continue;
       }
       /**
@@ -776,9 +853,20 @@ async function main(): Promise<void> {
        * which is how `affiliation`, `language`, `gender` and friends went
        * missing from the dataset.
        */
-      // The roster record is the target — it is the authoritative source —
-      // and the existing record fills in the gaps it does not cover.
-      channelById.set(channel.id, mergeChannels(channel, existing));
+      /**
+       * The roster record is the target — it is the authoritative source —
+       * and the existing record fills in the gaps it does not cover.
+       * `mergeChannels` keeps a `UC…` id over a handle id, so the record
+       * that survives is the one with the stable identity.
+       */
+      const merged = mergeChannels(channel, existing);
+      if (merged.id !== existing.id && existing.id !== channel.id) {
+        channelById.delete(existing.id);
+      }
+      channelById.set(merged.id, merged);
+      for (const key of identity(merged)) {
+        if (!byIdentity.has(key)) byIdentity.set(key, merged.id);
+      }
     }
     log(`roster: ${roster.length} channels, ${channelById.size} total`);
   }

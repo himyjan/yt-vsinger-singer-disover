@@ -1,30 +1,31 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T06:58:03.071Z",
+  "generatedAt": "2026-10-22T11:36:05.933Z",
   "channels": [
     {
-      "id": "UC7XCjKxBEct0uAukpQXNFPw",
-      "name": "はち",
+      "id": "bilibili:1795172933",
+      "name": "Hex_EN_Official",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
       "region": "en",
-      "regionSource": "declared",
+      "regionSource": "agency",
       "languages": [
         "en"
       ],
       "statedLanguages": [],
-      "agency": null,
-      "affiliation": "unknown",
-      "avatar": null,
+      "agency": "NIJISANJI EN",
+      "affiliation": "group",
+      "avatar": "https://i2.hdslb.com/bfs/face/548604b26dc23198e774a7002a176a4e0dae99b8.jpg",
       "banner": null,
-      "description": null,
+      "description": "Hello, my name is Hex Haywire.",
       "subscribers": {
-        "tag": "hidden"
+        "tag": "has",
+        "count": 30145
       },
-      "videoCount": null,
+      "videoCount": 3,
       "viewCount": null,
-      "uploadsPlaylistId": "UU7XCjKxBEct0uAukpQXNFPw",
+      "uploadsPlaylistId": null,
       "country": null,
       "tags": [],
       "isSinging": false,
@@ -34,7 +35,130 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "bilibili",
+          "id": "1795172933",
+          "handle": "1795172933",
+          "name": "HEX",
+          "url": "https://space.bilibili.com/1795172933",
+          "subscribers": {
+            "tag": "has",
+            "count": 30145
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-22T11:36:11.037Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "platform",
+      "aliases": [
+        "HEX"
+      ]
+    },
+    {
+      "id": "bilibili:1954549770",
+      "name": "Ver_Official",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "en",
+      "regionSource": "agency",
+      "languages": [
+        "en"
+      ],
+      "statedLanguages": [],
+      "agency": "NIJISANJI EN",
+      "affiliation": "group",
+      "avatar": "https://i0.hdslb.com/bfs/face/318d2d9178fe30578cc720aa4ae9a4075f037f56.jpg",
+      "banner": null,
+      "description": "Hello, I'm Ver, your Kaichou!",
+      "subscribers": {
+        "tag": "has",
+        "count": 35447
+      },
+      "videoCount": 9,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": false,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "bilibili",
+          "id": "1954549770",
+          "handle": "1954549770",
+          "name": "Ver",
+          "url": "https://space.bilibili.com/1954549770",
+          "subscribers": {
+            "tag": "has",
+            "count": 35447
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-22T11:36:11.074Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "platform",
+      "aliases": [
+        "Ver"
+      ]
+    },
+    {
+      "id": "UCMwGHR0BTZuLsmjY_NT5Pwg",
+      "name": "Ninomae Ina'nis Ch. hololive",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "en",
+      "regionSource": "agency",
+      "languages": [
+        "en"
+      ],
+      "statedLanguages": [],
+      "agency": "Hololive EN",
+      "affiliation": "group",
+      "avatar": "https://yt3.googleusercontent.com/hJ45UDEa_rKtqxjNcIcYYJ_3eBvl9Jj2H-gXHBwNDwKOcSvDLjSwgOVbU9tEbUQmpGnyGwQFLQ=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "One day, she picked up a strange book and then started to gain the power of controlling tentacles. To her, tentacles are just a part in her ordinary life; it...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": "UUMwGHR0BTZuLsmjY_NT5Pwg",
+      "country": null,
+      "tags": [
+        "Ninomae Ina'nis"
+      ],
+      "isSinging": true,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -43,39 +167,40 @@
       "platforms": [
         {
           "platform": "youtube",
-          "id": "UC7XCjKxBEct0uAukpQXNFPw",
+          "id": "UCMwGHR0BTZuLsmjY_NT5Pwg",
           "handle": null,
-          "name": "はち",
-          "url": "https://www.youtube.com/channel/UC7XCjKxBEct0uAukpQXNFPw",
+          "name": "一伊那尓栖",
+          "url": "https://www.youtube.com/channel/UCMwGHR0BTZuLsmjY_NT5Pwg",
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.079Z"
+          "avatar": "https://yt3.googleusercontent.com/hJ45UDEa_rKtqxjNcIcYYJ_3eBvl9Jj2H-gXHBwNDwKOcSvDLjSwgOVbU9tEbUQmpGnyGwQFLQ=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.110Z"
         },
         {
           "platform": "bilibili",
-          "id": "9979698",
+          "id": "674600647",
           "handle": null,
-          "name": "はち",
-          "url": "https://space.bilibili.com/9979698",
+          "name": "一伊那尓栖",
+          "url": "https://space.bilibili.com/674600647",
           "subscribers": {
             "tag": "hidden"
           },
           "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.079Z"
+          "lastCheckedAt": "2026-10-22T11:36:11.110Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "Ninomae Ina'nis",
+        "一伊那尓栖"
+      ]
     },
     {
       "id": "UCoSrY_IQQVpmIRZ9Xf-y93g",
-      "name": "Gawr Gura",
+      "name": "Gawr Gura Ch. hololive-EN",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -89,9 +214,9 @@
       ],
       "agency": "hololive",
       "affiliation": "group",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/6BCfAqi9yIpZbHLbw9BAWySvB3XZf9r8jFqudO5nSOsHoGzLhlKrm1M1uuMCRabi_pXGDzl7=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "[April 30, 2025 Graduated.] Shark-girl Idol of Hololive EN ! 🐟 --- A descendant of the Lost City of Atlantis, who swam to Earth while saying, \"It's so boring...",
       "subscribers": {
         "tag": "hidden"
       },
@@ -101,16 +226,16 @@
       "country": null,
       "tags": [],
       "isSinging": true,
-      "gender": "unknown",
+      "gender": "female",
       "isAi": false,
       "variant": "vtuber",
       "verification": null,
       "source": "seed",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
-      "activity": "unknown",
+      "activity": "graduated",
       "debutDate": null,
       "graduateDate": null,
       "platforms": [
@@ -123,9 +248,8 @@
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:05.126Z"
+          "avatar": "https://yt3.googleusercontent.com/6BCfAqi9yIpZbHLbw9BAWySvB3XZf9r8jFqudO5nSOsHoGzLhlKrm1M1uuMCRabi_pXGDzl7=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:07.961Z"
         },
         {
           "platform": "bilibili",
@@ -137,14 +261,15 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.256Z"
+          "lastCheckedAt": "2026-10-22T11:36:11.237Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "seed",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "Gawr Gura"
+      ]
     },
     {
       "id": "UCyZoDBhW8cLrzZ-dqKdQqEg",
@@ -160,9 +285,9 @@
       "statedLanguages": [],
       "agency": null,
       "affiliation": "unknown",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_kdvkU3SQGwWUcDVTszaHbQFkUpsyQ98iG47mVNXeVLoA=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "Halo! My name is Maya Putri, I’m a Virtual Youtuber from Indonesia. I sing, play games, and do things! Hope you enjoy your stay٩(๑❛ᴗ❛๑)۶ ◼Twitter https://twi...",
       "subscribers": {
         "tag": "hidden"
       },
@@ -171,20 +296,32 @@
       "uploadsPlaylistId": "UUyZoDBhW8cLrzZ-dqKdQqEg",
       "country": null,
       "tags": [],
-      "isSinging": false,
+      "isSinging": true,
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
       "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCyZoDBhW8cLrzZ-dqKdQqEg",
+          "handle": null,
+          "name": "Maya Putri",
+          "url": "https://www.youtube.com/channel/UCyZoDBhW8cLrzZ-dqKdQqEg",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_kdvkU3SQGwWUcDVTszaHbQFkUpsyQ98iG47mVNXeVLoA=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.049Z"
+        },
         {
           "platform": "bilibili",
           "id": "455888811",
@@ -195,21 +332,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.091Z"
-        },
-        {
-          "platform": "youtube",
-          "id": "UCyZoDBhW8cLrzZ-dqKdQqEg",
-          "handle": null,
-          "name": "Maya Putri",
-          "url": "https://www.youtube.com/channel/UCyZoDBhW8cLrzZ-dqKdQqEg",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.091Z"
+          "lastCheckedAt": "2026-10-22T11:36:11.049Z"
         }
       ],
       "externals": {},
@@ -249,7 +372,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",

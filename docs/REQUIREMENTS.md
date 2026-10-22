@@ -143,6 +143,27 @@ is published.
 - `[x]` Cantonese markers (粵語 · 廣東話 · 廣州話) identify the Cantonese
       performers in the mainland scene too.
 - `[x]` `regionSource` records which source decided the region.
+- `[x]` The record's `id` is the **immutable** platform id — a YouTube
+      `UC…` channel id. A `@handle` is unique but renameable, so a handle is
+      stored in `handle` and never used as the identity. `data:details --
+      --normalize-ids` re-keyed the 46 records that were stored as handles
+      (42 resolved; 4 handles no longer resolve at all).
+- `[x]` **A mirror is not an origin.** A Japanese VTuber with a Bilibili
+      channel is `jp`, a Hololive EN member with one is `en`, and a Filipino
+      VTuber with a Japanese stage name is `sea`. Fixing this moved 163
+      records out of the wrong region — 135 Japanese performers who were
+      filed under China, including 「巫てんり / Kannagi Tenri」, 「博衣こより」
+      and 「獅白ぼたん」.
+- `[x]` The region sources are **ranked**: an override, then the Taiwan track
+      list's nationality, then the channel's published country, then the
+      agency's branch, then kana in the Japanese name, then the platform,
+      then vdb's display language, then a script guess. A merge keeps the
+      more trusted one.
+- `[x]` vdb's `name.default` is **not** a statement of origin — it is the
+      language the Chinese wiki *displays*, so it lists 「巫てんり」 under the
+      Chinese rendition of her name. It is the second-weakest signal.
+- `[x]` A rename by hand — `region` in `data/overrides.json` — sets
+      `regionSource: "override"` and is the final word.
 
 ## 5c. Gender, AI and the combined variant
 
@@ -189,6 +210,20 @@ is published.
       not the same as the performer being a solo act.
 - `[x]` The affiliation is re-evaluated when a description arrives, because
       that is where a performer states it.
+- `[x]` The **agency is read out of the description** too, not only from the
+      rosters: 「〇〇所属」 (Japanese), 「所属：〇〇」 · 「隶属于〇〇」 ·
+      「〇〇旗下」 (Chinese), 「〇〇 소속」 (Korean), "affiliated with ○〇" ·
+      "member of ○〇" (English). A stated agency sets `affiliation: "group"`
+      in the same pass — 「にじさんじ所属」 is both facts at once.
+- `[x]` 「無所属」 · 「无所属」 · 「非所属」 are checked **before** the
+      patterns, because they deny an agency and contain the marker:
+      `affiliation: "independent"`, no agency.
+- `[x]` The big agencies are canonicalised — 「ホロライブ」, 「彩虹社」 and
+      「니지산지」 become `hololive` and `nijisanji`, so one agency is not
+      split across four spellings in the grouping.
+- `[x]` An agency read out of a description **never decides the region**: it
+      names the group, not the branch, and a Hololive EN member writes the
+      same line as a Japanese one.
 
 ## 5f2. Verification, not a confidence score
 
@@ -303,16 +338,25 @@ is published.
 - `[x]` The avatar comes from the **primary** platform, so a record never
       shows a Bilibili avatar on a YouTube channel.
 - `[x]` A dedicated script fills the backlog:
-      `npm run data:avatars -- --limit 2000`, with `--platform` to target
+      `npm run data:details -- --limit 2000`, with `--platform` to target
       one platform and `--dry-run` to preview.
 - `[x]` `--name-only` corrects the names and the aliases without touching
       anything else — the cheapest pass, because the name comes from the
       same request as the avatar.
-- `[x]` The script **re-reads each shard before writing it**, so a sync
+- `[x]` The script **re-reads the dataset before writing it**, so a sync
       that runs at the same time is not clobbered by a stale snapshot.
+- `[x]` It writes the records through `writeChannelShards()`, which is the
+      one writer and puts each channel in the dataset of its kind. It used to
+      write only the copy it read, and the next sync, reading `virtual/`, put
+      the roster's old name back: 「NoWorld Official」 reverted to
+      「NoWorld」, 「巫てんり / Kannagi Tenri」 to 「巫天翼」. With one copy
+      left there is nothing to drift.
 - `[x]` It writes **only** what it fetched — the avatar, the current name,
       the description, the follower count — and leaves the rest of the
       record and the file layout untouched.
+- `[x]` The script is called `fill-details.ts` / `npm run data:details` — it
+      fills the details, of which the avatar is only the first. The old name,
+      `fill-avatars`, described a fifth of what it does.
 - `[x]` The normal sync's details pass takes a **per-platform share** of its
       budget, so the largest platform cannot take all of it and leave the
       others unresolved.
@@ -462,6 +506,19 @@ their session cookie; the three that do use it.
 GitHub Free allows ~1 GB of repository content (hard limit 2 GB) and a 2 GB
 maximum for a single Git LFS file.
 
+- `[x]` A channel is stored **once**, in `virtual/` or `real/` — the
+      dataset of its kind. The scope switch is served without downloading the
+      other one, so the two must stay separate.
+- `[x]` `regions/` and `summaries/` are gone. They were extra copies of the
+      same records (a details job corrected one, the sync read another and
+      put the old name back) and the summaries were downloaded *and then
+      ignored*, because the app loads the full records anyway. The list is
+      now a projection of those records (`toSummary()` in
+      `scripts/lib/summary.ts`) and `validate.ts` fails if a stray
+      `channels/regions/` or `channels/summaries/` reappears. `data/` went
+      from 69 MB to 30 MB.
+- `[x]` **One writer at a time.** `acquireRunLock()` refuses to start when
+      another run holds the dataset; two runs at once lose each other's work.
 - `[x]` The dataset is **sharded** — by region, then by id bucket — so no
       single file gets large and the browser only downloads the slice it needs.
 - `[x]` Hard per-file budget: **8 MB**. Hard `data/` budget: **180 MB**.

@@ -1,15 +1,15 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T06:58:03.071Z",
+  "generatedAt": "2026-10-22T11:36:05.933Z",
   "channels": [
     {
-      "id": "UCGhqxhovNfaPBpxfCruy9EA",
-      "name": "Fulgur-Official",
+      "id": "bilibili:2129870539",
+      "name": "Uki的捕星网",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
       "region": "en",
-      "regionSource": "declared",
+      "regionSource": "agency",
       "languages": [
         "en"
       ],
@@ -24,7 +24,7 @@
       },
       "videoCount": null,
       "viewCount": null,
-      "uploadsPlaylistId": "UUGhqxhovNfaPBpxfCruy9EA",
+      "uploadsPlaylistId": null,
       "country": null,
       "tags": [],
       "isSinging": false,
@@ -34,13 +34,139 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
       "platforms": [
+        {
+          "platform": "bilibili",
+          "id": "2129870539",
+          "handle": null,
+          "name": "Uki的捕星网",
+          "url": "https://space.bilibili.com/2129870539",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-22T11:36:11.072Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": []
+    },
+    {
+      "id": "bilibili:361363473",
+      "name": "Fulgur的电子厂",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "en",
+      "regionSource": "agency",
+      "languages": [
+        "en"
+      ],
+      "statedLanguages": [],
+      "agency": "NIJISANJI EN",
+      "affiliation": "group",
+      "avatar": null,
+      "banner": null,
+      "description": null,
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": false,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "bilibili",
+          "id": "361363473",
+          "handle": null,
+          "name": "Fulgur的电子厂",
+          "url": "https://space.bilibili.com/361363473",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-22T11:36:11.036Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": []
+    },
+    {
+      "id": "UCGhqxhovNfaPBpxfCruy9EA",
+      "name": "Fulgur Ovid 【NIJISANJI EN】",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "en",
+      "regionSource": "agency",
+      "languages": [
+        "en"
+      ],
+      "statedLanguages": [],
+      "agency": "NIJISANJI EN",
+      "affiliation": "group",
+      "avatar": "https://yt3.googleusercontent.com/pubqT6sYLzsAsAj8tNh8rLwZwtfvZHQybIhOpu97MkCqDPbaq4T-DApLqFgtCatXjPS3BmtHaF4=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "Do you read me? Fulgur Ovid Here. NIJISANJI EN's archivist cyborg. #Noctyx. にじさんじENのファルガー・オーヴィド | ママ: https://twitter.com/ramdayo1122 Header: https://twitter...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": "UUGhqxhovNfaPBpxfCruy9EA",
+      "country": null,
+      "tags": [],
+      "isSinging": false,
+      "gender": "female",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCGhqxhovNfaPBpxfCruy9EA",
+          "handle": null,
+          "name": "Fulgur-Official",
+          "url": "https://www.youtube.com/channel/UCGhqxhovNfaPBpxfCruy9EA",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/pubqT6sYLzsAsAj8tNh8rLwZwtfvZHQybIhOpu97MkCqDPbaq4T-DApLqFgtCatXjPS3BmtHaF4=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.036Z"
+        },
         {
           "platform": "bilibili",
           "id": "1281805827",
@@ -51,45 +177,33 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.079Z"
-        },
-        {
-          "platform": "youtube",
-          "id": "UCGhqxhovNfaPBpxfCruy9EA",
-          "handle": null,
-          "name": "Fulgur-Official",
-          "url": "https://www.youtube.com/channel/UCGhqxhovNfaPBpxfCruy9EA",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.079Z"
+          "lastCheckedAt": "2026-10-22T11:36:11.036Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "Fulgur-Official"
+      ]
     },
     {
       "id": "UCpzxZW5kghGnO5TmAFJQAVw",
-      "name": "Aster Arcadia",
+      "name": "Aster Arcadia 【NIJISANJI EN】",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
       "region": "en",
-      "regionSource": "declared",
+      "regionSource": "agency",
       "languages": [
         "en"
       ],
       "statedLanguages": [],
       "agency": "NIJISANJI EN",
       "affiliation": "group",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/Cn3yTxP-Q6Fx6FX-1B5S1zljPiewlVzOeC4UoDV_I2AFTD6yI883az0YKSIUmuwbBuYJ42xJkFw=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "Hewwo! I'm Aster Arcadia, Celestial One of NIJISANJI EN! にじさんじEN所属天人のアスターアルカディアです。 Twitter: https://twitter.com/AsterArcadia ■ For more information, visit: ・...",
       "subscribers": {
         "tag": "hidden"
       },
@@ -99,13 +213,13 @@
       "country": null,
       "tags": [],
       "isSinging": false,
-      "gender": "unknown",
+      "gender": "female",
       "isAi": false,
       "variant": "vtuber",
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -121,33 +235,34 @@
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.069Z"
+          "avatar": "https://yt3.googleusercontent.com/Cn3yTxP-Q6Fx6FX-1B5S1zljPiewlVzOeC4UoDV_I2AFTD6yI883az0YKSIUmuwbBuYJ42xJkFw=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.026Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "Aster Arcadia"
+      ]
     },
     {
       "id": "UCQ1zGxHrfEmmW4CPpBx9-qw",
-      "name": "Alban Knox",
+      "name": "Alban Knox 【NIJISANJI EN】",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
       "region": "en",
-      "regionSource": "declared",
+      "regionSource": "agency",
       "languages": [
         "en"
       ],
       "statedLanguages": [],
       "agency": "NIJISANJI EN",
       "affiliation": "group",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/seL5IxcrXydLiLrqoJdZ1ShXJyQh5yjtRU8sr69K_lEXMfOvRV0XCkwgEhOl9snpoe3wwb_N=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "Phantom Thief from NIJISANJI EN's Noctyx! 🌈🕒 For Business and PR Inquiries https://www.anycolor.co.jp/en/contact Banner: https://twitter.com/crysteI Emotes: ...",
       "subscribers": {
         "tag": "hidden"
       },
@@ -163,7 +278,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -179,19 +294,20 @@
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.067Z"
+          "avatar": "https://yt3.googleusercontent.com/seL5IxcrXydLiLrqoJdZ1ShXJyQh5yjtRU8sr69K_lEXMfOvRV0XCkwgEhOl9snpoe3wwb_N=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.024Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "Alban Knox"
+      ]
     },
     {
       "id": "UCSXOBKJSKfNsVy_nUqew03g",
-      "name": "Dadi",
+      "name": "Dadi | Debut 4200",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -203,9 +319,9 @@
       "statedLanguages": [],
       "agency": null,
       "affiliation": "unknown",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/2sAxZj5IAU1_ig8wLmTB4S-TKqJ5atc0-tQ6x8RNyHO6gyio4peZSuS71FvSxQVKb9UJ6VvwRw=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "Hiallo hoooman!! This is your lovely Dadi!",
       "subscribers": {
         "tag": "hidden"
       },
@@ -215,16 +331,16 @@
       "country": null,
       "tags": [],
       "isSinging": false,
-      "gender": "unknown",
+      "gender": "male",
       "isAi": false,
       "variant": "vtuber",
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
-      "activity": "unknown",
+      "activity": "preparing",
       "debutDate": null,
       "graduateDate": null,
       "platforms": [
@@ -237,15 +353,16 @@
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.074Z"
+          "avatar": "https://yt3.googleusercontent.com/2sAxZj5IAU1_ig8wLmTB4S-TKqJ5atc0-tQ6x8RNyHO6gyio4peZSuS71FvSxQVKb9UJ6VvwRw=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.032Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "Dadi"
+      ]
     }
   ]
 }

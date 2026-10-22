@@ -1,86 +1,15 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T06:58:03.071Z",
+  "generatedAt": "2026-10-22T11:36:05.933Z",
   "channels": [
     {
-      "id": "UCJFZiqLMntJufDCHc6bQixg",
-      "name": "ホロライブ公式",
+      "id": "bilibili:1359534346",
+      "name": "Sonny的VSF分队",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
       "region": "en",
-      "regionSource": "declared",
-      "languages": [
-        "en"
-      ],
-      "statedLanguages": [],
-      "agency": "40e82f4e-40d8-539c-87c8-ed17c6ea519f",
-      "affiliation": "group",
-      "avatar": null,
-      "banner": null,
-      "description": null,
-      "subscribers": {
-        "tag": "hidden"
-      },
-      "videoCount": null,
-      "viewCount": null,
-      "uploadsPlaylistId": "UUJFZiqLMntJufDCHc6bQixg",
-      "country": null,
-      "tags": [],
-      "isSinging": true,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "verification": null,
-      "source": "api",
-      "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "youtube",
-          "id": "UCJFZiqLMntJufDCHc6bQixg",
-          "handle": null,
-          "name": "ホロライブ公式",
-          "url": "https://www.youtube.com/channel/UCJFZiqLMntJufDCHc6bQixg",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.081Z"
-        },
-        {
-          "platform": "bilibili",
-          "id": "286700005",
-          "handle": null,
-          "name": "ホロライブ公式",
-          "url": "https://space.bilibili.com/286700005",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.081Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
-    },
-    {
-      "id": "UCSc_KzY_9WYAx9LghggjVRA",
-      "name": "Yugo Asuma",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "regionSource": "declared",
+      "regionSource": "agency",
       "languages": [
         "en"
       ],
@@ -91,11 +20,12 @@
       "banner": null,
       "description": null,
       "subscribers": {
-        "tag": "hidden"
+        "tag": "has",
+        "count": 120119
       },
       "videoCount": null,
       "viewCount": null,
-      "uploadsPlaylistId": "UUSc_KzY_9WYAx9LghggjVRA",
+      "uploadsPlaylistId": null,
       "country": null,
       "tags": [],
       "isSinging": false,
@@ -105,7 +35,141 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-22T11:36:05.933Z",
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "bilibili",
+          "id": "1359534346",
+          "handle": "1359534346",
+          "name": "Sonny的VSF分队",
+          "url": "https://space.bilibili.com/1359534346",
+          "subscribers": {
+            "tag": "has",
+            "count": 120119
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-22T11:36:11.069Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": []
+    },
+    {
+      "id": "UCgnfPPb9JI3e9A4cXHnWbyg",
+      "name": "Shiori Novella Ch. hololive",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "en",
+      "regionSource": "agency",
+      "languages": [
+        "en"
+      ],
+      "statedLanguages": [],
+      "agency": "Hololive EN",
+      "affiliation": "group",
+      "avatar": "https://yt3.googleusercontent.com/q23ZTL-eIurUV4sMNtq5pJpFXWKI7dr-XuScFGVtSiDhTR_jrs4v1BpsWX1WP51sP4jjlmA=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "Shiori~n! 👁‍🗨 Aloof Archiver of hololive -Advent- at your service. Content Creator/Streamer, part of hololive production. https://hololivepro.com/en/ -------...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [
+        "シオリ・ノヴェラ",
+        "Shiori Novella"
+      ],
+      "isSinging": false,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "ShioriNovella",
+          "handle": "ShioriNovella",
+          "name": "诗织诺薇拉",
+          "url": "https://www.youtube.com/@ShioriNovella",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/q23ZTL-eIurUV4sMNtq5pJpFXWKI7dr-XuScFGVtSiDhTR_jrs4v1BpsWX1WP51sP4jjlmA=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.742Z"
+        },
+        {
+          "platform": "bilibili",
+          "id": "3706943625497110",
+          "handle": null,
+          "name": "诗织诺薇拉",
+          "url": "https://space.bilibili.com/3706943625497110",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-22T11:36:11.742Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "platform",
+      "aliases": [
+        "シオリ・ノヴェラ",
+        "Shiori Novella",
+        "诗织诺薇拉"
+      ]
+    },
+    {
+      "id": "UCSc_KzY_9WYAx9LghggjVRA",
+      "name": "Yugo Asuma 【NIJISANJI EN】",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "en",
+      "regionSource": "agency",
+      "languages": [
+        "en"
+      ],
+      "statedLanguages": [],
+      "agency": "NIJISANJI EN",
+      "affiliation": "group",
+      "avatar": "https://yt3.googleusercontent.com/lztVvqTIhLvxiK2xLO74rLyomQGrDNbYIMuPUdwaa6V_YKAvws5bU09_qUAnVlUSEnnetbPoEg=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "Yo. I’m Yugo Asuma the DJ from Nijisanji EN’s Noctyx. Let’s have fun. ◇Streamlab Donation◇ https://streamlabs.com/yugoasumanijisanjien/tip ◇Twitter◇ https://...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": "UUSc_KzY_9WYAx9LghggjVRA",
+      "country": null,
+      "tags": [],
+      "isSinging": false,
+      "gender": "male",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -121,86 +185,16 @@
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.126Z"
+          "avatar": "https://yt3.googleusercontent.com/lztVvqTIhLvxiK2xLO74rLyomQGrDNbYIMuPUdwaa6V_YKAvws5bU09_qUAnVlUSEnnetbPoEg=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.081Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
-    },
-    {
-      "id": "youtube:Sanavtuber12",
-      "name": "sanachanvt",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "regionSource": "declared",
-      "languages": [
-        "en"
-      ],
-      "statedLanguages": [],
-      "agency": null,
-      "affiliation": "unknown",
-      "avatar": null,
-      "banner": null,
-      "description": null,
-      "subscribers": {
-        "tag": "hidden"
-      },
-      "videoCount": null,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "verification": null,
-      "source": "api",
-      "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "3744978087972474",
-          "handle": null,
-          "name": "sanachanvt",
-          "url": "https://space.bilibili.com/3744978087972474",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.138Z"
-        },
-        {
-          "platform": "youtube",
-          "id": "Sanavtuber12",
-          "handle": "Sanavtuber12",
-          "name": "sanachanvt",
-          "url": "https://www.youtube.com/@Sanavtuber12",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.138Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "Yugo Asuma"
+      ]
     }
   ]
 }

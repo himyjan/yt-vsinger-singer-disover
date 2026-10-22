@@ -1,10 +1,69 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T06:58:03.071Z",
+  "generatedAt": "2026-10-22T11:36:05.933Z",
   "channels": [
     {
-      "id": "UCMCAh6rwRtoGDtF7lXj0gNw",
-      "name": "草莓猫Taffy",
+      "id": "bilibili:1730051024",
+      "name": "Ike的鱼子酱批发商",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "en",
+      "regionSource": "agency",
+      "languages": [
+        "en"
+      ],
+      "statedLanguages": [],
+      "agency": "NIJISANJI EN",
+      "affiliation": "group",
+      "avatar": "https://i2.hdslb.com/bfs/face/bdc088513bd37003d0443e9e975db30c393de75e.jpg",
+      "banner": null,
+      "description": "这里是Nijisanji En四期生Ike Eveland搬运烤肉组\n希望告别的这一刻，不是结束，而是把温柔留在你心里的方式",
+      "subscribers": {
+        "tag": "has",
+        "count": 33302
+      },
+      "videoCount": 171,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": false,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "graduated",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "bilibili",
+          "id": "1730051024",
+          "handle": "1730051024",
+          "name": "Ike的鱼子酱批发商",
+          "url": "https://space.bilibili.com/1730051024",
+          "subscribers": {
+            "tag": "has",
+            "count": 33302
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-22T11:36:11.039Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": []
+    },
+    {
+      "id": "UC93aWyXK1NuUnRumFxU7X3w",
+      "name": "YUY",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -16,9 +75,78 @@
       "statedLanguages": [],
       "agency": null,
       "affiliation": "unknown",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/S5_mU5n-KM_2UXod45MyjlUB21awI_jyc2zb1cmGZ6Mb-sYq-49mAsncaI6R0IdIUomqEKfI=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "I'm Yuy, part-time angel for hire and full-time professional victim! 📨 hello@yuyix.com",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": false,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "YUY_IX",
+          "handle": "YUY_IX",
+          "name": "YUY",
+          "url": "https://www.youtube.com/@YUY_IX",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/S5_mU5n-KM_2UXod45MyjlUB21awI_jyc2zb1cmGZ6Mb-sYq-49mAsncaI6R0IdIUomqEKfI=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.078Z"
+        },
+        {
+          "platform": "twitch",
+          "id": "yuy_ix",
+          "handle": null,
+          "name": "YUY",
+          "url": "https://www.twitch.tv/yuy_ix",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-22T11:36:11.078Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": []
+    },
+    {
+      "id": "UCMCAh6rwRtoGDtF7lXj0gNw",
+      "name": "NekumaVT",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "en",
+      "regionSource": "declared",
+      "languages": [
+        "en"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://yt3.googleusercontent.com/WoTBjhDEq83n6PgYbgDnXy30iSgzelUxDOIertGS8Cyi2I37WtppzTK51YbJ6ec-E0_GblmRMQ=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "Hellowe! I am the strawberry cat, Taffy Nekuma! 🍓 Please take into account that English is my only language and therefore I cannot speak much else. Despite t...",
       "subscribers": {
         "tag": "hidden"
       },
@@ -34,13 +162,25 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
       "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCMCAh6rwRtoGDtF7lXj0gNw",
+          "handle": null,
+          "name": "草莓猫Taffy",
+          "url": "https://www.youtube.com/channel/UCMCAh6rwRtoGDtF7lXj0gNw",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/WoTBjhDEq83n6PgYbgDnXy30iSgzelUxDOIertGS8Cyi2I37WtppzTK51YbJ6ec-E0_GblmRMQ=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.697Z"
+        },
         {
           "platform": "bilibili",
           "id": "1210816252",
@@ -51,21 +191,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.613Z"
-        },
-        {
-          "platform": "youtube",
-          "id": "UCMCAh6rwRtoGDtF7lXj0gNw",
-          "handle": null,
-          "name": "草莓猫Taffy",
-          "url": "https://www.youtube.com/channel/UCMCAh6rwRtoGDtF7lXj0gNw",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.613Z"
+          "lastCheckedAt": "2026-10-22T11:36:11.697Z"
         },
         {
           "platform": "twitch",
@@ -77,14 +203,15 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.613Z"
+          "lastCheckedAt": "2026-10-22T11:36:11.697Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "草莓猫Taffy"
+      ]
     }
   ]
 }

@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T06:58:03.071Z",
+  "generatedAt": "2026-10-22T11:36:05.933Z",
   "channels": [
     {
       "id": "twitch:vedal987",
-      "name": "neuro_sama",
+      "name": "vedal987",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -18,9 +18,10 @@
       "affiliation": "unknown",
       "avatar": null,
       "banner": null,
-      "description": null,
+      "description": "neuro-sama the ai vtuber",
       "subscribers": {
-        "tag": "hidden"
+        "tag": "has",
+        "count": 1017531
       },
       "videoCount": null,
       "viewCount": null,
@@ -34,7 +35,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -48,21 +49,23 @@
           "name": "neuro_sama",
           "url": "https://www.twitch.tv/vedal987",
           "subscribers": {
-            "tag": "hidden"
+            "tag": "has",
+            "count": 1017531
           },
           "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.135Z"
+          "lastCheckedAt": "2026-10-22T11:36:11.090Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "neuro_sama"
+      ]
     },
     {
-      "id": "UCsb-1aJgiJXJH2feV-zlZRw",
-      "name": "Kyo Kaneko",
+      "id": "UC1X4_nToTNhjj6f-YIlotkw",
+      "name": "Kiwimi",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -72,17 +75,17 @@
         "en"
       ],
       "statedLanguages": [],
-      "agency": "NIJISANJI EN",
-      "affiliation": "group",
-      "avatar": null,
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://yt3.googleusercontent.com/OHmBLB6NIfKLqa_37QAcpeProgNCenthnC4HZFt3tI9olcR-CfQIbI9bZ377KPmDwv2n_rQH=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "Alíen gritón que viene a conquistar tu planeta, Mis amigos me dicen Kiwi🥝 Subiré videos con mis amigos Moka, Axel, Seth, Gina, Danny y Eli! y posiblemente al...",
       "subscribers": {
         "tag": "hidden"
       },
       "videoCount": null,
       "viewCount": null,
-      "uploadsPlaylistId": "UUsb-1aJgiJXJH2feV-zlZRw",
+      "uploadsPlaylistId": null,
       "country": null,
       "tags": [],
       "isSinging": false,
@@ -92,7 +95,78 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "KiwimiYT",
+          "handle": "KiwimiYT",
+          "name": "Kiwimi_alien",
+          "url": "https://www.youtube.com/@KiwimiYT",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/OHmBLB6NIfKLqa_37QAcpeProgNCenthnC4HZFt3tI9olcR-CfQIbI9bZ377KPmDwv2n_rQH=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.042Z"
+        },
+        {
+          "platform": "bilibili",
+          "id": "3707070712908035",
+          "handle": null,
+          "name": "Kiwimi_alien",
+          "url": "https://space.bilibili.com/3707070712908035",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-22T11:36:11.042Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "platform",
+      "aliases": [
+        "Kiwimi_alien"
+      ]
+    },
+    {
+      "id": "UCsb-1aJgiJXJH2feV-zlZRw",
+      "name": "Kyo Kaneko 【NIJISANJI EN】",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "en",
+      "regionSource": "agency",
+      "languages": [
+        "en"
+      ],
+      "statedLanguages": [],
+      "agency": "NIJISANJI EN",
+      "affiliation": "group",
+      "avatar": "https://yt3.googleusercontent.com/Ox0CfbHFejnp2R9tbSpi0WwFKHj6MQIlBTJfyqinX8s16Blb7IFjmFBIi91oaMd5_EbKS3edrg=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "Wassup I'm Kyo! Chaotic 1st Year from ILUNA Institute of the Mystics! My primary goal in life is to always have fun and make others laugh. Twitter: https://w...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": "UUsb-1aJgiJXJH2feV-zlZRw",
+      "country": null,
+      "tags": [],
+      "isSinging": false,
+      "gender": "female",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -108,15 +182,16 @@
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.086Z"
+          "avatar": "https://yt3.googleusercontent.com/Ox0CfbHFejnp2R9tbSpi0WwFKHj6MQIlBTJfyqinX8s16Blb7IFjmFBIi91oaMd5_EbKS3edrg=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.042Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "Kyo Kaneko"
+      ]
     },
     {
       "id": "vdb:4bb946b7-6b9d-5b28-8975-f23291cba191",
@@ -142,7 +217,9 @@
       "viewCount": null,
       "uploadsPlaylistId": null,
       "country": null,
-      "tags": [],
+      "tags": [
+        "Unicreate"
+      ],
       "isSinging": false,
       "gender": "unknown",
       "isAi": false,
@@ -150,7 +227,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -160,7 +237,9 @@
       "externals": {},
       "popularVideoId": null,
       "nameSource": "roster",
-      "aliases": []
+      "aliases": [
+        "Unicreate"
+      ]
     },
     {
       "id": "vdb:ce23afd2-6f1a-5106-b1d6-09980187f549",
@@ -194,194 +273,13 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
       "platforms": [],
-      "externals": {},
-      "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
-    },
-    {
-      "id": "youtube:NOATalent",
-      "name": "NOA Talent",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "regionSource": "declared",
-      "languages": [
-        "en"
-      ],
-      "statedLanguages": [],
-      "agency": "20a14bd8-50b1-5613-96c9-191eef51b689",
-      "affiliation": "group",
-      "avatar": null,
-      "banner": null,
-      "description": null,
-      "subscribers": {
-        "tag": "hidden"
-      },
-      "videoCount": null,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "verification": null,
-      "source": "api",
-      "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "3546603258382382",
-          "handle": null,
-          "name": "NOA Talent",
-          "url": "https://space.bilibili.com/3546603258382382",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.095Z"
-        },
-        {
-          "platform": "youtube",
-          "id": "NOATalent",
-          "handle": "NOATalent",
-          "name": "NOA Talent",
-          "url": "https://www.youtube.com/@NOATalent",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.095Z"
-        },
-        {
-          "platform": "twitch",
-          "id": "noatalent",
-          "handle": null,
-          "name": "NOA Talent",
-          "url": "https://www.twitch.tv/noatalent",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.095Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
-    },
-    {
-      "id": "youtube:RiiKamiVT",
-      "name": "RiiKami",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "regionSource": "declared",
-      "languages": [
-        "en"
-      ],
-      "statedLanguages": [],
-      "agency": null,
-      "affiliation": "unknown",
-      "avatar": null,
-      "banner": null,
-      "description": null,
-      "subscribers": {
-        "tag": "hidden"
-      },
-      "videoCount": null,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "verification": null,
-      "source": "api",
-      "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "1460400193",
-          "handle": null,
-          "name": "RiiKami",
-          "url": "https://space.bilibili.com/1460400193",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.111Z"
-        },
-        {
-          "platform": "youtube",
-          "id": "RiiKamiVT",
-          "handle": "RiiKamiVT",
-          "name": "RiiKami",
-          "url": "https://www.youtube.com/@RiiKamiVT",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.111Z"
-        },
-        {
-          "platform": "youtube",
-          "id": "RiiKamiASMR",
-          "handle": "RiiKamiASMR",
-          "name": "RiiKami",
-          "url": "https://www.youtube.com/@RiiKamiASMR",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.111Z"
-        },
-        {
-          "platform": "twitch",
-          "id": "riikamivt",
-          "handle": null,
-          "name": "RiiKami",
-          "url": "https://www.twitch.tv/riikamivt",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.111Z"
-        }
-      ],
       "externals": {},
       "popularVideoId": null,
       "nameSource": "roster",

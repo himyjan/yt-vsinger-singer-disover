@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T06:58:03.071Z",
+  "generatedAt": "2026-10-22T11:36:05.933Z",
   "channels": [
     {
       "id": "UC8rcEBzJSleTkf_-agPM20g",
-      "name": "IRyS",
+      "name": "IRyS Ch. hololive",
       "handle": null,
       "kind": "virtual",
       "role": "vsinger",
@@ -18,9 +18,9 @@
       ],
       "agency": "hololive",
       "affiliation": "group",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/zztv3u0fMtIbGu5nLjKPTwR_8-U0nSq80kmWW0xBpc42tA6dFHlDb_TG3VjSPLNFBuAIZtaFrw=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "HiRyS, it's IRyS! Your seiso nephilim here to fill the world with hopium♪ IRyS, a half-demon, half-angel also known as a Nephilim, once brought hope to “The ...",
       "subscribers": {
         "tag": "hidden"
       },
@@ -36,7 +36,7 @@
       "verification": null,
       "source": "seed",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -52,19 +52,20 @@
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:05.126Z"
+          "avatar": "https://yt3.googleusercontent.com/zztv3u0fMtIbGu5nLjKPTwR_8-U0nSq80kmWW0xBpc42tA6dFHlDb_TG3VjSPLNFBuAIZtaFrw=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:07.961Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "seed",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "IRyS"
+      ]
     },
     {
       "id": "UC9ad82fASVVMQLsJbshxdfA",
-      "name": "NACHOCO",
+      "name": "NACHOCO Channel",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -76,9 +77,9 @@
       "statedLanguages": [],
       "agency": null,
       "affiliation": "unknown",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_mdISI1tN3Oz-jDzC0EZnDsogCny0frszV-Y2HEBgejkQ=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "アルバイト大好き！ おっきなリボンが目印の女子高生バーチャルYouTuber。 色々なエンタメ系アルバイトに日々チャレンジ٩( ᐛ )و どんな検証も実況も宣伝も、なちょこにお任せあれ！ みなさんからのアルバイト依頼もお待ちしています。 チャンネル登録をお願いしますっ！ 🎀【なちょこTwitter】 https:...",
       "subscribers": {
         "tag": "hidden"
       },
@@ -88,13 +89,13 @@
       "country": null,
       "tags": [],
       "isSinging": false,
-      "gender": "unknown",
+      "gender": "female",
       "isAi": false,
       "variant": "vtuber",
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -110,9 +111,8 @@
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.095Z"
+          "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_mdISI1tN3Oz-jDzC0EZnDsogCny0frszV-Y2HEBgejkQ=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.052Z"
         },
         {
           "platform": "bilibili",
@@ -124,32 +124,182 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.095Z"
+          "lastCheckedAt": "2026-10-22T11:36:11.052Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "NACHOCO"
+      ]
     },
     {
-      "id": "UCu-J8uIXuLZh16gG-cT1naw",
-      "name": "Finana Ryugu",
+      "id": "UCCmW4tpDTArjFE34UBH9kKg",
+      "name": "なおみん | Naomin",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
       "region": "en",
-      "regionSource": "declared",
+      "regionSource": "script",
+      "languages": [
+        "en"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://yt3.googleusercontent.com/fc5huO37OaU2NZ1vRRJgzdoY8AbpvobqEVz8RSfjz6TOvjJDmnm68TgVp6PHMoF23ZjVp3hoECI=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": null,
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": false,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "Naomin7777",
+          "handle": "Naomin7777",
+          "name": "PL",
+          "url": "https://www.youtube.com/@Naomin7777",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/fc5huO37OaU2NZ1vRRJgzdoY8AbpvobqEVz8RSfjz6TOvjJDmnm68TgVp6PHMoF23ZjVp3hoECI=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.265Z"
+        },
+        {
+          "platform": "bilibili",
+          "id": "3546610095098464",
+          "handle": null,
+          "name": "PL",
+          "url": "https://space.bilibili.com/3546610095098464",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-22T11:36:11.265Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "platform",
+      "aliases": [
+        "PL",
+        "なおみん",
+        "Naomin"
+      ]
+    },
+    {
+      "id": "UCHsx4Hqa-1ORjQTh9TYDhww",
+      "name": "Takanashi Kiara Ch. hololive",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "en",
+      "regionSource": "agency",
+      "languages": [
+        "en"
+      ],
+      "statedLanguages": [],
+      "agency": "Hololive EN",
+      "affiliation": "group",
+      "avatar": "https://yt3.googleusercontent.com/vnzn_RiKneABPPnp1-0SO4IAZQRXqVsL5RNDQYGR9GhT-Flm47vM4UJeyGfn4U_gteKqJMBwNA=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "Virtual Idol Phoenix on the rise🐦‍🔥 Based in Austria & Japan🌎Join KFP now!👇 For Inquiries Cover Corp: http://cover-corp.com/ Official Twitter: https://twitte...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": "UUHsx4Hqa-1ORjQTh9TYDhww",
+      "country": null,
+      "tags": [
+        "小鳥遊キアラ",
+        "Takanashi Kiara"
+      ],
+      "isSinging": true,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCHsx4Hqa-1ORjQTh9TYDhww",
+          "handle": null,
+          "name": "小鸟游琪亚拉",
+          "url": "https://www.youtube.com/channel/UCHsx4Hqa-1ORjQTh9TYDhww",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/vnzn_RiKneABPPnp1-0SO4IAZQRXqVsL5RNDQYGR9GhT-Flm47vM4UJeyGfn4U_gteKqJMBwNA=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.319Z"
+        },
+        {
+          "platform": "bilibili",
+          "id": "674600646",
+          "handle": null,
+          "name": "小鸟游琪亚拉",
+          "url": "https://space.bilibili.com/674600646",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-22T11:36:11.319Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "platform",
+      "aliases": [
+        "小鳥遊キアラ",
+        "Takanashi Kiara",
+        "小鸟游琪亚拉"
+      ]
+    },
+    {
+      "id": "UCu-J8uIXuLZh16gG-cT1naw",
+      "name": "Finana Ryugu 【NIJISANJI EN】",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "en",
+      "regionSource": "agency",
       "languages": [
         "en"
       ],
       "statedLanguages": [],
       "agency": "NIJISANJI EN",
       "affiliation": "group",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/xXO6UqEUCfXxrY16021Fjy6SQxv8GnPTOR_JilIwHE21yunBzMbmp4MEJEps4GOEMKZ6TvBI=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "Hi! I’m Finana Ryugu! A mermaid who spends my time with the tropical fish in the sea of coral reefs. I have a heart as clear and pure as the calm and beautif...",
       "subscribers": {
         "tag": "hidden"
       },
@@ -165,7 +315,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -181,15 +331,16 @@
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.078Z"
+          "avatar": "https://yt3.googleusercontent.com/xXO6UqEUCfXxrY16021Fjy6SQxv8GnPTOR_JilIwHE21yunBzMbmp4MEJEps4GOEMKZ6TvBI=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.035Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "Finana Ryugu"
+      ]
     }
   ]
 }

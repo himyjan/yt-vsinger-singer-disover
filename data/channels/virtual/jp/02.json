@@ -1,30 +1,92 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T06:58:03.071Z",
+  "generatedAt": "2026-10-22T11:36:05.933Z",
   "channels": [
     {
-      "id": "UC4YaOt1yT-ZeyB0OmxHgolA",
-      "name": "绊爱",
+      "id": "bilibili:1660351669",
+      "name": "劳伦伊罗斯的通缉名单",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
-      "regionSource": "declared",
+      "regionSource": "agency",
       "languages": [
         "ja"
       ],
       "statedLanguages": [],
-      "agency": "Kizuna AI株式会社",
+      "agency": "NIJISANJI",
       "affiliation": "group",
-      "avatar": null,
+      "avatar": "https://i1.hdslb.com/bfs/face/62c6433ff7b2be7e6c001fc4ab60fe893e05476f.jpg",
+      "banner": null,
+      "description": "にじさんじ所属劳伦·伊罗斯非公式搬运组，长期招收轴翻剪校美后转，审核群970085480",
+      "subscribers": {
+        "tag": "has",
+        "count": 58095
+      },
+      "videoCount": 297,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": false,
+      "gender": "female",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "bilibili",
+          "id": "1660351669",
+          "handle": "1660351669",
+          "name": "劳伦·伊罗斯",
+          "url": "https://space.bilibili.com/1660351669",
+          "subscribers": {
+            "tag": "has",
+            "count": 58095
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-22T11:36:11.186Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "platform",
+      "aliases": [
+        "劳伦·伊罗斯"
+      ]
+    },
+    {
+      "id": "bilibili:1724136548",
+      "name": "紫乃莱拉-官方WACTOR",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "agency",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": "WACTOR",
+      "affiliation": "group",
+      "avatar": "https://i2.hdslb.com/bfs/face/a6e94e045f95a2cc58b968d79ba8e5db5ba6ccea.jpg",
       "banner": null,
       "description": null,
       "subscribers": {
-        "tag": "hidden"
+        "tag": "has",
+        "count": 18719
       },
-      "videoCount": null,
+      "videoCount": 72,
       "viewCount": null,
-      "uploadsPlaylistId": "UU4YaOt1yT-ZeyB0OmxHgolA",
+      "uploadsPlaylistId": null,
       "country": null,
       "tags": [],
       "isSinging": false,
@@ -34,7 +96,186 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "bilibili",
+          "id": "1724136548",
+          "handle": "1724136548",
+          "name": "紫乃莱拉-官方WACTOR",
+          "url": "https://space.bilibili.com/1724136548",
+          "subscribers": {
+            "tag": "has",
+            "count": 18719
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-22T11:36:11.631Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": []
+    },
+    {
+      "id": "bilibili:359080356",
+      "name": "惺忪喵",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "agency",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": "winks",
+      "affiliation": "group",
+      "avatar": null,
+      "banner": null,
+      "description": null,
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [
+        "Xingsongmiao"
+      ],
+      "isSinging": true,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "bilibili",
+          "id": "359080356",
+          "handle": null,
+          "name": "惺忪喵",
+          "url": "https://space.bilibili.com/359080356",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-22T11:36:11.362Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": [
+        "Xingsongmiao"
+      ]
+    },
+    {
+      "id": "bilibili:690608703",
+      "name": "朝日南茜Official",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "agency",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": "NIJISANJI",
+      "affiliation": "group",
+      "avatar": null,
+      "banner": null,
+      "description": null,
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": false,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "bilibili",
+          "id": "690608703",
+          "handle": null,
+          "name": "朝日南茜Official",
+          "url": "https://space.bilibili.com/690608703",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-22T11:36:11.425Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": []
+    },
+    {
+      "id": "UC4YaOt1yT-ZeyB0OmxHgolA",
+      "name": "Kizuna AI - A.I.Channel",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "name",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": "Kizuna AI株式会社",
+      "affiliation": "group",
+      "avatar": "https://yt3.googleusercontent.com/rmX8Eivd_F0pceSa9cIhdrYH4ByXGBqylVWb_SN6CsfjA3QtZmG1z-AwM07J3BY2ubmRqjWo=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "KizunaAI Official YouTube Channel https://www.youtube.com/@AIChannel Kizuna AI (Artist / Virtual Talent)",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": "UU4YaOt1yT-ZeyB0OmxHgolA",
+      "country": null,
+      "tags": [
+        "绊爱",
+        "KizunaAI"
+      ],
+      "isSinging": false,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -50,9 +291,8 @@
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.148Z"
+          "avatar": "https://yt3.googleusercontent.com/rmX8Eivd_F0pceSa9cIhdrYH4ByXGBqylVWb_SN6CsfjA3QtZmG1z-AwM07J3BY2ubmRqjWo=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.103Z"
         },
         {
           "platform": "bilibili",
@@ -64,18 +304,21 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.148Z"
+          "lastCheckedAt": "2026-10-22T11:36:11.103Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "绊爱",
+        "KizunaAI",
+        "キズナアイ"
+      ]
     },
     {
       "id": "UC5CwaMl1eIgY8h02uZw7u8A",
-      "name": "Hoshimachi Suisei",
+      "name": "Suisei Channel",
       "handle": null,
       "kind": "virtual",
       "role": "vsinger",
@@ -90,9 +333,9 @@
       ],
       "agency": "hololive",
       "affiliation": "group",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_kLDBK5ksSvk5-XJ6S8e0kWfjy7mVl3jyUkgDeMQ7rlCpU=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "バーチャルアイドルの星街すいせいです！☄☄ ▼配信情報etcはTwitterにてチェック！▼ https://twitter.com/suisei_hosimati",
       "subscribers": {
         "tag": "hidden"
       },
@@ -108,7 +351,7 @@
       "verification": null,
       "source": "seed",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -124,9 +367,8 @@
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:05.126Z"
+          "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_kLDBK5ksSvk5-XJ6S8e0kWfjy7mVl3jyUkgDeMQ7rlCpU=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:07.961Z"
         },
         {
           "platform": "bilibili",
@@ -138,32 +380,94 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.382Z"
+          "lastCheckedAt": "2026-10-22T11:36:11.398Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "seed",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "Hoshimachi Suisei"
+      ]
     },
     {
-      "id": "UC7fk0CB07ly8oSl0aqKkqFg",
-      "name": "百鬼绫目",
+      "id": "UC6hdjP0rVgCp27DMeY_tQBA",
+      "name": "あきなさんち",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
-      "regionSource": "declared",
+      "regionSource": "name",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://yt3.googleusercontent.com/w74JmCk66EU2I-nZtlr2qsbeC-_F6gC2mm8LVGwjFiE-SsfsuuKkcCTxfT32czstMB05MBP4=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "声優の法元明菜です。 ほーみんって呼んでください。 特技は中国語、実家は大阪。 お手紙やプレゼント（邮递礼物地址） 事務所ジャストプロに法元明菜宛でお送りください。 （×：飲食物や生もの、危険物、金券、ぬいぐるみ、開封済みの物等 ｵｽｽﾒ：店からの直送、有名なメーカーの物、未開封の物等） 週替わりコーナー お便り...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": "UU6hdjP0rVgCp27DMeY_tQBA",
+      "country": null,
+      "tags": [
+        "法元明菜"
+      ],
+      "isSinging": false,
+      "gender": "female",
+      "isAi": false,
+      "variant": "female_vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UC6hdjP0rVgCp27DMeY_tQBA",
+          "handle": null,
+          "name": "法元明菜",
+          "url": "https://www.youtube.com/channel/UC6hdjP0rVgCp27DMeY_tQBA",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/w74JmCk66EU2I-nZtlr2qsbeC-_F6gC2mm8LVGwjFiE-SsfsuuKkcCTxfT32czstMB05MBP4=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.496Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "platform",
+      "aliases": [
+        "法元明菜"
+      ]
+    },
+    {
+      "id": "UC7fk0CB07ly8oSl0aqKkqFg",
+      "name": "Nakiri Ayame Ch. 百鬼あやめ",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "agency",
       "languages": [
         "ja"
       ],
       "statedLanguages": [],
       "agency": "Hololive",
       "affiliation": "group",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/3CeLWGYb6cLUywTJzNt-UpITviNxeGNvtjhIqbV-AIybCqCoFw9onWtg91bjwpqvfEP9mfqIR4Q=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "😈バーチャル鬼神😈の百鬼あやめ (なきり あやめ)というぞ✨式神と共に幽世からやってきた！ 実は生徒会長もやっていたり… 色々なことを放送して現世の皆と仲良くしていけたらいいなと思っている！ 💭母上：【@nana_kaguraaa】",
       "subscribers": {
         "tag": "hidden"
       },
@@ -171,7 +475,9 @@
       "viewCount": null,
       "uploadsPlaylistId": "UU7fk0CB07ly8oSl0aqKkqFg",
       "country": null,
-      "tags": [],
+      "tags": [
+        "百鬼绫目"
+      ],
       "isSinging": false,
       "gender": "unknown",
       "isAi": false,
@@ -179,7 +485,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -195,9 +501,8 @@
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.534Z"
+          "avatar": "https://yt3.googleusercontent.com/3CeLWGYb6cLUywTJzNt-UpITviNxeGNvtjhIqbV-AIybCqCoFw9onWtg91bjwpqvfEP9mfqIR4Q=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.589Z"
         },
         {
           "platform": "bilibili",
@@ -209,32 +514,34 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.534Z"
+          "lastCheckedAt": "2026-10-22T11:36:11.589Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "百鬼绫目",
+        "百鬼あやめ"
+      ]
     },
     {
       "id": "UC8C1LLhBhf_E2IBPLSDJXlQ",
-      "name": "健屋花那",
+      "name": "健屋花那【にじさんじ】KanaSukoya",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
-      "regionSource": "declared",
+      "regionSource": "agency",
       "languages": [
         "ja"
       ],
       "statedLanguages": [],
       "agency": "NIJISANJI",
       "affiliation": "group",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_n1iAdn7rwdvm6cQF28aNlJM--sYm5dvrW8PCaxarA78Nw=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "お加減はいかがでしょうか。 にじさんじ所属バーチャルライバーの 健屋 花那(すこや かな)です。 まだまだ未熟ではありますが、 皆さんが元気にそしてハッピーになれるような時間をお届けしたいと思います。 気軽にすこってください。 ✿ライブでご覧の皆さんにお願いごと １ 全く関係のない方のお名前を出したり、話題にあが...",
       "subscribers": {
         "tag": "hidden"
       },
@@ -242,15 +549,17 @@
       "viewCount": null,
       "uploadsPlaylistId": "UU8C1LLhBhf_E2IBPLSDJXlQ",
       "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
+      "tags": [
+        "KanaSukoya"
+      ],
+      "isSinging": true,
+      "gender": "female",
       "isAi": false,
       "variant": "vtuber",
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -266,9 +575,8 @@
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.195Z"
+          "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_n1iAdn7rwdvm6cQF28aNlJM--sYm5dvrW8PCaxarA78Nw=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.160Z"
         },
         {
           "platform": "bilibili",
@@ -280,45 +588,34 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.195Z"
-        },
-        {
-          "platform": "bilibili",
-          "id": "666726798",
-          "handle": null,
-          "name": "健屋花那",
-          "url": "https://space.bilibili.com/666726798",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.195Z"
+          "lastCheckedAt": "2026-10-22T11:36:11.160Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "KanaSukoya",
+        "健屋花那"
+      ]
     },
     {
       "id": "UCC0i9nECi4Gz7TU63xZwodg",
-      "name": "白雪みしろ",
+      "name": "白雪みしろShirayuki Mishiro",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
-      "regionSource": "declared",
+      "regionSource": "agency",
       "languages": [
         "ja"
       ],
       "statedLanguages": [],
       "agency": "NoriPro",
       "affiliation": "group",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/KcyIv0pSkO_STbvBc6P4OhoxasD7wGrYaOsxNMIlItkmaKKMIk-YcbG6VMKBs1qtZfo_iugb=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "┊白雪みしろ┊𝗦𝗛𝗜𝗥𝗔𝗬𝗨𝗞𝗜𝗠𝗜𝗦𝗛𝗜𝗥𝗢┊ Vsinger。 バーチャル界で暮らす 歌と芝居が好きな獣人族。 ✧歌動画の投稿 ✧週に一度の定期朝活配信 ✧歌配信 ✧シチュエーションボイス配信 ✧他、雑談、ゲームetc... ✧••┈┈┈┈┈┈┈┈┈┈┈┈••✧ 【 Roselta 】 バーチャル世界で共同生...",
       "subscribers": {
         "tag": "hidden"
       },
@@ -327,14 +624,14 @@
       "uploadsPlaylistId": "UUC0i9nECi4Gz7TU63xZwodg",
       "country": null,
       "tags": [],
-      "isSinging": false,
+      "isSinging": true,
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -350,9 +647,8 @@
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.531Z"
+          "avatar": "https://yt3.googleusercontent.com/KcyIv0pSkO_STbvBc6P4OhoxasD7wGrYaOsxNMIlItkmaKKMIk-YcbG6VMKBs1qtZfo_iugb=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.586Z"
         },
         {
           "platform": "bilibili",
@@ -364,32 +660,33 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.531Z"
+          "lastCheckedAt": "2026-10-22T11:36:11.586Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "白雪みしろ"
+      ]
     },
     {
       "id": "UCH0ObmokE-zUOeihkKwWySA",
-      "name": "梦乃栞",
+      "name": "Yumenoshiori ASMR",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
-      "regionSource": "declared",
+      "regionSource": "name",
       "languages": [
         "ja"
       ],
       "statedLanguages": [],
       "agency": "P家",
       "affiliation": "group",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/OiqpO6yzxz4jW-9FBbG20qg-VODNxebH-6PS2HFKMu9uO7wRXv-w3H3ESoriTH6ZnqgBPkK-nyk=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "サキュバス堕天使しおりちゃん♡バーチャルユーチューバー はじめまっするーっ✩ よろしくお願いしまするっ(੭ु´͈ ᐜ `͈)੭ु⁾⁾ ASMR、寝かしつけでは、大きい音がなってびっくりしないように終わり際の広告を外しています。もし、漏れがあっておっきい音がなっちゃった時は教えてくれたら嬉しいよ💕 🍄謎スタンプが使...",
       "subscribers": {
         "tag": "hidden"
       },
@@ -397,15 +694,17 @@
       "viewCount": null,
       "uploadsPlaylistId": "UUH0ObmokE-zUOeihkKwWySA",
       "country": null,
-      "tags": [],
+      "tags": [
+        "梦乃栞"
+      ],
       "isSinging": false,
-      "gender": "unknown",
+      "gender": "female",
       "isAi": false,
       "variant": "vtuber",
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -421,9 +720,8 @@
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.152Z"
+          "avatar": "https://yt3.googleusercontent.com/OiqpO6yzxz4jW-9FBbG20qg-VODNxebH-6PS2HFKMu9uO7wRXv-w3H3ESoriTH6ZnqgBPkK-nyk=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.108Z"
         },
         {
           "platform": "bilibili",
@@ -435,32 +733,34 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.152Z"
+          "lastCheckedAt": "2026-10-22T11:36:11.108Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "梦乃栞",
+        "ユメノシオリ"
+      ]
     },
     {
       "id": "UCH7ikLTeb77nNlh81Hogcng",
-      "name": "きさなちゃんねる",
+      "name": "キサナ【Kisana】",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
-      "regionSource": "declared",
+      "regionSource": "name",
       "languages": [
         "ja"
       ],
       "statedLanguages": [],
       "agency": null,
       "affiliation": "unknown",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_kBItEak0Q29QO-KzOEpFWRlchI3abcn18ieOSetWhTYfM=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "🦋ほぼほぼほろびた世界のなかで たのしい動画を作ります🦋 ゲームを作ったり、小説を書いたりもします 好きなもの：特撮（昭和から令和まで）、怪談・都市伝説",
       "subscribers": {
         "tag": "hidden"
       },
@@ -476,7 +776,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -492,33 +792,34 @@
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.142Z"
+          "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_kBItEak0Q29QO-KzOEpFWRlchI3abcn18ieOSetWhTYfM=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.096Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "きさなちゃんねる"
+      ]
     },
     {
       "id": "UCIdEIHpS0TdkqRkHL5OkLtA",
-      "name": "名取さな",
+      "name": "さなちゃんねる",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
-      "regionSource": "declared",
+      "regionSource": "name",
       "languages": [
         "ja"
       ],
       "statedLanguages": [],
       "agency": null,
       "affiliation": "unknown",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/cCZHhPBp_5JcVLUZmlp594ppNapLHCrfW1J05T_G1xbrgZrGwN0TLe91HF-Fx9qJdbLAoFy3Pg=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "こんにちは！名取さなです。 バーチャルサナトリウムに住んでいます。 Youtube以外ではこんなところで活動しています。 ■twitter https://twitter.com/sana_natori ■FANBOX https://www.pixiv.net/fanbox/creator/30984332 ■...",
       "subscribers": {
         "tag": "hidden"
       },
@@ -528,13 +829,13 @@
       "country": null,
       "tags": [],
       "isSinging": false,
-      "gender": "unknown",
+      "gender": "female",
       "isAi": false,
       "variant": "vtuber",
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -550,9 +851,8 @@
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.240Z"
+          "avatar": "https://yt3.googleusercontent.com/cCZHhPBp_5JcVLUZmlp594ppNapLHCrfW1J05T_G1xbrgZrGwN0TLe91HF-Fx9qJdbLAoFy3Pg=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.216Z"
         },
         {
           "platform": "bilibili",
@@ -564,32 +864,109 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.240Z"
+          "lastCheckedAt": "2026-10-22T11:36:11.216Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "名取さな"
+      ]
     },
     {
-      "id": "UCKMYISTJAQ8xTplUPHiABlA",
-      "name": "社筑",
+      "id": "UCIG9rDtgR45VCZmYnd-4DUw",
+      "name": "ラトナ・プティ -Ratna Petit -にじさんじ所属",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
-      "regionSource": "declared",
+      "regionSource": "agency",
       "languages": [
         "ja"
       ],
       "statedLanguages": [],
       "agency": "NIJISANJI",
       "affiliation": "group",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_mX9S_nkRRv8Mk7hqcb_S4c4awLoeI0mIbZRQWMoO3ox9I=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "ラトナ・プティ- Ratna･Petit -🐻💎 （ラトナ＝宝石 プティ＝小さな ：小さな宝石という意味が込められています。） にじさんじ所属。基本眠いレッサーパンダ。 普段は主に（ASMR/ゲーム）配信をやってるよ💭 twitter ▸ https://twitter.com/ratna_petit ( @ra...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": "UUIG9rDtgR45VCZmYnd-4DUw",
+      "country": null,
+      "tags": [
+        "拉特娜•佩蒂",
+        "小熊猫"
+      ],
+      "isSinging": false,
+      "gender": "female",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCIG9rDtgR45VCZmYnd-4DUw",
+          "handle": null,
+          "name": "拉特娜•佩蒂",
+          "url": "https://www.youtube.com/channel/UCIG9rDtgR45VCZmYnd-4DUw",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_mX9S_nkRRv8Mk7hqcb_S4c4awLoeI0mIbZRQWMoO3ox9I=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.108Z"
+        },
+        {
+          "platform": "bilibili",
+          "id": "1809637",
+          "handle": null,
+          "name": "拉特娜•佩蒂",
+          "url": "https://space.bilibili.com/1809637",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-22T11:36:11.108Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "platform",
+      "aliases": [
+        "拉特娜•佩蒂",
+        "小熊猫",
+        "ラトナ・プティ"
+      ]
+    },
+    {
+      "id": "UCKMYISTJAQ8xTplUPHiABlA",
+      "name": "社築",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "agency",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": "NIJISANJI",
+      "affiliation": "group",
+      "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_npLeRrjNdn1QODGfIxd-DvqZMep4zCzRcxf332kKsIwaI=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "バーチャルライバー集団「にじさんじ」所属の社築（やしろ きずく）です。 ただのオタクです。 Twitter: https://twitter.com/846kizuQ お手紙等： 一部受け取れないものもあります。詳細は下記にて https://www.nijisanji.jp/contact",
       "subscribers": {
         "tag": "hidden"
       },
@@ -597,15 +974,17 @@
       "viewCount": null,
       "uploadsPlaylistId": "UUKMYISTJAQ8xTplUPHiABlA",
       "country": null,
-      "tags": [],
+      "tags": [
+        "社筑"
+      ],
       "isSinging": false,
-      "gender": "unknown",
+      "gender": "female",
       "isAi": false,
       "variant": "vtuber",
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -621,9 +1000,8 @@
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.544Z"
+          "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_npLeRrjNdn1QODGfIxd-DvqZMep4zCzRcxf332kKsIwaI=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.602Z"
         },
         {
           "platform": "bilibili",
@@ -635,18 +1013,19 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.544Z"
+          "lastCheckedAt": "2026-10-22T11:36:11.602Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "社筑"
+      ]
     },
     {
       "id": "UCksCLL04bRIe61wnzZ7vXRg",
-      "name": "高峰伊織",
+      "name": "高峰伊織 -takamine iori-",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -658,9 +1037,9 @@
       "statedLanguages": [],
       "agency": null,
       "affiliation": "unknown",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/u54vK_1O3u7vtMEIqbhr3DiLbx3pkYxZVq3pwp7vAgvbQYV3n0IgnBXpMuBCqmk96sKTu_IneWI=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "バーチャルボーカリストの高峰伊織(たかみねいおり)です。 このチャンネルでは、高峰伊織の音楽をお届けしていきます。 チャンネル登録や動画の高評価、Twitterのフォロー、コメント等で たくさんの方に応援していただけるととっても嬉しいです！ よろしくお願いします！ ================== ★disc...",
       "subscribers": {
         "tag": "hidden"
       },
@@ -669,14 +1048,14 @@
       "uploadsPlaylistId": "UUksCLL04bRIe61wnzZ7vXRg",
       "country": null,
       "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
+      "isSinging": true,
+      "gender": "female",
       "isAi": false,
       "variant": "vtuber",
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -692,9 +1071,8 @@
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.708Z"
+          "avatar": "https://yt3.googleusercontent.com/u54vK_1O3u7vtMEIqbhr3DiLbx3pkYxZVq3pwp7vAgvbQYV3n0IgnBXpMuBCqmk96sKTu_IneWI=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.830Z"
         },
         {
           "platform": "bilibili",
@@ -706,32 +1084,33 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.708Z"
+          "lastCheckedAt": "2026-10-22T11:36:11.830Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "高峰伊織"
+      ]
     },
     {
       "id": "UCKwATdrcjyzNv9c56PqJbWA",
-      "name": "勇凪エレナ",
+      "name": "勇凪エレナ / Elena Yunagi",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
-      "regionSource": "declared",
+      "regionSource": "name",
       "languages": [
         "ja"
       ],
       "statedLanguages": [],
       "agency": "ViViD",
       "affiliation": "group",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/ioN9bWoABHf3gIAqv7EXqtcMb8KyKizN9DZHnCvU_DB32xmBsfKQYffFebz-PG-ERsa1vVmeb8s=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "世界をにっこりハッピーにする勇者、勇凪エレナです💛 こんなところまで見てくれて感謝～🧸🍯 ════════════════════════════ ▽About me┊#勇凪エレナ​ ▽Stream┊#エレなま ▽Illust┊#絵レナ ▽Message┊#エレナあのね ▼公式タグ┊#ビビドニア物語 ══════...",
       "subscribers": {
         "tag": "hidden"
       },
@@ -747,7 +1126,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -763,33 +1142,34 @@
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.217Z"
+          "avatar": "https://yt3.googleusercontent.com/ioN9bWoABHf3gIAqv7EXqtcMb8KyKizN9DZHnCvU_DB32xmBsfKQYffFebz-PG-ERsa1vVmeb8s=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.186Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "勇凪エレナ"
+      ]
     },
     {
       "id": "UCl1oLKcAq93p-pwKfDGhiYQ",
-      "name": "我是艾玛.奥古斯特",
+      "name": "えま★おうがすと / Emma★August【にじさんじ】",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
-      "regionSource": "declared",
+      "regionSource": "name",
       "languages": [
         "ja"
       ],
       "statedLanguages": [],
-      "agency": null,
-      "affiliation": "unknown",
-      "avatar": null,
+      "agency": "nijisanji",
+      "affiliation": "group",
+      "avatar": "https://yt3.googleusercontent.com/-BQkUr0GB6GZ9czZXAPKlaXeDcYc90wxi_PvkAdDVgGCTokzRlxtl0YxDJogAhh-S16ouY40=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "にじさんじ所属・2477歳の魔王です。 えまとおうがすとの間の星は中黒の星です。 大人の姿と小さい姿があります。お酒が好きです。 えま★おうがすと公式X https://twitter.com/emma_august_ メンバーシップhttps://www.youtube.com/channel/UCl1oLKc...",
       "subscribers": {
         "tag": "hidden"
       },
@@ -797,21 +1177,35 @@
       "viewCount": null,
       "uploadsPlaylistId": "UUl1oLKcAq93p-pwKfDGhiYQ",
       "country": null,
-      "tags": [],
+      "tags": [
+        "我是艾玛.奥古斯特"
+      ],
       "isSinging": false,
-      "gender": "unknown",
+      "gender": "female",
       "isAi": false,
       "variant": "vtuber",
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
       "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCl1oLKcAq93p-pwKfDGhiYQ",
+          "handle": null,
+          "name": "我是艾玛.奥古斯特",
+          "url": "https://www.youtube.com/channel/UCl1oLKcAq93p-pwKfDGhiYQ",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/-BQkUr0GB6GZ9czZXAPKlaXeDcYc90wxi_PvkAdDVgGCTokzRlxtl0YxDJogAhh-S16ouY40=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.095Z"
+        },
         {
           "platform": "bilibili",
           "id": "2031109",
@@ -822,31 +1216,20 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.141Z"
-        },
-        {
-          "platform": "youtube",
-          "id": "UCl1oLKcAq93p-pwKfDGhiYQ",
-          "handle": null,
-          "name": "我是艾玛.奥古斯特",
-          "url": "https://www.youtube.com/channel/UCl1oLKcAq93p-pwKfDGhiYQ",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.141Z"
+          "lastCheckedAt": "2026-10-22T11:36:11.095Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "我是艾玛.奥古斯特",
+        "えま★おうがすと"
+      ]
     },
     {
       "id": "UCL9dLCVvHyMiqjp2RDgowqQ",
-      "name": "高槻律",
+      "name": "高槻りつ / Takatsuki ritsu",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -858,9 +1241,9 @@
       "statedLanguages": [],
       "agency": null,
       "affiliation": "unknown",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/_nzHgKwwML-Xvoyzw9jaPYc01xcIDzcKxE1kr0vKc9yOuKZnmy5ZTSCL_YMlX5lqc-adnELCVrA=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "3Dモデリングと配信で飯を食っている女です 最近はポケカにハマっています ✿twitter https://twitter.com/re2_takatsuki",
       "subscribers": {
         "tag": "hidden"
       },
@@ -876,7 +1259,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -892,9 +1275,8 @@
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.708Z"
+          "avatar": "https://yt3.googleusercontent.com/_nzHgKwwML-Xvoyzw9jaPYc01xcIDzcKxE1kr0vKc9yOuKZnmy5ZTSCL_YMlX5lqc-adnELCVrA=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.831Z"
         },
         {
           "platform": "bilibili",
@@ -906,32 +1288,107 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.708Z"
+          "lastCheckedAt": "2026-10-22T11:36:11.831Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "高槻律"
+      ]
     },
     {
-      "id": "UCN00mjuLh6fXZpf-PTVXEzg",
-      "name": "えるきらちゃんねる",
+      "id": "UCle1cz6rcyH0a-xoMYwLlAg",
+      "name": "姫咲ゆずる / Himesaki Yuzuru",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
-      "regionSource": "declared",
+      "regionSource": "agency",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": "NoriPro",
+      "affiliation": "group",
+      "avatar": "https://yt3.googleusercontent.com/57H2NBeQP6kAutCj3U_zCGW3by24Y43lF2HPfMNf8JHvkJxPnLrVncn2sESoXCttpHuETikKQA=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "バーチャルアーティストの姫咲ゆずるです！ 本業イラストレーター&個人でVtuber活動中🐰✨ 🌟Twitter： https://twitter.com/Himesaki_yuzuru 🌟HP：https://himesakiyuzuru.wixsite.com/main 🌟姫咲ゆずるに関する利用規約はこちら h...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": "UUle1cz6rcyH0a-xoMYwLlAg",
+      "country": null,
+      "tags": [
+        "姬咲柚流"
+      ],
+      "isSinging": false,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCle1cz6rcyH0a-xoMYwLlAg",
+          "handle": null,
+          "name": "姬咲柚流",
+          "url": "https://www.youtube.com/channel/UCle1cz6rcyH0a-xoMYwLlAg",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/57H2NBeQP6kAutCj3U_zCGW3by24Y43lF2HPfMNf8JHvkJxPnLrVncn2sESoXCttpHuETikKQA=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.284Z"
+        },
+        {
+          "platform": "bilibili",
+          "id": "493724848",
+          "handle": null,
+          "name": "姬咲柚流",
+          "url": "https://space.bilibili.com/493724848",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-22T11:36:11.284Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "platform",
+      "aliases": [
+        "姬咲柚流",
+        "姫咲ゆずる"
+      ]
+    },
+    {
+      "id": "UCN00mjuLh6fXZpf-PTVXEzg",
+      "name": "えるきら",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "name",
       "languages": [
         "ja"
       ],
       "statedLanguages": [],
       "agency": null,
       "affiliation": "unknown",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/Ftva_fHTz2tEoxOG6Mum6cm59x5RDvM4QeF_ikX5ZNqdG4ZJaRYWB78M6fAjMM8xibJ35oOXjA=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "バーチャルがんだま～のえるきらです！！✧*｡(◍˃̵ᗜ˂̵◍)ॱ◌̥*⃝̣ ⋆ EXVSシリーズ、アケ版マキオンで金プレまで行きました！ガンダム得意です！(*ฅ́˘ฅ̀*) 現在はサイコザク乗ってます❣️ みんなチャンネル登録よろしくねー！✿*.(❁′ᗨ‵❁)*✲ﾟ",
       "subscribers": {
         "tag": "hidden"
       },
@@ -947,7 +1404,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -963,33 +1420,34 @@
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.142Z"
+          "avatar": "https://yt3.googleusercontent.com/Ftva_fHTz2tEoxOG6Mum6cm59x5RDvM4QeF_ikX5ZNqdG4ZJaRYWB78M6fAjMM8xibJ35oOXjA=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.095Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "えるきらちゃんねる"
+      ]
     },
     {
       "id": "UCp-5t9SrOQwXMU7iIjQfARg",
-      "name": "大神澪",
+      "name": "Mio Channel 大神ミオ",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
-      "regionSource": "declared",
+      "regionSource": "agency",
       "languages": [
         "ja"
       ],
       "statedLanguages": [],
       "agency": "Hololive",
       "affiliation": "group",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/JV8VdQFA7eZk5H1cRxHyIdLKQ5wD6EBywjxLzrne2EpY9LSiVgtapvh0iQA6plVNxdIKNxK0NRU=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "ホロライブゲーマーズ所属✨大神ミオ（ookami mio）だよ🐺🌲狼です！ Twitter：https://twitter.com/ookamimio ✣✣­­–­­–­­–­­–­­–­­–­­–­­–­­–­­–­­–­­–­­–­­–✣–­­–­­–­­–­­–­­–­­–­­–­­–­­–­­–­­–­­...",
       "subscribers": {
         "tag": "hidden"
       },
@@ -997,15 +1455,17 @@
       "viewCount": null,
       "uploadsPlaylistId": "UUp-5t9SrOQwXMU7iIjQfARg",
       "country": null,
-      "tags": [],
-      "isSinging": false,
+      "tags": [
+        "大神澪"
+      ],
+      "isSinging": true,
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1021,9 +1481,8 @@
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.274Z"
+          "avatar": "https://yt3.googleusercontent.com/JV8VdQFA7eZk5H1cRxHyIdLKQ5wD6EBywjxLzrne2EpY9LSiVgtapvh0iQA6plVNxdIKNxK0NRU=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.260Z"
         },
         {
           "platform": "bilibili",
@@ -1035,32 +1494,34 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.274Z"
+          "lastCheckedAt": "2026-10-22T11:36:11.260Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "大神澪",
+        "大神ミオ"
+      ]
     },
     {
       "id": "UCp01G7ZvzZh_Rn0J9QsCFbg",
-      "name": "桃ゐ咲鬼",
+      "name": "桃ゐ咲鬼/Saki Channel【おとりざ和編】",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
-      "regionSource": "declared",
+      "regionSource": "name",
       "languages": [
         "ja"
       ],
       "statedLanguages": [],
       "agency": null,
       "affiliation": "unknown",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_mkkYnyLIim2g7-0S_y48Le4mcbhXcZFM5sVZSiNQH_oA=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "御伽りざれくしょん【和編】の桃ゐ咲鬼じゃ！！！ 鬼退治に行くたびに食中毒になり。。再び鬼ヶ島にいくためお供を探しておる！！！ お供になる者はチャンネル登録じゃぞ！！！ Twitterは＠momoi＿saki ライブのツイートは＃桃咲鬼 ファンアートは＃もも応援旗",
       "subscribers": {
         "tag": "hidden"
       },
@@ -1069,14 +1530,14 @@
       "uploadsPlaylistId": "UUp01G7ZvzZh_Rn0J9QsCFbg",
       "country": null,
       "tags": [],
-      "isSinging": false,
+      "isSinging": true,
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1092,15 +1553,16 @@
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.428Z"
+          "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_mkkYnyLIim2g7-0S_y48Le4mcbhXcZFM5sVZSiNQH_oA=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.454Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "桃ゐ咲鬼"
+      ]
     },
     {
       "id": "UCSFaf99eT5T4wNN1O2Z3NZg",
@@ -1109,7 +1571,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
-      "regionSource": "declared",
+      "regionSource": "name",
       "languages": [
         "ja"
       ],
@@ -1134,7 +1596,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1151,8 +1613,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.147Z"
+          "lastCheckedAt": "2026-10-22T11:36:11.102Z"
         },
         {
           "platform": "bilibili",
@@ -1164,8 +1625,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.147Z"
+          "lastCheckedAt": "2026-10-22T11:36:11.102Z"
         }
       ],
       "externals": {},
@@ -1175,21 +1635,21 @@
     },
     {
       "id": "UCspv01oxUFf_MTSipURRhkA",
-      "name": "叶",
+      "name": "Kanae Channel",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
-      "regionSource": "declared",
+      "regionSource": "agency",
       "languages": [
         "ja"
       ],
       "statedLanguages": [],
       "agency": "NIJISANJI",
       "affiliation": "group",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/jqa21VQlm5H8S7h0S7flUT18lGt30ynTZPW2JUnF-ET5Wi8idRjOn6orVhsYnvIOUIzafUYa6w=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "にじさんじ所属ライバーの叶です！ ほぼ毎日生放送をしています！ 告知なく始まる配信も多いので通知をオンにして遊びにきてくれると嬉しいです！ ＿＿＿＿＿＿＿＿＿＿ ▱ 公式プロフィール 突然天使の如く舞い降りてきた超癒し系男子。 そして猫のクッションを両手で抱っこしている。話し方もふわふわしている。 学生のように見...",
       "subscribers": {
         "tag": "hidden"
       },
@@ -1197,15 +1657,17 @@
       "viewCount": null,
       "uploadsPlaylistId": "UUspv01oxUFf_MTSipURRhkA",
       "country": null,
-      "tags": [],
+      "tags": [
+        "叶"
+      ],
       "isSinging": false,
-      "gender": "unknown",
+      "gender": "female",
       "isAi": false,
-      "variant": "vtuber",
+      "variant": "female_vtuber",
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1221,9 +1683,8 @@
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.152Z"
+          "avatar": "https://yt3.googleusercontent.com/jqa21VQlm5H8S7h0S7flUT18lGt30ynTZPW2JUnF-ET5Wi8idRjOn6orVhsYnvIOUIzafUYa6w=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.107Z"
         },
         {
           "platform": "bilibili",
@@ -1235,32 +1696,109 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.152Z"
+          "lastCheckedAt": "2026-10-22T11:36:11.107Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "叶",
+        "ホットパイおじさん"
+      ]
     },
     {
-      "id": "UCvEX2UICvFAa_T6pqizC20g",
-      "name": "乙女音",
+      "id": "UCUDy5nMvNadPnf-LgkPO7rg",
+      "name": "星守れんげ / Hoshimori Renge",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
-      "regionSource": "declared",
+      "regionSource": "name",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://yt3.googleusercontent.com/Jz8Ul_8kfb07BYAp8NecyDdg2r2ZX949OcSzgWftQ8wFBTVTIw_hPdl6Gm0OypHIo4T_5dlUwQ=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "得意なイラストや大好きな歌を楽しみながらも、目標のために努力を欠かさない女の子。 今は夢を叶えるために師匠の手伝いをしながら秘伝の技を学んでいる… 配信確率 日：10%（ほぼできない） 月：80%（ほぼできる） 火：70%（たぶんやる） 水：20%（たぶんむり） 木：50%（やる気次第） 金：90%（なるべくやる...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [
+        "星守莲花"
+      ],
+      "isSinging": true,
+      "gender": "female",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "lotus_hoshimori",
+          "handle": "lotus_hoshimori",
+          "name": "星守莲花",
+          "url": "https://www.youtube.com/@lotus_hoshimori",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/Jz8Ul_8kfb07BYAp8NecyDdg2r2ZX949OcSzgWftQ8wFBTVTIw_hPdl6Gm0OypHIo4T_5dlUwQ=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.389Z"
+        },
+        {
+          "platform": "bilibili",
+          "id": "3546729811019868",
+          "handle": null,
+          "name": "星守莲花",
+          "url": "https://space.bilibili.com/3546729811019868",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-22T11:36:11.389Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "platform",
+      "aliases": [
+        "星守莲花",
+        "星守れんげ",
+        "Hoshimori Renge"
+      ]
+    },
+    {
+      "id": "UCvEX2UICvFAa_T6pqizC20g",
+      "name": "乙女おと / Otome Oto",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "name",
       "languages": [
         "ja"
       ],
       "statedLanguages": [],
       "agency": "chucolala",
       "affiliation": "group",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/3-V2vQlWUGwu-hbRdPi1SQfPALipf_X--uEG52b0ppKmNMRWVV7lm7WQN3_fV0mvT1Yp5hrhwpc=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "I am Japanese virtual YouTuber. 5000兆円欲しい系Vtuber、「乙女おと」(おとめ おと)！ 自分で曲をつくったりしています！ 歌ったり、ゲームしたりの配信を普段は楽しんでいるよ〜。 大きく分けて3種類の配信を行っています。 ・通常枠：雑談やマシュマロ、教養コーナーなど(ピンク...",
       "subscribers": {
         "tag": "hidden"
       },
@@ -1268,15 +1806,18 @@
       "viewCount": null,
       "uploadsPlaylistId": "UUvEX2UICvFAa_T6pqizC20g",
       "country": null,
-      "tags": [],
-      "isSinging": false,
+      "tags": [
+        "乙女音",
+        "Otome Oto"
+      ],
+      "isSinging": true,
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1292,9 +1833,8 @@
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.172Z"
+          "avatar": "https://yt3.googleusercontent.com/3-V2vQlWUGwu-hbRdPi1SQfPALipf_X--uEG52b0ppKmNMRWVV7lm7WQN3_fV0mvT1Yp5hrhwpc=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.133Z"
         },
         {
           "platform": "bilibili",
@@ -1306,32 +1846,35 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.172Z"
+          "lastCheckedAt": "2026-10-22T11:36:11.133Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "乙女音",
+        "Otome Oto",
+        "乙女おと"
+      ]
     },
     {
       "id": "UCwokZsOK_uEre70XayaFnzA",
-      "name": "铃鹿诗子",
+      "name": "鈴鹿詩子 Utako Suzuka",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
-      "regionSource": "declared",
+      "regionSource": "agency",
       "languages": [
         "ja"
       ],
       "statedLanguages": [],
       "agency": "NIJISANJI",
       "affiliation": "group",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/2Cf2JpP4QbGb9LTpVkpyo9Iw14k22x_RqEFTCq8HB4qG0QKeDbLESUZ-sTXcDGcUb05YC2rT=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "よいこのみんなー、こんにっちはー！ にじさんじ所属、公式バーチャルライバーの、歌のお姉さんで腐女子で婚活中の26歳、鈴鹿詩子です♪ ♡毎日夜に生配信or動画投稿してます！ 生配信はゲーム、雑談、視聴者さんからのお便りコーナー（質問、お悩み相談、BL体験談）などです。 生配信タグ： #詩子おねえさんといっしょ 【T...",
       "subscribers": {
         "tag": "hidden"
       },
@@ -1339,15 +1882,17 @@
       "viewCount": null,
       "uploadsPlaylistId": "UUwokZsOK_uEre70XayaFnzA",
       "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
+      "tags": [
+        "铃鹿诗子"
+      ],
+      "isSinging": true,
+      "gender": "female",
       "isAi": false,
       "variant": "vtuber",
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1363,9 +1908,8 @@
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.666Z"
+          "avatar": "https://yt3.googleusercontent.com/2Cf2JpP4QbGb9LTpVkpyo9Iw14k22x_RqEFTCq8HB4qG0QKeDbLESUZ-sTXcDGcUb05YC2rT=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.772Z"
         },
         {
           "platform": "bilibili",
@@ -1377,32 +1921,34 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.666Z"
+          "lastCheckedAt": "2026-10-22T11:36:11.772Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "铃鹿诗子",
+        "鈴鹿詩子"
+      ]
     },
     {
       "id": "UCXU7YYxy_iQd3ulXyO-zC2w",
-      "name": "伏見ガク",
+      "name": "伏見ガク【にじさんじ所属】",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
-      "regionSource": "declared",
+      "regionSource": "name",
       "languages": [
         "ja"
       ],
       "statedLanguages": [],
-      "agency": null,
-      "affiliation": "unknown",
-      "avatar": null,
+      "agency": "nijisanji",
+      "affiliation": "group",
+      "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_kkT3jDljNPbm4xkVN6CEdPkO-nvWoAoDehkcJvdLcql8I=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "ピース✌ にじさんじ所属バーチャルライバー伏見ガクです！！ 楽しいこととか面白いことが大好き！ ゲームとか雑談とか！とにかくみんなと一体感を感じられるようなものをやりたいと思ってるんでそんな俺をどうぞよろしく！的な！？ twitter:https://twitter.com/gaku_fushimi メンバーシッ...",
       "subscribers": {
         "tag": "hidden"
       },
@@ -1418,7 +1964,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1434,9 +1980,8 @@
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.189Z"
+          "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_kkT3jDljNPbm4xkVN6CEdPkO-nvWoAoDehkcJvdLcql8I=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.153Z"
         },
         {
           "platform": "bilibili",
@@ -1448,32 +1993,33 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.189Z"
+          "lastCheckedAt": "2026-10-22T11:36:11.153Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "伏見ガク"
+      ]
     },
     {
       "id": "UCyDdJzG9BQeLKtc0upGf3Bg",
-      "name": "門叶困の野望(仮)",
+      "name": "門叶困の野望",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
-      "regionSource": "declared",
+      "regionSource": "name",
       "languages": [
         "ja"
       ],
       "statedLanguages": [],
       "agency": null,
       "affiliation": "unknown",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/dWD2bE7d17FzCyq969mj1LPYOpTTHu-R_OBPpx2_SaCa-9Fa5bbLaxMfgDj0sgqLQhKPpreuhw=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "今推すと無料で感謝の全力前転ブリッジが付いてくる！！！！！！",
       "subscribers": {
         "tag": "hidden"
       },
@@ -1489,7 +2035,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1505,33 +2051,34 @@
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.672Z"
+          "avatar": "https://yt3.googleusercontent.com/dWD2bE7d17FzCyq969mj1LPYOpTTHu-R_OBPpx2_SaCa-9Fa5bbLaxMfgDj0sgqLQhKPpreuhw=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.779Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "門叶困の野望(仮)"
+      ]
     },
     {
       "id": "UCyLGcqYs7RsBb3L0SJfzGYA",
-      "name": "花芽すみれ",
+      "name": "花芽すみれ / Kaga Sumire",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
-      "regionSource": "declared",
+      "regionSource": "name",
       "languages": [
         "ja"
       ],
       "statedLanguages": [],
       "agency": null,
       "affiliation": "unknown",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/62gVOJZDVb-9pPCbljnoRlwqEuvcGk0pNl32GNi_GA_KQS3N7X6-B660Pk3crHh3zi1XSzHMNQ=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "おいす～",
       "subscribers": {
         "tag": "hidden"
       },
@@ -1547,7 +2094,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1563,15 +2110,16 @@
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.603Z"
+          "avatar": "https://yt3.googleusercontent.com/62gVOJZDVb-9pPCbljnoRlwqEuvcGk0pNl32GNi_GA_KQS3N7X6-B660Pk3crHh3zi1XSzHMNQ=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.683Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "花芽すみれ"
+      ]
     }
   ]
 }

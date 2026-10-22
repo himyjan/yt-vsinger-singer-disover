@@ -1,24 +1,24 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T06:58:03.071Z",
+  "generatedAt": "2026-10-22T11:36:05.933Z",
   "channels": [
     {
       "id": "UC4yNIKGvy-YUrwYupVdLDXA",
-      "name": "Ike_Official",
+      "name": "Ike Eveland【NIJISANJI EN】",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
       "region": "en",
-      "regionSource": "declared",
+      "regionSource": "agency",
       "languages": [
         "en"
       ],
       "statedLanguages": [],
       "agency": "NIJISANJI EN",
       "affiliation": "group",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/kJCFm1WPQnsavK2Sx7Npk5VzE2E4BvRqZyOcXIAwmv3j6aHVHOtcAfCCa7hLnEyjZPATSO8lzw=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "Ike here! Virtual novelist from NIJISANJI EN! にじさんじEN所属のバーチャル文豪アイク・イーヴランドです！ よろしくお願いします！ Twitter: https://twitter.com/ike_eveland ■ For more information, vis...",
       "subscribers": {
         "tag": "hidden"
       },
@@ -28,19 +28,31 @@
       "country": null,
       "tags": [],
       "isSinging": false,
-      "gender": "unknown",
+      "gender": "female",
       "isAi": false,
       "variant": "vtuber",
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
       "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UC4yNIKGvy-YUrwYupVdLDXA",
+          "handle": null,
+          "name": "Ike_Official",
+          "url": "https://www.youtube.com/channel/UC4yNIKGvy-YUrwYupVdLDXA",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/kJCFm1WPQnsavK2Sx7Npk5VzE2E4BvRqZyOcXIAwmv3j6aHVHOtcAfCCa7hLnEyjZPATSO8lzw=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.039Z"
+        },
         {
           "platform": "bilibili",
           "id": "1921596130",
@@ -51,45 +63,33 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.082Z"
-        },
-        {
-          "platform": "youtube",
-          "id": "UC4yNIKGvy-YUrwYupVdLDXA",
-          "handle": null,
-          "name": "Ike_Official",
-          "url": "https://www.youtube.com/channel/UC4yNIKGvy-YUrwYupVdLDXA",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.082Z"
+          "lastCheckedAt": "2026-10-22T11:36:11.039Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "Ike_Official"
+      ]
     },
     {
       "id": "UChJ5FTsHOu72_5OVx0rvsvQ",
-      "name": "Uki Violeta",
+      "name": "Uki Violeta 【NIJISANJI EN】",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
       "region": "en",
-      "regionSource": "declared",
+      "regionSource": "agency",
       "languages": [
         "en"
       ],
       "statedLanguages": [],
       "agency": "NIJISANJI EN",
       "affiliation": "group",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/EOhdbdcntWg50PqiDk5wqe1c29qx3Cb7LTKYgco4EDBVFSedPSzfULwlB7uxrgXMK8g7xFumnQ=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "Psychic from NIJISANJI EN's NOCTYX 🌃 にじさんじEN所属の浮奇ヴィオレタです！ 『 Tags 』 ✧ General: #UkiVioleta ✧ Art: #VioletAtelier ✧ Live: #UkiLive ✧ Meme: #uwukiVioleta ✧ Thum...",
       "subscribers": {
         "tag": "hidden"
       },
@@ -98,14 +98,14 @@
       "uploadsPlaylistId": "UUhJ5FTsHOu72_5OVx0rvsvQ",
       "country": null,
       "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
+      "isSinging": true,
+      "gender": "female",
       "isAi": false,
       "variant": "vtuber",
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -121,33 +121,34 @@
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.120Z"
+          "avatar": "https://yt3.googleusercontent.com/EOhdbdcntWg50PqiDk5wqe1c29qx3Cb7LTKYgco4EDBVFSedPSzfULwlB7uxrgXMK8g7xFumnQ=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.072Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "Uki Violeta"
+      ]
     },
     {
       "id": "UCN68LoM3khS4gdBMiWJO8WA",
-      "name": "Aia Amare",
+      "name": "Aia Amare 【NIJISANJI EN】",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
       "region": "en",
-      "regionSource": "declared",
+      "regionSource": "agency",
       "languages": [
         "en"
       ],
       "statedLanguages": [],
       "agency": "NIJISANJI EN",
       "affiliation": "group",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/OZCrdJ0j_HALe3aIL20IDVL-2hWvpVE0xcFn4Xl77m_Q-9remZ9g_cV__y4eLawPsu_FSPYWLw=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "Good heavens~! I’m Aia Amare, the dice slinging, professional LARPing Angelic Maiden of NIJISANJI EN!👼🏻⭐ にじさんじEN所属天界の少女アイア・アマレです。 Twitter: https://twitter.co...",
       "subscribers": {
         "tag": "hidden"
       },
@@ -157,13 +158,13 @@
       "country": null,
       "tags": [],
       "isSinging": false,
-      "gender": "unknown",
+      "gender": "female",
       "isAi": false,
       "variant": "vtuber",
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -179,15 +180,99 @@
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.066Z"
+          "avatar": "https://yt3.googleusercontent.com/OZCrdJ0j_HALe3aIL20IDVL-2hWvpVE0xcFn4Xl77m_Q-9remZ9g_cV__y4eLawPsu_FSPYWLw=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.023Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "Aia Amare"
+      ]
+    },
+    {
+      "id": "UCSeOZ1Uttta_fjsCZFCjXmQ",
+      "name": "Rae·Séverin",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "en",
+      "regionSource": "declared",
+      "languages": [
+        "en"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://yt3.googleusercontent.com/y5Cxd-oTGNRZlwZT1LyeQcXm7eKw-6Tn3fyGSg7LF5bY8nz5wh7liX7cTjgSTDJsc1HPgQNM=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": null,
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": false,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "rae_severinvtuber",
+          "handle": "rae_severinvtuber",
+          "name": "Rae Severin",
+          "url": "https://www.youtube.com/@rae_severinvtuber",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/y5Cxd-oTGNRZlwZT1LyeQcXm7eKw-6Tn3fyGSg7LF5bY8nz5wh7liX7cTjgSTDJsc1HPgQNM=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.061Z"
+        },
+        {
+          "platform": "bilibili",
+          "id": "652386779",
+          "handle": null,
+          "name": "Rae Severin",
+          "url": "https://space.bilibili.com/652386779",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-22T11:36:11.061Z"
+        },
+        {
+          "platform": "twitch",
+          "id": "rae_severin",
+          "handle": null,
+          "name": "Rae Severin",
+          "url": "https://www.twitch.tv/rae_severin",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-22T11:36:11.061Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "platform",
+      "aliases": [
+        "Rae Severin"
+      ]
     },
     {
       "id": "vdb:db0ee4df-8826-507c-8cd4-dbe478f0c0a8",
@@ -221,7 +306,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",

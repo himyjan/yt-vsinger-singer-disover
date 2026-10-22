@@ -41,7 +41,7 @@ Node + TypeScript, no native dependencies. It runs unchanged in GitHub Actions.
 scripts/
 ├── sync.ts            fetch → classify → merge → write
 ├── build-index.ts     build the inverted search index
-├── fill-avatars.ts    fill the missing avatars and details
+├── fill-details.ts    fill the missing avatars, names and details
 ├── validate.ts        CI gate
 ├── verify.ts           verify classifications with web-search grounding
 ├── import-legacy-db.ts  one-off SQLite migration
@@ -108,15 +108,50 @@ replace one the platform has confirmed.
 ### 3. A mirror is not an origin
 
 A performer's region is where they belong, not where their accounts are
-hosted. A Japanese VTuber with a Bilibili mirror is `jp`: kana occur in
-Japanese and nowhere else, and a `jp` name that contains them settles it.
-The Bilibili prior is for a performer who **only** exists on Bilibili.
+hosted. A Japanese VTuber with a Bilibili mirror is `jp`; a Hololive EN
+member with one is `en`; a Filipino VTuber with a Japanese stage name is
+`sea`.
 
-vdb's `name.default` is the language the catalogue *displays* — it is a
-Chinese wiki, so it lists 「巫てんり」 as `cn` — and it is the weakest region
-signal, never the decisive one.
+The sources are ranked, and a merge keeps the more trusted one — the full
+order is in `docs/DATA-SCHEMA.md`. Two of the rankings are easy to get
+wrong:
 
-### 4. A confidence score is not a fact
+- **vdb's `name.default` is the weakest.** It is the language the catalogue
+  *displays*, and vdb is a Chinese wiki, so it lists 「巫てんり」 as `cn`.
+  It never outranks kana, an agency branch or a published country.
+- **Kana mean Japanese.** They occur in Japanese and nowhere else — but only
+  as evidence, never as proof: a performer whose own country is published,
+  or who belongs to a known agency, is decided by that instead.
+
+### 4. The id is the immutable platform id
+
+`UC…` for YouTube, the numeric id for Twitch, `<platform>:<id>` for the rest.
+A `@handle` and a Twitch login are **names**: unique today, renameable
+tomorrow, and a record keyed by one breaks the day the performer changes it.
+They live in `handle`, beside the id, and are refreshed from the profile.
+
+`scripts/lib/youtubei.ts` returns the real id from the response — not the one
+that was asked for — because that is the only one that can be trusted.
+
+### 5. A channel is stored once
+
+In `virtual/` or `real/`, never both — that is the scope switch, served
+without downloading the other dataset. `writeChannelShards()` writes each
+record to its own kind and nothing else, and `readAllChannelRecords()` reads
+the pair back, so there is no second copy a run could leave stale.
+
+The list views are a **projection**, not a file: the app builds them from the
+records it has already downloaded for the drawer (`toSummary()` in
+`scripts/lib/summary.ts`). Do not reintroduce `regions/` or `summaries/` —
+`validate.ts` fails when either appears.
+
+### 6. One writer at a time
+
+`acquireRunLock()` refuses to start when another run holds the dataset. Both
+the sync and the details fill read the whole dataset before they write it, so
+two at once lose each other's work.
+
+### 7. A confidence score is not a fact
 
 `confidence` is **optional** and the dataset does not populate it. A computed
 number is a guess dressed up as a measurement, and what a record needs to say
@@ -127,25 +162,25 @@ an unknown role, no description — not by a score. The type still allows
 `confidence` for a producer that wants to record an estimate, and
 `docs/DATA-SCHEMA.md` documents its shape.
 
-### 5. The classifier is deterministic
+### 8. The classifier is deterministic
 
 `scripts/lib/classify.ts` has no randomness and no network calls. The same
 input always produces the same record. This is what keeps the git history of
 `data/` readable — do not introduce `Math.random()`, timestamps or
 network-derived values into a record's classification.
 
-### 6. Never write a file over the size budget
+### 9. Never write a file over the size budget
 
 `scripts/lib/io.ts` throws when a file exceeds 8 MB, and `data/` is capped at
 180 MB. GitHub Free allows ~1 GB for the whole repository. If a change makes
 the dataset grow, add a retention rule rather than raising the budget.
 
-### 7. Every record keeps its provenance
+### 10. Every record keeps its provenance
 
 `mergeById()` preserves `addedAt`, and preserves `source: "seed"` and
 `source: "manual"` across API refreshes. Do not overwrite provenance.
 
-### 8. Never let a failing source break the run
+### 11. Never let a failing source break the run
 
 Every network call in the pipeline is wrapped, and every one of them carries
 a timeout — a `fetch` with no timeout never rejects, it just hangs, and a
@@ -157,13 +192,13 @@ When a source pushes back — Bilibili's risk control, for instance — the
 run **backs off and leaves it alone** rather than grinding through
 thousands of doomed requests.
 
-### 9. Quota is a hard constraint
+### 12. Quota is a hard constraint
 
 The YouTube free tier is 10,000 units/day and `search.list` costs 100. The
 `QuotaBudget` refuses calls that would exceed the limit. Never bypass it with
 a direct `fetch` to the API.
 
-### 10. `better-sqlite3` is an optional dependency
+### 13. `better-sqlite3` is an optional dependency
 
 It is only used by the one-off legacy migration. The CI path must stay free
 of native modules.
@@ -173,8 +208,9 @@ of native modules.
 | Task | Where |
 | --- | --- |
 | Fix a misclassified channel | `data/overrides.json`, then `npm run data:sync -- --no-search` |
-| Fix an outdated channel name | the platform corrects it; `npm run data:avatars -- --name-only` to apply it now |
-| Fill the missing avatars | `npm run data:avatars -- --limit 2000` |
+| Fix an outdated channel name | the platform corrects it; `npm run data:details -- --name-only` to apply it now |
+| A record keyed by a handle | `npm run data:ids` — resolves it to the `UC…` id |
+| Fill the missing avatars | `npm run data:details -- --limit 2000` |
 | Fix the classifier itself | `scripts/lib/classify.ts` |
 | Add a curated channel | `scripts/lib/seeds.ts` |
 | Add a region | `scripts/lib/types.ts`, `scripts/lib/regions.ts` |
@@ -192,9 +228,10 @@ npm run data:sync -- --no-search     # refresh known channels only
 npm run data:sync -- --keyword "…"   # run one discovery query
 npm run data:verify                   # verify classifications with search grounding
 npm run data:index                   # rebuild the search index
-npm run data:avatars -- --limit 2000 # fill the missing avatars
-npm run data:avatars -- --name-only  # correct the names and the aliases
-npm run data:avatars -- --platform bilibili --dry-run
+npm run data:details -- --limit 2000 # fill the missing avatars
+npm run data:details -- --name-only  # correct the names and the aliases
+npm run data:details -- --platform bilibili --dry-run
+npm run data:ids                     # re-key handle ids to UC… ids
 npm run data:validate                # structure + budgets
 npm run data:import-legacy           # migrate the old SQLite database
 ```

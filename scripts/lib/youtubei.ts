@@ -29,7 +29,14 @@ import { RateLimiter } from "./rate-limit";
 import { REQUEST_TIMEOUT_MS } from "./io";
 
 export interface InnerTubeProfile {
-  /** The channel id. */
+  /**
+   * The channel's `UC…` id.
+   *
+   * Not the id that was asked for: a channel asked for by handle answers with
+   * its real one, and that is the only part of a YouTube identity that cannot
+   * change — a handle is unique but renameable, so a record has to be keyed
+   * by this.
+   */
   id: string;
   /** The display name. */
   title: string | null;
@@ -226,13 +233,25 @@ export class InnerTubeSource {
       }
 
       this.limiter.reward();
+      /**
+       * The header of a channel response carries the canonical identity in
+       * its current tab: `browseId` is the `UC…` id and `canonicalBaseUrl`
+       * the `/@handle`. `youtubei.js` exposes neither as `channel.id`.
+       */
+      const endpoint = channel?.current_tab?.endpoint?.payload ?? {};
+      const canonical: string | null =
+        endpoint.browseId ?? channel?.id ?? meta?.channelId ?? null;
+      const vanity: string | null = endpoint.canonicalBaseUrl ?? null;
+      const handle = vanity
+        ? vanity.replace(/^\/?@?/, "").split("/")[0] || null
+        : null;
       return {
-        id: channelId,
+        id: canonical ?? channelId,
         title: meta.title ?? null,
         description: meta.description ?? null,
         avatar: avatar ?? null,
         subscribers,
-        handle: meta.canonicalBaseUrl ?? null,
+        handle,
         links,
       };
     } catch (err) {

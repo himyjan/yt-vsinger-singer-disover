@@ -1,24 +1,24 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T06:58:03.071Z",
+  "generatedAt": "2026-10-22T11:36:05.933Z",
   "channels": [
     {
       "id": "UC7Gb7Uawe20QyFibhLl1lzA",
-      "name": "Luca_EN_Official",
+      "name": "Luca Kaneshiro【NIJISANJI EN】",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
       "region": "en",
-      "regionSource": "declared",
+      "regionSource": "agency",
       "languages": [
         "en"
       ],
       "statedLanguages": [],
       "agency": "NIJISANJI EN",
       "affiliation": "group",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/103XpMqHLYhBZRaJCR05-ioI8c70ZeTFTebb-22u9s88UYbki4WJIFOes6VY7X62Y8-St0_CGUU=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "NIJISANJI EN's first male wave #Luxiem Make sure to check out my channels and streams. OR ELSE. ■ For more information, visit: ・ NIJISANJI Official YouTube (...",
       "subscribers": {
         "tag": "hidden"
       },
@@ -28,19 +28,31 @@
       "country": null,
       "tags": [],
       "isSinging": false,
-      "gender": "unknown",
+      "gender": "male",
       "isAi": false,
       "variant": "vtuber",
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
       "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UC7Gb7Uawe20QyFibhLl1lzA",
+          "handle": null,
+          "name": "Luca_EN_Official",
+          "url": "https://www.youtube.com/channel/UC7Gb7Uawe20QyFibhLl1lzA",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/103XpMqHLYhBZRaJCR05-ioI8c70ZeTFTebb-22u9s88UYbki4WJIFOes6VY7X62Y8-St0_CGUU=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.044Z"
+        },
         {
           "platform": "bilibili",
           "id": "1673137696",
@@ -51,31 +63,19 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.088Z"
-        },
-        {
-          "platform": "youtube",
-          "id": "UC7Gb7Uawe20QyFibhLl1lzA",
-          "handle": null,
-          "name": "Luca_EN_Official",
-          "url": "https://www.youtube.com/channel/UC7Gb7Uawe20QyFibhLl1lzA",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.088Z"
+          "lastCheckedAt": "2026-10-22T11:36:11.044Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "Luca_EN_Official"
+      ]
     },
     {
       "id": "UC7jFoGjZQrax3rgd3SB6WmQ",
-      "name": "翎澈",
+      "name": "Rinfair Official",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -87,9 +87,9 @@
       "statedLanguages": [],
       "agency": null,
       "affiliation": "unknown",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/k9C_GHcjZvOysCEtstO_hPj7j_THIMGzY9qwqLnTxTiHu_aQFwUQOBlvyuB5zaQdlQF5MMNqL-k=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "Hello! This is Rinfair's official channel on YouTube! A dandelion-based fox! From the ProbleKids group in China! I'll randomly upload my tutorial video or br...",
       "subscribers": {
         "tag": "hidden"
       },
@@ -97,21 +97,35 @@
       "viewCount": null,
       "uploadsPlaylistId": "UU7jFoGjZQrax3rgd3SB6WmQ",
       "country": null,
-      "tags": [],
+      "tags": [
+        "Rinfair"
+      ],
       "isSinging": false,
-      "gender": "unknown",
+      "gender": "male",
       "isAi": false,
       "variant": "vtuber",
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
       "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UC7jFoGjZQrax3rgd3SB6WmQ",
+          "handle": null,
+          "name": "翎澈",
+          "url": "https://www.youtube.com/channel/UC7jFoGjZQrax3rgd3SB6WmQ",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/k9C_GHcjZvOysCEtstO_hPj7j_THIMGzY9qwqLnTxTiHu_aQFwUQOBlvyuB5zaQdlQF5MMNqL-k=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.655Z"
+        },
         {
           "platform": "bilibili",
           "id": "35892690",
@@ -122,45 +136,34 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.585Z"
-        },
-        {
-          "platform": "youtube",
-          "id": "UC7jFoGjZQrax3rgd3SB6WmQ",
-          "handle": null,
-          "name": "翎澈",
-          "url": "https://www.youtube.com/channel/UC7jFoGjZQrax3rgd3SB6WmQ",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.585Z"
+          "lastCheckedAt": "2026-10-22T11:36:11.655Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "Rinfair",
+        "翎澈"
+      ]
     },
     {
       "id": "UCG0rzBZV_QMP4MtWg6IjhEA",
-      "name": "Shu_Official",
+      "name": "Shu Yamino【NIJISANJI EN】",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
       "region": "en",
-      "regionSource": "declared",
+      "regionSource": "agency",
       "languages": [
         "en"
       ],
       "statedLanguages": [],
       "agency": "NIJISANJI EN",
       "affiliation": "group",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/w2LaS4ankJlkf3FdjHJVSWBOTAHYfsC-RcEi95NOrgcChjJG6Lz3x_b7UPQBiZ_1HJt_GemBeR8=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "A sorcerer from NIJISANJI EN's 4th wave 「Luxiem」! 呪術師の闇ノシュウです！ ■ My Socials! Twitter: https://twitter.com/shu_yamino ■ Become a Yaminion! (membership) https:...",
       "subscribers": {
         "tag": "hidden"
       },
@@ -176,13 +179,25 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
       "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCG0rzBZV_QMP4MtWg6IjhEA",
+          "handle": null,
+          "name": "Shu_Official",
+          "url": "https://www.youtube.com/channel/UCG0rzBZV_QMP4MtWg6IjhEA",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/w2LaS4ankJlkf3FdjHJVSWBOTAHYfsC-RcEi95NOrgcChjJG6Lz3x_b7UPQBiZ_1HJt_GemBeR8=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.067Z"
+        },
         {
           "platform": "bilibili",
           "id": "1420890712",
@@ -193,31 +208,19 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.116Z"
-        },
-        {
-          "platform": "youtube",
-          "id": "UCG0rzBZV_QMP4MtWg6IjhEA",
-          "handle": null,
-          "name": "Shu_Official",
-          "url": "https://www.youtube.com/channel/UCG0rzBZV_QMP4MtWg6IjhEA",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.116Z"
+          "lastCheckedAt": "2026-10-22T11:36:11.067Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "Shu_Official"
+      ]
     },
     {
       "id": "UCGZz3jSTHO8VP17BZ6MeitQ",
-      "name": "sunyeojin",
+      "name": "선여진",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -229,7 +232,7 @@
       "statedLanguages": [],
       "agency": null,
       "affiliation": "unknown",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_k1A0_eKZSqS6nr5PrZbZdBgLhRwBBYy08zh6y-_6jXAA=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
       "description": null,
       "subscribers": {
@@ -247,13 +250,25 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
       "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCGZz3jSTHO8VP17BZ6MeitQ",
+          "handle": null,
+          "name": "sunyeojin",
+          "url": "https://www.youtube.com/channel/UCGZz3jSTHO8VP17BZ6MeitQ",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_k1A0_eKZSqS6nr5PrZbZdBgLhRwBBYy08zh6y-_6jXAA=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.092Z"
+        },
         {
           "platform": "bilibili",
           "id": "1869304",
@@ -264,21 +279,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.139Z"
-        },
-        {
-          "platform": "youtube",
-          "id": "UCGZz3jSTHO8VP17BZ6MeitQ",
-          "handle": null,
-          "name": "sunyeojin",
-          "url": "https://www.youtube.com/channel/UCGZz3jSTHO8VP17BZ6MeitQ",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.139Z"
+          "lastCheckedAt": "2026-10-22T11:36:11.092Z"
         },
         {
           "platform": "twitch",
@@ -290,32 +291,33 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.139Z"
+          "lastCheckedAt": "2026-10-22T11:36:11.092Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "sunyeojin"
+      ]
     },
     {
       "id": "UCIeSUTOTkF9Hs7q3SGcO-Ow",
-      "name": "Elira Pendora",
+      "name": "Elira Pendora 【NIJISANJI EN】",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
       "region": "en",
-      "regionSource": "declared",
+      "regionSource": "agency",
       "languages": [
         "en"
       ],
       "statedLanguages": [],
       "agency": "NIJISANJI EN",
       "affiliation": "group",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/JCyRLd80Znc5g28VztowNaT537HODqR_MbIVvwp_QfFials0GWjNXTrEI7HqqtJdmLe2s7iPKg=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "I’m Elira Pendora, official Virtual Liver from NIJISANJI EN! Pleased to make your acquaintance I’m a dragon with many scales- I mean, skills! ꒰ ꒪ ⌑ ///꒱ I lo...",
       "subscribers": {
         "tag": "hidden"
       },
@@ -324,14 +326,14 @@
       "uploadsPlaylistId": "UUIeSUTOTkF9Hs7q3SGcO-Ow",
       "country": null,
       "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
+      "isSinging": true,
+      "gender": "male",
       "isAi": false,
       "variant": "vtuber",
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -347,15 +349,16 @@
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.076Z"
+          "avatar": "https://yt3.googleusercontent.com/JCyRLd80Znc5g28VztowNaT537HODqR_MbIVvwp_QfFials0GWjNXTrEI7HqqtJdmLe2s7iPKg=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.033Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "Elira Pendora"
+      ]
     }
   ]
 }

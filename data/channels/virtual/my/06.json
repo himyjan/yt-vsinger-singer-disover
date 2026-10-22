@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T06:58:03.071Z",
+  "generatedAt": "2026-10-22T11:36:05.933Z",
   "channels": [
     {
       "id": "UC1zMLyyOd74oJlioTYf-zww",
-      "name": "Ian Tips",
+      "name": "IanTips",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -15,10 +15,10 @@
       ],
       "statedLanguages": [],
       "agency": null,
-      "affiliation": "independent",
-      "avatar": null,
+      "affiliation": "unknown",
+      "avatar": "https://yt3.googleusercontent.com/KaVrObfgeDZLsUDxCnrZxNTRc6gVifnYOX0FMXKId-03Vn-uw1uUFETYsQU16VPqukjlfNqKZNE=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "Pluck me I forgot that my yt exists",
       "subscribers": {
         "tag": "hidden"
       },
@@ -34,10 +34,10 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
-      "activity": "unknown",
+      "activity": "active",
       "debutDate": null,
       "graduateDate": null,
       "platforms": [
@@ -50,9 +50,8 @@
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
-          "activity": "active",
-          "lastCheckedAt": "2026-10-22T06:58:05.126Z"
+          "avatar": "https://yt3.googleusercontent.com/KaVrObfgeDZLsUDxCnrZxNTRc6gVifnYOX0FMXKId-03Vn-uw1uUFETYsQU16VPqukjlfNqKZNE=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:07.961Z"
         },
         {
           "platform": "twitch",
@@ -64,14 +63,15 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "activity": "active",
-          "lastCheckedAt": "2026-10-22T06:58:05.126Z"
+          "lastCheckedAt": "2026-10-22T11:36:07.961Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "Ian Tips"
+      ]
     },
     {
       "id": "UCb-QOnKvqyOKJlVtrqEOZMQ",
@@ -106,10 +106,10 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
-      "activity": "unknown",
+      "activity": "active",
       "debutDate": null,
       "graduateDate": null,
       "platforms": [
@@ -124,8 +124,7 @@
             "count": 393
           },
           "avatar": "https://static-cdn.jtvnw.net/jtv_user_pictures/bcbfba6f-b829-4ae4-8b93-1002f0969226-profile_image-300x300.png",
-          "activity": "active",
-          "lastCheckedAt": "2026-10-22T06:58:05.126Z"
+          "lastCheckedAt": "2026-10-22T11:36:07.961Z"
         },
         {
           "platform": "twitch",
@@ -137,8 +136,7 @@
             "tag": "hidden"
           },
           "avatar": "https://static-cdn.jtvnw.net/jtv_user_pictures/bcbfba6f-b829-4ae4-8b93-1002f0969226-profile_image-300x300.png",
-          "activity": "active",
-          "lastCheckedAt": "2026-10-22T06:58:05.126Z"
+          "lastCheckedAt": "2026-10-22T11:36:07.961Z"
         }
       ],
       "externals": {},
@@ -179,10 +177,10 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
-      "activity": "unknown",
+      "activity": "active",
       "debutDate": "2021-03-20",
       "graduateDate": null,
       "platforms": [
@@ -197,8 +195,7 @@
             "count": 11600
           },
           "avatar": "https://yt3.ggpht.com/wCQf7DDFfTjWTaS9JewrktmupNCg6KDtFsecBTPSafhKW-uSdrw4UEgFOi6MGl5JhqauU5LPLHw=s88-c-k-c0x00ffffff-no-rj",
-          "activity": "active",
-          "lastCheckedAt": "2026-10-22T06:58:05.126Z"
+          "lastCheckedAt": "2026-10-22T11:36:07.961Z"
         },
         {
           "platform": "twitch",
@@ -210,8 +207,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.ggpht.com/wCQf7DDFfTjWTaS9JewrktmupNCg6KDtFsecBTPSafhKW-uSdrw4UEgFOi6MGl5JhqauU5LPLHw=s88-c-k-c0x00ffffff-no-rj",
-          "activity": "active",
-          "lastCheckedAt": "2026-10-22T06:58:05.126Z"
+          "lastCheckedAt": "2026-10-22T11:36:07.961Z"
         }
       ],
       "externals": {},
@@ -221,7 +217,7 @@
     },
     {
       "id": "UCc337NFdHZ1gyb3CZRu2nrA",
-      "name": "幽幽",
+      "name": "Yuyu ch. 幽幽",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -232,10 +228,10 @@
       ],
       "statedLanguages": [],
       "agency": null,
-      "affiliation": "independent",
-      "avatar": null,
+      "affiliation": "unknown",
+      "avatar": "https://yt3.googleusercontent.com/B1thPZ9nG58HS4y36wpM3qoOAqMsGNqIHF3oLRYblvW9ebm7rTFaf75skCRhR3sekF2g-QVTqw=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "某天工作回家發生意外... 醒來時身體已經變成靈魂形態了, 走進森林裡漂浮遇上了一個乾你那可愛的小毛球， 之後發現一個很漂亮的城堡, 一位很漂亮的 惡魔妹妹正往我走來 但是她看不見我？ 突然！被一股能量吸入了 醒過來之後 發現自己有實體 而且竟然是那位惡魔妹妹 ！ ！ 來到她的房間後，發現她的電腦開著文件竟然是直...",
       "subscribers": {
         "tag": "hidden"
       },
@@ -245,16 +241,16 @@
       "country": null,
       "tags": [],
       "isSinging": false,
-      "gender": "unknown",
+      "gender": "female",
       "isAi": false,
-      "variant": "vtuber",
+      "variant": "female_vtuber",
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
-      "activity": "unknown",
+      "activity": "active",
       "debutDate": "2021-12-04",
       "graduateDate": null,
       "platforms": [
@@ -267,19 +263,20 @@
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
-          "activity": "active",
-          "lastCheckedAt": "2026-10-22T06:58:05.126Z"
+          "avatar": "https://yt3.googleusercontent.com/B1thPZ9nG58HS4y36wpM3qoOAqMsGNqIHF3oLRYblvW9ebm7rTFaf75skCRhR3sekF2g-QVTqw=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:07.961Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "幽幽"
+      ]
     },
     {
       "id": "UCCIFR5lAuZTk-ZH-KSFLTfQ",
-      "name": "黒沢 弦",
+      "name": "Gen ch.黒沢 弦【EXILE】",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -291,9 +288,9 @@
       "statedLanguages": [],
       "agency": null,
       "affiliation": "independent",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/uU-BFQkuxjZllwp0WYeeuE3138dMyjz-XsEqLAt1YPHCFE6OEgHo6tIQa6cVkjPu9PoOzD1Q5Q=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "隸屬【EXILE】團隊的惡鬼兼職Vtuber 黒沢 弦 Gen Kurosawa 重生的感覺真不錯。 來自馬來西亞的個人勢Vtuber",
       "subscribers": {
         "tag": "hidden"
       },
@@ -309,10 +306,10 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
-      "activity": "unknown",
+      "activity": "active",
       "debutDate": "2021-08-20",
       "graduateDate": null,
       "platforms": [
@@ -325,15 +322,16 @@
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
-          "activity": "active",
-          "lastCheckedAt": "2026-10-22T06:58:05.126Z"
+          "avatar": "https://yt3.googleusercontent.com/uU-BFQkuxjZllwp0WYeeuE3138dMyjz-XsEqLAt1YPHCFE6OEgHo6tIQa6cVkjPu9PoOzD1Q5Q=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:07.961Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "黒沢 弦"
+      ]
     },
     {
       "id": "UCcYxUF_Wev7U7H9F9cSn_TA",
@@ -368,10 +366,10 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
-      "activity": "unknown",
+      "activity": "active",
       "debutDate": null,
       "graduateDate": null,
       "platforms": [
@@ -386,8 +384,7 @@
             "count": 12000
           },
           "avatar": "https://yt3.ggpht.com/ZDN54NVJn7qTyOHOgNEPMioITuOeMMPm1fNfn48cmLpp2ZLxwyyJLteFqPJLgZqtkWQ1uDqlZw=s88-c-k-c0x00ffffff-no-rj",
-          "activity": "active",
-          "lastCheckedAt": "2026-10-22T06:58:05.126Z"
+          "lastCheckedAt": "2026-10-22T11:36:07.961Z"
         },
         {
           "platform": "twitch",
@@ -399,8 +396,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.ggpht.com/ZDN54NVJn7qTyOHOgNEPMioITuOeMMPm1fNfn48cmLpp2ZLxwyyJLteFqPJLgZqtkWQ1uDqlZw=s88-c-k-c0x00ffffff-no-rj",
-          "activity": "active",
-          "lastCheckedAt": "2026-10-22T06:58:05.126Z"
+          "lastCheckedAt": "2026-10-22T11:36:07.961Z"
         }
       ],
       "externals": {},
@@ -441,10 +437,10 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
-      "activity": "unknown",
+      "activity": "active",
       "debutDate": "2023-05-14",
       "graduateDate": null,
       "platforms": [
@@ -459,8 +455,7 @@
             "count": 867
           },
           "avatar": "https://yt3.ggpht.com/rxkAuDwPXdaMHuHTrwQv4NAjOhe6_Mi200TNL-L8NhW_fdAvRdZ4qfTDy-YAN4TGc8tFS4U3=s88-c-k-c0x00ffffff-no-rj",
-          "activity": "active",
-          "lastCheckedAt": "2026-10-22T06:58:05.126Z"
+          "lastCheckedAt": "2026-10-22T11:36:07.961Z"
         }
       ],
       "externals": {},
@@ -481,10 +476,10 @@
       ],
       "statedLanguages": [],
       "agency": null,
-      "affiliation": "independent",
-      "avatar": null,
+      "affiliation": "unknown",
+      "avatar": "https://yt3.googleusercontent.com/wEpkS6YelI-J171Mkh4gN7RbmbKiVomXNGEcDC0NASR5D0uuo7jbQ7AN-LpZJ1KccT0k2u0o=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "欸嘿☆ -----✨----- 来自遥远星球的半鬼星川みかです！ 前因魔法出错而导致灵魂结合，如今又因为魔法出错来到这个世界？！ 真希望这是一场梦！ 为找到回家的路（为了零用钱(??)），踏上了成为Vtuber的路！ -----✨----- 聊天室规则： 1） 政治等敏感话题禁止！ 2） 刷屏禁止！ 3） 禁止在...",
       "subscribers": {
         "tag": "hidden"
       },
@@ -500,10 +495,10 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
-      "activity": "unknown",
+      "activity": "active",
       "debutDate": "2021-11-05",
       "graduateDate": null,
       "platforms": [
@@ -516,9 +511,8 @@
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
-          "activity": "active",
-          "lastCheckedAt": "2026-10-22T06:58:05.126Z"
+          "avatar": "https://yt3.googleusercontent.com/wEpkS6YelI-J171Mkh4gN7RbmbKiVomXNGEcDC0NASR5D0uuo7jbQ7AN-LpZJ1KccT0k2u0o=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:07.961Z"
         }
       ],
       "externals": {},
@@ -559,10 +553,10 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
-      "activity": "unknown",
+      "activity": "active",
       "debutDate": "2021-11-03",
       "graduateDate": null,
       "platforms": [
@@ -577,8 +571,7 @@
             "count": 474
           },
           "avatar": "https://static-cdn.jtvnw.net/jtv_user_pictures/b795bab7-bd2c-4ff4-a9cd-52bf36d14969-profile_image-300x300.jpeg",
-          "activity": "active",
-          "lastCheckedAt": "2026-10-22T06:58:05.126Z"
+          "lastCheckedAt": "2026-10-22T11:36:07.961Z"
         },
         {
           "platform": "twitch",
@@ -590,8 +583,7 @@
             "tag": "hidden"
           },
           "avatar": "https://static-cdn.jtvnw.net/jtv_user_pictures/b795bab7-bd2c-4ff4-a9cd-52bf36d14969-profile_image-300x300.jpeg",
-          "activity": "active",
-          "lastCheckedAt": "2026-10-22T06:58:05.126Z"
+          "lastCheckedAt": "2026-10-22T11:36:07.961Z"
         }
       ],
       "externals": {},
@@ -632,10 +624,10 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
-      "activity": "unknown",
+      "activity": "active",
       "debutDate": "2022-09-24",
       "graduateDate": null,
       "platforms": [
@@ -650,8 +642,7 @@
             "count": 116
           },
           "avatar": "https://static-cdn.jtvnw.net/jtv_user_pictures/35707b07-90a2-4f75-b048-74d6004d773a-profile_image-300x300.png",
-          "activity": "active",
-          "lastCheckedAt": "2026-10-22T06:58:05.126Z"
+          "lastCheckedAt": "2026-10-22T11:36:07.961Z"
         },
         {
           "platform": "twitch",
@@ -663,8 +654,7 @@
             "tag": "hidden"
           },
           "avatar": "https://static-cdn.jtvnw.net/jtv_user_pictures/35707b07-90a2-4f75-b048-74d6004d773a-profile_image-300x300.png",
-          "activity": "active",
-          "lastCheckedAt": "2026-10-22T06:58:05.126Z"
+          "lastCheckedAt": "2026-10-22T11:36:07.961Z"
         }
       ],
       "externals": {},
@@ -674,7 +664,7 @@
     },
     {
       "id": "UCrF3f8fkJHkD5a6e4UVl-ZQ",
-      "name": "爱利亚",
+      "name": "Ariel Ch. 爱利亚",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -686,7 +676,7 @@
       "statedLanguages": [],
       "agency": null,
       "affiliation": "independent",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/awqehbvojECwwErilftIuQQwDIR5iWNyQvqaA4zhErVgACtV6d_KeY5pkxExRUWDDD89j7UAJQ=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
       "description": null,
       "subscribers": {
@@ -704,10 +694,10 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
-      "activity": "unknown",
+      "activity": "active",
       "debutDate": "2022-02-19",
       "graduateDate": null,
       "platforms": [
@@ -720,15 +710,16 @@
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
-          "activity": "active",
-          "lastCheckedAt": "2026-10-22T06:58:05.126Z"
+          "avatar": "https://yt3.googleusercontent.com/awqehbvojECwwErilftIuQQwDIR5iWNyQvqaA4zhErVgACtV6d_KeY5pkxExRUWDDD89j7UAJQ=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:07.961Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "爱利亚"
+      ]
     },
     {
       "id": "UCSKpNotPlJIbenQY_3gF-Sg",
@@ -763,10 +754,10 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
-      "activity": "unknown",
+      "activity": "graduated",
       "debutDate": "2021-03-13",
       "graduateDate": null,
       "platforms": [
@@ -781,8 +772,7 @@
             "count": 2440
           },
           "avatar": "https://yt3.ggpht.com/ytc/AIdro_k3TOr4JuawSeH4D5VnSo42cTDCbePF0Ye9cH98QH7hMQ=s88-c-k-c0x00ffffff-no-rj",
-          "activity": "graduated",
-          "lastCheckedAt": "2026-10-22T06:58:05.126Z"
+          "lastCheckedAt": "2026-10-22T11:36:07.961Z"
         },
         {
           "platform": "twitch",
@@ -794,8 +784,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.ggpht.com/ytc/AIdro_k3TOr4JuawSeH4D5VnSo42cTDCbePF0Ye9cH98QH7hMQ=s88-c-k-c0x00ffffff-no-rj",
-          "activity": "graduated",
-          "lastCheckedAt": "2026-10-22T06:58:05.126Z"
+          "lastCheckedAt": "2026-10-22T11:36:07.961Z"
         }
       ],
       "externals": {},
@@ -805,7 +794,7 @@
     },
     {
       "id": "UCwXOSFcPcOzLmY4YgP6LOUg",
-      "name": "竜也レイ",
+      "name": "Tatsuya Rei Ch.竜也レイ",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -816,10 +805,10 @@
       ],
       "statedLanguages": [],
       "agency": null,
-      "affiliation": "independent",
-      "avatar": null,
+      "affiliation": "unknown",
+      "avatar": "https://yt3.googleusercontent.com/u0PWWQknhAMT8YiRZSHzB8XlB2qg9W4OU2tQc4MkDNMCHdTYUcEU6GKRWLQQTUBNJqo_0Mlv=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "规矩只有一个人 不要紛爭 ！! 不要紛爭 ！! ! 不要紛爭 ！! ! ! 很重要所以要说三次",
       "subscribers": {
         "tag": "hidden"
       },
@@ -835,10 +824,10 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
-      "activity": "unknown",
+      "activity": "active",
       "debutDate": "2022-07-17",
       "graduateDate": null,
       "platforms": [
@@ -851,9 +840,8 @@
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
-          "activity": "active",
-          "lastCheckedAt": "2026-10-22T06:58:05.126Z"
+          "avatar": "https://yt3.googleusercontent.com/u0PWWQknhAMT8YiRZSHzB8XlB2qg9W4OU2tQc4MkDNMCHdTYUcEU6GKRWLQQTUBNJqo_0Mlv=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:07.961Z"
         },
         {
           "platform": "twitch",
@@ -865,14 +853,15 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "activity": "active",
-          "lastCheckedAt": "2026-10-22T06:58:05.126Z"
+          "lastCheckedAt": "2026-10-22T11:36:07.961Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "竜也レイ"
+      ]
     }
   ]
 }

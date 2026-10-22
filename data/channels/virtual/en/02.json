@@ -1,10 +1,69 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T06:58:03.071Z",
+  "generatedAt": "2026-10-22T11:36:05.933Z",
   "channels": [
     {
+      "id": "bilibili:1763663258",
+      "name": "Ike的随笔札记",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "en",
+      "regionSource": "agency",
+      "languages": [
+        "en"
+      ],
+      "statedLanguages": [],
+      "agency": "NIJISANJI EN",
+      "affiliation": "group",
+      "avatar": "https://i2.hdslb.com/bfs/face/a5f27c815a2e28825f8bc47475526325e5cce5d8.jpg",
+      "banner": null,
+      "description": "NIJISANJI EN四期Ike Eveland非公式字幕组。生肉合集→@Ike的札记文库",
+      "subscribers": {
+        "tag": "has",
+        "count": 37788
+      },
+      "videoCount": 186,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": false,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "bilibili",
+          "id": "1763663258",
+          "handle": "1763663258",
+          "name": "Ike的随笔札记",
+          "url": "https://space.bilibili.com/1763663258",
+          "subscribers": {
+            "tag": "has",
+            "count": 37788
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-22T11:36:11.039Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": []
+    },
+    {
       "id": "UC-3piUPtXhIu-KAdEs7fT8A",
-      "name": "NoWorld",
+      "name": "NoWorld Official",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -16,9 +75,9 @@
       "statedLanguages": [],
       "agency": null,
       "affiliation": "unknown",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/H1OhDDgcUXxiH2ouEi26INuwoPQIxwVztXjTLPXB9u4obXN49fWUeNIaUZo7vC7oEw5C5RmdeQ=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "音楽ユニット「NoWorld」Official ｜Profile 音楽ユニット「NoWorld」のYouTube Channelです 音楽を通じて私たちの世界を表現していきますので、チャンネル登録よろしくお願いします ｜Member NoiR：https://twitter.com/No_iR88 ハイズミ：ht...",
       "subscribers": {
         "tag": "hidden"
       },
@@ -34,7 +93,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -50,9 +109,8 @@
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.102Z"
+          "avatar": "https://yt3.googleusercontent.com/H1OhDDgcUXxiH2ouEi26INuwoPQIxwVztXjTLPXB9u4obXN49fWUeNIaUZo7vC7oEw5C5RmdeQ=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.055Z"
         },
         {
           "platform": "bilibili",
@@ -64,32 +122,33 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.102Z"
+          "lastCheckedAt": "2026-10-22T11:36:11.055Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "NoWorld"
+      ]
     },
     {
       "id": "UCIM92Ok_spNKLVB5TsgwseQ",
-      "name": "Mysta_Official",
+      "name": "Mysta Rias 【NIJISANJI EN】",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
       "region": "en",
-      "regionSource": "declared",
+      "regionSource": "agency",
       "languages": [
         "en"
       ],
       "statedLanguages": [],
       "agency": "NIJISANJI EN",
       "affiliation": "group",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/poFnH_5AgAQoTbBtHrSxhFGLyVRCS0rduc0-5akrrnF3bZwqEvLAE-2lK_8TlFno59uqvLGjEQ=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "From NIJISANJI EN's first male wave #Luxiem Detective Mysta is here to find out what makes you happy! 🧡 Follow me on twitter: https://twitter.com/Mysta_Rias ...",
       "subscribers": {
         "tag": "hidden"
       },
@@ -99,13 +158,13 @@
       "country": null,
       "tags": [],
       "isSinging": false,
-      "gender": "unknown",
+      "gender": "male",
       "isAi": false,
       "variant": "vtuber",
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T06:58:05.126Z",
+      "updatedAt": "2026-10-22T11:36:07.961Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -121,9 +180,8 @@
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.095Z"
+          "avatar": "https://yt3.googleusercontent.com/poFnH_5AgAQoTbBtHrSxhFGLyVRCS0rduc0-5akrrnF3bZwqEvLAE-2lK_8TlFno59uqvLGjEQ=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-22T11:36:11.052Z"
         },
         {
           "platform": "bilibili",
@@ -135,14 +193,15 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T06:58:08.095Z"
+          "lastCheckedAt": "2026-10-22T11:36:11.052Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "Mysta_Official"
+      ]
     }
   ]
 }
