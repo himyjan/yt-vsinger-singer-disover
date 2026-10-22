@@ -67,7 +67,7 @@ jobs:
         run: npm ci --no-audit --no-fund
 
       - name: Restore quota state
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: .cache
           key: yt-quota-${{ github.run_number }}
