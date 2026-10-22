@@ -78,6 +78,8 @@ The record for one performer.
 | `source` | `"api"` \| `"seed"` \| `"manual"` | Provenance |
 | `addedAt` | string | ISO timestamp of first sighting |
 | `updatedAt` | string | ISO timestamp of last refresh |
+| `lastItemsFetchedAt` | string \| null | When the channel's uploads were last fetched — drives the rotation |
+| `lastDetailsFetchedAt` | string \| null | When the channel's profile was last resolved — drives the rotation |
 | `activity` | `"active"` \| `"preparing"` \| `"graduated"` \| `"unknown"` | Streaming status |
 | `debutDate` | string \| null | ISO date of debut |
 | `graduateDate` | string \| null | ISO date of graduation |
@@ -103,6 +105,21 @@ type CountRef =
 
 This mirrors the pattern used by the reference `TaiwanVTuberTrackingDataJson`
 API, which gets it right.
+
+### `affiliation`
+
+Most VTubers are independent; a large part belong to a commercial group. The
+two are different facts and both are stored:
+
+- `group` — an agency name is known. It is in `agency`.
+- `independent` — the source says so positively: the Taiwan roster leaves the
+  group column empty for a solo act, and a description that says 「个人势vup」,
+  「個人勢」 or `independent` states it outright.
+- `unknown` — the sources do not say. This is **not** the same as
+  `independent`, and the UI never treats it as such.
+
+The affiliation and the activity status are re-evaluated whenever a channel's
+description is fetched, because a description is where a performer states both.
 
 ### Enums
 

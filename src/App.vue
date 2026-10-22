@@ -110,6 +110,20 @@ const SUB_FILTERS = [
   { id: "untracked", label: "Not tracked", countKey: "untracked" },
 ] as const;
 
+const AFFILIATION_FILTERS = [
+  { id: "all", label: "Any affiliation", title: "Every performer" },
+  {
+    id: "independent",
+    label: "🎪 Independent",
+    title: "Solo performers with no agency behind them",
+  },
+  {
+    id: "group",
+    label: "🏢 Agency",
+    title: "Performers signed to a business group",
+  },
+] as const;
+
 const GENDERS = [
   { id: "all", label: "Any gender" },
   { id: "female", label: "♀ Female" },
@@ -123,6 +137,7 @@ const visibleLive = computed(() =>
     categories: state.categories,
     gender: state.gender,
     ai: state.ai,
+    affiliation: state.affiliation,
     limit: 300,
   }),
 );
@@ -133,6 +148,7 @@ const visibleUpcoming = computed(() =>
     region: state.region,
     gender: state.gender,
     ai: state.ai,
+    affiliation: state.affiliation,
     limit: 300,
   }),
 );
@@ -160,6 +176,7 @@ const visibleChannels = computed(() =>
     region: state.region,
     gender: state.gender,
     ai: state.ai,
+    affiliation: state.affiliation,
     text: state.query.trim() || undefined,
     limit: 400,
   }),
@@ -212,6 +229,7 @@ const visibleSaved = computed(() => {
     region: state.region,
     gender: state.gender,
     ai: state.ai,
+    affiliation: state.affiliation,
     limit: 200,
   });
 });
@@ -803,6 +821,24 @@ onMounted(async () => {
           "
           :aria-pressed="state.gender === option.id"
           @click="state.gender = option.id"
+        >
+          {{ option.label }}
+        </button>
+
+        <!-- Independent vs. agency -->
+        <button
+          v-for="option in AFFILIATION_FILTERS"
+          :key="option.id"
+          type="button"
+          class="shrink-0 rounded-full border px-3 py-1.5 text-xs font-semibold whitespace-nowrap transition"
+          :class="
+            state.affiliation === option.id
+              ? 'border-indigo-500 bg-indigo-500/15 text-indigo-700 dark:text-indigo-400'
+              : 'border-black/10 bg-white text-neutral-500 hover:text-neutral-800 dark:border-white/12 dark:bg-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100'
+          "
+          :aria-pressed="state.affiliation === option.id"
+          :title="option.title"
+          @click="state.affiliation = option.id"
         >
           {{ option.label }}
         </button>

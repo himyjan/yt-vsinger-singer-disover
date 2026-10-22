@@ -29,6 +29,7 @@ import {
   classifyChannel,
   classifyItem,
   detectActivity,
+  detectAffiliation,
   extractCollaboratorNames,
   isShortItem,
 } from "./lib/classify";
@@ -42,7 +43,7 @@ import { createAdapters } from "./lib/platform-registry";
 import { fetchAiList, isOnAiList } from "./lib/aislist";
 import { fetchTrackedVtubers } from "./lib/taiwan-vtuber-data";
 import { buildRoster } from "./lib/roster";
-import { dedupeChannels } from "./lib/dedupe";
+import { dedupeChannels, mergeChannels } from "./lib/dedupe";
 import { IdentityRegistry } from "./lib/identity";
 import { fetchMusicDataset, indexMusicDataset } from "./lib/music-dataset";
 import { deriveVariant } from "./lib/classify";
@@ -144,6 +145,7 @@ interface SyncConfig {
   maxItemsPerChannelRetained: number;
   maxItemAgeDays: number;
   maxLiveChannelsPerRun: number;
+  maxChannelDetailsPerRun: number;
   searchResultsPerKeyword: number;
   refreshLiveEveryRun: boolean;
   searches: SearchSpec[];
@@ -158,6 +160,7 @@ const config: SyncConfig = readJson(
     maxItemsPerChannelRetained: 30,
     maxItemAgeDays: 365,
     maxLiveChannelsPerRun: 60,
+    maxChannelDetailsPerRun: 120,
     searchResultsPerKeyword: 25,
     refreshLiveEveryRun: true,
     searches: [],
@@ -262,6 +265,11 @@ function channelFromApi(
     regionSource: classification.regionSource,
     language: classification.language,
     agency: classification.agency,
+    affiliation: detectAffiliation(
+      snippet.title,
+      description,
+      classification.agency,
+    ),
     avatar: pickThumbnail(snippet.thumbnails, "high"),
     banner: branding.banner?.imageUrl
       ? pickThumbnail(
@@ -295,6 +303,7 @@ function channelFromApi(
     addedAt: now,
     updatedAt: now,
     lastItemsFetchedAt: null,
+    lastDetailsFetchedAt: null,
 
     activity: detectActivity(snippet.title, description, null),
     debutDate: null,
@@ -419,6 +428,7 @@ function itemFromApi(
     addedAt: now,
     updatedAt: now,
     lastItemsFetchedAt: null,
+    lastDetailsFetchedAt: null,
   };
 }
 
@@ -645,26 +655,18 @@ async function main(): Promise<void> {
         channelById.set(channel.id, channel);
         continue;
       }
-      // The roster wins on the facts it owns; anything it does not know is
-      // kept from the existing record.
-      channelById.set(channel.id, {
-        ...existing,
-        name: channel.name || existing.name,
-        kind: channel.kind,
-        role: channel.role,
-        region: channel.region,
-        agency: channel.agency ?? existing.agency,
-        subscribers: channel.subscribers.tag === "hidden"
-          ? existing.subscribers
-          : channel.subscribers,
-        activity: channel.activity !== "unknown" ? channel.activity : existing.activity,
-        debutDate: channel.debutDate ?? existing.debutDate,
-        graduateDate: channel.graduateDate ?? existing.graduateDate,
-        avatar: channel.avatar ?? existing.avatar,
-        platforms: channel.platforms.length ? channel.platforms : existing.platforms,
-        source: channel.source === "seed" ? "seed" : existing.source,
-        confidence: Math.max(existing.confidence, channel.confidence),
-      });
+      /**
+       * The roster wins on the facts it owns; anything it does not know is
+       * kept from the existing record.
+       *
+       * `mergeChannels` is used rather than a hand-written field list: a
+       * hand-written list silently drops every field it does not mention,
+       * which is how `affiliation`, `language`, `gender` and friends went
+       * missing from the dataset.
+       */
+      // The roster record is the target — it is the authoritative source —
+      // and the existing record fills in the gaps it does not cover.
+      channelById.set(channel.id, mergeChannels(channel, existing));
     }
     log(`roster: ${roster.length} channels, ${channelById.size} total`);
   }
@@ -763,6 +765,103 @@ async function main(): Promise<void> {
     );
     for (const pair of result.pairs.slice(0, 5)) {
       log(`  merged ${pair.merged} → ${pair.kept}`);
+    }
+  }
+
+  /**
+   * The platform adapters. YouTube and Twitch are handled by their own
+   * clients above; these are the ones that discover channels on their own.
+   */
+  const adapters = createAdapters({
+    youtubeClient: null,
+    twitchClient: null,
+  });
+
+  /* --- platform profile details ----------------------------------------- */
+  /**
+   * Fetch the profile of the channels whose details are missing.
+   *
+   * The description, the follower count and the platform-specific fields come
+   * from the platform's own API, one channel at a time. That is far too many
+   * requests to do in one run for a catalogue this size, so it is rotated:
+   * the channels that have never been resolved come first, then the least
+   * recently resolved.
+   */
+  {
+    const budget = config.maxChannelDetailsPerRun;
+    const needDetails = channels
+      .filter(
+        (c) =>
+          !c.description ||
+          c.platforms.some((p) => p.subscribers.tag === "hidden"),
+      )
+      .sort((a, b) =>
+        (a.lastDetailsFetchedAt ?? "").localeCompare(
+          b.lastDetailsFetchedAt ?? "",
+        ),
+      )
+      .slice(0, budget);
+
+    let resolved = 0;
+    for (const channel of needDetails) {
+      for (const link of channel.platforms) {
+        const adapter = adapters.find((a) => a.id === link.platform);
+        if (!adapter) continue;
+        try {
+          const profile = await adapter.resolve(link.handle ?? link.id);
+          if (!profile) continue;
+          if (profile.description && !channel.description) {
+            channel.description = profile.description.slice(0, 1000);
+          }
+          if (profile.avatar && !channel.avatar) channel.avatar = profile.avatar;
+          if (profile.subscribers.tag === "has") {
+            link.subscribers = profile.subscribers;
+          }
+          if (profile.handle) link.handle = profile.handle;
+          resolved++;
+        } catch {
+          /* a profile that cannot be fetched is not a reason to fail */
+        }
+        channel.lastDetailsFetchedAt = now;
+        if (resolved >= budget) break;
+      }
+      if (resolved >= budget) break;
+    }
+    if (needDetails.length) {
+      log(`details: resolved ${resolved}/${needDetails.length} channel profile(s)`);
+    }
+
+    /**
+     * Re-evaluate the facts the description can answer.
+     *
+     * The affiliation and the activity status are both stated in the
+     * channel's own description — 「个人势vup」 says the performer is
+     * independent, 「已毕业」 says they have graduated. Those facts were not
+     * available when the record was first classified, so they are read now.
+     */
+    let reclassified = 0;
+    for (const channel of channels) {
+      if (!channel.description) continue;
+      const affiliation = detectAffiliation(
+        channel.name,
+        channel.description,
+        channel.agency,
+      );
+      if (affiliation !== channel.affiliation) {
+        channel.affiliation = affiliation;
+        reclassified++;
+      }
+      const activity = detectActivity(
+        channel.name,
+        channel.description,
+        null,
+      );
+      if (activity !== "unknown" && channel.activity === "unknown") {
+        channel.activity = activity;
+      }
+    }
+    if (reclassified) {
+      log(`details: ${reclassified} channel(s) re-classified from their description`);
     }
   }
 
@@ -897,10 +996,6 @@ async function main(): Promise<void> {
   }
 
   /* --- other platforms: bilibili / niconico / vk ----------------------- */
-  const adapters = createAdapters({
-    youtubeClient: null,
-    twitchClient: null,
-  });
   const extraPlatforms = adapters.filter(
     (a) => a.id !== "youtube" && a.id !== "twitch",
   );
@@ -1131,6 +1226,7 @@ async function main(): Promise<void> {
           addedAt: now,
           updatedAt: now,
           lastItemsFetchedAt: null,
+          lastDetailsFetchedAt: null,
         };
         const prev = itemById.get(item.id);
         itemById.set(item.id, { ...item, addedAt: prev?.addedAt ?? item.addedAt });
@@ -1396,6 +1492,7 @@ export function platformUploadToItem(
     addedAt: now,
     updatedAt: now,
     lastItemsFetchedAt: null,
+    lastDetailsFetchedAt: null,
   };
 }
 
@@ -1455,6 +1552,11 @@ export function channelFromPlatform(
     regionSource: classification.regionSource,
     language: classification.language,
     agency: classification.agency,
+    affiliation: detectAffiliation(
+      channel.name,
+      channel.description,
+      classification.agency,
+    ),
     avatar: channel.avatar,
     banner: null,
     description: channel.description ? channel.description.slice(0, 1000) : null,
@@ -1473,6 +1575,7 @@ export function channelFromPlatform(
     addedAt: now,
     updatedAt: now,
     lastItemsFetchedAt: null,
+    lastDetailsFetchedAt: null,
 
     activity: "unknown",
     debutDate: null,

@@ -123,6 +123,7 @@ export function toSummary(c: Channel): ChannelSummary {
     region: c.region,
     regionSource: c.regionSource,
     agency: c.agency,
+    affiliation: c.affiliation,
     avatar: c.avatar,
     subscribers: countValue(c.subscribers),
     isSinging: c.isSinging,

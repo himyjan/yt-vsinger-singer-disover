@@ -158,8 +158,16 @@ const saved = computed(() =>
                   <span
                     v-if="channel.agency"
                     class="rounded bg-black/5 px-1.5 py-0.5 text-[10px] font-semibold text-neutral-600 dark:bg-white/10 dark:text-neutral-300"
+                    :title="`Business group: ${channel.agency}`"
                   >
-                    {{ channel.agency }}
+                    🏢 {{ channel.agency }}
+                  </span>
+                  <span
+                    v-else-if="channel.affiliation === 'independent'"
+                    class="rounded bg-indigo-500/15 px-1.5 py-0.5 text-[10px] font-semibold text-indigo-700 dark:text-indigo-400"
+                    title="Independent performer — no agency"
+                  >
+                    🎪 Independent
                   </span>
                   <span
                     class="rounded px-1.5 py-0.5 text-[10px] font-semibold"
@@ -221,6 +229,39 @@ const saved = computed(() =>
                 <span aria-hidden="true">·</span>
                 <span>{{ REGION_SOURCE_LABELS[channel.regionSource] ?? channel.regionSource }}</span>
               </p>
+
+              <!-- Business and lifecycle -->
+              <section v-if="channel.affiliation !== 'unknown' || channel.debutDate || channel.graduateDate">
+                <h3 class="mb-2 text-xs font-bold tracking-wide text-neutral-500 uppercase">
+                  About the performer
+                </h3>
+                <dl class="space-y-1.5 text-xs">
+                  <div v-if="channel.affiliation !== 'unknown'" class="flex justify-between gap-3">
+                    <dt class="text-neutral-500">Affiliation</dt>
+                    <dd class="text-right font-semibold text-neutral-800 dark:text-neutral-200">
+                      {{
+                        channel.affiliation === "independent"
+                          ? "Independent"
+                          : channel.affiliation === "group"
+                            ? channel.agency || "Business group"
+                            : "Unknown"
+                      }}
+                    </dd>
+                  </div>
+                  <div v-if="channel.debutDate" class="flex justify-between gap-3">
+                    <dt class="text-neutral-500">Debut</dt>
+                    <dd class="font-semibold text-neutral-800 dark:text-neutral-200">
+                      {{ channel.debutDate }}
+                    </dd>
+                  </div>
+                  <div v-if="channel.graduateDate" class="flex justify-between gap-3">
+                    <dt class="text-neutral-500">Graduated</dt>
+                    <dd class="font-semibold text-neutral-800 dark:text-neutral-200">
+                      {{ channel.graduateDate }}
+                    </dd>
+                  </div>
+                </dl>
+              </section>
 
               <!-- All links -->
               <section>

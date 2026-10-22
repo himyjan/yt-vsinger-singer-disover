@@ -163,6 +163,28 @@ is published.
       overrides the heuristic extraction, because the curated data is
       authoritative.
 
+## 5f. Independent vs. business group
+
+- `[x]` `affiliation` — `independent` · `group` · `unknown`, stored on every
+      channel and filterable from the web app.
+- `[x]` The **business group name** is stored in `agency`, from vdb's
+      `group_name` and the Taiwan roster's `Group Name` column (e.g.
+      `VirtuaReal`, `NIJISANJI`, `极光社`, `ChaosLiveSprout`).
+- `[x]` `unknown` is distinct from `independent` — the sources not saying is
+      not the same as the performer being a solo act.
+- `[x]` The affiliation is re-evaluated when a description arrives, because
+      that is where a performer states it.
+
+## 5g. Channel details from the source
+
+- `[x]` The profile — description, follower count, avatar, handle — is
+      fetched from the platform's own API.
+- `[x]` It is fetched **one channel at a time**, so it is rotated: the
+      channels that have never been resolved come first, then the least
+      recently resolved. 120 per run by default.
+- `[x]` The description then feeds back into the classification: it can
+      reveal the affiliation (「个人势」) and the activity (「已毕业」).
+
 ## 6. Live page (modelled on the `camlisted` reference)
 
 - `[x]` A dedicated **Live** view listing every currently-live VTuber / singer.

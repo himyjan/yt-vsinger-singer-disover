@@ -18,6 +18,7 @@
  */
 
 import type {
+  Affiliation,
   Channel,
   ChannelSummary,
   Gender,
@@ -311,6 +312,8 @@ export interface ItemQuery {
   acoustic?: boolean;
   /** Gender filter. */
   gender?: Gender | "all";
+  /** Independent or signed to a business group. */
+  affiliation?: Affiliation | "all";
   /** `ai` shows only AI performers, `human` hides them, `all` shows both. */
   ai?: "ai" | "human" | "all";
   /** Free-text filter over title / song / channel. */
@@ -332,6 +335,7 @@ export function filterItems(items: Item[], query: ItemQuery): Item[] {
   const status = query.status ?? "all";
   const gender = query.gender ?? "all";
   const ai = query.ai ?? "all";
+  const affiliation = query.affiliation ?? "all";
   const text = query.text?.trim().toLowerCase() ?? "";
 
   const filtered = items.filter((item) => {
@@ -373,6 +377,7 @@ export function filterChannels(
   const region = query.region ?? "all";
   const gender = query.gender ?? "all";
   const ai = query.ai ?? "all";
+  const affiliation = query.affiliation ?? "all";
   const text = query.text?.trim().toLowerCase() ?? "";
 
   return channels.filter((channel) => {
@@ -381,6 +386,9 @@ export function filterChannels(
     if (gender !== "all" && channel.gender !== gender) return false;
     if (ai === "ai" && !channel.isAi) return false;
     if (ai === "human" && channel.isAi) return false;
+    if (affiliation !== "all" && channel.affiliation !== affiliation) {
+      return false;
+    }
     if (text) {
       const haystack = `${channel.name} ${channel.handle ?? ""} ${
         channel.agency ?? ""
