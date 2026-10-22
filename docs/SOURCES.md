@@ -105,6 +105,51 @@ with their pre-fame career, and its infobox image is a photograph of them.
 
 Bilibili, Niconico, Twitch and VK — see `docs/PLATFORMS.md`.
 
+### The quota-free sources
+
+The Data API's 10,000 units a day is a hard ceiling: the catalogue is
+fourteen thousand channels, and at one unit per channel plus one per fifty
+videos, a full refresh would take days of the allowance.
+
+Each platform has an unofficial route that costs **nothing** — the same trade
+InnerTube offers on YouTube:
+
+| Platform | Official | Quota-free equivalent | Gives |
+| --- | --- | --- | --- |
+| YouTube | Data API v3 | **InnerTube** (`youtubei.js`) | description, avatar, subscribers, uploads, live |
+| Twitch | Helix (client id **and** secret) | **GQL** (`gql.twitch.tv`) | description, avatar, followers, live |
+| Bilibili | — | **WBI-signed public API** | description, avatar, followers, uploads, live |
+
+**InnerTube** (`scripts/lib/youtubei.ts`) — the channel's *description* is the
+richest field in the project: it is where a performer states their own
+language, their agency and their links. It also gives the avatar, the
+subscriber count and the upload list.
+
+**Twitch GQL** (`scripts/lib/twitch-gql.ts`) — the same GraphQL endpoint the
+Twitch website itself uses. It needs only the **public web client id** that
+every Twitch page ships with, so there is no secret to manage and no quota.
+
+**Bilibili WBI** (`scripts/lib/platforms/bilibili.ts`) — Bilibili's equivalent
+of InnerTube. Two pieces:
+- the **visitor id** (`buvid3`), fetched once from `x/frontend/finger/spi` and
+  sent as a cookie, which is what stops the risk-control system answering
+  with HTTP 412;
+- the **WBI signature**, computed from the two rotating key URLs — and the
+  key file names must be taken *without their extensions*, or every signed
+  request is rejected with `-412 request was banned`.
+
+### Rate limiting
+
+The free sources have no published quota, but they do push back. All three go
+through `scripts/lib/rate-limit.ts`, which keeps a minimum gap between
+requests, **doubles** it when a source answers with a rate-limit response,
+and relaxes it again once the source has been quiet. Bilibili also needs the
+visitor id, without which every request is treated as an attack.
+
+**With no YouTube API key at all the pipeline still produces a complete
+dataset** — the uploads come from InnerTube and the profiles from InnerTube
+and Twitch GQL.
+
 ## What the pipeline cannot read
 
 These are the well-known VTuber databases worth knowing about, and why they

@@ -73,6 +73,7 @@ export async function buildRoster(
       // The language follows the region, not the name: a Taiwanese performer
       // with a Japanese-style stage name still performs in Chinese.
       languages: languagesForRegion(record.region, classification.languages),
+      statedLanguages: classification.statedLanguages,
       agency: record.group,
       // The track list states "no group" positively for a solo act.
       affiliation: record.isIndependent
@@ -177,6 +178,7 @@ export async function buildRoster(
       region: seed.region,
       regionSource: "override",
       languages: ["en"],
+      statedLanguages: ["en"],
       agency: seed.agency ?? null,
       affiliation: detectAffiliation(
         seed.name,
@@ -261,8 +263,12 @@ export async function buildRoster(
       description: null,
       tags: entry.aliases,
       country: null,
-      // The platform the performer is on is a strong region signal.
-      platform: entry.platforms[0]?.platform ?? null,
+      // The platform is deliberately **not** passed: one platform is not
+      // enough to decide the region. A performer with both a Bilibili and a
+      // YouTube account presents to a global audience, and their
+      // Chinese-subtitled Bilibili channel does not make them a Chinese
+      // speaker. Only the full set of platforms says that — and that decision
+      // is made below, where the whole set is known.
     });
 
     byId.set(entry.id, {
@@ -285,9 +291,10 @@ export async function buildRoster(
        * because that is what they chose to publish.
        */
       languages: mergeLanguages(
-        classification.languages,
+        classification.statedLanguages,
         languagesForRegion(entry.region),
       ),
+      statedLanguages: classification.statedLanguages,
       agency: entry.group,
       affiliation: detectAffiliation(entry.name, null, entry.group),
       avatar: null,
@@ -360,6 +367,8 @@ export async function buildRoster(
             region: classification.region,
             regionSource: classification.regionSource,
             languages: classification.languages,
+            statedLanguages: classification.statedLanguages,
+
             agency: null,
             affiliation: detectAffiliation(
               channel.name,

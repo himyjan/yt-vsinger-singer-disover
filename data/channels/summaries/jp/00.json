@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T03:15:21.113Z",
+  "generatedAt": "2026-10-22T03:46:49.992Z",
   "channels": [
     {
       "id": "UC_GCs6GARLxEHxy1w40d6VQ",
@@ -11,7 +11,6 @@
       "region": "jp",
       "regionSource": "declared",
       "languages": [
-        "zh-Hans",
         "ja"
       ],
       "agency": "NIJISANJI",
@@ -37,6 +36,18 @@
           "u": "https://space.bilibili.com/436596837",
           "h": null
         }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "bilibili",
+          "n": null,
+          "hidden": true
+        }
       ]
     },
     {
@@ -48,7 +59,6 @@
       "region": "jp",
       "regionSource": "declared",
       "languages": [
-        "zh-Hant",
         "ja"
       ],
       "agency": null,
@@ -74,6 +84,18 @@
           "u": "https://space.bilibili.com/358617079",
           "h": null
         }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "bilibili",
+          "n": null,
+          "hidden": true
+        }
       ]
     },
     {
@@ -85,7 +107,8 @@
       "region": "jp",
       "regionSource": "override",
       "languages": [
-        "en"
+        "en",
+        "ja"
       ],
       "agency": "hololive",
       "affiliation": "group",
@@ -109,6 +132,18 @@
           "p": "bilibili",
           "u": "https://space.bilibili.com/443305053",
           "h": null
+        }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "bilibili",
+          "n": null,
+          "hidden": true
         }
       ]
     },
@@ -146,6 +181,18 @@
           "u": "https://space.bilibili.com/809154",
           "h": null
         }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "bilibili",
+          "n": null,
+          "hidden": true
+        }
       ]
     },
     {
@@ -176,6 +223,13 @@
           "p": "youtube",
           "u": "https://www.youtube.com/channel/UC2xrDXTlTyxagWiMNWTk6nA",
           "h": null
+        }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
         }
       ]
     },
@@ -213,6 +267,18 @@
           "u": "https://space.bilibili.com/252599",
           "h": null
         }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "bilibili",
+          "n": null,
+          "hidden": true
+        }
       ]
     },
     {
@@ -249,6 +315,18 @@
           "u": "https://space.bilibili.com/408833733",
           "h": null
         }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "bilibili",
+          "n": null,
+          "hidden": true
+        }
       ]
     },
     {
@@ -260,7 +338,6 @@
       "region": "jp",
       "regionSource": "declared",
       "languages": [
-        "zh-Hans",
         "ja"
       ],
       "agency": null,
@@ -285,6 +362,18 @@
           "p": "bilibili",
           "u": "https://space.bilibili.com/409689786",
           "h": null
+        }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "bilibili",
+          "n": null,
+          "hidden": true
         }
       ]
     },
@@ -322,6 +411,18 @@
           "u": "https://space.bilibili.com/397222615",
           "h": null
         }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "bilibili",
+          "n": null,
+          "hidden": true
+        }
       ]
     },
     {
@@ -333,7 +434,6 @@
       "region": "jp",
       "regionSource": "declared",
       "languages": [
-        "zh-Hans",
         "ja"
       ],
       "agency": null,
@@ -363,6 +463,23 @@
           "p": "twitch",
           "u": "https://www.twitch.tv/souma_mayoi",
           "h": null
+        }
+      ],
+      "followers": [
+        {
+          "p": "bilibili",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "twitch",
+          "n": null,
+          "hidden": true
         }
       ]
     },
@@ -400,6 +517,18 @@
           "u": "https://space.bilibili.com/216648",
           "h": null
         }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "bilibili",
+          "n": null,
+          "hidden": true
+        }
       ]
     },
     {
@@ -431,6 +560,13 @@
           "u": "https://www.youtube.com/channel/UCBC7vYFNQoGPupe5NxPG4Bw",
           "h": null
         }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        }
       ]
     },
     {
@@ -442,7 +578,6 @@
       "region": "jp",
       "regionSource": "declared",
       "languages": [
-        "zh-Hans",
         "ja"
       ],
       "agency": "NIJISANJI",
@@ -468,6 +603,18 @@
           "u": "https://space.bilibili.com/441666967",
           "h": null
         }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "bilibili",
+          "n": null,
+          "hidden": true
+        }
       ]
     },
     {
@@ -479,7 +626,6 @@
       "region": "jp",
       "regionSource": "declared",
       "languages": [
-        "zh-Hant",
         "ja"
       ],
       "agency": null,
@@ -504,6 +650,18 @@
           "p": "bilibili",
           "u": "https://space.bilibili.com/3326614",
           "h": null
+        }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "bilibili",
+          "n": null,
+          "hidden": true
         }
       ]
     },
@@ -535,6 +693,13 @@
           "p": "youtube",
           "u": "https://www.youtube.com/channel/UCBKxF1PHQtT78ypcVYmBtBA",
           "h": null
+        }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
         }
       ]
     },
@@ -572,6 +737,18 @@
           "u": "https://space.bilibili.com/389856447",
           "h": null
         }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "bilibili",
+          "n": null,
+          "hidden": true
+        }
       ]
     },
     {
@@ -602,6 +779,13 @@
           "p": "youtube",
           "u": "https://www.youtube.com/channel/UCdHZ_5d2DEp9fMlXRZw39Zg",
           "h": null
+        }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
         }
       ]
     },
@@ -634,6 +818,13 @@
           "u": "https://www.youtube.com/channel/UCerkculBD7YLc_vOGrF7tKg",
           "h": null
         }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        }
       ]
     },
     {
@@ -665,6 +856,13 @@
           "u": "https://www.youtube.com/channel/UCgTzsBI0DIRopMylJEDqnog",
           "h": null
         }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        }
       ]
     },
     {
@@ -676,7 +874,6 @@
       "region": "jp",
       "regionSource": "declared",
       "languages": [
-        "zh-Hans",
         "ja"
       ],
       "agency": "和遥树奈Project",
@@ -702,6 +899,18 @@
           "u": "https://www.youtube.com/channel/UCh3bQf20rJnEtiU25vIK2Hg",
           "h": null
         }
+      ],
+      "followers": [
+        {
+          "p": "bilibili",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        }
       ]
     },
     {
@@ -713,7 +922,6 @@
       "region": "jp",
       "regionSource": "declared",
       "languages": [
-        "en",
         "ja"
       ],
       "agency": null,
@@ -739,6 +947,18 @@
           "u": "https://space.bilibili.com/1745191666",
           "h": null
         }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "bilibili",
+          "n": null,
+          "hidden": true
+        }
       ]
     },
     {
@@ -750,7 +970,6 @@
       "region": "jp",
       "regionSource": "declared",
       "languages": [
-        "zh-Hans",
         "ja"
       ],
       "agency": "NIJISANJI",
@@ -775,6 +994,18 @@
           "p": "bilibili",
           "u": "https://space.bilibili.com/458154143",
           "h": null
+        }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "bilibili",
+          "n": null,
+          "hidden": true
         }
       ]
     },
@@ -812,6 +1043,18 @@
           "u": "https://space.bilibili.com/12645374",
           "h": null
         }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "bilibili",
+          "n": null,
+          "hidden": true
+        }
       ]
     },
     {
@@ -843,6 +1086,13 @@
           "u": "https://www.youtube.com/channel/UCKeAhJvy8zgXWbh9duVjIaQ",
           "h": null
         }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        }
       ]
     },
     {
@@ -873,6 +1123,13 @@
           "p": "youtube",
           "u": "https://www.youtube.com/channel/UCL34fAoFim9oHLbVzMKFavQ",
           "h": null
+        }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
         }
       ]
     },
@@ -910,6 +1167,18 @@
           "u": "https://space.bilibili.com/391614061",
           "h": null
         }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "bilibili",
+          "n": null,
+          "hidden": true
+        }
       ]
     },
     {
@@ -946,6 +1215,18 @@
           "u": "https://space.bilibili.com/423728837",
           "h": null
         }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "bilibili",
+          "n": null,
+          "hidden": true
+        }
       ]
     },
     {
@@ -957,7 +1238,6 @@
       "region": "jp",
       "regionSource": "declared",
       "languages": [
-        "zh-Hant",
         "ja"
       ],
       "agency": "NIJISANJI",
@@ -978,6 +1258,13 @@
           "u": "https://www.youtube.com/channel/UCoM_XmK45j504hfUWvN06Qg",
           "h": null
         }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        }
       ]
     },
     {
@@ -989,7 +1276,6 @@
       "region": "jp",
       "regionSource": "declared",
       "languages": [
-        "zh-Hant",
         "ja"
       ],
       "agency": null,
@@ -1015,6 +1301,18 @@
           "u": "https://space.bilibili.com/257492",
           "h": null
         }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "bilibili",
+          "n": null,
+          "hidden": true
+        }
       ]
     },
     {
@@ -1026,7 +1324,8 @@
       "region": "jp",
       "regionSource": "override",
       "languages": [
-        "en"
+        "en",
+        "ja"
       ],
       "agency": "hololive",
       "affiliation": "group",
@@ -1051,6 +1350,18 @@
           "u": "https://space.bilibili.com/286179206",
           "h": null
         }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "bilibili",
+          "n": null,
+          "hidden": true
+        }
       ]
     },
     {
@@ -1062,7 +1373,6 @@
       "region": "jp",
       "regionSource": "declared",
       "languages": [
-        "zh-Hans",
         "ja"
       ],
       "agency": null,
@@ -1087,6 +1397,18 @@
           "p": "youtube",
           "u": "https://www.youtube.com/channel/UCPjotP9qDvvTuBSAXdrhBzg",
           "h": null
+        }
+      ],
+      "followers": [
+        {
+          "p": "bilibili",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
         }
       ]
     },
@@ -1124,6 +1446,18 @@
           "u": "https://space.bilibili.com/473935898",
           "h": null
         }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "bilibili",
+          "n": null,
+          "hidden": true
+        }
       ]
     },
     {
@@ -1160,6 +1494,18 @@
           "u": "https://space.bilibili.com/176486647",
           "h": null
         }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "bilibili",
+          "n": null,
+          "hidden": true
+        }
       ]
     },
     {
@@ -1190,6 +1536,13 @@
           "p": "youtube",
           "u": "https://www.youtube.com/channel/UCuep1JCrMvSxOGgGhBfJuYw",
           "h": null
+        }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
         }
       ]
     },
@@ -1227,6 +1580,18 @@
           "u": "https://space.bilibili.com/392505232",
           "h": null
         }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "bilibili",
+          "n": null,
+          "hidden": true
+        }
       ]
     },
     {
@@ -1238,7 +1603,6 @@
       "region": "jp",
       "regionSource": "declared",
       "languages": [
-        "zh-Hans",
         "ja"
       ],
       "agency": "ReAcT",
@@ -1263,6 +1627,18 @@
           "p": "youtube",
           "u": "https://www.youtube.com/channel/UCxJ9SJLG7dA00M7VoEe4ltw",
           "h": null
+        }
+      ],
+      "followers": [
+        {
+          "p": "bilibili",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
         }
       ]
     },
@@ -1300,6 +1676,18 @@
           "u": "https://www.youtube.com/@DEV_IS_FLOWGLOW",
           "h": "DEV_IS_FLOWGLOW"
         }
+      ],
+      "followers": [
+        {
+          "p": "bilibili",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        }
       ]
     },
     {
@@ -1311,7 +1699,6 @@
       "region": "jp",
       "regionSource": "declared",
       "languages": [
-        "zh-Hans",
         "ja"
       ],
       "agency": null,
@@ -1336,6 +1723,18 @@
           "p": "youtube",
           "u": "https://www.youtube.com/@lotus_hoshimori",
           "h": "lotus_hoshimori"
+        }
+      ],
+      "followers": [
+        {
+          "p": "bilibili",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
         }
       ]
     }

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T03:15:21.113Z",
+  "generatedAt": "2026-10-22T03:46:49.992Z",
   "channels": [
     {
       "id": "UC2c8dQYdDadn7tmK_d7o-HQ",
@@ -11,7 +11,6 @@
       "region": "en",
       "regionSource": "declared",
       "languages": [
-        "ja",
         "en"
       ],
       "agency": null,
@@ -36,6 +35,18 @@
           "p": "bilibili",
           "u": "https://space.bilibili.com/414753486",
           "h": null
+        }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "bilibili",
+          "n": null,
+          "hidden": true
         }
       ]
     },
@@ -73,6 +84,18 @@
           "u": "https://space.bilibili.com/92874801",
           "h": null
         }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "bilibili",
+          "n": null,
+          "hidden": true
+        }
       ]
     },
     {
@@ -84,7 +107,6 @@
       "region": "en",
       "regionSource": "declared",
       "languages": [
-        "zh-Hans",
         "en"
       ],
       "agency": null,
@@ -115,6 +137,23 @@
           "u": "https://www.youtube.com/channel/UCYKX4HL54erXdCyMj7TpFyg",
           "h": null
         }
+      ],
+      "followers": [
+        {
+          "p": "bilibili",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "twitch",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        }
       ]
     },
     {
@@ -140,7 +179,8 @@
       "isAi": false,
       "variant": "vtuber",
       "verification": null,
-      "links": []
+      "links": [],
+      "followers": []
     }
   ]
 }

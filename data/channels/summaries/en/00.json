@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T03:15:21.113Z",
+  "generatedAt": "2026-10-22T03:46:49.992Z",
   "channels": [
     {
       "id": "twitch:vedal987",
@@ -30,6 +30,13 @@
           "p": "twitch",
           "u": "https://www.twitch.tv/vedal987",
           "h": null
+        }
+      ],
+      "followers": [
+        {
+          "p": "twitch",
+          "n": null,
+          "hidden": true
         }
       ]
     },
@@ -62,6 +69,13 @@
           "u": "https://www.youtube.com/channel/UCsb-1aJgiJXJH2feV-zlZRw",
           "h": null
         }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        }
       ]
     },
     {
@@ -73,7 +87,6 @@
       "region": "en",
       "regionSource": "declared",
       "languages": [
-        "ja",
         "en"
       ],
       "agency": "4bb946b7-6b9d-5b28-8975-f23291cba191",
@@ -88,7 +101,8 @@
       "isAi": false,
       "variant": "vtuber",
       "verification": null,
-      "links": []
+      "links": [],
+      "followers": []
     },
     {
       "id": "vdb:ce23afd2-6f1a-5106-b1d6-09980187f549",
@@ -113,7 +127,8 @@
       "isAi": false,
       "variant": "vtuber",
       "verification": null,
-      "links": []
+      "links": [],
+      "followers": []
     },
     {
       "id": "youtube:NOATalent",
@@ -124,7 +139,6 @@
       "region": "en",
       "regionSource": "declared",
       "languages": [
-        "zh-Hans",
         "en"
       ],
       "agency": "20a14bd8-50b1-5613-96c9-191eef51b689",
@@ -155,6 +169,23 @@
           "u": "https://www.twitch.tv/noatalent",
           "h": null
         }
+      ],
+      "followers": [
+        {
+          "p": "bilibili",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "twitch",
+          "n": null,
+          "hidden": true
+        }
       ]
     },
     {
@@ -166,7 +197,6 @@
       "region": "en",
       "regionSource": "declared",
       "languages": [
-        "zh-Hans",
         "en"
       ],
       "agency": null,
@@ -201,6 +231,28 @@
           "p": "twitch",
           "u": "https://www.twitch.tv/riikamivt",
           "h": null
+        }
+      ],
+      "followers": [
+        {
+          "p": "bilibili",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "twitch",
+          "n": null,
+          "hidden": true
         }
       ]
     }

@@ -347,7 +347,15 @@ export interface Channel {
    * country) are two different standards. A Japanese VTuber is
    * `languages: ["ja"]` and `region: "jp"`.
    */
-  languages: string[];
+  languages: string | string[];
+  /**
+   * Only the languages the performer **stated** themselves.
+   *
+   * The `languages` above is the full picture: the stated ones plus the one
+   * the region implies. Keeping the stated ones separately means the two can
+   * never be derived from different regions and disagree.
+   */
+  statedLanguages: string[];
   /** Agency / group, e.g. `hololive`, `nijisanji`, `kmvs`. */
   agency: string | null;
   /**
@@ -474,6 +482,16 @@ export interface ChannelLink {
   h: string | null;
 }
 
+/** The follower count of one platform. */
+export interface PlatformFollower {
+  /** Platform id. */
+  p: PlatformId;
+  /** The count. `null` when the platform hides it. */
+  n: number | null;
+  /** True when the platform does not publish a count at all. */
+  hidden: boolean;
+}
+
 /** Compact projection used by list views and the search index. */
 export interface ChannelSummary {
   id: string;
@@ -491,6 +509,7 @@ export interface ChannelSummary {
    * *where* they are (`jp`), the languages say *what they perform in* (`ja`).
    */
   languages: string | string[];
+
   agency: string | null;
   /** Independent or signed to a business group. */
   affiliation: Affiliation;
@@ -510,6 +529,14 @@ export interface ChannelSummary {
   variant: Variant;
   /** Every platform identity, for the "all links" info block. */
   links: ChannelLink[];
+  /**
+   * The follower count of each platform.
+   *
+   * A performer with accounts on several platforms has several counts, and
+   * they are not the same number — the UI shows them side by side rather
+   * than collapsing them into one.
+   */
+  followers: PlatformFollower[];
 }
 
 /* -------------------------------------------------------------------------- */
@@ -533,6 +560,7 @@ export interface Item {
   gender: Gender;
   /** Owning channel's languages — a single code or a list. */
   languages: string | string[];
+
   /** True when the upload is AI-generated. */
   isAi: boolean;
   /** Owning channel's combined variant label. */
@@ -663,6 +691,7 @@ export interface SongRecord {
   gender: Gender;
   /** Owning channel's languages — a single code or a list. */
   languages: string | string[];
+
   /** True when the performer is AI-generated. */
   isAi: boolean;
   /** The upload's title. */

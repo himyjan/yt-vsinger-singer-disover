@@ -41,12 +41,14 @@ import {
 } from "./lib/twitch";
 import { createAdapters } from "./lib/platform-registry";
 import { InnerTubeSource } from "./lib/youtubei";
+import { TwitchGqlSource } from "./lib/twitch-gql";
 import {
   orderPlatformLinks,
   pickAvatar,
   pickSubscribers,
   primaryPlatformOf,
 } from "./lib/platforms";
+import { languagesForRegion, mergeLanguages } from "./lib/regions";
 import { fetchAiList, isOnAiList } from "./lib/aislist";
 import { fetchTrackedVtubers } from "./lib/taiwan-vtuber-data";
 import { buildRoster } from "./lib/roster";
@@ -173,9 +175,9 @@ const config: SyncConfig = readJson(
     maxItemsPerChannelRetained: 30,
     maxItemAgeDays: 365,
     maxLiveChannelsPerRun: 60,
-    maxChannelDetailsPerRun: 200,
+    maxChannelDetailsPerRun: 900,
     detailsDelayMs: 700,
-    innertubeDelayMs: 350,
+    innertubeDelayMs: 250,
     searchResultsPerKeyword: 25,
     refreshLiveEveryRun: true,
     searches: [],
@@ -285,6 +287,8 @@ function channelFromApi(
     region: classification.region,
     regionSource: classification.regionSource,
     languages: classification.languages,
+    statedLanguages: classification.statedLanguages,
+
     agency: classification.agency,
     affiliation: detectAffiliation(
       snippet.title,
@@ -551,6 +555,15 @@ async function main(): Promise<void> {
     onLog: (m) => log(m),
   });
   await innertube.connect();
+
+  /**
+   * The Twitch GQL client — the quota-free, secret-free Twitch source.
+   * The same trade-off InnerTube offers on YouTube.
+   */
+  const twitchGql = new TwitchGqlSource({
+    delayMs: config.innertubeDelayMs,
+    onLog: (m) => log(m),
+  });
 
   const client = apiKey
     ? new YouTubeClient({
@@ -853,6 +866,19 @@ async function main(): Promise<void> {
       )
       .slice(0, budget);
 
+    /**
+     * The channels that are missing the most visible fields come first.
+     *
+     * An avatar is the first thing anyone sees on a card, so a record with
+     * no avatar at all is worth more than one that merely lacks a
+     * description.
+     */
+    needDetails.sort((a, b) => {
+      const score = (c: Channel) =>
+        (c.avatar ? 0 : 4) + (c.description ? 0 : 1) + (c.subscribers.tag === "has" ? 0 : 1);
+      return score(b) - score(a);
+    });
+
     let resolved = 0;
     for (const channel of needDetails) {
       /**
@@ -862,6 +888,49 @@ async function main(): Promise<void> {
        * happened to list first.
        */
       const ordered = orderPlatformLinks(channel);
+      /**
+       * The Twitch profile, from GQL — no secret, no quota.
+       *
+       * The description is where a performer states their own language and
+       * their links, and the follower count is the one Twitch publishes
+       * publicly.
+       */
+      {
+        const twitchLink = channel.platforms.find(
+          (p) => p.platform === "twitch",
+        );
+        if (twitchLink) {
+          const login = twitchLink.handle ?? twitchLink.id;
+          const profile = await twitchGql.profile(login);
+          if (profile) {
+            if (profile.description && !channel.description) {
+              channel.description = profile.description.slice(0, 1000);
+            }
+            if (profile.avatar && !channel.avatar) {
+              channel.avatar = profile.avatar;
+            }
+            if (profile.followers) {
+              twitchLink.subscribers = {
+                tag: "has",
+                count: profile.followers,
+              };
+            }
+            if (profile.live) {
+              // The channel is live right now.
+              const item = innertubeLiveToItem(profile.live, channel, now);
+              if (item) {
+                const prev = itemById.get(item.id);
+                itemById.set(item.id, {
+                  ...item,
+                  addedAt: prev?.addedAt ?? item.addedAt,
+                });
+              }
+            }
+            resolved++;
+          }
+        }
+      }
+
       for (const link of ordered) {
         const adapter = adapterById.get(link.platform);
         if (!adapter) continue;
@@ -924,6 +993,20 @@ async function main(): Promise<void> {
      * available when the record was first classified, so they are read now.
      */
     for (const channel of channels) {
+      /**
+       * The languages are settled from the **final** region.
+       *
+       * The region can change at several points — a roster entry, a platform
+       * prior, an override — and the languages have to follow whichever one
+       * won. Deriving them from different regions is how a Japanese VTuber
+       * with a Chinese-subtitled Bilibili channel ended up recorded as
+       * speaking Simplified Chinese.
+       */
+      channel.languages = mergeLanguages(
+        channel.statedLanguages,
+        languagesForRegion(channel.region),
+      );
+
       // The avatar follows the primary platform, whatever order the source
       // listed the accounts in.
       channel.avatar = pickAvatar(channel);
@@ -1251,7 +1334,7 @@ async function main(): Promise<void> {
      * still fills up. With a key, the Data API is used — it is the
      * supported, quota-guaranteed route — and InnerTube is the fallback.
      */
-    if (!client && innertube.isAvailable) {
+    if (!client && innertube.isAvailable && channel.id.startsWith("UC")) {
       try {
         const uploads = await innertube.uploads(
           channel.id,
@@ -1338,6 +1421,8 @@ async function main(): Promise<void> {
           region: channel.region,
           gender: channel.gender,
           languages: channel.languages,
+
+
           isAi: channel.isAi,
           variant: channel.variant,
           title: snippet.title ?? "Untitled",
@@ -1608,6 +1693,60 @@ async function main(): Promise<void> {
 /* Multi-platform helpers                                                     */
 /* -------------------------------------------------------------------------- */
 
+/**
+ * Converts a live Twitch stream into a dataset item.
+ */
+export function innertubeLiveToItem(
+  live: { id: string; title: string; viewers: number | null },
+  channel: Channel,
+  now: string,
+): Item | null {
+  if (!live?.id) return null;
+  return {
+    id: live.id,
+    type: "live",
+    channelId: channel.id,
+    channelName: channel.name,
+    channelKind: channel.kind,
+    region: channel.region,
+    gender: channel.gender,
+    languages: channel.languages,
+    isAi: channel.isAi,
+    variant: channel.variant,
+    title: live.title || "Untitled",
+    description: null,
+    thumbnail: null,
+    publishedAt: now,
+    scheduledStart: null,
+    actualStart: now,
+    actualEnd: null,
+    duration: null,
+    status: "live",
+    category: "live",
+    songTitle: null,
+    originalArtist: null,
+    isCollab: false,
+    collaborators: [
+      {
+        channelId: channel.id,
+        name: channel.name,
+        kind: channel.kind,
+        region: channel.region,
+      },
+    ],
+    isAcoustic: false,
+    tags: [],
+    viewCount: null,
+    likeCount: null,
+    concurrentViewers: live.viewers ?? null,
+    source: "api",
+    addedAt: now,
+    updatedAt: now,
+    lastItemsFetchedAt: null,
+    lastDetailsFetchedAt: null,
+  };
+}
+
 /** Maps a published URL to the platform key it belongs to. */
 function externalKeyFor(url: string): string | null {
   const map: Record<string, string> = {
@@ -1661,6 +1800,8 @@ export function innertubeUploadToItem(
     region: channel.region,
     gender: channel.gender,
     languages: channel.languages,
+
+
     isAi: channel.isAi,
     variant: channel.variant,
     title: upload.title || "Untitled",
@@ -1718,6 +1859,8 @@ export function platformUploadToItem(
     region: "cn",
     gender: "unknown",
     languages: [],
+
+
     isAi: false,
     variant: "unknown",
     title: upload.title ?? "Untitled",
@@ -1803,6 +1946,8 @@ export function channelFromPlatform(
     region: classification.region,
     regionSource: classification.regionSource,
     languages: classification.languages,
+    statedLanguages: classification.statedLanguages,
+
     agency: classification.agency,
     affiliation: detectAffiliation(
       channel.name,

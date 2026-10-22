@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T03:15:21.113Z",
+  "generatedAt": "2026-10-22T03:46:49.992Z",
   "channels": [
     {
       "id": "UCJFZiqLMntJufDCHc6bQixg",
@@ -11,7 +11,6 @@
       "region": "en",
       "regionSource": "declared",
       "languages": [
-        "ja",
         "en"
       ],
       "agency": "40e82f4e-40d8-539c-87c8-ed17c6ea519f",
@@ -36,6 +35,18 @@
           "p": "bilibili",
           "u": "https://space.bilibili.com/286700005",
           "h": null
+        }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "bilibili",
+          "n": null,
+          "hidden": true
         }
       ]
     },
@@ -68,6 +79,13 @@
           "u": "https://www.youtube.com/channel/UCSc_KzY_9WYAx9LghggjVRA",
           "h": null
         }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        }
       ]
     },
     {
@@ -79,7 +97,6 @@
       "region": "en",
       "regionSource": "declared",
       "languages": [
-        "zh-Hans",
         "en"
       ],
       "agency": null,
@@ -104,6 +121,18 @@
           "p": "youtube",
           "u": "https://www.youtube.com/@Sanavtuber12",
           "h": "Sanavtuber12"
+        }
+      ],
+      "followers": [
+        {
+          "p": "bilibili",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
         }
       ]
     }

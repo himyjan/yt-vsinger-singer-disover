@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T03:15:21.113Z",
+  "generatedAt": "2026-10-22T03:46:49.992Z",
   "channels": [
     {
       "id": "UCBURM8S4LH7cRZ0Clea9RDA",
@@ -31,6 +31,13 @@
           "u": "https://www.youtube.com/channel/UCBURM8S4LH7cRZ0Clea9RDA",
           "h": null
         }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        }
       ]
     },
     {
@@ -42,7 +49,6 @@
       "region": "en",
       "regionSource": "declared",
       "languages": [
-        "zh-Hans",
         "en"
       ],
       "agency": "NIJISANJI",
@@ -73,6 +79,23 @@
           "u": "https://space.bilibili.com/628292888",
           "h": null
         }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "bilibili",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "bilibili",
+          "n": null,
+          "hidden": true
+        }
       ]
     },
     {
@@ -84,7 +107,6 @@
       "region": "en",
       "regionSource": "declared",
       "languages": [
-        "zh-Hans",
         "en"
       ],
       "agency": "ENTUM",
@@ -110,6 +132,18 @@
           "u": "https://space.bilibili.com/238537745",
           "h": null
         }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "bilibili",
+          "n": null,
+          "hidden": true
+        }
       ]
     },
     {
@@ -121,7 +155,6 @@
       "region": "en",
       "regionSource": "declared",
       "languages": [
-        "zh-Hans",
         "en"
       ],
       "agency": null,
@@ -151,6 +184,23 @@
           "p": "niconico",
           "u": "https://www.nicovideo.jp/user/90274745",
           "h": null
+        }
+      ],
+      "followers": [
+        {
+          "p": "bilibili",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "niconico",
+          "n": null,
+          "hidden": true
         }
       ]
     },
@@ -183,6 +233,13 @@
           "u": "https://www.youtube.com/channel/UCP4nMSTdwU1KqYWu3UH5DHQ",
           "h": null
         }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        }
       ]
     },
     {
@@ -194,7 +251,6 @@
       "region": "en",
       "regionSource": "declared",
       "languages": [
-        "zh-Hans",
         "en"
       ],
       "agency": null,
@@ -225,6 +281,23 @@
           "u": "https://www.youtube.com/channel/UCTbFf0IcWd9XE5HxBuYTt1w",
           "h": null
         }
+      ],
+      "followers": [
+        {
+          "p": "bilibili",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "twitch",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        }
       ]
     },
     {
@@ -250,7 +323,8 @@
       "isAi": false,
       "variant": "vtuber",
       "verification": null,
-      "links": []
+      "links": [],
+      "followers": []
     },
     {
       "id": "youtube:KitsuiAkira",
@@ -261,7 +335,6 @@
       "region": "en",
       "regionSource": "declared",
       "languages": [
-        "zh-Hans",
         "en"
       ],
       "agency": null,
@@ -297,6 +370,28 @@
           "u": "https://www.youtube.com/channel/KiichanYT",
           "h": null
         }
+      ],
+      "followers": [
+        {
+          "p": "bilibili",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "twitch",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        }
       ]
     },
     {
@@ -308,7 +403,6 @@
       "region": "en",
       "regionSource": "declared",
       "languages": [
-        "zh-Hans",
         "en"
       ],
       "agency": null,
@@ -333,6 +427,18 @@
           "p": "youtube",
           "u": "https://www.youtube.com/@KiwimiYT",
           "h": "KiwimiYT"
+        }
+      ],
+      "followers": [
+        {
+          "p": "bilibili",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
         }
       ]
     },
@@ -374,6 +480,23 @@
           "p": "twitch",
           "u": "https://www.twitch.tv/yuy_ix",
           "h": null
+        }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "twitch",
+          "n": null,
+          "hidden": true
         }
       ]
     }

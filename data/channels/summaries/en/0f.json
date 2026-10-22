@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T03:15:21.113Z",
+  "generatedAt": "2026-10-22T03:46:49.992Z",
   "channels": [
     {
       "id": "UC-JSeFfovhNsEhftt1WHMvg",
@@ -30,6 +30,13 @@
           "p": "youtube",
           "u": "https://www.youtube.com/channel/UC-JSeFfovhNsEhftt1WHMvg",
           "h": null
+        }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
         }
       ]
     },
@@ -62,6 +69,13 @@
           "u": "https://www.youtube.com/channel/UCgA2jKRkqpY_8eysPUs8sjw",
           "h": null
         }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        }
       ]
     },
     {
@@ -73,7 +87,6 @@
       "region": "en",
       "regionSource": "declared",
       "languages": [
-        "zh-Hans",
         "en"
       ],
       "agency": "神椿工作室",
@@ -98,6 +111,18 @@
           "p": "youtube",
           "u": "https://www.youtube.com/channel/UCqG0skCM-dky7KGazl9bLqA",
           "h": null
+        }
+      ],
+      "followers": [
+        {
+          "p": "bilibili",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
         }
       ]
     },
@@ -130,6 +155,13 @@
           "u": "https://www.youtube.com/channel/UCV1xUwfM2v2oBtT3JNvic3w",
           "h": null
         }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        }
       ]
     },
     {
@@ -141,7 +173,6 @@
       "region": "en",
       "regionSource": "declared",
       "languages": [
-        "zh-Hans",
         "en"
       ],
       "agency": "f0f6db36-c594-50bd-ae6a-5032878a8ce6",
@@ -156,7 +187,8 @@
       "isAi": false,
       "variant": "vtuber",
       "verification": null,
-      "links": []
+      "links": [],
+      "followers": []
     },
     {
       "id": "vdb:fa86cc75-0288-55e4-a6f9-e1c4134a8ec0",
@@ -181,7 +213,8 @@
       "isAi": false,
       "variant": "vtuber",
       "verification": null,
-      "links": []
+      "links": [],
+      "followers": []
     },
     {
       "id": "youtube:rae_severinvtuber",
@@ -192,7 +225,6 @@
       "region": "en",
       "regionSource": "declared",
       "languages": [
-        "zh-Hans",
         "en"
       ],
       "agency": null,
@@ -222,6 +254,23 @@
           "p": "twitch",
           "u": "https://www.twitch.tv/rae_severin",
           "h": null
+        }
+      ],
+      "followers": [
+        {
+          "p": "bilibili",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "twitch",
+          "n": null,
+          "hidden": true
         }
       ]
     }

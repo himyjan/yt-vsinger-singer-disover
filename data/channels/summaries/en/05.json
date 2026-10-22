@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T03:15:21.113Z",
+  "generatedAt": "2026-10-22T03:46:49.992Z",
   "channels": [
     {
       "id": "UCckdfYDGrjojJM28n5SHYrA",
@@ -11,7 +11,6 @@
       "region": "en",
       "regionSource": "declared",
       "languages": [
-        "zh-Hans",
         "en"
       ],
       "agency": "NIJISANJI EN",
@@ -36,6 +35,18 @@
           "p": "youtube",
           "u": "https://www.youtube.com/channel/UCckdfYDGrjojJM28n5SHYrA",
           "h": null
+        }
+      ],
+      "followers": [
+        {
+          "p": "bilibili",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
         }
       ]
     },
@@ -68,6 +79,13 @@
           "u": "https://www.youtube.com/channel/UCgmPnx-EEeOrZSg5Tiw7ZRQ",
           "h": null
         }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        }
       ]
     },
     {
@@ -98,6 +116,13 @@
           "p": "youtube",
           "u": "https://www.youtube.com/channel/UCkieJGn3pgJikVW8gmMXE2w",
           "h": null
+        }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
         }
       ]
     },
@@ -130,6 +155,13 @@
           "u": "https://www.youtube.com/channel/UCKu59gTZ_rdEmerdx5rV4Yg",
           "h": null
         }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        }
       ]
     },
     {
@@ -141,7 +173,6 @@
       "region": "en",
       "regionSource": "declared",
       "languages": [
-        "zh-Hans",
         "en"
       ],
       "agency": "NIJISANJI EN",
@@ -166,6 +197,18 @@
           "p": "youtube",
           "u": "https://www.youtube.com/channel/UCwaS8_S7kMiKA3izlTWHbQg",
           "h": null
+        }
+      ],
+      "followers": [
+        {
+          "p": "bilibili",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
         }
       ]
     },
@@ -202,6 +245,18 @@
           "p": "twitch",
           "u": "https://www.twitch.tv/halo_sweety",
           "h": null
+        }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "twitch",
+          "n": null,
+          "hidden": true
         }
       ]
     }

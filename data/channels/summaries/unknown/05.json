@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T03:15:21.113Z",
+  "generatedAt": "2026-10-22T03:46:49.992Z",
   "channels": [
     {
       "id": "UC3ouWYUnRsyjxjj9lg_APAw",
@@ -10,9 +10,7 @@
       "role": "vtuber",
       "region": "unknown",
       "regionSource": "roster",
-      "languages": [
-        "ja"
-      ],
+      "languages": [],
       "agency": null,
       "affiliation": "independent",
       "avatar": null,
@@ -31,6 +29,13 @@
           "u": "https://www.youtube.com/channel/UC3ouWYUnRsyjxjj9lg_APAw",
           "h": null
         }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        }
       ]
     },
     {
@@ -41,9 +46,7 @@
       "role": "vtuber",
       "region": "unknown",
       "regionSource": "roster",
-      "languages": [
-        "zh-Hant"
-      ],
+      "languages": [],
       "agency": null,
       "affiliation": "independent",
       "avatar": null,
@@ -67,6 +70,18 @@
           "u": "https://www.twitch.tv/253904560",
           "h": "253904560"
         }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "twitch",
+          "n": null,
+          "hidden": true
+        }
       ]
     },
     {
@@ -77,9 +92,7 @@
       "role": "vtuber",
       "region": "unknown",
       "regionSource": "roster",
-      "languages": [
-        "ja"
-      ],
+      "languages": [],
       "agency": null,
       "affiliation": "independent",
       "avatar": null,
@@ -103,6 +116,18 @@
           "u": "https://www.twitch.tv/801575658",
           "h": "801575658"
         }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "twitch",
+          "n": null,
+          "hidden": true
+        }
       ]
     },
     {
@@ -113,9 +138,7 @@
       "role": "vtuber",
       "region": "unknown",
       "regionSource": "roster",
-      "languages": [
-        "ja"
-      ],
+      "languages": [],
       "agency": null,
       "affiliation": "independent",
       "avatar": null,
@@ -139,6 +162,18 @@
           "u": "https://www.twitch.tv/926240634",
           "h": "926240634"
         }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "twitch",
+          "n": null,
+          "hidden": true
+        }
       ]
     },
     {
@@ -149,9 +184,7 @@
       "role": "vtuber",
       "region": "unknown",
       "regionSource": "roster",
-      "languages": [
-        "zh-Hans"
-      ],
+      "languages": [],
       "agency": null,
       "affiliation": "independent",
       "avatar": null,
@@ -170,6 +203,13 @@
           "u": "https://www.youtube.com/channel/UCVwfGHD_oIRUJRS7di6QVaQ",
           "h": null
         }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        }
       ]
     },
     {
@@ -180,9 +220,7 @@
       "role": "vtuber",
       "region": "unknown",
       "regionSource": "roster",
-      "languages": [
-        "ja"
-      ],
+      "languages": [],
       "agency": null,
       "affiliation": "independent",
       "avatar": null,
@@ -205,6 +243,18 @@
           "p": "twitch",
           "u": "https://www.twitch.tv/798593237",
           "h": "798593237"
+        }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "twitch",
+          "n": null,
+          "hidden": true
         }
       ]
     }

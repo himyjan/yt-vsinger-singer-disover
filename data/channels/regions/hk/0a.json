@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T03:15:21.113Z",
+  "generatedAt": "2026-10-22T03:46:49.992Z",
   "channels": [
     {
       "id": "UC1umuUiqZtu7dJnr-Oydcow",
@@ -10,7 +10,10 @@
       "role": "vtuber",
       "region": "hk",
       "regionSource": "roster",
-      "language": "yue",
+      "languages": [
+        "yue"
+      ],
+      "statedLanguages": [],
       "agency": null,
       "affiliation": "independent",
       "avatar": "https://yt3.ggpht.com/jU-Ejle5HyvmNjV-ErxlVgltHVItRRPVD_LhXjnRBwRozCDXemkHiTJ10SxHgEctyHWxY_rxClA=s88-c-k-c0x00ffffff-no-rj",
@@ -31,8 +34,8 @@
       "variant": "vtuber",
       "verification": null,
       "source": "api",
-      "addedAt": "2026-10-22T02:27:57.931Z",
-      "updatedAt": "2026-10-22T03:15:21.180Z",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T03:46:50.086Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -51,14 +54,11 @@
           },
           "avatar": "https://yt3.ggpht.com/jU-Ejle5HyvmNjV-ErxlVgltHVItRRPVD_LhXjnRBwRozCDXemkHiTJ10SxHgEctyHWxY_rxClA=s88-c-k-c0x00ffffff-no-rj",
           "activity": "graduated",
-          "lastCheckedAt": "2026-10-22T03:15:21.180Z"
+          "lastCheckedAt": "2026-10-22T03:46:50.086Z"
         }
       ],
       "externals": {},
-      "popularVideoId": null,
-      "languages": [
-        "yue"
-      ]
+      "popularVideoId": null
     },
     {
       "id": "UC3e6-KGp1rw7DK5qRDLerFw",
@@ -68,7 +68,10 @@
       "role": "vtuber",
       "region": "hk",
       "regionSource": "roster",
-      "language": "yue",
+      "languages": [
+        "yue"
+      ],
+      "statedLanguages": [],
       "agency": null,
       "affiliation": "independent",
       "avatar": "https://yt3.ggpht.com/hDdX9vB3QXpqGLDDYCe1LaTYewwaBPinrlB-jf8mVztPUM4b5DtBlYE9Qx3pI_fu6xjEXtaKeQ=s88-c-k-c0x00ffffff-no-rj",
@@ -89,8 +92,8 @@
       "variant": "vtuber",
       "verification": null,
       "source": "api",
-      "addedAt": "2026-10-22T02:27:57.931Z",
-      "updatedAt": "2026-10-22T03:15:21.180Z",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T03:46:50.086Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -109,7 +112,7 @@
           },
           "avatar": "https://yt3.ggpht.com/hDdX9vB3QXpqGLDDYCe1LaTYewwaBPinrlB-jf8mVztPUM4b5DtBlYE9Qx3pI_fu6xjEXtaKeQ=s88-c-k-c0x00ffffff-no-rj",
           "activity": "active",
-          "lastCheckedAt": "2026-10-22T03:15:21.180Z"
+          "lastCheckedAt": "2026-10-22T03:46:50.086Z"
         },
         {
           "platform": "twitch",
@@ -122,14 +125,11 @@
           },
           "avatar": "https://yt3.ggpht.com/hDdX9vB3QXpqGLDDYCe1LaTYewwaBPinrlB-jf8mVztPUM4b5DtBlYE9Qx3pI_fu6xjEXtaKeQ=s88-c-k-c0x00ffffff-no-rj",
           "activity": "active",
-          "lastCheckedAt": "2026-10-22T03:15:21.180Z"
+          "lastCheckedAt": "2026-10-22T03:46:50.086Z"
         }
       ],
       "externals": {},
-      "popularVideoId": null,
-      "languages": [
-        "yue"
-      ]
+      "popularVideoId": null
     },
     {
       "id": "UCaTbL4lBU8Ksv5JX3OfwNZw",
@@ -139,7 +139,10 @@
       "role": "vtuber",
       "region": "hk",
       "regionSource": "roster",
-      "language": "yue",
+      "languages": [
+        "yue"
+      ],
+      "statedLanguages": [],
       "agency": null,
       "affiliation": "independent",
       "avatar": null,
@@ -159,8 +162,8 @@
       "variant": "vtuber",
       "verification": null,
       "source": "api",
-      "addedAt": "2026-10-22T02:27:57.931Z",
-      "updatedAt": "2026-10-22T03:15:21.180Z",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T03:46:50.086Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -178,14 +181,11 @@
           },
           "avatar": null,
           "activity": "active",
-          "lastCheckedAt": "2026-10-22T03:15:21.180Z"
+          "lastCheckedAt": "2026-10-22T03:46:50.086Z"
         }
       ],
       "externals": {},
-      "popularVideoId": null,
-      "languages": [
-        "yue"
-      ]
+      "popularVideoId": null
     },
     {
       "id": "UCDcLMgJFabq7OSD8036pCDw",
@@ -195,7 +195,10 @@
       "role": "vtuber",
       "region": "hk",
       "regionSource": "roster",
-      "language": "yue",
+      "languages": [
+        "yue"
+      ],
+      "statedLanguages": [],
       "agency": null,
       "affiliation": "independent",
       "avatar": "https://yt3.ggpht.com/qbr62_2FPYDxFPlMPh3uULSGarXgXxJw6C1tNkiAU8KgaTN7tDdzjHMC4U2PODLGsX0d6EhF-A=s88-c-k-c0x00ffffff-no-rj",
@@ -216,8 +219,8 @@
       "variant": "vtuber",
       "verification": null,
       "source": "api",
-      "addedAt": "2026-10-22T02:27:57.931Z",
-      "updatedAt": "2026-10-22T03:15:21.180Z",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T03:46:50.086Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -236,7 +239,7 @@
           },
           "avatar": "https://yt3.ggpht.com/qbr62_2FPYDxFPlMPh3uULSGarXgXxJw6C1tNkiAU8KgaTN7tDdzjHMC4U2PODLGsX0d6EhF-A=s88-c-k-c0x00ffffff-no-rj",
           "activity": "preparing",
-          "lastCheckedAt": "2026-10-22T03:15:21.180Z"
+          "lastCheckedAt": "2026-10-22T03:46:50.086Z"
         },
         {
           "platform": "twitch",
@@ -249,14 +252,11 @@
           },
           "avatar": "https://yt3.ggpht.com/qbr62_2FPYDxFPlMPh3uULSGarXgXxJw6C1tNkiAU8KgaTN7tDdzjHMC4U2PODLGsX0d6EhF-A=s88-c-k-c0x00ffffff-no-rj",
           "activity": "preparing",
-          "lastCheckedAt": "2026-10-22T03:15:21.180Z"
+          "lastCheckedAt": "2026-10-22T03:46:50.086Z"
         }
       ],
       "externals": {},
-      "popularVideoId": null,
-      "languages": [
-        "yue"
-      ]
+      "popularVideoId": null
     },
     {
       "id": "UCeCpNK3Xjos-IQtlN6EpsWg",
@@ -266,7 +266,10 @@
       "role": "vtuber",
       "region": "hk",
       "regionSource": "roster",
-      "language": "yue",
+      "languages": [
+        "yue"
+      ],
+      "statedLanguages": [],
       "agency": null,
       "affiliation": "independent",
       "avatar": null,
@@ -286,8 +289,8 @@
       "variant": "vtuber",
       "verification": null,
       "source": "api",
-      "addedAt": "2026-10-22T02:27:57.931Z",
-      "updatedAt": "2026-10-22T03:15:21.180Z",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T03:46:50.086Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -305,14 +308,11 @@
           },
           "avatar": null,
           "activity": "active",
-          "lastCheckedAt": "2026-10-22T03:15:21.180Z"
+          "lastCheckedAt": "2026-10-22T03:46:50.086Z"
         }
       ],
       "externals": {},
-      "popularVideoId": null,
-      "languages": [
-        "yue"
-      ]
+      "popularVideoId": null
     },
     {
       "id": "UChgHxoVMzD_i7SimpOvJEMg",
@@ -322,7 +322,10 @@
       "role": "vtuber",
       "region": "hk",
       "regionSource": "roster",
-      "language": "yue",
+      "languages": [
+        "yue"
+      ],
+      "statedLanguages": [],
       "agency": null,
       "affiliation": "independent",
       "avatar": null,
@@ -342,8 +345,8 @@
       "variant": "vtuber",
       "verification": null,
       "source": "api",
-      "addedAt": "2026-10-22T02:27:57.931Z",
-      "updatedAt": "2026-10-22T03:15:21.180Z",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T03:46:50.086Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -361,14 +364,11 @@
           },
           "avatar": null,
           "activity": "active",
-          "lastCheckedAt": "2026-10-22T03:15:21.180Z"
+          "lastCheckedAt": "2026-10-22T03:46:50.086Z"
         }
       ],
       "externals": {},
-      "popularVideoId": null,
-      "languages": [
-        "yue"
-      ]
+      "popularVideoId": null
     },
     {
       "id": "UCiWoas68LUrpEmcgW5_S_eA",
@@ -378,7 +378,10 @@
       "role": "vtuber",
       "region": "hk",
       "regionSource": "roster",
-      "language": "yue",
+      "languages": [
+        "yue"
+      ],
+      "statedLanguages": [],
       "agency": null,
       "affiliation": "independent",
       "avatar": null,
@@ -398,8 +401,8 @@
       "variant": "vtuber",
       "verification": null,
       "source": "api",
-      "addedAt": "2026-10-22T02:27:57.931Z",
-      "updatedAt": "2026-10-22T03:15:21.180Z",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T03:46:50.086Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -417,14 +420,11 @@
           },
           "avatar": null,
           "activity": "active",
-          "lastCheckedAt": "2026-10-22T03:15:21.180Z"
+          "lastCheckedAt": "2026-10-22T03:46:50.086Z"
         }
       ],
       "externals": {},
-      "popularVideoId": null,
-      "languages": [
-        "yue"
-      ]
+      "popularVideoId": null
     },
     {
       "id": "UCKVYhRRfqjPuYb6jx783SXg",
@@ -434,7 +434,10 @@
       "role": "vtuber",
       "region": "hk",
       "regionSource": "roster",
-      "language": "yue",
+      "languages": [
+        "yue"
+      ],
+      "statedLanguages": [],
       "agency": null,
       "affiliation": "independent",
       "avatar": null,
@@ -454,8 +457,8 @@
       "variant": "vtuber",
       "verification": null,
       "source": "api",
-      "addedAt": "2026-10-22T02:27:57.931Z",
-      "updatedAt": "2026-10-22T03:15:21.180Z",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T03:46:50.086Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -473,14 +476,11 @@
           },
           "avatar": null,
           "activity": "active",
-          "lastCheckedAt": "2026-10-22T03:15:21.180Z"
+          "lastCheckedAt": "2026-10-22T03:46:50.086Z"
         }
       ],
       "externals": {},
-      "popularVideoId": null,
-      "languages": [
-        "yue"
-      ]
+      "popularVideoId": null
     },
     {
       "id": "UCL0imlchw5iO5vEHgeJHLsQ",
@@ -490,7 +490,10 @@
       "role": "vtuber",
       "region": "hk",
       "regionSource": "roster",
-      "language": "yue",
+      "languages": [
+        "yue"
+      ],
+      "statedLanguages": [],
       "agency": null,
       "affiliation": "independent",
       "avatar": "https://yt3.ggpht.com/ytc/AIdro_nTqdw2Vw5VAkcW9DZAjRqI53ewCujwrbcFNX6BA0KiJA=s88-c-k-c0x00ffffff-no-rj",
@@ -511,8 +514,8 @@
       "variant": "vtuber",
       "verification": null,
       "source": "api",
-      "addedAt": "2026-10-22T02:27:57.931Z",
-      "updatedAt": "2026-10-22T03:15:21.180Z",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T03:46:50.086Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -531,14 +534,11 @@
           },
           "avatar": "https://yt3.ggpht.com/ytc/AIdro_nTqdw2Vw5VAkcW9DZAjRqI53ewCujwrbcFNX6BA0KiJA=s88-c-k-c0x00ffffff-no-rj",
           "activity": "graduated",
-          "lastCheckedAt": "2026-10-22T03:15:21.180Z"
+          "lastCheckedAt": "2026-10-22T03:46:50.086Z"
         }
       ],
       "externals": {},
-      "popularVideoId": null,
-      "languages": [
-        "yue"
-      ]
+      "popularVideoId": null
     },
     {
       "id": "UCnarYWXO4WoA3iyQfo4BqUA",
@@ -548,7 +548,10 @@
       "role": "vtuber",
       "region": "hk",
       "regionSource": "roster",
-      "language": "yue",
+      "languages": [
+        "yue"
+      ],
+      "statedLanguages": [],
       "agency": null,
       "affiliation": "independent",
       "avatar": "https://yt3.ggpht.com/xy04tHe4iT0kft8FEp7VsPz0PbUViiLttQPEjZLKSV5tkYpO9KUbikJ9qwxnBJqiiRsiAPDj_Q=s88-c-k-c0x00ffffff-no-rj",
@@ -569,8 +572,8 @@
       "variant": "vtuber",
       "verification": null,
       "source": "api",
-      "addedAt": "2026-10-22T02:27:57.931Z",
-      "updatedAt": "2026-10-22T03:15:21.180Z",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T03:46:50.086Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -589,14 +592,11 @@
           },
           "avatar": "https://yt3.ggpht.com/xy04tHe4iT0kft8FEp7VsPz0PbUViiLttQPEjZLKSV5tkYpO9KUbikJ9qwxnBJqiiRsiAPDj_Q=s88-c-k-c0x00ffffff-no-rj",
           "activity": "active",
-          "lastCheckedAt": "2026-10-22T03:15:21.180Z"
+          "lastCheckedAt": "2026-10-22T03:46:50.086Z"
         }
       ],
       "externals": {},
-      "popularVideoId": null,
-      "languages": [
-        "yue"
-      ]
+      "popularVideoId": null
     },
     {
       "id": "UCpRvDROmu_ohG7BMBohSwSg",
@@ -606,7 +606,10 @@
       "role": "vtuber",
       "region": "hk",
       "regionSource": "roster",
-      "language": "yue",
+      "languages": [
+        "yue"
+      ],
+      "statedLanguages": [],
       "agency": null,
       "affiliation": "independent",
       "avatar": "https://yt3.ggpht.com/UHPPaJOg2L5qr6sGj6Eu2HdCD-46H0XmcHw1ABhEDH3xneZs2_1U-uYdLn1CfaIHTwA14chvO6M=s88-c-k-c0x00ffffff-no-rj",
@@ -627,8 +630,8 @@
       "variant": "vtuber",
       "verification": null,
       "source": "api",
-      "addedAt": "2026-10-22T02:27:57.931Z",
-      "updatedAt": "2026-10-22T03:15:21.180Z",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T03:46:50.086Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -647,14 +650,11 @@
           },
           "avatar": "https://yt3.ggpht.com/UHPPaJOg2L5qr6sGj6Eu2HdCD-46H0XmcHw1ABhEDH3xneZs2_1U-uYdLn1CfaIHTwA14chvO6M=s88-c-k-c0x00ffffff-no-rj",
           "activity": "active",
-          "lastCheckedAt": "2026-10-22T03:15:21.180Z"
+          "lastCheckedAt": "2026-10-22T03:46:50.086Z"
         }
       ],
       "externals": {},
-      "popularVideoId": null,
-      "languages": [
-        "yue"
-      ]
+      "popularVideoId": null
     },
     {
       "id": "UCreAv66N9lEkbs2TNYBCYaQ",
@@ -664,7 +664,10 @@
       "role": "vtuber",
       "region": "hk",
       "regionSource": "roster",
-      "language": "yue",
+      "languages": [
+        "yue"
+      ],
+      "statedLanguages": [],
       "agency": null,
       "affiliation": "independent",
       "avatar": null,
@@ -684,8 +687,8 @@
       "variant": "vtuber",
       "verification": null,
       "source": "api",
-      "addedAt": "2026-10-22T02:27:57.931Z",
-      "updatedAt": "2026-10-22T03:15:21.180Z",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T03:46:50.086Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -703,14 +706,11 @@
           },
           "avatar": null,
           "activity": "active",
-          "lastCheckedAt": "2026-10-22T03:15:21.180Z"
+          "lastCheckedAt": "2026-10-22T03:46:50.086Z"
         }
       ],
       "externals": {},
-      "popularVideoId": null,
-      "languages": [
-        "yue"
-      ]
+      "popularVideoId": null
     },
     {
       "id": "UCRLOQ3XCFpZtTcMmjL7U6uw",
@@ -720,7 +720,10 @@
       "role": "vtuber",
       "region": "hk",
       "regionSource": "roster",
-      "language": "yue",
+      "languages": [
+        "yue"
+      ],
+      "statedLanguages": [],
       "agency": null,
       "affiliation": "independent",
       "avatar": "https://yt3.ggpht.com/UiArrueyjyt01psKOIrNeYq_p4bNh6nCcII8uvdvsByNK-DgUo8P5QR9U57Gb9my8Pu8LJmGEQ=s88-c-k-c0x00ffffff-no-rj",
@@ -741,8 +744,8 @@
       "variant": "vtuber",
       "verification": null,
       "source": "api",
-      "addedAt": "2026-10-22T02:27:57.931Z",
-      "updatedAt": "2026-10-22T03:15:21.180Z",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T03:46:50.086Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -761,14 +764,11 @@
           },
           "avatar": "https://yt3.ggpht.com/UiArrueyjyt01psKOIrNeYq_p4bNh6nCcII8uvdvsByNK-DgUo8P5QR9U57Gb9my8Pu8LJmGEQ=s88-c-k-c0x00ffffff-no-rj",
           "activity": "active",
-          "lastCheckedAt": "2026-10-22T03:15:21.180Z"
+          "lastCheckedAt": "2026-10-22T03:46:50.086Z"
         }
       ],
       "externals": {},
-      "popularVideoId": null,
-      "languages": [
-        "yue"
-      ]
+      "popularVideoId": null
     },
     {
       "id": "UCrodZ-UfvXUn58MuGRyPlAg",
@@ -778,7 +778,10 @@
       "role": "vtuber",
       "region": "hk",
       "regionSource": "roster",
-      "language": "yue",
+      "languages": [
+        "yue"
+      ],
+      "statedLanguages": [],
       "agency": null,
       "affiliation": "independent",
       "avatar": null,
@@ -798,8 +801,8 @@
       "variant": "vtuber",
       "verification": null,
       "source": "api",
-      "addedAt": "2026-10-22T02:27:57.931Z",
-      "updatedAt": "2026-10-22T03:15:21.180Z",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T03:46:50.086Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -817,14 +820,11 @@
           },
           "avatar": null,
           "activity": "active",
-          "lastCheckedAt": "2026-10-22T03:15:21.180Z"
+          "lastCheckedAt": "2026-10-22T03:46:50.086Z"
         }
       ],
       "externals": {},
-      "popularVideoId": null,
-      "languages": [
-        "yue"
-      ]
+      "popularVideoId": null
     },
     {
       "id": "UCsp0rv5-xXA-0Ah8InEgOvQ",
@@ -834,7 +834,10 @@
       "role": "vtuber",
       "region": "hk",
       "regionSource": "roster",
-      "language": "yue",
+      "languages": [
+        "yue"
+      ],
+      "statedLanguages": [],
       "agency": null,
       "affiliation": "independent",
       "avatar": null,
@@ -854,8 +857,8 @@
       "variant": "vtuber",
       "verification": null,
       "source": "api",
-      "addedAt": "2026-10-22T02:27:57.931Z",
-      "updatedAt": "2026-10-22T03:15:21.180Z",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T03:46:50.086Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -873,14 +876,11 @@
           },
           "avatar": null,
           "activity": "active",
-          "lastCheckedAt": "2026-10-22T03:15:21.180Z"
+          "lastCheckedAt": "2026-10-22T03:46:50.086Z"
         }
       ],
       "externals": {},
-      "popularVideoId": null,
-      "languages": [
-        "yue"
-      ]
+      "popularVideoId": null
     },
     {
       "id": "UCSvecUBizE0ROyH62KBFIZA",
@@ -890,7 +890,10 @@
       "role": "vtuber",
       "region": "hk",
       "regionSource": "roster",
-      "language": "yue",
+      "languages": [
+        "yue"
+      ],
+      "statedLanguages": [],
       "agency": null,
       "affiliation": "independent",
       "avatar": "https://yt3.ggpht.com/TvpReq_Rn-XY9IySZoFjM81Zx4uIoenvdtJ-g9bvRdkrNaqKa1qGS3pHSmuwi6dFpxRpcG5n=s88-c-k-c0x00ffffff-no-rj",
@@ -911,8 +914,8 @@
       "variant": "vtuber",
       "verification": null,
       "source": "api",
-      "addedAt": "2026-10-22T02:27:57.931Z",
-      "updatedAt": "2026-10-22T03:15:21.180Z",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T03:46:50.086Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -931,14 +934,11 @@
           },
           "avatar": "https://yt3.ggpht.com/TvpReq_Rn-XY9IySZoFjM81Zx4uIoenvdtJ-g9bvRdkrNaqKa1qGS3pHSmuwi6dFpxRpcG5n=s88-c-k-c0x00ffffff-no-rj",
           "activity": "active",
-          "lastCheckedAt": "2026-10-22T03:15:21.180Z"
+          "lastCheckedAt": "2026-10-22T03:46:50.086Z"
         }
       ],
       "externals": {},
-      "popularVideoId": null,
-      "languages": [
-        "yue"
-      ]
+      "popularVideoId": null
     },
     {
       "id": "UCU1kK3Qi1215uDWMvjFphOA",
@@ -948,7 +948,10 @@
       "role": "vtuber",
       "region": "hk",
       "regionSource": "roster",
-      "language": "yue",
+      "languages": [
+        "yue"
+      ],
+      "statedLanguages": [],
       "agency": null,
       "affiliation": "independent",
       "avatar": null,
@@ -968,8 +971,8 @@
       "variant": "vtuber",
       "verification": null,
       "source": "api",
-      "addedAt": "2026-10-22T02:27:57.931Z",
-      "updatedAt": "2026-10-22T03:15:21.180Z",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T03:46:50.086Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -987,14 +990,11 @@
           },
           "avatar": null,
           "activity": "active",
-          "lastCheckedAt": "2026-10-22T03:15:21.180Z"
+          "lastCheckedAt": "2026-10-22T03:46:50.086Z"
         }
       ],
       "externals": {},
-      "popularVideoId": null,
-      "languages": [
-        "yue"
-      ]
+      "popularVideoId": null
     },
     {
       "id": "UCUqGWqjMiErcGYU_XpEzyKQ",
@@ -1004,7 +1004,10 @@
       "role": "vtuber",
       "region": "hk",
       "regionSource": "roster",
-      "language": "yue",
+      "languages": [
+        "yue"
+      ],
+      "statedLanguages": [],
       "agency": null,
       "affiliation": "independent",
       "avatar": "https://yt3.ggpht.com/2uJCF9FOc3WptwZbBoQvUZFS-uVbzlnIKT79dKFFqj7nvHPTbUcnvy15IP_XOTcPpnzeHGjV=s88-c-k-c0x00ffffff-no-rj",
@@ -1025,8 +1028,8 @@
       "variant": "vtuber",
       "verification": null,
       "source": "api",
-      "addedAt": "2026-10-22T02:27:57.931Z",
-      "updatedAt": "2026-10-22T03:15:21.180Z",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T03:46:50.086Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1045,14 +1048,11 @@
           },
           "avatar": "https://yt3.ggpht.com/2uJCF9FOc3WptwZbBoQvUZFS-uVbzlnIKT79dKFFqj7nvHPTbUcnvy15IP_XOTcPpnzeHGjV=s88-c-k-c0x00ffffff-no-rj",
           "activity": "active",
-          "lastCheckedAt": "2026-10-22T03:15:21.180Z"
+          "lastCheckedAt": "2026-10-22T03:46:50.086Z"
         }
       ],
       "externals": {},
-      "popularVideoId": null,
-      "languages": [
-        "yue"
-      ]
+      "popularVideoId": null
     },
     {
       "id": "UCxUUkSnWUMblhGqGHC-pfdA",
@@ -1062,7 +1062,10 @@
       "role": "vtuber",
       "region": "hk",
       "regionSource": "roster",
-      "language": "yue",
+      "languages": [
+        "yue"
+      ],
+      "statedLanguages": [],
       "agency": null,
       "affiliation": "independent",
       "avatar": null,
@@ -1082,8 +1085,8 @@
       "variant": "vtuber",
       "verification": null,
       "source": "api",
-      "addedAt": "2026-10-22T02:27:57.931Z",
-      "updatedAt": "2026-10-22T03:15:21.180Z",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T03:46:50.086Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1101,14 +1104,11 @@
           },
           "avatar": null,
           "activity": "active",
-          "lastCheckedAt": "2026-10-22T03:15:21.180Z"
+          "lastCheckedAt": "2026-10-22T03:46:50.086Z"
         }
       ],
       "externals": {},
-      "popularVideoId": null,
-      "languages": [
-        "yue"
-      ]
+      "popularVideoId": null
     },
     {
       "id": "UCyknKJmF9-tUODm8v1hI7Xw",
@@ -1118,7 +1118,10 @@
       "role": "vtuber",
       "region": "hk",
       "regionSource": "roster",
-      "language": "yue",
+      "languages": [
+        "yue"
+      ],
+      "statedLanguages": [],
       "agency": null,
       "affiliation": "independent",
       "avatar": "https://yt3.ggpht.com/a7INT9t1V7RWZK67D3WmOdTAwSskK5g46TyUa-Kr1OtbgWOczoVCfNYbuSTLCrZpFY8wPQbV2g=s88-c-k-c0x00ffffff-no-rj",
@@ -1139,8 +1142,8 @@
       "variant": "vtuber",
       "verification": null,
       "source": "api",
-      "addedAt": "2026-10-22T02:27:57.931Z",
-      "updatedAt": "2026-10-22T03:15:21.180Z",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T03:46:50.086Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1159,14 +1162,11 @@
           },
           "avatar": "https://yt3.ggpht.com/a7INT9t1V7RWZK67D3WmOdTAwSskK5g46TyUa-Kr1OtbgWOczoVCfNYbuSTLCrZpFY8wPQbV2g=s88-c-k-c0x00ffffff-no-rj",
           "activity": "active",
-          "lastCheckedAt": "2026-10-22T03:15:21.180Z"
+          "lastCheckedAt": "2026-10-22T03:46:50.086Z"
         }
       ],
       "externals": {},
-      "popularVideoId": null,
-      "languages": [
-        "yue"
-      ]
+      "popularVideoId": null
     },
     {
       "id": "UCZpo0q67hgB0b6U7EEF9uTg",
@@ -1176,7 +1176,10 @@
       "role": "vtuber",
       "region": "hk",
       "regionSource": "roster",
-      "language": "yue",
+      "languages": [
+        "yue"
+      ],
+      "statedLanguages": [],
       "agency": null,
       "affiliation": "independent",
       "avatar": "https://yt3.ggpht.com/_LjEyhjSb9bGkLVro4qwpHuZ1TKZMNyX8CgWDlfUe0u8vgrgBuEWQjxLjM8v_1vFeHl5jBgoG0Y=s88-c-k-c0x00ffffff-no-rj",
@@ -1197,8 +1200,8 @@
       "variant": "vtuber",
       "verification": null,
       "source": "api",
-      "addedAt": "2026-10-22T02:27:57.931Z",
-      "updatedAt": "2026-10-22T03:15:21.180Z",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-22T03:46:50.086Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1217,14 +1220,11 @@
           },
           "avatar": "https://yt3.ggpht.com/_LjEyhjSb9bGkLVro4qwpHuZ1TKZMNyX8CgWDlfUe0u8vgrgBuEWQjxLjM8v_1vFeHl5jBgoG0Y=s88-c-k-c0x00ffffff-no-rj",
           "activity": "active",
-          "lastCheckedAt": "2026-10-22T03:15:21.180Z"
+          "lastCheckedAt": "2026-10-22T03:46:50.086Z"
         }
       ],
       "externals": {},
-      "popularVideoId": null,
-      "languages": [
-        "yue"
-      ]
+      "popularVideoId": null
     }
   ]
 }

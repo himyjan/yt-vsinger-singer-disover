@@ -37,7 +37,6 @@
  */
 
 import { detectLanguage } from "./regions";
-import { detectClipAccount } from "./classify";
 import { classifyChannel } from "./classify";
 import type { ArtistKind, PlatformId, RegionCode } from "./types";
 import type { PlatformLink } from "./types";
@@ -271,15 +270,19 @@ export class VdbSource {
     const hasYouTube = platformSet.has("youtube");
 
     /**
-     * A clip or translation account is not the performer.
+     * The platform prior.
      *
-     * 「YUA/藤崎由愛」 is a Chinese account that re-uploads Yua Mikami's
-     * streams. The language it lists is the *artist's*, not the language its
-     * own audience hears, so the platform decides the region instead.
+     * A performer with a **Bilibili account and no YouTube account** presents
+     * to a mainland Chinese audience — that is where their audience is, and
+     * the region records where they stream. The same goes for Niconico and
+     * Japan.
+     *
+     * A performer who *also* has a YouTube account is presenting to a global
+     * audience, so the language they listed in vdb is the better signal.
+     * Their Chinese-subtitled Bilibili channel does not make them a Chinese
+     * speaker.
      */
-    const isClipAccount = detectClipAccount(name, null);
-
-    if (!hasYouTube || isClipAccount) {
+    if (!hasYouTube) {
       if (platformSet.has("bilibili")) {
         region = "cn";
         regionSource = "platform";

@@ -106,6 +106,9 @@ export function mergeChannels(target: Channel, other: Channel): Channel {
         ? target.region
         : (other.region as RegionCode);
     })(),
+    // The target's languages come first — the target is the fresher record in
+    // the sync's roster merge, and the languages are a fact that should not
+    // be diluted by a stale copy.
     languages: mergeLanguages(target.languages, other.languages),
     agency: target.agency ?? other.agency,
     affiliation: (() => {

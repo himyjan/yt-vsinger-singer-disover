@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T03:15:21.113Z",
+  "generatedAt": "2026-10-22T03:46:49.992Z",
   "channels": [
     {
       "id": "UC65T4-sM0VkDK9QZc7hf7JA",
@@ -10,9 +10,7 @@
       "role": "vtuber",
       "region": "unknown",
       "regionSource": "roster",
-      "languages": [
-        "en"
-      ],
+      "languages": [],
       "agency": null,
       "affiliation": "independent",
       "avatar": null,
@@ -36,6 +34,18 @@
           "u": "https://www.twitch.tv/452998835",
           "h": "452998835"
         }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "twitch",
+          "n": null,
+          "hidden": true
+        }
       ]
     },
     {
@@ -46,9 +56,7 @@
       "role": "vtuber",
       "region": "unknown",
       "regionSource": "roster",
-      "languages": [
-        "ja"
-      ],
+      "languages": [],
       "agency": null,
       "affiliation": "independent",
       "avatar": null,
@@ -72,6 +80,18 @@
           "u": "https://www.twitch.tv/769014193",
           "h": "769014193"
         }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "twitch",
+          "n": null,
+          "hidden": true
+        }
       ]
     },
     {
@@ -82,9 +102,7 @@
       "role": "vtuber",
       "region": "unknown",
       "regionSource": "roster",
-      "languages": [
-        "en"
-      ],
+      "languages": [],
       "agency": null,
       "affiliation": "independent",
       "avatar": null,
@@ -103,6 +121,13 @@
           "u": "https://www.youtube.com/channel/UCkcenwQpQwgNkG2sl28Az-A",
           "h": null
         }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        }
       ]
     },
     {
@@ -113,9 +138,7 @@
       "role": "vtuber",
       "region": "unknown",
       "regionSource": "roster",
-      "languages": [
-        "ja"
-      ],
+      "languages": [],
       "agency": null,
       "affiliation": "independent",
       "avatar": null,
@@ -138,6 +161,18 @@
           "p": "twitch",
           "u": "https://www.twitch.tv/820028043",
           "h": "820028043"
+        }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "twitch",
+          "n": null,
+          "hidden": true
         }
       ]
     }

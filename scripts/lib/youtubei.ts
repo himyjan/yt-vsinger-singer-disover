@@ -25,6 +25,7 @@
  */
 
 import { Innertube } from "youtubei.js";
+import { RateLimiter } from "./rate-limit";
 
 export interface InnerTubeProfile {
   /** The channel id. */
@@ -69,12 +70,19 @@ export class InnerTubeSource {
   private readonly delayMs: number;
   private readonly enabled: boolean;
   private readonly onLog: (message: string) => void;
-  private lastRequest = 0;
+  /** The adaptive limiter — it widens when InnerTube pushes back. */
+  private readonly limiter: RateLimiter;
 
   constructor(options: InnerTubeOptions = {}) {
     this.enabled = options.enabled ?? true;
     this.delayMs = options.delayMs ?? 350;
     this.onLog = options.onLog ?? (() => {});
+    this.limiter = new RateLimiter({
+      minIntervalMs: this.delayMs,
+      maxIntervalMs: 15_000,
+      onLimit: (m) => this.onLog(`innertube: ${m}`),
+      onChange: (ms) => this.onLog(`innertube: interval → ${Math.round(ms)}ms`),
+    });
   }
 
   /** True when the client is available. */
@@ -102,9 +110,7 @@ export class InnerTubeSource {
 
   /** Waits between requests so InnerTube does not rate-limit us. */
   private async throttle(): Promise<void> {
-    const wait = this.lastRequest + this.delayMs - Date.now();
-    if (wait > 0) await new Promise((r) => setTimeout(r, wait));
-    this.lastRequest = Date.now();
+    await this.limiter.wait();
   }
 
   /**
@@ -143,6 +149,7 @@ export class InnerTubeSource {
         if (url) links.push(url);
       }
 
+      this.limiter.reward();
       return {
         id: channelId,
         title: meta.title ?? null,
@@ -153,6 +160,7 @@ export class InnerTubeSource {
         links,
       };
     } catch (err) {
+      this.limiter.penalise();
       this.onLog(
         `innertube: profile failed for ${channelId} — ${(err as Error).message}`,
       );
@@ -196,11 +204,17 @@ export class InnerTubeSource {
           views: null,
         });
       }
+      this.limiter.reward();
       return out;
     } catch (err) {
-      this.onLog(
-        `innertube: uploads failed for ${channelId} — ${(err as Error).message}`,
-      );
+      // A channel with no videos tab, or one that is only Shorts, is normal.
+      this.limiter.penalise();
+      const message = (err as Error).message;
+      if (!/Tab .* not found/.test(message)) {
+        this.onLog(
+          `innertube: uploads failed for ${channelId} — ${message}`,
+        );
+      }
       return [];
     }
   }

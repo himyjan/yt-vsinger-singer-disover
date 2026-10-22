@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T03:15:21.113Z",
+  "generatedAt": "2026-10-22T03:46:49.992Z",
   "channels": [
     {
       "id": "UCGhqxhovNfaPBpxfCruy9EA",
@@ -11,7 +11,6 @@
       "region": "en",
       "regionSource": "declared",
       "languages": [
-        "zh-Hans",
         "en"
       ],
       "agency": "NIJISANJI EN",
@@ -36,6 +35,18 @@
           "p": "youtube",
           "u": "https://www.youtube.com/channel/UCGhqxhovNfaPBpxfCruy9EA",
           "h": null
+        }
+      ],
+      "followers": [
+        {
+          "p": "bilibili",
+          "n": null,
+          "hidden": true
+        },
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
         }
       ]
     },
@@ -68,6 +79,13 @@
           "u": "https://www.youtube.com/channel/UCpzxZW5kghGnO5TmAFJQAVw",
           "h": null
         }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        }
       ]
     },
     {
@@ -99,6 +117,13 @@
           "u": "https://www.youtube.com/channel/UCQ1zGxHrfEmmW4CPpBx9-qw",
           "h": null
         }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
+        }
       ]
     },
     {
@@ -129,6 +154,13 @@
           "p": "youtube",
           "u": "https://www.youtube.com/channel/UCSXOBKJSKfNsVy_nUqew03g",
           "h": null
+        }
+      ],
+      "followers": [
+        {
+          "p": "youtube",
+          "n": null,
+          "hidden": true
         }
       ]
     }

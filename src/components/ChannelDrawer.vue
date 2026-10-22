@@ -129,6 +129,23 @@ const REGION_SOURCE_LABELS: Record<string, string> = {
   unknown: "unknown",
 };
 
+/**
+ * The follower count of each platform.
+ *
+ * A performer on several platforms has several counts, and they are not the
+ * same number — so they are shown side by side rather than collapsed into
+ * one.
+ */
+const followers = computed(() => {
+  const source = props.channel as unknown as {
+    followers?: { p: string; n: number | null; hidden: boolean }[];
+  };
+  const list = source.followers ?? [];
+  return list
+    .filter((entry) => entry.n !== null || !entry.hidden)
+    .sort((a, b) => (b.n ?? -1) - (a.n ?? -1));
+});
+
 /** The languages, whether the field holds one code or a list. */
 const languageList = computed(() => toLanguageList(props.channel?.languages));
 
@@ -347,6 +364,36 @@ const saved = computed(() =>
                     </dd>
                   </div>
                 </dl>
+              </section>
+
+              <!-- Followers, per platform -->
+              <section v-if="followers.length">
+                <h3 class="mb-2 text-xs font-bold tracking-wide text-neutral-500 uppercase">
+                  Followers
+                </h3>
+                <ul class="space-y-1">
+                  <li
+                    v-for="entry in followers"
+                    :key="entry.p"
+                    class="flex items-center justify-between gap-3 rounded-lg border border-black/6 bg-white px-2.5 py-1.5 text-xs dark:border-white/8 dark:bg-neutral-900"
+                  >
+                    <span class="flex items-center gap-1.5 font-medium">
+                      <span aria-hidden="true">
+                        {{ platformMeta(entry.p).icon }}
+                      </span>
+                      {{ platformMeta(entry.p).label }}
+                    </span>
+                    <span class="font-semibold text-neutral-700 dark:text-neutral-200">
+                      {{
+                        entry.n === null
+                          ? entry.hidden
+                            ? "Hidden"
+                            : "—"
+                          : formatCount(entry.n)
+                      }}
+                    </span>
+                  </li>
+                </ul>
               </section>
 
               <!-- All links -->
