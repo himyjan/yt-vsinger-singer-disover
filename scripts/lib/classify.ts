@@ -301,6 +301,14 @@ export interface ChannelClassification {
   region: RegionCode;
   /** The languages the performer streams in. */
   languages: string[];
+  /**
+   * Only the languages the performer **stated** themselves.
+   *
+   * The distinction matters: a record's languages are the stated ones plus
+   * the ones the region implies, and a caller that already knows the region
+   * must not have the region applied twice — or with the wrong region.
+   */
+  statedLanguages: string[];
   agency: string | null;
   isSinging: boolean;
   /** True when the channel looks like an aggregator rather than a performer. */
@@ -512,6 +520,7 @@ export function classifyChannel(signals: ChannelSignals): ChannelClassification 
     regionSource = "declared";
   }
 
+  const statedLanguages = statedLangs;
   const languages = statedLangs.length
     ? statedLangs
     : [REGION_LANGUAGE[region] ?? scriptLang].filter(
@@ -597,6 +606,7 @@ export function classifyChannel(signals: ChannelSignals): ChannelClassification 
     regionSource,
     confidence,
     languages,
+    statedLanguages,
     agency,
     isSinging,
     isAggregator,

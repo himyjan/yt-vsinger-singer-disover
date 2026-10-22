@@ -30,6 +30,7 @@
 
 import crypto from "node:crypto";
 import { classifyItem } from "../classify";
+import { RateLimiter, detectRateLimit } from "../rate-limit";
 import type { CountRef, PlatformId } from "../types";
 import type {
   PlatformAdapter,
@@ -63,13 +64,23 @@ let mixinKeyFetchedAt = 0;
 const MIXIN_KEY_TTL = 60 * 60 * 1000;
 
 /** Derives the mixin key from the two rotating key URLs. */
-async function getMixinKey(): Promise<string | null> {
+async function getMixinKey(buvid: string | null): Promise<string | null> {
   if (mixinKey && Date.now() - mixinKeyFetchedAt < MIXIN_KEY_TTL) {
     return mixinKey;
   }
   try {
     const res = await fetch(`${API}/x/web-interface/nav`, {
-      headers: { "User-Agent": USER_AGENT, Referer: "https://www.bilibili.com/" },
+      headers: {
+        "User-Agent": USER_AGENT,
+        Referer: "https://www.bilibili.com/",
+        Accept: "application/json, text/plain, */*",
+        // The same visitor id the rest of the client uses. Without it the
+        // risk-control system answers with `-352`, and every signed request
+        // is then rejected.
+        ...(buvid
+          ? { Cookie: `buvid3=${buvid}; b_nut=${Math.floor(Date.now() / 1000)}` }
+          : {}),
+      },
     });
     if (!res.ok) return mixinKey;
     const json = (await res.json()) as {
@@ -79,8 +90,16 @@ async function getMixinKey(): Promise<string | null> {
     const sub = json.data?.wbi_img?.sub_url;
     if (!img || !sub) return mixinKey;
 
-    const raw =
-      img.slice(img.lastIndexOf("/") + 1) + sub.slice(sub.lastIndexOf("/") + 1);
+    /**
+     * The two key file names, **without their extensions**.
+     *
+     * Taking everything after the last `/` leaves the `.jpg` in, and the
+     * resulting mixin key is wrong — every signed request is then rejected
+     * with `-412 request was banned`.
+     */
+    const keyOf = (url: string): string =>
+      url.slice(url.lastIndexOf("/") + 1, url.lastIndexOf("."));
+    const raw = keyOf(img) + keyOf(sub);
     mixinKey = MIXIN_KEY_ENC_TAB
       .map((n) => raw[n])
       .join("")
@@ -95,8 +114,9 @@ async function getMixinKey(): Promise<string | null> {
 /** Signs a query string with WBI. */
 async function signQuery(
   params: Record<string, string | number>,
+  buvid: string | null = null,
 ): Promise<string | null> {
-  const key = await getMixinKey();
+  const key = await getMixinKey(buvid);
   if (!key) return null;
 
   const wts = Math.floor(Date.now() / 1000);
@@ -207,6 +227,8 @@ export interface BilibiliOptions {
   partition?: number;
   /** How many videos to pull per channel. */
   maxUploads?: number;
+  /** The minimum gap between requests, in milliseconds. */
+  delayMs?: number;
   onLog?: (message: string) => void;
 }
 
@@ -220,6 +242,20 @@ export class BilibiliAdapter implements PlatformAdapter {
   private readonly onLog: (message: string) => void;
 
   /**
+   * The visitor id (`buvid3`).
+   *
+   * This is Bilibili's equivalent of InnerTube's visitor data: without it
+   * the risk-control system answers with HTTP 412. It is fetched once from
+   * `x/frontend/finger/spi` and then sent as a cookie, exactly as the
+   * browser does.
+   */
+  private buvid3: string | null = null;
+  private buvidFetched = false;
+
+  /** The adaptive limiter — it widens when Bilibili pushes back. */
+  private readonly limiter: RateLimiter;
+
+  /**
    * The Bilibili account ids that belong to VTubers.
    *
    * The live endpoint does not honour the partition, so this set is what
@@ -231,6 +267,32 @@ export class BilibiliAdapter implements PlatformAdapter {
     this.partition = options.partition ?? VTUBER_PARTITION;
     this.maxUploads = options.maxUploads ?? 30;
     this.onLog = options.onLog ?? (() => {});
+    this.limiter = new RateLimiter({
+      minIntervalMs: options.delayMs ?? 400,
+      maxIntervalMs: 20_000,
+      onLimit: (m) => this.onLog(`bilibili: ${m}`),
+      onChange: (ms) =>
+        this.onLog(`bilibili: interval → ${Math.round(ms)}ms`),
+    });
+  }
+
+  /**
+   * The visitor id, fetched once and cached for the run.
+   */
+  private async getBuvid(): Promise<string | null> {
+    if (this.buvidFetched) return this.buvid3;
+    this.buvidFetched = true;
+    try {
+      const res = await fetch(`${API}/x/frontend/finger/spi`, {
+        headers: { "User-Agent": USER_AGENT, Referer: "https://www.bilibili.com/" },
+      });
+      if (!res.ok) return null;
+      const json = (await res.json()) as { data?: { b_3?: string } };
+      this.buvid3 = json.data?.b_3 ?? null;
+      return this.buvid3;
+    } catch {
+      return null;
+    }
   }
 
   isConfigured(): boolean {
@@ -255,20 +317,31 @@ export class BilibiliAdapter implements PlatformAdapter {
     headers: Record<string, string> = {},
     attempt = 0,
   ): Promise<T | null> {
+    await this.limiter.wait();
+
+    const buvid = await this.getBuvid();
+
     try {
       const res = await fetch(url, {
         headers: {
           "User-Agent": USER_AGENT,
           Accept: "application/json, text/plain, */*",
           Referer: "https://www.bilibili.com/",
+          // The visitor id — Bilibili's equivalent of InnerTube's visitor
+          // data. Without it the risk-control system answers with HTTP 412.
+          ...(buvid
+            ? { Cookie: `buvid3=${buvid}; b_nut=${Math.floor(Date.now() / 1000)}` }
+            : {}),
           ...headers,
         },
       });
 
       const contentType = res.headers.get("content-type") ?? "";
-      const blocked = res.status === 412 || !contentType.includes("json");
+      const text = await res.text();
+      const limited = detectRateLimit(res.status, text);
 
-      if (blocked) {
+      if (limited.limited || !contentType.includes("json")) {
+        this.limiter.penalise();
         if (attempt < 2) {
           const wait = 5_000 * 2 ** attempt;
           this.onLog(
@@ -281,8 +354,10 @@ export class BilibiliAdapter implements PlatformAdapter {
       }
 
       if (!res.ok) return null;
-      return (await res.json()) as T;
+      this.limiter.reward();
+      return JSON.parse(text) as T;
     } catch {
+      this.limiter.penalise();
       return null;
     }
   }
@@ -359,15 +434,18 @@ export class BilibiliAdapter implements PlatformAdapter {
     channel: PlatformChannel,
     limit: number,
   ): Promise<PlatformUpload[]> {
-    const query = await signQuery({
-      mid: channel.id,
-      ps: Math.min(50, limit || this.maxUploads),
-      pn: 1,
-      order: "pubdate",
-      index: 1,
-      platform: "web",
-      web_location: "1550101",
-    });
+    const query = await signQuery(
+      {
+        mid: channel.id,
+        ps: Math.min(50, limit || this.maxUploads),
+        pn: 1,
+        order: "pubdate",
+        index: 1,
+        platform: "web",
+        web_location: "1550101",
+      },
+      await this.getBuvid(),
+    );
     if (!query) return [];
 
     const json = await this.getJson<{

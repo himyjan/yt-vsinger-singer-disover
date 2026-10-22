@@ -240,6 +240,22 @@ honest about the well-known databases it *cannot* read.
 | [VTuber.hk](https://vtuber.hk) | — | Hong Kong VTubers — no documented format |
 | [Streams Charts](https://streamscharts.com/vtubers) | — | Channel statistics — blocks automated requests |
 
+## The quota-free sources
+
+| Platform | Official API | Quota-free equivalent | Credentials |
+| --- | --- | --- | --- |
+| YouTube | Data API v3 | **InnerTube** (`youtubei.js`) | none |
+| Twitch | Helix | **GQL** (`gql.twitch.tv/gql`) | the public web client id |
+| Bilibili | — | the WBI-signed public API | the visitor id (`buvid3`) |
+
+All three go through `scripts/lib/rate-limit.ts`, which keeps a minimum gap
+between requests, doubles it when a source pushes back, and relaxes it again
+once the source is quiet.
+
+With **no YouTube API key at all**, the pipeline still fills the dataset:
+the profiles come from InnerTube and Twitch GQL, and the uploads from
+InnerTube.
+
 ## The Bilibili risk-control wall
 
 Bilibili protects its per-user profile endpoint
@@ -255,7 +271,8 @@ The endpoints that *are* reachable, and are used:
 | `x/web-interface/online/list?rid=160` | 200 | Live VTuber streams |
 | `x/space/arc/search?mid=` | 200 | A channel's uploads |
 | `x/relation/stat?vmid=` | 200 | **The follower count** |
-| `x/web-interface/card?mid=` | **412** | The name, avatar and signature |
+| `x/web-interface/card?mid=` | **412** without a visitor id | The name, avatar and signature |
+| `x/space/arc/search?mid=` | 200 with a WBI signature | The uploads |
 
 So the follower count is fetched and stored, and the channel *description*
 from Bilibili is not — a channel that only exists there simply has no
