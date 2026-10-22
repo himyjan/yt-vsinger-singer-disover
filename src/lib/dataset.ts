@@ -28,6 +28,7 @@ import type {
 } from "@shared/lib/types";
 import type { SearchPack, SearchHit } from "@shared/lib/search";
 import { searchPacks } from "@shared/lib/search";
+import { toLanguageList } from "@shared/lib/regions";
 
 /** Base path of the deployment (handles GitHub Pages sub-paths). */
 const BASE = import.meta.env.BASE_URL || "/";
@@ -314,6 +315,8 @@ export interface ItemQuery {
   gender?: Gender | "all";
   /** Independent or signed to a business group. */
   affiliation?: Affiliation | "all";
+  /** A language the performer streams in. */
+  language?: string | "all";
   /** `ai` shows only AI performers, `human` hides them, `all` shows both. */
   ai?: "ai" | "human" | "all";
   /** Free-text filter over title / song / channel. */
@@ -336,6 +339,7 @@ export function filterItems(items: Item[], query: ItemQuery): Item[] {
   const gender = query.gender ?? "all";
   const ai = query.ai ?? "all";
   const affiliation = query.affiliation ?? "all";
+  const language = query.language ?? "all";
   const text = query.text?.trim().toLowerCase() ?? "";
 
   const filtered = items.filter((item) => {
@@ -378,6 +382,7 @@ export function filterChannels(
   const gender = query.gender ?? "all";
   const ai = query.ai ?? "all";
   const affiliation = query.affiliation ?? "all";
+  const language = query.language ?? "all";
   const text = query.text?.trim().toLowerCase() ?? "";
 
   return channels.filter((channel) => {
@@ -387,6 +392,12 @@ export function filterChannels(
     if (ai === "ai" && !channel.isAi) return false;
     if (ai === "human" && channel.isAi) return false;
     if (affiliation !== "all" && channel.affiliation !== affiliation) {
+      return false;
+    }
+    if (
+      language !== "all" &&
+      !toLanguageList(channel.languages).includes(language)
+    ) {
       return false;
     }
     if (text) {

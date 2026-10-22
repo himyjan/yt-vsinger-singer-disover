@@ -201,7 +201,16 @@ a handle is a coincidence. Getting this wrong was not subtle: before the
 region took precedence, **5,895 mainland Chinese channels were recorded as
 Japanese** because their names used kana.
 
-| Region | Language |
+`languages` accepts **a single code or a list**. Performers usually stream in
+more than one language, and the first entry is the primary one — but some
+sources only ever name one, so both shapes are valid. Use
+`toLanguageList()` (in `scripts/lib/regions.ts`) to read it either way:
+
+```ts
+const languages = toLanguageList(channel.languages);  // always a string[]
+```
+
+| Region | Languages |
 | --- | --- |
 | `jp` | `ja` |
 | `cn` | `zh-Hans` |
@@ -210,6 +219,11 @@ Japanese** because their names used kana.
 | `kr` | `ko` |
 | `en` | `en` |
 | `id` / `my` | `id` / `ms` |
+
+When a performer **states** their languages — 「主な配信言語: 広東語 / English」
+— every language they name is kept, in the order they wrote them, and the
+region no longer overrides it. That is a fact about themselves, and it
+outranks anything inferred.
 
 A mainland Chinese performer who is Cantonese-speaking (Guangzhou and the
 Pearl River Delta) is detected from the markers 粵語 · 廣東話 · 廣州話 ·

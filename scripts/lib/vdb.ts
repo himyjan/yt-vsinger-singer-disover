@@ -37,6 +37,7 @@
  */
 
 import { detectLanguage } from "./regions";
+import { detectClipAccount } from "./classify";
 import { classifyChannel } from "./classify";
 import type { ArtistKind, PlatformId, RegionCode } from "./types";
 import type { PlatformLink } from "./types";
@@ -268,7 +269,17 @@ export class VdbSource {
      */
     const platformSet = new Set(platforms.map((p) => p.platform));
     const hasYouTube = platformSet.has("youtube");
-    if (!hasYouTube) {
+
+    /**
+     * A clip or translation account is not the performer.
+     *
+     * 「YUA/藤崎由愛」 is a Chinese account that re-uploads Yua Mikami's
+     * streams. The language it lists is the *artist's*, not the language its
+     * own audience hears, so the platform decides the region instead.
+     */
+    const isClipAccount = detectClipAccount(name, null);
+
+    if (!hasYouTube || isClipAccount) {
       if (platformSet.has("bilibili")) {
         region = "cn";
         regionSource = "platform";

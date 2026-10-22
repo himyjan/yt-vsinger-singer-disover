@@ -335,8 +335,19 @@ export interface Channel {
    * roster entry from a guess.
    */
   regionSource: RegionSource;
-  /** BCP-47 language tag detected from the description/tags. */
-  language: string | null;
+  /**
+   * The languages the channel performs in, as ISO 639-1 codes.
+   *
+   * A list, because performers usually stream in more than one — a Hong Kong
+   * VTuber in Cantonese and English, a Japanese VTuber in Japanese and
+   * English. The first entry is the primary one.
+   *
+   * These are **language** codes and are deliberately different from the
+   * region: `ja` (ISO 639-1, the language) and `jp` (ISO 3166-1, the
+   * country) are two different standards. A Japanese VTuber is
+   * `languages: ["ja"]` and `region: "jp"`.
+   */
+  languages: string[];
   /** Agency / group, e.g. `hololive`, `nijisanji`, `kmvs`. */
   agency: string | null;
   /**
@@ -474,12 +485,12 @@ export interface ChannelSummary {
   /** Which source decided the region. */
   regionSource: RegionSource;
   /**
-   * The language of the channel, as an ISO 639-1 code.
+   * The languages of the channel, as ISO 639-1 codes.
    *
-   * Distinct from the region: the region says *where* they are (`jp`), the
-   * language says *what they perform in* (`ja`).
+   * A single code or a list. Distinct from the region: the region says
+   * *where* they are (`jp`), the languages say *what they perform in* (`ja`).
    */
-  language: string | null;
+  languages: string | string[];
   agency: string | null;
   /** Independent or signed to a business group. */
   affiliation: Affiliation;
@@ -520,6 +531,8 @@ export interface Item {
   region: RegionCode;
   /** Owning channel's gender. */
   gender: Gender;
+  /** Owning channel's languages — a single code or a list. */
+  languages: string | string[];
   /** True when the upload is AI-generated. */
   isAi: boolean;
   /** Owning channel's combined variant label. */
@@ -648,6 +661,8 @@ export interface SongRecord {
   variant: Variant;
   /** Owning channel's gender. */
   gender: Gender;
+  /** Owning channel's languages — a single code or a list. */
+  languages: string | string[];
   /** True when the performer is AI-generated. */
   isAi: boolean;
   /** The upload's title. */

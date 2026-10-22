@@ -273,6 +273,45 @@ export const REGION_LANGUAGE: Record<RegionCode, string | null> = {
 };
 
 /**
+ * Normalises the `languages` field.
+ *
+ * The field accepts a single code or a list, and this is the one place that
+ * knows it.
+ *
+ * The field is a single code **or** a list, because some sources only ever
+ * name one language. Everything internal uses the list form.
+ */
+export function toLanguageList(
+  value: string | string[] | null | undefined,
+): string[] {
+  if (!value) return [];
+  const list = Array.isArray(value) ? value : [value];
+  return list.map((l) => l.trim()).filter(Boolean);
+}
+
+/**
+ * Merges two language lists, keeping the order and dropping the duplicates.
+ */
+export function mergeLanguages(
+  a: string | string[] | null | undefined,
+  b: string | string[] | null | undefined,
+): string[] {
+  return [...new Set([...toLanguageList(a), ...toLanguageList(b)])];
+}
+
+/**
+ * The languages a region implies, as a list.
+ */
+export function languagesForRegion(
+  region: RegionCode,
+  fallback: string[] | null = null,
+): string[] {
+  const language = REGION_LANGUAGE[region];
+  if (language) return [language];
+  return fallback ? [...fallback] : [];
+}
+
+/**
  * Settles a record's language from its region.
  *
  * The region is the authoritative fact; the language follows it. This is
@@ -380,13 +419,17 @@ export const LANGUAGE_STATEMENT_LEADS = [
 /**
  * Reads an explicit language statement out of a description.
  *
- * Returns `null` when there is no statement — the caller then falls back to
- * the region.
+ * A performer usually streams in **more than one** language —
+ * 「主な配信言語: 広東語 / English」 — so this returns every language the
+ * statement names, in the order they were written.
+ *
+ * Returns an empty array when there is no statement; the caller then falls
+ * back to the region.
  */
-export function detectLanguageStatement(
+export function detectLanguageStatements(
   text: string | null | undefined,
-): string | null {
-  if (!text) return null;
+): string[] {
+  if (!text) return [];
   const haystack = text.toLowerCase();
 
   for (const lead of LANGUAGE_STATEMENT_LEADS) {
@@ -394,15 +437,33 @@ export function detectLanguageStatement(
     if (leadIndex < 0) continue;
 
     // Only look at the text right after the lead — a statement names its
-    // language immediately.
-    const window = haystack.slice(leadIndex, leadIndex + lead.length + 24);
+    // languages immediately.
+    const window = haystack.slice(leadIndex, leadIndex + lead.length + 40);
+
+    // Collect every match with its position, so the order the performer
+    // wrote them in is preserved.
+    const found: { language: string; at: number }[] = [];
     for (const { language, patterns } of LANGUAGE_STATEMENT_PATTERNS) {
       for (const pattern of patterns) {
-        if (window.includes(pattern.toLowerCase())) return language;
+        const at = window.indexOf(pattern.toLowerCase());
+        if (at < 0) continue;
+        if (found.some((f) => f.language === language)) continue;
+        found.push({ language, at });
       }
     }
+    if (!found.length) continue;
+
+    found.sort((a, b) => a.at - b.at);
+    return found.map((f) => f.language);
   }
-  return null;
+  return [];
+}
+
+/** The single-language form, for the callers that only need one. */
+export function detectLanguageStatement(
+  text: string | null | undefined,
+): string | null {
+  return detectLanguageStatements(text)[0] ?? null;
 }
 
 export const CANTONESE_MARKERS = [

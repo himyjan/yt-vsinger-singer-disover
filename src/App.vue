@@ -110,6 +110,16 @@ const SUB_FILTERS = [
   { id: "untracked", label: "Not tracked", countKey: "untracked" },
 ] as const;
 
+const LANGUAGES = [
+  { id: "all", label: "Any language", title: "Every performer" },
+  { id: "ja", label: "🇯🇵 日本語", title: "Performers who stream in Japanese" },
+  { id: "yue", label: "🇭🇰 廣東語", title: "Performers who stream in Cantonese" },
+  { id: "zh-Hans", label: "🇨🇳 简体中文", title: "Performers who stream in Simplified Chinese" },
+  { id: "zh-Hant", label: "🇹🇼 繁體中文", title: "Performers who stream in Traditional Chinese" },
+  { id: "ko", label: "🇰🇷 한국어", title: "Performers who stream in Korean" },
+  { id: "en", label: "🌐 English", title: "Performers who stream in English" },
+] as const;
+
 const AFFILIATION_FILTERS = [
   { id: "all", label: "Any affiliation", title: "Every performer" },
   {
@@ -143,6 +153,7 @@ const visibleLive = computed(() =>
     gender: state.gender,
     ai: state.ai,
     affiliation: state.affiliation,
+    language: state.language,
     limit: 300,
   }),
 );
@@ -154,6 +165,7 @@ const visibleUpcoming = computed(() =>
     gender: state.gender,
     ai: state.ai,
     affiliation: state.affiliation,
+    language: state.language,
     limit: 300,
   }),
 );
@@ -235,6 +247,7 @@ const visibleSaved = computed(() => {
     gender: state.gender,
     ai: state.ai,
     affiliation: state.affiliation,
+    language: state.language,
     limit: 200,
   });
 });
@@ -844,6 +857,24 @@ onMounted(async () => {
           :aria-pressed="state.affiliation === option.id"
           :title="option.title"
           @click="state.affiliation = option.id"
+        >
+          {{ option.label }}
+        </button>
+
+        <!-- Languages -->
+        <button
+          v-for="option in LANGUAGES"
+          :key="option.id"
+          type="button"
+          class="shrink-0 rounded-full border px-3 py-1.5 text-xs font-semibold whitespace-nowrap transition"
+          :class="
+            state.language === option.id
+              ? 'border-teal-500 bg-teal-500/15 text-teal-700 dark:text-teal-400'
+              : 'border-black/10 bg-white text-neutral-500 hover:text-neutral-800 dark:border-white/12 dark:bg-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100'
+          "
+          :aria-pressed="state.language === option.id"
+          :title="option.title"
+          @click="state.language = option.id"
         >
           {{ option.label }}
         </button>

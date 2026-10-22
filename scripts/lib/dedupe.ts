@@ -24,6 +24,7 @@
 import { IdentityRegistry, type Candidate } from "./identity";
 import type { Affiliation, Channel, RegionCode } from "./types";
 import { pickAvatar } from "./platforms";
+import { mergeLanguages } from "./regions";
 
 /** The identity keys a channel contributes. */
 function keysFor(channel: Channel): string[] {
@@ -105,7 +106,7 @@ export function mergeChannels(target: Channel, other: Channel): Channel {
         ? target.region
         : (other.region as RegionCode);
     })(),
-    language: target.language ?? other.language,
+    languages: mergeLanguages(target.languages, other.languages),
     agency: target.agency ?? other.agency,
     affiliation: (() => {
       // The more specific answer wins: a positive statement beats "unknown".

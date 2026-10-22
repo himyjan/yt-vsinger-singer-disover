@@ -115,6 +115,8 @@ export const state = reactive({
   acousticOnly: false,
   /** Gender filter. */
   gender: "all" as Gender | "all",
+  /** A language filter — the performers who stream in it. */
+  language: "all" as string | "all",
   /**
    * Business filter: independent performers, agency performers, or both.
    * `unknown` means the sources do not say.
