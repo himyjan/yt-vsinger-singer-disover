@@ -22,7 +22,13 @@ import { fetchTrackedVtubers } from "./taiwan-vtuber-data";
 import { languagesForRegion, mergeLanguages } from "./regions";
 import { VdbSource } from "./vdb";
 import { createAdapters } from "./platform-registry";
-import { classifyChannel, deriveVariant, detectAffiliation } from "./classify";
+import {
+  classifyChannel,
+  deriveVariant,
+  detectActivity,
+  detectAffiliation,
+  mergeActivity,
+} from "./classify";
 import { toCountRef } from "./types";
 import type { Channel, RecordSource } from "./types";
 
@@ -115,7 +121,15 @@ export async function buildRoster(
       lastItemsFetchedAt: null,
       lastDetailsFetchedAt: null,
 
-      activity: record.activity,
+      /**
+       * The tracker's status, plus what the name says. A Chinese channel
+       * named 「XX 已畢業」 says so outright, and the tracker may not have
+       * noticed.
+       */
+      activity: mergeActivity(
+        record.activity,
+        detectActivity(record.name, null, null),
+      ),
       debutDate: record.debutDate,
       graduateDate: null,
 
@@ -134,7 +148,6 @@ export async function buildRoster(
           url: `https://www.youtube.com/channel/${youtubeId}`,
           subscribers: record.subscribers,
           avatar: record.avatar,
-          activity: record.activity,
           lastCheckedAt: now,
         },
         ...(record.twitchId
@@ -147,7 +160,6 @@ export async function buildRoster(
                 url: `https://www.twitch.tv/${record.twitchId}`,
                 subscribers: { tag: "hidden" } as const,
                 avatar: record.avatar,
-                activity: record.activity,
                 lastCheckedAt: now,
               },
             ]
@@ -216,7 +228,8 @@ export async function buildRoster(
       lastItemsFetchedAt: null,
       lastDetailsFetchedAt: null,
 
-      activity: "unknown",
+      // A seed's name can say 「卒業」 too.
+      activity: detectActivity(seed.name, null, null),
       debutDate: null,
       graduateDate: null,
 
@@ -229,7 +242,6 @@ export async function buildRoster(
           url: `https://www.youtube.com/channel/${seed.channelId}`,
           subscribers: toCountRef(null),
           avatar: null,
-          activity: "unknown",
           lastCheckedAt: now,
         },
       ],
@@ -425,7 +437,6 @@ export async function buildRoster(
                 url: channel.url,
                 subscribers: channel.subscribers,
                 avatar: channel.avatar,
-                activity: "unknown",
                 lastCheckedAt: now,
               },
             ],

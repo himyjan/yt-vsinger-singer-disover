@@ -41,6 +41,7 @@ Node + TypeScript, no native dependencies. It runs unchanged in GitHub Actions.
 scripts/
 ├── sync.ts            fetch → classify → merge → write
 ├── build-index.ts     build the inverted search index
+├── fill-avatars.ts    fill the missing avatars and details
 ├── validate.ts        CI gate
 ├── verify.ts           verify classifications with web-search grounding
 ├── import-legacy-db.ts  one-off SQLite migration
@@ -75,7 +76,26 @@ src/
 new view must funnel its results through those functions. Do not add a
 per-view `kind` check.
 
-### 2. A confidence score is not a fact
+### 2. The platform is the source of truth for a name
+
+A performer renames. The rosters record the name they saw, which can be
+months out of date, so every record carries the provenance of its name —
+`nameSource`: `manual`, `platform`, `seed` or `roster`. The **platform**
+is the primary source; a hand-written override in `data/overrides.json` is
+the final word.
+
+Two rules follow:
+
+- **Only the record's own platform may rename it.** A Chinese Bilibili
+  account must not rename a Japanese YouTube channel.
+- **A placeholder is not a name.** 「账号已注销」 and 「(알 수 없음)」 are
+  tombstones, and they are rejected.
+
+A rename is **recorded**: the old name goes into `aliases`, and the aliases
+are indexed for search, so a channel that renamed is still findable under
+the name someone remembers.
+
+### 3. A confidence score is not a fact
 
 `confidence` is **optional** and the dataset does not populate it. A computed
 number is a guess dressed up as a measurement, and what a record needs to say
@@ -86,37 +106,43 @@ an unknown role, no description — not by a score. The type still allows
 `confidence` for a producer that wants to record an estimate, and
 `docs/DATA-SCHEMA.md` documents its shape.
 
-### 3. The classifier is deterministic
+### 4. The classifier is deterministic
 
 `scripts/lib/classify.ts` has no randomness and no network calls. The same
 input always produces the same record. This is what keeps the git history of
 `data/` readable — do not introduce `Math.random()`, timestamps or
 network-derived values into a record's classification.
 
-### 4. Never write a file over the size budget
+### 5. Never write a file over the size budget
 
 `scripts/lib/io.ts` throws when a file exceeds 8 MB, and `data/` is capped at
 180 MB. GitHub Free allows ~1 GB for the whole repository. If a change makes
 the dataset grow, add a retention rule rather than raising the budget.
 
-### 5. Every record keeps its provenance
+### 6. Every record keeps its provenance
 
 `mergeById()` preserves `addedAt`, and preserves `source: "seed"` and
 `source: "manual"` across API refreshes. Do not overwrite provenance.
 
-### 6. Never let a failing source break the run
+### 7. Never let a failing source break the run
 
-Every network call in the pipeline is wrapped. A source that is unreachable
-must return an empty result and log why. A broken Bilibili endpoint must
-never take the YouTube sync down.
+Every network call in the pipeline is wrapped, and every one of them carries
+a timeout — a `fetch` with no timeout never rejects, it just hangs, and a
+hung request in a loop of thousands stalls the run with no output and no
+error. A source that is unreachable must return an empty result and log
+why. A broken Bilibili endpoint must never take the YouTube sync down.
 
-### 7. Quota is a hard constraint
+When a source pushes back — Bilibili's risk control, for instance — the
+run **backs off and leaves it alone** rather than grinding through
+thousands of doomed requests.
+
+### 8. Quota is a hard constraint
 
 The YouTube free tier is 10,000 units/day and `search.list` costs 100. The
 `QuotaBudget` refuses calls that would exceed the limit. Never bypass it with
 a direct `fetch` to the API.
 
-### 8. `better-sqlite3` is an optional dependency
+### 9. `better-sqlite3` is an optional dependency
 
 It is only used by the one-off legacy migration. The CI path must stay free
 of native modules.
@@ -126,6 +152,8 @@ of native modules.
 | Task | Where |
 | --- | --- |
 | Fix a misclassified channel | `data/overrides.json`, then `npm run data:sync -- --no-search` |
+| Fix an outdated channel name | the platform corrects it; `npm run data:avatars` to apply it now |
+| Fill the missing avatars | `npm run data:avatars -- --limit 2000` |
 | Fix the classifier itself | `scripts/lib/classify.ts` |
 | Add a curated channel | `scripts/lib/seeds.ts` |
 | Add a region | `scripts/lib/types.ts`, `scripts/lib/regions.ts` |
@@ -143,6 +171,8 @@ npm run data:sync -- --no-search     # refresh known channels only
 npm run data:sync -- --keyword "…"   # run one discovery query
 npm run data:verify                   # verify classifications with search grounding
 npm run data:index                   # rebuild the search index
+npm run data:avatars -- --limit 2000 # fill the missing avatars
+npm run data:avatars -- --platform bilibili --dry-run
 npm run data:validate                # structure + budgets
 npm run data:import-legacy           # migrate the old SQLite database
 ```

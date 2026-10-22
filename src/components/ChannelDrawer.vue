@@ -166,6 +166,12 @@ const followers = computed(() => {
 /** The languages, whether the field holds one code or a list. */
 const languageList = computed(() => toLanguageList(props.channel?.languages));
 
+/** The other names the performer is known by. */
+const aliasList = computed(() => {
+  const source = props.channel as unknown as { aliases?: string[] } | null;
+  return (source?.aliases ?? []).filter(Boolean).slice(0, 4);
+});
+
 const saved = computed(() =>
   props.channel ? state.saved.some((s) => s.id === props.channel!.id) : false,
 );
@@ -212,6 +218,19 @@ const saved = computed(() =>
                   class="truncate text-xs text-neutral-500"
                 >
                   @{{ channel.handle }}
+                </p>
+                <!--
+                  The other names the performer is known by.
+
+                  A performer renames, and the name they used to have is the
+                  one a fan remembers — so it is kept, and shown here.
+                -->
+                <p
+                  v-if="aliasList.length"
+                  class="mt-0.5 truncate text-xs text-neutral-500"
+                  :title="aliasList.join(' · ')"
+                >
+                  aka {{ aliasList.join(" · ") }}
                 </p>
                 <div class="mt-1.5 flex flex-wrap items-center gap-1">
                   <span

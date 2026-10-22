@@ -83,7 +83,7 @@ The record for one performer.
 | `updatedAt` | string | ISO timestamp of last refresh |
 | `lastItemsFetchedAt` | string \| null | When the channel's uploads were last fetched — drives the rotation |
 | `lastDetailsFetchedAt` | string \| null | When the channel's profile was last resolved — drives the rotation |
-| `activity` | `"active"` \| `"preparing"` \| `"graduated"` \| `"unknown"` | Streaming status |
+| `activity` | `"active"` \| `"preparing"` \| `"graduated"` \| `"unknown"` | Streaming status — one per performer, not one per platform |
 | `debutDate` | string \| null | ISO date of debut |
 | `graduateDate` | string \| null | ISO date of graduation |
 | `platforms` | `PlatformLink[]` | Every platform identity |
@@ -92,6 +92,25 @@ The record for one performer.
 | `twitchFollowers` | `CountRef` | |
 | `externals` | `Record<string, string>` | `x`, `instagram`, `tiktok`, `discord`, `spotify`, … |
 | `popularVideoId` | string \| null | A representative upload |
+
+### `activity` — one per performer, not one per platform
+
+Whether a performer has retired is a fact about the **performer**, not about
+one account. A performer who has graduated has graduated on every platform,
+so the record carries one `activity` and the platform links carry none.
+
+It is set from three places, and a graduation always wins:
+
+| Source | Example |
+| --- | --- |
+| A **name or a description** | 「已停播」, 「已畢業」, 「卒業」, 「活動終了」, 「retired」, «закрыт» |
+| A **roster** | the Taiwan tracker publishes `active` / `preparing` / `graduated` |
+| **Recency** | no upload for a year |
+
+The markers are multilingual, because the performers are — see
+`GRADUATED_MARKERS` in `scripts/lib/classify.ts`. The Chinese ones matter
+most here: 「已停播」 and 「已畢業」 are what the Chinese scene writes, and
+neither contains the Japanese 「卒業」.
 
 ### `CountRef`
 

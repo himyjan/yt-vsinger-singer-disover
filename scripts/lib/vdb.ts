@@ -210,7 +210,6 @@ export class VdbSource {
         url,
         subscribers: { tag: "hidden" },
         avatar: null,
-        activity: "unknown",
         lastCheckedAt: new Date().toISOString(),
       });
     }

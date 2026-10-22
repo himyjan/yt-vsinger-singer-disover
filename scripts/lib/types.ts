@@ -303,9 +303,14 @@ export interface PlatformLink {
   videoCount?: number | null;
   /** Avatar / profile image. */
   avatar: string | null;
-  /** Streaming activity on that platform. */
-  activity: Activity;
-  /** ISO timestamp of the last successful check. */
+  /**
+   * ISO timestamp of the last successful check.
+   *
+   * There is deliberately **no** per-platform activity: whether a performer
+   * has graduated is a fact about the *performer*, not about one account.
+   * A performer who has retired has retired on every platform, so the
+   * record carries one `activity` and the links carry none.
+   */
   lastCheckedAt: string;
 }
 

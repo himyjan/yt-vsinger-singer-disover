@@ -271,7 +271,18 @@ export class BilibiliAdapter implements PlatformAdapter {
     this.onLog = options.onLog ?? (() => {});
     this.limiter = new RateLimiter({
       minIntervalMs: options.delayMs ?? 400,
-      maxIntervalMs: 20_000,
+      /**
+       * The ceiling is low on purpose.
+       *
+       * Bilibili's risk control answers `-352` or `-412` when it decides a
+       * request looks automated, and it keeps answering that way for a while.
+       * The breaker therefore has to trip **quickly**: at a 20-second ceiling
+       * it took six rejections to get there, and each rejection cost a
+       * fifteen-second backoff — so a single blocked channel stalled a whole
+       * run for minutes. At eight seconds it trips after four, and the run
+       * moves on to the next platform.
+       */
+      maxIntervalMs: 8_000,
       onLimit: (m) => this.onLog(`bilibili: ${m}`),
       onChange: (ms) =>
         this.onLog(`bilibili: interval → ${Math.round(ms)}ms`),
@@ -351,10 +362,19 @@ export class BilibiliAdapter implements PlatformAdapter {
       if (limited.limited || !contentType.includes("json")) {
         this.limiter.penalise();
         if (attempt < 2) {
-          const wait = 5_000 * 2 ** attempt;
+          const wait = 2_000 * 2 ** attempt;
           this.onLog(
             `bilibili: rate limited (${res.status}), waiting ${wait / 1000}s`,
           );
+          /**
+           * A fresh visitor id.
+           *
+           * Bilibili's risk control is partly keyed on the visitor id, so
+           * the same `buvid3` that was just rejected is unlikely to be
+           * accepted on the next attempt.
+           */
+          this.buvidFetched = false;
+          this.buvid3 = null;
           await new Promise((r) => setTimeout(r, wait));
           return this.getJson<T>(url, headers, attempt + 1);
         }
