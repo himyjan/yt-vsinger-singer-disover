@@ -73,7 +73,8 @@ import {
   extractAgency,
   mergeActivity,
 } from "./lib/classify";
-import { REGION_LANGUAGE } from "./lib/regions";
+import { REGION_LANGUAGE, profileLanguage } from "./lib/regions";
+import { splitName } from "./lib/names";
 import { pickAvatar, pickSubscribers } from "./lib/platforms";
 import type { Channel, PlatformId } from "./lib/types";
 
@@ -229,33 +230,17 @@ interface Profile {
   /** The channel's current `@handle`, when the platform publishes one. */
   handle?: string | null;
   /**
+   * The 🎵 Official Artist Channel badge.
+   *
+   * Only YouTube has one; the other platforms leave it `undefined`.
+   */
+  officialArtist?: boolean;
+  /**
    * The country the channel publishes, as an ISO code.
    *
    * Only YouTube states one, and it is the fact a mirror cannot corrupt.
    */
   country?: string | null;
-}
-
-/** The language YouTube should answer in, from the region. */
-function profileLanguage(region: string | null | undefined): string {
-  switch (region) {
-    case "jp":
-      return "ja";
-    case "cn":
-      return "zh-CN";
-    case "tw":
-      return "zh-TW";
-    case "hk":
-      return "zh-HK";
-    case "kr":
-      return "ko";
-    case "id":
-      return "id";
-    case "my":
-      return "ms";
-    default:
-      return "en";
-  }
 }
 
 /**
@@ -319,6 +304,7 @@ async function fetchProfile(
         id: profile.id,
         handle: profile.handle,
         country: profile.country,
+        officialArtist: profile.officialArtist,
       };
     }
 
@@ -356,39 +342,7 @@ async function fetchProfile(
   }
 }
 
-/**
- * The names inside one channel title.
- *
- * A title like 「空星きらめ/Sorahoshi Kirame【にじさんじ】」 carries three
- * things: the Japanese name, the romanised name and the agency. The slash
- * and the brackets separate them.
- */
-export function splitName(title: string): string[] {
-  const out: string[] = [];
-  const add = (value: string) => {
-    const trimmed = value.trim();
-    if (trimmed.length > 1 && !out.includes(trimmed)) out.push(trimmed);
-  };
-
-  for (const part of title.split(/[\/|｜]/)) {
-    const bare = part
-      .replace(/[【\[（(].*?[】\]）)]/g, "")
-      .replace(/[【\[（(].*$/g, "")
-      .trim();
-    add(bare);
-
-    /**
-     * 「Name Ch. 中之人」 — the YouTube channel-title convention.
-     *
-     * The part after `Ch.` is the performer's own name, and it is the part
-     * someone searches for; the part before is the channel they publish on.
-     */
-    const suffix = /\sCh\.?\s+(.+)$/i.exec(bare);
-    if (suffix) add(suffix[1]!);
-  }
-
-  return out;
-}
+export { splitName } from "./lib/names";
 
 /**
  * Whether a record's identity is a name the platform can change.
@@ -604,6 +558,16 @@ function applyProfile(
   // The avatar and the follower count follow the primary platform.
   channel.avatar = pickAvatar(channel);
   channel.subscribers = pickSubscribers(channel);
+
+  /**
+   * The 🎵 Official Artist Channel badge.
+   *
+   * It is a fact about the YouTube channel, so a non-YouTube profile leaves
+   * whatever the last YouTube pass found untouched.
+   */
+  if (profile.officialArtist !== undefined) {
+    channel.isOfficialArtist = profile.officialArtist;
+  }
 }
 
 /* -------------------------------------------------------------------------- */
@@ -851,6 +815,7 @@ async function main(): Promise<void> {
     record.country = updated.country;
     record.languages = updated.languages;
     record.isSinging = updated.isSinging;
+    record.isOfficialArtist = updated.isOfficialArtist;
     record.subscribers = updated.subscribers;
     record.videoCount = updated.videoCount;
     written.add(record.id);

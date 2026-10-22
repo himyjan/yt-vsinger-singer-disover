@@ -665,3 +665,34 @@ export function buildRegionMeta(
     items: counts.get(code)?.items ?? 0,
   }));
 }
+
+/**
+ * The language to ask YouTube in for a record of this region.
+ *
+ * A channel publishes a localized title per UI language, and the English one
+ * is often an alias: the Japanese channel 「向葵 / あおい」 answers with
+ * `Aoi / Vtuber` in English. The profile is therefore always requested in the
+ * language of the record's own region, and this is the mapping.
+ */
+export function profileLanguage(
+  region: string | null | undefined,
+): string {
+  switch (region) {
+    case "jp":
+      return "ja";
+    case "cn":
+      return "zh-CN";
+    case "tw":
+      return "zh-TW";
+    case "hk":
+      return "zh-HK";
+    case "kr":
+      return "ko";
+    case "id":
+      return "id";
+    case "my":
+      return "ms";
+    default:
+      return "en";
+  }
+}

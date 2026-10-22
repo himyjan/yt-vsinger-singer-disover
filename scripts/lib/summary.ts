@@ -38,6 +38,7 @@ export function toSummary(c: Channel): ChannelSummary {
       c.platforms.find((p) => p.platform === "twitch")?.handle ?? null,
     gender: c.gender,
     isAi: c.isAi,
+    isOfficialArtist: c.isOfficialArtist === true,
     variant: c.variant,
     verification: c.verification,
     links: c.platforms.map((p) => ({

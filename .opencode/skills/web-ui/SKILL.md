@@ -114,6 +114,13 @@ YouTube Data API v3 is not enabled in the Cloud project,
 401 means the token expired. After a successful link the app switches to the
 `subs` view, so a link that produced nothing is never silent.
 
+**Paging.** `subscriptions(account, onProgress)` calls `onProgress({loaded,
+total})` after every page; `total` is Google's `pageInfo.totalResults`, and the
+Subs header renders “loading 200 / 956…”. A 5xx is retried twice. If the API
+returns fewer than `totalResults`, the toast says so — never report a truncated
+list as complete. The API caps `mine=true` at about 1,000; an account that
+subscribes more must be linked as a second account (they are merged).
+
 ## Data loading
 
 `src/lib/dataset.ts` loads lazily and caches in **plain** module-level

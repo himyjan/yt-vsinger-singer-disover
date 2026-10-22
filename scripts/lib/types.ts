@@ -447,6 +447,20 @@ export interface Channel {
    * a synthesised voice such as Synthesizer V / CeVIO AI.
    */
   isAi: boolean;
+  /**
+   * True when YouTube marks the channel as an **Official Artist Channel**.
+   *
+   * The sign is the 🎵 badge beside the name — `AUDIO_BADGE` /
+   * `BADGE_STYLE_TYPE_VERIFIED_ARTIST` in the page data. It means the
+   * performer's releases are managed through YouTube Music (albums, singles,
+   * the "Releases" tab), and it is not exposed by the Data API at all — only
+   * by the channel page.
+   *
+   * Optional because it is filled by the details pass: a record written
+   * before the pass has not been asked, which is not the same as "not an
+   * artist".
+   */
+  isOfficialArtist?: boolean;
   /** Combined label, e.g. `female_vtuber` or `ai_vsinger`. */
   variant: Variant;
   /**
@@ -586,6 +600,8 @@ export interface ChannelSummary {
   twitchLogin: string | null;
   gender: Gender;
   isAi: boolean;
+  /** True when YouTube shows the 🎵 Official Artist Channel badge. */
+  isOfficialArtist: boolean;
   variant: Variant;
   /** Every platform identity, for the "all links" info block. */
   links: ChannelLink[];

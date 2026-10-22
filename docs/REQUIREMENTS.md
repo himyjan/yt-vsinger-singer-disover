@@ -527,6 +527,15 @@ their session cookie; the three that do use it.
       `channels.list(mine=true)`, which the `youtube.readonly` scope already
       allows; `oauth2/v3/userinfo` needs the `profile` scope and is only a
       fallback.
+- `[x]` Subscription paging runs to the end and shows progress
+      (“loading 200 / 956…”). A page is retried twice on a 5xx, so one
+      transient error cannot truncate a long list.
+- `[x]` `pageInfo.totalResults` is compared with what arrived: if Google
+      reports more than the API returned, the app says so instead of showing a
+      silently truncated list. (The API caps `mine=true` at ~1,000 in some
+      cases; the account's own channels count is the other common reason.)
+- `[x]` Several accounts on the same platform are merged — a second YouTube
+      channel's subscriptions add to the first rather than replacing them.
 
 ---
 
