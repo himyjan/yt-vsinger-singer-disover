@@ -258,6 +258,18 @@ is published.
       re-classified once it arrives.
 - `[x]` Filterable in the web app, and shown as a 🎤 badge on the card.
 
+## 5k2. Graduation
+
+- `[x]` A performer whose **name or description** says they have finished —
+      「已停播」, 「已畢業」, 「畢業」, 「卒業」, 「活動終了」, 「retired»,
+      «закрыт», 「은퇴」 — is marked `"activity": "graduated"`.
+- `[x]` The markers are multilingual, because the performers are.
+- `[x]` The status is a fact about the **performer**, not about one account:
+      the record carries one `activity` and the platform links carry none.
+- `[x]` A graduation is **never downgraded**. The classifier's silence is
+      not evidence, and a source that states a graduation is right.
+- `[x]` A hand-written `activity` in `data/overrides.json` is the final word.
+
 ## 5k. The name
 
 - `[x]` The **platform** is the primary source for a name. A performer

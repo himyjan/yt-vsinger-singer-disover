@@ -50,6 +50,12 @@ import { InnerTubeSource } from "./lib/youtubei";
 import { TwitchGqlSource } from "./lib/twitch-gql";
 import { createAdapters } from "./lib/platform-registry";
 import { primaryPlatformOf, isPlaceholderName } from "./lib/platforms";
+import {
+  detectActivity,
+  detectAffiliation,
+  mergeActivity,
+} from "./lib/classify";
+import { pickAvatar, pickSubscribers } from "./lib/platforms";
 import type { Channel, PlatformId } from "./lib/types";
 
 /* -------------------------------------------------------------------------- */
@@ -164,7 +170,18 @@ async function fetchProfile(
 
   try {
     if (platform === "youtube") {
-      const profile = await ctx.innertube.profile(channel.id);
+      /**
+       * InnerTube resolves a channel id or a handle, but not the dataset's
+       * own id format — a handle record is stored as `youtube:user-<handle>`,
+       * so the handle is what has to be handed over.
+       */
+      const youtubeId = channel.id.startsWith("UC")
+        ? channel.id
+        : await ctx.innertube.resolveHandle(
+            channel.id.replace(/^youtube:user-/, ""),
+          );
+      if (!youtubeId) return null;
+      const profile = await ctx.innertube.profile(youtubeId);
       if (!profile) return null;
       return {
         name: profile.title,
@@ -275,6 +292,31 @@ function applyProfile(
   if (profile.avatar && primaryPlatformOf(channel) === platform) {
     channel.avatar = profile.avatar;
   }
+
+  /**
+   * The description is where a performer states their own facts, and it has
+   * only just arrived — so the classification is read again.
+   *
+   * 「已畢業」 in a bio means the performer has graduated, 「個人勢」 means
+   * they are independent, and a channel that says it publishes songs is a
+   * singing one. None of that was available when the record was first
+   * classified.
+   */
+  if (channel.description) {
+    channel.affiliation = detectAffiliation(
+      channel.name,
+      channel.description,
+      channel.agency,
+    );
+    channel.activity = mergeActivity(
+      channel.activity,
+      detectActivity(channel.name, channel.description, null),
+    );
+  }
+
+  // The avatar and the follower count follow the primary platform.
+  channel.avatar = pickAvatar(channel);
+  channel.subscribers = pickSubscribers(channel);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -338,26 +380,51 @@ async function main(): Promise<void> {
   const ctx = { innertube, twitch, adapters };
   const touched = new Set<string>();
 
+  /**
+   * How many consecutive failures one platform may have before the run
+   * leaves it alone.
+   *
+   * Bilibili's risk control rejects a burst for a while, and every rejected
+   * request costs a backoff. Grinding through thousands of them would take
+   * hours and fill nothing, so the platform is dropped for the rest of the
+   * run and the others carry on.
+   */
+  const MAX_CONSECUTIVE_FAILURES = 8;
+  const consecutiveFailures = new Map<PlatformId, number>();
+  const abandoned = new Set<PlatformId>();
+
   for (const channel of pending) {
     const platform = primaryPlatformOf(channel);
     if (!platform) continue;
+    if (abandoned.has(platform)) continue;
 
     const profile = await fetchProfile(channel, platform, ctx);
     fetched++;
 
     if (!profile) {
       failed++;
+      const streak = (consecutiveFailures.get(platform) ?? 0) + 1;
+      consecutiveFailures.set(platform, streak);
+      if (streak >= MAX_CONSECUTIVE_FAILURES) {
+        abandoned.add(platform);
+        log(
+          `bilibili: giving up on this platform for this run — ` +
+            `${streak} consecutive failures`,
+        );
+        continue;
+      }
       // The source is pushing back — wait a little longer before the next.
       await sleep(options.intervalMs * 2);
       continue;
     }
+    consecutiveFailures.set(platform, 0);
 
     const before = channel.avatar;
     applyProfile(channel, platform, profile, overrides);
     if (channel.avatar && channel.avatar !== before) filled++;
     touched.add(channel.id);
 
-    if (fetched % 25 === 0) {
+    if (fetched % 50 === 0) {
       log(
         `${fetched}/${pending.length} fetched · ${filled} avatar(s) filled · ` +
           `${renamed} renamed · ${failed} failed`,
@@ -370,6 +437,9 @@ async function main(): Promise<void> {
     `${fetched} fetched · ${filled} avatar(s) filled · ${renamed} renamed · ` +
       `${failed} failed`,
   );
+  if (abandoned.size) {
+    log(`abandoned: ${[...abandoned].join(", ")} — run them again later`);
+  }
 
   if (options.dryRun) {
     log("dry run — nothing written");

@@ -1,11 +1,13 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T06:58:03.071Z",
+  "generatedAt": "2026-10-22T08:05:32.768Z",
   "channels": [
     {
       "id": "UC8rcEBzJSleTkf_-agPM20g",
-      "name": "IRyS",
-      "aliases": [],
+      "name": "IRyS Ch. hololive",
+      "aliases": [
+        "IRyS"
+      ],
       "handle": null,
       "kind": "virtual",
       "role": "vsinger",
@@ -16,7 +18,7 @@
       ],
       "agency": "hololive",
       "affiliation": "group",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/zztv3u0fMtIbGu5nLjKPTwR_8-U0nSq80kmWW0xBpc42tA6dFHlDb_TG3VjSPLNFBuAIZtaFrw=s900-c-k-c0x00ffffff-no-rj",
       "subscribers": null,
       "isSinging": true,
       "activity": "unknown",
@@ -45,8 +47,10 @@
     },
     {
       "id": "UC9ad82fASVVMQLsJbshxdfA",
-      "name": "NACHOCO",
-      "aliases": [],
+      "name": "NACHOCO Channel",
+      "aliases": [
+        "NACHOCO"
+      ],
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -57,7 +61,7 @@
       ],
       "agency": null,
       "affiliation": "unknown",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_mdISI1tN3Oz-jDzC0EZnDsogCny0frszV-Y2HEBgejkQ=s900-c-k-c0x00ffffff-no-rj",
       "subscribers": null,
       "isSinging": false,
       "activity": "unknown",
@@ -97,8 +101,10 @@
     },
     {
       "id": "UCu-J8uIXuLZh16gG-cT1naw",
-      "name": "Finana Ryugu",
-      "aliases": [],
+      "name": "Finana Ryugu 【NIJISANJI EN】",
+      "aliases": [
+        "Finana Ryugu"
+      ],
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -109,7 +115,7 @@
       ],
       "agency": "NIJISANJI EN",
       "affiliation": "group",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/xXO6UqEUCfXxrY16021Fjy6SQxv8GnPTOR_JilIwHE21yunBzMbmp4MEJEps4GOEMKZ6TvBI=s900-c-k-c0x00ffffff-no-rj",
       "subscribers": null,
       "isSinging": false,
       "activity": "unknown",

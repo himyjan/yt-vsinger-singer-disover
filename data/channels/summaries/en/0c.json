@@ -1,11 +1,13 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T06:58:03.071Z",
+  "generatedAt": "2026-10-22T08:05:32.768Z",
   "channels": [
     {
       "id": "UCJFZiqLMntJufDCHc6bQixg",
-      "name": "ホロライブ公式",
-      "aliases": [],
+      "name": "hololive ホロライブ - VTuber Group",
+      "aliases": [
+        "ホロライブ公式"
+      ],
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -16,7 +18,7 @@
       ],
       "agency": "40e82f4e-40d8-539c-87c8-ed17c6ea519f",
       "affiliation": "group",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/rl6ZG9_MqKPDABLRDNG75FPX7EOPGXHtJ-2Hm97yqWziq6gkcwnsSe6wA8vv8xIhGuQe9joF=s900-c-k-c0x00ffffff-no-rj",
       "subscribers": null,
       "isSinging": true,
       "activity": "unknown",
@@ -56,8 +58,10 @@
     },
     {
       "id": "UCSc_KzY_9WYAx9LghggjVRA",
-      "name": "Yugo Asuma",
-      "aliases": [],
+      "name": "Yugo Asuma 【NIJISANJI EN】",
+      "aliases": [
+        "Yugo Asuma"
+      ],
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -68,7 +72,7 @@
       ],
       "agency": "NIJISANJI EN",
       "affiliation": "group",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/lztVvqTIhLvxiK2xLO74rLyomQGrDNbYIMuPUdwaa6V_YKAvws5bU09_qUAnVlUSEnnetbPoEg=s900-c-k-c0x00ffffff-no-rj",
       "subscribers": null,
       "isSinging": false,
       "activity": "unknown",

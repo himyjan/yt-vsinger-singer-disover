@@ -110,7 +110,29 @@ export function pickName(target: Channel, other: Channel): string {
  * two sources described the same performer — and if they disagreed on the
  * name, one of them was stale.
  */
-export function mergeAliases(target: Channel, other: Channel): string[] {
+/**
+ * The provenance of the name that was chosen.
+ *
+ * It has to travel with the name: a record whose name came from the
+ * platform must say so, or the next merge would not know that the name is
+ * the current one.
+ */
+export function pickNameSource(
+  target: Channel,
+  other: Channel,
+): NameSource {
+  const targetTrust = NAME_TRUST[target.nameSource ?? "unknown"];
+  const otherTrust = NAME_TRUST[other.nameSource ?? "unknown"];
+  return targetTrust >= otherTrust
+    ? (target.nameSource ?? "unknown")
+    : (other.nameSource ?? "unknown");
+}
+
+export function mergeAliases(
+  target: Channel,
+  other: Channel,
+  current?: string,
+): string[] {
   const out: string[] = [];
   const seen = new Set<string>();
   const add = (name: string | null | undefined) => {
@@ -130,8 +152,8 @@ export function mergeAliases(target: Channel, other: Channel): string[] {
   }
 
   // A name that is the current one is not an alias.
-  const current = (target.name || other.name).trim().toLowerCase();
-  return out.filter((a) => a.trim().toLowerCase() !== current);
+  const shown = (current ?? (target.name || other.name)).trim().toLowerCase();
+  return out.filter((a) => a.trim().toLowerCase() !== shown);
 }
 
 export function mergeChannels(target: Channel, other: Channel): Channel {
@@ -153,7 +175,8 @@ export function mergeChannels(target: Channel, other: Channel): Channel {
      * 「シスター・クレア」 on another is one person, and both names have to
      * stay reachable.
      */
-    aliases: mergeAliases(target, other),
+    aliases: mergeAliases(target, other, pickName(target, other)),
+    nameSource: pickNameSource(target, other),
     handle: target.handle ?? other.handle,
     kind: target.kind === "virtual" ? target.kind : other.kind,
     role: target.role === "unknown" ? other.role : target.role,
@@ -260,7 +283,6 @@ function mergePlatforms(
     if (existing.subscribers.tag === "hidden") {
       existing.subscribers = link.subscribers;
     }
-    if (existing.activity === "unknown") existing.activity = link.activity;
   }
   return out;
 }

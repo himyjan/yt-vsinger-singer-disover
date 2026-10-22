@@ -1447,21 +1447,85 @@ export function deriveVariant(
 /* Activity                                                                   */
 /* -------------------------------------------------------------------------- */
 
-/** Markers that indicate a performer has retired or rebranded. */
+/**
+ * Markers that indicate a performer has retired or rebranded.
+ *
+ * The list is deliberately multilingual, because the performers are: a
+ * Taiwanese channel says 「已畢業」, a Chinese one says 「已停播」, a Japanese
+ * one says 「卒業」 or 「活動終了」, a Korean one says 「은퇴」, and a Russian
+ * one says «закрыт».
+ *
+ * The Chinese markers are the important ones here — 「已停播」 and 「已畢業」
+ * are what the Chinese scene actually writes, and neither is a substring of
+ * the Japanese 「卒業」.
+ */
 const GRADUATED_MARKERS = [
+  /* Japanese */
   "卒業",
+  "活動終了",
+  "活動終了のお知らせ",
+  "休眠",
+  "最終配信",
+  "卒業のお知らせ",
+  "卒業しました",
+  "配信終了",
+  "活動休止",
+  "最後の配信",
+  /* Chinese — traditional */
+  "已畢業",
+  "畢業了",
+  "畢業",
+  "已停播",
+  "停播",
+  "已停更",
+  "停更",
+  "停止更新",
+  "已結束",
+  "結束直播",
+  "最後一次直播",
+  "正式告別",
+  "告別",
+  "休息一陣子",
+  /* Chinese — simplified */
+  "已毕业",
+  "毕业了",
+  "毕业",
+  "已停播",
+  "停播了",
+  "停更了",
+  "停止更新",
+  "已结束",
+  "结束直播",
+  "最后一次直播",
+  "正式告别",
+  "告别",
+  "休息一阵子",
+  /* English */
   "graduated",
   "graduation",
   "retired",
   "farewell",
   "last stream",
-  "活動終了",
-  "活動終了のお知らせ",
-  "休眠",
-  " hiatus",
-  "最終配信",
-  "卒業のお知らせ",
-  "卒業しました",
+  "final stream",
+  "hiatus",
+  "no longer active",
+  "channel closed",
+  "has ended",
+  /* Korean */
+  "은퇴",
+  "활동 종료",
+  "최종 방송",
+  "그만",
+  /* Russian */
+  "закрыт",
+  "закрыла",
+  "закрытие",
+  "завершил",
+  "завершение",
+  /* Spanish / Portuguese / Italian */
+  "se ha retirado",
+  "encerrou",
+  "si è ritirato",
 ];
 
 const PREPARING_MARKERS = [
@@ -1505,4 +1569,22 @@ export function detectActivity(
   }
 
   return "unknown";
+}
+
+/**
+ * Combines what a source stated with what the classifier detected.
+ *
+ * The rules are asymmetric on purpose:
+ *
+ * - **A graduation always wins.** Whether a performer has retired is a
+ *   fact, and every source that states it — a name that says 「已畢業」, a
+ *   tracker that says `graduated`, a year without an upload — is right for
+ *   the same reason.
+ * - **A positive statement is never downgraded to "unknown".** The
+ *   classifier's silence is not evidence of anything.
+ */
+export function mergeActivity(current: Activity, detected: Activity): Activity {
+  if (detected === "graduated") return "graduated";
+  if (current === "unknown") return detected;
+  return current;
 }

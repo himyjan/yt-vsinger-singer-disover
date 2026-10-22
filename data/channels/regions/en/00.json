@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T06:58:03.071Z",
+  "generatedAt": "2026-10-22T08:05:32.768Z",
   "channels": [
     {
       "id": "twitch:vedal987",
-      "name": "neuro_sama",
+      "name": "vedal987",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -18,9 +18,10 @@
       "affiliation": "unknown",
       "avatar": null,
       "banner": null,
-      "description": null,
+      "description": "neuro-sama the ai vtuber",
       "subscribers": {
-        "tag": "hidden"
+        "tag": "has",
+        "count": 1017531
       },
       "videoCount": null,
       "viewCount": null,
@@ -45,10 +46,11 @@
           "platform": "twitch",
           "id": "vedal987",
           "handle": null,
-          "name": "neuro_sama",
+          "name": "vedal987",
           "url": "https://www.twitch.tv/vedal987",
           "subscribers": {
-            "tag": "hidden"
+            "tag": "has",
+            "count": 1017531
           },
           "avatar": null,
           "activity": "unknown",
@@ -57,12 +59,14 @@
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "neuro_sama"
+      ]
     },
     {
       "id": "UCsb-1aJgiJXJH2feV-zlZRw",
-      "name": "Kyo Kaneko",
+      "name": "Kyo Kaneko 【NIJISANJI EN】",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -74,9 +78,9 @@
       "statedLanguages": [],
       "agency": "NIJISANJI EN",
       "affiliation": "group",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/Ox0CfbHFejnp2R9tbSpi0WwFKHj6MQIlBTJfyqinX8s16Blb7IFjmFBIi91oaMd5_EbKS3edrg=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "Wassup I'm Kyo! Chaotic 1st Year from ILUNA Institute of the Mystics! My primary goal in life is to always have fun and make others laugh. Twitter: https://w...",
       "subscribers": {
         "tag": "hidden"
       },
@@ -103,20 +107,22 @@
           "platform": "youtube",
           "id": "UCsb-1aJgiJXJH2feV-zlZRw",
           "handle": null,
-          "name": "Kyo Kaneko",
+          "name": "Kyo Kaneko 【NIJISANJI EN】",
           "url": "https://www.youtube.com/channel/UCsb-1aJgiJXJH2feV-zlZRw",
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
+          "avatar": "https://yt3.googleusercontent.com/Ox0CfbHFejnp2R9tbSpi0WwFKHj6MQIlBTJfyqinX8s16Blb7IFjmFBIi91oaMd5_EbKS3edrg=s900-c-k-c0x00ffffff-no-rj",
           "activity": "unknown",
           "lastCheckedAt": "2026-10-22T06:58:08.086Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "Kyo Kaneko"
+      ]
     },
     {
       "id": "vdb:4bb946b7-6b9d-5b28-8975-f23291cba191",

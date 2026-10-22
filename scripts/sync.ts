@@ -29,6 +29,7 @@ import {
   classifyChannel,
   classifyItem,
   detectActivity,
+  mergeActivity,
   detectAffiliation,
   extractCollaboratorNames,
   isShortItem,
@@ -196,6 +197,8 @@ const config: SyncConfig = readJson(
 interface Override {
   /** The current display name — a hand-written correction. */
   name?: string;
+  /** The streaming status — `active`, `preparing`, `graduated`, `unknown`. */
+  activity?: Channel["activity"];
   kind?: Channel["kind"];
   role?: Channel["role"];
   region?: Channel["region"];
@@ -358,7 +361,6 @@ function channelFromApi(
         url: `https://www.youtube.com/channel/${raw.id}`,
         subscribers: toCountRef(stats.subscriberCount),
         avatar: pickThumbnail(snippet.thumbnails, "high"),
-        activity: "unknown",
         lastCheckedAt: now,
       },
     ],
@@ -870,6 +872,7 @@ async function main(): Promise<void> {
         if (link) link.name = override.name;
       }
 
+      if (override.activity) channel.activity = override.activity;
       if (override.kind) channel.kind = override.kind;
       if (override.role) channel.role = override.role;
       if (override.region) channel.region = override.region;
@@ -1322,14 +1325,16 @@ async function main(): Promise<void> {
         channel.affiliation = affiliation;
         reclassified++;
       }
+      /**
+       * The description is where a performer states their own status — and
+       * where a name or a bio says 「已畢業」, 「卒業」 or 「retired».
+       */
       const activity = detectActivity(
         channel.name,
         channel.description,
         null,
       );
-      if (activity !== "unknown" && channel.activity === "unknown") {
-        channel.activity = activity;
-      }
+      channel.activity = mergeActivity(channel.activity, activity);
     }
     if (reclassified) {
       log(`details: ${reclassified} channel(s) re-classified from their description`);
@@ -1455,7 +1460,6 @@ async function main(): Promise<void> {
             url: `https://www.twitch.tv/${login}`,
             subscribers: { tag: "hidden" },
             avatar: null,
-            activity: channel.activity,
             lastCheckedAt: now,
           });
         }
@@ -1590,7 +1594,6 @@ async function main(): Promise<void> {
         url: channel.url,
         subscribers: channel.subscribers,
         avatar: channel.avatar,
-        activity: "unknown",
         lastCheckedAt: now,
       };
       if (match) {
@@ -1898,10 +1901,13 @@ async function main(): Promise<void> {
     if (!prev || ts > prev) newestByChannel.set(item.channelId, ts);
   }
   for (const channel of channels) {
-    channel.activity = detectActivity(
-      channel.name,
-      channel.description,
-      newestByChannel.get(channel.id) ?? null,
+    channel.activity = mergeActivity(
+      channel.activity,
+      detectActivity(
+        channel.name,
+        channel.description,
+        newestByChannel.get(channel.id) ?? null,
+      ),
     );
   }
 
@@ -2335,7 +2341,6 @@ export function channelFromPlatform(
         url: channel.url,
         subscribers: channel.subscribers,
         avatar: channel.avatar,
-        activity: "unknown",
         lastCheckedAt: now,
       },
     ],

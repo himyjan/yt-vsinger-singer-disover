@@ -44,13 +44,16 @@ interface PlatformLink {
   url: string;
   subscribers: CountRef;
   avatar: string | null;
-  activity: Activity;
   lastCheckedAt: string;
 }
 ```
 
 So one performer can be present on YouTube *and* Twitch *and* Bilibili, and
 the web app renders every one of them in the "all links" block.
+
+There is deliberately **no** per-platform `activity`: whether a performer has
+graduated is a fact about the performer, not about one account, so it lives
+on the record.
 
 ### Linking performers across platforms
 
@@ -122,16 +125,48 @@ The scope is `user:read:follows`, and the followed channels come from
 
 | Endpoint | Purpose |
 | --- | --- |
-| `GET /x/web-interface/card?mid=…` | Profile, avatar, follower count |
-| `GET /x/space/arc/search?mid=…` | Recent uploads |
+| `GET /x/web-interface/card?mid=…` | Profile, avatar, follower count, video count |
+| `GET /x/space/wbi/arc/search?mid=…` | Recent uploads (WBI signed) |
+| `GET /x/space/wbi/acc/info?mid=…` | The modern profile endpoint (WBI signed) |
+| `GET /x/relation/stat?vmid=…` | The follower count |
 | `GET /x/web-interface/search/type?search_type=bili_user` | User search |
 | `GET /x/relation/followings?vmid=…` | The user's follow list (needs a cookie) |
 | `GET /x/web-interface/nav` | The signed-in user's id (needs a cookie) |
+| `GET /x/frontend/finger/spi` | The visitor id (`buvid3`) |
+
+### The 412 wall
+
+Bilibili answers a burst of requests with **HTTP 412**, and a rejected
+request with `-352 风控校验失败` in the body. Neither is an error in the
+usual sense — it is the risk-control system saying "this looks automated".
+
+What the reference implementations do, and what this adapter does too:
+
+- **Send a visitor id.** `buvid3` from `x/frontend/finger/spi`, as a cookie,
+  exactly as the browser sends it.
+- **Rotate it on rejection.** A `buvid3` that was just refused is unlikely
+  to be accepted on the next attempt, so a fresh one is fetched.
+- **Back off quickly.** The breaker trips after a few rejections and the
+  adapter stops calling Bilibili for the rest of the run, rather than
+  grinding through thousands of doomed requests.
+
+The `x/web-interface/card` endpoint is the workhorse: it is **not** behind
+the wall, and it carries the name, the avatar, the signature, the follower
+count and the video count in one request. `space/*` is behind it.
 
 > **Note on the WBI signature.** In 2023 Bilibili added a WBI signature
-> requirement to `space/arc/search` and `space/wbi/acc/info`. This adapter
-> uses the legacy unsigned endpoints where possible and degrades to "no
-> uploads" when Bilibili rejects a request, rather than failing the run.
+> requirement to `space/arc/search` and `space/wbi/acc/info`. The signature
+> is `md5(sortedQuery + wts + mixinKey)`, where the mixin key comes from
+> the two key file names in `/x/web-interface/nav` — **without** their
+> `.jpg` extensions. Taking the extension with them produces a key that
+> looks right and is rejected by every request.
+>
+> The `web_location` parameter is not required. The reference implementation
+> ([biliscope](https://github.com/gaogaotiantian/biliscope), PR #287) dropped
+> it, and the signed request works without it.
+>
+> `space/wbi/acc/info` additionally wants a `w_webid` — the `access_id` from
+> the space page's `__RENDER_DATA__` — and answers `-352` without it.
 
 ### Account linking
 
@@ -219,7 +254,10 @@ no credentials.
 | --- | --- | --- |
 | **CHZZK** (Naver) | `GET api.chzzk.naver.com/service/v1/channels/{id}` | name, image, description, follower count, live state |
 | | `GET api.chzzk.naver.com/service/v3/channels/{id}/live-detail` | the live stream |
+| | `GET api.chzzk.naver.com/service/v1/channels/followings` | the user's followed channels (needs a cookie) |
 | **KICK** | `GET kick.com/api/v2/channels/{login}` | slug, follower count, bio, the live stream |
+| | `GET kick.com/api/v2/channels/followed` | the user's followed channels (needs a token) |
+| | `GET api.kick.com/public/v1/users` | the signed-in user (needs a token) |
 
 CHZZK is the biggest Korean VTuber scene and KICK is where a lot of the
 Western scene has moved, so both are in the dataset. Neither has a public

@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T06:58:03.071Z",
+  "generatedAt": "2026-10-22T08:03:49.812Z",
   "channels": [
     {
       "id": "UCMCAh6rwRtoGDtF7lXj0gNw",
-      "name": "草莓猫Taffy",
+      "name": "NekumaVT",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -16,9 +16,9 @@
       "statedLanguages": [],
       "agency": null,
       "affiliation": "unknown",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/WoTBjhDEq83n6PgYbgDnXy30iSgzelUxDOIertGS8Cyi2I37WtppzTK51YbJ6ec-E0_GblmRMQ=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "Hellowe! I am the strawberry cat, Taffy Nekuma! 🍓 Please take into account that English is my only language and therefore I cannot speak much else. Despite t...",
       "subscribers": {
         "tag": "hidden"
       },
@@ -58,12 +58,12 @@
           "platform": "youtube",
           "id": "UCMCAh6rwRtoGDtF7lXj0gNw",
           "handle": null,
-          "name": "草莓猫Taffy",
+          "name": "NekumaVT",
           "url": "https://www.youtube.com/channel/UCMCAh6rwRtoGDtF7lXj0gNw",
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
+          "avatar": "https://yt3.googleusercontent.com/WoTBjhDEq83n6PgYbgDnXy30iSgzelUxDOIertGS8Cyi2I37WtppzTK51YbJ6ec-E0_GblmRMQ=s900-c-k-c0x00ffffff-no-rj",
           "activity": "unknown",
           "lastCheckedAt": "2026-10-22T06:58:08.613Z"
         },
@@ -83,8 +83,10 @@
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "草莓猫Taffy"
+      ]
     }
   ]
 }

@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T06:58:03.071Z",
+  "generatedAt": "2026-10-22T08:03:49.812Z",
   "channels": [
     {
       "id": "UCJFZiqLMntJufDCHc6bQixg",
-      "name": "ホロライブ公式",
+      "name": "hololive ホロライブ - VTuber Group",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -16,9 +16,9 @@
       "statedLanguages": [],
       "agency": "40e82f4e-40d8-539c-87c8-ed17c6ea519f",
       "affiliation": "group",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/rl6ZG9_MqKPDABLRDNG75FPX7EOPGXHtJ-2Hm97yqWziq6gkcwnsSe6wA8vv8xIhGuQe9joF=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "English follows Japanese. VTuber・バーチャルアイドルグループ「ホロライブ」の公式チャンネルへようこそ！ 各タレント・公式チャンネルのチャンネル登録をよろしくお願いします！ ホロライブ公式チャンネルでは、3Dショートアニメ『#ホロぐら』や公式動画、所属タレントの企画放送やホロライブの...",
       "subscribers": {
         "tag": "hidden"
       },
@@ -45,12 +45,12 @@
           "platform": "youtube",
           "id": "UCJFZiqLMntJufDCHc6bQixg",
           "handle": null,
-          "name": "ホロライブ公式",
+          "name": "hololive ホロライブ - VTuber Group",
           "url": "https://www.youtube.com/channel/UCJFZiqLMntJufDCHc6bQixg",
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
+          "avatar": "https://yt3.googleusercontent.com/rl6ZG9_MqKPDABLRDNG75FPX7EOPGXHtJ-2Hm97yqWziq6gkcwnsSe6wA8vv8xIhGuQe9joF=s900-c-k-c0x00ffffff-no-rj",
           "activity": "unknown",
           "lastCheckedAt": "2026-10-22T06:58:08.081Z"
         },
@@ -70,12 +70,14 @@
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "ホロライブ公式"
+      ]
     },
     {
       "id": "UCSc_KzY_9WYAx9LghggjVRA",
-      "name": "Yugo Asuma",
+      "name": "Yugo Asuma 【NIJISANJI EN】",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -87,9 +89,9 @@
       "statedLanguages": [],
       "agency": "NIJISANJI EN",
       "affiliation": "group",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/lztVvqTIhLvxiK2xLO74rLyomQGrDNbYIMuPUdwaa6V_YKAvws5bU09_qUAnVlUSEnnetbPoEg=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "Yo. I’m Yugo Asuma the DJ from Nijisanji EN’s Noctyx. Let’s have fun. ◇Streamlab Donation◇ https://streamlabs.com/yugoasumanijisanjien/tip ◇Twitter◇ https://...",
       "subscribers": {
         "tag": "hidden"
       },
@@ -116,20 +118,22 @@
           "platform": "youtube",
           "id": "UCSc_KzY_9WYAx9LghggjVRA",
           "handle": null,
-          "name": "Yugo Asuma",
+          "name": "Yugo Asuma 【NIJISANJI EN】",
           "url": "https://www.youtube.com/channel/UCSc_KzY_9WYAx9LghggjVRA",
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
+          "avatar": "https://yt3.googleusercontent.com/lztVvqTIhLvxiK2xLO74rLyomQGrDNbYIMuPUdwaa6V_YKAvws5bU09_qUAnVlUSEnnetbPoEg=s900-c-k-c0x00ffffff-no-rj",
           "activity": "unknown",
           "lastCheckedAt": "2026-10-22T06:58:08.126Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "Yugo Asuma"
+      ]
     },
     {
       "id": "youtube:Sanavtuber12",

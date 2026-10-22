@@ -119,6 +119,8 @@ InnerTube offers on YouTube:
 | YouTube | Data API v3 | **InnerTube** (`youtubei.js`) | description, avatar, subscribers, uploads, live |
 | Twitch | Helix (client id **and** secret) | **GQL** (`gql.twitch.tv`) | description, avatar, followers, live |
 | Bilibili | — | **WBI-signed public API** | description, avatar, followers, uploads, live |
+| CHZZK | — | **the public API** | description, image, followers, live |
+| KICK | — | **the public API** | description, image, followers, live |
 
 **InnerTube** (`scripts/lib/youtubei.ts`) — the channel's *description* is the
 richest field in the project: it is where a performer states their own
@@ -150,7 +152,7 @@ fields go first:
 
 | Field | Where it comes from |
 | --- | --- |
-| the **description** | InnerTube (YouTube), GQL (Twitch), the Bilibili `card` endpoint |
+| the **description** | InnerTube (YouTube), GQL (Twitch), the Bilibili `card` endpoint, the CHZZK and KICK profile endpoints |
 | the **avatar** | the same three sources |
 | the **follower count** | InnerTube, GQL, `x/relation/stat` (Bilibili) |
 | the **links** | the channel's own published links |
@@ -198,6 +200,16 @@ are not in the pipeline.
 
 If any of them publishes a JSON or CSV file, adding it is one adapter and
 one line in the registry.
+
+## Reference implementations consulted
+
+These are read for **how** a platform's API is called, not for their data.
+
+| Project | What it settled |
+| --- | --- |
+| [biliscope](https://github.com/gaogaotiantian/biliscope) | The WBI signature, the mixin key (file names **without** the `.jpg`), the fact that `web_location` is not required (PR #287), and the `w_webid` that `space/wbi/acc/info` wants |
+| [youtubei.js](https://github.com/LuanRT/YouTube.js) | InnerTube: the profile, the upload grid, the live streams, and `navigation/resolve_url` for turning a `@handle` into a channel id |
+| `gql.twitch.tv` | The GQL endpoint and the public web client id |
 
 ## Adding a source
 

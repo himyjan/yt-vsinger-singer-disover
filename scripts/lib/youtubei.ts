@@ -67,6 +67,20 @@ export interface InnerTubeOptions {
 }
 
 /**
+ * True when the failure is about the channel, not about the request rate.
+ *
+ * A deleted or private channel is a fact about the channel, not a signal
+ * about the request rate. Penalising the limiter for it makes the whole run
+ * crawl for no reason — a catalogue of 14,000 channels has hundreds of dead
+ * ones in it, and a malformed id is the client's fault, not the server's.
+ */
+function isNotRateLimited(message: string): boolean {
+  return /does not exist|not found|404|removed|terminated|status code 400/i.test(
+    message,
+  );
+}
+
+/**
  * Abandons a promise that takes too long.
  *
  * InnerTube's client has no timeout of its own, so a request that never
@@ -87,6 +101,8 @@ export class InnerTubeSource {
   private readonly onLog: (message: string) => void;
   /** The adaptive limiter — it widens when InnerTube pushes back. */
   private readonly limiter: RateLimiter;
+  /** Resolved `@handle` → channel id. */
+  private readonly handleCache = new Map<string, string | null>();
 
   constructor(options: InnerTubeOptions = {}) {
     this.enabled = options.enabled ?? true;
@@ -127,6 +143,46 @@ export class InnerTubeSource {
   private async throttle(): Promise<void> {
     if (this.limiter.isTripped()) return;
     await this.limiter.wait();
+  }
+
+  /**
+   * Resolves a `@handle` to the channel id behind it.
+   *
+   * The dataset stores a handle-only channel as `youtube:user-<handle>`,
+   * because that is all some sources publish. InnerTube's `getChannel`
+   * takes a channel id and nothing else, so the handle has to be resolved
+   * first — through the same `navigation/resolve_url` endpoint the website
+   * uses when you paste a channel URL into the address bar.
+   *
+   * The answers are cached, because a catalogue has the same handle in it
+   * more than once.
+   */
+  async resolveHandle(handle: string): Promise<string | null> {
+    const key = handle.replace(/^@/, "").trim();
+    if (!key) return null;
+    const cached = this.handleCache.get(key.toLowerCase());
+    if (cached !== undefined) return cached;
+
+    if (!this.client) return null;
+    try {
+      await this.throttle();
+      const endpoint: any = await withTimeout(
+        this.client.resolveURL(`https://www.youtube.com/@${key}`),
+        REQUEST_TIMEOUT_MS,
+      );
+      const id: string | null =
+        endpoint?.browseId ?? endpoint?.payload?.browseId ?? null;
+      this.handleCache.set(key.toLowerCase(), id);
+      if (id) this.limiter.reward();
+      else this.onLog(`innertube: no channel for @${key}`);
+      return id;
+    } catch (err) {
+      const message = (err as Error).message;
+      if (!isNotRateLimited(message)) this.limiter.penalise();
+      this.handleCache.set(key.toLowerCase(), null);
+      this.onLog(`innertube: @${key} did not resolve — ${message}`);
+      return null;
+    }
   }
 
   /**
@@ -180,9 +236,10 @@ export class InnerTubeSource {
         links,
       };
     } catch (err) {
-      this.limiter.penalise();
+      const message = (err as Error).message;
+      if (!isNotRateLimited(message)) this.limiter.penalise();
       this.onLog(
-        `innertube: profile failed for ${channelId} — ${(err as Error).message}`,
+        `innertube: profile failed for ${channelId} — ${message}`,
       );
       return null;
     }
@@ -236,8 +293,8 @@ export class InnerTubeSource {
       return out;
     } catch (err) {
       // A channel with no videos tab, or one that is only Shorts, is normal.
-      this.limiter.penalise();
       const message = (err as Error).message;
+      if (!/Tab .* not found/.test(message)) this.limiter.penalise();
       if (!/Tab .* not found/.test(message)) {
         this.onLog(
           `innertube: uploads failed for ${channelId} — ${message}`,
