@@ -23,6 +23,7 @@
 
 import { IdentityRegistry, type Candidate } from "./identity";
 import type { Affiliation, Channel, RegionCode } from "./types";
+import { pickAvatar } from "./platforms";
 
 /** The identity keys a channel contributes. */
 function keysFor(channel: Channel): string[] {
@@ -114,7 +115,14 @@ export function mergeChannels(target: Channel, other: Channel): Channel {
         ? (target.affiliation ?? "unknown")
         : (other.affiliation ?? "unknown");
     })(),
-    avatar: target.avatar ?? other.avatar,
+    // The avatar belongs to the primary platform, so it is re-derived after
+    // the platform lists are merged — otherwise a record could end up with a
+    // Bilibili avatar and a YouTube id.
+    avatar: pickAvatar({
+      id: preferOther ? other.id : target.id,
+      avatar: target.avatar ?? other.avatar,
+      platforms: mergePlatforms(target.platforms, other.platforms),
+    }),
     banner: target.banner ?? other.banner,
     description: target.description ?? other.description,
     subscribers:
@@ -130,7 +138,21 @@ export function mergeChannels(target: Channel, other: Channel): Channel {
     isSinging: target.isSinging || other.isSinging,
     gender: target.gender !== "unknown" ? target.gender : other.gender,
     isAi: target.isAi || other.isAi,
-    confidence: Math.max(target.confidence, other.confidence),
+    // The stronger value wins, per axis.
+    confidence: {
+      kind: Math.max(target.confidence?.kind ?? 0, other.confidence?.kind ?? 0),
+      region: Math.max(
+        target.confidence?.region ?? 0,
+        other.confidence?.region ?? 0,
+      ),
+      role: Math.max(target.confidence?.role ?? 0, other.confidence?.role ?? 0),
+      gender: Math.max(
+        target.confidence?.gender ?? 0,
+        other.confidence?.gender ?? 0,
+      ),
+      ai: Math.max(target.confidence?.ai ?? 0, other.confidence?.ai ?? 0),
+      overall: 0,
+    },
     source:
       target.source === "seed" || other.source === "seed"
         ? "seed"
@@ -150,6 +172,10 @@ export function mergeChannels(target: Channel, other: Channel): Channel {
     popularVideoId: target.popularVideoId ?? other.popularVideoId,
   };
 
+  merged.confidence.overall = Math.min(
+    merged.confidence.kind,
+    merged.confidence.region,
+  );
   return merged;
 }
 

@@ -96,6 +96,114 @@ export interface PlatformAdapter {
 }
 
 /* -------------------------------------------------------------------------- */
+/* Primary platform                                                           */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * The order platforms are preferred in, when a record is not tied to one.
+ *
+ * YouTube first because it is the platform the dataset is keyed on and the
+ * one with the widest coverage, then the platforms that are usually a
+ * performer's *main* presence.
+ */
+export const PLATFORM_PRIORITY: PlatformId[] = [
+  "youtube",
+  "bilibili",
+  "niconico",
+  "twitch",
+  "vk",
+];
+
+/**
+ * The platform a channel record is primarily about.
+ *
+ * The record's id decides it: a `UC…` id is a YouTube channel, a
+ * `bilibili:…` id is a Bilibili account. A record that only exists on one
+ * platform therefore always takes its avatar and its details from that
+ * platform.
+ */
+export function primaryPlatformOf(channel: {
+  id: string;
+  platforms?: { platform: PlatformId }[];
+}): PlatformId | null {
+  if (channel.id.startsWith("UC")) return "youtube";
+  const [prefix] = channel.id.split(":");
+  if (
+    prefix &&
+    (PLATFORM_PRIORITY as string[]).includes(prefix)
+  ) {
+    return prefix as PlatformId;
+  }
+  // No platform in the id — fall back to the order the record lists them in.
+  return channel.platforms?.[0]?.platform ?? null;
+}
+
+/**
+ * Picks the avatar for a channel.
+ *
+ * ## The precedence
+ *
+ * A performer with accounts on several platforms has several avatars, and
+ * several sources can supply one. The rule is:
+ *
+ * 1. **The primary platform's avatar.** The primary platform is the one the
+ *    record's id belongs to — a `UC…` id is a YouTube channel, a
+ *    `bilibili:…` id is a Bilibili account. The avatar of that platform is
+ *    the one the record shows, so it always matches the platform the record
+ *    is about.
+ * 2. **The record's own avatar.** This is the same thing in practice: every
+ *    source attaches its avatar to the platform it came from — the Taiwan VTuber
+ *    track list's `imgUrl` is a YouTube avatar and sits on the YouTube link,
+ *    Bilibili's `card.face` is a Bilibili avatar and sits on the Bilibili
+ *    link. The record's own value is a fallback for records whose primary
+ *    platform has no link.
+ * 3. **The remaining platforms**, in the fixed priority order.
+ *
+ * The per-platform avatars always stay on the `PlatformLink`s, so a caller
+ * that wants the Bilibili avatar of a YouTube channel can get it.
+ */
+export function pickAvatar(
+  channel: {
+    id: string;
+    avatar?: string | null;
+    platforms?: { platform: PlatformId; avatar?: string | null }[];
+  },
+): string | null {
+  const primary = primaryPlatformOf(channel);
+  if (primary) {
+    const link = channel.platforms?.find((p) => p.platform === primary);
+    if (link?.avatar) return link.avatar;
+  }
+  // Fall back to the priority order, then to whatever the record has.
+  for (const platform of PLATFORM_PRIORITY) {
+    const link = channel.platforms?.find((p) => p.platform === platform);
+    if (link?.avatar) return link.avatar;
+  }
+  return channel.avatar ?? null;
+}
+
+/**
+ * The platform links of a channel, in the order they should be processed.
+ *
+ * The channel's primary platform comes first, then the rest in the fixed
+ * priority order. This makes the pipeline deterministic: the avatar and the
+ * details of a record always come from the same platform, instead of from
+ * whichever account the source happened to list first.
+ */
+export function orderPlatformLinks<
+  T extends { platform: PlatformId },
+>(channel: { id: string; platforms?: T[] }): T[] {
+  const links = channel.platforms ?? [];
+  const primary = primaryPlatformOf(channel);
+  const rank = (link: T): number => {
+    if (primary && link.platform === primary) return -1;
+    const index = PLATFORM_PRIORITY.indexOf(link.platform);
+    return index < 0 ? PLATFORM_PRIORITY.length : index;
+  };
+  return [...links].sort((a, b) => rank(a) - rank(b));
+}
+
+/* -------------------------------------------------------------------------- */
 /* URL helpers                                                                */
 /* -------------------------------------------------------------------------- */
 

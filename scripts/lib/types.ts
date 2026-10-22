@@ -13,6 +13,27 @@
 
 export const SCHEMA_VERSION = 1;
 
+/**
+ * How sure a classification is, per axis.
+ *
+ * `1` means a source stated it outright, `0` means the source is silent,
+ * and the values in between mean it was inferred.
+ */
+export interface ClassificationConfidence {
+  /** Virtual or real — the split the dataset is built on. */
+  kind: number;
+  /** Where the performer belongs. */
+  region: number;
+  /** What they do. */
+  role: number;
+  /** Self-described gender. */
+  gender: number;
+  /** Whether the performer is AI-generated. */
+  ai: number;
+  /** The weakest meaningful axis. */
+  overall: number;
+}
+
 /** Virtual performer (VTuber / VSinger / virtual singer) vs. a real human artist. */
 export type ArtistKind = "virtual" | "real";
 
@@ -104,8 +125,13 @@ export type PlatformId =
  * them — and a large part of the catalogue belongs to a commercial group.
  * Knowing which is which is the difference between "a VTuber" and "a VTuber
  * signed to a company", and it decides how a viewer should follow them.
+ *
+ * The three-way split comes from the Chinese VTuber scene's "camp" (勢)
+ * vocabulary, where a performer's fan community is named after the kind of
+ * performer they are: 個人勢 (individual), 企業勢 (corporate) and 社團勢
+ * (a fan circle rather than a company).
  */
-export type Affiliation = "independent" | "group" | "unknown";
+export type Affiliation = "independent" | "community" | "group" | "unknown";
 
 /**
  * How a channel's region was determined.
@@ -303,8 +329,14 @@ export interface Channel {
   isAi: boolean;
   /** Combined label, e.g. `female_vtuber` or `ai_vsinger`. */
   variant: Variant;
-  /** Classifier confidence, 0..1. `1` for seeded/curated records. */
-  confidence: number;
+  /**
+   * How sure the classification is, **per axis**.
+   *
+   * A record can be certain about its region and unsure about its gender, so
+   * a single number would hide that. `overall` is the weakest meaningful
+   * axis — one wrong field makes the whole record wrong.
+   */
+  confidence: ClassificationConfidence;
   /** Provenance of the record. */
   source: RecordSource;
   /** ISO timestamp of first sighting. */
@@ -380,9 +412,18 @@ export interface ChannelSummary {
   region: RegionCode;
   /** Which source decided the region. */
   regionSource: RegionSource;
+  /**
+   * The language of the channel, as an ISO 639-1 code.
+   *
+   * Distinct from the region: the region says *where* they are (`jp`), the
+   * language says *what they perform in* (`ja`).
+   */
+  language: string | null;
   agency: string | null;
   /** Independent or signed to a business group. */
   affiliation: Affiliation;
+  /** How sure the classification is, per axis. */
+  confidence: ClassificationConfidence;
   avatar: string | null;
   subscribers: number | null;
   isSinging: boolean;

@@ -210,6 +210,29 @@ Whatever a channel's description links to is harvested into
 
 These are rendered in the "all links" block next to the platform identities.
 
+## The Bilibili risk-control wall
+
+Bilibili protects its per-user profile endpoint
+(`x/web-interface/card`) with a captcha: a request without a session cookie
+is answered with **HTTP 412**, not a JSON error. Node's TLS fingerprint is
+enough to trip it, so the profile cannot be fetched from the pipeline.
+
+The endpoints that *are* reachable, and are used:
+
+| Endpoint | Status | Used for |
+| --- | --- | --- |
+| `x/web-interface/ranking/v2?rid=160` | 200 | Discovering VTuber channels |
+| `x/web-interface/online/list?rid=160` | 200 | Live VTuber streams |
+| `x/space/arc/search?mid=` | 200 | A channel's uploads |
+| `x/relation/stat?vmid=` | 200 | **The follower count** |
+| `x/web-interface/card?mid=` | **412** | The name, avatar and signature |
+
+So the follower count is fetched and stored, and the channel *description*
+from Bilibili is not — a channel that only exists there simply has no
+description until the API can be reached. The WBI signature
+(`scripts/lib/platforms/bilibili.ts`) is implemented anyway, because Bilibili
+does require it for `space/arc/search` from some networks.
+
 ## Adding a platform
 
 1. Write `scripts/lib/platforms/<name>.ts` implementing `PlatformAdapter`.

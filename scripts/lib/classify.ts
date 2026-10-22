@@ -30,6 +30,18 @@ import {
   languageToRegion,
   regionFromLocaleHints,
 } from "./regions";
+import {
+  AI_TRANSLATED,
+  CLIP_CHANNELS,
+  COMMUNITY_CAMP,
+  CORPORATE_CAMP,
+  PERSON_BEHIND,
+  PREMIERE,
+  REINCARNATION_CAMP,
+  SINGING_CAMP,
+  SKIN_SUIT,
+  SOLO_CAMP,
+} from "./vtuber-glossary";
 
 /* -------------------------------------------------------------------------- */
 /* Text helpers                                                               */
@@ -146,6 +158,8 @@ const REAL_WEAK = [
  * They must never be classified as performers.
  */
 const AGGREGATOR_MARKERS = [
+  ...CLIP_CHANNELS,
+  ...SKIN_SUIT,
   "compilation",
   "compilations",
   "best of",
@@ -284,11 +298,19 @@ export interface ChannelClassification {
   language: string | null;
   agency: string | null;
   isSinging: boolean;
-  confidence: number;
   /** True when the channel looks like an aggregator rather than a performer. */
   isAggregator: boolean;
   /** Which source decided the region. */
   regionSource: RegionSource;
+  /** How sure each axis of the classification is. */
+  confidence: {
+    kind: number;
+    region: number;
+    role: number;
+    gender: number;
+    ai: number;
+    overall: number;
+  };
   /** Self-described gender. */
   gender: Gender;
   /** True when the performer is AI-generated. */
@@ -347,6 +369,7 @@ export function classifyChannel(signals: ChannelSignals): ChannelClassification 
   /* --- virtual vs real --------------------------------------------------- */
   const virtualScore =
     3 * countHits(name, VIRTUAL_STRONG) +
+    2 * countHits(intro, PERSON_BEHIND) +
     2 * countHits(intro, VIRTUAL_STRONG) +
     countHits(body, VIRTUAL_STRONG) +
     countHits(tags, VIRTUAL_STRONG) +
@@ -382,6 +405,10 @@ export function classifyChannel(signals: ChannelSignals): ChannelClassification 
     role = "unknown";
   } else if (kind === "virtual") {
     if (has(all(name, intro, body, tags), ["vsinger", "virtual singer", "歌い手"])) {
+      role = "vsinger";
+    } else if (has(all(name, intro, body, tags), SINGING_CAMP)) {
+      // 歌勢 — posts MVs and holds singing streams; the community also calls
+      // these performers 虛擬歌手 (virtual singers).
       role = "vsinger";
     } else if (virtualScore > 0) {
       role = "vtuber";
@@ -482,12 +509,28 @@ export function classifyChannel(signals: ChannelSignals): ChannelClassification 
   }
   if (ov.agency !== undefined) agency = ov.agency;
 
-  const confidence = ov.kind || ov.role
-    ? 1
-    : Math.max(
-        0.15,
-        Math.min(1, (kindScore * 0.25 + regionScore * 0.6) / 1.2),
-      );
+  /**
+   * The confidence of each axis.
+   *
+   * The region and the kind are the axes a record can be *wrong* about in a
+   * way that matters, so they drive the overall figure. The role, the gender
+   * and the AI flag are recorded but do not: an unstated gender does not make
+   * a record useless.
+   */
+  const confidence = {
+    kind: kindScore >= 3 ? 0.9 : kindScore > 0 ? 0.6 : 0.3,
+    region: regionScore,
+    role: role === "unknown" ? 0.3 : 0.85,
+    gender: 0.2,
+    ai: 0.5,
+    overall: 0,
+  };
+  confidence.overall = Math.min(confidence.kind, confidence.region);
+  if (ov.kind || ov.role) {
+    confidence.kind = 1;
+    confidence.role = 1;
+    confidence.overall = 1;
+  }
 
   const gender = detectGender(
     signals.name,
@@ -499,6 +542,8 @@ export function classifyChannel(signals: ChannelSignals): ChannelClassification 
     signals.description,
     signals.tags,
   );
+  confidence.gender = gender === "unknown" ? 0.2 : 0.9;
+  confidence.ai = isAi ? 0.9 : 0.5;
 
   return {
     kind,
@@ -587,6 +632,8 @@ const MV_MARKERS = [
   "pv full",
   "pv full ver",
 ];
+
+const PREMIERE_MARKERS = [...PREMIERE];
 
 const ORIGINAL_MARKERS = [
   "original song",
@@ -728,6 +775,7 @@ export function classifyItem(signals: ItemSignals): ItemClassification {
   const isMv = has(all, MV_MARKERS);
   const isOriginal = has(all, ORIGINAL_MARKERS);
   const isLive = has(all, LIVE_MARKERS);
+  const isPremiere = has(all, PREMIERE_MARKERS);
   const isPerformance = has(all, PERFORMANCE_MARKERS);
   const isCollab = has(all, COLLAB_MARKERS);
   const isAcoustic = has(all, ACOUSTIC_MARKERS);
@@ -738,7 +786,9 @@ export function classifyItem(signals: ItemSignals): ItemClassification {
   else if (isMv) category = "mv";
   else if (isLive) category = "live";
   else if (isPerformance) category = "performance";
-  else if (signals.status === "upcoming") category = "premiere";
+  else if (signals.status === "upcoming" || isPremiere) {
+    category = "premiere";
+  }
 
   // A live/upcoming item on a singing channel is a live performance even when
   // the title has no live marker.
@@ -975,9 +1025,20 @@ export function detectAffiliation(
 ): Affiliation {
   if (agency && agency.trim()) return "group";
 
-  const text = normalize(
-    `${name ?? ""} ${description ?? ""}`,
-  );
+  const text = normalize(`${name ?? ""} ${description ?? ""}`);
+
+  /**
+   * The camp (勢) vocabulary states the performer's business relationship
+   * outright, which is more precise than any heuristic:
+   *
+   *   個人勢 — a solo performer          → independent
+   *   企業勢 — backed by a company       → group
+   *   社團勢 — a fan circle              → community
+   */
+  if (has(text, CORPORATE_CAMP)) return "group";
+  if (has(text, SOLO_CAMP)) return "independent";
+  if (has(text, COMMUNITY_CAMP)) return "community";
+
   if (has(text, INDEPENDENT_MARKERS)) return "independent";
 
   return "unknown";
@@ -1146,6 +1207,7 @@ const AI_MARKERS = [
   "ai歌声合成",
   "ai歌生成",
   "歌生成ai",
+  ...AI_TRANSLATED,
   "ai original song",
   "ai original",
   "ai channel",

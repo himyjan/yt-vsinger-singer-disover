@@ -96,7 +96,15 @@ export async function buildRoster(
         classification.gender,
         classification.isAi,
       ),
-      confidence: 1,
+      // The track list states the nationality and that they are a VTuber.
+      confidence: {
+        kind: 1,
+        region: record.region === "unknown" ? 0.4 : 1,
+        role: 0.85,
+        gender: 0.2,
+        ai: 0.5,
+        overall: record.region === "unknown" ? 0.4 : 1,
+      },
       source: "api",
       addedAt: now,
       updatedAt: now,
@@ -107,6 +115,12 @@ export async function buildRoster(
       debutDate: record.debutDate,
       graduateDate: null,
 
+      /**
+       * The roster's `imgUrl` is a **YouTube** avatar, so it belongs on the
+       * YouTube link rather than on the record. Keeping every avatar on the
+       * platform it came from is what makes the precedence rule work: the
+       * record's own avatar is then just the primary platform's avatar.
+       */
       platforms: [
         {
           platform: "youtube",
@@ -155,7 +169,14 @@ export async function buildRoster(
       if (seed.agency !== undefined) existing.agency = seed.agency;
       if (seed.isSinging !== undefined) existing.isSinging = seed.isSinging;
       existing.source = "seed";
-      existing.confidence = 1;
+      existing.confidence = {
+        kind: 1,
+        region: 1,
+        role: 1,
+        gender: existing.gender === "unknown" ? 0.2 : 0.9,
+        ai: existing.isAi ? 0.9 : 0.5,
+        overall: 1,
+      };
       continue;
     }
 
@@ -189,7 +210,14 @@ export async function buildRoster(
       gender: "unknown",
       isAi: false,
       variant: deriveVariant(seed.role, "unknown", false),
-      confidence: 1,
+      confidence: {
+        kind: 1,
+        region: 1,
+        role: 1,
+        gender: 0.2,
+        ai: 0.5,
+        overall: 1,
+      },
       source: "seed",
       addedAt: now,
       updatedAt: now,
@@ -291,7 +319,17 @@ export async function buildRoster(
         classification.gender,
         entry.isAi,
       ),
-      confidence: entry.region === "unknown" ? 0.6 : 1,
+      // vdb states the kind and the region outright, so both are certain;
+      // the role, the gender and the AI flag are not.
+      confidence: {
+        kind: 1,
+        region: entry.regionSource === "script" ? 0.6 : 1,
+        role: classification.role === "unknown" ? 0.3 : 0.85,
+        gender: classification.gender === "unknown" ? 0.2 : 0.9,
+        ai: entry.isAi ? 0.9 : 0.5,
+        overall:
+          entry.regionSource === "script" ? 0.6 : 1,
+      },
       source: "api",
       addedAt: now,
       updatedAt: now,

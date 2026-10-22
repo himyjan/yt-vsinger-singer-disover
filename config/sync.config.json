@@ -6,7 +6,8 @@
   "maxItemsPerChannelRetained": 30,
   "maxItemAgeDays": 1095,
   "maxLiveChannelsPerRun": 60,
-  "maxChannelDetailsPerRun": 120,
+  "maxChannelDetailsPerRun": 200,
+  "detailsDelayMs": 700,
   "searchResultsPerKeyword": 25,
   "refreshLiveEveryRun": true,
   "searches": [

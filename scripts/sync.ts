@@ -40,6 +40,7 @@ import {
   TwitchClient,
 } from "./lib/twitch";
 import { createAdapters } from "./lib/platform-registry";
+import { orderPlatformLinks, pickAvatar, primaryPlatformOf } from "./lib/platforms";
 import { fetchAiList, isOnAiList } from "./lib/aislist";
 import { fetchTrackedVtubers } from "./lib/taiwan-vtuber-data";
 import { buildRoster } from "./lib/roster";
@@ -146,6 +147,7 @@ interface SyncConfig {
   maxItemAgeDays: number;
   maxLiveChannelsPerRun: number;
   maxChannelDetailsPerRun: number;
+  detailsDelayMs: number;
   searchResultsPerKeyword: number;
   refreshLiveEveryRun: boolean;
   searches: SearchSpec[];
@@ -160,7 +162,8 @@ const config: SyncConfig = readJson(
     maxItemsPerChannelRetained: 30,
     maxItemAgeDays: 365,
     maxLiveChannelsPerRun: 60,
-    maxChannelDetailsPerRun: 120,
+    maxChannelDetailsPerRun: 200,
+    detailsDelayMs: 700,
     searchResultsPerKeyword: 25,
     refreshLiveEveryRun: true,
     searches: [],
@@ -298,7 +301,9 @@ function channelFromApi(
       gender,
       isAi,
     ),
-    confidence: override?.verifiedAt ? 1 : classification.confidence,
+    confidence: override?.verifiedAt
+      ? { kind: 1, region: 1, role: 1, gender: 1, ai: 1, overall: 1 }
+      : classification.confidence,
     source: override?.verifiedAt ? "manual" : source,
     addedAt: now,
     updatedAt: now,
@@ -731,7 +736,20 @@ async function main(): Promise<void> {
         });
         if (ch) {
           ch.addedAt = prev?.addedAt ?? ch.addedAt;
-          ch.confidence = Math.max(prev?.confidence ?? 0, ch.confidence);
+          if (prev?.confidence) {
+            ch.confidence = {
+              kind: Math.max(prev.confidence.kind ?? 0, ch.confidence.kind),
+              region: Math.max(prev.confidence.region, ch.confidence.region),
+              role: Math.max(prev.confidence.role, ch.confidence.role),
+              gender: Math.max(prev.confidence.gender, ch.confidence.gender),
+              ai: Math.max(prev.confidence.ai, ch.confidence.ai),
+              overall: 0,
+            };
+            ch.confidence.overall = Math.min(
+              ch.confidence.kind,
+              ch.confidence.region,
+            );
+          }
           channelById.set(ch.id, ch);
         }
       }
@@ -789,12 +807,24 @@ async function main(): Promise<void> {
    */
   {
     const budget = config.maxChannelDetailsPerRun;
+    const adapterById = new Map(adapters.map((a) => [a.id as string, a]));
+
+    /**
+     * Only the channels this pass can actually improve.
+     *
+     * YouTube profiles come from the YouTube API refresh instead, so a
+     * channel with no other platform is not a candidate — including it would
+     * spend the whole budget on channels the pass cannot resolve.
+     */
     const needDetails = channels
-      .filter(
-        (c) =>
+      .filter((c) => {
+        const resolvable = c.platforms.some((p) => adapterById.has(p.platform));
+        if (!resolvable) return false;
+        return (
           !c.description ||
-          c.platforms.some((p) => p.subscribers.tag === "hidden"),
-      )
+          c.platforms.some((p) => p.subscribers.tag === "hidden")
+        );
+      })
       .sort((a, b) =>
         (a.lastDetailsFetchedAt ?? "").localeCompare(
           b.lastDetailsFetchedAt ?? "",
@@ -804,9 +834,23 @@ async function main(): Promise<void> {
 
     let resolved = 0;
     for (const channel of needDetails) {
-      for (const link of channel.platforms) {
-        const adapter = adapters.find((a) => a.id === link.platform);
+      /**
+       * The platform links are visited in a defined order — the channel's
+       * primary platform first — so the avatar and the details always come
+       * from the same place, rather than from whichever account the source
+       * happened to list first.
+       */
+      const ordered = orderPlatformLinks(channel);
+      for (const link of ordered) {
+        const adapter = adapterById.get(link.platform);
         if (!adapter) continue;
+
+        // Be polite to the public endpoints: one request at a time, with a
+        // short pause between them.
+        if (resolved > 0) {
+          await new Promise((r) => setTimeout(r, config.detailsDelayMs));
+        }
+
         try {
           const profile = await adapter.resolve(link.handle ?? link.id);
           if (!profile) continue;
@@ -839,6 +883,12 @@ async function main(): Promise<void> {
      * independent, 「已毕业」 says they have graduated. Those facts were not
      * available when the record was first classified, so they are read now.
      */
+    for (const channel of channels) {
+      // The avatar follows the primary platform, whatever order the source
+      // listed the accounts in.
+      channel.avatar = pickAvatar(channel);
+    }
+
     let reclassified = 0;
     for (const channel of channels) {
       if (!channel.description) continue;
@@ -984,7 +1034,15 @@ async function main(): Promise<void> {
           channel.gender,
           true,
         );
-        channel.confidence = 1;
+        // The AiSList is authoritative about the AI flag.
+        channel.confidence = {
+          kind: channel.confidence.kind,
+          region: channel.confidence.region,
+          role: channel.confidence.role,
+          gender: channel.confidence.gender,
+          ai: 1,
+          overall: channel.confidence.overall,
+        };
         marked++;
       }
     }

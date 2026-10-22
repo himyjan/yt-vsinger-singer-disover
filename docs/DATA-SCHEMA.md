@@ -74,7 +74,7 @@ The record for one performer.
 | `gender` | `"female"` \| `"male"` \| `"unknown"` | Self-described |
 | `isAi` | boolean | AI-generated performer (AI VTuber, AI singer) |
 | `variant` | see below | The combined label |
-| `confidence` | number | 0–1; `1` for curated records |
+| `confidence` | `ClassificationConfidence` | How sure the classification is, **per axis** — see below |
 | `source` | `"api"` \| `"seed"` \| `"manual"` | Provenance |
 | `addedAt` | string | ISO timestamp of first sighting |
 | `updatedAt` | string | ISO timestamp of last refresh |
@@ -106,6 +106,66 @@ type CountRef =
 This mirrors the pattern used by the reference `TaiwanVTuberTrackingDataJson`
 API, which gets it right.
 
+### `confidence` — how sure the classification is
+
+The classifier is deterministic but not infallible, and a record can be right
+about one field and wrong about another. A single number cannot express that,
+so confidence is stored **per axis**:
+
+| Axis | What it measures | `1` means |
+| --- | --- | --- |
+| `kind` | virtual or real | a source stated it |
+| `region` | where the performer belongs | the roster or the performer stated it |
+| `role` | what they do | a role marker matched |
+| `gender` | self-described gender | the channel or agency stated it |
+| `ai` | whether the performer is AI-generated | the AiSList listed it |
+| `overall` | the weakest meaningful axis | curated by hand |
+
+`overall` is `min(kind, region)`, because a record with the wrong region is in
+the wrong place and a record with the wrong kind is in the wrong dataset. The
+role, the gender and the AI flag are recorded but do **not** drag the record
+down: a channel that never states its gender is still a perfectly good record.
+
+The values are coarse on purpose — `1` means a source stated it, `0` means
+the source is silent, and the values in between mean it was inferred. A
+number with three decimal places would look more precise than it is.
+
+**What it is used for:**
+
+1. **The verification queue.** `scripts/verify.ts` sorts by `overall`
+   ascending, so the web-search verification checks the records that are
+   actually uncertain first. A dataset where everything scored `1.0` gave the
+   verifier nothing to do.
+2. **Review in the UI.** The channel drawer names the uncertain axes, so a
+   reader can see *which* field is shaky rather than just that something is.
+3. **The merge.** When two records are merged, the stronger value wins per
+   axis, so a curated field is never downgraded by an inferred one.
+
+The current spread:
+
+```
+1.0  curated          14247
+0.5-0.79                 101
+<0.5                      141
+```
+
+and the uncertain axes are `gender` (14,384 — almost nobody states it),
+`role` (10,041), `region` (144) and `kind` (102) — the last two being the
+ones that actually matter.
+
+### Language code vs. region code
+
+Two different standards, kept apart on purpose:
+
+| | Standard | Japanese | Chinese (Simplified) | Korean |
+| --- | --- | --- | --- | --- |
+| `language` | ISO 639-1 | `ja` | `zh-Hans` | `ko` |
+| `region` | ISO 3166-1 alpha-2 | `jp` | `cn` | `kr` |
+
+`ja` is the language — it belongs in a `lang` attribute or a locale tag. `jp`
+is the country — it belongs in a domain suffix or a country field. A Japanese
+VTuber is `language: "ja"` and `region: "jp"`.
+
 ### `affiliation`
 
 Most VTubers are independent; a large part belong to a commercial group. The
@@ -115,8 +175,16 @@ two are different facts and both are stored:
 - `independent` — the source says so positively: the Taiwan roster leaves the
   group column empty for a solo act, and a description that says 「个人势vup」,
   「個人勢」 or `independent` states it outright.
+- `community` — 社團勢, a circle of fellow VTuber fans rather than a
+  company: between the two.
 - `unknown` — the sources do not say. This is **not** the same as
   `independent`, and the UI never treats it as such.
+
+The three-way split comes from the Chinese VTuber scene's **camp** (勢)
+vocabulary, where a performer's fan community is named after the kind of
+performer they are: 個人勢 (individual), 企業勢 (corporate) and 社團勢
+(community). The full glossary is in `scripts/lib/vtuber-glossary.ts`,
+curated from the [Moegirl encyclopedia](https://zh.moegirl.org.cn/zh-tw/虚拟UP主用语与梗).
 
 The affiliation and the activity status are re-evaluated whenever a channel's
 description is fetched, because a description is where a performer states both.
@@ -303,7 +371,7 @@ The de-duplication registry, in `data/identities.json`.
 | `debutDate` / `graduateDate` | string \| null | |
 | `sources` | string[] | Which sources contributed |
 | `firstSeen` / `updatedAt` | string | |
-| `confidence` | number | 0–1 |
+| `confidence` | `ClassificationConfidence` | Per-axis certainty — see above |
 
 ## `override.json`
 
