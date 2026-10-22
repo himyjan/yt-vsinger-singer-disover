@@ -19,19 +19,41 @@ export const SCHEMA_VERSION = 1;
  * `1` means a source stated it outright, `0` means the source is silent,
  * and the values in between mean it was inferred.
  */
-export interface ClassificationConfidence {
-  /** Virtual or real — the split the dataset is built on. */
-  kind: number;
-  /** Where the performer belongs. */
-  region: number;
-  /** What they do. */
-  role: number;
-  /** Self-described gender. */
-  gender: number;
-  /** Whether the performer is AI-generated. */
-  ai: number;
-  /** The weakest meaningful axis. */
-  overall: number;
+/**
+ * The record of an actual verification.
+ *
+ * A computed confidence score is a guess. This is not: it says that a
+ * record was **looked up** — in Wikidata, in Wikipedia, by a search-grounded
+ * model, or by a human — and what was found. The sources it lists are the
+ * citation trail.
+ */
+export interface Verification {
+  /**
+   * `verified` — a source confirmed the record.
+   * `conflicted` — the sources disagreed with the record.
+   * `unverified` — nothing was found.
+   */
+  status: "verified" | "conflicted" | "unverified";
+  /** Where the verification came from. */
+  source: "wikidata" | "wikipedia" | "web-search" | "manual";
+  /** What was checked. */
+  checked: (
+    | "kind"
+    | "role"
+    | "region"
+    | "gender"
+    | "ai"
+    | "affiliation"
+    | "description"
+  )[];
+  /** The verifier's own confidence, 0–1. */
+  confidence: number;
+  /** ISO timestamp of the verification. */
+  at: string;
+  /** The URLs that were read. */
+  sources: string[];
+  /** What was found, in one line. */
+  note?: string;
 }
 
 /** Virtual performer (VTuber / VSinger / virtual singer) vs. a real human artist. */
@@ -265,6 +287,7 @@ export interface PlatformLink {
 /* Channel                                                                    */
 /* -------------------------------------------------------------------------- */
 
+
 export interface Channel {
   /** Canonical YouTube channel id (`UC...`). */
   id: string;
@@ -330,13 +353,18 @@ export interface Channel {
   /** Combined label, e.g. `female_vtuber` or `ai_vsinger`. */
   variant: Variant;
   /**
-   * How sure the classification is, **per axis**.
+   * The verification record — what was actually looked up, and where.
    *
-   * A record can be certain about its region and unsure about its gender, so
-   * a single number would hide that. `overall` is the weakest meaningful
-   * axis — one wrong field makes the whole record wrong.
+   * `null` means the record has not been verified.
    */
-  confidence: ClassificationConfidence;
+  /**
+   * The verification record — what was actually looked up, and where.
+   *
+   * This is the *fact*. There is deliberately no confidence score: a
+   * computed number is a guess, and a record needs to say whether anyone
+   * actually checked it.
+   */
+  verification: Verification | null;
   /** Provenance of the record. */
   source: RecordSource;
   /** ISO timestamp of first sighting. */
@@ -422,8 +450,8 @@ export interface ChannelSummary {
   agency: string | null;
   /** Independent or signed to a business group. */
   affiliation: Affiliation;
-  /** How sure the classification is, per axis. */
-  confidence: ClassificationConfidence;
+  /** The verification record — what was looked up, and where. */
+  verification: Verification | null;
   avatar: string | null;
   subscribers: number | null;
   isSinging: boolean;

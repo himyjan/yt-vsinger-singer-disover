@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T16:32:21.032Z",
+  "generatedAt": "2026-10-22T02:31:32.427Z",
   "channels": [
     {
       "id": "UC4YaOt1yT-ZeyB0OmxHgolA",
@@ -10,7 +10,7 @@
       "role": "vtuber",
       "region": "jp",
       "regionSource": "declared",
-      "language": "zh-Hans",
+      "language": "ja",
       "agency": "Kizuna AI株式会社",
       "affiliation": "group",
       "avatar": null,
@@ -28,10 +28,10 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
-      "confidence": 1,
+      "verification": null,
       "source": "api",
-      "addedAt": "2026-10-21T16:30:06.041Z",
-      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "addedAt": "2026-10-22T02:27:57.931Z",
+      "updatedAt": "2026-10-22T02:31:32.560Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -49,7 +49,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.278Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.311Z"
         },
         {
           "platform": "bilibili",
@@ -62,7 +62,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.278Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.311Z"
         }
       ],
       "externals": {},
@@ -70,14 +70,14 @@
     },
     {
       "id": "UC5CwaMl1eIgY8h02uZw7u8A",
-      "name": "星街彗星",
+      "name": "Hoshimachi Suisei",
       "handle": null,
       "kind": "virtual",
-      "role": "vtuber",
+      "role": "vsinger",
       "region": "jp",
-      "regionSource": "declared",
-      "language": "ja",
-      "agency": "Hololive",
+      "regionSource": "override",
+      "language": null,
+      "agency": "hololive",
       "affiliation": "group",
       "avatar": null,
       "banner": null,
@@ -90,14 +90,14 @@
       "uploadsPlaylistId": "UU5CwaMl1eIgY8h02uZw7u8A",
       "country": null,
       "tags": [],
-      "isSinging": false,
+      "isSinging": true,
       "gender": "unknown",
       "isAi": false,
-      "variant": "vtuber",
-      "confidence": 1,
-      "source": "api",
-      "addedAt": "2026-10-21T16:30:06.041Z",
-      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "variant": "vsinger",
+      "verification": null,
+      "source": "seed",
+      "addedAt": "2026-10-22T02:27:57.931Z",
+      "updatedAt": "2026-10-22T02:31:32.560Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -108,14 +108,14 @@
           "platform": "youtube",
           "id": "UC5CwaMl1eIgY8h02uZw7u8A",
           "handle": null,
-          "name": "星街彗星",
+          "name": "Hoshimachi Suisei",
           "url": "https://www.youtube.com/channel/UC5CwaMl1eIgY8h02uZw7u8A",
           "subscribers": {
             "tag": "hidden"
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.479Z"
+          "lastCheckedAt": "2026-10-22T02:31:32.560Z"
         },
         {
           "platform": "bilibili",
@@ -128,7 +128,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.479Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.536Z"
         }
       ],
       "externals": {},
@@ -160,10 +160,10 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
-      "confidence": 1,
+      "verification": null,
       "source": "api",
-      "addedAt": "2026-10-21T16:30:06.041Z",
-      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "addedAt": "2026-10-22T02:27:57.931Z",
+      "updatedAt": "2026-10-22T02:31:32.560Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -181,7 +181,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.613Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.686Z"
         },
         {
           "platform": "bilibili",
@@ -194,7 +194,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.613Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.686Z"
         }
       ],
       "externals": {},
@@ -226,10 +226,10 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
-      "confidence": 1,
+      "verification": null,
       "source": "api",
-      "addedAt": "2026-10-21T16:30:06.041Z",
-      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "addedAt": "2026-10-22T02:27:57.931Z",
+      "updatedAt": "2026-10-22T02:31:32.560Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -247,7 +247,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.317Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.354Z"
         },
         {
           "platform": "bilibili",
@@ -260,7 +260,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.317Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.354Z"
         },
         {
           "platform": "bilibili",
@@ -273,7 +273,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.317Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.354Z"
         }
       ],
       "externals": {},
@@ -305,10 +305,10 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
-      "confidence": 1,
+      "verification": null,
       "source": "api",
-      "addedAt": "2026-10-21T16:30:06.041Z",
-      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "addedAt": "2026-10-22T02:27:57.931Z",
+      "updatedAt": "2026-10-22T02:31:32.560Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -326,7 +326,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.610Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.683Z"
         },
         {
           "platform": "bilibili",
@@ -339,7 +339,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.610Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.683Z"
         }
       ],
       "externals": {},
@@ -371,10 +371,10 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
-      "confidence": 1,
+      "verification": null,
       "source": "api",
-      "addedAt": "2026-10-21T16:30:06.041Z",
-      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "addedAt": "2026-10-22T02:27:57.931Z",
+      "updatedAt": "2026-10-22T02:31:32.560Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -392,7 +392,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.281Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.315Z"
         },
         {
           "platform": "bilibili",
@@ -405,7 +405,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.281Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.315Z"
         }
       ],
       "externals": {},
@@ -437,10 +437,10 @@
       "gender": "female",
       "isAi": false,
       "variant": "female_vtuber",
-      "confidence": 1,
+      "verification": null,
       "source": "api",
-      "addedAt": "2026-10-21T16:30:06.041Z",
-      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "addedAt": "2026-10-22T02:27:57.931Z",
+      "updatedAt": "2026-10-22T02:31:32.560Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -458,7 +458,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.273Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.306Z"
         }
       ],
       "externals": {},
@@ -490,10 +490,10 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
-      "confidence": 1,
+      "verification": null,
       "source": "api",
-      "addedAt": "2026-10-21T16:30:06.041Z",
-      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "addedAt": "2026-10-22T02:27:57.931Z",
+      "updatedAt": "2026-10-22T02:31:32.560Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -511,7 +511,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.355Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.396Z"
         },
         {
           "platform": "bilibili",
@@ -524,7 +524,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.355Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.396Z"
         }
       ],
       "externals": {},
@@ -538,7 +538,7 @@
       "role": "vtuber",
       "region": "jp",
       "regionSource": "declared",
-      "language": "zh-Hans",
+      "language": "ja",
       "agency": "NIJISANJI",
       "affiliation": "group",
       "avatar": null,
@@ -556,10 +556,10 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
-      "confidence": 1,
+      "verification": null,
       "source": "api",
-      "addedAt": "2026-10-21T16:30:06.041Z",
-      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "addedAt": "2026-10-22T02:27:57.931Z",
+      "updatedAt": "2026-10-22T02:31:32.560Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -577,7 +577,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.621Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.696Z"
         },
         {
           "platform": "bilibili",
@@ -590,7 +590,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.621Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.696Z"
         }
       ],
       "externals": {},
@@ -604,7 +604,7 @@
       "role": "vtuber",
       "region": "jp",
       "regionSource": "declared",
-      "language": "zh-Hant",
+      "language": "ja",
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -622,10 +622,10 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
-      "confidence": 1,
+      "verification": null,
       "source": "api",
-      "addedAt": "2026-10-21T16:30:06.041Z",
-      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "addedAt": "2026-10-22T02:27:57.931Z",
+      "updatedAt": "2026-10-22T02:31:32.560Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -643,7 +643,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.766Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.856Z"
         },
         {
           "platform": "bilibili",
@@ -656,7 +656,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.766Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.856Z"
         }
       ],
       "externals": {},
@@ -688,10 +688,10 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
-      "confidence": 1,
+      "verification": null,
       "source": "api",
-      "addedAt": "2026-10-21T16:30:06.041Z",
-      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "addedAt": "2026-10-22T02:27:57.931Z",
+      "updatedAt": "2026-10-22T02:31:32.560Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -709,7 +709,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.335Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.374Z"
         }
       ],
       "externals": {},
@@ -723,7 +723,7 @@
       "role": "vtuber",
       "region": "jp",
       "regionSource": "declared",
-      "language": "zh-Hans",
+      "language": "ja",
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -741,10 +741,10 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
-      "confidence": 1,
+      "verification": null,
       "source": "api",
-      "addedAt": "2026-10-21T16:30:06.041Z",
-      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "addedAt": "2026-10-22T02:27:57.931Z",
+      "updatedAt": "2026-10-22T02:31:32.560Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -762,7 +762,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.271Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.305Z"
         },
         {
           "platform": "youtube",
@@ -775,7 +775,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.271Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.305Z"
         }
       ],
       "externals": {},
@@ -807,10 +807,10 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
-      "confidence": 1,
+      "verification": null,
       "source": "api",
-      "addedAt": "2026-10-21T16:30:06.041Z",
-      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "addedAt": "2026-10-22T02:27:57.931Z",
+      "updatedAt": "2026-10-22T02:31:32.560Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -828,7 +828,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.766Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.856Z"
         },
         {
           "platform": "bilibili",
@@ -841,7 +841,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.766Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.856Z"
         }
       ],
       "externals": {},
@@ -873,10 +873,10 @@
       "gender": "female",
       "isAi": false,
       "variant": "female_vtuber",
-      "confidence": 1,
+      "verification": null,
       "source": "api",
-      "addedAt": "2026-10-21T16:30:06.041Z",
-      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "addedAt": "2026-10-22T02:27:57.931Z",
+      "updatedAt": "2026-10-22T02:31:32.560Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -894,7 +894,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.271Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.306Z"
         }
       ],
       "externals": {},
@@ -926,10 +926,10 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
-      "confidence": 1,
+      "verification": null,
       "source": "api",
-      "addedAt": "2026-10-21T16:30:06.041Z",
-      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "addedAt": "2026-10-22T02:27:57.931Z",
+      "updatedAt": "2026-10-22T02:31:32.560Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -947,7 +947,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.385Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.430Z"
         },
         {
           "platform": "bilibili",
@@ -960,7 +960,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.385Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.430Z"
         }
       ],
       "externals": {},
@@ -992,10 +992,10 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
-      "confidence": 1,
+      "verification": null,
       "source": "api",
-      "addedAt": "2026-10-21T16:30:06.041Z",
-      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "addedAt": "2026-10-22T02:27:57.931Z",
+      "updatedAt": "2026-10-22T02:31:32.560Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1013,7 +1013,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.517Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.580Z"
         }
       ],
       "externals": {},
@@ -1045,10 +1045,10 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
-      "confidence": 1,
+      "verification": null,
       "source": "api",
-      "addedAt": "2026-10-21T16:30:06.041Z",
-      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "addedAt": "2026-10-22T02:27:57.931Z",
+      "updatedAt": "2026-10-22T02:31:32.560Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1066,7 +1066,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.277Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.310Z"
         },
         {
           "platform": "bilibili",
@@ -1079,7 +1079,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.277Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.310Z"
         }
       ],
       "externals": {},
@@ -1093,7 +1093,7 @@
       "role": "vtuber",
       "region": "jp",
       "regionSource": "declared",
-      "language": "zh-Hans",
+      "language": "ja",
       "agency": "NIJISANJI",
       "affiliation": "group",
       "avatar": null,
@@ -1111,10 +1111,10 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
-      "confidence": 1,
+      "verification": null,
       "source": "api",
-      "addedAt": "2026-10-21T16:30:06.041Z",
-      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "addedAt": "2026-10-22T02:27:57.931Z",
+      "updatedAt": "2026-10-22T02:31:32.560Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1132,7 +1132,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.280Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.314Z"
         },
         {
           "platform": "bilibili",
@@ -1145,7 +1145,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.280Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.314Z"
         }
       ],
       "externals": {},
@@ -1177,10 +1177,10 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
-      "confidence": 1,
+      "verification": null,
       "source": "api",
-      "addedAt": "2026-10-21T16:30:06.041Z",
-      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "addedAt": "2026-10-22T02:27:57.931Z",
+      "updatedAt": "2026-10-22T02:31:32.560Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1198,7 +1198,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.298Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.333Z"
         },
         {
           "platform": "bilibili",
@@ -1211,7 +1211,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.298Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.333Z"
         }
       ],
       "externals": {},
@@ -1225,7 +1225,7 @@
       "role": "vtuber",
       "region": "jp",
       "regionSource": "declared",
-      "language": "zh-Hans",
+      "language": "ja",
       "agency": "NIJISANJI",
       "affiliation": "group",
       "avatar": null,
@@ -1243,10 +1243,10 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
-      "confidence": 1,
+      "verification": null,
       "source": "api",
-      "addedAt": "2026-10-21T16:30:06.041Z",
-      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "addedAt": "2026-10-22T02:27:57.931Z",
+      "updatedAt": "2026-10-22T02:31:32.560Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1264,7 +1264,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.729Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.816Z"
         },
         {
           "platform": "bilibili",
@@ -1277,7 +1277,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.729Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.816Z"
         }
       ],
       "externals": {},
@@ -1309,10 +1309,10 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
-      "confidence": 1,
+      "verification": null,
       "source": "api",
-      "addedAt": "2026-10-21T16:30:06.041Z",
-      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "addedAt": "2026-10-22T02:27:57.931Z",
+      "updatedAt": "2026-10-22T02:31:32.560Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1330,7 +1330,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.312Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.349Z"
         },
         {
           "platform": "bilibili",
@@ -1343,7 +1343,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.312Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.349Z"
         }
       ],
       "externals": {},
@@ -1375,10 +1375,10 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
-      "confidence": 1,
+      "verification": null,
       "source": "api",
-      "addedAt": "2026-10-21T16:30:06.041Z",
-      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "addedAt": "2026-10-22T02:27:57.931Z",
+      "updatedAt": "2026-10-22T02:31:32.560Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1396,7 +1396,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.734Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.822Z"
         }
       ],
       "externals": {},
@@ -1428,10 +1428,10 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
-      "confidence": 1,
+      "verification": null,
       "source": "api",
-      "addedAt": "2026-10-21T16:30:06.041Z",
-      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "addedAt": "2026-10-22T02:27:57.931Z",
+      "updatedAt": "2026-10-22T02:31:32.560Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1449,7 +1449,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.673Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.754Z"
         }
       ],
       "externals": {},

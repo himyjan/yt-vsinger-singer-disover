@@ -1,75 +1,7 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T16:32:21.032Z",
+  "generatedAt": "2026-10-22T02:31:32.427Z",
   "channels": [
-    {
-      "id": "bilibili:1120494980",
-      "name": "八桦卡夜娜",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "regionSource": "declared",
-      "language": "ja",
-      "agency": "极光社",
-      "affiliation": "group",
-      "avatar": null,
-      "banner": null,
-      "description": null,
-      "subscribers": {
-        "tag": "hidden"
-      },
-      "videoCount": null,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [
-        "CayenaHakaba"
-      ],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "confidence": 1,
-      "source": "api",
-      "addedAt": "2026-10-21T16:30:06.041Z",
-      "updatedAt": "2026-10-21T16:32:21.135Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "1120494980",
-          "handle": null,
-          "name": "八桦卡夜娜",
-          "url": "https://space.bilibili.com/1120494980",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.324Z"
-        },
-        {
-          "platform": "twitch",
-          "id": "cayenahakaba",
-          "handle": null,
-          "name": "八桦卡夜娜",
-          "url": "https://www.twitch.tv/cayenahakaba",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.324Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null
-    },
     {
       "id": "UC7Gb7Uawe20QyFibhLl1lzA",
       "name": "Luca_EN_Official",
@@ -96,10 +28,10 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
-      "confidence": 1,
+      "verification": null,
       "source": "api",
-      "addedAt": "2026-10-21T16:30:06.041Z",
-      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "addedAt": "2026-10-22T02:27:57.931Z",
+      "updatedAt": "2026-10-22T02:31:32.560Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -117,7 +49,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.228Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.262Z"
         },
         {
           "platform": "youtube",
@@ -130,7 +62,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.228Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.262Z"
         }
       ],
       "externals": {},
@@ -144,7 +76,7 @@
       "role": "vtuber",
       "region": "en",
       "regionSource": "declared",
-      "language": "ja",
+      "language": "en",
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -162,10 +94,10 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
-      "confidence": 1,
+      "verification": null,
       "source": "api",
-      "addedAt": "2026-10-21T16:30:06.041Z",
-      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "addedAt": "2026-10-22T02:27:57.931Z",
+      "updatedAt": "2026-10-22T02:31:32.560Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -183,7 +115,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.658Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.737Z"
         },
         {
           "platform": "youtube",
@@ -196,7 +128,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.658Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.737Z"
         }
       ],
       "externals": {},
@@ -228,10 +160,10 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
-      "confidence": 1,
+      "verification": null,
       "source": "api",
-      "addedAt": "2026-10-21T16:30:06.041Z",
-      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "addedAt": "2026-10-22T02:27:57.931Z",
+      "updatedAt": "2026-10-22T02:31:32.560Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -249,7 +181,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.249Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.283Z"
         },
         {
           "platform": "youtube",
@@ -262,7 +194,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.249Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.283Z"
         }
       ],
       "externals": {},
@@ -294,10 +226,10 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
-      "confidence": 1,
+      "verification": null,
       "source": "api",
-      "addedAt": "2026-10-21T16:30:06.041Z",
-      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "addedAt": "2026-10-22T02:27:57.931Z",
+      "updatedAt": "2026-10-22T02:31:32.560Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -315,7 +247,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.268Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.303Z"
         },
         {
           "platform": "youtube",
@@ -328,7 +260,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.268Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.303Z"
         },
         {
           "platform": "twitch",
@@ -341,7 +273,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.268Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.303Z"
         }
       ],
       "externals": {},
@@ -373,10 +305,10 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
-      "confidence": 1,
+      "verification": null,
       "source": "api",
-      "addedAt": "2026-10-21T16:30:06.041Z",
-      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "addedAt": "2026-10-22T02:27:57.931Z",
+      "updatedAt": "2026-10-22T02:31:32.560Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -394,7 +326,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.216Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.246Z"
         }
       ],
       "externals": {},

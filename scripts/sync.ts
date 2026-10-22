@@ -40,7 +40,12 @@ import {
   TwitchClient,
 } from "./lib/twitch";
 import { createAdapters } from "./lib/platform-registry";
-import { orderPlatformLinks, pickAvatar, primaryPlatformOf } from "./lib/platforms";
+import {
+  orderPlatformLinks,
+  pickAvatar,
+  pickSubscribers,
+  primaryPlatformOf,
+} from "./lib/platforms";
 import { fetchAiList, isOnAiList } from "./lib/aislist";
 import { fetchTrackedVtubers } from "./lib/taiwan-vtuber-data";
 import { buildRoster } from "./lib/roster";
@@ -77,7 +82,11 @@ import type {
   RecordSource,
 } from "./lib/types";
 import { SCHEMA_VERSION, toCountRef } from "./lib/types";
-import type { Collaborator, PlatformLink } from "./lib/types";
+import type {
+  Collaborator,
+  PlatformLink,
+  Verification,
+} from "./lib/types";
 
 /* -------------------------------------------------------------------------- */
 /* CLI                                                                        */
@@ -182,6 +191,12 @@ interface Override {
   gender?: Channel["gender"];
   isAi?: boolean;
   isSinging?: boolean;
+  /** A human-written description of the performer. */
+  description?: string;
+  /** A verified avatar URL, e.g. the Wikipedia infobox image. */
+  avatar?: string;
+  /** The verification record — what was looked up, and where. */
+  verification?: Verification;
   /** Hide a channel from the public dataset. */
   hidden?: boolean;
   /** Who verified this record, and when. Written by `scripts/verify.ts`. */
@@ -273,7 +288,8 @@ function channelFromApi(
       description,
       classification.agency,
     ),
-    avatar: pickThumbnail(snippet.thumbnails, "high"),
+    avatar:
+      override?.avatar ?? pickThumbnail(snippet.thumbnails, "high"),
     banner: branding.banner?.imageUrl
       ? pickThumbnail(
           [
@@ -286,7 +302,8 @@ function channelFromApi(
           "max",
         )
       : null,
-    description: truncate(description, 1000),
+    // A verified description and avatar beat an inferred one.
+    description: override?.description ?? truncate(description, 1000),
     subscribers: toCountRef(stats.subscriberCount),
     videoCount: toNumber(stats.videoCount),
     viewCount: toNumber(stats.viewCount),
@@ -301,9 +318,7 @@ function channelFromApi(
       gender,
       isAi,
     ),
-    confidence: override?.verifiedAt
-      ? { kind: 1, region: 1, role: 1, gender: 1, ai: 1, overall: 1 }
-      : classification.confidence,
+    verification: override?.verification ?? null,
     source: override?.verifiedAt ? "manual" : source,
     addedAt: now,
     updatedAt: now,
@@ -736,20 +751,8 @@ async function main(): Promise<void> {
         });
         if (ch) {
           ch.addedAt = prev?.addedAt ?? ch.addedAt;
-          if (prev?.confidence) {
-            ch.confidence = {
-              kind: Math.max(prev.confidence.kind ?? 0, ch.confidence.kind),
-              region: Math.max(prev.confidence.region, ch.confidence.region),
-              role: Math.max(prev.confidence.role, ch.confidence.role),
-              gender: Math.max(prev.confidence.gender, ch.confidence.gender),
-              ai: Math.max(prev.confidence.ai, ch.confidence.ai),
-              overall: 0,
-            };
-            ch.confidence.overall = Math.min(
-              ch.confidence.kind,
-              ch.confidence.region,
-            );
-          }
+          // A verification that already happened is kept.
+          ch.verification = prev?.verification ?? ch.verification;
           channelById.set(ch.id, ch);
         }
       }
@@ -862,6 +865,25 @@ async function main(): Promise<void> {
             link.subscribers = profile.subscribers;
           }
           if (profile.handle) link.handle = profile.handle;
+          if (profile.subscribers && profile.subscribers.tag !== "hidden") {
+            link.subscribers = profile.subscribers;
+          } else if (adapter.followers) {
+            // Some platforms publish the count on a different endpoint.
+            const followers = await adapter.followers({
+              platform: adapter.id,
+              id: link.id,
+              handle: link.handle,
+              name: link.name,
+              url: link.url,
+              subscribers: link.subscribers,
+              avatar: link.avatar,
+              description: null,
+              tags: [],
+            });
+            if (followers && followers.tag !== "hidden") {
+              link.subscribers = followers;
+            }
+          }
           resolved++;
         } catch {
           /* a profile that cannot be fetched is not a reason to fail */
@@ -887,6 +909,9 @@ async function main(): Promise<void> {
       // The avatar follows the primary platform, whatever order the source
       // listed the accounts in.
       channel.avatar = pickAvatar(channel);
+      // The subscriber count is the best one any of the linked platforms
+      // publishes — the primary platform's, then YouTube's, then any other.
+      channel.subscribers = pickSubscribers(channel);
     }
 
     let reclassified = 0;
@@ -1034,15 +1059,6 @@ async function main(): Promise<void> {
           channel.gender,
           true,
         );
-        // The AiSList is authoritative about the AI flag.
-        channel.confidence = {
-          kind: channel.confidence.kind,
-          region: channel.confidence.region,
-          role: channel.confidence.role,
-          gender: channel.confidence.gender,
-          ai: 1,
-          overall: channel.confidence.overall,
-        };
         marked++;
       }
     }
@@ -1057,6 +1073,29 @@ async function main(): Promise<void> {
   const extraPlatforms = adapters.filter(
     (a) => a.id !== "youtube" && a.id !== "twitch",
   );
+
+  /**
+   * Tell the Bilibili adapter which accounts belong to VTubers.
+   *
+   * Its live endpoint returns the general live feed rather than the VTuber
+   * partition, so the roster is the filter that keeps gaming and news streams
+   * out of the dataset.
+   */
+  {
+    const bili = adapters.find((a) => a.id === "bilibili") as
+      | (typeof adapters)[number] & { knownMids?: Set<string> }
+      | undefined;
+    if (bili) {
+      const mids = new Set<string>();
+      for (const channel of channels) {
+        for (const link of channel.platforms) {
+          if (link.platform === "bilibili") mids.add(link.id);
+        }
+      }
+      bili.knownMids = mids;
+      log(`bilibili: ${mids.size} known VTuber account(s) for the live filter`);
+    }
+  }
   if (extraPlatforms.length) {
     const platformKeywords = readJson<Record<string, string[]>>(
       path.join(ROOT, "config", "platform-keywords.json"),
@@ -1438,6 +1477,23 @@ async function main(): Promise<void> {
   }
 
   /**
+   * Drop the items whose channel is no longer in the dataset.
+   *
+   * The merge is a union with what is on disk, so an item whose channel was
+   * removed — or whose channel was never really a performer — would stay
+   * forever. This is also what keeps a mis-discovered source from polluting
+   * the dataset: an item only survives if its channel is still a channel.
+   */
+  {
+    const known = new Set(channels.map((c) => c.id));
+    const before = items.length;
+    items = items.filter((i) => known.has(i.channelId));
+    if (items.length !== before) {
+      log(`cleanup: dropped ${before - items.length} orphaned item(s)`);
+    }
+  }
+
+  /**
    * Retention runs *after* the merge, not before.
    *
    * The merge is a union with what is already on disk, so trimming before it
@@ -1604,6 +1660,7 @@ export function channelFromPlatform(
     id: `${adapter.id}:${channel.id}`,
     name: channel.name ?? channel.handle ?? channel.id,
     handle: channel.handle,
+    verification: null,
     kind: classification.kind,
     role: classification.role,
     region: classification.region,
@@ -1628,7 +1685,6 @@ export function channelFromPlatform(
     gender: classification.gender,
     isAi: classification.isAi,
     variant: classification.variant,
-    confidence: classification.confidence,
     source: "api",
     addedAt: now,
     updatedAt: now,

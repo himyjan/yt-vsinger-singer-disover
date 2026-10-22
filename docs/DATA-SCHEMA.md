@@ -74,7 +74,7 @@ The record for one performer.
 | `gender` | `"female"` \| `"male"` \| `"unknown"` | Self-described |
 | `isAi` | boolean | AI-generated performer (AI VTuber, AI singer) |
 | `variant` | see below | The combined label |
-| `confidence` | `ClassificationConfidence` | How sure the classification is, **per axis** — see below |
+| `verification` | `Verification \| null` | What was actually looked up, and where — see below |
 | `source` | `"api"` \| `"seed"` \| `"manual"` | Provenance |
 | `addedAt` | string | ISO timestamp of first sighting |
 | `updatedAt` | string | ISO timestamp of last refresh |
@@ -106,52 +106,39 @@ type CountRef =
 This mirrors the pattern used by the reference `TaiwanVTuberTrackingDataJson`
 API, which gets it right.
 
-### `confidence` — how sure the classification is
+### `verification` — what was actually looked up
 
-The classifier is deterministic but not infallible, and a record can be right
-about one field and wrong about another. A single number cannot express that,
-so confidence is stored **per axis**:
+A computed confidence score is a guess. The verification record is not: it
+says the record was **looked up**, by what, and what was found.
 
-| Axis | What it measures | `1` means |
-| --- | --- | --- |
-| `kind` | virtual or real | a source stated it |
-| `region` | where the performer belongs | the roster or the performer stated it |
-| `role` | what they do | a role marker matched |
-| `gender` | self-described gender | the channel or agency stated it |
-| `ai` | whether the performer is AI-generated | the AiSList listed it |
-| `overall` | the weakest meaningful axis | curated by hand |
-
-`overall` is `min(kind, region)`, because a record with the wrong region is in
-the wrong place and a record with the wrong kind is in the wrong dataset. The
-role, the gender and the AI flag are recorded but do **not** drag the record
-down: a channel that never states its gender is still a perfectly good record.
-
-The values are coarse on purpose — `1` means a source stated it, `0` means
-the source is silent, and the values in between mean it was inferred. A
-number with three decimal places would look more precise than it is.
-
-**What it is used for:**
-
-1. **The verification queue.** `scripts/verify.ts` sorts by `overall`
-   ascending, so the web-search verification checks the records that are
-   actually uncertain first. A dataset where everything scored `1.0` gave the
-   verifier nothing to do.
-2. **Review in the UI.** The channel drawer names the uncertain axes, so a
-   reader can see *which* field is shaky rather than just that something is.
-3. **The merge.** When two records are merged, the stronger value wins per
-   axis, so a curated field is never downgraded by an inferred one.
-
-The current spread:
-
-```
-1.0  curated          14247
-0.5-0.79                 101
-<0.5                      141
+```jsonc
+"verification": {
+  "status": "verified",           // verified · conflicted · unverified
+  "source": "wikidata",           // wikidata · wikipedia · web-search · manual
+  "checked": ["affiliation", "gender", "region"],
+  "at": "2026-10-22T09:14:00.000Z",
+  "sources": ["https://www.wikidata.org/wiki/Q22128111"],
+  "note": "Yua Mikami — affiliated with SKE48"
+}
 ```
 
-and the uncertain axes are `gender` (14,384 — almost nobody states it),
-`role` (10,041), `region` (144) and `kind` (102) — the last two being the
-ones that actually matter.
+**The sources, in order of authority:**
+
+1. **Wikidata**, queried by the YouTube channel id (`P2397`). A hit is a
+   *fact*: the id in Wikidata either is the same performer or is not. The
+   same query returns the agency (`P463`), the gender (`P21`), the country
+   (`P27`) and the inception date (`P571`).
+2. **Wikipedia**, through the [REST API](https://en.wikipedia.org/api/rest_v1/):
+   `GET /page/summary/{title}` returns a clean summary, the one-line
+   description, the infobox image and the Wikidata item id.
+3. **A search-grounded model**, for the performers neither of the above
+   covers.
+4. **A human**, through `data/overrides.json`.
+
+The Wikipedia text and image are only used when the article is actually
+*about the performer*. An article about someone who later became a VTuber
+often leads with their pre-fame career, and its infobox image is a photograph
+of them — neither belongs on a VTuber record.
 
 ### Language code vs. region code
 
@@ -165,6 +152,47 @@ Two different standards, kept apart on purpose:
 `ja` is the language — it belongs in a `lang` attribute or a locale tag. `jp`
 is the country — it belongs in a domain suffix or a country field. A Japanese
 VTuber is `language: "ja"` and `region: "jp"`.
+
+**The language follows the region, not the name.** A Taiwanese performer very
+often has a Japanese-style stage name, and the kana in it says nothing about
+the language they sing in. The region is the authoritative fact; the script of
+a handle is a coincidence. Getting this wrong was not subtle: before the
+region took precedence, **5,895 mainland Chinese channels were recorded as
+Japanese** because their names used kana.
+
+| Region | Language |
+| --- | --- |
+| `jp` | `ja` |
+| `cn` | `zh-Hans` |
+| `tw` | `zh-Hant` |
+| `hk` | **`yue`** — Cantonese, which is a separate language from written Mandarin |
+| `kr` | `ko` |
+| `en` | `en` |
+| `id` / `my` | `id` / `ms` |
+
+A mainland Chinese performer who is Cantonese-speaking (Guangzhou and the
+Pearl River Delta) is detected from the markers 粵語 · 廣東話 · 廣州話 ·
+`cantonese` in the description.
+
+### `regionSource` — which source decided the region
+
+The region is inferred from sources of very different quality, so the
+provenance is stored with it.
+
+| Source | Meaning | Reliability |
+| --- | --- | --- |
+| `override` | Curated by hand in `data/overrides.json` | certain |
+| `roster` | The **Taiwan VTuber Tracking Data** nationality column | authoritative |
+| `declared` | The performer listed their own language (vdb) | authoritative |
+| `platform` | The platform they are on — Bilibili → China, Niconico → Japan | strong |
+| `agency` | Their agency's branch | strong |
+| `country` | The channel's published country | strong |
+| `script` | The characters in the name | a guess |
+
+The platform prior applies when a performer has a Bilibili account and **no
+YouTube account**: their audience is mainland Chinese, so that is their
+region. A performer with a YouTube account is presenting to a global
+audience, so the language they listed is the better signal.
 
 ### `affiliation`
 
@@ -371,7 +399,7 @@ The de-duplication registry, in `data/identities.json`.
 | `debutDate` / `graduateDate` | string \| null | |
 | `sources` | string[] | Which sources contributed |
 | `firstSeen` / `updatedAt` | string | |
-| `confidence` | `ClassificationConfidence` | Per-axis certainty — see above |
+| `verification` | `Verification \| null` | What was looked up, and where — see above |
 
 ## `override.json`
 

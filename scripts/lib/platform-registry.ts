@@ -206,6 +206,16 @@ class TwitchAdapter implements PlatformAdapter {
     return this.live(channel).then((list) => list.slice(0, limit));
   }
 
+  /** The follower count, straight from the Helix API. */
+  async followers(channel: PlatformChannel): Promise<CountRef | null> {
+    if (!channel.id) return null;
+    try {
+      return await this.client.followers(channel.id);
+    } catch {
+      return null;
+    }
+  }
+
   async live(channel: PlatformChannel): Promise<PlatformUpload[]> {
     const streams = await this.client.streams([channel.id]);
     return streams.map((stream: any) => ({

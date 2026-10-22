@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T16:32:21.032Z",
+  "generatedAt": "2026-10-22T02:31:32.427Z",
   "channels": [
     {
       "id": "UC_AuJsYVZTfYO2LF1PDTuTA",
@@ -10,6 +10,7 @@
       "role": "vtuber",
       "region": "jp",
       "regionSource": "declared",
+      "language": "ja",
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -21,6 +22,7 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
+      "verification": null,
       "links": [
         {
           "p": "youtube",
@@ -42,6 +44,7 @@
       "role": "vtuber",
       "region": "jp",
       "regionSource": "declared",
+      "language": "ja",
       "agency": "NIJISANJI",
       "affiliation": "group",
       "avatar": null,
@@ -53,6 +56,7 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
+      "verification": null,
       "links": [
         {
           "p": "youtube",
@@ -74,6 +78,7 @@
       "role": "vtuber",
       "region": "jp",
       "regionSource": "declared",
+      "language": "ja",
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -85,6 +90,7 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
+      "verification": null,
       "links": [
         {
           "p": "youtube",
@@ -106,6 +112,7 @@
       "role": "vtuber",
       "region": "jp",
       "regionSource": "declared",
+      "language": "ja",
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -117,6 +124,7 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
+      "verification": null,
       "links": [
         {
           "p": "youtube",
@@ -133,6 +141,7 @@
       "role": "vtuber",
       "region": "jp",
       "regionSource": "declared",
+      "language": "ja",
       "agency": "Hololive",
       "affiliation": "group",
       "avatar": null,
@@ -144,6 +153,7 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
+      "verification": null,
       "links": [
         {
           "p": "youtube",
@@ -165,6 +175,7 @@
       "role": "vtuber",
       "region": "jp",
       "regionSource": "declared",
+      "language": "ja",
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -176,6 +187,7 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
+      "verification": null,
       "links": [
         {
           "p": "youtube",
@@ -192,6 +204,7 @@
       "role": "vtuber",
       "region": "jp",
       "regionSource": "declared",
+      "language": "ja",
       "agency": "NIJISANJI",
       "affiliation": "group",
       "avatar": null,
@@ -203,6 +216,7 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
+      "verification": null,
       "links": [
         {
           "p": "youtube",
@@ -224,6 +238,7 @@
       "role": "vtuber",
       "region": "jp",
       "regionSource": "declared",
+      "language": "ja",
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -235,6 +250,7 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
+      "verification": null,
       "links": [
         {
           "p": "youtube",
@@ -251,6 +267,7 @@
       "role": "vtuber",
       "region": "jp",
       "regionSource": "declared",
+      "language": "ja",
       "agency": "Hololive",
       "affiliation": "group",
       "avatar": null,
@@ -262,6 +279,7 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
+      "verification": null,
       "links": [
         {
           "p": "youtube",
@@ -283,6 +301,7 @@
       "role": "vtuber",
       "region": "jp",
       "regionSource": "declared",
+      "language": "ja",
       "agency": "VOMS Project",
       "affiliation": "group",
       "avatar": null,
@@ -294,6 +313,7 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
+      "verification": null,
       "links": [
         {
           "p": "youtube",
@@ -310,6 +330,7 @@
       "role": "vtuber",
       "region": "jp",
       "regionSource": "declared",
+      "language": "ja",
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -321,6 +342,7 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
+      "verification": null,
       "links": [
         {
           "p": "bilibili",
@@ -342,6 +364,7 @@
       "role": "vtuber",
       "region": "jp",
       "regionSource": "declared",
+      "language": "ja",
       "agency": "NIJISANJI",
       "affiliation": "group",
       "avatar": null,
@@ -353,6 +376,7 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
+      "verification": null,
       "links": [
         {
           "p": "youtube",
@@ -368,23 +392,25 @@
     },
     {
       "id": "UChAnqc_AY5_I3Px5dig3X1Q",
-      "name": "戌神沁音",
+      "name": "Inugami Korone",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
-      "regionSource": "declared",
-      "agency": "Hololive",
+      "regionSource": "override",
+      "language": null,
+      "agency": "hololive",
       "affiliation": "group",
       "avatar": null,
       "subscribers": null,
-      "isSinging": false,
+      "isSinging": true,
       "activity": "unknown",
       "subscribersHidden": true,
       "twitchLogin": null,
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
+      "verification": null,
       "links": [
         {
           "p": "youtube",
@@ -406,6 +432,7 @@
       "role": "vtuber",
       "region": "jp",
       "regionSource": "declared",
+      "language": "ja",
       "agency": "upd8",
       "affiliation": "group",
       "avatar": null,
@@ -417,6 +444,7 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
+      "verification": null,
       "links": [
         {
           "p": "youtube",
@@ -438,6 +466,7 @@
       "role": "vtuber",
       "region": "jp",
       "regionSource": "declared",
+      "language": "ja",
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -449,6 +478,7 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
+      "verification": null,
       "links": [
         {
           "p": "youtube",
@@ -465,6 +495,7 @@
       "role": "vtuber",
       "region": "jp",
       "regionSource": "declared",
+      "language": "ja",
       "agency": "ますかれーど",
       "affiliation": "group",
       "avatar": null,
@@ -476,6 +507,7 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
+      "verification": null,
       "links": [
         {
           "p": "youtube",
@@ -492,6 +524,7 @@
       "role": "vtuber",
       "region": "jp",
       "regionSource": "declared",
+      "language": "ja",
       "agency": "NIJISANJI",
       "affiliation": "group",
       "avatar": null,
@@ -503,6 +536,7 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
+      "verification": null,
       "links": [
         {
           "p": "youtube",
@@ -519,6 +553,7 @@
       "role": "vtuber",
       "region": "jp",
       "regionSource": "declared",
+      "language": "ja",
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -530,6 +565,7 @@
       "gender": "female",
       "isAi": false,
       "variant": "female_vtuber",
+      "verification": null,
       "links": [
         {
           "p": "youtube",
@@ -551,6 +587,7 @@
       "role": "vtuber",
       "region": "jp",
       "regionSource": "declared",
+      "language": "ja",
       "agency": "LiveCartoon",
       "affiliation": "group",
       "avatar": null,
@@ -562,6 +599,7 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
+      "verification": null,
       "links": [
         {
           "p": "bilibili",
@@ -583,6 +621,7 @@
       "role": "vtuber",
       "region": "jp",
       "regionSource": "declared",
+      "language": "ja",
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -594,6 +633,7 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
+      "verification": null,
       "links": [
         {
           "p": "youtube",
@@ -615,6 +655,7 @@
       "role": "vtuber",
       "region": "jp",
       "regionSource": "declared",
+      "language": "ja",
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -626,6 +667,7 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
+      "verification": null,
       "links": [
         {
           "p": "youtube",
@@ -647,6 +689,7 @@
       "role": "vtuber",
       "region": "jp",
       "regionSource": "declared",
+      "language": "ja",
       "agency": "NIJISANJI",
       "affiliation": "group",
       "avatar": null,
@@ -658,6 +701,7 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
+      "verification": null,
       "links": [
         {
           "p": "youtube",
@@ -684,6 +728,7 @@
       "role": "vtuber",
       "region": "jp",
       "regionSource": "declared",
+      "language": "ja",
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -695,6 +740,7 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
+      "verification": null,
       "links": [
         {
           "p": "bilibili",
@@ -709,6 +755,35 @@
       ]
     },
     {
+      "id": "UCUCeZaZeJbEYAAzvMgrKOPQ",
+      "name": "Kenshi Yonezu",
+      "handle": null,
+      "kind": "real",
+      "role": "singer",
+      "region": "jp",
+      "regionSource": "override",
+      "language": null,
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": null,
+      "subscribers": null,
+      "isSinging": true,
+      "activity": "unknown",
+      "subscribersHidden": true,
+      "twitchLogin": null,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "singer",
+      "verification": null,
+      "links": [
+        {
+          "p": "youtube",
+          "u": "https://www.youtube.com/channel/UCUCeZaZeJbEYAAzvMgrKOPQ",
+          "h": null
+        }
+      ]
+    },
+    {
       "id": "UCWCc8tO-uUl_7SJXIKJACMw",
       "name": "神乐魅娅",
       "handle": null,
@@ -716,6 +791,7 @@
       "role": "vtuber",
       "region": "jp",
       "regionSource": "declared",
+      "language": "ja",
       "agency": "神楽组",
       "affiliation": "group",
       "avatar": null,
@@ -727,6 +803,7 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
+      "verification": null,
       "links": [
         {
           "p": "youtube",
@@ -748,6 +825,7 @@
       "role": "vtuber",
       "region": "jp",
       "regionSource": "declared",
+      "language": "ja",
       "agency": "NIJISANJI",
       "affiliation": "group",
       "avatar": null,
@@ -759,6 +837,7 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
+      "verification": null,
       "links": [
         {
           "p": "youtube",
@@ -775,6 +854,7 @@
       "role": "vtuber",
       "region": "jp",
       "regionSource": "declared",
+      "language": "ja",
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -786,6 +866,7 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
+      "verification": null,
       "links": [
         {
           "p": "bilibili",
@@ -807,6 +888,7 @@
       "role": "vtuber",
       "region": "jp",
       "regionSource": "declared",
+      "language": "ja",
       "agency": "holostars",
       "affiliation": "group",
       "avatar": null,
@@ -818,6 +900,7 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
+      "verification": null,
       "links": [
         {
           "p": "youtube",
@@ -839,6 +922,7 @@
       "role": "vtuber",
       "region": "jp",
       "regionSource": "declared",
+      "language": "ja",
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -850,6 +934,7 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
+      "verification": null,
       "links": []
     }
   ]

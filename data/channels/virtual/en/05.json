@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T16:32:21.032Z",
+  "generatedAt": "2026-10-22T02:31:32.427Z",
   "channels": [
     {
       "id": "UCckdfYDGrjojJM28n5SHYrA",
@@ -28,10 +28,10 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
-      "confidence": 1,
+      "verification": null,
       "source": "api",
-      "addedAt": "2026-10-21T16:30:06.041Z",
-      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "addedAt": "2026-10-22T02:27:57.931Z",
+      "updatedAt": "2026-10-22T02:31:32.560Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -49,7 +49,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.257Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.290Z"
         },
         {
           "platform": "youtube",
@@ -62,7 +62,60 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.257Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.290Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
+    },
+    {
+      "id": "UCgmPnx-EEeOrZSg5Tiw7ZRQ",
+      "name": "Hakos Baelz",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "en",
+      "regionSource": "override",
+      "language": null,
+      "agency": "hololive",
+      "affiliation": "group",
+      "avatar": null,
+      "banner": null,
+      "description": null,
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": "UUgmPnx-EEeOrZSg5Tiw7ZRQ",
+      "country": null,
+      "tags": [],
+      "isSinging": true,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "seed",
+      "addedAt": "2026-10-22T02:27:57.931Z",
+      "updatedAt": "2026-10-22T02:31:32.560Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCgmPnx-EEeOrZSg5Tiw7ZRQ",
+          "handle": null,
+          "name": "Hakos Baelz",
+          "url": "https://www.youtube.com/channel/UCgmPnx-EEeOrZSg5Tiw7ZRQ",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "activity": "unknown",
+          "lastCheckedAt": "2026-10-22T02:31:32.560Z"
         }
       ],
       "externals": {},
@@ -94,10 +147,10 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
-      "confidence": 1,
+      "verification": null,
       "source": "api",
-      "addedAt": "2026-10-21T16:30:06.041Z",
-      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "addedAt": "2026-10-22T02:27:57.931Z",
+      "updatedAt": "2026-10-22T02:31:32.560Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -115,7 +168,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.236Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.271Z"
         }
       ],
       "externals": {},
@@ -147,10 +200,10 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
-      "confidence": 1,
+      "verification": null,
       "source": "api",
-      "addedAt": "2026-10-21T16:30:06.041Z",
-      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "addedAt": "2026-10-22T02:27:57.931Z",
+      "updatedAt": "2026-10-22T02:31:32.560Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -168,7 +221,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.245Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.278Z"
         }
       ],
       "externals": {},
@@ -200,10 +253,10 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
-      "confidence": 1,
+      "verification": null,
       "source": "api",
-      "addedAt": "2026-10-21T16:30:06.041Z",
-      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "addedAt": "2026-10-22T02:27:57.931Z",
+      "updatedAt": "2026-10-22T02:31:32.560Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -221,7 +274,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.230Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.264Z"
         },
         {
           "platform": "youtube",
@@ -234,7 +287,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.230Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.264Z"
         }
       ],
       "externals": {},
@@ -266,10 +319,10 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
-      "confidence": 1,
+      "verification": null,
       "source": "api",
-      "addedAt": "2026-10-21T16:30:06.041Z",
-      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "addedAt": "2026-10-22T02:27:57.931Z",
+      "updatedAt": "2026-10-22T02:31:32.560Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -287,7 +340,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.220Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.251Z"
         },
         {
           "platform": "twitch",
@@ -300,7 +353,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:32:23.220Z"
+          "lastCheckedAt": "2026-10-22T02:31:34.251Z"
         }
       ],
       "externals": {},

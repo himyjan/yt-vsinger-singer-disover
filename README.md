@@ -42,6 +42,7 @@ npm run data:validate       # check structure and size budgets
 | [docs/DATA-SCHEMA.md](docs/DATA-SCHEMA.md) | Every field, every file, every enum |
 | [docs/YOUTUBE-API.md](docs/YOUTUBE-API.md) | Quota maths and endpoint costs |
 | [docs/PLATFORMS.md](docs/PLATFORMS.md) | The five platform adapters |
+| [docs/SOURCES.md](docs/SOURCES.md) | Every data source, and which are read |
 | [docs/DEPLOY.md](docs/DEPLOY.md) | GitHub Actions, Pages, secrets, LFS |
 | [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) | How to add a channel, a region, a platform |
 | [AGENTS.md](AGENTS.md) | Guide for AI agents |
@@ -78,7 +79,10 @@ Everything is sharded so no single file grows large — see
 
 ## Classification
 
-Each channel is classified along several axes, deterministically:
+Each channel is classified along several axes, deterministically. The **region
+is authoritative** and the language follows it — a Taiwanese performer often
+has a Japanese-style stage name, and the kana in it says nothing about the
+language they sing in.
 
 | Axis | Values |
 | --- | --- |
@@ -88,6 +92,8 @@ Each channel is classified along several axes, deterministically:
 | `gender` | `female` · `male` · `unknown` |
 | `isAi` | AI-generated performers (AI VTuber, AI singer) |
 | `variant` | the combined label — `female_vtuber`, `ai_vsinger`, … |
+| `affiliation` | independent · community · business group (the 勢 vocabulary) |
+| `regionSource` | which source decided the region — a roster, the platform, a script |
 
 Uploads are classified as `cover`, `mv`, `original`, `live`, `premiere` or
 `performance`, and carry an `isAcoustic` flag for 弾き語り / 彈唱 — singing

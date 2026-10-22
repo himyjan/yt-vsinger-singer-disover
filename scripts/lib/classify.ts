@@ -26,7 +26,9 @@ import {
   AGENCY_REGION,
   AGENCY_SUBREGION,
   COUNTRY_REGION,
+  REGION_LANGUAGE,
   detectLanguage,
+  detectLanguageStatement,
   languageToRegion,
   regionFromLocaleHints,
 } from "./regions";
@@ -302,15 +304,6 @@ export interface ChannelClassification {
   isAggregator: boolean;
   /** Which source decided the region. */
   regionSource: RegionSource;
-  /** How sure each axis of the classification is. */
-  confidence: {
-    kind: number;
-    region: number;
-    role: number;
-    gender: number;
-    ai: number;
-    overall: number;
-  };
   /** Self-described gender. */
   gender: Gender;
   /** True when the performer is AI-generated. */
@@ -464,15 +457,48 @@ export function classifyChannel(signals: ChannelSignals): ChannelClassification 
     regionSource = "country";
   }
 
-  const lang = detectLanguage(
+  /**
+   * The language.
+   *
+   * It is derived from the **region**, not from the name. A Taiwanese
+   * performer very often has a Japanese-style stage name — and the kana in
+   * it says nothing about the language they sing in. The region is the
+   * authoritative fact; the script of a handle is a coincidence.
+   *
+   * The name is only used when the region is unknown.
+   */
+  const scriptLang = detectLanguage(
     `${signals.name ?? ""} ${signals.description ?? ""} ${signals.tags.join(" ")}`,
   );
-  const langRegion = languageToRegion(lang);
+  const langRegion = languageToRegion(scriptLang);
   if (langRegion && regionScore < 0.7) {
     region = langRegion;
     regionScore = 0.65;
     regionSource = "script";
   }
+  /**
+   * The language, in order of authority:
+   *
+   * 1. **What the performer states.** 「主な配信言語: 広東語」 is a fact about
+   *    themselves — it outranks everything else.
+   * 2. **The region.** A Taiwanese performer performs in Chinese, whatever
+   *    their stage name looks like.
+   * 3. **The script of the name.** The weakest signal, and only used when
+   *    nothing else is known.
+   */
+  const statedLang = detectLanguageStatement(
+    `${signals.description ?? ""} ${signals.name ?? ""}`,
+  );
+
+  // A performer who states they speak Cantonese and whose region is not
+  // otherwise known belongs to the Hong Kong scene.
+  if (statedLang === "yue" && region === "unknown") {
+    region = "hk";
+    regionScore = 0.85;
+    regionSource = "declared";
+  }
+
+  const lang = statedLang ?? REGION_LANGUAGE[region] ?? scriptLang;
 
   const strongRegion = detectStrongRegion(all(name, intro, body, tags));
   if (strongRegion) {
@@ -509,28 +535,6 @@ export function classifyChannel(signals: ChannelSignals): ChannelClassification 
   }
   if (ov.agency !== undefined) agency = ov.agency;
 
-  /**
-   * The confidence of each axis.
-   *
-   * The region and the kind are the axes a record can be *wrong* about in a
-   * way that matters, so they drive the overall figure. The role, the gender
-   * and the AI flag are recorded but do not: an unstated gender does not make
-   * a record useless.
-   */
-  const confidence = {
-    kind: kindScore >= 3 ? 0.9 : kindScore > 0 ? 0.6 : 0.3,
-    region: regionScore,
-    role: role === "unknown" ? 0.3 : 0.85,
-    gender: 0.2,
-    ai: 0.5,
-    overall: 0,
-  };
-  confidence.overall = Math.min(confidence.kind, confidence.region);
-  if (ov.kind || ov.role) {
-    confidence.kind = 1;
-    confidence.role = 1;
-    confidence.overall = 1;
-  }
 
   const gender = detectGender(
     signals.name,
@@ -542,8 +546,6 @@ export function classifyChannel(signals: ChannelSignals): ChannelClassification 
     signals.description,
     signals.tags,
   );
-  confidence.gender = gender === "unknown" ? 0.2 : 0.9;
-  confidence.ai = isAi ? 0.9 : 0.5;
 
   return {
     kind,
@@ -553,7 +555,6 @@ export function classifyChannel(signals: ChannelSignals): ChannelClassification 
     language: lang,
     agency,
     isSinging,
-    confidence,
     isAggregator,
     gender,
     isAi,

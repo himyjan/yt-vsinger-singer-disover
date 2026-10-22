@@ -138,21 +138,9 @@ export function mergeChannels(target: Channel, other: Channel): Channel {
     isSinging: target.isSinging || other.isSinging,
     gender: target.gender !== "unknown" ? target.gender : other.gender,
     isAi: target.isAi || other.isAi,
-    // The stronger value wins, per axis.
-    confidence: {
-      kind: Math.max(target.confidence?.kind ?? 0, other.confidence?.kind ?? 0),
-      region: Math.max(
-        target.confidence?.region ?? 0,
-        other.confidence?.region ?? 0,
-      ),
-      role: Math.max(target.confidence?.role ?? 0, other.confidence?.role ?? 0),
-      gender: Math.max(
-        target.confidence?.gender ?? 0,
-        other.confidence?.gender ?? 0,
-      ),
-      ai: Math.max(target.confidence?.ai ?? 0, other.confidence?.ai ?? 0),
-      overall: 0,
-    },
+    // The verification that actually happened wins — a curated one over an
+    // inferred one.
+    verification: target.verification ?? other.verification ?? null,
     source:
       target.source === "seed" || other.source === "seed"
         ? "seed"
@@ -171,11 +159,6 @@ export function mergeChannels(target: Channel, other: Channel): Channel {
     externals: { ...other.externals, ...target.externals },
     popularVideoId: target.popularVideoId ?? other.popularVideoId,
   };
-
-  merged.confidence.overall = Math.min(
-    merged.confidence.kind,
-    merged.confidence.region,
-  );
   return merged;
 }
 

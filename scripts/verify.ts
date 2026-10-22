@@ -10,7 +10,7 @@
  *
  * ```bash
  * npm run data:verify -- --limit 40
- * npm run data:verify -- --confidence 0.5 --min-confidence 0.8
+ * npm run data:verify -- --min-confidence 0.8
  * npm run data:verify -- --dry-run
  * npm run data:verify -- --id UCxxxxxxxxxxxxxxxxxxxxxx
  * ```
@@ -23,7 +23,14 @@ import path from "node:path";
 import { ROOT, readJson, writeJson } from "./lib/io";
 import { layout, readAllChannelRecords } from "./lib/dataset";
 import { Verifier, type VerificationResult } from "./lib/verify";
-import type { Channel, ChannelFile, ItemFile } from "./lib/types";
+import {
+  COUNTRY_TO_REGION,
+  lookupByChannelId,
+  lookupByName,
+  wikipediaSummary,
+  wikidataUrl,
+} from "./lib/wikidata";
+import type { Channel, ChannelFile, ItemFile, Verification } from "./lib/types";
 import { SCHEMA_VERSION } from "./lib/types";
 
 /* -------------------------------------------------------------------------- */
@@ -32,7 +39,6 @@ import { SCHEMA_VERSION } from "./lib/types";
 
 interface Args {
   limit: number;
-  maxConfidence: number;
   minConfidence: number;
   dryRun: boolean;
   noSearch: boolean;
@@ -45,7 +51,6 @@ interface Args {
 function parseArgs(argv: string[]): Args {
   const args: Args = {
     limit: 25,
-    maxConfidence: 1,
     minConfidence: 0.7,
     dryRun: false,
     noSearch: false,
@@ -57,7 +62,6 @@ function parseArgs(argv: string[]): Args {
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (a === "--limit") args.limit = Number(argv[++i]);
-    else if (a === "--confidence") args.maxConfidence = Number(argv[++i]);
     else if (a === "--min-confidence") args.minConfidence = Number(argv[++i]);
     else if (a === "--dry-run") args.dryRun = true;
     else if (a === "--no-search") args.noSearch = true;
@@ -81,6 +85,12 @@ interface Override {
   isAi?: boolean;
   isSinging?: boolean;
   hidden?: boolean;
+  /** A human-written description of the performer. */
+  description?: string;
+  /** A verified avatar URL, e.g. the Wikipedia infobox image. */
+  avatar?: string;
+  /** The verification record — what was looked up, and where. */
+  verification?: Verification;
   /** Who verified it, and when. */
   verifiedBy?: string;
   verifiedAt?: string;
@@ -99,11 +109,19 @@ async function main(): Promise<void> {
 
   const apiKey =
     process.env.GEMINI_API_KEY ?? process.env.GOOGLE_API_KEY ?? "";
+
+  /**
+   * The API key is optional.
+   *
+   * Wikidata and Wikipedia need no key and no model — they are the
+   * authoritative sources, and they answer most of the questions. The
+   * search-grounded model is the fallback for the performers neither of them
+   * covers, and it is only used when a key is available.
+   */
   if (!apiKey) {
-    console.error(
-      "[verify] GEMINI_API_KEY is not set. Get one at https://aistudio.google.com/apikey.",
+    console.log(
+      "[verify] GEMINI_API_KEY is not set — using Wikidata and Wikipedia only.",
     );
-    process.exit(1);
   }
 
   /* --- load the dataset ------------------------------------------------ */
@@ -112,17 +130,35 @@ async function main(): Promise<void> {
   const overrides: OverrideMap = readJson<OverrideMap>(layout.overrides, {});
 
   /* --- pick the candidates ---------------------------------------------- */
+  /**
+   * The verification queue.
+   *
+   * There is no confidence score to sort by, and that is the point: the
+   * queue is ordered by **what is not known**. A record with an unknown
+   * region is worth checking; a record that was already verified in
+   * Wikidata is not.
+   */
+  const missingFacts = (channel: Channel): string[] => {
+    const missing: string[] = [];
+    if (channel.region === "unknown") missing.push("region");
+    if (channel.role === "unknown") missing.push("role");
+    if (channel.gender === "unknown") missing.push("gender");
+    if (!channel.description) missing.push("description");
+    if (!channel.agency && channel.affiliation === "unknown") {
+      missing.push("affiliation");
+    }
+    return missing;
+  };
+
   let candidates = channels.filter((c) => {
     if (args.ids.length) return args.ids.includes(c.id);
     if (c.source === "seed") return false; // already curated by hand
-    if (c.confidence.overall > args.maxConfidence) return false;
     if (overrides[c.id]?.verifiedAt) return false; // already verified
     return true;
   });
 
-  // The ones the classifier is least sure about go first.
-  // The least certain records first — the ones worth checking.
-  candidates.sort((a, b) => a.confidence.overall - b.confidence.overall);
+  // The records that are missing the most come first.
+  candidates.sort((a, b) => missingFacts(b).length - missingFacts(a).length);
   candidates = candidates.slice(0, args.limit);
 
   console.log(
@@ -133,24 +169,157 @@ async function main(): Promise<void> {
     return;
   }
 
-  const verifier = new Verifier({
-    apiKey,
-    model: args.model,
-    minConfidence: args.minConfidence,
-    useSearch: !args.noSearch,
-    delayMs: args.delayMs,
-    onLog: (m) => console.log(m),
-  });
+  const verifier = apiKey
+    ? new Verifier({
+        apiKey,
+        model: args.model,
+        minConfidence: args.minConfidence,
+        useSearch: !args.noSearch,
+        delayMs: args.delayMs,
+        onLog: (m) => console.log(m),
+      })
+    : null;
 
   const results: VerificationResult[] = [];
   let changed = 0;
+  let wikidataChecked = 0;
 
   for (const [index, channel] of candidates.entries()) {
+    const missing = missingFacts(channel);
     console.log(
       `[verify] ${index + 1}/${candidates.length} ${channel.name} ` +
-        `(${channel.kind}/${channel.role}/${channel.region}, conf ${channel.confidence.overall.toFixed(2)})`,
+        `(${channel.kind}/${channel.role}/${channel.region}` +
+        `${missing.length ? `, missing ${missing.join("/")}` : ""})`,
     );
 
+    /**
+     * Wikidata first.
+     *
+     * A Wikidata item whose YouTube channel id matches the record is a
+     * *fact*, not an estimate: the two ids are the same performer, stated in
+     * a curated knowledge base. It is cheaper, more precise and more
+     * defensible than asking a model to guess — and the Wikipedia extract
+     * gives a real, human-written description.
+     */
+    const wikidata =
+      (channel.id.startsWith("UC")
+        ? await lookupByChannelId(channel.id)
+        : null) ?? (await lookupByName(channel.name));
+
+    if (wikidata) {
+      wikidataChecked++;
+      const identity = wikidata.identity;
+      const summary = identity.article
+        ? await wikipediaSummary(identity.article)
+        : null;
+
+      const override: Record<string, unknown> = {};
+      const checked: string[] = [];
+      const sources: string[] = [wikidataUrl(identity.id)];
+
+      if (identity.agency && identity.agency !== channel.agency) {
+        override.agency = identity.agency;
+        checked.push("affiliation");
+      }
+      if (identity.gender && identity.gender !== channel.gender) {
+        override.gender = identity.gender;
+        checked.push("gender");
+      }
+      if (identity.country) {
+        const region = COUNTRY_TO_REGION[identity.country.toLowerCase()];
+        if (region && region !== channel.region) {
+          override.region = region;
+          checked.push("region");
+        }
+      }
+      /**
+       * Only use the Wikipedia text and image when the article is actually
+       * about the *performer*.
+       *
+       * A Wikipedia article about a person who later became a VTuber often
+       * leads with their pre-fame career — "Japanese former pornographic
+       * actress" — and its infobox image is a photograph of them. Neither is
+       * an appropriate description or avatar for a VTuber record, so the
+       * article has to be about the virtual performer before any of it is
+       * used.
+       */
+      const isPerformerArticle =
+        /vtuber|virtual\s+(youtuber|idol|streamer|singer)|v-singer/i.test(
+          [
+            summary?.description ?? "",
+            summary?.extract ?? "",
+            identity.description ?? "",
+          ].join(" "),
+        );
+
+      if (isPerformerArticle && summary?.description) {
+        override.description = summary.description;
+        checked.push("description");
+        sources.push(summary.url ?? "");
+      }
+      if (isPerformerArticle && summary?.image) {
+        // The Wikipedia infobox portrait is a good channel avatar — but only
+        // when the article is about the performer.
+        override.avatar = summary.image;
+        checked.push("description");
+      }
+
+      const verified: Verification = {
+        status: checked.length ? "verified" : "verified",
+        source: summary ? "wikipedia" : "wikidata",
+        checked: checked as Verification["checked"],
+        confidence: wikidata.matchedBy === "channel" ? 1 : 0.7,
+        at: new Date().toISOString(),
+        sources: sources.filter(Boolean),
+        note: [
+          identity.label,
+          identity.description ?? summary?.description ?? null,
+          identity.agency ? `affiliated with ${identity.agency}` : null,
+        ]
+          .filter(Boolean)
+          .join(" — "),
+      };
+
+      if (Object.keys(override).length) {
+        changed++;
+        console.log(
+          `  ✓ wikidata ${identity.id}: ${JSON.stringify(override)}` +
+            `\n    ${verified.note}`,
+        );
+        if (!args.dryRun) {
+          overrides[channel.id] = {
+            ...overrides[channel.id],
+            ...override,
+            verification: verified,
+            verifiedBy: `wikidata:${identity.id}`,
+            verifiedAt: verified.at,
+            note: verified.note,
+          };
+        }
+      } else {
+        console.log(
+          `  ✓ wikidata ${identity.id} confirms the record` +
+            (verified.note ? `\n    ${verified.note}` : ""),
+        );
+        if (!args.dryRun) {
+          overrides[channel.id] = {
+            ...overrides[channel.id],
+            verification: verified,
+            verifiedBy: `wikidata:${identity.id}`,
+            verifiedAt: verified.at,
+            note: verified.note,
+          };
+        }
+      }
+      if (verifier) await verifier.throttle();
+      continue;
+    }
+
+    // No Wikidata item — fall back to the search-grounded model.
+    if (!verifier) {
+      await new Promise((r) => setTimeout(r, 100));
+      continue;
+    }
     const result = await verifier.verify({
       id: channel.id,
       name: channel.name,
@@ -163,7 +332,7 @@ async function main(): Promise<void> {
         region: channel.region,
         gender: channel.gender,
         isAi: channel.isAi,
-        confidence: channel.confidence.overall,
+        confidence: 1,
       },
     });
 
@@ -179,7 +348,7 @@ async function main(): Promise<void> {
       region: channel.region,
       gender: channel.gender,
       isAi: channel.isAi,
-      confidence: channel.confidence.overall,
+      confidence: 1,
     });
 
     if (override) {
@@ -218,7 +387,8 @@ async function main(): Promise<void> {
   }
 
   console.log(
-    `[verify] ${results.length} verified, ${results.filter((r) => r.isAggregator).length} aggregator(s), ` +
+    `[verify] ${results.length} verified by search, ${wikidataChecked} verified by Wikidata, ` +
+      `${results.filter((r) => r.isAggregator).length} aggregator(s), ` +
       `${results.filter((r) => r.isAi).length} AI`,
   );
   console.log(

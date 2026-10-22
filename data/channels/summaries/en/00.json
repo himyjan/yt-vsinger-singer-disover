@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T16:32:21.032Z",
+  "generatedAt": "2026-10-22T02:31:32.427Z",
   "channels": [
     {
       "id": "twitch:vedal987",
@@ -10,6 +10,7 @@
       "role": "vtuber",
       "region": "en",
       "regionSource": "declared",
+      "language": "en",
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -21,6 +22,7 @@
       "gender": "unknown",
       "isAi": true,
       "variant": "ai_vtuber",
+      "verification": null,
       "links": [
         {
           "p": "twitch",
@@ -37,6 +39,7 @@
       "role": "vtuber",
       "region": "en",
       "regionSource": "declared",
+      "language": "en",
       "agency": "NIJISANJI EN",
       "affiliation": "group",
       "avatar": null,
@@ -48,6 +51,7 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
+      "verification": null,
       "links": [
         {
           "p": "youtube",
@@ -64,6 +68,7 @@
       "role": "vtuber",
       "region": "en",
       "regionSource": "declared",
+      "language": "en",
       "agency": "4bb946b7-6b9d-5b28-8975-f23291cba191",
       "affiliation": "group",
       "avatar": null,
@@ -75,6 +80,7 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
+      "verification": null,
       "links": []
     },
     {
@@ -85,6 +91,7 @@
       "role": "vtuber",
       "region": "en",
       "regionSource": "declared",
+      "language": "en",
       "agency": "ce23afd2-6f1a-5106-b1d6-09980187f549",
       "affiliation": "group",
       "avatar": null,
@@ -96,6 +103,7 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
+      "verification": null,
       "links": []
     },
     {
@@ -106,6 +114,7 @@
       "role": "vtuber",
       "region": "en",
       "regionSource": "declared",
+      "language": "en",
       "agency": "20a14bd8-50b1-5613-96c9-191eef51b689",
       "affiliation": "group",
       "avatar": null,
@@ -117,6 +126,7 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
+      "verification": null,
       "links": [
         {
           "p": "bilibili",
@@ -143,6 +153,7 @@
       "role": "vtuber",
       "region": "en",
       "regionSource": "declared",
+      "language": "en",
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -154,6 +165,7 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
+      "verification": null,
       "links": [
         {
           "p": "bilibili",

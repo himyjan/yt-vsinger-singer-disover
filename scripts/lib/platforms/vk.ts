@@ -173,4 +173,15 @@ export class VkAdapter implements PlatformAdapter {
   async live(_channel: PlatformChannel): Promise<PlatformUpload[]> {
     return [];
   }
+
+  /** The follower count. */
+  async followers(channel: PlatformChannel): Promise<CountRef | null> {
+    const json = await this.call<{ followers_count?: number }>("users.get", {
+      user_ids: channel.id,
+      fields: "followers_count",
+    });
+    const count = json?.followers_count;
+    if (count === undefined) return null;
+    return count > 0 ? { tag: "has", count } : { tag: "no" };
+  }
 }

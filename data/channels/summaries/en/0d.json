@@ -1,39 +1,7 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T16:32:21.032Z",
+  "generatedAt": "2026-10-22T02:31:32.427Z",
   "channels": [
-    {
-      "id": "bilibili:1120494980",
-      "name": "八桦卡夜娜",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "regionSource": "declared",
-      "agency": "极光社",
-      "affiliation": "group",
-      "avatar": null,
-      "subscribers": null,
-      "isSinging": false,
-      "activity": "unknown",
-      "subscribersHidden": true,
-      "twitchLogin": null,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "links": [
-        {
-          "p": "bilibili",
-          "u": "https://space.bilibili.com/1120494980",
-          "h": null
-        },
-        {
-          "p": "twitch",
-          "u": "https://www.twitch.tv/cayenahakaba",
-          "h": null
-        }
-      ]
-    },
     {
       "id": "UC7Gb7Uawe20QyFibhLl1lzA",
       "name": "Luca_EN_Official",
@@ -42,6 +10,7 @@
       "role": "vtuber",
       "region": "en",
       "regionSource": "declared",
+      "language": "en",
       "agency": "NIJISANJI EN",
       "affiliation": "group",
       "avatar": null,
@@ -53,6 +22,7 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
+      "verification": null,
       "links": [
         {
           "p": "bilibili",
@@ -74,6 +44,7 @@
       "role": "vtuber",
       "region": "en",
       "regionSource": "declared",
+      "language": "en",
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -85,6 +56,7 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
+      "verification": null,
       "links": [
         {
           "p": "bilibili",
@@ -106,6 +78,7 @@
       "role": "vtuber",
       "region": "en",
       "regionSource": "declared",
+      "language": "en",
       "agency": "NIJISANJI EN",
       "affiliation": "group",
       "avatar": null,
@@ -117,6 +90,7 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
+      "verification": null,
       "links": [
         {
           "p": "bilibili",
@@ -138,6 +112,7 @@
       "role": "vtuber",
       "region": "en",
       "regionSource": "declared",
+      "language": "en",
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -149,6 +124,7 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
+      "verification": null,
       "links": [
         {
           "p": "bilibili",
@@ -175,6 +151,7 @@
       "role": "vtuber",
       "region": "en",
       "regionSource": "declared",
+      "language": "en",
       "agency": "NIJISANJI EN",
       "affiliation": "group",
       "avatar": null,
@@ -186,6 +163,7 @@
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
+      "verification": null,
       "links": [
         {
           "p": "youtube",

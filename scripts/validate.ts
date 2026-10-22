@@ -132,6 +132,8 @@ function validateItems(): Item[] {
   for (const region of fs.readdirSync(itemsRoot)) {
     const dir = path.join(itemsRoot, region);
     if (!fs.statSync(dir).isDirectory()) continue;
+    // `live.json` and `upcoming.json` are *derived* views of the shards
+    // below — counting them here would double-count every live item.
     for (const file of fs.readdirSync(dir)) {
       if (!file.endsWith(".json")) continue;
       const parsed = JSON.parse(

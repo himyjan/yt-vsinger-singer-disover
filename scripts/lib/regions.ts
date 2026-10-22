@@ -250,6 +250,44 @@ export function detectLanguage(text: string | null | undefined): string | null {
 }
 
 /**
+ * The language a region implies.
+ *
+ * The region says which scene the performer is in, and the language says what
+ * they perform in — and for a VTuber the second follows the first. A
+ * Taiwanese performer writes a Japanese-style stage name all the time, and
+ * the kana in it says nothing about the language they sing in.
+ */
+export const REGION_LANGUAGE: Record<RegionCode, string | null> = {
+  jp: "ja",
+  cn: "zh-Hans",
+  tw: "zh-Hant",
+  // Hong Kong's primary language is Cantonese, which is a separate language
+  // from written Mandarin — `yue` is its ISO 639-3 code.
+  hk: "yue",
+  kr: "ko",
+  en: "en",
+  id: "id",
+  my: "ms",
+  sea: "en",
+  unknown: null,
+};
+
+/**
+ * Settles a record's language from its region.
+ *
+ * The region is the authoritative fact; the language follows it. This is
+ * applied *after* the region is final, because the region can change at
+ * several points — a roster entry, a platform prior, an override — and the
+ * language has to follow whichever one won.
+ */
+export function languageForRegion(
+  region: RegionCode,
+  fallback: string | null = null,
+): string | null {
+  return REGION_LANGUAGE[region] ?? fallback;
+}
+
+/**
  * Maps an ISO 639-1 language code to the project's region code.
  *
  * The two vocabularies are deliberately separate: `ja` (language) becomes
@@ -274,6 +312,119 @@ export function languageToRegion(lang: string | null): RegionCode | null {
  * — to disambiguate kanji-only names. 「歌枠」 is Japanese; 「翻唱」 is
  * Chinese; 「노래」 is Korean.
  */
+/**
+/**
+ * The patterns a performer uses to state their own language.
+ *
+ * A channel that writes 「主な配信言語: 広東語」 is stating a fact about
+ * themselves — a far better signal than anything inferred from the name or
+ * the region.
+ */
+export const LANGUAGE_STATEMENT_PATTERNS: {
+  language: string;
+  patterns: string[];
+}[] = [
+  {
+    // Cantonese — its own language, not written Mandarin.
+    language: "yue",
+    patterns: [
+      "広東語",
+      "廣東語",
+      "广东语",
+      "粵語",
+      "粤语",
+      "cantonese",
+      "廣州話",
+      "广州话",
+    ],
+  },
+  { language: "ja", patterns: ["日本語", "japanese", "日語", "日语"] },
+  {
+    language: "zh-Hant",
+    patterns: ["繁體中文", "繁体中文", "正體中文", "國語", "国语", "mandarin"],
+  },
+  {
+    language: "zh-Hans",
+    patterns: ["简体中文", "普通話", "普通话"],
+  },
+  { language: "ko", patterns: ["한국어", "한국", "korean"] },
+  { language: "en", patterns: ["english", "英語", "英语"] },
+  { language: "id", patterns: ["bahasa indonesia", "indonesia"] },
+  { language: "ms", patterns: ["bahasa melayu", "malay"] },
+];
+
+/**
+ * The words that introduce a language statement.
+ *
+ * The pattern has to be a *statement*, not a passing mention — 「中文」 in a
+ * sentence about a Chinese song is not a language declaration.
+ */
+export const LANGUAGE_STATEMENT_LEADS = [
+  "主な配信言語",
+  "主要配信言語",
+  "配信言語",
+  "主な言語",
+  "主要語言",
+  "主要语言",
+  "使用言語",
+  "使用语言",
+  "言語",
+  "语言",
+  "language",
+  "languages",
+  "speaks",
+  "streaming language",
+  "主要使用语言",
+];
+
+/**
+ * Reads an explicit language statement out of a description.
+ *
+ * Returns `null` when there is no statement — the caller then falls back to
+ * the region.
+ */
+export function detectLanguageStatement(
+  text: string | null | undefined,
+): string | null {
+  if (!text) return null;
+  const haystack = text.toLowerCase();
+
+  for (const lead of LANGUAGE_STATEMENT_LEADS) {
+    const leadIndex = haystack.indexOf(lead.toLowerCase());
+    if (leadIndex < 0) continue;
+
+    // Only look at the text right after the lead — a statement names its
+    // language immediately.
+    const window = haystack.slice(leadIndex, leadIndex + lead.length + 24);
+    for (const { language, patterns } of LANGUAGE_STATEMENT_PATTERNS) {
+      for (const pattern of patterns) {
+        if (window.includes(pattern.toLowerCase())) return language;
+      }
+    }
+  }
+  return null;
+}
+
+export const CANTONESE_MARKERS = [
+  "粵語",
+  "粤语",
+  "廣東話",
+  "广东话",
+  "廣州話",
+  "广州话",
+  "港式",
+  "cantonese",
+];
+
+/** Whether a text identifies a Cantonese-speaking performer. */
+export function detectCantonese(text: string | null | undefined): boolean {
+  if (!text) return false;
+  const haystack = text.toLowerCase();
+  return CANTONESE_MARKERS.some((marker) =>
+    haystack.includes(marker.toLowerCase()),
+  );
+}
+
 export const LOCALE_TOKENS: { region: RegionCode; tokens: string[] }[] = [
   {
     region: "cn",

@@ -135,7 +135,7 @@ export function toSummary(c: Channel): ChannelSummary {
     gender: c.gender,
     isAi: c.isAi,
     variant: c.variant,
-    confidence: c.confidence,
+    verification: c.verification,
     links: c.platforms.map((p) => ({
       p: p.platform,
       u: p.url,

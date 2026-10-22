@@ -93,6 +93,12 @@ export interface PlatformAdapter {
   live(channel: PlatformChannel): Promise<PlatformUpload[]>;
   /** Discovers channels by keyword. Used by the discovery sweep. */
   search?(query: string, limit: number): Promise<PlatformChannel[]>;
+  /**
+   * The follower / subscriber count for a channel.
+   *
+   * Optional: not every platform publishes one without authentication.
+   */
+  followers?(channel: PlatformChannel): Promise<CountRef | null>;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -201,6 +207,51 @@ export function orderPlatformLinks<
     return index < 0 ? PLATFORM_PRIORITY.length : index;
   };
   return [...links].sort((a, b) => rank(a) - rank(b));
+}
+
+/**
+ * Picks the subscriber count for a channel.
+ *
+ * A performer with accounts on several platforms has several counts, and
+ * they are not the same number — a Bilibili channel can have more followers
+ * than the same performer's YouTube channel has subscribers. The rule is:
+ *
+ * 1. the **primary platform's** count — the platform the record is about;
+ * 2. **YouTube's**, because it is the platform the dataset is keyed on and
+ *    the count people quote;
+ * 3. any other platform's.
+ *
+ * The per-platform counts always stay on the `PlatformLink`s.
+ */
+export function pickSubscribers(channel: {
+  id: string;
+  subscribers?: CountRef;
+  platforms?: { platform: PlatformId; subscribers?: CountRef }[];
+}): CountRef {
+  const primary = primaryPlatformOf(channel);
+  if (primary) {
+    const link = channel.platforms?.find((p) => p.platform === primary);
+    if (link?.subscribers && link.subscribers.tag !== "hidden") {
+      return link.subscribers;
+    }
+  }
+
+  const youtube = channel.platforms?.find((p) => p.platform === "youtube");
+  if (youtube?.subscribers && youtube.subscribers.tag !== "hidden") {
+    return youtube.subscribers;
+  }
+
+  for (const platform of PLATFORM_PRIORITY) {
+    const link = channel.platforms?.find((p) => p.platform === platform);
+    if (link?.subscribers && link.subscribers.tag !== "hidden") {
+      return link.subscribers;
+    }
+  }
+
+  if (channel.subscribers && channel.subscribers.tag !== "hidden") {
+    return channel.subscribers;
+  }
+  return { tag: "hidden" };
 }
 
 /* -------------------------------------------------------------------------- */

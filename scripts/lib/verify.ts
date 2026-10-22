@@ -166,7 +166,6 @@ const RESPONSE_SCHEMA = {
     "gender",
     "isAi",
     "isAggregator",
-    "confidence",
     "reasoning",
   ],
 } as const;
