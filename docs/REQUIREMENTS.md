@@ -513,6 +513,20 @@ their session cookie; the three that do use it.
 - `[x]` Subscriptions are matched by channel id first, then by normalised
       display name, so a YouTube subscription of a VTuber who also streams on
       Twitch is recognised.
+- `[x]` A **subscribed / not subscribed** filter on the Channels view, shown
+      once an account is linked — the discovery direction: the performers the
+      user does *not* follow yet.
+- `[x]` After linking, the app switches to the subscription list and reports
+      how many were linked, so a link that produced nothing is never silent.
+- `[x]` A failed platform request names its cause instead of looking like an
+      empty result: `youtube.readonly` missing, YouTube Data API v3 not
+      enabled in the project, quota exhausted, account without a channel,
+      expired token, or a consent-screen refusal (`access_denied`,
+      `origin_mismatch`).
+- `[x]` The linked account's own name and avatar come from
+      `channels.list(mine=true)`, which the `youtube.readonly` scope already
+      allows; `oauth2/v3/userinfo` needs the `profile` scope and is only a
+      fallback.
 
 ---
 

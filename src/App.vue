@@ -113,6 +113,13 @@ const SUB_FILTERS = [
   { id: "untracked", label: "Not tracked", countKey: "untracked" },
 ] as const;
 
+/** The subscribed / not-subscribed filter of the Channels view. */
+const CHANNEL_SUB_FILTERS = [
+  { id: "all", label: "All" },
+  { id: "subscribed", label: "Subscribed" },
+  { id: "not-subscribed", label: "Not subscribed" },
+] as const;
+
 const LANGUAGES = [
   { id: "all", label: "Any language", title: "Every performer" },
   { id: "ja", label: "🇯🇵 日本語", title: "Performers who stream in Japanese" },
@@ -248,22 +255,36 @@ const visibleSongs = computed(() =>
   ),
 );
 
-const visibleChannels = computed(() =>
-  sortChannels(
-    filterChannels(summaries.value, {
-      kind: state.scope,
-      region: state.region,
-      gender: state.gender,
-      ai: state.ai,
-      affiliation: state.affiliation,
-      language: state.language,
-      singing: state.singing,
-      text: state.query.trim() || undefined,
-      limit: 400,
-    }),
-    state.sort.channels,
-  ),
-);
+const visibleChannels = computed(() => {
+  const channels = filterChannels(summaries.value, {
+    kind: state.scope,
+    region: state.region,
+    gender: state.gender,
+    ai: state.ai,
+    affiliation: state.affiliation,
+    language: state.language,
+    singing: state.singing,
+    text: state.query.trim() || undefined,
+    limit: 400,
+  });
+
+  /**
+   * Subscribed / not subscribed. Only meaningful once an account is linked,
+   * and matched through the same id-or-name rule the subscriptions use, so a
+   * YouTube subscription of a channel catalogued under its Twitch id is
+   * still recognised as "subscribed".
+   */
+  const filtered =
+    !hasAnyAccount.value || state.channelSubs === "all"
+      ? channels
+      : channels.filter((channel) =>
+          state.channelSubs === "subscribed"
+            ? subscribedChannelIds.value.has(channel.id)
+            : !subscribedChannelIds.value.has(channel.id),
+        );
+
+  return sortChannels(filtered, state.sort.channels);
+});
 
 const linkedProviders = computed(() =>
   AUTH_PROVIDERS.filter((provider) => (state.accounts[provider.id] ?? []).length > 0),
@@ -298,6 +319,28 @@ const subscriptionCounts = computed(() => {
     tracked: all.filter((s) => s.known).length,
     untracked: all.filter((s) => !s.known).length,
   };
+});
+
+/**
+ * The dataset channels the linked accounts follow.
+ *
+ * A subscription carries the platform's own channel id, while the dataset may
+ * key the same performer by another platform's id, so the name is also
+ * matched — the same rule `linkProvider` uses to mark a subscription as
+ * `known`. Both an exact id and a name match count.
+ */
+const subscribedChannelIds = computed(() => {
+  const ids = new Set<string>();
+  const byName = new Map<string, string>();
+  for (const summary of summaries.value) {
+    byName.set(normalizeForMatch(summary.name), summary.id);
+  }
+  for (const sub of allSubscriptions()) {
+    if (sub.channelId) ids.add(sub.channelId);
+    const named = byName.get(normalizeForMatch(sub.title));
+    if (named) ids.add(named);
+  }
+  return ids;
 });
 
 /**
@@ -485,6 +528,9 @@ async function linkProvider(provider: AuthProvider): Promise<void> {
   }
 
   state.subscriptionsLoading = true;
+  if (provider.id === "youtube") {
+    showToast("info", "Opening Google sign-in — finish in the popup.", 15000);
+  }
   try {
     const linked = await provider.link();
     if (!linked) {
@@ -497,7 +543,9 @@ async function linkProvider(provider: AuthProvider): Promise<void> {
     };
     addAccount(account);
 
-    const remote = await provider.subscriptions(account);
+    const remote = await provider.subscriptions(account, (progress) => {
+      state.subscriptionsProgress = progress;
+    });
     const byName = new Map<string, ChannelSummary>();
     for (const summary of summaries.value) {
       byName.set(normalizeForMatch(summary.name), summary);
@@ -520,16 +568,34 @@ async function linkProvider(provider: AuthProvider): Promise<void> {
     });
 
     setSubscriptions(subscriptionKey(provider.id, account.id), mapped);
-    showToast(
-      "success",
-      `${provider.label}: ${mapped.length} subscription(s) linked, ${mapped.filter((m) => m.known).length} already tracked.`,
-      6000,
-    );
+
+    /**
+     * The subscriptions are the reason to link: show them. A successful
+     * link that leaves the user on the page they started on looks like
+     * nothing happened.
+     */
+    if (mapped.length > 0) state.view = "subs";
+
+    if (mapped.length === 0) {
+      showToast(
+        "info",
+        `${provider.label}: account linked, but it returned no subscriptions. ` +
+          `Check that YouTube Data API v3 is enabled for the project and that this is the account that owns the channel.`,
+        10000,
+      );
+    } else {
+      showToast(
+        "success",
+        `${provider.label}: ${mapped.length} subscription(s) linked, ${mapped.filter((m) => m.known).length} already tracked.`,
+        6000,
+      );
+    }
   } catch (err) {
+    console.error("[auth] link failed", err);
     showToast(
       "error",
       `${provider.label}: ${(err as Error).message}`,
-      6000,
+      12000,
     );
   } finally {
     state.subscriptionsLoading = false;
@@ -1251,12 +1317,36 @@ onMounted(async () => {
 
       <!-- Channels -->
       <section v-else-if="state.view === 'channels'" aria-label="Channels">
-        <h2 class="mb-3 text-lg font-bold">
-          Channels
-          <span class="ml-1 text-sm font-normal text-neutral-500">
-            {{ visibleChannels.length }}
-          </span>
-        </h2>
+        <div class="mb-3 flex flex-wrap items-center justify-between gap-3">
+          <h2 class="text-lg font-bold">
+            Channels
+            <span class="ml-1 text-sm font-normal text-neutral-500">
+              {{ visibleChannels.length }}
+            </span>
+          </h2>
+          <!-- Subscribed / not subscribed, once an account is linked -->
+          <div
+            v-if="hasAnyAccount"
+            class="flex shrink-0 items-center rounded-full border border-black/10 bg-white p-0.5 dark:border-white/12 dark:bg-neutral-900"
+            role="group"
+            aria-label="Subscription filter"
+          >
+            <button
+              v-for="option in CHANNEL_SUB_FILTERS"
+              :key="option.id"
+              type="button"
+              class="rounded-full px-2.5 py-1 text-[11px] font-semibold whitespace-nowrap transition"
+              :class="
+                state.channelSubs === option.id
+                  ? 'bg-purple-600 text-white'
+                  : 'text-neutral-500 hover:text-neutral-800 dark:hover:text-neutral-100'
+              "
+              @click="state.channelSubs = option.id"
+            >
+              {{ option.label }}
+            </button>
+          </div>
+        </div>
         <div
           class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6"
         >
@@ -1330,14 +1420,22 @@ onMounted(async () => {
               v-for="provider in AUTH_PROVIDERS"
               :key="provider.id"
               type="button"
-              class="rounded-full px-3 py-2 text-xs font-bold text-white transition hover:opacity-85"
+              class="rounded-full px-3 py-2 text-xs font-bold text-white transition hover:opacity-85 disabled:opacity-40"
               :style="{ backgroundColor: provider.color }"
               :title="provider.unavailableReason() ?? ''"
+              :disabled="state.subscriptionsLoading"
               @click="linkProvider(provider)"
             >
               {{ provider.label }}
             </button>
           </div>
+          <p
+            v-if="state.subscriptionsLoading"
+            class="mt-3 text-xs text-neutral-500"
+          >
+            Waiting for the sign-in window — finish signing in there, then come
+            back to this tab.
+          </p>
         </div>
 
         <div

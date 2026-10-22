@@ -61,8 +61,16 @@ export interface AuthProvider {
    * Resolves with the linked account, or `null` when the user cancels.
    */
   link(): Promise<ProviderAccount | null>;
-  /** Fetches the account's followed channels / singers. */
-  subscriptions(account: ProviderAccount): Promise<RemoteSubscription[]>;
+  /**
+   * Fetches the account's followed channels / singers.
+   *
+   * `onProgress` is called after each page when the platform paginates, so a
+   * large list can show "450 / 4,000" instead of freezing.
+   */
+  subscriptions(
+    account: ProviderAccount,
+    onProgress?: (progress: { loaded: number; total: number | null }) => void,
+  ): Promise<RemoteSubscription[]>;
   /** Ends the session. */
   unlink(account: ProviderAccount): void;
 }
@@ -126,42 +134,110 @@ export const youtubeProvider: AuthProvider = {
   async link(): Promise<ProviderAccount | null> {
     if (!env.googleClientId) return null;
 
-    const client = await getGoogleTokenClient();
-    if (!client) return null;
+    return new Promise((resolve, reject) => {
+      /**
+       * A popup that never comes back — blocked, closed, or a consent screen
+       * that cannot reach the opener — would otherwise leave this promise
+       * pending forever, and with it the UI's "linking" state.
+       */
+      const timer = setTimeout(() => {
+        reject(
+          new Error(
+            "The Google sign-in window did not return. Allow popups for this site and try again.",
+          ),
+        );
+      }, 180_000);
+      const finish = (): void => clearTimeout(timer);
 
-    return new Promise((resolve) => {
-      client.requestAccessToken({
-        prompt: "consent",
-        callback: async (response) => {
-          if (!response.access_token) {
-            resolve(null);
+      const onToken = async (response: {
+        access_token?: string;
+        expires_in?: number;
+        error?: string;
+      }): Promise<void> => {
+        finish();
+        if (!response.access_token) {
+          if (response.error === "access_denied") {
+            reject(
+              new Error(
+                "Google refused access — the account shown in the popup must be listed under Google Auth Platform → Audience → Test users.",
+              ),
+            );
             return;
           }
-          let name: string | null = null;
-          let picture: string | null = null;
-          try {
-            const profile = await fetchProfile(response.access_token);
-            name = profile.name;
-            picture = profile.picture;
-          } catch {
-            /* the profile is a nice-to-have */
+          resolve(null);
+          return;
+        }
+        let name: string | null = null;
+        let picture: string | null = null;
+        try {
+          const profile = await fetchProfile(response.access_token);
+          name = profile.name;
+          picture = profile.picture;
+        } catch {
+          /* the profile is a nice-to-have */
+        }
+        resolve({
+          provider: "youtube",
+          name,
+          picture,
+          token: response.access_token,
+          expiresAt: Date.now() + (response.expires_in ?? 3600) * 1000,
+        });
+      };
+
+      const onError = (error: { type?: string; message?: string }): void => {
+        finish();
+        /**
+         * Closing the popup is a cancel; everything else is a real failure
+         * (a misconfigured origin, an account missing from the test users)
+         * and must be reported — silently resolving `null` made every one of
+         * them look like the user changing their mind.
+         */
+        if (
+          error?.type === "popup_closed" ||
+          error?.type === "popup_closed_by_user"
+        ) {
+          resolve(null);
+          return;
+        }
+        reject(new Error(googleLinkError(error?.type, error?.message)));
+      };
+
+      /**
+       * **The callback must be registered on `initTokenClient`.** The
+       * `requestAccessToken` override only accepts `prompt`, `scope`,
+       * `login_hint`, `state` and the consent flags — a `callback` passed
+       * there is silently discarded, so the token arrived at the no-op
+       * callback and the link hung forever. (The COOP `window.closed` warning
+       * in the console is unrelated noise from Google's own script.)
+       */
+      getGoogleTokenClient(onToken, onError)
+        .then((client) => {
+          if (!client) {
+            finish();
+            reject(new Error("Google sign-in is not available in this browser."));
+            return;
           }
-          resolve({
-            provider: "youtube",
-            name,
-            picture,
-            token: response.access_token,
-            expiresAt: Date.now() + (response.expires_in ?? 3600) * 1000,
-          });
-        },
-        error_callback: () => resolve(null),
-      });
+          client.requestAccessToken({ prompt: "consent" });
+        })
+        .catch(() => {
+          finish();
+          reject(
+            new Error(
+              "Google's sign-in script could not be loaded — check the network (or an ad-blocker) and try again.",
+            ),
+          );
+        });
     });
   },
 
-  async subscriptions(account: ProviderAccount): Promise<RemoteSubscription[]> {
+  async subscriptions(
+    account: ProviderAccount,
+    onProgress?: (progress: { loaded: number; total: number | null }) => void,
+  ): Promise<RemoteSubscription[]> {
     const all: RemoteSubscription[] = [];
     let pageToken: string | undefined;
+    let total: number | null = null;
 
     do {
       const params = new URLSearchParams({
@@ -171,17 +247,42 @@ export const youtubeProvider: AuthProvider = {
         order: "alphabetical",
         ...(pageToken ? { pageToken } : {}),
       });
-      const res = await fetch(
-        `https://www.googleapis.com/youtube/v3/subscriptions?${params}`,
-        {
-          headers: {
-            Authorization: `Bearer ${account.token}`,
-            Accept: "application/json",
-          },
-        },
-      );
-      if (!res.ok) break;
+      const url = `https://www.googleapis.com/youtube/v3/subscriptions?${params}`;
+      const headers = {
+        Authorization: `Bearer ${account.token}`,
+        Accept: "application/json",
+      };
+
+      /**
+       * A page is retried twice: a single transient 500 halfway through a
+       * 4,000-subscription list must not silently truncate it. Client errors
+       * (401/403/400) are not retried — the same request cannot succeed.
+       */
+      let res: Response | null = null;
+      for (let attempt = 0; attempt < 3; attempt++) {
+        res = await fetch(url, { headers });
+        if (res.ok || res.status < 500) break;
+        await new Promise((r) => setTimeout(r, 500 * (attempt + 1)));
+      }
+      if (!res || !res.ok) {
+        /**
+         * A failed page must not look like "this account subscribes to
+         * nothing": the reason is read out of the body and thrown, so the
+         * toast can name the actual cause (API disabled, scope missing…).
+         */
+        const body = await res?.text().catch(() => "") ?? "";
+        throw new Error(googleApiError(res?.status ?? 0, body));
+      }
       const json = await res.json();
+      /**
+       * `pageInfo.totalResults` is what Google says the account has. Keeping
+       * it lets the UI say "loaded 956 of 4,000" instead of pretending the
+       * list is complete — the API caps what it will return, and the number
+       * it reports is the only way to see that.
+       */
+      if (typeof json.pageInfo?.totalResults === "number") {
+        total = json.pageInfo.totalResults;
+      }
       for (const entry of json.items ?? []) {
         const snippet = entry.snippet ?? {};
         all.push({
@@ -196,6 +297,7 @@ export const youtubeProvider: AuthProvider = {
         });
       }
       pageToken = json.nextPageToken;
+      onProgress?.({ loaded: all.length, total });
     } while (pageToken);
 
     return all;
@@ -206,18 +308,22 @@ export const youtubeProvider: AuthProvider = {
   },
 };
 
-let gisReady = false;
-
-async function getGoogleTokenClient(): Promise<GoogleTokenClient | null> {
+async function getGoogleTokenClient(
+  onToken: (response: {
+    access_token?: string;
+    expires_in?: number;
+    error?: string;
+  }) => void | Promise<void>,
+  onError: (error: { type?: string; message?: string }) => void,
+): Promise<GoogleTokenClient | null> {
   await loadScript("https://accounts.google.com/gsi/client");
-  gisReady = true;
   const oauth2 = window.google?.accounts?.oauth2;
   if (!oauth2) return null;
   return oauth2.initTokenClient({
     client_id: env.googleClientId ?? "",
     scope: YOUTUBE_SCOPE,
-    callback: () => {},
-    error_callback: () => {},
+    callback: onToken,
+    error_callback: onError,
   });
 }
 
@@ -245,27 +351,122 @@ function loadScript(src: string): Promise<void> {
   });
 }
 
+/**
+ * The linked account's own identity, for the account menu.
+ *
+ * `channels.list(mine=true)` needs only the `youtube.readonly` scope the
+ * token was granted — `oauth2/v3/userinfo` needs `profile`, which the token
+ * client never asked for, so it fails with a 403 and left the account with
+ * no name and no avatar (the "the UI did not change" symptom). The channel is
+ * also the better identity: the name and picture the user knows.
+ */
 async function fetchProfile(
   token: string,
 ): Promise<{ name: string | null; picture: string | null }> {
+  const headers = {
+    Authorization: `Bearer ${token}`,
+    Accept: "application/json",
+  };
+
+  try {
+    const res = await fetch(
+      "https://www.googleapis.com/youtube/v3/channels?part=snippet&mine=true",
+      { headers },
+    );
+    if (res.ok) {
+      const json = await res.json();
+      const snippet = json.items?.[0]?.snippet;
+      if (snippet) {
+        return {
+          name: snippet.title ?? null,
+          picture:
+            snippet.thumbnails?.default?.url ??
+            snippet.thumbnails?.medium?.url ??
+            null,
+        };
+      }
+    }
+  } catch {
+    /* fall through to userinfo */
+  }
+
   const res = await fetch(
     "https://www.googleapis.com/oauth2/v3/userinfo",
-    { headers: { Authorization: `Bearer ${token}` } },
+    { headers },
   );
   if (!res.ok) throw new Error("profile request failed");
   const json = await res.json();
   return { name: json.name ?? null, picture: json.picture ?? null };
 }
 
+/**
+ * Turns a Google Identity Services failure into something the user can act
+ * on. The type is what the SDK reports; the message is a hint, not a spec.
+ */
+function googleLinkError(type?: string, message?: string): string {
+  switch (type) {
+    case "access_denied":
+      return "Google refused the request — the signed-in account is not on the OAuth consent screen's test-user list.";
+    case "origin_mismatch":
+      return "This origin is not in the OAuth client's Authorized JavaScript origins.";
+    case "popup_failed_to_open":
+      return "The sign-in popup was blocked — allow popups for this site and try again.";
+    case "idpiframe_initialization_failed":
+      return "Google could not initialise in this browser (third-party cookies are often the cause).";
+    case "immediate_failed":
+      return "Google rejected the silent sign-in — link the account again.";
+    default:
+      return `Google sign-in failed${type ? ` (${type})` : ""}${message ? `: ${message}` : ""}.`;
+  }
+}
+
+/**
+ * Reads the reason out of a failed YouTube Data API response.
+ *
+ * The API answers with `{ error: { message, errors: [{ reason }] } }`, and the
+ * `reason` is the part that tells the operator what to change — almost always
+ * "the API is not enabled", "the scope was not granted" or "quota".
+ */
+function googleApiError(status: number, body: string): string {
+  let reason = "";
+  let message = "";
+  try {
+    const json = JSON.parse(body);
+    reason = json?.error?.errors?.[0]?.reason ?? "";
+    message = json?.error?.message ?? "";
+  } catch {
+    /* not JSON — the status is all we have */
+  }
+
+  switch (reason) {
+    case "accessNotConfigured":
+      return "the YouTube Data API v3 is not enabled for this Google Cloud project — enable it under APIs & Services → Library, then retry.";
+    case "quotaExceeded":
+    case "rateLimitExceeded":
+      return "the YouTube Data API quota for today is exhausted — try again tomorrow or raise the quota.";
+    case "youtubeSignupRequired":
+      return "this Google account has no YouTube channel.";
+    case "insufficientPermissions":
+    case "ACCESS_TOKEN_SCOPE_INSUFFICIENT":
+      return "the token was granted without the YouTube permission — unlink the account and link it again, leaving the YouTube checkbox ticked.";
+  }
+
+  if (status === 401) {
+    return "the Google token expired — link the account again.";
+  }
+  if (status === 403) {
+    return `Google denied the request${message ? `: ${message}` : "."}`;
+  }
+  return `YouTube returned ${status}${message ? `: ${message}` : ""}.`;
+}
+
 interface GoogleTokenClient {
-  requestAccessToken(options: {
-    prompt?: string;
-    callback?: (response: {
-      access_token?: string;
-      expires_in?: number;
-    }) => void;
-    error_callback?: (error: { type?: string; message?: string }) => void;
-  }): void;
+  /**
+   * Only [`OverridableTokenClientConfig`] fields are honoured here — a
+   * `callback` passed in this object is ignored, which is why the real one is
+   * registered on `initTokenClient`.
+   */
+  requestAccessToken(options?: { prompt?: string; login_hint?: string }): void;
 }
 
 declare global {
@@ -279,6 +480,7 @@ declare global {
             callback: (response: {
               access_token?: string;
               expires_in?: number;
+              error?: string;
             }) => void;
             error_callback: (error: { type?: string; message?: string }) => void;
           }): GoogleTokenClient;
