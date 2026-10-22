@@ -98,6 +98,16 @@ export type PlatformId =
  * inferred at display time so the dataset can be filtered on it.
  */
 /**
+ * The performer's business relationship.
+ *
+ * Most VTubers are independent — a solo performer with no agency behind
+ * them — and a large part of the catalogue belongs to a commercial group.
+ * Knowing which is which is the difference between "a VTuber" and "a VTuber
+ * signed to a company", and it decides how a viewer should follow them.
+ */
+export type Affiliation = "independent" | "group" | "unknown";
+
+/**
  * How a channel's region was determined.
  *
  * | Source | Reliability |
@@ -254,6 +264,13 @@ export interface Channel {
   language: string | null;
   /** Agency / group, e.g. `hololive`, `nijisanji`, `kmvs`. */
   agency: string | null;
+  /**
+   * Whether the performer is independent or signed to a business group.
+   *
+   * `unknown` means the sources do not say — which is different from
+   * `independent`, which means they positively are a solo act.
+   */
+  affiliation: Affiliation;
   /** Channel avatar URL. */
   avatar: string | null;
   /** Channel banner URL. */
@@ -303,6 +320,14 @@ export interface Channel {
    * days of scheduled runs.
    */
   lastItemsFetchedAt: string | null;
+  /**
+   * ISO timestamp of the last time this channel's *profile* was fetched.
+   *
+   * The profile carries the description, the follower count and the
+   * platform-specific fields, and it has to be fetched one channel at a time —
+   * so it is rotated the same way the uploads are.
+   */
+  lastDetailsFetchedAt: string | null;
 
   /* --- lifecycle (from the reference tracking dataset) ------------------ */
 
@@ -356,6 +381,8 @@ export interface ChannelSummary {
   /** Which source decided the region. */
   regionSource: RegionSource;
   agency: string | null;
+  /** Independent or signed to a business group. */
+  affiliation: Affiliation;
   avatar: string | null;
   subscribers: number | null;
   isSinging: boolean;
@@ -458,6 +485,14 @@ export interface Item {
    * days of scheduled runs.
    */
   lastItemsFetchedAt: string | null;
+  /**
+   * ISO timestamp of the last time this channel's *profile* was fetched.
+   *
+   * The profile carries the description, the follower count and the
+   * platform-specific fields, and it has to be fetched one channel at a time —
+   * so it is rotated the same way the uploads are.
+   */
+  lastDetailsFetchedAt: string | null;
 }
 
 /** Compact projection used by list views and the search index. */

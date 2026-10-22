@@ -12,6 +12,7 @@
 
 import type {
   Activity,
+  Affiliation,
   ArtistKind,
   ArtistRole,
   Gender,
@@ -930,6 +931,57 @@ export const MARKERS = {
   COLLAB_MARKERS,
   CLIP_MARKERS,
 };
+
+/* -------------------------------------------------------------------------- */
+/* Affiliation                                                                */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * Markers that positively identify a solo / independent performer.
+ *
+ * These matter because "no agency listed" is ambiguous: it can mean the
+ * performer *is* independent, or that the source simply does not say.
+ */
+const INDEPENDENT_MARKERS = [
+  "independent",
+  "indie vtuber",
+  "indie virtual",
+  "solo project",
+  "个人势",
+  "個人勢",
+  "個人",
+  "独立",
+  "自主",
+  "フリー",
+  "freelance",
+  "self-produced",
+  "個人製作",
+  "无所属",
+  "無所屬",
+  "non-affiliated",
+];
+
+/**
+ * Decides whether a performer is independent or signed to a business group.
+ *
+ * - an agency name ⇒ `group`
+ * - an explicit independence statement ⇒ `independent`
+ * - otherwise ⇒ `unknown`
+ */
+export function detectAffiliation(
+  name: string | null | undefined,
+  description: string | null | undefined,
+  agency: string | null | undefined,
+): Affiliation {
+  if (agency && agency.trim()) return "group";
+
+  const text = normalize(
+    `${name ?? ""} ${description ?? ""}`,
+  );
+  if (has(text, INDEPENDENT_MARKERS)) return "independent";
+
+  return "unknown";
+}
 
 /* -------------------------------------------------------------------------- */
 /* Gender                                                                     */

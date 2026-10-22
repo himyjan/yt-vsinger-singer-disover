@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T16:02:13.938Z",
+  "generatedAt": "2026-10-21T16:32:21.032Z",
   "channels": [
     {
       "id": "bilibili:1858967562",
@@ -12,6 +12,7 @@
       "regionSource": "declared",
       "language": "en",
       "agency": "极光社",
+      "affiliation": "group",
       "avatar": null,
       "banner": null,
       "description": null,
@@ -29,8 +30,10 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T16:00:50.780Z",
-      "updatedAt": "2026-10-21T16:00:50.780Z",
+      "addedAt": "2026-10-21T16:30:06.041Z",
+      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -46,7 +49,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.572Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.262Z"
         },
         {
           "platform": "twitch",
@@ -59,7 +62,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.572Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.262Z"
         }
       ],
       "externals": {},
@@ -75,6 +78,7 @@
       "regionSource": "declared",
       "language": "ja",
       "agency": null,
+      "affiliation": "unknown",
       "avatar": null,
       "banner": null,
       "description": null,
@@ -92,8 +96,10 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T16:00:50.780Z",
-      "updatedAt": "2026-10-21T16:00:50.780Z",
+      "addedAt": "2026-10-21T16:30:06.041Z",
+      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -109,7 +115,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.995Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.683Z"
         },
         {
           "platform": "youtube",
@@ -122,7 +128,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.995Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.683Z"
         },
         {
           "platform": "twitch",
@@ -135,7 +141,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.995Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.683Z"
         }
       ],
       "externals": {},

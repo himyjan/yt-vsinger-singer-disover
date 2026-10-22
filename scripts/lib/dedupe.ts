@@ -22,7 +22,7 @@
  */
 
 import { IdentityRegistry, type Candidate } from "./identity";
-import type { Channel, RegionCode } from "./types";
+import type { Affiliation, Channel, RegionCode } from "./types";
 
 /** The identity keys a channel contributes. */
 function keysFor(channel: Channel): string[] {
@@ -66,11 +66,16 @@ function platformRegionOf(channel: Channel): RegionCode | null {
  * other's facts fill in its gaps. The canonical id is the one that looks
  * like a real channel id (`UC…` for YouTube) rather than a namespaced one.
  */
-function mergeChannels(target: Channel, other: Channel): Channel {
+export function mergeChannels(target: Channel, other: Channel): Channel {
   const preferOther =
     !target.id.startsWith("UC") && other.id.startsWith("UC");
 
   const merged: Channel = {
+    // `other` first, then `target`: the target's values win, and any field
+    // the target does not have is filled in from the other record. A plain
+    // `...target` would drop those fields entirely, which is how new fields
+    // went missing whenever two records were merged.
+    ...other,
     ...target,
     ...(preferOther ? { id: other.id } : {}),
     name: target.name || other.name,
@@ -101,6 +106,14 @@ function mergeChannels(target: Channel, other: Channel): Channel {
     })(),
     language: target.language ?? other.language,
     agency: target.agency ?? other.agency,
+    affiliation: (() => {
+      // The more specific answer wins: a positive statement beats "unknown".
+      const rank = (a: Affiliation | undefined) =>
+        a === "group" ? 3 : a === "independent" ? 2 : a === "unknown" ? 1 : 0;
+      return rank(target.affiliation) >= rank(other.affiliation)
+        ? (target.affiliation ?? "unknown")
+        : (other.affiliation ?? "unknown");
+    })(),
     avatar: target.avatar ?? other.avatar,
     banner: target.banner ?? other.banner,
     description: target.description ?? other.description,

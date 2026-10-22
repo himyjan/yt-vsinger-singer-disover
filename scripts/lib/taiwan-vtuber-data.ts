@@ -57,6 +57,15 @@ export interface TrackedVTuber {
   avatar: string | null;
   /** Agency / group. */
   group: string | null;
+  /**
+   * True when the track list lists the performer with **no** group.
+   *
+   * The track list has a `Group Name` column, and a performer who is a solo
+   * act simply has it empty. That is a positive statement — "no group" —
+   * not an absence of information, so it is recorded separately from
+   * `group === null`.
+   */
+  isIndependent: boolean;
 }
 
 interface ApiVTuber {
@@ -136,6 +145,8 @@ async function fetchNationality(
         twitchId: entry.Twitch?.id ?? null,
         avatar: entry.imgUrl ?? null,
         group: entry.group ?? null,
+        // The JSON API does not distinguish "no group" from "not listed".
+        isIndependent: false,
       });
     }
     return out;
@@ -181,6 +192,8 @@ export async function fetchTrackedVtubers(): Promise<
     existing.debutDate = entry.debutDate ?? existing.debutDate;
     existing.twitchId = entry.twitchId ?? existing.twitchId;
     existing.group = entry.group ?? existing.group;
+    // The track list is the only source that states "no group" positively.
+    existing.isIndependent = entry.isIndependent;
     if (entry.activity !== "unknown") existing.activity = entry.activity;
   }
 
@@ -304,6 +317,8 @@ export async function fetchTrackList(): Promise<TrackedVTuber[]> {
         twitchId: c.twitch >= 0 && cells[c.twitch] ? cells[c.twitch]! : null,
         avatar: null,
         group: c.group >= 0 ? cells[c.group] || null : null,
+        // An empty group column means the track list says they are solo.
+        isIndependent: !cells[c.group],
       });
     }
     return out;

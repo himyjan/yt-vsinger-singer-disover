@@ -16,6 +16,7 @@
 
 import { reactive, computed, watch } from "vue";
 import type {
+  Affiliation,
   ArtistKind,
   Gender,
   ItemCategory,
@@ -114,6 +115,11 @@ export const state = reactive({
   acousticOnly: false,
   /** Gender filter. */
   gender: "all" as Gender | "all",
+  /**
+   * Business filter: independent performers, agency performers, or both.
+   * `unknown` means the sources do not say.
+   */
+  affiliation: "all" as Affiliation | "all",
   /** AI filter: show AI performers, hide them, or show both. */
   ai: "all" as "ai" | "human" | "all",
   /**

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T16:02:13.938Z",
+  "generatedAt": "2026-10-21T16:32:21.032Z",
   "channels": [
     {
       "id": "UC47rNmkDcNgbOcM-2BwzJTQ",
@@ -12,6 +12,7 @@
       "regionSource": "declared",
       "language": "en",
       "agency": "NIJISANJI EN",
+      "affiliation": "group",
       "avatar": null,
       "banner": null,
       "description": null,
@@ -29,8 +30,10 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T16:00:50.780Z",
-      "updatedAt": "2026-10-21T16:00:50.780Z",
+      "addedAt": "2026-10-21T16:30:06.041Z",
+      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -46,7 +49,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.545Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.232Z"
         }
       ],
       "externals": {},
@@ -62,6 +65,7 @@
       "regionSource": "declared",
       "language": "en",
       "agency": "NIJISANJI EN",
+      "affiliation": "group",
       "avatar": null,
       "banner": null,
       "description": null,
@@ -79,8 +83,10 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T16:00:50.780Z",
-      "updatedAt": "2026-10-21T16:00:50.780Z",
+      "addedAt": "2026-10-21T16:30:06.041Z",
+      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -96,7 +102,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.530Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.216Z"
         }
       ],
       "externals": {},
@@ -112,6 +118,7 @@
       "regionSource": "declared",
       "language": "zh-Hans",
       "agency": null,
+      "affiliation": "unknown",
       "avatar": null,
       "banner": null,
       "description": null,
@@ -129,8 +136,10 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T16:00:50.780Z",
-      "updatedAt": "2026-10-21T16:00:50.780Z",
+      "addedAt": "2026-10-21T16:30:06.041Z",
+      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -146,7 +155,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.519Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.205Z"
         },
         {
           "platform": "twitch",
@@ -159,7 +168,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.519Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.205Z"
         }
       ],
       "externals": {},
@@ -175,6 +184,7 @@
       "regionSource": "script",
       "language": "en",
       "agency": null,
+      "affiliation": "unknown",
       "avatar": null,
       "banner": null,
       "description": null,
@@ -192,8 +202,10 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T16:00:50.780Z",
-      "updatedAt": "2026-10-21T16:00:50.780Z",
+      "addedAt": "2026-10-21T16:30:06.041Z",
+      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -209,7 +221,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.699Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.388Z"
         },
         {
           "platform": "youtube",
@@ -222,7 +234,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.699Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.388Z"
         }
       ],
       "externals": {},

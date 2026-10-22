@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T16:02:13.938Z",
+  "generatedAt": "2026-10-21T16:32:21.032Z",
   "channels": [
     {
       "id": "bilibili:3493137448176445",
@@ -12,6 +12,7 @@
       "regionSource": "declared",
       "language": "en",
       "agency": null,
+      "affiliation": "unknown",
       "avatar": null,
       "banner": null,
       "description": null,
@@ -29,8 +30,10 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T16:00:50.780Z",
-      "updatedAt": "2026-10-21T16:00:50.780Z",
+      "addedAt": "2026-10-21T16:30:06.041Z",
+      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -46,7 +49,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.551Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.238Z"
         },
         {
           "platform": "twitch",
@@ -59,7 +62,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.551Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.238Z"
         }
       ],
       "externals": {},
@@ -75,6 +78,7 @@
       "regionSource": "declared",
       "language": "zh-Hans",
       "agency": "NIJISANJI",
+      "affiliation": "group",
       "avatar": null,
       "banner": null,
       "description": null,
@@ -92,8 +96,10 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T16:00:50.780Z",
-      "updatedAt": "2026-10-21T16:00:50.780Z",
+      "addedAt": "2026-10-21T16:30:06.041Z",
+      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -109,7 +115,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.721Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.410Z"
         },
         {
           "platform": "bilibili",
@@ -122,7 +128,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.721Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.410Z"
         }
       ],
       "externals": {},
@@ -138,6 +144,7 @@
       "regionSource": "declared",
       "language": "zh-Hant",
       "agency": null,
+      "affiliation": "unknown",
       "avatar": null,
       "banner": null,
       "description": null,
@@ -155,8 +162,10 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T16:00:50.780Z",
-      "updatedAt": "2026-10-21T16:00:50.780Z",
+      "addedAt": "2026-10-21T16:30:06.041Z",
+      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -172,7 +181,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.569Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.259Z"
         },
         {
           "platform": "bilibili",
@@ -185,7 +194,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.569Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.259Z"
         }
       ],
       "externals": {},
@@ -201,6 +210,7 @@
       "regionSource": "declared",
       "language": "ja",
       "agency": "Hololive",
+      "affiliation": "group",
       "avatar": null,
       "banner": null,
       "description": null,
@@ -218,8 +228,10 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T16:00:50.780Z",
-      "updatedAt": "2026-10-21T16:00:50.780Z",
+      "addedAt": "2026-10-21T16:30:06.041Z",
+      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -235,7 +247,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.630Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.320Z"
         },
         {
           "platform": "bilibili",
@@ -248,7 +260,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.630Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.320Z"
         }
       ],
       "externals": {},
@@ -264,6 +276,7 @@
       "regionSource": "declared",
       "language": "ja",
       "agency": "774 inc",
+      "affiliation": "group",
       "avatar": null,
       "banner": null,
       "description": null,
@@ -281,8 +294,10 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T16:00:50.780Z",
-      "updatedAt": "2026-10-21T16:00:50.780Z",
+      "addedAt": "2026-10-21T16:30:06.041Z",
+      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -298,7 +313,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.720Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.409Z"
         },
         {
           "platform": "bilibili",
@@ -311,7 +326,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.720Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.409Z"
         }
       ],
       "externals": {},
@@ -327,6 +342,7 @@
       "regionSource": "declared",
       "language": "ja",
       "agency": null,
+      "affiliation": "unknown",
       "avatar": null,
       "banner": null,
       "description": null,
@@ -344,8 +360,10 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T16:00:50.780Z",
-      "updatedAt": "2026-10-21T16:00:50.780Z",
+      "addedAt": "2026-10-21T16:30:06.041Z",
+      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -361,7 +379,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.586Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.276Z"
         }
       ],
       "externals": {},
@@ -377,6 +395,7 @@
       "regionSource": "declared",
       "language": "ja",
       "agency": "Unlimited",
+      "affiliation": "group",
       "avatar": null,
       "banner": null,
       "description": null,
@@ -394,8 +413,10 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T16:00:50.780Z",
-      "updatedAt": "2026-10-21T16:00:50.780Z",
+      "addedAt": "2026-10-21T16:30:06.041Z",
+      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -411,7 +432,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.589Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.278Z"
         },
         {
           "platform": "bilibili",
@@ -424,7 +445,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.589Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.278Z"
         }
       ],
       "externals": {},
@@ -440,6 +461,7 @@
       "regionSource": "declared",
       "language": "ja",
       "agency": null,
+      "affiliation": "unknown",
       "avatar": null,
       "banner": null,
       "description": null,
@@ -457,8 +479,10 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T16:00:50.780Z",
-      "updatedAt": "2026-10-21T16:00:50.780Z",
+      "addedAt": "2026-10-21T16:30:06.041Z",
+      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -474,7 +498,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.582Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.271Z"
         },
         {
           "platform": "bilibili",
@@ -487,7 +511,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.582Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.271Z"
         }
       ],
       "externals": {},
@@ -503,6 +527,7 @@
       "regionSource": "declared",
       "language": "zh-Hans",
       "agency": null,
+      "affiliation": "unknown",
       "avatar": null,
       "banner": null,
       "description": null,
@@ -520,8 +545,10 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T16:00:50.780Z",
-      "updatedAt": "2026-10-21T16:00:50.780Z",
+      "addedAt": "2026-10-21T16:30:06.041Z",
+      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -537,7 +564,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.585Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.275Z"
         },
         {
           "platform": "bilibili",
@@ -550,7 +577,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.585Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.275Z"
         }
       ],
       "externals": {},
@@ -566,6 +593,7 @@
       "regionSource": "declared",
       "language": "ja",
       "agency": null,
+      "affiliation": "unknown",
       "avatar": null,
       "banner": null,
       "description": null,
@@ -583,8 +611,10 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T16:00:50.780Z",
-      "updatedAt": "2026-10-21T16:00:50.780Z",
+      "addedAt": "2026-10-21T16:30:06.041Z",
+      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -600,7 +630,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:17.008Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.695Z"
         },
         {
           "platform": "bilibili",
@@ -613,7 +643,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:17.008Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.695Z"
         }
       ],
       "externals": {},
@@ -629,6 +659,7 @@
       "regionSource": "declared",
       "language": "zh-Hant",
       "agency": null,
+      "affiliation": "unknown",
       "avatar": null,
       "banner": null,
       "description": null,
@@ -646,8 +677,10 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T16:00:50.780Z",
-      "updatedAt": "2026-10-21T16:00:50.780Z",
+      "addedAt": "2026-10-21T16:30:06.041Z",
+      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -663,7 +696,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:17.047Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.734Z"
         },
         {
           "platform": "youtube",
@@ -676,7 +709,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:17.047Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.734Z"
         },
         {
           "platform": "twitch",
@@ -689,7 +722,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:17.047Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.734Z"
         }
       ],
       "externals": {},
@@ -705,6 +738,7 @@
       "regionSource": "declared",
       "language": "ja",
       "agency": null,
+      "affiliation": "unknown",
       "avatar": null,
       "banner": null,
       "description": null,
@@ -722,8 +756,10 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T16:00:50.780Z",
-      "updatedAt": "2026-10-21T16:00:50.780Z",
+      "addedAt": "2026-10-21T16:30:06.041Z",
+      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -739,7 +775,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.630Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.321Z"
         },
         {
           "platform": "bilibili",
@@ -752,7 +788,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.630Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.321Z"
         }
       ],
       "externals": {},
@@ -768,6 +804,7 @@
       "regionSource": "declared",
       "language": "ja",
       "agency": null,
+      "affiliation": "unknown",
       "avatar": null,
       "banner": null,
       "description": null,
@@ -785,8 +822,10 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T16:00:50.780Z",
-      "updatedAt": "2026-10-21T16:00:50.780Z",
+      "addedAt": "2026-10-21T16:30:06.041Z",
+      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -802,7 +841,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.605Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.296Z"
         }
       ],
       "externals": {},
@@ -818,6 +857,7 @@
       "regionSource": "declared",
       "language": "zh-Hans",
       "agency": "NIJISANJI",
+      "affiliation": "group",
       "avatar": null,
       "banner": null,
       "description": null,
@@ -835,8 +875,10 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T16:00:50.780Z",
-      "updatedAt": "2026-10-21T16:00:50.780Z",
+      "addedAt": "2026-10-21T16:30:06.041Z",
+      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -852,7 +894,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.590Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.280Z"
         },
         {
           "platform": "bilibili",
@@ -865,7 +907,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.590Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.280Z"
         }
       ],
       "externals": {},
@@ -881,6 +923,7 @@
       "regionSource": "declared",
       "language": "zh-Hant",
       "agency": null,
+      "affiliation": "unknown",
       "avatar": null,
       "banner": null,
       "description": null,
@@ -898,8 +941,10 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T16:00:50.780Z",
-      "updatedAt": "2026-10-21T16:00:50.780Z",
+      "addedAt": "2026-10-21T16:30:06.041Z",
+      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -915,7 +960,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.775Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.463Z"
         },
         {
           "platform": "bilibili",
@@ -928,7 +973,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.775Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.463Z"
         }
       ],
       "externals": {},
@@ -944,6 +989,7 @@
       "regionSource": "declared",
       "language": "ja",
       "agency": "ViViD",
+      "affiliation": "group",
       "avatar": null,
       "banner": null,
       "description": null,
@@ -961,8 +1007,10 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T16:00:50.780Z",
-      "updatedAt": "2026-10-21T16:00:50.780Z",
+      "addedAt": "2026-10-21T16:30:06.041Z",
+      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -978,7 +1026,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.610Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.300Z"
         }
       ],
       "externals": {},
@@ -994,6 +1042,7 @@
       "regionSource": "declared",
       "language": "ja",
       "agency": "Hololive",
+      "affiliation": "group",
       "avatar": null,
       "banner": null,
       "description": null,
@@ -1011,8 +1060,10 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T16:00:50.780Z",
-      "updatedAt": "2026-10-21T16:00:50.780Z",
+      "addedAt": "2026-10-21T16:30:06.041Z",
+      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -1028,7 +1079,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.693Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.383Z"
         },
         {
           "platform": "bilibili",
@@ -1041,7 +1092,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.693Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.383Z"
         }
       ],
       "externals": {},
@@ -1057,6 +1108,7 @@
       "regionSource": "declared",
       "language": "ja",
       "agency": null,
+      "affiliation": "unknown",
       "avatar": null,
       "banner": null,
       "description": null,
@@ -1074,8 +1126,10 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T16:00:50.780Z",
-      "updatedAt": "2026-10-21T16:00:50.780Z",
+      "addedAt": "2026-10-21T16:30:06.041Z",
+      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -1091,7 +1145,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.794Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.482Z"
         }
       ],
       "externals": {},
@@ -1107,6 +1161,7 @@
       "regionSource": "declared",
       "language": "ja",
       "agency": "NIJISANJI",
+      "affiliation": "group",
       "avatar": null,
       "banner": null,
       "description": null,
@@ -1124,8 +1179,10 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T16:00:50.780Z",
-      "updatedAt": "2026-10-21T16:00:50.780Z",
+      "addedAt": "2026-10-21T16:30:06.041Z",
+      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -1141,7 +1198,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:17.080Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.767Z"
         }
       ],
       "externals": {},
@@ -1157,6 +1214,7 @@
       "regionSource": "declared",
       "language": "ja",
       "agency": null,
+      "affiliation": "unknown",
       "avatar": null,
       "banner": null,
       "description": null,
@@ -1174,8 +1232,10 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T16:00:50.780Z",
-      "updatedAt": "2026-10-21T16:00:50.780Z",
+      "addedAt": "2026-10-21T16:30:06.041Z",
+      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -1191,7 +1251,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.735Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.424Z"
         }
       ],
       "externals": {},
@@ -1207,6 +1267,7 @@
       "regionSource": "declared",
       "language": "zh-Hans",
       "agency": "和遥树奈Project",
+      "affiliation": "group",
       "avatar": null,
       "banner": null,
       "description": null,
@@ -1224,8 +1285,10 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T16:00:50.780Z",
-      "updatedAt": "2026-10-21T16:00:50.780Z",
+      "addedAt": "2026-10-21T16:30:06.041Z",
+      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -1241,7 +1304,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:17.064Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.752Z"
         },
         {
           "platform": "youtube",
@@ -1254,7 +1317,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:17.064Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.752Z"
         }
       ],
       "externals": {},
@@ -1270,6 +1333,7 @@
       "regionSource": "declared",
       "language": "en",
       "agency": null,
+      "affiliation": "unknown",
       "avatar": null,
       "banner": null,
       "description": null,
@@ -1287,8 +1351,10 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T16:00:50.780Z",
-      "updatedAt": "2026-10-21T16:00:50.780Z",
+      "addedAt": "2026-10-21T16:30:06.041Z",
+      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -1304,7 +1370,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.578Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.267Z"
         },
         {
           "platform": "bilibili",
@@ -1317,7 +1383,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.578Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.267Z"
         }
       ],
       "externals": {},
@@ -1333,6 +1399,7 @@
       "regionSource": "declared",
       "language": "zh-Hans",
       "agency": "NIJISANJI",
+      "affiliation": "group",
       "avatar": null,
       "banner": null,
       "description": null,
@@ -1350,8 +1417,10 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T16:00:50.780Z",
-      "updatedAt": "2026-10-21T16:00:50.780Z",
+      "addedAt": "2026-10-21T16:30:06.041Z",
+      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -1367,7 +1436,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.588Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.277Z"
         },
         {
           "platform": "bilibili",
@@ -1380,7 +1449,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.588Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.277Z"
         }
       ],
       "externals": {},
@@ -1396,6 +1465,7 @@
       "regionSource": "declared",
       "language": "ja",
       "agency": null,
+      "affiliation": "unknown",
       "avatar": null,
       "banner": null,
       "description": null,
@@ -1413,8 +1483,10 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T16:00:50.780Z",
-      "updatedAt": "2026-10-21T16:00:50.780Z",
+      "addedAt": "2026-10-21T16:30:06.041Z",
+      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -1430,7 +1502,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:17.041Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.728Z"
         },
         {
           "platform": "bilibili",
@@ -1443,7 +1515,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:17.041Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.728Z"
         }
       ],
       "externals": {},
@@ -1459,6 +1531,7 @@
       "regionSource": "declared",
       "language": "ja",
       "agency": null,
+      "affiliation": "unknown",
       "avatar": null,
       "banner": null,
       "description": null,
@@ -1476,8 +1549,10 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T16:00:50.780Z",
-      "updatedAt": "2026-10-21T16:00:50.780Z",
+      "addedAt": "2026-10-21T16:30:06.041Z",
+      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -1493,7 +1568,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.587Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.277Z"
         }
       ],
       "externals": {},
@@ -1509,6 +1584,7 @@
       "regionSource": "declared",
       "language": "ja",
       "agency": "NIJISANJI",
+      "affiliation": "group",
       "avatar": null,
       "banner": null,
       "description": null,
@@ -1526,8 +1602,10 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T16:00:50.780Z",
-      "updatedAt": "2026-10-21T16:00:50.780Z",
+      "addedAt": "2026-10-21T16:30:06.041Z",
+      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -1543,7 +1621,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.694Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.383Z"
         }
       ],
       "externals": {},
@@ -1559,6 +1637,7 @@
       "regionSource": "declared",
       "language": "ja",
       "agency": "WACTOR",
+      "affiliation": "group",
       "avatar": null,
       "banner": null,
       "description": null,
@@ -1576,8 +1655,10 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T16:00:50.780Z",
-      "updatedAt": "2026-10-21T16:00:50.780Z",
+      "addedAt": "2026-10-21T16:30:06.041Z",
+      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -1593,7 +1674,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.590Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.280Z"
         },
         {
           "platform": "bilibili",
@@ -1606,7 +1687,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.590Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.280Z"
         }
       ],
       "externals": {},
@@ -1622,6 +1703,7 @@
       "regionSource": "declared",
       "language": "ja",
       "agency": "upd8",
+      "affiliation": "group",
       "avatar": null,
       "banner": null,
       "description": null,
@@ -1639,8 +1721,10 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T16:00:50.780Z",
-      "updatedAt": "2026-10-21T16:00:50.780Z",
+      "addedAt": "2026-10-21T16:30:06.041Z",
+      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -1656,7 +1740,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.582Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.271Z"
         },
         {
           "platform": "bilibili",
@@ -1669,7 +1753,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.582Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.271Z"
         }
       ],
       "externals": {},
@@ -1685,6 +1769,7 @@
       "regionSource": "declared",
       "language": "zh-Hant",
       "agency": "NIJISANJI",
+      "affiliation": "group",
       "avatar": null,
       "banner": null,
       "description": null,
@@ -1702,8 +1787,10 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T16:00:50.780Z",
-      "updatedAt": "2026-10-21T16:00:50.780Z",
+      "addedAt": "2026-10-21T16:30:06.041Z",
+      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -1719,7 +1806,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.769Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.457Z"
         }
       ],
       "externals": {},
@@ -1735,6 +1822,7 @@
       "regionSource": "declared",
       "language": "zh-Hant",
       "agency": null,
+      "affiliation": "unknown",
       "avatar": null,
       "banner": null,
       "description": null,
@@ -1752,8 +1840,10 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T16:00:50.780Z",
-      "updatedAt": "2026-10-21T16:00:50.780Z",
+      "addedAt": "2026-10-21T16:30:06.041Z",
+      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -1769,7 +1859,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.605Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.296Z"
         },
         {
           "platform": "bilibili",
@@ -1782,7 +1872,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.605Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.296Z"
         }
       ],
       "externals": {},
@@ -1798,6 +1888,7 @@
       "regionSource": "declared",
       "language": "zh-Hans",
       "agency": "Hololive",
+      "affiliation": "group",
       "avatar": null,
       "banner": null,
       "description": null,
@@ -1815,8 +1906,10 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T16:00:50.780Z",
-      "updatedAt": "2026-10-21T16:00:50.780Z",
+      "addedAt": "2026-10-21T16:30:06.041Z",
+      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -1832,7 +1925,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.585Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.274Z"
         },
         {
           "platform": "bilibili",
@@ -1845,7 +1938,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.585Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.274Z"
         }
       ],
       "externals": {},
@@ -1861,6 +1954,7 @@
       "regionSource": "declared",
       "language": "ja",
       "agency": null,
+      "affiliation": "unknown",
       "avatar": null,
       "banner": null,
       "description": null,
@@ -1878,8 +1972,10 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T16:00:50.780Z",
-      "updatedAt": "2026-10-21T16:00:50.780Z",
+      "addedAt": "2026-10-21T16:30:06.041Z",
+      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -1895,7 +1991,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:17.095Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.781Z"
         },
         {
           "platform": "youtube",
@@ -1908,7 +2004,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:17.095Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.781Z"
         }
       ],
       "externals": {},
@@ -1924,6 +2020,7 @@
       "regionSource": "declared",
       "language": "ja",
       "agency": null,
+      "affiliation": "unknown",
       "avatar": null,
       "banner": null,
       "description": null,
@@ -1941,8 +2038,10 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T16:00:50.780Z",
-      "updatedAt": "2026-10-21T16:00:50.780Z",
+      "addedAt": "2026-10-21T16:30:06.041Z",
+      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -1958,7 +2057,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.545Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.231Z"
         },
         {
           "platform": "bilibili",
@@ -1971,7 +2070,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.545Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.231Z"
         }
       ],
       "externals": {},
@@ -1987,6 +2086,7 @@
       "regionSource": "declared",
       "language": "ja",
       "agency": null,
+      "affiliation": "unknown",
       "avatar": null,
       "banner": null,
       "description": null,
@@ -2004,8 +2104,10 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T16:00:50.780Z",
-      "updatedAt": "2026-10-21T16:00:50.780Z",
+      "addedAt": "2026-10-21T16:30:06.041Z",
+      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -2021,7 +2123,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:17.042Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.729Z"
         },
         {
           "platform": "bilibili",
@@ -2034,7 +2136,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:17.042Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.729Z"
         }
       ],
       "externals": {},
@@ -2050,6 +2152,7 @@
       "regionSource": "declared",
       "language": "ja",
       "agency": "NIJISANJI",
+      "affiliation": "group",
       "avatar": null,
       "banner": null,
       "description": null,
@@ -2067,8 +2170,10 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T16:00:50.780Z",
-      "updatedAt": "2026-10-21T16:00:50.780Z",
+      "addedAt": "2026-10-21T16:30:06.041Z",
+      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -2084,7 +2189,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.590Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.280Z"
         }
       ],
       "externals": {},
@@ -2100,6 +2205,7 @@
       "regionSource": "declared",
       "language": "ja",
       "agency": "VirtuaReal",
+      "affiliation": "group",
       "avatar": null,
       "banner": null,
       "description": null,
@@ -2117,8 +2223,10 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T16:00:50.780Z",
-      "updatedAt": "2026-10-21T16:00:50.780Z",
+      "addedAt": "2026-10-21T16:30:06.041Z",
+      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -2134,7 +2242,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.717Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.406Z"
         },
         {
           "platform": "bilibili",
@@ -2147,7 +2255,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.717Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.406Z"
         }
       ],
       "externals": {},
@@ -2163,6 +2271,7 @@
       "regionSource": "declared",
       "language": "ja",
       "agency": "ReAcT",
+      "affiliation": "group",
       "avatar": null,
       "banner": null,
       "description": null,
@@ -2180,8 +2289,10 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T16:00:50.780Z",
-      "updatedAt": "2026-10-21T16:00:50.780Z",
+      "addedAt": "2026-10-21T16:30:06.041Z",
+      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -2197,7 +2308,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.698Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.387Z"
         },
         {
           "platform": "youtube",
@@ -2210,7 +2321,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.698Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.387Z"
         }
       ],
       "externals": {},
@@ -2226,6 +2337,7 @@
       "regionSource": "declared",
       "language": "en",
       "agency": "Hololive",
+      "affiliation": "group",
       "avatar": null,
       "banner": null,
       "description": null,
@@ -2243,8 +2355,10 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T16:00:50.780Z",
-      "updatedAt": "2026-10-21T16:00:50.780Z",
+      "addedAt": "2026-10-21T16:30:06.041Z",
+      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -2260,7 +2374,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.574Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.263Z"
         },
         {
           "platform": "youtube",
@@ -2273,7 +2387,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.574Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.263Z"
         }
       ],
       "externals": {},
@@ -2289,6 +2403,7 @@
       "regionSource": "declared",
       "language": "zh-Hans",
       "agency": null,
+      "affiliation": "unknown",
       "avatar": null,
       "banner": null,
       "description": null,
@@ -2306,8 +2421,10 @@
       "variant": "vtuber",
       "confidence": 1,
       "source": "api",
-      "addedAt": "2026-10-21T16:00:50.780Z",
-      "updatedAt": "2026-10-21T16:00:50.780Z",
+      "addedAt": "2026-10-21T16:30:06.041Z",
+      "updatedAt": "2026-10-21T16:32:21.135Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -2323,7 +2440,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.785Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.473Z"
         },
         {
           "platform": "youtube",
@@ -2336,7 +2453,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-21T16:02:16.785Z"
+          "lastCheckedAt": "2026-10-21T16:32:23.473Z"
         }
       ],
       "externals": {},

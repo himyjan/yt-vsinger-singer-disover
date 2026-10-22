@@ -21,7 +21,7 @@ import { ALL_SEEDS } from "./seeds";
 import { fetchTrackedVtubers } from "./taiwan-vtuber-data";
 import { VdbSource } from "./vdb";
 import { createAdapters } from "./platform-registry";
-import { classifyChannel, deriveVariant } from "./classify";
+import { classifyChannel, deriveVariant, detectAffiliation } from "./classify";
 import { toCountRef } from "./types";
 import type { Channel, RecordSource } from "./types";
 
@@ -71,6 +71,10 @@ export async function buildRoster(
       regionSource: "roster",
       language: classification.language,
       agency: record.group,
+      // The track list states "no group" positively for a solo act.
+      affiliation: record.isIndependent
+        ? "independent"
+        : detectAffiliation(record.name, null, record.group),
       avatar: record.avatar,
       banner: null,
       description: null,
@@ -97,6 +101,7 @@ export async function buildRoster(
       addedAt: now,
       updatedAt: now,
       lastItemsFetchedAt: null,
+      lastDetailsFetchedAt: null,
 
       activity: record.activity,
       debutDate: record.debutDate,
@@ -164,6 +169,11 @@ export async function buildRoster(
       regionSource: "override",
       language: null,
       agency: seed.agency ?? null,
+      affiliation: detectAffiliation(
+        seed.name,
+        null,
+        seed.agency ?? null,
+      ),
       avatar: null,
       banner: null,
       description: null,
@@ -184,6 +194,7 @@ export async function buildRoster(
       addedAt: now,
       updatedAt: now,
       lastItemsFetchedAt: null,
+      lastDetailsFetchedAt: null,
 
       activity: "unknown",
       debutDate: null,
@@ -260,6 +271,7 @@ export async function buildRoster(
             : "script",
       language: classification.language,
       agency: entry.group,
+      affiliation: detectAffiliation(entry.name, null, entry.group),
       avatar: null,
       banner: null,
       description: null,
@@ -284,6 +296,7 @@ export async function buildRoster(
       addedAt: now,
       updatedAt: now,
       lastItemsFetchedAt: null,
+      lastDetailsFetchedAt: null,
 
       activity: "unknown",
       debutDate: null,
@@ -327,6 +340,11 @@ export async function buildRoster(
             regionSource: classification.regionSource,
             language: classification.language,
             agency: null,
+            affiliation: detectAffiliation(
+              channel.name,
+              channel.description,
+              null,
+            ),
             avatar: channel.avatar,
             banner: null,
             description: channel.description,
@@ -349,6 +367,7 @@ export async function buildRoster(
             addedAt: now,
             updatedAt: now,
             lastItemsFetchedAt: null,
+            lastDetailsFetchedAt: null,
 
             activity: "unknown",
             debutDate: null,
