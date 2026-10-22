@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T02:45:20.113Z",
+  "generatedAt": "2026-10-22T03:15:21.113Z",
   "channels": [
     {
       "id": "UC47rNmkDcNgbOcM-2BwzJTQ",
@@ -31,7 +31,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T02:27:57.931Z",
-      "updatedAt": "2026-10-22T02:45:20.180Z",
+      "updatedAt": "2026-10-22T03:02:04.277Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -49,11 +49,14 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T02:45:22.653Z"
+          "lastCheckedAt": "2026-10-22T03:02:06.491Z"
         }
       ],
       "externals": {},
-      "popularVideoId": null
+      "popularVideoId": null,
+      "languages": [
+        "en"
+      ]
     },
     {
       "id": "UCR6qhsLpn62WVxCBK1dkLow",
@@ -84,7 +87,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T02:27:57.931Z",
-      "updatedAt": "2026-10-22T02:45:20.180Z",
+      "updatedAt": "2026-10-22T03:02:04.277Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -102,11 +105,14 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T02:45:22.635Z"
+          "lastCheckedAt": "2026-10-22T03:02:06.475Z"
         }
       ],
       "externals": {},
-      "popularVideoId": null
+      "popularVideoId": null,
+      "languages": [
+        "en"
+      ]
     },
     {
       "id": "UCwKirAYzzWUQRTC-aAB-aRQ",
@@ -137,7 +143,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T02:27:57.931Z",
-      "updatedAt": "2026-10-22T02:45:20.180Z",
+      "updatedAt": "2026-10-22T03:02:04.277Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -155,7 +161,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T02:45:22.623Z"
+          "lastCheckedAt": "2026-10-22T03:02:06.463Z"
         },
         {
           "platform": "twitch",
@@ -168,11 +174,15 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T02:45:22.623Z"
+          "lastCheckedAt": "2026-10-22T03:02:06.463Z"
         }
       ],
       "externals": {},
-      "popularVideoId": null
+      "popularVideoId": null,
+      "languages": [
+        "zh-Hans",
+        "en"
+      ]
     },
     {
       "id": "youtube:Naomin7777",
@@ -203,7 +213,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T02:27:57.931Z",
-      "updatedAt": "2026-10-22T02:45:20.180Z",
+      "updatedAt": "2026-10-22T03:02:04.277Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -221,7 +231,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T02:45:22.826Z"
+          "lastCheckedAt": "2026-10-22T03:02:06.655Z"
         },
         {
           "platform": "youtube",
@@ -234,11 +244,15 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T02:45:22.826Z"
+          "lastCheckedAt": "2026-10-22T03:02:06.655Z"
         }
       ],
       "externals": {},
-      "popularVideoId": null
+      "popularVideoId": null,
+      "languages": [
+        "zh-Hans",
+        "en"
+      ]
     }
   ]
 }

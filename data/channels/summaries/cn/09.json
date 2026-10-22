@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T02:45:20.113Z",
+  "generatedAt": "2026-10-22T03:15:21.113Z",
   "channels": [
     {
       "id": "bilibili:10408102",
@@ -10,7 +10,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "independent",
       "avatar": "https://i1.hdslb.com/bfs/face/d8d835a248829f4207897d69437f669ee8b6b13e.jpg",
@@ -39,7 +41,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": "https://i2.hdslb.com/bfs/face/843f8a93a9a86d8ea9c19f5ef2cd58518df688d1.jpg",
@@ -68,7 +72,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "虚研学园",
       "affiliation": "group",
       "avatar": "https://i0.hdslb.com/bfs/face/8cb977b68cbe1d8cfd3e36227327689f6cb66957.jpg",
@@ -97,7 +103,9 @@
       "role": "unknown",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": "https://i0.hdslb.com/bfs/face/8ebbf4fc358baf9ded623dc113ca92cc431843de.jpg",
@@ -126,7 +134,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": "https://i2.hdslb.com/bfs/face/a5e683a3c16b6a4954c6419b0f2ff6030b015d69.jpg",
@@ -155,7 +165,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "狄灵计划",
       "affiliation": "group",
       "avatar": "https://i1.hdslb.com/bfs/face/f2dda2011ade98b3a8a0f013993d3283c3b80388.jpg",
@@ -184,7 +196,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": "https://i2.hdslb.com/bfs/face/395185df46c6debdcc022fd262dfec876c14d188.jpg",
@@ -213,7 +227,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "玄月神",
       "affiliation": "group",
       "avatar": "https://i0.hdslb.com/bfs/face/d61cf85418cf121ba3e0ca1544602e1fd65f6062.jpg",
@@ -242,7 +258,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": "https://i2.hdslb.com/bfs/face/a075770c4193efa1d56f0e9588ea0345805691fe.jpg",
@@ -271,7 +289,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": "https://i0.hdslb.com/bfs/face/33d017fb147d8cb97c7ed3257f02fc8ad7ab5e10.jpg",
@@ -300,7 +320,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": "https://i1.hdslb.com/bfs/face/9f8c0fbb64598a0da65db0da98108a8ea5b72b24.jpg",
@@ -329,7 +351,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": "https://i2.hdslb.com/bfs/face/90ef59858c0661c4aa2e3ff9277f4c20ee16e233.jpg",
@@ -358,7 +382,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": "https://i2.hdslb.com/bfs/face/5b1bba7d732b294a8984e7383d6c3ab709a9c2c1.jpg",
@@ -387,7 +413,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "VirtuaReal",
       "affiliation": "group",
       "avatar": "https://i1.hdslb.com/bfs/face/53f289749f4659aa4ce1f8242e64d1ac3b38e58c.jpg",
@@ -416,7 +444,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": "https://i1.hdslb.com/bfs/face/accd1885206e6e3c516d100330764c56099ae816.jpg",
@@ -445,7 +475,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": "https://i0.hdslb.com/bfs/face/00f384f868a3370eacba2928b5b37f2e1dba7eb4.jpg",
@@ -474,7 +506,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "Tinsgoo-Project",
       "affiliation": "group",
       "avatar": "https://i0.hdslb.com/bfs/face/42703f1350c26bbf83a45abe590dcbe084078d05.jpg",
@@ -503,7 +537,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": "https://i2.hdslb.com/bfs/face/a7e37a14ae19e9284a8828c723ed82d37bb1797f.jpg",
@@ -532,7 +568,9 @@
       "role": "unknown",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": "https://i0.hdslb.com/bfs/face/90e93bb5e2ad9038e19e4670d9ca3571358e34c4.jpg",
@@ -561,7 +599,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": "https://i0.hdslb.com/bfs/face/32687f201cb9f621e2f247ab0f72bb4663397ba6.jpg",
@@ -590,7 +630,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "hOuOu_Project",
       "affiliation": "group",
       "avatar": "https://i2.hdslb.com/bfs/face/1950662e34dee4531cada0b28b68e03815c8d84c.jpg",
@@ -619,7 +661,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "VirtuaReal",
       "affiliation": "group",
       "avatar": "https://i2.hdslb.com/bfs/face/bf9ee18706751a9e21a13e6bc0d66977280165e3.jpg",
@@ -648,7 +692,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": "https://i1.hdslb.com/bfs/face/ca70737c3d92e2eef6e2059abf42e806bffe4e43.jpg",
@@ -677,7 +723,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": "https://i0.hdslb.com/bfs/face/314eb94c5d8962d107ecc4f6445de9633d327ee3.jpg",
@@ -706,7 +754,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": "https://i0.hdslb.com/bfs/face/d2e53349dce2b56a19a3ea603803e6e33f8238ca.jpg",
@@ -735,7 +785,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "chaoslive",
       "affiliation": "group",
       "avatar": "https://i1.hdslb.com/bfs/face/e2b4205e281c242a86babe2fb176fb58adbef7c9.jpg",
@@ -764,7 +816,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": "https://i2.hdslb.com/bfs/face/79f9ed7618de4b7a4954d95e4904fbd387e61075.jpg",
@@ -793,7 +847,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": "https://i2.hdslb.com/bfs/face/0c1cd7d07f1609c765f3ad8309f743d7ede8f359.jpg",
@@ -822,11 +878,13 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": "https://i0.hdslb.com/bfs/face/member/noface.jpg",
-      "subscribers": 9036,
+      "subscribers": 9035,
       "isSinging": false,
       "activity": "unknown",
       "subscribersHidden": false,
@@ -851,7 +909,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": "https://i0.hdslb.com/bfs/face/25b1c069035387314a9534fa30367d41ac4cd254.jpg",
@@ -880,7 +940,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": "https://i0.hdslb.com/bfs/face/c414f99f80f947f5f2cf3cb63b7973a734b07838.jpg",
@@ -909,7 +971,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "hOuOu_Project",
       "affiliation": "group",
       "avatar": "https://i2.hdslb.com/bfs/face/d221ffee332e9d02e86d578f9111e6e4e0ab368c.jpg",
@@ -938,7 +1002,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": "https://i1.hdslb.com/bfs/face/c679afc58ef22283a5cedd8e21aa9831797bac9f.jpg",
@@ -967,7 +1033,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": "https://i0.hdslb.com/bfs/face/member/noface.jpg",
@@ -996,7 +1064,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": "https://i0.hdslb.com/bfs/face/06df65c71a39919fe7bc0718ac9728a84a4f9ab3.jpg",
@@ -1025,14 +1095,16 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "30f0a6c7-e49d-56b9-8dd9-60bf6539212b",
       "affiliation": "group",
-      "avatar": null,
-      "subscribers": null,
+      "avatar": "https://i2.hdslb.com/bfs/face/132d34141ac5121a0c58cbf3b3fb0592dd8937c6.jpg",
+      "subscribers": 501,
       "isSinging": false,
       "activity": "unknown",
-      "subscribersHidden": true,
+      "subscribersHidden": false,
       "twitchLogin": null,
       "gender": "unknown",
       "isAi": false,
@@ -1042,7 +1114,7 @@
         {
           "p": "bilibili",
           "u": "https://space.bilibili.com/12888470",
-          "h": null
+          "h": "12888470"
         }
       ]
     },
@@ -1054,14 +1126,16 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "WonIDOLand",
       "affiliation": "group",
-      "avatar": null,
-      "subscribers": null,
+      "avatar": "https://i0.hdslb.com/bfs/face/member/noface.jpg",
+      "subscribers": 10669,
       "isSinging": false,
       "activity": "unknown",
-      "subscribersHidden": true,
+      "subscribersHidden": false,
       "twitchLogin": null,
       "gender": "unknown",
       "isAi": false,
@@ -1071,7 +1145,7 @@
         {
           "p": "bilibili",
           "u": "https://space.bilibili.com/1289581866",
-          "h": null
+          "h": "1289581866"
         }
       ]
     },
@@ -1083,14 +1157,16 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
-      "avatar": null,
-      "subscribers": null,
+      "avatar": "https://i2.hdslb.com/bfs/face/f4f31c06d89edce9f24edddd0e08ef86e161903c.jpg",
+      "subscribers": 15765,
       "isSinging": false,
       "activity": "unknown",
-      "subscribersHidden": true,
+      "subscribersHidden": false,
       "twitchLogin": null,
       "gender": "unknown",
       "isAi": false,
@@ -1100,7 +1176,7 @@
         {
           "p": "bilibili",
           "u": "https://space.bilibili.com/12918458",
-          "h": null
+          "h": "12918458"
         }
       ]
     },
@@ -1112,14 +1188,16 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
-      "avatar": null,
-      "subscribers": null,
+      "avatar": "https://i0.hdslb.com/bfs/face/member/noface.jpg",
+      "subscribers": 8914,
       "isSinging": false,
       "activity": "unknown",
-      "subscribersHidden": true,
+      "subscribersHidden": false,
       "twitchLogin": null,
       "gender": "unknown",
       "isAi": false,
@@ -1129,7 +1207,7 @@
         {
           "p": "bilibili",
           "u": "https://space.bilibili.com/1302129189",
-          "h": null
+          "h": "1302129189"
         }
       ]
     },
@@ -1141,14 +1219,16 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
-      "avatar": null,
-      "subscribers": null,
+      "avatar": "https://i0.hdslb.com/bfs/face/f1c46923eec8019841f97404b3f17e0efefd6320.jpg",
+      "subscribers": 92234,
       "isSinging": false,
       "activity": "unknown",
-      "subscribersHidden": true,
+      "subscribersHidden": false,
       "twitchLogin": null,
       "gender": "unknown",
       "isAi": false,
@@ -1158,7 +1238,7 @@
         {
           "p": "bilibili",
           "u": "https://space.bilibili.com/13100124",
-          "h": null
+          "h": "13100124"
         }
       ]
     },
@@ -1170,14 +1250,16 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "hOuOu_Project",
       "affiliation": "group",
-      "avatar": null,
-      "subscribers": null,
+      "avatar": "https://i1.hdslb.com/bfs/face/4fa2c011435f4e23eec01c583a40acbf9f540191.jpg",
+      "subscribers": 10489,
       "isSinging": false,
       "activity": "unknown",
-      "subscribersHidden": true,
+      "subscribersHidden": false,
       "twitchLogin": null,
       "gender": "unknown",
       "isAi": false,
@@ -1187,7 +1269,7 @@
         {
           "p": "bilibili",
           "u": "https://space.bilibili.com/1326080431",
-          "h": null
+          "h": "1326080431"
         }
       ]
     },
@@ -1199,14 +1281,16 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
-      "avatar": null,
-      "subscribers": null,
+      "avatar": "https://i2.hdslb.com/bfs/face/434da04ae27f131ee725231058274c7ccd8fcbc2.jpg",
+      "subscribers": 1389,
       "isSinging": false,
       "activity": "unknown",
-      "subscribersHidden": true,
+      "subscribersHidden": false,
       "twitchLogin": null,
       "gender": "unknown",
       "isAi": false,
@@ -1216,7 +1300,7 @@
         {
           "p": "bilibili",
           "u": "https://space.bilibili.com/1327189298",
-          "h": null
+          "h": "1327189298"
         }
       ]
     },
@@ -1228,14 +1312,16 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
-      "avatar": null,
-      "subscribers": null,
+      "avatar": "https://i0.hdslb.com/bfs/face/61c142ae7a26fb7922b4db71580f359c232d8222.jpg",
+      "subscribers": 723,
       "isSinging": false,
       "activity": "unknown",
-      "subscribersHidden": true,
+      "subscribersHidden": false,
       "twitchLogin": null,
       "gender": "unknown",
       "isAi": false,
@@ -1245,7 +1331,7 @@
         {
           "p": "bilibili",
           "u": "https://space.bilibili.com/1327350405",
-          "h": null
+          "h": "1327350405"
         }
       ]
     },
@@ -1257,14 +1343,16 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
-      "avatar": null,
-      "subscribers": null,
+      "avatar": "https://i2.hdslb.com/bfs/face/6698cf86f92a8694239dc8dc43d4dc5586d06941.jpg",
+      "subscribers": 12475,
       "isSinging": false,
       "activity": "unknown",
-      "subscribersHidden": true,
+      "subscribersHidden": false,
       "twitchLogin": null,
       "gender": "unknown",
       "isAi": false,
@@ -1274,7 +1362,7 @@
         {
           "p": "bilibili",
           "u": "https://space.bilibili.com/1328581235",
-          "h": null
+          "h": "1328581235"
         }
       ]
     },
@@ -1286,14 +1374,16 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
-      "avatar": null,
-      "subscribers": null,
+      "avatar": "https://i1.hdslb.com/bfs/face/fd1a9dca81e741f633c17625100d519e848bef36.jpg",
+      "subscribers": 21401,
       "isSinging": false,
       "activity": "unknown",
-      "subscribersHidden": true,
+      "subscribersHidden": false,
       "twitchLogin": null,
       "gender": "unknown",
       "isAi": false,
@@ -1303,7 +1393,7 @@
         {
           "p": "bilibili",
           "u": "https://space.bilibili.com/1357705819",
-          "h": null
+          "h": "1357705819"
         }
       ]
     },
@@ -1315,14 +1405,16 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
-      "avatar": null,
-      "subscribers": null,
+      "avatar": "https://i0.hdslb.com/bfs/face/5e08cb759e9c08f72cb6b7a53dc20b7811c2ce0f.jpg",
+      "subscribers": 55173,
       "isSinging": false,
       "activity": "unknown",
-      "subscribersHidden": true,
+      "subscribersHidden": false,
       "twitchLogin": null,
       "gender": "unknown",
       "isAi": false,
@@ -1332,7 +1424,7 @@
         {
           "p": "bilibili",
           "u": "https://space.bilibili.com/1359996",
-          "h": null
+          "h": "1359996"
         }
       ]
     },
@@ -1344,14 +1436,16 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
-      "avatar": null,
-      "subscribers": null,
+      "avatar": "https://i0.hdslb.com/bfs/face/8573a66e7a8704d1bac65d5de354165f3c9c7ec8.jpg",
+      "subscribers": 52079,
       "isSinging": false,
       "activity": "unknown",
-      "subscribersHidden": true,
+      "subscribersHidden": false,
       "twitchLogin": null,
       "gender": "unknown",
       "isAi": false,
@@ -1361,7 +1455,7 @@
         {
           "p": "bilibili",
           "u": "https://space.bilibili.com/13724010",
-          "h": null
+          "h": "13724010"
         }
       ]
     },
@@ -1373,14 +1467,16 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "Palette",
       "affiliation": "group",
-      "avatar": null,
-      "subscribers": null,
+      "avatar": "https://i2.hdslb.com/bfs/face/a72cc06eb22a5a4eeeda384ee4e83a637abcda0b.jpg",
+      "subscribers": 56475,
       "isSinging": false,
       "activity": "unknown",
-      "subscribersHidden": true,
+      "subscribersHidden": false,
       "twitchLogin": null,
       "gender": "unknown",
       "isAi": false,
@@ -1390,7 +1486,7 @@
         {
           "p": "bilibili",
           "u": "https://space.bilibili.com/1376650682",
-          "h": null
+          "h": "1376650682"
         }
       ]
     },
@@ -1402,14 +1498,16 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
-      "affiliation": "unknown",
-      "avatar": null,
-      "subscribers": null,
+      "affiliation": "independent",
+      "avatar": "https://i1.hdslb.com/bfs/face/2495969c98d8500cb2ae87fe712081e1b875f23b.jpg",
+      "subscribers": 35231,
       "isSinging": false,
       "activity": "unknown",
-      "subscribersHidden": true,
+      "subscribersHidden": false,
       "twitchLogin": null,
       "gender": "unknown",
       "isAi": false,
@@ -1419,7 +1517,7 @@
         {
           "p": "bilibili",
           "u": "https://space.bilibili.com/1378053841",
-          "h": null
+          "h": "1378053841"
         }
       ]
     },
@@ -1431,14 +1529,16 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
-      "avatar": null,
-      "subscribers": null,
+      "avatar": "https://i2.hdslb.com/bfs/face/1f2f7c946fe314c92724a0575415b4f5fc35ea6b.jpg",
+      "subscribers": 40382,
       "isSinging": false,
       "activity": "unknown",
-      "subscribersHidden": true,
+      "subscribersHidden": false,
       "twitchLogin": null,
       "gender": "unknown",
       "isAi": false,
@@ -1448,7 +1548,7 @@
         {
           "p": "bilibili",
           "u": "https://space.bilibili.com/13980476",
-          "h": null
+          "h": "13980476"
         }
       ]
     },
@@ -1460,14 +1560,16 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
-      "avatar": null,
-      "subscribers": null,
+      "avatar": "https://i2.hdslb.com/bfs/face/ec0112068f97e43c3280b694af8b38db8deceefc.jpg",
+      "subscribers": 1671618,
       "isSinging": false,
       "activity": "unknown",
-      "subscribersHidden": true,
+      "subscribersHidden": false,
       "twitchLogin": null,
       "gender": "unknown",
       "isAi": false,
@@ -1477,7 +1579,7 @@
         {
           "p": "bilibili",
           "u": "https://space.bilibili.com/1398337493",
-          "h": null
+          "h": "1398337493"
         }
       ]
     },
@@ -1489,14 +1591,16 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
-      "avatar": null,
-      "subscribers": null,
+      "avatar": "https://i2.hdslb.com/bfs/face/fa50ec08e2f171dac150ca967252acd72dd68538.jpg",
+      "subscribers": 36618,
       "isSinging": false,
       "activity": "unknown",
-      "subscribersHidden": true,
+      "subscribersHidden": false,
       "twitchLogin": null,
       "gender": "unknown",
       "isAi": false,
@@ -1506,7 +1610,7 @@
         {
           "p": "bilibili",
           "u": "https://space.bilibili.com/1399393991",
-          "h": null
+          "h": "1399393991"
         }
       ]
     },
@@ -1518,14 +1622,16 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
-      "affiliation": "unknown",
-      "avatar": null,
-      "subscribers": null,
+      "affiliation": "independent",
+      "avatar": "https://i0.hdslb.com/bfs/face/ae55b8fd588674f3c37287342187cec47bd51818.jpg",
+      "subscribers": 71471,
       "isSinging": false,
       "activity": "unknown",
-      "subscribersHidden": true,
+      "subscribersHidden": false,
       "twitchLogin": null,
       "gender": "unknown",
       "isAi": false,
@@ -1535,7 +1641,7 @@
         {
           "p": "bilibili",
           "u": "https://space.bilibili.com/1408772106",
-          "h": null
+          "h": "1408772106"
         }
       ]
     },
@@ -1547,14 +1653,16 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
-      "avatar": null,
-      "subscribers": null,
+      "avatar": "https://i2.hdslb.com/bfs/face/5b8a1d40ed793d155af2f84ddebf09ad60403a3c.jpg",
+      "subscribers": 2980,
       "isSinging": false,
       "activity": "unknown",
-      "subscribersHidden": true,
+      "subscribersHidden": false,
       "twitchLogin": null,
       "gender": "unknown",
       "isAi": false,
@@ -1564,7 +1672,7 @@
         {
           "p": "bilibili",
           "u": "https://space.bilibili.com/1414231802",
-          "h": null
+          "h": "1414231802"
         }
       ]
     },
@@ -1576,14 +1684,16 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "月光社",
       "affiliation": "group",
-      "avatar": null,
-      "subscribers": null,
+      "avatar": "https://i2.hdslb.com/bfs/face/ab7b6774016351bc523f42152380730af4fd1710.jpg",
+      "subscribers": 229,
       "isSinging": false,
       "activity": "unknown",
-      "subscribersHidden": true,
+      "subscribersHidden": false,
       "twitchLogin": null,
       "gender": "unknown",
       "isAi": false,
@@ -1593,7 +1703,7 @@
         {
           "p": "bilibili",
           "u": "https://space.bilibili.com/14189630",
-          "h": null
+          "h": "14189630"
         }
       ]
     },
@@ -1605,14 +1715,16 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
-      "affiliation": "unknown",
-      "avatar": null,
-      "subscribers": null,
+      "affiliation": "independent",
+      "avatar": "https://i0.hdslb.com/bfs/face/64d9bc3cce79b71cdadc1cb74a2511b77dab6efd.jpg",
+      "subscribers": 1521,
       "isSinging": false,
       "activity": "unknown",
-      "subscribersHidden": true,
+      "subscribersHidden": false,
       "twitchLogin": null,
       "gender": "unknown",
       "isAi": false,
@@ -1622,7 +1734,7 @@
         {
           "p": "bilibili",
           "u": "https://space.bilibili.com/1418993982",
-          "h": null
+          "h": "1418993982"
         }
       ]
     },
@@ -1634,14 +1746,16 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
-      "affiliation": "unknown",
-      "avatar": null,
-      "subscribers": null,
+      "affiliation": "independent",
+      "avatar": "https://i0.hdslb.com/bfs/face/65b8a7e52d60bfb523e3694369a55dd7b4842e66.jpg",
+      "subscribers": 607,
       "isSinging": false,
       "activity": "unknown",
-      "subscribersHidden": true,
+      "subscribersHidden": false,
       "twitchLogin": null,
       "gender": "unknown",
       "isAi": false,
@@ -1651,7 +1765,7 @@
         {
           "p": "bilibili",
           "u": "https://space.bilibili.com/1420404759",
-          "h": null
+          "h": "1420404759"
         }
       ]
     },
@@ -1663,14 +1777,16 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
-      "affiliation": "unknown",
-      "avatar": null,
-      "subscribers": null,
+      "affiliation": "independent",
+      "avatar": "https://i0.hdslb.com/bfs/face/890fa2a98fd31c807136ca7b6a244fd33130c40c.jpg",
+      "subscribers": 344591,
       "isSinging": false,
       "activity": "unknown",
-      "subscribersHidden": true,
+      "subscribersHidden": false,
       "twitchLogin": null,
       "gender": "unknown",
       "isAi": false,
@@ -1680,7 +1796,7 @@
         {
           "p": "bilibili",
           "u": "https://space.bilibili.com/14248896",
-          "h": null
+          "h": "14248896"
         }
       ]
     },
@@ -1692,14 +1808,16 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
-      "avatar": null,
-      "subscribers": null,
+      "avatar": "http://i1.hdslb.com/bfs/face/4cc11a5d25431eb07001b324d930b08b0a1d4d69.jpg",
+      "subscribers": 7614,
       "isSinging": false,
       "activity": "unknown",
-      "subscribersHidden": true,
+      "subscribersHidden": false,
       "twitchLogin": null,
       "gender": "unknown",
       "isAi": false,
@@ -1709,7 +1827,7 @@
         {
           "p": "bilibili",
           "u": "https://space.bilibili.com/1430541064",
-          "h": null
+          "h": "1430541064"
         }
       ]
     },
@@ -1721,14 +1839,16 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
-      "avatar": null,
-      "subscribers": null,
+      "avatar": "https://i2.hdslb.com/bfs/face/bbe569a70816efc3844ca3d9caa0479659d0364f.jpg",
+      "subscribers": 17058,
       "isSinging": false,
       "activity": "unknown",
-      "subscribersHidden": true,
+      "subscribersHidden": false,
       "twitchLogin": null,
       "gender": "unknown",
       "isAi": false,
@@ -1738,7 +1858,7 @@
         {
           "p": "bilibili",
           "u": "https://space.bilibili.com/1436878388",
-          "h": null
+          "h": "1436878388"
         }
       ]
     },
@@ -1750,14 +1870,16 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "VirtuaReal",
       "affiliation": "group",
-      "avatar": null,
-      "subscribers": null,
+      "avatar": "https://i2.hdslb.com/bfs/face/d0073f1a0a37009a0af44f7bf329eaf13ba3c775.jpg",
+      "subscribers": 541963,
       "isSinging": false,
       "activity": "unknown",
-      "subscribersHidden": true,
+      "subscribersHidden": false,
       "twitchLogin": null,
       "gender": "female",
       "isAi": false,
@@ -1767,7 +1889,7 @@
         {
           "p": "bilibili",
           "u": "https://space.bilibili.com/14387072",
-          "h": null
+          "h": "14387072"
         }
       ]
     },
@@ -1779,14 +1901,16 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
-      "avatar": null,
-      "subscribers": null,
+      "avatar": "https://i2.hdslb.com/bfs/face/eaceafd4f8d4ffdf39773dd06cc2143d2e56dfe6.jpg",
+      "subscribers": 14027,
       "isSinging": false,
       "activity": "unknown",
-      "subscribersHidden": true,
+      "subscribersHidden": false,
       "twitchLogin": null,
       "gender": "unknown",
       "isAi": false,
@@ -1796,7 +1920,7 @@
         {
           "p": "bilibili",
           "u": "https://space.bilibili.com/1439938649",
-          "h": null
+          "h": "1439938649"
         }
       ]
     },
@@ -1808,14 +1932,16 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
-      "affiliation": "unknown",
-      "avatar": null,
-      "subscribers": null,
+      "affiliation": "independent",
+      "avatar": "https://i2.hdslb.com/bfs/face/9790d40829b8544b3fcadc9b32f87b651024dd90.jpg",
+      "subscribers": 1964,
       "isSinging": false,
       "activity": "unknown",
-      "subscribersHidden": true,
+      "subscribersHidden": false,
       "twitchLogin": null,
       "gender": "unknown",
       "isAi": false,
@@ -1825,7 +1951,7 @@
         {
           "p": "bilibili",
           "u": "https://space.bilibili.com/1442154380",
-          "h": null
+          "h": "1442154380"
         }
       ]
     },
@@ -1837,14 +1963,16 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
-      "avatar": null,
-      "subscribers": null,
+      "avatar": "https://i1.hdslb.com/bfs/face/4b67752a9b769911f5593fdf5d51cedf787cf9af.jpg",
+      "subscribers": 2689,
       "isSinging": false,
       "activity": "unknown",
-      "subscribersHidden": true,
+      "subscribersHidden": false,
       "twitchLogin": null,
       "gender": "unknown",
       "isAi": false,
@@ -1854,7 +1982,7 @@
         {
           "p": "bilibili",
           "u": "https://space.bilibili.com/1447392763",
-          "h": null
+          "h": "1447392763"
         }
       ]
     },
@@ -1866,14 +1994,16 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
-      "affiliation": "unknown",
-      "avatar": null,
-      "subscribers": null,
+      "affiliation": "independent",
+      "avatar": "https://i0.hdslb.com/bfs/face/2032b964b633da272bd301a0bfb82c33310afeac.jpg",
+      "subscribers": 12029,
       "isSinging": false,
       "activity": "unknown",
-      "subscribersHidden": true,
+      "subscribersHidden": false,
       "twitchLogin": null,
       "gender": "unknown",
       "isAi": false,
@@ -1883,7 +2013,7 @@
         {
           "p": "bilibili",
           "u": "https://space.bilibili.com/1448763009",
-          "h": null
+          "h": "1448763009"
         }
       ]
     },
@@ -1895,14 +2025,16 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
-      "avatar": null,
-      "subscribers": null,
+      "avatar": "https://i2.hdslb.com/bfs/face/be54a8a9960eab2d4537151c762ee4e4aed19dea.jpg",
+      "subscribers": 4260,
       "isSinging": false,
       "activity": "unknown",
-      "subscribersHidden": true,
+      "subscribersHidden": false,
       "twitchLogin": null,
       "gender": "unknown",
       "isAi": false,
@@ -1912,7 +2044,7 @@
         {
           "p": "bilibili",
           "u": "https://space.bilibili.com/144984743",
-          "h": null
+          "h": "144984743"
         }
       ]
     },
@@ -1924,14 +2056,16 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "Providence",
       "affiliation": "group",
-      "avatar": null,
-      "subscribers": null,
+      "avatar": "https://i0.hdslb.com/bfs/face/8b96d12b129bc8fccbce6ae638c03712240b0a0d.jpg",
+      "subscribers": 14032,
       "isSinging": false,
       "activity": "unknown",
-      "subscribersHidden": true,
+      "subscribersHidden": false,
       "twitchLogin": null,
       "gender": "unknown",
       "isAi": false,
@@ -1941,7 +2075,7 @@
         {
           "p": "bilibili",
           "u": "https://space.bilibili.com/1453221585",
-          "h": null
+          "h": "1453221585"
         }
       ]
     },
@@ -1953,14 +2087,16 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "量子少年Official",
       "affiliation": "group",
-      "avatar": null,
-      "subscribers": null,
+      "avatar": "https://i0.hdslb.com/bfs/face/df3a5c6cffa25ca29815366050e8e6ce37cb90f1.jpg",
+      "subscribers": 31807,
       "isSinging": false,
       "activity": "unknown",
-      "subscribersHidden": true,
+      "subscribersHidden": false,
       "twitchLogin": null,
       "gender": "male",
       "isAi": false,
@@ -1970,7 +2106,7 @@
         {
           "p": "bilibili",
           "u": "https://space.bilibili.com/1461176910",
-          "h": null
+          "h": "1461176910"
         }
       ]
     },
@@ -1982,14 +2118,16 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
-      "avatar": null,
-      "subscribers": null,
+      "avatar": "https://i2.hdslb.com/bfs/face/5512061028ba69b7e4e1b3bd2fa8f21aff297ff7.jpg",
+      "subscribers": 25436,
       "isSinging": false,
       "activity": "unknown",
-      "subscribersHidden": true,
+      "subscribersHidden": false,
       "twitchLogin": null,
       "gender": "unknown",
       "isAi": false,
@@ -1999,7 +2137,7 @@
         {
           "p": "bilibili",
           "u": "https://space.bilibili.com/146977967",
-          "h": null
+          "h": "146977967"
         }
       ]
     },
@@ -2011,14 +2149,16 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
-      "avatar": null,
-      "subscribers": null,
+      "avatar": "https://i1.hdslb.com/bfs/face/e0285f6613ab2a43ac823af17eb910a1f58eb936.jpg",
+      "subscribers": 29348,
       "isSinging": false,
       "activity": "unknown",
-      "subscribersHidden": true,
+      "subscribersHidden": false,
       "twitchLogin": null,
       "gender": "unknown",
       "isAi": false,
@@ -2028,7 +2168,7 @@
         {
           "p": "bilibili",
           "u": "https://space.bilibili.com/147688",
-          "h": null
+          "h": "147688"
         }
       ]
     },
@@ -2040,14 +2180,16 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "雨林社",
       "affiliation": "group",
-      "avatar": null,
-      "subscribers": null,
+      "avatar": "https://i0.hdslb.com/bfs/face/a3e31c3ed06f105ceb0d19c334a44930e714b2e0.jpg",
+      "subscribers": 3257,
       "isSinging": false,
       "activity": "unknown",
-      "subscribersHidden": true,
+      "subscribersHidden": false,
       "twitchLogin": null,
       "gender": "unknown",
       "isAi": false,
@@ -2057,7 +2199,7 @@
         {
           "p": "bilibili",
           "u": "https://space.bilibili.com/147821346",
-          "h": null
+          "h": "147821346"
         }
       ]
     },
@@ -2069,7 +2211,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "三垣四象project",
       "affiliation": "group",
       "avatar": null,
@@ -2098,7 +2242,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -2127,7 +2273,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -2156,7 +2304,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -2185,7 +2335,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -2214,7 +2366,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "Vi-D",
       "affiliation": "group",
       "avatar": null,
@@ -2248,7 +2402,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -2277,7 +2433,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -2306,7 +2464,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -2335,7 +2495,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "V_G研究所",
       "affiliation": "group",
       "avatar": null,
@@ -2364,7 +2526,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -2393,7 +2557,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -2422,7 +2588,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -2451,7 +2619,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -2480,7 +2650,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -2509,7 +2681,9 @@
       "role": "unknown",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": "https://i1.hdslb.com/bfs/face/6237c423a25e6f6e79d78c738911e39c2d26bac9.jpg",
@@ -2538,7 +2712,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -2567,7 +2743,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -2596,7 +2774,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -2625,7 +2805,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -2654,7 +2836,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -2683,7 +2867,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -2712,7 +2898,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -2741,7 +2929,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -2770,7 +2960,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -2799,7 +2991,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -2828,7 +3022,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -2857,7 +3053,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -2886,7 +3084,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -2915,7 +3115,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -2944,7 +3146,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -2973,7 +3177,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -3002,7 +3208,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -3031,7 +3239,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -3060,7 +3270,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -3089,7 +3301,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "虚研学园",
       "affiliation": "group",
       "avatar": null,
@@ -3118,7 +3332,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -3147,7 +3363,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -3176,7 +3394,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -3205,7 +3425,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -3234,7 +3456,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -3263,7 +3487,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -3292,7 +3518,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -3321,7 +3549,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -3350,7 +3580,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -3379,7 +3611,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -3408,7 +3642,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -3437,7 +3673,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -3466,7 +3704,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -3495,7 +3735,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -3524,7 +3766,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -3553,7 +3797,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "ChaosLiveSprout",
       "affiliation": "group",
       "avatar": null,
@@ -3582,7 +3828,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -3611,7 +3859,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -3640,7 +3890,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -3669,7 +3921,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -3698,7 +3952,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -3727,7 +3983,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -3756,7 +4014,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -3785,7 +4045,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "月光社",
       "affiliation": "group",
       "avatar": null,
@@ -3814,7 +4076,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "Wildfire野火企划",
       "affiliation": "group",
       "avatar": null,
@@ -3843,7 +4107,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -3872,7 +4138,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -3901,7 +4169,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "VOISLIVE",
       "affiliation": "group",
       "avatar": null,
@@ -3930,7 +4200,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -3959,7 +4231,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "星云社_CosmicNebula",
       "affiliation": "group",
       "avatar": null,
@@ -3988,7 +4262,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -4017,7 +4293,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -4046,7 +4324,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "极光社",
       "affiliation": "group",
       "avatar": null,
@@ -4075,7 +4355,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -4104,7 +4386,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -4133,7 +4417,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -4162,7 +4448,9 @@
       "role": "unknown",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": "https://i1.hdslb.com/bfs/face/998aa0b9a1b591f6361aa12e7edda9176f576331.jpg",
@@ -4191,7 +4479,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -4220,7 +4510,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -4249,7 +4541,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -4278,7 +4572,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "超电VUP",
       "affiliation": "group",
       "avatar": null,
@@ -4307,7 +4603,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -4336,7 +4634,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -4365,7 +4665,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -4394,7 +4696,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -4423,7 +4727,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -4452,7 +4758,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -4481,7 +4789,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "MZ次元",
       "affiliation": "group",
       "avatar": null,
@@ -4510,7 +4820,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -4539,7 +4851,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -4568,7 +4882,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -4597,7 +4913,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -4626,7 +4944,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -4655,7 +4975,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "hOuOu_Project",
       "affiliation": "group",
       "avatar": null,
@@ -4684,7 +5006,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "空白社",
       "affiliation": "group",
       "avatar": null,
@@ -4713,7 +5037,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -4742,7 +5068,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "云光计划",
       "affiliation": "group",
       "avatar": null,
@@ -4771,7 +5099,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -4800,7 +5130,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -4829,7 +5161,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -4858,7 +5192,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "Afaer-Official",
       "affiliation": "group",
       "avatar": null,
@@ -4887,7 +5223,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -4916,7 +5254,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "P家",
       "affiliation": "group",
       "avatar": null,
@@ -4945,7 +5285,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -4974,7 +5316,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -5003,7 +5347,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -5032,7 +5378,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -5061,7 +5409,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -5090,7 +5440,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -5119,7 +5471,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "VirtuaReal",
       "affiliation": "group",
       "avatar": null,
@@ -5148,7 +5502,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "fb7977c3-8198-5021-a136-3c8de14290f7",
       "affiliation": "group",
       "avatar": null,
@@ -5177,7 +5533,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -5206,7 +5564,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "极光社",
       "affiliation": "group",
       "avatar": null,
@@ -5235,7 +5595,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -5264,7 +5626,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -5293,7 +5657,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -5322,7 +5688,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -5351,7 +5719,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "Wenthernten",
       "affiliation": "group",
       "avatar": null,
@@ -5380,7 +5750,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -5409,7 +5781,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "英灵殿ValhallaClub",
       "affiliation": "group",
       "avatar": null,
@@ -5438,7 +5812,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -5467,7 +5843,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -5496,7 +5874,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -5525,7 +5905,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -5554,7 +5936,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "三垣四象project",
       "affiliation": "group",
       "avatar": null,
@@ -5583,7 +5967,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "ChaosLiveSprout",
       "affiliation": "group",
       "avatar": null,
@@ -5612,7 +5998,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -5641,7 +6029,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -5670,7 +6060,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -5699,7 +6091,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -5728,7 +6122,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -5757,7 +6153,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -5786,7 +6184,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -5815,7 +6215,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -5844,7 +6246,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -5873,7 +6277,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -5902,7 +6308,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "Vi-D",
       "affiliation": "group",
       "avatar": null,
@@ -5931,7 +6339,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -5960,7 +6370,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -5989,7 +6401,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "ChaosLiveSprout",
       "affiliation": "group",
       "avatar": null,
@@ -6018,7 +6432,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -6047,7 +6463,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -6076,7 +6494,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -6105,7 +6525,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -6134,7 +6556,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -6163,7 +6587,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -6192,7 +6618,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -6221,7 +6649,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -6250,7 +6680,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -6279,7 +6711,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -6308,7 +6742,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -6337,7 +6773,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -6366,7 +6804,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -6395,7 +6835,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -6424,7 +6866,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -6453,7 +6897,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -6482,7 +6928,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -6511,7 +6959,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "VirtuaReal",
       "affiliation": "group",
       "avatar": null,
@@ -6540,7 +6990,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -6569,7 +7021,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -6598,7 +7052,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -6627,7 +7083,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -6656,7 +7114,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -6685,7 +7145,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -6714,7 +7176,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "VirtuaReal",
       "affiliation": "group",
       "avatar": null,
@@ -6743,7 +7207,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -6772,7 +7238,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -6801,7 +7269,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -6830,7 +7300,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -6859,7 +7331,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -6888,7 +7362,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -6917,7 +7393,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "千鸟战队",
       "affiliation": "group",
       "avatar": null,
@@ -6946,7 +7424,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -6975,7 +7455,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -7004,7 +7486,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -7033,7 +7517,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -7062,7 +7548,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -7091,7 +7579,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -7120,7 +7610,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -7149,7 +7641,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -7178,7 +7672,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -7207,7 +7703,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -7236,7 +7734,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -7265,7 +7765,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -7294,7 +7796,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "7893a9ee-da88-54f3-8005-023fc8095d8a",
       "affiliation": "group",
       "avatar": null,
@@ -7323,7 +7827,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -7352,7 +7858,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -7381,7 +7889,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -7410,7 +7920,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -7439,7 +7951,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -7468,7 +7982,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -7497,7 +8013,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -7526,7 +8044,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -7555,7 +8075,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -7584,7 +8106,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -7613,7 +8137,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -7642,7 +8168,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -7671,7 +8199,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -7700,7 +8230,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -7729,7 +8261,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -7758,7 +8292,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -7787,7 +8323,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -7816,7 +8354,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -7845,7 +8385,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -7874,7 +8416,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -7903,7 +8447,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -7932,7 +8478,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -7961,7 +8509,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -7990,7 +8540,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -8019,7 +8571,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "天枢project",
       "affiliation": "group",
       "avatar": null,
@@ -8048,7 +8602,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "妖精管理局（北立交桥）",
       "affiliation": "group",
       "avatar": null,
@@ -8077,7 +8633,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -8106,7 +8664,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -8135,7 +8695,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -8164,7 +8726,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -8193,7 +8757,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -8222,7 +8788,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -8251,7 +8819,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -8280,7 +8850,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -8309,7 +8881,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -8338,7 +8912,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -8367,7 +8943,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -8396,7 +8974,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -8425,7 +9005,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -8454,7 +9036,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -8483,7 +9067,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -8512,7 +9098,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -8541,7 +9129,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -8570,7 +9160,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -8599,7 +9191,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -8628,7 +9222,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -8657,7 +9253,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -8686,7 +9284,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -8715,7 +9315,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -8744,7 +9346,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -8773,7 +9377,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -8802,7 +9408,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -8831,7 +9439,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -8860,7 +9470,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -8889,7 +9501,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -8918,7 +9532,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -8947,7 +9563,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -8976,7 +9594,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -9005,7 +9625,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -9034,7 +9656,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -9063,7 +9687,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -9092,7 +9718,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -9121,7 +9749,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -9150,7 +9780,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -9179,7 +9811,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -9208,7 +9842,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -9237,7 +9873,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -9266,7 +9904,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -9295,7 +9935,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -9324,7 +9966,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -9353,7 +9997,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -9382,7 +10028,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -9411,7 +10059,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -9440,7 +10090,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -9469,7 +10121,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "GravityS Project",
       "affiliation": "group",
       "avatar": null,
@@ -9498,7 +10152,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -9527,7 +10183,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -9556,7 +10214,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -9585,7 +10245,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -9614,7 +10276,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -9643,7 +10307,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -9672,7 +10338,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -9701,7 +10369,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -9730,7 +10400,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -9759,7 +10431,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -9788,7 +10462,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "ARP",
       "affiliation": "group",
       "avatar": null,
@@ -9817,7 +10493,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -9846,7 +10524,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -9875,7 +10555,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -9904,7 +10586,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -9933,7 +10617,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "d21eef30-ea61-5631-95ac-db4992368013",
       "affiliation": "group",
       "avatar": null,
@@ -9962,7 +10648,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -9991,7 +10679,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -10020,7 +10710,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -10049,7 +10741,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -10078,7 +10772,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "问尘仙会",
       "affiliation": "group",
       "avatar": null,
@@ -10107,7 +10803,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -10136,7 +10834,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -10165,7 +10865,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -10194,7 +10896,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -10223,7 +10927,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -10252,7 +10958,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -10281,7 +10989,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -10310,7 +11020,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -10339,7 +11051,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "Providence",
       "affiliation": "group",
       "avatar": null,
@@ -10368,7 +11082,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -10397,7 +11113,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "Hanabi_live",
       "affiliation": "group",
       "avatar": null,
@@ -10426,7 +11144,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -10455,7 +11175,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -10484,7 +11206,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "天枢project",
       "affiliation": "group",
       "avatar": null,
@@ -10513,7 +11237,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -10542,7 +11268,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -10571,7 +11299,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -10600,7 +11330,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -10629,7 +11361,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "GravityS Project",
       "affiliation": "group",
       "avatar": null,
@@ -10658,7 +11392,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -10687,7 +11423,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -10716,7 +11454,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -10745,7 +11485,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -10774,7 +11516,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -10803,7 +11547,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "圣魔社SeiMa",
       "affiliation": "group",
       "avatar": null,
@@ -10832,7 +11578,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -10861,7 +11609,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -10890,7 +11640,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -10919,7 +11671,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "幻想社Fantas1A",
       "affiliation": "group",
       "avatar": null,
@@ -10948,7 +11702,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -10977,7 +11733,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -11006,7 +11764,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -11035,7 +11795,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -11064,7 +11826,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -11093,7 +11857,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -11122,7 +11888,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -11151,7 +11919,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -11180,7 +11950,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -11209,7 +11981,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -11238,7 +12012,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -11267,7 +12043,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -11296,7 +12074,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "妖精管理局（北立交桥）",
       "affiliation": "group",
       "avatar": null,
@@ -11325,7 +12105,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -11354,7 +12136,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "GravityS Project",
       "affiliation": "group",
       "avatar": null,
@@ -11383,7 +12167,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -11412,7 +12198,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -11441,7 +12229,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "八木百货",
       "affiliation": "group",
       "avatar": null,
@@ -11470,7 +12260,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -11499,7 +12291,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -11528,7 +12322,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -11557,7 +12353,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -11586,7 +12384,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -11615,7 +12415,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -11644,7 +12446,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -11673,7 +12477,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -11702,7 +12508,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -11731,7 +12539,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -11760,7 +12570,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -11789,7 +12601,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -11818,7 +12632,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -11847,7 +12663,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -11876,7 +12694,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "极光社",
       "affiliation": "group",
       "avatar": null,
@@ -11905,7 +12725,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -11934,7 +12756,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -11963,7 +12787,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -11992,7 +12818,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -12021,7 +12849,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -12050,7 +12880,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -12079,7 +12911,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "三光五色（北立交桥）",
       "affiliation": "group",
       "avatar": null,
@@ -12108,7 +12942,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -12137,7 +12973,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -12166,7 +13004,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -12195,7 +13035,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -12224,7 +13066,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -12253,7 +13097,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "银潮project(北立交桥)",
       "affiliation": "group",
       "avatar": null,
@@ -12282,7 +13128,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -12311,7 +13159,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -12340,7 +13190,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -12369,7 +13221,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -12398,7 +13252,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -12427,7 +13283,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -12456,7 +13314,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "Vidol工作室",
       "affiliation": "group",
       "avatar": null,
@@ -12485,7 +13345,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -12514,7 +13376,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "Vidol工作室",
       "affiliation": "group",
       "avatar": null,
@@ -12543,7 +13407,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -12572,7 +13438,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -12601,7 +13469,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "幻想社Fantas1A",
       "affiliation": "group",
       "avatar": null,
@@ -12630,7 +13500,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -12659,7 +13531,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "kanae",
       "affiliation": "group",
       "avatar": null,
@@ -12688,7 +13562,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -12717,7 +13593,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "ProjectViberglow",
       "affiliation": "group",
       "avatar": null,
@@ -12746,7 +13624,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -12775,7 +13655,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -12804,7 +13686,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -12833,7 +13717,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "月光社",
       "affiliation": "group",
       "avatar": null,
@@ -12862,7 +13748,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -12891,7 +13779,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -12920,7 +13810,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "极光社",
       "affiliation": "group",
       "avatar": null,
@@ -12949,7 +13841,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -12978,7 +13872,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -13007,7 +13903,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -13036,7 +13934,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -13065,7 +13965,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -13094,7 +13996,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -13123,7 +14027,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "极光社",
       "affiliation": "group",
       "avatar": null,
@@ -13152,7 +14058,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "Vi-D",
       "affiliation": "group",
       "avatar": null,
@@ -13181,7 +14089,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -13210,7 +14120,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -13239,7 +14151,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -13268,7 +14182,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "空想岛",
       "affiliation": "group",
       "avatar": null,
@@ -13297,7 +14213,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -13326,7 +14244,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -13355,7 +14275,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -13384,7 +14306,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -13413,7 +14337,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -13442,7 +14368,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -13471,7 +14399,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "NornsProject",
       "affiliation": "group",
       "avatar": null,
@@ -13500,7 +14430,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": ".Live",
       "affiliation": "group",
       "avatar": null,
@@ -13529,7 +14461,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -13558,7 +14492,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "玹云社",
       "affiliation": "group",
       "avatar": null,
@@ -13587,7 +14523,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -13616,7 +14554,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "yifun社",
       "affiliation": "group",
       "avatar": null,
@@ -13645,7 +14585,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -13674,7 +14616,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -13703,7 +14647,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -13732,7 +14678,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -13761,7 +14709,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "和遥树奈Project",
       "affiliation": "group",
       "avatar": null,
@@ -13790,7 +14740,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "96331fdb-5540-5fa2-887a-7a8e2c719e2c",
       "affiliation": "group",
       "avatar": null,
@@ -13819,7 +14771,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -13848,7 +14802,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -13877,7 +14833,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "闪米社",
       "affiliation": "group",
       "avatar": null,
@@ -13906,7 +14864,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -13935,7 +14895,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -13964,7 +14926,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -13993,7 +14957,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -14022,7 +14988,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -14051,7 +15019,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "三垣四象project",
       "affiliation": "group",
       "avatar": null,
@@ -14080,7 +15050,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -14109,7 +15081,9 @@
       "role": "unknown",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": "https://i1.hdslb.com/bfs/face/48503596681ab931d7d08a34071d3c8bf8b284bb.webp",
@@ -14138,7 +15112,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "Croven教团",
       "affiliation": "group",
       "avatar": null,
@@ -14167,7 +15143,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "WACTOR",
       "affiliation": "group",
       "avatar": null,
@@ -14196,7 +15174,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -14225,7 +15205,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -14254,7 +15236,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -14283,7 +15267,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -14312,7 +15298,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -14341,7 +15329,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -14370,7 +15360,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -14399,7 +15391,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -14428,7 +15422,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "chaoslive",
       "affiliation": "group",
       "avatar": null,
@@ -14457,7 +15453,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -14486,7 +15484,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -14515,7 +15515,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "Palette",
       "affiliation": "group",
       "avatar": null,
@@ -14544,7 +15546,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "P-SP",
       "affiliation": "group",
       "avatar": null,
@@ -14573,7 +15577,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -14602,7 +15608,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -14631,7 +15639,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -14660,7 +15670,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -14689,7 +15701,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -14718,7 +15732,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "P-SP",
       "affiliation": "group",
       "avatar": null,
@@ -14747,7 +15763,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -14776,7 +15794,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -14805,7 +15825,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -14834,7 +15856,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -14863,7 +15887,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -14892,7 +15918,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "草莓王子",
       "affiliation": "group",
       "avatar": null,
@@ -14921,7 +15949,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "云光计划",
       "affiliation": "group",
       "avatar": null,
@@ -14950,7 +15980,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -14979,7 +16011,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -15008,7 +16042,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "holostars",
       "affiliation": "group",
       "avatar": null,
@@ -15037,7 +16073,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "ReAcT",
       "affiliation": "group",
       "avatar": null,
@@ -15066,7 +16104,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "VirtuaReal",
       "affiliation": "group",
       "avatar": null,
@@ -15095,7 +16135,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "P.K.S",
       "affiliation": "group",
       "avatar": null,
@@ -15124,7 +16166,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -15153,7 +16197,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -15182,7 +16228,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -15211,7 +16259,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "MiosLive",
       "affiliation": "group",
       "avatar": null,
@@ -15240,7 +16290,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -15269,7 +16321,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -15298,7 +16352,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "upd8",
       "affiliation": "group",
       "avatar": null,
@@ -15327,7 +16383,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "梦镜茶会（北立交桥）",
       "affiliation": "group",
       "avatar": null,
@@ -15356,7 +16414,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -15385,7 +16445,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -15414,7 +16476,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "Croven教团",
       "affiliation": "group",
       "avatar": null,
@@ -15443,7 +16507,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -15472,7 +16538,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -15501,7 +16569,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -15530,7 +16600,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -15559,7 +16631,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -15588,7 +16662,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -15617,7 +16693,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -15646,7 +16724,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -15675,7 +16755,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -15704,7 +16786,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "P-SP",
       "affiliation": "group",
       "avatar": null,
@@ -15733,7 +16817,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -15762,7 +16848,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -15791,7 +16879,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -15820,7 +16910,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -15849,7 +16941,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "MZ次元",
       "affiliation": "group",
       "avatar": null,
@@ -15878,7 +16972,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "a2dfbe6d-579b-50da-a404-9d80711403d7",
       "affiliation": "group",
       "avatar": null,
@@ -15907,7 +17003,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "雪风军团",
       "affiliation": "group",
       "avatar": null,
@@ -15936,7 +17034,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -15965,7 +17065,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -15994,7 +17096,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -16023,7 +17127,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -16052,7 +17158,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -16081,7 +17189,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -16110,7 +17220,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -16139,7 +17251,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -16168,7 +17282,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -16197,7 +17313,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -16226,7 +17344,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -16255,7 +17375,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "VirtuaReal",
       "affiliation": "group",
       "avatar": null,
@@ -16284,7 +17406,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "VirtuaReal",
       "affiliation": "group",
       "avatar": null,
@@ -16313,7 +17437,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "VirtuaReal",
       "affiliation": "group",
       "avatar": null,
@@ -16342,7 +17468,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "VirtuaReal",
       "affiliation": "group",
       "avatar": null,
@@ -16371,7 +17499,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -16400,7 +17530,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -16429,7 +17561,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -16458,7 +17592,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -16487,7 +17623,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -16516,7 +17654,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -16545,7 +17685,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -16574,7 +17716,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -16603,7 +17747,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "ChaosLiveSprout",
       "affiliation": "group",
       "avatar": null,
@@ -16632,7 +17778,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -16661,7 +17809,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -16690,7 +17840,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "hOuOu_Project",
       "affiliation": "group",
       "avatar": null,
@@ -16719,7 +17871,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -16748,7 +17902,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -16777,7 +17933,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -16806,7 +17964,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -16835,7 +17995,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "狄灵计划",
       "affiliation": "group",
       "avatar": null,
@@ -16864,7 +18026,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -16893,7 +18057,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "淬蜂计划（北立交桥）",
       "affiliation": "group",
       "avatar": null,
@@ -16922,7 +18088,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -16951,7 +18119,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -16980,7 +18150,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -17009,7 +18181,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -17038,7 +18212,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -17067,7 +18243,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -17096,7 +18274,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -17125,7 +18305,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -17154,7 +18336,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -17183,7 +18367,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -17212,7 +18398,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -17241,7 +18429,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -17270,7 +18460,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -17299,7 +18491,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -17328,7 +18522,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "忒弥斯project",
       "affiliation": "group",
       "avatar": null,
@@ -17357,7 +18553,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "Pursue-live",
       "affiliation": "group",
       "avatar": null,
@@ -17386,7 +18584,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -17415,7 +18615,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -17444,7 +18646,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "platform",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "虚研社",
       "affiliation": "group",
       "avatar": null,
@@ -17473,7 +18677,10 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "declared",
-      "language": "zh-Hans",
+      "languages": [
+        "ja",
+        "zh-Hans"
+      ],
       "agency": "upd8",
       "affiliation": "group",
       "avatar": null,
@@ -17507,7 +18714,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "declared",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -17546,7 +18755,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "declared",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -17580,7 +18791,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "declared",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "Hololive",
       "affiliation": "group",
       "avatar": null,
@@ -17614,7 +18827,10 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "declared",
-      "language": "zh-Hans",
+      "languages": [
+        "ja",
+        "zh-Hans"
+      ],
       "agency": "星巡学园",
       "affiliation": "group",
       "avatar": null,
@@ -17648,7 +18864,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "declared",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "NIJISANJI",
       "affiliation": "group",
       "avatar": null,
@@ -17682,7 +18900,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "declared",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -17716,7 +18936,10 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "declared",
-      "language": "zh-Hans",
+      "languages": [
+        "en",
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -17750,7 +18973,10 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "declared",
-      "language": "zh-Hans",
+      "languages": [
+        "ja",
+        "zh-Hans"
+      ],
       "agency": "NIJISANJI",
       "affiliation": "group",
       "avatar": null,
@@ -17784,7 +19010,10 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "declared",
-      "language": "zh-Hans",
+      "languages": [
+        "ja",
+        "zh-Hans"
+      ],
       "agency": "0224316a-592e-547c-89b6-9f4f4e425779",
       "affiliation": "group",
       "avatar": null,
@@ -17807,7 +19036,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "declared",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "037feda8-c790-5eed-b42e-3bcf55efdba9",
       "affiliation": "group",
       "avatar": null,
@@ -17830,7 +19061,10 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "declared",
-      "language": "zh-Hans",
+      "languages": [
+        "ja",
+        "zh-Hans"
+      ],
       "agency": "d406e5da-ef7d-5e0f-9439-264188944758",
       "affiliation": "group",
       "avatar": null,
@@ -17853,7 +19087,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "declared",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "Hololive",
       "affiliation": "group",
       "avatar": null,
@@ -17887,7 +19123,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "declared",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,
@@ -17921,7 +19159,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "declared",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": "NOA Talent",
       "affiliation": "group",
       "avatar": null,
@@ -17960,7 +19200,9 @@
       "role": "vtuber",
       "region": "cn",
       "regionSource": "declared",
-      "language": "zh-Hans",
+      "languages": [
+        "zh-Hans"
+      ],
       "agency": null,
       "affiliation": "unknown",
       "avatar": null,

@@ -30,7 +30,7 @@ import {
   COUNTRY_REGION,
   REGION_LANGUAGE,
   detectLanguage,
-  detectLanguageStatement,
+  detectLanguageStatements,
   languageToRegion,
   regionFromLocaleHints,
 } from "./regions";
@@ -299,7 +299,8 @@ export interface ChannelClassification {
   kind: ArtistKind;
   role: ArtistRole;
   region: RegionCode;
-  language: string | null;
+  /** The languages the performer streams in. */
+  languages: string[];
   agency: string | null;
   isSinging: boolean;
   /** True when the channel looks like an aggregator rather than a performer. */
@@ -367,7 +368,8 @@ export function classifyChannel(signals: ChannelSignals): ChannelClassification 
   const isAggregator =
     countHits(name, AGGREGATOR_MARKERS) > 0 ||
     countHits(intro, AGGREGATOR_MARKERS) > 0 ||
-    AGGREGATOR_NAME_PATTERNS.some((re) => re.test(signals.name ?? ""));
+    AGGREGATOR_NAME_PATTERNS.some((re) => re.test(signals.name ?? "")) ||
+    detectClipAccount(signals.name, signals.description);
 
   /* --- virtual vs real --------------------------------------------------- */
   const virtualScore =
@@ -487,28 +489,34 @@ export function classifyChannel(signals: ChannelSignals): ChannelClassification 
     regionSource = "script";
   }
   /**
-   * The language, in order of authority:
+   * The languages, in order of authority:
    *
-   * 1. **What the performer states.** 「主な配信言語: 広東語」 is a fact about
-   *    themselves — it outranks everything else.
+   * 1. **What the performer states.** 「主な配信言語: 広東語 / English」 is a
+   *    fact about themselves — it outranks everything else. Performers
+   *    usually stream in more than one language, so all of them are kept, in
+   *    the order they were written.
    * 2. **The region.** A Taiwanese performer performs in Chinese, whatever
    *    their stage name looks like.
    * 3. **The script of the name.** The weakest signal, and only used when
    *    nothing else is known.
    */
-  const statedLang = detectLanguageStatement(
+  const statedLangs = detectLanguageStatements(
     `${signals.description ?? ""} ${signals.name ?? ""}`,
   );
 
   // A performer who states they speak Cantonese and whose region is not
   // otherwise known belongs to the Hong Kong scene.
-  if (statedLang === "yue" && region === "unknown") {
+  if (statedLangs.includes("yue") && region === "unknown") {
     region = "hk";
     regionScore = 0.85;
     regionSource = "declared";
   }
 
-  const lang = statedLang ?? REGION_LANGUAGE[region] ?? scriptLang;
+  const languages = statedLangs.length
+    ? statedLangs
+    : [REGION_LANGUAGE[region] ?? scriptLang].filter(
+        (l): l is string => !!l,
+      );
 
   const strongRegion = detectStrongRegion(all(name, intro, body, tags));
   if (strongRegion) {
@@ -588,7 +596,7 @@ export function classifyChannel(signals: ChannelSignals): ChannelClassification 
     region,
     regionSource,
     confidence,
-    language: lang,
+    languages,
     agency,
     isSinging,
     isAggregator,
@@ -953,6 +961,73 @@ export function isShortItem(
     return true;
   }
   return false;
+}
+
+/**
+ * Markers that identify a **clip or translation channel**.
+ *
+ * The Chinese scene is full of them: an account that re-uploads a Japanese
+ * performer's streams with Chinese subtitles. They are named after the
+ * performer they translate — often as `Artist/Original name` — and they are
+ * *not* performers. Counting them as VTubers pollutes the dataset with
+ * duplicates of the real artist under a second channel.
+ */
+const CLIP_ACCOUNT_MARKERS = [
+  "翻译组",
+  "翻譯組",
+  "翻译",
+  "翻譯",
+  "字幕组",
+  "字幕組",
+  "切片",
+  "搬运",
+  "搬運",
+  "直播切片",
+  "录播",
+  "錄播",
+  "直送",
+  "非官方",
+  "unofficial",
+  "unofficial fan",
+  "fan translation",
+  "subtitles by",
+  "translated by",
+  "on subtitles",
+  "搬运工",
+];
+
+/**
+ * The `Artist/Original name` naming pattern.
+ *
+ * 「YUA/藤崎由愛」 is a translation account for Yua Mikami. A slash between a
+ * romanised name and a CJK name is the signature.
+ */
+const CLIP_ACCOUNT_NAME = /^[^/]{1,24}\/[^/\s]{1,24}$/;
+
+/**
+ * Whether a channel is a clip or translation account rather than a
+ * performer.
+ */
+export function detectClipAccount(
+  name: string | null | undefined,
+  description: string | null | undefined,
+): boolean {
+  const text = normalize(description ?? "");
+  if (has(text, CLIP_ACCOUNT_MARKERS)) return true;
+
+  const trimmed = (name ?? "").trim();
+  if (!trimmed.includes("/")) return false;
+  if (!CLIP_ACCOUNT_NAME.test(trimmed)) return false;
+
+  // The part after the slash is the original artist's name, and the part
+  // before it is a romanisation of it — or vice versa. Either way, two names
+  // for one performer means a fan account.
+  const [first, second] = trimmed.split("/").map((p) => p.trim());
+  if (!first || !second) return false;
+  const firstIsLatin = /^[A-Za-z0-9 ._'-]+$/.test(first);
+  const secondIsLatin = /^[A-Za-z0-9 ._'-]+$/.test(second);
+  // Both romanised, or both CJK — that is a normal name, not a clip account.
+  return firstIsLatin !== secondIsLatin;
 }
 
 /**

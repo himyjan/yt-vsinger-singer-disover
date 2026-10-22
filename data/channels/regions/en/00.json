@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T02:45:20.113Z",
+  "generatedAt": "2026-10-22T03:15:21.113Z",
   "channels": [
     {
       "id": "twitch:vedal987",
@@ -31,7 +31,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T02:27:57.931Z",
-      "updatedAt": "2026-10-22T02:45:20.180Z",
+      "updatedAt": "2026-10-22T03:02:04.277Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -49,11 +49,14 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T02:45:22.689Z"
+          "lastCheckedAt": "2026-10-22T03:02:06.524Z"
         }
       ],
       "externals": {},
-      "popularVideoId": null
+      "popularVideoId": null,
+      "languages": [
+        "en"
+      ]
     },
     {
       "id": "UCsb-1aJgiJXJH2feV-zlZRw",
@@ -84,7 +87,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T02:27:57.931Z",
-      "updatedAt": "2026-10-22T02:45:20.180Z",
+      "updatedAt": "2026-10-22T03:02:04.277Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -102,11 +105,14 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T02:45:22.646Z"
+          "lastCheckedAt": "2026-10-22T03:02:06.485Z"
         }
       ],
       "externals": {},
-      "popularVideoId": null
+      "popularVideoId": null,
+      "languages": [
+        "en"
+      ]
     },
     {
       "id": "vdb:4bb946b7-6b9d-5b28-8975-f23291cba191",
@@ -137,7 +143,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T02:27:57.931Z",
-      "updatedAt": "2026-10-22T02:45:20.180Z",
+      "updatedAt": "2026-10-22T03:02:04.277Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -145,7 +151,11 @@
       "graduateDate": null,
       "platforms": [],
       "externals": {},
-      "popularVideoId": null
+      "popularVideoId": null,
+      "languages": [
+        "ja",
+        "en"
+      ]
     },
     {
       "id": "vdb:ce23afd2-6f1a-5106-b1d6-09980187f549",
@@ -176,7 +186,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T02:27:57.931Z",
-      "updatedAt": "2026-10-22T02:45:20.180Z",
+      "updatedAt": "2026-10-22T03:02:04.277Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -184,7 +194,10 @@
       "graduateDate": null,
       "platforms": [],
       "externals": {},
-      "popularVideoId": null
+      "popularVideoId": null,
+      "languages": [
+        "en"
+      ]
     },
     {
       "id": "youtube:NOATalent",
@@ -215,7 +228,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T02:27:57.931Z",
-      "updatedAt": "2026-10-22T02:45:20.180Z",
+      "updatedAt": "2026-10-22T03:02:04.277Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -233,7 +246,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T02:45:22.657Z"
+          "lastCheckedAt": "2026-10-22T03:02:06.493Z"
         },
         {
           "platform": "youtube",
@@ -246,7 +259,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T02:45:22.657Z"
+          "lastCheckedAt": "2026-10-22T03:02:06.493Z"
         },
         {
           "platform": "twitch",
@@ -259,11 +272,15 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T02:45:22.657Z"
+          "lastCheckedAt": "2026-10-22T03:02:06.493Z"
         }
       ],
       "externals": {},
-      "popularVideoId": null
+      "popularVideoId": null,
+      "languages": [
+        "zh-Hans",
+        "en"
+      ]
     },
     {
       "id": "youtube:RiiKamiVT",
@@ -294,7 +311,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T02:27:57.931Z",
-      "updatedAt": "2026-10-22T02:45:20.180Z",
+      "updatedAt": "2026-10-22T03:02:04.277Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -312,7 +329,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T02:45:22.668Z"
+          "lastCheckedAt": "2026-10-22T03:02:06.504Z"
         },
         {
           "platform": "youtube",
@@ -325,7 +342,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T02:45:22.668Z"
+          "lastCheckedAt": "2026-10-22T03:02:06.504Z"
         },
         {
           "platform": "youtube",
@@ -338,7 +355,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T02:45:22.668Z"
+          "lastCheckedAt": "2026-10-22T03:02:06.504Z"
         },
         {
           "platform": "twitch",
@@ -351,11 +368,15 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T02:45:22.668Z"
+          "lastCheckedAt": "2026-10-22T03:02:06.504Z"
         }
       ],
       "externals": {},
-      "popularVideoId": null
+      "popularVideoId": null,
+      "languages": [
+        "zh-Hans",
+        "en"
+      ]
     }
   ]
 }

@@ -19,7 +19,7 @@
 
 import { ALL_SEEDS } from "./seeds";
 import { fetchTrackedVtubers } from "./taiwan-vtuber-data";
-import { languageForRegion } from "./regions";
+import { languagesForRegion, mergeLanguages } from "./regions";
 import { VdbSource } from "./vdb";
 import { createAdapters } from "./platform-registry";
 import { classifyChannel, deriveVariant, detectAffiliation } from "./classify";
@@ -72,7 +72,7 @@ export async function buildRoster(
       regionSource: "roster",
       // The language follows the region, not the name: a Taiwanese performer
       // with a Japanese-style stage name still performs in Chinese.
-      language: languageForRegion(record.region, classification.language),
+      languages: languagesForRegion(record.region, classification.languages),
       agency: record.group,
       // The track list states "no group" positively for a solo act.
       affiliation: record.isIndependent
@@ -176,7 +176,7 @@ export async function buildRoster(
       role: seed.role,
       region: seed.region,
       regionSource: "override",
-      language: null,
+      languages: ["en"],
       agency: seed.agency ?? null,
       affiliation: detectAffiliation(
         seed.name,
@@ -278,7 +278,16 @@ export async function buildRoster(
           : entry.regionSource === "platform"
             ? "platform"
             : "script",
-      language: languageForRegion(entry.region, classification.language),
+      /**
+       * A performer who lists a language *and* is in a region with a
+       * different one speaks both: a Japanese VTuber who lists English
+       * streams in Japanese and English. The declared language comes first,
+       * because that is what they chose to publish.
+       */
+      languages: mergeLanguages(
+        classification.languages,
+        languagesForRegion(entry.region),
+      ),
       agency: entry.group,
       affiliation: detectAffiliation(entry.name, null, entry.group),
       avatar: null,
@@ -350,7 +359,7 @@ export async function buildRoster(
             role: classification.role,
             region: classification.region,
             regionSource: classification.regionSource,
-            language: classification.language,
+            languages: classification.languages,
             agency: null,
             affiliation: detectAffiliation(
               channel.name,

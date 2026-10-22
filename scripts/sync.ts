@@ -40,6 +40,7 @@ import {
   TwitchClient,
 } from "./lib/twitch";
 import { createAdapters } from "./lib/platform-registry";
+import { InnerTubeSource } from "./lib/youtubei";
 import {
   orderPlatformLinks,
   pickAvatar,
@@ -157,6 +158,7 @@ interface SyncConfig {
   maxLiveChannelsPerRun: number;
   maxChannelDetailsPerRun: number;
   detailsDelayMs: number;
+  innertubeDelayMs: number;
   searchResultsPerKeyword: number;
   refreshLiveEveryRun: boolean;
   searches: SearchSpec[];
@@ -173,6 +175,7 @@ const config: SyncConfig = readJson(
     maxLiveChannelsPerRun: 60,
     maxChannelDetailsPerRun: 200,
     detailsDelayMs: 700,
+    innertubeDelayMs: 350,
     searchResultsPerKeyword: 25,
     refreshLiveEveryRun: true,
     searches: [],
@@ -281,7 +284,7 @@ function channelFromApi(
     role: classification.role,
     region: classification.region,
     regionSource: classification.regionSource,
-    language: classification.language,
+    languages: classification.languages,
     agency: classification.agency,
     affiliation: detectAffiliation(
       snippet.title,
@@ -423,6 +426,7 @@ function itemFromApi(
     channelKind: channel?.kind ?? "virtual",
     region: channel?.region ?? "unknown",
     gender: channel?.gender ?? "unknown",
+    languages: channel?.languages ?? [],
     isAi: channel?.isAi ?? false,
     variant: channel?.variant ?? "unknown",
     title: snippet.title ?? "Untitled",
@@ -533,6 +537,20 @@ async function main(): Promise<void> {
   const quotaPath = path.join(CACHE_DIR, "quota.json");
   const budget = new QuotaBudget(quotaPath, args.quotaLimit);
   if (args.force) budget.overrideUsed(0);
+
+  /**
+   * The InnerTube client — the quota-free source.
+   *
+   * It fetches the channel descriptions, avatars, subscriber counts and
+   * upload lists without spending a single Data API unit, so the pipeline
+   * produces a complete dataset even with no API key at all.
+   */
+  const innertube = new InnerTubeSource({
+    enabled: process.env.YOUTUBE_USE_INNERTUBE !== "0",
+    delayMs: config.innertubeDelayMs,
+    onLog: (m) => log(m),
+  });
+  await innertube.connect();
 
   const client = apiKey
     ? new YouTubeClient({
@@ -1228,6 +1246,34 @@ async function main(): Promise<void> {
   let fetchedDetails = 0;
 
   for (const channel of channelList) {
+    /**
+     * Without an API key the uploads come from InnerTube, so the dataset
+     * still fills up. With a key, the Data API is used — it is the
+     * supported, quota-guaranteed route — and InnerTube is the fallback.
+     */
+    if (!client && innertube.isAvailable) {
+      try {
+        const uploads = await innertube.uploads(
+          channel.id,
+          config.maxItemsPerChannel,
+        );
+        for (const upload of uploads) {
+          const item = innertubeUploadToItem(upload, channel, now);
+          if (!item) continue;
+          const prev = itemById.get(item.id);
+          itemById.set(item.id, {
+            ...item,
+            addedAt: prev?.addedAt ?? item.addedAt,
+          });
+          fetchedVideos++;
+        }
+        channel.lastItemsFetchedAt = now;
+      } catch {
+        /* a channel that cannot be fetched is not a reason to fail */
+      }
+      continue;
+    }
+
     if (!client || !budget.canAfford(2)) break;
     try {
       const rawVideos = await fetchChannelVideos(
@@ -1291,6 +1337,7 @@ async function main(): Promise<void> {
           channelKind: channel.kind,
           region: channel.region,
           gender: channel.gender,
+          languages: channel.languages,
           isAi: channel.isAi,
           variant: channel.variant,
           title: snippet.title ?? "Untitled",
@@ -1561,6 +1608,95 @@ async function main(): Promise<void> {
 /* Multi-platform helpers                                                     */
 /* -------------------------------------------------------------------------- */
 
+/** Maps a published URL to the platform key it belongs to. */
+function externalKeyFor(url: string): string | null {
+  const map: Record<string, string> = {
+    "x.com": "x",
+    "twitter.com": "x",
+    "instagram.com": "instagram",
+    "tiktok.com": "tiktok",
+    "bilibili.com": "bilibili",
+    "nicovideo.jp": "niconico",
+    "discord.gg": "discord",
+    "open.spotify.com": "spotify",
+    "patreon.com": "patreon",
+    "pixiv.net": "pixiv",
+    "booth.pm": "booth",
+  };
+  for (const [host, key] of Object.entries(map)) {
+    if (url.includes(host)) return key;
+  }
+  return null;
+}
+
+/**
+ * Converts an InnerTube upload into a dataset item.
+ *
+ * The grid view carries the id, the title and the thumbnail. The published
+ * date and the statistics come from the Data API when there is one.
+ */
+export function innertubeUploadToItem(
+  upload: { id: string; title: string; thumbnail: string | null },
+  channel: Channel,
+  now: string,
+): Item | null {
+  if (!upload?.id) return null;
+  const classification = classifyItem({
+    title: upload.title,
+    description: null,
+    tags: [],
+    channelKind: channel.kind,
+    status: "past",
+    isShort: false,
+    durationSeconds: null,
+    channelRegion: channel.region,
+  });
+
+  return {
+    id: upload.id,
+    type: "video",
+    channelId: channel.id,
+    channelName: channel.name,
+    channelKind: channel.kind,
+    region: channel.region,
+    gender: channel.gender,
+    languages: channel.languages,
+    isAi: channel.isAi,
+    variant: channel.variant,
+    title: upload.title || "Untitled",
+    description: null,
+    thumbnail: upload.thumbnail,
+    publishedAt: null,
+    scheduledStart: null,
+    actualStart: null,
+    actualEnd: null,
+    duration: null,
+    status: "past",
+    category: classification.category,
+    songTitle: classification.songTitle,
+    originalArtist: classification.originalArtist,
+    isCollab: classification.isCollab,
+    collaborators: [
+      {
+        channelId: channel.id,
+        name: channel.name,
+        kind: channel.kind,
+        region: channel.region,
+      },
+    ],
+    isAcoustic: classification.isAcoustic,
+    tags: [],
+    viewCount: null,
+    likeCount: null,
+    concurrentViewers: null,
+    source: "api",
+    addedAt: now,
+    updatedAt: now,
+    lastItemsFetchedAt: null,
+    lastDetailsFetchedAt: null,
+  };
+}
+
 /**
  * Converts a platform upload into a dataset item.
  *
@@ -1581,6 +1717,7 @@ export function platformUploadToItem(
     channelKind: "virtual",
     region: "cn",
     gender: "unknown",
+    languages: [],
     isAi: false,
     variant: "unknown",
     title: upload.title ?? "Untitled",
@@ -1665,7 +1802,7 @@ export function channelFromPlatform(
     role: classification.role,
     region: classification.region,
     regionSource: classification.regionSource,
-    language: classification.language,
+    languages: classification.languages,
     agency: classification.agency,
     affiliation: detectAffiliation(
       channel.name,

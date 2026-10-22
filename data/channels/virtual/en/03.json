@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T02:45:20.113Z",
+  "generatedAt": "2026-10-22T03:15:21.113Z",
   "channels": [
     {
       "id": "UC4WvIIAo89_AzGUh1AZ6Dkg",
@@ -31,7 +31,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T02:27:57.931Z",
-      "updatedAt": "2026-10-22T02:45:20.180Z",
+      "updatedAt": "2026-10-22T03:02:04.277Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -49,11 +49,14 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T02:45:22.669Z"
+          "lastCheckedAt": "2026-10-22T03:02:06.505Z"
         }
       ],
       "externals": {},
-      "popularVideoId": null
+      "popularVideoId": null,
+      "languages": [
+        "en"
+      ]
     },
     {
       "id": "UC94NiQXdPedmfOE_qlIBd7Q",
@@ -84,7 +87,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T02:27:57.931Z",
-      "updatedAt": "2026-10-22T02:45:20.180Z",
+      "updatedAt": "2026-10-22T03:02:04.277Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -102,7 +105,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T02:45:22.626Z"
+          "lastCheckedAt": "2026-10-22T03:02:06.467Z"
         },
         {
           "platform": "youtube",
@@ -115,11 +118,15 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T02:45:22.626Z"
+          "lastCheckedAt": "2026-10-22T03:02:06.467Z"
         }
       ],
       "externals": {},
-      "popularVideoId": null
+      "popularVideoId": null,
+      "languages": [
+        "zh-Hans",
+        "en"
+      ]
     },
     {
       "id": "UCBePKUYNhoMcjBi-BRmjarQ",
@@ -150,7 +157,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T02:27:57.931Z",
-      "updatedAt": "2026-10-22T02:45:20.180Z",
+      "updatedAt": "2026-10-22T03:02:04.277Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -168,7 +175,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T02:45:22.658Z"
+          "lastCheckedAt": "2026-10-22T03:02:06.494Z"
         },
         {
           "platform": "bilibili",
@@ -181,11 +188,15 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T02:45:22.658Z"
+          "lastCheckedAt": "2026-10-22T03:02:06.494Z"
         }
       ],
       "externals": {},
-      "popularVideoId": null
+      "popularVideoId": null,
+      "languages": [
+        "zh-Hans",
+        "en"
+      ]
     },
     {
       "id": "UCuuAb_72QzK0M1USPMEl1yw",
@@ -216,7 +227,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T02:27:57.931Z",
-      "updatedAt": "2026-10-22T02:45:20.180Z",
+      "updatedAt": "2026-10-22T03:02:04.277Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -234,11 +245,14 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T02:45:22.674Z"
+          "lastCheckedAt": "2026-10-22T03:02:06.508Z"
         }
       ],
       "externals": {},
-      "popularVideoId": null
+      "popularVideoId": null,
+      "languages": [
+        "en"
+      ]
     },
     {
       "id": "vdb:fe322361-ebad-52de-8494-089e3205892b",
@@ -269,7 +283,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T02:27:57.931Z",
-      "updatedAt": "2026-10-22T02:45:20.180Z",
+      "updatedAt": "2026-10-22T03:02:04.277Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -277,7 +291,10 @@
       "graduateDate": null,
       "platforms": [],
       "externals": {},
-      "popularVideoId": null
+      "popularVideoId": null,
+      "languages": [
+        "en"
+      ]
     }
   ]
 }

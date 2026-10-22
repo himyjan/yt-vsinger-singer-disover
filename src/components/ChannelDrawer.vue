@@ -10,6 +10,7 @@ import { computed } from "vue";
 import type { Channel, ChannelSummary, Item } from "@shared/lib/types";
 import { formatCount, formatDuration, formatRelative } from "@/lib/dataset";
 import { channelLinks, itemUrl, platformMeta } from "@/lib/links";
+import { toLanguageList } from "@shared/lib/regions";
 import { state, toggleSaved } from "@/lib/store";
 
 const props = defineProps<{
@@ -127,6 +128,9 @@ const REGION_SOURCE_LABELS: Record<string, string> = {
   script: "guessed from the characters in the name",
   unknown: "unknown",
 };
+
+/** The languages, whether the field holds one code or a list. */
+const languageList = computed(() => toLanguageList(props.channel?.languages));
 
 const saved = computed(() =>
   props.channel ? state.saved.some((s) => s.id === props.channel!.id) : false,
@@ -256,7 +260,7 @@ const saved = computed(() =>
 
               <!-- Region and language, labelled so they are not confused -->
               <dl
-                v-if="channel.regionSource || channel.language"
+                v-if="channel.regionSource || channel.languages?.length"
                 class="space-y-1 border-t border-black/5 pt-2 text-[11px] dark:border-white/8"
               >
                 <div class="flex justify-between gap-3">
@@ -268,12 +272,22 @@ const saved = computed(() =>
                     </span>
                   </dd>
                 </div>
-                <div v-if="channel.language" class="flex justify-between gap-3">
+                <div
+                  v-if="languageList.length"
+                  class="flex justify-between gap-3"
+                >
                   <dt class="text-neutral-500">Language</dt>
                   <dd class="text-right font-semibold text-neutral-700 dark:text-neutral-200">
-                    {{ LANGUAGE_LABELS[channel.language] ?? channel.language }}
-                    <span class="font-normal text-neutral-400">
-                      ({{ channel.language }})
+                    <span
+                      v-for="(language, index) in languageList"
+                      :key="language"
+                      class="whitespace-nowrap"
+                    >
+                      {{ LANGUAGE_LABELS[language] ?? language }}
+                      <span class="font-normal text-neutral-400">
+                        ({{ language }})
+                      </span>
+                      <span v-if="index < languageList.length - 1">, </span>
                     </span>
                   </dd>
                 </div>

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T02:45:20.113Z",
+  "generatedAt": "2026-10-22T03:15:21.113Z",
   "channels": [
     {
       "id": "UC2c8dQYdDadn7tmK_d7o-HQ",
@@ -31,7 +31,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T02:27:57.931Z",
-      "updatedAt": "2026-10-22T02:45:20.180Z",
+      "updatedAt": "2026-10-22T03:02:04.277Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -49,7 +49,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T02:45:22.651Z"
+          "lastCheckedAt": "2026-10-22T03:02:06.489Z"
         },
         {
           "platform": "bilibili",
@@ -62,11 +62,15 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T02:45:22.651Z"
+          "lastCheckedAt": "2026-10-22T03:02:06.489Z"
         }
       ],
       "externals": {},
-      "popularVideoId": null
+      "popularVideoId": null,
+      "languages": [
+        "ja",
+        "en"
+      ]
     },
     {
       "id": "UCu6IFOMX4F8xn1NIc0DQ2Mg",
@@ -97,7 +101,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T02:27:57.931Z",
-      "updatedAt": "2026-10-22T02:45:20.180Z",
+      "updatedAt": "2026-10-22T03:02:04.277Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -115,7 +119,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T02:45:22.662Z"
+          "lastCheckedAt": "2026-10-22T03:02:06.498Z"
         },
         {
           "platform": "bilibili",
@@ -128,11 +132,14 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T02:45:22.662Z"
+          "lastCheckedAt": "2026-10-22T03:02:06.498Z"
         }
       ],
       "externals": {},
-      "popularVideoId": null
+      "popularVideoId": null,
+      "languages": [
+        "en"
+      ]
     },
     {
       "id": "UCYKX4HL54erXdCyMj7TpFyg",
@@ -163,7 +170,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T02:27:57.931Z",
-      "updatedAt": "2026-10-22T02:45:20.180Z",
+      "updatedAt": "2026-10-22T03:02:04.277Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -181,7 +188,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T02:45:22.672Z"
+          "lastCheckedAt": "2026-10-22T03:02:06.507Z"
         },
         {
           "platform": "twitch",
@@ -194,7 +201,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T02:45:22.672Z"
+          "lastCheckedAt": "2026-10-22T03:02:06.507Z"
         },
         {
           "platform": "youtube",
@@ -207,11 +214,15 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T02:45:22.672Z"
+          "lastCheckedAt": "2026-10-22T03:02:06.507Z"
         }
       ],
       "externals": {},
-      "popularVideoId": null
+      "popularVideoId": null,
+      "languages": [
+        "zh-Hans",
+        "en"
+      ]
     },
     {
       "id": "vdb:f2fd7bb2-a25a-597e-bf64-9bb35241fccb",
@@ -242,7 +253,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T02:27:57.931Z",
-      "updatedAt": "2026-10-22T02:45:20.180Z",
+      "updatedAt": "2026-10-22T03:02:04.277Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -250,7 +261,10 @@
       "graduateDate": null,
       "platforms": [],
       "externals": {},
-      "popularVideoId": null
+      "popularVideoId": null,
+      "languages": [
+        "en"
+      ]
     }
   ]
 }
