@@ -13,6 +13,7 @@
 import type {
   Activity,
   Affiliation,
+  ClassificationConfidence,
   ArtistKind,
   ArtistRole,
   Gender,
@@ -22,6 +23,7 @@ import type {
   RegionSource,
   Variant,
 } from "./types";
+import { computeConfidence } from "./confidence";
 import {
   AGENCY_REGION,
   AGENCY_SUBREGION,
@@ -304,6 +306,14 @@ export interface ChannelClassification {
   isAggregator: boolean;
   /** Which source decided the region. */
   regionSource: RegionSource;
+  /**
+   * How sure each axis of the classification is.
+   *
+   * An estimate, not a measurement — it says how much evidence the
+   * classifier had. It is used to order the verification queue; the
+   * `verification` record is the fact.
+   */
+  confidence: ClassificationConfidence;
   /** Self-described gender. */
   gender: Gender;
   /** True when the performer is AI-generated. */
@@ -547,11 +557,37 @@ export function classifyChannel(signals: ChannelSignals): ChannelClassification 
     signals.tags,
   );
 
+  /**
+   * The confidence of each axis.
+   *
+   * The region and the kind drive the overall figure, because a record with
+   * the wrong region is in the wrong place and a record with the wrong kind
+   * is in the wrong dataset.
+   */
+  const confidence = computeConfidence({
+    kind,
+    role,
+    region,
+    regionSource,
+    gender,
+    isAi,
+    affiliation: detectAffiliation(
+      signals.name,
+      signals.description,
+      agency,
+    ),
+    activity: "unknown",
+    curated: !!(ov.kind || ov.role),
+    kindDeclared: kindScore >= 3,
+    kindHits: kindScore,
+  });
+
   return {
     kind,
     role,
     region,
     regionSource,
+    confidence,
     language: lang,
     agency,
     isSinging,

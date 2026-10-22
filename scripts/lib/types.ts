@@ -288,6 +288,32 @@ export interface PlatformLink {
 /* -------------------------------------------------------------------------- */
 
 
+/**
+ * How sure the classification is, per axis.
+ *
+ * This is an **estimate**, not a measurement: it says how much evidence the
+ * classifier had, not whether anyone checked. It is used to order the
+ * verification queue — the record that is most uncertain is the one worth
+ * looking up. The `verification` record is the fact.
+ *
+ * `1` means a source stated it outright, `0` means the source is silent,
+ * and the values in between mean it was inferred.
+ */
+export interface ClassificationConfidence {
+  /** Virtual or real — the split the dataset is built on. */
+  kind: number;
+  /** Where the performer belongs. */
+  region: number;
+  /** What they do. */
+  role: number;
+  /** Self-described gender. */
+  gender: number;
+  /** Whether the performer is AI-generated. */
+  ai: number;
+  /** The weakest meaningful axis. */
+  overall: number;
+}
+
 export interface Channel {
   /** Canonical YouTube channel id (`UC...`). */
   id: string;
@@ -360,11 +386,18 @@ export interface Channel {
   /**
    * The verification record — what was actually looked up, and where.
    *
-   * This is the *fact*. There is deliberately no confidence score: a
-   * computed number is a guess, and a record needs to say whether anyone
-   * actually checked it.
+   * This is the *fact*. A confidence score is only an estimate, so it is
+   * optional and the dataset does not currently populate it: the
+   * verification says whether anyone actually checked.
    */
   verification: Verification | null;
+  /**
+   * How sure the classification is, per axis — an estimate.
+   *
+   * Optional. The dataset does not populate it, because a computed number is
+   * a guess and `verification` is the authority.
+   */
+  confidence?: ClassificationConfidence;
   /** Provenance of the record. */
   source: RecordSource;
   /** ISO timestamp of first sighting. */
@@ -452,6 +485,8 @@ export interface ChannelSummary {
   affiliation: Affiliation;
   /** The verification record — what was looked up, and where. */
   verification: Verification | null;
+  /** The confidence estimate — optional, see `Channel.confidence`. */
+  confidence?: ClassificationConfidence;
   avatar: string | null;
   subscribers: number | null;
   isSinging: boolean;

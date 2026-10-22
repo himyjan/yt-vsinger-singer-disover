@@ -157,8 +157,15 @@ async function main(): Promise<void> {
     return true;
   });
 
-  // The records that are missing the most come first.
-  candidates.sort((a, b) => missingFacts(b).length - missingFacts(a).length);
+  // The records that are missing the most come first; the confidence
+  // estimate breaks the tie between records that are equally incomplete.
+  candidates.sort((a, b) => {
+    const byMissing = missingFacts(b).length - missingFacts(a).length;
+    if (byMissing !== 0) return byMissing;
+    return (
+      (a.confidence?.overall ?? 1) - (b.confidence?.overall ?? 1)
+    );
+  });
   candidates = candidates.slice(0, args.limit);
 
   console.log(
