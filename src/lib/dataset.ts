@@ -5,9 +5,9 @@
  * repository. Everything is fetched lazily and cached in memory:
  *
  *   data/manifest.json            counts + region table (always loaded)
- *   data/channels/index.json      lightweight channel summaries (always loaded)
- *   data/channels/virtual.json    full records for virtual performers
- *   data/channels/real.json       full records for real artists
+ *   data/channels/manifest.json   the shard map, per kind and region
+ *   data/channels/virtual/<r>/<b>.json  virtual performers
+ *   data/channels/real/<r>/<b>.json     real artists
  *   data/items/<region>/<b>.json  items, sharded by region and id bucket
  *   data/items/live.json          currently live streams
  *   data/items/upcoming.json      scheduled streams and premieres
@@ -29,6 +29,7 @@ import type {
 import type { SearchPack, SearchHit } from "@shared/lib/search";
 import { searchPacks } from "@shared/lib/search";
 import { toLanguageList } from "@shared/lib/regions";
+import { toSummary } from "@shared/lib/summary";
 
 /** Base path of the deployment (handles GitHub Pages sub-paths). */
 const BASE = import.meta.env.BASE_URL || "/";
@@ -68,12 +69,16 @@ async function fetchJson<T>(path: string): Promise<T | null> {
  */
 const cache = {
   manifest: null as Manifest | null,
-  channelManifest: null as
-    | { code: RegionCode; channels: number; buckets: string[] }[]
-    | null,
+  channelManifest: null as ChannelRegionMeta[] | null,
+  /** The manifest while it is downloading, so parallel readers share one. */
+  channelManifestPending: null as Promise<ChannelRegionMeta[]> | null,
   summaries: null as ChannelSummary[] | null,
   summariesByRegion: new Map<RegionCode, ChannelSummary[]>(),
+  /** Regions whose summary is being built right now. */
+  summariesPending: new Map<RegionCode, Promise<ChannelSummary[]>>(),
   channelsByKind: new Map<string, Channel[]>(),
+  /** Shard lists that are being downloaded right now, keyed `kind:region`. */
+  channelsPending: new Map<string, Promise<Channel[]>>(),
   shards: new Map<string, string[]>(),
   virtual: null as Channel[] | null,
   real: null as Channel[] | null,
@@ -97,11 +102,12 @@ export async function loadManifest(): Promise<Manifest | null> {
 }
 
 /**
- * Loads the channel summaries for the given regions.
+ * The channel list for the given regions.
  *
- * The summaries are sharded by region and then by id bucket, so only the
- * regions the user is actually looking at are downloaded. With a roster of
- * more than 14,000 performers, loading everything up front would be a waste.
+ * A summary is a **projection** of a full record, not a second copy of the
+ * channel. The full record is downloaded anyway — the drawer opens it — so
+ * the list is built from it: one fetch per region instead of two, and no way
+ * for the card and the drawer to disagree about a name or an avatar.
  */
 export async function loadSummaries(
   regions: RegionCode[] | "all" = "all",
@@ -117,14 +123,14 @@ export async function loadSummaries(
     targets.map(async (region) => {
       const cached = cache.summariesByRegion.get(region);
       if (cached) return cached;
-      const buckets = await loadShards("channels/summaries", region);
-      const list: ChannelSummary[] = [];
-      for (const bucket of buckets) {
-        const parsed = await fetchJson<{ channels?: ChannelSummary[] }>(
-          `data/channels/summaries/${region}/${bucket}.json`,
-        );
-        list.push(...(parsed?.channels ?? []));
-      }
+      const pending = cache.summariesPending.get(region);
+      if (pending) return pending;
+      const promise = loadAllChannels([region]).then((channels) =>
+        channels.map(toSummary),
+      );
+      cache.summariesPending.set(region, promise);
+      const list = await promise;
+      cache.summariesPending.delete(region);
       cache.summariesByRegion.set(region, list);
       return list;
     }),
@@ -135,32 +141,57 @@ export async function loadSummaries(
   return all;
 }
 
+/** One kind of channel in one region, and the shards that hold it. */
+export interface ChannelKindMeta {
+  channels: number;
+  buckets: string[];
+}
+
+/** One region in the channel manifest. */
+export interface ChannelRegionMeta {
+  code: RegionCode;
+  channels: number;
+  virtual: ChannelKindMeta;
+  real: ChannelKindMeta;
+}
+
 /** The region list for the channel dataset. */
-export async function loadChannelManifest(): Promise<
-  { code: RegionCode; channels: number; buckets: string[] }[]
-> {
+export async function loadChannelManifest(): Promise<ChannelRegionMeta[]> {
   if (cache.channelManifest) return cache.channelManifest;
-  const parsed = await fetchJson<{
-    regions?: { code: RegionCode; channels: number; buckets: string[] }[];
-  }>("data/channels/manifest.json");
-  cache.channelManifest = parsed?.regions ?? [];
-  return cache.channelManifest!;
+  /**
+   * One download, however many readers.
+   *
+   * The app asks for the list and the summaries together, and the summaries
+   * have to resolve the region list first — without this the page fetched the
+   * same manifest once per reader before any of them finished.
+   */
+  if (!cache.channelManifestPending) {
+    cache.channelManifestPending = fetchJson<{ regions?: ChannelRegionMeta[] }>(
+      "data/channels/manifest.json",
+    ).then((parsed) => (cache.channelManifest = parsed?.regions ?? []));
+  }
+  return cache.channelManifestPending;
 }
 
 /**
- * The shard files that hold a region's records.
+ * The shard files that hold one kind's records for a region.
  *
  * The manifest lists them, so the browser never has to probe for files that
- * do not exist — which would fill the console with 404s.
+ * do not exist — which would fill the console with 404s. The two kinds have
+ * their own lists: a region can have a `real` shard that no `virtual` file
+ * matches, and fetching the wrong list would silently skip records.
  */
-async function loadShards(dir: string, region: RegionCode): Promise<string[]> {
-  const key = `${dir}:${region}`;
+async function loadShards(
+  kind: "virtual" | "real",
+  region: RegionCode,
+): Promise<string[]> {
+  const key = `${kind}:${region}`;
   const cached = cache.shards.get(key);
   if (cached) return cached;
 
   const manifest = await loadChannelManifest();
   const entry = manifest.find((r) => r.code === region);
-  const buckets = entry?.buckets ?? [];
+  const buckets = entry?.[kind]?.buckets ?? [];
   cache.shards.set(key, buckets);
   return buckets;
 }
@@ -176,26 +207,50 @@ export async function loadChannels(
       : regions;
 
   const results = await Promise.all(
-    targets.map(async (region) => {
-      const cached = cache.channelsByKind.get(`${kind}:${region}`);
-      if (cached) return cached;
-      const buckets = await loadShards(`channels/${kind}`, region);
-      const list: Channel[] = [];
-      for (const bucket of buckets) {
-        const parsed = await fetchJson<{ channels?: Channel[] }>(
-          `data/channels/${kind}/${region}/${bucket}.json`,
-        );
-        list.push(...(parsed?.channels ?? []));
-      }
-      cache.channelsByKind.set(`${kind}:${region}`, list);
-      return list;
-    }),
+    targets.map((region) => loadKind(kind, region)),
   );
 
   const all = results.flat();
   if (kind === "virtual") cache.virtual = all;
   else cache.real = all;
   return all;
+}
+
+/**
+ * One kind of one region, cached and de-duplicated in flight.
+ *
+ * `loadSummaries()` and `loadAllChannels()` are called together by the app,
+ * and both need these shards. Without the in-flight map the page would
+ * download every shard twice and use whichever copy finished last.
+ */
+async function loadKind(
+  kind: "virtual" | "real",
+  region: RegionCode,
+): Promise<Channel[]> {
+  const key = `${kind}:${region}`;
+  const cached = cache.channelsByKind.get(key);
+  if (cached) return cached;
+
+  const pending = cache.channelsPending.get(key);
+  if (pending) return pending;
+
+  const promise = (async () => {
+    const buckets = await loadShards(kind, region);
+    const list: Channel[] = [];
+    for (const bucket of buckets) {
+      const parsed = await fetchJson<{ channels?: Channel[] }>(
+        `data/channels/${kind}/${region}/${bucket}.json`,
+      );
+      list.push(...(parsed?.channels ?? []));
+    }
+    return list;
+  })();
+
+  cache.channelsPending.set(key, promise);
+  const list = await promise;
+  cache.channelsPending.delete(key);
+  cache.channelsByKind.set(key, list);
+  return list;
 }
 
 /** Every channel record, both kinds. */

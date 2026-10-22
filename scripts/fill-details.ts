@@ -1,5 +1,6 @@
 /**
- * Fills in the missing channel details — the avatar first.
+ * Fills in the missing channel details — the avatar first, the name close
+ * behind.
  *
  * The normal sync fetches a slice of the channel details per run, because a
  * full pass over 14,000 channels is more than one run can afford. That works
@@ -7,11 +8,19 @@
  * 8,000 channels have no avatar at all, and a broken image is the first thing
  * anyone sees on a card.
  *
- * So this script does one thing, and does it until the backlog is empty:
+ * So this script walks the backlog and fills what is missing:
  *
- *   npm run data:avatars -- --limit 2000
- *   npm run data:avatars -- --platform bilibili --limit 500
- *   npm run data:avatars -- --dry-run
+ *   npm run data:details -- --limit 2000
+ *   npm run data:details -- --platform bilibili --limit 500
+ *   npm run data:details -- --name-only
+ *   npm run data:ids                   # re-key handle ids to UC… ids
+ *   npm run data:details -- --dry-run
+ *
+ * `--name-only` is the cheap pass: the same request that carries the avatar
+ * carries the platform's current name, and the name is the field a roster
+ * gets wrong most often. It also splits the title into aliases, so a channel
+ * titled 「空星きらめ/Sorahoshi Kirame【にじさんじ】」 is findable under any
+ * of the three names in it.
  *
  * ## What it fetches
  *
@@ -37,29 +46,30 @@
  * name is kept as an alias so the channel stays findable under it.
  */
 
-import fs from "node:fs";
-import path from "node:path";
 import {
-  DATA_DIR,
-  ensureDir,
-  readJson,
-  writeJson,
   acquireRunLock,
+  readJson,
 } from "./lib/io";
 import {
   ALL_BUCKETS,
   bucketFor,
   layout,
-  toSummary,
+  readAllChannelRecords,
   writeChannelShards,
 } from "./lib/dataset";
 import { InnerTubeSource } from "./lib/youtubei";
 import { TwitchGqlSource } from "./lib/twitch-gql";
 import { createAdapters } from "./lib/platform-registry";
-import { primaryPlatformOf, isPlaceholderName } from "./lib/platforms";
+import {
+  isPlaceholderName,
+  normalizeChannelId,
+  primaryPlatformOf,
+} from "./lib/platforms";
+import { dedupePlatformLinks, mergeChannels } from "./lib/dedupe";
 import {
   detectActivity,
   detectAffiliation,
+  extractAgency,
   mergeActivity,
 } from "./lib/classify";
 import { pickAvatar, pickSubscribers } from "./lib/platforms";
@@ -90,12 +100,21 @@ interface Options {
    * that carries the avatar.
    */
   nameOnly: boolean;
+  /**
+   * Re-key the records that are stored under a renameable id.
+   *
+   * A YouTube handle is unique but the performer can change it, so a record
+   * keyed by `youtube:@someone` breaks the day they rename. `UC…` is the
+   * channel's permanent id and the one `youtube.com/channel/UC…` uses, so
+   * those records are resolved and re-keyed.
+   */
+  normalizeIds: boolean;
 }
 
 /**
  * The spellings of the name pass.
  *
- * `npm run data:avatars --nameOnly` is what a person actually types, so the
+ * `npm run data:details --nameOnly` is what a person actually types, so the
  * dashes and the case are not something to be strict about.
  */
 const NAME_ONLY_FLAGS = new Set([
@@ -114,6 +133,7 @@ function parseArgs(argv: string[]): Options {
     intervalMs: 450,
     nameOnly: false,
     force: false,
+    normalizeIds: false,
   };
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i];
@@ -124,6 +144,13 @@ function parseArgs(argv: string[]): Options {
       options.intervalMs = Number(argv[++i] ?? options.intervalMs);
     } else if (arg === "--dry-run") options.dryRun = true;
     else if (arg === "--force") options.force = true;
+    else if (
+      arg === "--normalize-ids" ||
+      arg === "--normalizeIds" ||
+      arg === "--ids-only"
+    ) {
+      options.normalizeIds = true;
+    }
     else if (NAME_ONLY_FLAGS.has(arg.toLowerCase())) {
       const value = argv[i + 1];
       if (value && !value.startsWith("--")) {
@@ -146,42 +173,17 @@ const started = Date.now();
 let fetched = 0;
 let filled = 0;
 let renamed = 0;
+let grouped = 0;
+let rekeyed = 0;
 let failed = 0;
 
 function log(message: string): void {
   const seconds = ((Date.now() - started) / 1000).toFixed(0);
-  console.log(`[avatars:${seconds}s] ${message}`);
+  console.log(`[details:${seconds}s] ${message}`);
 }
 
 function sleep(ms: number): Promise<void> {
   return new Promise((r) => setTimeout(r, ms));
-}
-
-/* -------------------------------------------------------------------------- */
-/* The record files                                                           */
-/* -------------------------------------------------------------------------- */
-
-interface ChannelFile {
-  schemaVersion: number;
-  generatedAt: string;
-  channels: Channel[];
-}
-
-/** Every channel record file, with its path. */
-function readChannelFiles(): { file: string; data: ChannelFile }[] {
-  const out: { file: string; data: ChannelFile }[] = [];
-  const root = path.join(DATA_DIR, "channels", "regions");
-  if (!fs.existsSync(root)) return out;
-  for (const region of fs.readdirSync(root)) {
-    const dir = path.join(root, region);
-    if (!fs.statSync(dir).isDirectory()) continue;
-    for (const file of fs.readdirSync(dir)) {
-      if (!file.endsWith(".json")) continue;
-      const full = path.join(dir, file);
-      out.push({ file: full, data: readJson<ChannelFile>(full, { schemaVersion: 1, generatedAt: "", channels: [] }) });
-    }
-  }
-  return out;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -194,6 +196,17 @@ interface Profile {
   description: string | null;
   subscribers: number | null;
   videoCount: number | null;
+  /**
+   * The platform's own immutable id, when it has one.
+   *
+   * A YouTube handle is unique but **renameable**, so `@someone` is not a
+   * stable identity: the performer can take a different handle tomorrow and
+   * the record would point at nothing. `UC…` cannot change, and it is what
+   * the channel URL uses.
+   */
+  id?: string | null;
+  /** The channel's current `@handle`, when the platform publishes one. */
+  handle?: string | null;
 }
 
 /**
@@ -244,6 +257,8 @@ async function fetchProfile(
         description: profile.description,
         subscribers: profile.subscribers,
         videoCount: null,
+        id: profile.id,
+        handle: profile.handle,
       };
     }
 
@@ -315,6 +330,23 @@ export function splitName(title: string): string[] {
   return out;
 }
 
+/**
+ * Whether a record's identity is a name the platform can change.
+ *
+ * A YouTube handle is unique but renameable; `UC…` is not. The record may be
+ * keyed by the handle itself (`youtube:@someone`) or merely hold one as its
+ * YouTube link.
+ */
+function needsStableId(channel: Channel): boolean {
+  const link = channel.platforms.find((p) => p.platform === "youtube");
+  if (!link) return false;
+  // A tab in the id means it was built from a URL, not a channel.
+  if (channel.id.includes("/") || (link.id ?? "").includes("/")) return true;
+  if (link.id && !link.id.startsWith("UC")) return true;
+  const bare = channel.id.replace(/^youtube:(user-)?/, "");
+  return channel.id !== bare && !bare.startsWith("UC");
+}
+
 /* -------------------------------------------------------------------------- */
 /* Applying a profile                                                          */
 /* -------------------------------------------------------------------------- */
@@ -335,6 +367,51 @@ function applyProfile(
 ): void {
   const link = channel.platforms.find((p) => p.platform === platform);
   if (!link) return;
+
+  /**
+   * The identity is the platform's immutable id.
+   *
+   * A YouTube handle is unique but can be **changed** — the performer picks a
+   * new `@name` and every `@old` link dies — while `UC…` is permanent and is
+   * what `youtube.com/channel/UC…` uses. So a record stored under a handle is
+   * re-keyed the first time its profile is fetched, and the handle is kept as
+   * the link's handle for display.
+   *
+   * A Twitch login is renameable for the same reason; its numeric id is the
+   * stable one, and that is what `twitch-gql` resolves.
+   */
+  if (platform === "youtube") {
+    /**
+     * The id is the `UC…` channel id, and the URL is its `/channel/…` form.
+     *
+     * A handle is unique but renameable, so `@someone` is not an identity: the
+     * performer takes a new handle and the link points at nothing. The handle
+     * is kept beside it, for display and for lookups that take one.
+     */
+    const was = link.handle ?? link.id;
+    if (profile.handle) link.handle = profile.handle;
+    if (profile.id && profile.id.startsWith("UC")) {
+      link.id = normalizeChannelId(profile.id);
+    }
+    /**
+     * The record is re-keyed when its identity is not the stable one — a
+     * handle, a `youtube:user-…`, or an id built from a URL (`UC…/featured`).
+     */
+    if (link.id.startsWith("UC") && channel.id !== link.id) {
+      const bare = channel.id.replace(/^youtube:(user-)?/, "");
+      if (
+        bare === was ||
+        bare === link.id ||
+        normalizeChannelId(channel.id) === link.id
+      ) {
+        channel.id = link.id;
+        rekeyed++;
+      }
+    }
+    if (link.id.startsWith("UC")) {
+      link.url = `https://www.youtube.com/channel/${link.id}`;
+    }
+  }
 
   if (!nameOnly) {
     if (profile.avatar) link.avatar = profile.avatar;
@@ -407,8 +484,19 @@ function applyProfile(
    * they are independent, and a channel that says it publishes songs is a
    * singing one. None of that was available when the record was first
    * classified.
+   *
+   * It is also where the agency is stated: 「にじさんじ所属」, 「所属：彩虹社」,
+   * 「니지산지 소속」, "affiliated with Nijisanji" all name the group, in the
+   * performer's own words, for a field the rosters leave empty.
    */
   if (channel.description) {
+    if (!channel.agency) {
+      const stated = extractAgency(channel.name, channel.description);
+      if (stated) {
+        channel.agency = stated;
+        grouped++;
+      }
+    }
     channel.affiliation = detectAffiliation(
       channel.name,
       channel.description,
@@ -437,16 +525,15 @@ async function main(): Promise<void> {
    * The run reads the whole dataset before it writes it, so a sync running
    * at the same time would lose its work to this run's snapshot.
    */
-  const releaseLock = acquireRunLock("avatars");
+  const releaseLock = acquireRunLock("details");
   const overrides = readJson<Record<string, { name?: string }>>(
     layout.overrides,
     {},
   );
 
   log(`reading the dataset…`);
-  const files = readChannelFiles();
-  const all = files.flatMap((f) => f.data.channels);
-  log(`${all.length} channel(s) in ${files.length} shard(s)`);
+  const all = readAllChannelRecords();
+  log(`${all.length} channel(s) in the dataset`);
 
   /**
    * The channels that need an avatar, worst first.
@@ -460,6 +547,11 @@ async function main(): Promise<void> {
       if (options.platform && primaryPlatformOf(c) !== options.platform) {
         return false;
       }
+      /**
+       * `--normalize-ids` touches only the records whose identity is a
+       * handle — everything else is already keyed by a permanent id.
+       */
+      if (options.normalizeIds) return needsStableId(c);
       // In name-only mode every channel is a candidate: the point is to
       // correct the name, whether or not the avatar is already there.
       if (!options.nameOnly && c.avatar) return false;
@@ -487,9 +579,11 @@ async function main(): Promise<void> {
     .slice(0, options.limit);
 
   log(
-    options.nameOnly
-      ? `${pending.length} channel(s) to rename`
-      : `${pending.length} channel(s) need an avatar`,
+    options.normalizeIds
+      ? `${pending.length} channel(s) are keyed by a handle`
+      : options.nameOnly
+        ? `${pending.length} channel(s) to rename`
+        : `${pending.length} channel(s) need an avatar`,
   );
 
   const innertube = new InnerTubeSource({
@@ -541,15 +635,22 @@ async function main(): Promise<void> {
     consecutiveFailures.set(platform, 0);
 
     const before = channel.avatar;
+    const originalId = channel.id;
     applyProfile(channel, platform, profile, overrides, options.nameOnly);
     if (channel.avatar && channel.avatar !== before) filled++;
-    updatedById.set(channel.id, channel);
+    /**
+     * Keyed by the id the record **had** when it was read: a profile can
+     * re-key a handle record to its permanent `UC…` id, and the shard on disk
+     * still holds the old one.
+     */
+    updatedById.set(originalId, channel);
+    if (channel.id !== originalId) log(`id: ${originalId} → ${channel.id}`);
 
     if (fetched % 50 === 0) {
       log(
         `${fetched}/${pending.length} fetched · ` +
           (options.nameOnly ? "" : `${filled} avatar(s) filled · `) +
-          `${renamed} renamed · ${failed} failed`,
+          `${renamed} renamed · ${grouped} grouped · ${rekeyed} re-keyed · ${failed} failed`,
       );
     }
     await sleep(options.intervalMs);
@@ -558,7 +659,7 @@ async function main(): Promise<void> {
   log(
     `${fetched} fetched · ` +
       (options.nameOnly ? "" : `${filled} avatar(s) filled · `) +
-      `${renamed} renamed · ${failed} failed`,
+      `${renamed} renamed · ${grouped} grouped · ${rekeyed} re-keyed · ${failed} failed`,
   );
   const struggling = [...consecutiveFailures.entries()].filter(
     ([, streak]) => streak >= 20,
@@ -579,25 +680,29 @@ async function main(): Promise<void> {
 
   /* --- write the records back ----------------------------------------- */
   /**
-   * The dataset is **re-read** before it is written, and every copy of it is
-   * written.
+   * The dataset is **re-read** before it is written.
    *
-   * Two things go wrong otherwise. A run reads the dataset at the start and
-   * writes it at the end, so a sync that ran in between would have its work
-   * replaced by the stale snapshot. And the records live in three places —
-   * `regions/`, `virtual/` and `real/` — so writing only the one this script
-   * happens to read leaves the copies disagreeing, and the next sync, which
-   * reads `virtual/`, puts the old name back.
-   *
-   * So: read the current records again, apply the fields this run fetched to
-   * the ones it touched, and write them all out.
+   * A run reads the dataset at the start and writes it at the end, so a sync
+   * that ran in between would have its work replaced by this run's stale
+   * snapshot — the same reason the run holds the lock. So the current records
+   * are read again, the fields this run fetched are applied to the ones it
+   * touched, and every record is written back through
+   * `writeChannelShards()`, which is the only writer.
    */
   const now = new Date().toISOString();
-  const fresh = readChannelFiles().flatMap((f) => f.data.channels);
+  const fresh = readAllChannelRecords();
   const written = new Set<string>();
   for (const record of fresh) {
     const updated = updatedById.get(record.id);
     if (!updated) continue;
+    record.id = updated.id;
+    /**
+     * The platform list is taken **whole**: it carries the re-keyed id, the
+     * handle it replaced and the URL that follows, and copying it field by
+     * field is how the id on disk stayed a handle after the record had been
+     * re-keyed.
+     */
+    record.platforms = dedupePlatformLinks(updated.platforms);
     record.avatar = updated.avatar;
     record.name = updated.name;
     record.aliases = updated.aliases;
@@ -605,66 +710,31 @@ async function main(): Promise<void> {
     record.description = updated.description;
     record.activity = updated.activity;
     record.affiliation = updated.affiliation;
+    record.agency = updated.agency;
     record.isSinging = updated.isSinging;
     record.subscribers = updated.subscribers;
     record.videoCount = updated.videoCount;
-    for (const link of record.platforms) {
-      const updatedLink = updated.platforms.find(
-        (p) => p.platform === link.platform,
-      );
-      if (!updatedLink) continue;
-      link.name = updatedLink.name;
-      link.avatar = updatedLink.avatar;
-      link.subscribers = updatedLink.subscribers;
-    }
     written.add(record.id);
   }
-  writeChannelShards(fresh, now);
-  log(`${written.size} channel(s) written back`);
-
-  /* --- the summaries ---------------------------------------------------- */
   /**
-   * The list views read the summaries, not the records, so the avatar has to
-   * land there too — otherwise the cards would still show a broken image.
+   * Two records can become one: re-keying a record to the id another already
+   * holds (`UC…/videos` and `UC…` are the same channel) must not leave two
+   * records with the same id, or the next read is ambiguous.
    */
-  const summariesRoot = path.join(DATA_DIR, "channels", "summaries");
-  let summaryFiles = 0;
-  if (fs.existsSync(summariesRoot)) {
-    // Only the channels this run changed — an untouched summary is left
-    // alone, so a sync's changes to it are not reverted by this snapshot.
-    const byId = updatedById;
-    for (const region of fs.readdirSync(summariesRoot)) {
-      const dir = path.join(summariesRoot, region);
-      if (!fs.statSync(dir).isDirectory()) continue;
-      for (const file of fs.readdirSync(dir)) {
-        if (!file.endsWith(".json")) continue;
-        const full = path.join(dir, file);
-        const data = readJson<{
-          schemaVersion: number;
-          generatedAt: string;
-          channels: any[];
-        }>(full, { schemaVersion: 1, generatedAt: "", channels: [] });
-        let changed = false;
-        for (const summary of data.channels) {
-          const channel = byId.get(summary.id);
-          if (!channel) continue;
-          const next = toSummary(channel);
-          if (JSON.stringify(next) !== JSON.stringify(summary)) {
-            data.channels[data.channels.indexOf(summary)] = next;
-            changed = true;
-          }
-        }
-        if (!changed) continue;
-        writeJson(full, { ...data, generatedAt: now });
-        summaryFiles++;
-      }
-    }
+  const byId = new Map<string, Channel>();
+  for (const record of fresh) {
+    const seen = byId.get(record.id);
+    byId.set(record.id, seen ? mergeChannels(record, seen) : record);
   }
-  log(`${summaryFiles} summary shard(s) updated`);
+  const shards = writeChannelShards([...byId.values()], now);
+  log(
+    `${written.size} channel(s) updated · ${shards.files} shard(s) written`,
+  );
+
   releaseLock();
 }
 
 main().catch((err) => {
-  console.error(`[avatars] failed: ${(err as Error).message}`);
+  console.error(`[details] failed: ${(err as Error).message}`);
   process.exit(1);
 });

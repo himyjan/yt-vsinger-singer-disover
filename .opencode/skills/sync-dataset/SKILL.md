@@ -72,8 +72,9 @@ Always finish with `npm run data:index && npm run data:validate`.
 
 ```
 data/manifest.json
-data/channels/{index,virtual,real}.json
-data/channels/regions/<region>.json
+data/channels/manifest.json
+data/channels/virtual/<region>/<bucket>.json   (16 buckets per region)
+data/channels/real/<region>/<bucket>.json
 data/items/<region>/<bucket>.json     (16 buckets per region)
 data/items/{live,upcoming}.json
 data/songs/{index,manifest}.json

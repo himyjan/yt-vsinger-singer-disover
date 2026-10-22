@@ -375,9 +375,14 @@ export function isPlaceholderName(name: string | null | undefined): boolean {
  */
 export function normalizeChannelId(id: string): string {
   const trimmed = id.trim();
-  const slash = trimmed.indexOf("/");
+  // `youtube:UC…` and `UC…` are the same channel; the bare form is the one
+  // the dataset stores.
+  const body = trimmed.startsWith("youtube:")
+    ? trimmed.slice("youtube:".length)
+    : trimmed;
+  const slash = body.indexOf("/");
   if (slash < 0) return trimmed;
-  const head = trimmed.slice(0, slash);
-  // Only a YouTube channel id can carry a tab.
+  const head = body.slice(0, slash);
+  // Only a YouTube channel id can carry a tab: `UC…/featured`, `UC…/videos`.
   return head.startsWith("UC") ? head : trimmed;
 }

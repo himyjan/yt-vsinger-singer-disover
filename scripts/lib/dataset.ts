@@ -11,10 +11,9 @@
  *   data/
  *     manifest.json               counts, quota, region table
  *     channels/
- *       index.json                ChannelSummary[]  (all channels, light)
- *       virtual.json              Channel[]         (virtual dataset)
- *       real.json                 Channel[]         (real human artist dataset)
- *       regions/<region>.json     ChannelSummary[]  (region listing, light)
+ *       manifest.json             counts + the shard map, per kind
+ *       virtual/<region>/<b>.json Channel[]         (virtual dataset)
+ *       real/<region>/<b>.json    Channel[]         (real human artist dataset)
  *     items/
  *       manifest.json             shard map + counts
  *       <region>/<bucket>.json    Item[]            (sharded by region)
@@ -45,7 +44,6 @@ import { ALL_REGIONS, SCHEMA_VERSION } from "./types";
 import type {
   Channel,
   ChannelFile,
-  ChannelSummary,
   Item,
   ItemFile,
   Manifest,
@@ -53,7 +51,6 @@ import type {
   SongFile,
   SongRecord,
 } from "./types";
-import { countHidden, countValue } from "./types";
 
 /* -------------------------------------------------------------------------- */
 /* Sharding                                                                   */
@@ -69,15 +66,10 @@ export const SHARD_COUNT = 16;
 export const layout = {
   manifest: path.join(DATA_DIR, "manifest.json"),
   channelsManifest: path.join(DATA_DIR, "channels", "manifest.json"),
-  channelsIndex: path.join(DATA_DIR, "channels", "index.json"),
-  channelsSummary: (r: string, b: string) =>
-    path.join(DATA_DIR, "channels", "summaries", r, `${b}.json`),
   channelsVirtual: (r: string, b: string) =>
     path.join(DATA_DIR, "channels", "virtual", r, `${b}.json`),
   channelsReal: (r: string, b: string) =>
     path.join(DATA_DIR, "channels", "real", r, `${b}.json`),
-  channelRegion: (r: string, b: string) =>
-    path.join(DATA_DIR, "channels", "regions", r, `${b}.json`),
   itemsManifest: path.join(DATA_DIR, "items", "manifest.json"),
   itemsRegion: (r: string, b: string) =>
     path.join(DATA_DIR, "items", r, `${b}.json`),
@@ -113,44 +105,12 @@ export const ALL_BUCKETS: string[] = Array.from(
 /* Projections                                                                */
 /* -------------------------------------------------------------------------- */
 
-export function toSummary(c: Channel): ChannelSummary {
-  return {
-    id: c.id,
-    name: c.name,
-    aliases: c.aliases ?? [],
-    handle: c.handle,
-    kind: c.kind,
-    role: c.role,
-    region: c.region,
-    regionSource: c.regionSource,
-    languages: c.languages,
-    agency: c.agency,
-    affiliation: c.affiliation,
-    avatar: c.avatar,
-    subscribers: countValue(c.subscribers),
-    isSinging: c.isSinging,
-    activity: c.activity,
-    subscribersHidden: countHidden(c.subscribers),
-    twitchLogin:
-      c.platforms.find((p) => p.platform === "twitch")?.handle ?? null,
-    gender: c.gender,
-    isAi: c.isAi,
-    variant: c.variant,
-    verification: c.verification,
-    links: c.platforms.map((p) => ({
-      p: p.platform,
-      u: p.url,
-      h: p.handle,
-    })),
-    addedAt: c.addedAt,
-    followers: c.platforms.map((p) => ({
-      p: p.platform,
-      n: p.subscribers.tag === "has" ? p.subscribers.count : null,
-      hidden: p.subscribers.tag === "hidden",
-      v: p.videoCount ?? null,
-    })),
-  };
-}
+/**
+ * The list projection lives in its own module: the browser builds the list
+ * from the records it has already downloaded, and it cannot import this file
+ * — `node:fs` is not a browser module.
+ */
+export { toSummary } from "./summary";
 
 /* -------------------------------------------------------------------------- */
 /* Writers                                                                    */
@@ -169,11 +129,17 @@ function pruneStale(dir: string, keep: Set<string>): string[] {
   return removed;
 }
 
+export interface ChannelKindMeta {
+  channels: number;
+  /** The shard files that hold this kind's records for the region. */
+  buckets: string[];
+}
+
 export interface ChannelRegionMeta {
   code: RegionCode;
   channels: number;
-  /** The shard files that hold this region's records. */
-  buckets: string[];
+  virtual: ChannelKindMeta;
+  real: ChannelKindMeta;
 }
 
 export interface ChannelsManifest {
@@ -223,8 +189,6 @@ export function writeDataset(
   const removed: string[] = [];
 
   /* --- channels ------------------------------------------------------- */
-  const summaries = channels.map(toSummary).sort((a, b) => a.id.localeCompare(b.id));
-
   /**
    * Every channel dataset is sharded by **region and then by id bucket**.
    *
@@ -233,11 +197,17 @@ export function writeDataset(
    * whole catalogue to show one region. Sharding solves both: every file
    * stays small, and the web app loads exactly the region the user is
    * looking at.
+   *
+   * A channel is written **once**, into the dataset of its kind. There is no
+   * third copy and no separate summary projection: the list views are built
+   * from the records the app has already fetched, so there is nothing that
+   * can drift.
    */
   const shardChannels = (
     list: Channel[],
+    root: string,
     fileFor: (region: string, bucket: string) => string,
-  ): { files: number } => {
+  ): Map<string, ChannelKindMeta> => {
     const byRegion = new Map<string, Map<string, Channel[]>>();
     for (const channel of list) {
       const region = channel.region ?? "unknown";
@@ -252,66 +222,63 @@ export function writeDataset(
       byBucket.set(bucket, bucketList);
     }
 
-    let files = 0;
+    const meta = new Map<string, ChannelKindMeta>();
     for (const [region, byBucket] of byRegion) {
       const dir = path.dirname(fileFor(region, "00"));
       ensureDir(dir);
       const keep = new Set<string>();
+      const buckets: string[] = [];
+      let count = 0;
       for (const [bucket, bucketList] of byBucket) {
         const file = `${bucket}.json`;
         keep.add(file);
+        buckets.push(bucket);
+        count += bucketList.length;
+        bucketList.sort((a, b) => a.id.localeCompare(b.id));
         writeJson(fileFor(region, bucket), {
           schemaVersion: SCHEMA_VERSION,
           generatedAt: now,
           channels: bucketList,
         } satisfies ChannelFile);
-        files++;
       }
       removed.push(...pruneStale(dir, keep));
+      meta.set(region, { channels: count, buckets: buckets.sort() });
     }
-    return { files };
+
+    // A region that lost its last channel must not keep its directory.
+    if (fs.existsSync(root)) {
+      for (const entry of fs.readdirSync(root)) {
+        const dir = path.join(root, entry);
+        if (!fs.statSync(dir).isDirectory()) continue;
+        if (byRegion.has(entry)) continue;
+        fs.rmSync(dir, { recursive: true, force: true });
+        removed.push(`${path.basename(root)}/${entry}/`);
+      }
+    }
+    return meta;
   };
 
-  // The summaries, per region and per bucket — what the list views read.
-  const summariesDir = path.join(DATA_DIR, "channels", "summaries");
-  ensureDir(summariesDir);
-  const keepSummaryFiles = new Set<string>();
+  const virtualMeta = shardChannels(
+    channels.filter((c) => c.kind === "virtual"),
+    path.join(DATA_DIR, "channels", "virtual"),
+    layout.channelsVirtual,
+  );
+  const realMeta = shardChannels(
+    channels.filter((c) => c.kind === "real"),
+    path.join(DATA_DIR, "channels", "real"),
+    layout.channelsReal,
+  );
+
   const channelRegionMeta: ChannelRegionMeta[] = [];
-  for (const region of ALL_REGIONS) {
-    const list = summaries.filter((s) => s.region === region);
-    if (!list.length) continue;
-
-    const dir = path.join(summariesDir, region);
-    ensureDir(dir);
-    const byBucket = new Map<string, ChannelSummary[]>();
-    const regionBuckets: string[] = [];
-    for (const summary of list) {
-      const bucket = bucketFor(summary.id);
-      const bucketList = byBucket.get(bucket) ?? [];
-      bucketList.push(summary);
-      byBucket.set(bucket, bucketList);
-    }
-
-    const keep = new Set<string>();
-    for (const [bucket, bucketList] of byBucket) {
-      const file = `${bucket}.json`;
-      keep.add(file);
-      regionBuckets.push(bucket);
-      writeJson(layout.channelsSummary(region, bucket), {
-        schemaVersion: SCHEMA_VERSION,
-        generatedAt: now,
-        channels: bucketList,
-      } satisfies {
-        schemaVersion: number;
-        generatedAt: string;
-        channels: ChannelSummary[];
-      });
-    }
-    removed.push(...pruneStale(dir, keep));
+  for (const code of ALL_REGIONS) {
+    const virtual = virtualMeta.get(code);
+    const real = realMeta.get(code);
+    if (!virtual && !real) continue;
     channelRegionMeta.push({
-      code: region,
-      channels: list.length,
-      buckets: regionBuckets.sort(),
+      code,
+      channels: (virtual?.channels ?? 0) + (real?.channels ?? 0),
+      virtual: virtual ?? { channels: 0, buckets: [] },
+      real: real ?? { channels: 0, buckets: [] },
     });
   }
 
@@ -320,8 +287,6 @@ export function writeDataset(
   for (const root of [
     path.join(DATA_DIR, "channels", "virtual"),
     path.join(DATA_DIR, "channels", "real"),
-    path.join(DATA_DIR, "channels", "summaries"),
-    path.join(DATA_DIR, "channels", "regions"),
   ]) {
     if (!fs.existsSync(root)) continue;
     for (const entry of fs.readdirSync(root)) {
@@ -331,28 +296,8 @@ export function writeDataset(
     }
   }
 
-  // Remove the summary directories of regions that no longer have channels.
-  for (const entry of fs.readdirSync(summariesDir)) {
-    const dir = path.join(summariesDir, entry);
-    if (!fs.statSync(dir).isDirectory()) continue;
-    if (channelRegionMeta.some((r) => r.code === entry)) continue;
-    fs.rmSync(dir, { recursive: true, force: true });
-    removed.push(`summaries/${entry}/`);
-  }
-
-  // The full records, per region and per kind.
-  shardChannels(channels, (region, bucket) => layout.channelRegion(region, bucket));
-  shardChannels(
-    channels.filter((c) => c.kind === "virtual"),
-    (region, bucket) => layout.channelsVirtual(region, bucket),
-  );
-  shardChannels(
-    channels.filter((c) => c.kind === "real"),
-    (region, bucket) => layout.channelsReal(region, bucket),
-  );
-
-  // The previous flat layout is no longer used; remove it so the dataset
-  // does not carry two copies of the same records.
+  // The previous layout is no longer used; remove it so the dataset does not
+  // carry two copies of the same records.
   for (const legacy of [
     path.join(DATA_DIR, "channels", "index.json"),
     path.join(DATA_DIR, "channels", "virtual.json"),
@@ -363,13 +308,13 @@ export function writeDataset(
       removed.push(path.basename(legacy));
     }
   }
-  const legacyRegionDir = path.join(DATA_DIR, "channels", "regions");
-  if (fs.existsSync(legacyRegionDir)) {
-    for (const entry of fs.readdirSync(legacyRegionDir)) {
-      if (!entry.endsWith(".json")) continue;
-      fs.rmSync(path.join(legacyRegionDir, entry), { force: true });
-      removed.push(`regions/${entry}`);
-    }
+  for (const legacyDir of [
+    path.join(DATA_DIR, "channels", "regions"),
+    path.join(DATA_DIR, "channels", "summaries"),
+  ]) {
+    if (!fs.existsSync(legacyDir)) continue;
+    fs.rmSync(legacyDir, { recursive: true, force: true });
+    removed.push(`${path.basename(legacyDir)}/`);
   }
 
   writeJson(layout.channelsManifest, {
@@ -379,13 +324,6 @@ export function writeDataset(
     regions: channelRegionMeta,
   } satisfies ChannelsManifest);
 
-  /**
-   * The full channel records are sharded by **kind and region**.
-   *
-   * A single `virtual.json` holding every VTuber in the catalogue overflows
-   * the per-file budget as soon as the roster grows past a few thousand
-   * channels, so the datasets are split the same way the items are.
-   */
   /* --- items, sharded by region then bucket --------------------------- */
   const itemsByRegion = new Map<RegionCode, Map<string, Item[]>>();
   for (const item of items) {
@@ -611,19 +549,26 @@ export function readAllChannelRecords(): Channel[] {
 }
 
 /**
- * Writes the full channel records to **every** copy of the store.
+ * Writes the full channel records, each into the dataset of its kind.
  *
- * The dataset keeps three: `regions/` holds every channel, and `virtual/` and
- * `real/` hold the two split datasets — which is what the pipeline reads back
- * through `readAllChannelRecords()`. Writing only one of them is how the same
- * channel ended up with two different names: a details run corrected the name
- * in `regions/` and the next sync, reading `virtual/`, put the old one back.
+ * There are two stores and no more: `virtual/` and `real/`. A channel is
+ * written to exactly one of them, which is also the one the pipeline reads
+ * back through `readAllChannelRecords()` — so there is no second copy that a
+ * later run could leave stale.
  *
  * The records are grouped by region and sharded by id, so the same id always
  * lands in the same file.
  */
-export function writeChannelShards(channels: Channel[], now: string): number {
-  const write = (list: Channel[], fileFor: (r: string, b: string) => string) => {
+export function writeChannelShards(
+  channels: Channel[],
+  now: string,
+): { records: number; files: number } {
+  let files = 0;
+  const write = (
+    list: Channel[],
+    root: string,
+    fileFor: (r: string, b: string) => string,
+  ) => {
     const byRegion = new Map<string, Map<string, Channel[]>>();
     for (const channel of list) {
       const bucket = bucketFor(channel.id);
@@ -634,8 +579,11 @@ export function writeChannelShards(channels: Channel[], now: string): number {
       region.set(bucket, bucketList);
     }
     for (const [region, byBucket] of byRegion) {
-      ensureDir(path.dirname(fileFor(region, "00")));
+      const dir = path.dirname(fileFor(region, "00"));
+      ensureDir(dir);
+      const keep = new Set<string>();
       for (const [bucket, bucketList] of byBucket) {
+        keep.add(`${bucket}.json`);
         bucketList.sort((a, b) => a.id.localeCompare(b.id));
         /**
          * An unchanged shard is not rewritten.
@@ -657,41 +605,34 @@ export function writeChannelShards(channels: Channel[], now: string): number {
           generatedAt: now,
           channels: bucketList,
         } satisfies { schemaVersion: number; generatedAt: string; channels: Channel[] });
+        files++;
+      }
+      // A re-keyed or deleted record must not survive in the shard it left.
+      pruneStale(dir, keep);
+    }
+
+    // The same for a region that lost its last channel.
+    if (fs.existsSync(root)) {
+      for (const entry of fs.readdirSync(root)) {
+        const dir = path.join(root, entry);
+        if (!fs.statSync(dir).isDirectory()) continue;
+        if (byRegion.has(entry)) continue;
+        fs.rmSync(dir, { recursive: true, force: true });
       }
     }
   };
 
-  write(channels, layout.channelRegion);
   write(
     channels.filter((c) => c.kind === "virtual"),
+    path.join(DATA_DIR, "channels", "virtual"),
     layout.channelsVirtual,
   );
   write(
     channels.filter((c) => c.kind === "real"),
+    path.join(DATA_DIR, "channels", "real"),
     layout.channelsReal,
   );
-  return channels.length;
-}
-
-/** Reads the full channel records for one region. */
-export function readChannelRecords(region: RegionCode): Channel[] {
-  const out: Channel[] = [];
-  const dir = path.join(DATA_DIR, "channels", "regions", region);
-  if (!fs.existsSync(dir)) return out;
-  for (const file of fs.readdirSync(dir)) {
-    if (!file.endsWith(".json")) continue;
-    const parsed = readJson<{ channels?: Channel[] }>(path.join(dir, file), {});
-    out.push(...(parsed.channels ?? []));
-  }
-  return out;
-}
-
-export function readChannelSummaries(): ChannelSummary[] {
-  const file = readJson<{ channels?: ChannelSummary[] }>(
-    layout.channelsIndex,
-    {},
-  );
-  return file.channels ?? [];
+  return { records: channels.length, files };
 }
 
 export function readItemsManifest(): ItemsManifest {

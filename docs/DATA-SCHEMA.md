@@ -11,9 +11,7 @@ data/
 ├── overrides.json              manual corrections (input, not output)
 ├── identities.json             the de-duplication registry
 ├── channels/
-│   ├── manifest.json           the region list, with the shard names
-│   ├── summaries/<region>/<bucket>.json   ChannelSummary[] — list views
-│   ├── regions/<region>/<bucket>.json      Channel[] — full records
+│   ├── manifest.json           the shard map, per kind and region
 │   ├── virtual/<region>/<bucket>.json      Channel[] — virtual dataset
 │   └── real/<region>/<bucket>.json         Channel[] — real dataset
 ├── items/
@@ -31,11 +29,53 @@ data/
     └── <region>.json           SearchPack — the inverted index
 ```
 
+A channel is stored **once**, in `virtual/` or `real/` — the dataset of its
+kind. The two are separate because the scope switch has to be served without
+downloading both: `virtual` is 14,000 records, `real` is a handful.
+
+There used to be four copies: `regions/` held every record and `summaries/`
+held a light projection for the list views, beside the two datasets. Every
+writer had to remember all of them, and one that forgot let them drift — a
+details run corrected a name in `regions/` and the next sync, which reads
+back through `virtual/`, put the old name back. The copies are gone:
+
+- the **list** is a projection of the records (`toSummary()` in
+  `scripts/lib/summary.ts`), built in the browser from the shards it has
+  already fetched for the drawer — nothing to store, nothing to diverge;
+- the **scope switch** picks `virtual/` or `real/`, which is what the
+  manifest's per-kind shard lists are for.
+
+`writeChannelShards()` in `scripts/lib/dataset.ts` is the only place that
+writes the records, and it writes each one to exactly one dataset.
+
 Every channel dataset is sharded by **region and then by id bucket** (16
 buckets). With a roster of more than 14,000 performers a single file would
 overflow the per-file budget, and the browser would have to download the whole
 catalogue to show one region. The manifests list the shards that exist, so
 the browser never requests a file that is not there.
+
+`channels/manifest.json` is that list, kept per kind — a region can have a
+`real` shard that no `virtual` file matches:
+
+```jsonc
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-22T…",
+  "total": 14517,
+  "regions": [
+    {
+      "code": "jp",
+      "channels": 617,
+      "virtual": { "channels": 616, "buckets": ["00", "03", …] },
+      "real": { "channels": 1, "buckets": ["0a"] }
+    }
+  ]
+}
+```
+
+The bucket for a record is a hash of its id (`bucketFor()`), so the same
+channel always lands in the same file and a run only rewrites the shards it
+changed.
 
 Every file has the same envelope:
 
@@ -53,11 +93,11 @@ The record for one performer.
 
 | Field | Type | Notes |
 | --- | --- | --- |
-| `id` | string | YouTube channel id (`UC…`), or `<platform>:<id>` for a performer who only exists elsewhere |
+| `id` | string | The **immutable** id of the primary platform: a YouTube `UC…` channel id, or `<platform>:<id>` elsewhere |
+| `handle` | string \| null | `@handle` without the `@` — a name, not an identity |
 | `name` | string | Display name |
 | `nameSource` | `"manual"` \| `"platform"` \| `"seed"` \| `"roster"` \| `"unknown"` | Where the name came from — see below |
 | `aliases` | string[] | The other names the performer is known by |
-| `handle` | string \| null | `@handle` without the `@` |
 | `kind` | `"virtual"` \| `"real"` | Virtual performer vs. real human artist |
 | `role` | see below | What they do |
 | `region` | see below | Where they belong |
@@ -127,6 +167,25 @@ type CountRef =
 
 This mirrors the pattern used by the reference `TaiwanVTuberTrackingDataJson`
 API, which gets it right.
+
+### `id` — an identity, not a name
+
+The `id` is the one thing about a channel that does not change, and everything
+else in the dataset points at it: the shards and their buckets, the items,
+the search index, the de-duplication registry.
+
+For YouTube that is the `UC…` channel id — the one in
+`youtube.com/channel/UC…`. A `@handle` is **unique but renameable**: the
+performer picks a new one and every `@old` link is dead, so a record keyed by
+a handle points at nothing. The handle is stored in `handle`, beside the id,
+and is updated from the profile whenever the details are fetched.
+
+The other platforms have the same rule: a Twitch login changes on rename, so
+the numeric user id is the identity; the login is the handle.
+
+A record that some source published as a handle — vdb lists YouTube accounts
+as `youtubeAt` — is re-keyed the first time its profile is fetched, which is
+what `npm run data:details -- --normalize-ids` does in bulk.
 
 ### `nameSource` and `aliases` — whose name is it?
 
@@ -305,8 +364,9 @@ provenance is stored with it.
 | `declared` | The language vdb lists for display (`name.default`) | weak — a display choice, not an origin |
 | `platform` | The platform they are on — Bilibili → China, Niconico → Japan | strong |
 | `agency` | Their agency's branch | strong |
-| `country` | The channel's published country | strong |
-| `script` | The characters in the name — kana are decisive for Japanese | a guess, unless kana is the signal |
+| `country` | The channel's published country | a stated fact |
+| `name` | Kana in a Japanese name — they occur in Japanese and nowhere else | decisive for Japanese |
+| `script` | The characters in the name | a guess |
 
 The platform prior applies when a performer has a Bilibili account and **no
 YouTube account**: their audience is mainland Chinese, so that is their
@@ -331,10 +391,24 @@ where each account is hosted. The order of authority:
    (「巫天翼」) is the one it shows. A performer listed that way is not
    thereby Chinese.
 
-The region a merge keeps is the **fresher record's**. A roster is rebuilt
-from the upstream data on every run, so its answer beats the one already on
-disk; the hand-written override and the Taiwan track list are applied after
-the merge and outrank both.
+When two records disagree, the region with the **more trusted source** wins,
+and a tie goes to the fresher record:
+
+| Order | Source | What it actually knows |
+| --- | --- | --- |
+| 1 | `override` | a human decided |
+| 2 | `roster` | the Taiwan track list's nationality column |
+| 3 | `country` | the channel's own published country |
+| 4 | `agency` | the group's branch — Hololive EN, VirtuaReal |
+| 5 | `name` | kana: Japanese, and nothing else |
+| 6 | `platform` | where the account is hosted — a mirror breaks this |
+| 7 | `declared` | the language vdb *displays* |
+| 8 | `script` | a guess from shared characters |
+
+`declared` sits that low because it is not a statement of origin: vdb is a
+Chinese wiki, so 「巫てんり」 — a Japanese VTuber — is listed under the
+Chinese rendition of her name. A record with no kana and no agency has
+nothing better, but it never outranks a fact.
 
 ### `affiliation`
 
@@ -359,6 +433,33 @@ curated from the [Moegirl encyclopedia](https://zh.moegirl.org.cn/zh-tw/虚拟UP
 The affiliation and the activity status are re-evaluated whenever a channel's
 description is fetched, because a description is where a performer states both.
 
+### `agency` and 「〇〇所属」
+
+An agency name is a fact, and the performer states it themselves far more
+often than a roster records it. Every language has its own phrasing, and the
+agency sits on the opposite side of the marker in each:
+
+| Language | The line | What is read |
+| --- | --- | --- |
+| Japanese | 「にじさんじ所属」 · 「〇〇に所属」 | `agency: "nijisanji"` |
+| Chinese | 「所属：彩虹社」 · 「隶属于〇〇」 · 「〇〇旗下」 | `agency: "nijisanji"` |
+| Korean | 「니지산지 소속」 · 「소속：〇〇」 | `agency: "nijisanji"` |
+| English | "affiliated with ○○" · "member of ○○" | `agency: "Nijisanji"` |
+
+A stated agency sets `affiliation: "group"` in the same pass — the two fields
+are one fact. The big agencies are canonicalised, so 「ホロライブ」, 「彩虹社」
+and 「니지산지」 all become `hololive` / `nijisanji` and the grouping does not
+split one agency across four spellings.
+
+Two boundaries:
+
+- **A否定 is not a name.** 「無所属」, 「无所属」 and 「非所属」 state the
+  opposite, and they contain the marker, so they are checked first: the
+  result is `affiliation: "independent"` and no agency.
+- **The region is left alone.** 「ホロライブ所属」 names the group, not the
+  branch — a Hololive EN member writes the same line — so an agency read out
+  of a description never decides a region.
+
 ### Enums
 
 **`role`** — what the performer does:
@@ -382,7 +483,9 @@ and shown in the channel drawer.
 | `platform` | The platform they are on — Bilibili → China, Niconico → Japan | strong |
 | `country` | The channel's published country | strong |
 | `agency` | Their agency's branch | strong |
-| `script` | The characters in the name — kana are decisive for Japanese | a guess, unless kana is the signal |
+| `country` | The channel's published country | a stated fact |
+| `name` | Kana in a Japanese name | decisive for Japanese |
+| `script` | The characters in the name | a guess |
 | `unknown` | | |
 
 The platform rule matters more than it looks: a Chinese VTuber whose name is
@@ -557,13 +660,18 @@ Manual corrections, keyed by channel id. A file the humans edit.
     "role": "singer",
     "region": "jp",
     "agency": "nijisanji",
-    "isSinging": true
+    "isSinging": true,
+    "note": "Filipino VTuber — filed under SEA, not Japan"
   },
   "UCyyyyyyyyyyyyyyyyyyyyyy": { "hidden": true }
 }
 ```
 
 `hidden: true` removes the channel from the published dataset entirely.
+
+`region` also sets `regionSource: "override"`, so the drawer shows that a
+human decided it. `note` is not stored on the record — it is the reason,
+kept for whoever reads the file next.
 
 ## Size budgets
 

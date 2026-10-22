@@ -19,7 +19,7 @@ export const REGION_META: Record<
   jp: { label: "Japan", badge: "🇯🇵", languages: ["ja", "en"] },
   cn: { label: "China", badge: "🇨🇳", languages: ["zh-Hans"] },
   tw: { label: "Taiwan", badge: "🇹🇼", languages: ["zh-Hant"] },
-  hk: { label: "Hong Kong", badge: "🇭🇰", languages: ["zh-Hant", "en"] },
+  hk: { label: "Hong Kong", badge: "🇭🇰", languages: ["yue", "zh-Hant", "en"] },
   kr: { label: "Korea", badge: "🇰🇷", languages: ["ko", "en"] },
   en: { label: "English", badge: "🌐", languages: ["en"] },
   id: { label: "Indonesia", badge: "🇮🇩", languages: ["id", "en"] },

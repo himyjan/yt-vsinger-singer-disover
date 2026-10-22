@@ -66,10 +66,9 @@ blob that large is unusable in a browser anyway. So the dataset is split:
 | File | Contents | Approx. size |
 | --- | --- | --- |
 | `data/manifest.json` | counts, region table, quota usage | ~4 KB |
-| `data/channels/index.json` | lightweight summaries of every channel | ~200 KB |
-| `data/channels/virtual.json` | full records, virtual performers | ~1 MB |
-| `data/channels/real.json` | full records, real artists | ~100 KB |
-| `data/channels/regions/<r>.json` | summaries for one region | ~30 KB |
+| `data/channels/manifest.json` | the shard map, per kind and region | ~4 KB |
+| `data/channels/virtual/<r>/<b>.json` | full records, virtual performers | ~150 KB each |
+| `data/channels/real/<r>/<b>.json` | full records, real artists | small |
 | `data/items/<region>/<bucket>.json` | items, sharded by region + id bucket | ~50 KB each |
 | `data/items/live.json` | currently live | small |
 | `data/items/upcoming.json` | scheduled streams and premieres | small |
@@ -77,9 +76,11 @@ blob that large is unusable in a browser anyway. So the dataset is split:
 | `data/songs/categories/<c>.json` | one file per song category | ~100 KB |
 | `data/search/<region>.json` | inverted index for one region | ~200 KB |
 
-The browser loads only the slice it needs: the manifest and channel summaries
-on startup, a region pack when the user picks a region, the live/upcoming
-files for those views, and the search packs for the query.
+The browser loads only the slice it needs: the channel manifest on startup,
+the shards of the regions and kinds it is showing when the user picks one, the
+live/upcoming files for those views, and the search packs for the query. The
+list is a projection of those records — there is no separate summary file to
+download.
 
 ### 3. The scope switch is enforced in the data layer
 

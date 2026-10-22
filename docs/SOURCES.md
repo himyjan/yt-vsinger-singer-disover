@@ -63,8 +63,20 @@ The region is now settled in this order:
 3. **A Japanese name and a YouTube channel** — kana are decisive.
 4. **`name.default`**, and finally the script of the name.
 
+That order is *inside* vdb. Across the sources, a merge keeps the more
+trusted answer — an override, then the Taiwan tracker's nationality, then a
+published country, then an agency, then kana, then the platform, then vdb's
+display language. The full ranking is in `docs/DATA-SCHEMA.md`.
+
 The JSON has no avatar and no description — those come from the platform
 APIs and from Wikipedia.
+
+One account list can hold the same channel twice — `youtubeAt` with the
+handle and `youtube` with the channel id — and the `youtube` value is
+sometimes another handle, `KiichanYT` where a `UC…` id belongs. The better
+identity wins (channel id over handle over anything else), so a performer is
+not given two links to one channel and a `youtube.com/channel/KiichanYT`
+that does not exist.
 
 ### 3. Taiwan VTuber Tracking Data
 

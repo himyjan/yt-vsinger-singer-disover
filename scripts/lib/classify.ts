@@ -478,6 +478,26 @@ export function classifyChannel(signals: ChannelSignals): ChannelClassification 
       agencyRegion = AGENCY_REGION[key] ?? null;
     }
   }
+
+  /**
+   * No agency from the known list — so read the one the performer states.
+   *
+   * 「にじさんじ所属」, 「所属：にじさんじ」, 「니지산지 소속」, "affiliated with
+   * Nijisanji" all say the same thing, and all of them name a group that the
+   * roster never recorded.
+   */
+  if (!agency) {
+    const stated = extractAgency(signals.name, signals.description);
+    if (stated) {
+      agency = stated;
+      /**
+       * The region is **not** touched. A description saying 「ホロライブ所属」
+       * names the group, not the branch — a Hololive EN member writes the same
+       * line — and it is the same mistake as trusting a Bilibili mirror.
+       */
+    }
+  }
+
   if (agency) {
     const sub = AGENCY_SUBREGION[agency];
     if (sub) agencyRegion = sub;
@@ -1225,6 +1245,198 @@ export const MARKERS = {
 /* -------------------------------------------------------------------------- */
 
 /**
+ * The ways a description states who a performer belongs to.
+ *
+ * The phrasing is different in every language, and the agency sits on the
+ * opposite side of the marker in each:
+ *
+ * | Language | The line | The agency |
+ * | --- | --- | --- |
+ * | Japanese | 「にじさんじ所属」 | before 所属 |
+ * | Chinese | 「所属：にじさんじ」「隶属〇〇」「〇〇旗下」 | after the marker, or before 旗下 |
+ * | Korean | 「니지산지 소속」 | before 소속 |
+ * | English | "affiliated with Nijisanji" | after the preposition |
+ *
+ * The capture is deliberately narrow — no spaces, no sentence punctuation, a
+ * couple of particles excluded — because whatever matches is written into the
+ * `agency` field as a fact.
+ */
+const AFFILIATION_PATTERNS: RegExp[] = [
+  // Japanese: 「〇〇所属」「〇〇に所属」「〇〇事務所所属」.
+  /([^\s、。,.|/／()（）\[\]【】「」『』:：;；~〜–—はがをも]{2,26})(?:に|へ)?\s*所属/u,
+  // Chinese: 「所属：〇〇」「所属于〇〇」.
+  /所属于?\s*[：:]\s*([^\s、。,.|/／()（）\[\]【】「」『』:：;；的]{2,26})/u,
+  /所属于\s*([^\s、。,.|/／()（）\[\]【】「」『』:：;；的]{2,26})/u,
+  // Chinese: 「隶属〇〇」「隸屬〇〇」.
+  /(?:隶属|隸屬)(?:于|於)?\s*[：:]?\s*([^\s、。,.|/／()（）\[\]【】「」『』:：;；的]{2,26})/u,
+  // Chinese: 「〇〇旗下」.
+  /([^\s、。,.|/／()（）\[\]【】「」『』:：;；]{2,26})\s*旗下/u,
+  // Korean: 「〇〇 소속」「소속：〇〇」.
+  /([^\s,.|/()\[\]:：;；]{2,26})\s*소속/u,
+  /소속\s*[：:]\s*([^\s,.|/()\[\]:：;；]{2,26})/u,
+  // English.
+  /\baffiliated\s+(?:with|to)\s+([\p{L}\p{N} &'’\-]{2,40})/iu,
+  /\b(?:member|part)\s+of\s+([\p{L}\p{N} &'’\-]{2,40})/iu,
+  /\bbelongs?\s+to\s+([\p{L}\p{N} &'’\-]{2,40})/iu,
+];
+
+/**
+ * A capture that is a word about the statement rather than a name.
+ *
+ * 「無所属」 puts 無 where the agency would be, and a bio that says "member of
+ * the channel" says nothing at all.
+ */const AGENCY_STOPWORDS = new Set([
+  "無",
+  "无",
+  "非",
+  "未",
+  "元",
+  "現",
+  "当",
+  "該当",
+  "本人",
+  "ここ",
+  "こちら",
+  "個人",
+  "个人",
+  "個人勢",
+  "个人势",
+  // Where in the group, not which group.
+  "本部",
+  "总部",
+  "總部",
+  "支部",
+  "分部",
+  "本社",
+  "分社",
+  "本家",
+  // What the group makes, not what it is called.
+  "世界观",
+  "世界觀",
+  "企划",
+  "企劃",
+  "社团",
+  "社團",
+  "计划",
+  "計劃",
+  "vtuber",
+  "vtubers",
+  "vsinger",
+  "v singer",
+  "performer",
+  "channel",
+  "チャンネル",
+  "配信者",
+  "브이튜버",
+  "버튜버",
+  "채널",
+  "a",
+  "an",
+  "the",
+  "my",
+  "this",
+  "our",
+  "us",
+  "me",
+  "them",
+  "it",
+]);
+
+/**
+ * The names the big agencies are known by in their own languages.
+ *
+ * A description in Japanese says 「ホロライブ所属」, in Chinese 「彩虹社」 and
+ * in Korean 「니지산지」 — the same three groups the rest of the dataset spells
+ * `hololive`, `nijisanji` and `nijisanji`. Without this the `agency` field
+ * would hold four spellings of one agency and the grouping would split it.
+ */
+const AGENCY_ALIASES = new Map<string, string>([
+  ["ホロライブ", "hololive"],
+  ["ホロライブプロダクション", "hololive"],
+  ["にじさんじ", "nijisanji"],
+  ["彩虹社", "nijisanji"],
+  ["니지산지", "nijisanji"],
+  ["ぶいすぽ", "vspo"],
+  ["ぶいすぽっ", "vspo"],
+  ["ぶいすぽっ!", "vspo"],
+  ["神椿", "kamitsubaki"],
+  ["バーチャルミュージックラボ", "virtual music lab"],
+  ["あにまーれ", "有閑喫茶あにまーれ"],
+  ["のりプロ", "noripro"],
+  ["ハニーストラップ", "HoneyStrap"],
+]);
+
+/** Strips what a capture picks up around a name but that is not the name. */
+function cleanAgencyName(raw: string): string | null {
+  let name = raw
+    .trim()
+    /**
+     * Decoration, not part of the name: 「✨纸片人计划所属」 and 「<EDEN>旗下」
+     * capture the emoji and the brackets with the agency.
+     */
+    .replace(/^[\s\p{P}\p{S}\p{Extended_Pictographic}]+/u, "")
+    .replace(/[\s\p{P}\p{S}\p{Extended_Pictographic}]+$/u, "")
+    .replace(/\s+/g, " ")
+    .replace(/^(?:the|a|an)\s+/i, "")
+    .trim();
+  // 「〇〇事務所所属」 states the agency's legal form, not a different agency.
+  name = name.replace(/\s*(?:事務所|事务所)$/u, "").trim();
+  /**
+   * Japanese puts the particle inside the token: 「ぶいすぽっ！に所属」 is
+   * captured as 「ぶいすぽっ！に」, because the greedy match cannot tell the
+   * particle from the name.
+   */
+  name = name.replace(/[にへ]$/u, "").trim();
+  if (name.length < 2) return null;
+  if (AGENCY_STOPWORDS.has(name.toLowerCase())) return null;
+  if (!/[\p{L}\p{N}]/u.test(name)) return null;
+  return name;
+}
+
+/**
+ * Reads the agency out of a name or a description.
+ *
+ * A performer who writes 「〇〇所属」 has told us two things at once: they are
+ * signed to a group (`affiliation: "group"`) and the group is called 〇〇
+ * (`agency: "〇〇"`). The rosters do not carry that for most channels, and the
+ * description is the one place the performer says it themselves.
+ *
+ * A known agency is returned in its canonical spelling, so 「ホロライブ」 and
+ * "Hololive" both become `hololive`, which is what `AGENCY_REGION` and the
+ * UI's grouping understand.
+ */
+export function extractAgency(
+  name: string | null | undefined,
+  description: string | null | undefined,
+): string | null {
+  // Width-normalised but **not** lower-cased: the agency name keeps the case
+  // the performer wrote it in.
+  const text = `${name ?? ""}\n${description ?? ""}`.normalize("NFKC");
+  if (!text.trim()) return null;
+
+  /**
+   * 「無所属」「无所属」「非所属」 are the opposite statement — no agency at
+   * all — and they contain the very marker the patterns look for. The agency
+   * would be read out of the word that denies one.
+   */
+  if (/[無无]所属|非所属|無隸屬|无隶属/u.test(text)) return null;
+
+  for (const pattern of AFFILIATION_PATTERNS) {
+    const match = pattern.exec(text);
+    if (!match?.[1]) continue;
+    const cleaned = cleanAgencyName(match[1]);
+    if (!cleaned) continue;
+    const alias = AGENCY_ALIASES.get(cleaned);
+    if (alias) return alias;
+    const known = AGENCY_KEYS.find(
+      (key) => key.toLowerCase() === cleaned.toLowerCase(),
+    );
+    return known ?? cleaned;
+  }
+  return null;
+}
+
+/**
  * Markers that positively identify a solo / independent performer.
  *
  * These matter because "no agency listed" is ambiguous: it can mean the
@@ -1244,8 +1456,10 @@ const INDEPENDENT_MARKERS = [
   "freelance",
   "self-produced",
   "個人製作",
+  "無所属",
   "无所属",
   "無所屬",
+  "非所属",
   "non-affiliated",
 ];
 
@@ -1281,7 +1495,6 @@ export function detectAffiliation(
 
   return "unknown";
 }
-
 /* -------------------------------------------------------------------------- */
 /* Gender                                                                     */
 /* -------------------------------------------------------------------------- */
