@@ -258,6 +258,44 @@ is published.
       re-classified once it arrives.
 - `[x]` Filterable in the web app, and shown as a 🎤 badge on the card.
 
+## 5k. The name
+
+- `[x]` The **platform** is the primary source for a name. A performer
+      renames and the platform knows; a public roster records the name it
+      saw, which can be months out of date.
+- `[x]` Every record carries the provenance of its name — `manual`,
+      `platform`, `seed` or `roster` — so a stale roster can never undo a
+      platform's correction on the next run.
+- `[x]` A hand-written name in `data/overrides.json` outranks everything.
+- `[x]` Only the record's **own** platform may rename it. A Chinese
+      Bilibili account must not rename a Japanese YouTube channel — the two
+      names are different languages for the same performer.
+- `[x]` A deleted account answers with a placeholder — 「账号已注销」 on
+      Bilibili, 「(알 수 없음)」 on CHZZK. A placeholder is not a name, and
+      it is rejected.
+- `[x]` The name a record had is kept as an **alias**, and the aliases are
+      indexed for search, so a channel that renamed is still findable under
+      the name someone remembers.
+- `[x]` The aliases the public rosters publish are kept too — the Taiwan
+      track list records alias names that its own JSON API drops, and vdb
+      lists the performer's name in every locale.
+
+## 5l. The avatars
+
+- `[x]` Every card shows the channel's avatar. A missing avatar is a broken
+      image, which is the first thing anyone sees.
+- `[x]` The avatar comes from the **primary** platform, so a record never
+      shows a Bilibili avatar on a YouTube channel.
+- `[x]` A dedicated script fills the backlog:
+      `npm run data:avatars -- --limit 2000`, with `--platform` to target
+      one platform and `--dry-run` to preview.
+- `[x]` It writes **only** what it fetched — the avatar, the current name,
+      the description, the follower count — and leaves the rest of the
+      record and the file layout untouched.
+- `[x]` The normal sync's details pass takes a **per-platform share** of its
+      budget, so the largest platform cannot take all of it and leave the
+      others unresolved.
+
 ## 5h. Enrichment from the quota-free sources
 
 - `[x]` The descriptions, avatars and follower counts are filled in from the
@@ -319,7 +357,21 @@ is published.
       channel, region, kind) so results render without another fetch.
 - `[x]` Search respects the global scope switch and the region filter.
 
-### 7.3 YouTube account linking
+### 7.3 Account linking
+
+Every platform the dataset covers can be linked, using whatever mechanism the
+platform actually offers. The four that have no public OAuth ask the user for
+their session cookie; the three that do use it.
+
+| Platform | Mechanism | Configuration |
+| --- | --- | --- |
+| **YouTube** | Google Identity Services | `VITE_GOOGLE_CLIENT_ID` |
+| **Twitch** | OAuth 2.0 with PKCE | `VITE_TWITCH_CLIENT_ID` |
+| **VK** | implicit OAuth | `VITE_VK_CLIENT_ID` |
+| **KICK** | OAuth 2.1 with PKCE | `VITE_KICK_CLIENT_ID` + `VITE_KICK_CLIENT_SECRET` |
+| **Bilibili** | the `SESSDATA` cookie | none |
+| **CHZZK** | the `NaverLogin` cookie | none |
+| **Niconico** | the `user_session` cookie | none |
 
 - `[x]` Client-side Google OAuth via Google Identity Services — works on a
       static site, no backend.
@@ -330,6 +382,20 @@ is published.
       Bilibili offers no public OAuth for a follow list.
 - `[x]` **VK** — implicit OAuth. VK has no channel-subscription concept, so
       the provider surfaces the user's friend list.
+- `[x]` **Niconico** — the user pastes their `user_session` cookie. The API
+      is the v2 one, and it needs the `X-Frontend-Id` headers the web app
+      sends — without them the request never reaches the application.
+- `[x]` **CHZZK** — the user pastes their `NaverLogin` cookie. The
+      followed-channel list is published by
+      `api.chzzk.naver.com/service/v1/channels/followings`, which is the
+      endpoint the CHZZK web app itself calls.
+- `[x]` **KICK** — OAuth 2.1 with PKCE against `id.kick.com`, the OAuth
+      host, which is *not* the API host. The token exchange asks for the
+      client secret, so a registered KICK app is needed; without one the user
+      pastes their `kick_session` cookie instead, which needs no
+      configuration at all.
+- `[x]` Every provider that needs no configuration works **out of the box** —
+      four of the seven need nothing but a cookie.
 - `[x]` **Several accounts per platform** — a user can link two Twitch
       accounts, or two Google profiles.
 - `[x]` **Switch account** — the active account is stored per platform, so

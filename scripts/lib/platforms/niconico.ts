@@ -22,6 +22,7 @@ import type {
   PlatformChannel,
   PlatformUpload,
 } from "../platforms";
+import { REQUEST_TIMEOUT_MS } from "../io";
 
 const SEARCH = "https://api.search.nicovideo.jp/api/v2";
 
@@ -57,6 +58,7 @@ export class NiconicoAdapter implements PlatformAdapter {
       const url = new URL(`${SEARCH}/${path}`);
       for (const [k, v] of Object.entries(params)) url.searchParams.set(k, v);
       const res = await fetch(url.toString(), {
+        signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
         headers: {
           Accept: "application/json",
           "User-Agent": "Mozilla/5.0",

@@ -44,6 +44,7 @@ import { InnerTubeSource } from "./lib/youtubei";
 import { checkUpstreams, writeRevisions } from "./lib/upstream";
 import { TwitchGqlSource } from "./lib/twitch-gql";
 import {
+  isPlaceholderName,
   orderPlatformLinks,
   pickAvatar,
   pickSubscribers,
@@ -83,6 +84,7 @@ import type {
   ItemFile,
   Manifest,
   ManifestCounts,
+  PlatformId,
   RecordSource,
 } from "./lib/types";
 import { SCHEMA_VERSION, toCountRef } from "./lib/types";
@@ -192,6 +194,8 @@ const config: SyncConfig = readJson(
 /* -------------------------------------------------------------------------- */
 
 interface Override {
+  /** The current display name — a hand-written correction. */
+  name?: string;
   kind?: Channel["kind"];
   role?: Channel["role"];
   region?: Channel["region"];
@@ -223,6 +227,7 @@ const overrides: OverrideMap = readJson<OverrideMap>(paths.overrides, {});
 /* -------------------------------------------------------------------------- */
 
 const nowIso = () => new Date().toISOString();
+
 
 function log(msg: string): void {
   console.log(`[sync] ${msg}`);
@@ -284,6 +289,11 @@ function channelFromApi(
   return {
     id: raw.id,
     name: snippet.title ?? "Unknown",
+    // The API reports the channel's current title.
+    nameSource: "platform",
+    // The API does not publish a channel's other names; the roster's aliases
+    // are merged in separately.
+    aliases: [],
     handle: snippet.customUrl ? snippet.customUrl.replace(/^@/, "") : null,
     kind: classification.kind,
     role: classification.role,
@@ -809,6 +819,12 @@ async function main(): Promise<void> {
           ch.addedAt = prev?.addedAt ?? ch.addedAt;
           // A verification that already happened is kept.
           ch.verification = prev?.verification ?? ch.verification;
+          // The API does not know the performer's other names, so the ones
+          // the rosters recorded are kept.
+          ch.aliases = [
+            ...(prev?.aliases ?? []),
+            ...(ch.aliases ?? []),
+          ];
           channelById.set(ch.id, ch);
         }
       }
@@ -820,6 +836,54 @@ async function main(): Promise<void> {
 
   channels = [...channelById.values()].filter((c) => !overrides[c.id]?.hidden);
   log(`channel set: ${channels.length}`);
+
+  /* --- hand-written overrides -------------------------------------------- */
+  /**
+   * `data/overrides.json` is the last word.
+   *
+   * The overrides used to be applied only to the channels the Data API
+   * happened to refresh, so a hand-written correction was silently ignored
+   * for every other channel — and a roster-only run ignored all of them.
+   * They are applied here instead, to every record, whatever the run did.
+   */
+  {
+    let applied = 0;
+    for (const channel of channels) {
+      const override = overrides[channel.id];
+      if (!override) continue;
+
+      /**
+       * A hand-written name is the final word, and the name it replaces
+       * becomes an alias so the channel stays findable under it.
+       */
+      if (override.name && override.name !== channel.name) {
+        log(`override: ${channel.name} → ${override.name} (${channel.id})`);
+        if (!channel.aliases.includes(channel.name)) {
+          channel.aliases.push(channel.name);
+        }
+        channel.name = override.name;
+        channel.nameSource = "manual";
+        const primary = primaryPlatformOf(channel);
+        const link = channel.platforms.find(
+          (p) => p.id === channel.id || p.platform === primary,
+        );
+        if (link) link.name = override.name;
+      }
+
+      if (override.kind) channel.kind = override.kind;
+      if (override.role) channel.role = override.role;
+      if (override.region) channel.region = override.region;
+      if (override.agency !== undefined) channel.agency = override.agency;
+      if (override.gender) channel.gender = override.gender;
+      if (override.isAi !== undefined) channel.isAi = override.isAi;
+      if (override.isSinging !== undefined) channel.isSinging = override.isSinging;
+      if (override.description) channel.description = override.description;
+      if (override.avatar) channel.avatar = override.avatar;
+      if (override.verification) channel.verification = override.verification;
+      applied++;
+    }
+    if (applied) log(`overrides: ${applied} channel(s) corrected by hand`);
+  }
 
   /** Every known item, keyed by id — the working set for this run. */
   const itemById = new Map<string, Item>();
@@ -911,6 +975,50 @@ async function main(): Promise<void> {
       return score(b) - score(a);
     });
 
+    /**
+     * The budget is **per platform**, not one pool.
+     *
+     * A single pool lets the largest platform take all of it: Bilibili has
+     * four times as many channels as YouTube, so a run that sorts by "no
+     * avatar" spends every request on Bilibili and the YouTube and Twitch
+     * channels are never resolved at all. A per-platform share keeps every
+     * platform moving.
+     *
+     * The avatar **backlog** is a separate job — `npm run data:avatars` —
+     * so this pass is free to prioritise what it is actually good at: the
+     * name, the description and the follower count.
+     */
+    const perPlatform = new Map<PlatformId, Channel[]>();
+    for (const channel of needDetails) {
+      const platform = primaryPlatformOf(channel);
+      if (!platform) continue;
+      const list = perPlatform.get(platform) ?? [];
+      list.push(channel);
+      perPlatform.set(platform, list);
+    }
+
+    /**
+     * The share each platform gets: an equal split, with the remainder going
+     * to the platforms that still have channels waiting.
+     */
+    const platforms = [...perPlatform.keys()];
+    const share = Math.max(1, Math.floor(budget / Math.max(1, platforms.length)));
+    const selected: Channel[] = [];
+    const leftovers: Channel[] = [];
+    for (const platform of platforms) {
+      const list = perPlatform.get(platform)!;
+      selected.push(...list.slice(0, share));
+      leftovers.push(...list.slice(share));
+    }
+    // Whatever is left over goes to the platforms that have the most waiting.
+    selected.push(...leftovers.slice(0, Math.max(0, budget - selected.length)));
+    needDetails.length = 0;
+    needDetails.push(...selected);
+    log(
+      `details: ${needDetails.length} channel(s) to resolve · ` +
+        platforms.map((p) => `${p} ${Math.min(share, (perPlatform.get(p) ?? []).length)}`).join(", "),
+    );
+
     let resolved = 0;
     for (const channel of needDetails) {
       /**
@@ -920,6 +1028,78 @@ async function main(): Promise<void> {
        * happened to list first.
        */
       const ordered = orderPlatformLinks(channel);
+      /**
+       * The platform the record is *about* — the one its id belongs to. Only
+       * that platform may rename the record: a Bilibili account with a
+       * Chinese name must not rename a YouTube channel.
+       */
+      const primaryPlatform = primaryPlatformOf(channel);
+
+      /**
+       * A rename, recorded rather than applied silently.
+       *
+       * The platform knows the current name; the rosters know the name the
+       * performer had when the roster was written. The old name is not
+       * thrown away — it becomes an alias, so a search for the name someone
+       * remembers still finds the channel.
+       */
+      const rename = (next: string, platform: string) => {
+        const trimmed = next.trim();
+        if (!trimmed || trimmed === channel.name) return;
+        // A deleted account answers with a placeholder, not a name.
+        if (isPlaceholderName(trimmed)) {
+          log(`rename: ${channel.name} → (placeholder ignored, ${platform})`);
+          return;
+        }
+        log(`rename: ${channel.name} → ${trimmed} (${platform})`);
+        channel.aliases = channel.aliases ?? [];
+        if (!channel.aliases.includes(channel.name)) {
+          channel.aliases.push(channel.name);
+        }
+        // Keep the alias list from growing without bound.
+        if (channel.aliases.length > 12) {
+          channel.aliases = channel.aliases.slice(-12);
+        }
+        channel.name = trimmed;
+        channel.nameSource = "platform";
+      };
+      /**
+       * The YouTube profile, from InnerTube — no quota.
+       *
+       * The platform knows the channel's **current** name. The rosters carry
+       * whatever the name was when they were written, so a performer who has
+       * renamed keeps the old name until the platform corrects it.
+       */
+      if (channel.id.startsWith("UC") && innertube.isAvailable) {
+        const profile = await innertube.profile(channel.id);
+        if (profile) {
+          if (profile.title) {
+            rename(profile.title, "youtube");
+            const link = channel.platforms.find((p) => p.platform === "youtube");
+            if (link) link.name = channel.name;
+          }
+          if (profile.description && !channel.description) {
+            channel.description = profile.description.slice(0, 1000);
+          }
+          if (profile.avatar && !channel.avatar) {
+            channel.avatar = profile.avatar;
+          }
+          if (profile.subscribers) {
+            const link = channel.platforms.find((p) => p.platform === "youtube");
+            if (link) {
+              link.subscribers = { tag: "has", count: profile.subscribers };
+            }
+            if (channel.subscribers.tag === "hidden") {
+              channel.subscribers = {
+                tag: "has",
+                count: profile.subscribers,
+              };
+            }
+          }
+          resolved++;
+        }
+      }
+
       /**
        * The Twitch profile, from GQL — no secret, no quota.
        *
@@ -958,6 +1138,17 @@ async function main(): Promise<void> {
                 count: profile.followers,
               };
             }
+            // The profile knows the **current** display name, which
+            // corrects a stale roster entry.
+            /**
+             * Only the record's **own** platform may rename it. A Chinese
+             * Bilibili account must not rename a Japanese YouTube channel —
+             * the two names are different languages for the same performer.
+             */
+            if (profile.displayName && primaryPlatform === "twitch") {
+              rename(profile.displayName, "twitch");
+              twitchLink.name = channel.name;
+            }
             // The profile knows the **current** login, so a renamed channel
             // gets a link that resolves.
             if (profile.login && profile.login !== twitchLink.handle) {
@@ -995,6 +1186,16 @@ async function main(): Promise<void> {
         try {
           const profile = await adapter.resolve(link.handle ?? link.id);
           if (!profile) continue;
+
+          /**
+           * The platform's name is the current one. A roster can be months
+           * old, and performers rename themselves — 「克蕾雅」 is one of them.
+           */
+          if (profile.name && link.platform === primaryPlatform) {
+            rename(profile.name, link.platform);
+            link.name = channel.name;
+          }
+
           if (profile.description && !channel.description) {
             channel.description = profile.description.slice(0, 1000);
           }
@@ -2085,6 +2286,8 @@ export function channelFromPlatform(
   return {
     id: `${adapter.id}:${channel.id}`,
     name: channel.name ?? channel.handle ?? channel.id,
+    nameSource: "platform",
+    aliases: [],
     handle: channel.handle,
     verification: null,
     kind: classification.kind,

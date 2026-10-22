@@ -55,6 +55,8 @@ The record for one performer.
 | --- | --- | --- |
 | `id` | string | YouTube channel id (`UC…`), or `<platform>:<id>` for a performer who only exists elsewhere |
 | `name` | string | Display name |
+| `nameSource` | `"manual"` \| `"platform"` \| `"seed"` \| `"roster"` \| `"unknown"` | Where the name came from — see below |
+| `aliases` | string[] | The other names the performer is known by |
 | `handle` | string \| null | `@handle` without the `@` |
 | `kind` | `"virtual"` \| `"real"` | Virtual performer vs. real human artist |
 | `role` | see below | What they do |
@@ -106,6 +108,49 @@ type CountRef =
 
 This mirrors the pattern used by the reference `TaiwanVTuberTrackingDataJson`
 API, which gets it right.
+
+### `nameSource` and `aliases` — whose name is it?
+
+A performer renames, and every source records the name it saw. The Taiwan
+roster says 「克蕾雅」; the YouTube channel itself says 「シスター・クレア」.
+Both are right, at different times.
+
+So the record keeps **two** things:
+
+- **`name`** — the name to display.
+- **`nameSource`** — where that name came from.
+
+And the names it is *not* showing are kept in **`aliases`**.
+
+The order of trust is:
+
+| `nameSource` | Meaning |
+| --- | --- |
+| `manual` | A human wrote it in `data/overrides.json`. The final word. |
+| `platform` | The platform's own current name. **The primary source.** |
+| `seed` | A hand-verified seed, but as old as the seed file. |
+| `roster` | Whatever a public roster said when it was written. |
+| `unknown` | Not known. |
+
+The order matters. The **platform** is the primary source, because it is the
+only one that knows the name *now*: a roster's name is frozen at the moment
+the roster was written, and a performer who renamed keeps the old name until
+the platform corrects it. A hand-written override outranks everything,
+because that is an explicit decision to disagree with the platform — which
+is exactly what is needed when the platform's answer is a tombstone.
+
+Two rules follow from it:
+
+- **Only the record's own platform may rename it.** A Chinese Bilibili
+  account must not rename a Japanese YouTube channel: the two names are
+  different languages for the same performer.
+- **A placeholder is not a name.** A deleted account still answers the
+  profile endpoint, but with 「账号已注销」 instead of a name. That is
+  rejected, and the record keeps the name it had.
+
+Every rename is **recorded**: the old name goes into `aliases`, and the
+aliases are indexed for search. A channel that renamed is still findable
+under the name someone remembers.
 
 ### `confidence` — the estimate
 

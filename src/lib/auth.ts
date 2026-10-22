@@ -688,6 +688,459 @@ async function vkFetch<T>(url: string, token: string): Promise<T | null> {
 }
 
 /* -------------------------------------------------------------------------- */
+/* KICK — OAuth 2.1 with PKCE                                                  */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * KICK's OAuth 2.1 flow.
+ *
+ * The authorization endpoint is `id.kick.com/oauth/authorize` and the token
+ * endpoint is `id.kick.com/oauth/token` — a *different* host from the API
+ * server, which is the usual source of confusion.
+ *
+ * The token exchange asks for the client secret, so the OAuth route needs a
+ * registered KICK app. The cookie route below needs nothing.
+ */
+export const kickProvider: AuthProvider = {
+  id: "kick",
+  label: "KICK",
+  color: "#53fc18",
+
+  isConfigured() {
+    // The cookie route works without any configuration.
+    return true;
+  },
+
+  unavailableReason() {
+    return null;
+  },
+
+  async link(): Promise<ProviderAccount | null> {
+    const clientId = env.kickClientId;
+    const clientSecret = env.kickClientSecret;
+
+    /**
+     * With a registered app the OAuth flow is used. Without one the user
+     * pastes their KICK session token, exactly as on Bilibili.
+     */
+    if (!clientId || !clientSecret) {
+      const token = window.prompt(
+        [
+          "KICK's OAuth flow needs a registered KICK app (VITE_KICK_CLIENT_ID",
+          "and VITE_KICK_CLIENT_SECRET).",
+          "",
+          "You can link with your session token instead:",
+          "",
+          "1. Open https://kick.com and sign in.",
+          "2. Open the developer tools → Application → Cookies.",
+          "3. Copy the value of the `kick_session` cookie.",
+          "",
+          "It is stored only in this browser and is never sent anywhere except",
+          "KICK's own API.",
+        ].join("\n"),
+      );
+      if (!token?.trim()) return null;
+
+      const account: ProviderAccount = {
+        provider: "kick",
+        name: null,
+        picture: null,
+        token: token.trim(),
+        expiresAt: null,
+      };
+      const profile = await kickApi<{
+        data?: {
+          user_id?: number;
+          username?: string;
+          profile_pic?: string;
+        };
+      }>("https://kick.com/api/v2/users/my", account);
+      if (profile?.data) {
+        account.name = profile.data.username ?? null;
+        account.picture = profile.data.profile_pic ?? null;
+        account.extra = { userId: String(profile.data.user_id ?? "") };
+      }
+      return account;
+    }
+
+    const verifier = randomString(64);
+    const challenge = await sha256Base64Url(verifier);
+    const state = randomString(24);
+    const redirectUri = currentOrigin();
+
+    const params = new URLSearchParams({
+      client_id: clientId,
+      redirect_uri: redirectUri,
+      response_type: "code",
+      scope: "user:read channel:read",
+      state,
+      code_challenge: challenge,
+      code_challenge_method: "S256",
+    });
+
+    const result = await runPopupFlow(
+      `https://id.kick.com/oauth/authorize?${params}`,
+      state,
+    );
+    if (!result.code) return null;
+
+    const body = new URLSearchParams({
+      grant_type: "authorization_code",
+      client_id: clientId,
+      client_secret: clientSecret,
+      code: result.code,
+      redirect_uri: redirectUri,
+      code_verifier: verifier,
+    });
+    const res = await fetch("https://id.kick.com/oauth/token", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body,
+    });
+    if (!res.ok) return null;
+    const json = await res.json();
+
+    const account: ProviderAccount = {
+      provider: "kick",
+      name: null,
+      picture: null,
+      token: json.access_token,
+      expiresAt: Date.now() + (json.expires_in ?? 3600) * 1000,
+    };
+
+    const profile = await kickApi<{
+      data?: {
+        user_id?: number;
+        username?: string;
+        profile_picture?: string;
+      }[];
+    }>("https://api.kick.com/public/v1/users", account);
+    const me = profile?.data?.[0];
+    if (me) {
+      account.name = me.username ?? null;
+      account.picture = me.profile_picture ?? null;
+      account.extra = { userId: String(me.user_id ?? "") };
+    }
+    return account;
+  },
+
+  async subscriptions(account: ProviderAccount): Promise<RemoteSubscription[]> {
+    /**
+     * KICK's web API is the only place the followed-channel list is
+     * published, and it wants the session token in the `Authorization`
+     * header. The Dev API has no equivalent endpoint.
+     */
+    const json = await kickApi<{
+      data?: {
+        id?: number;
+        slug?: string;
+        user_id?: number;
+        user?: { username?: string; profile_image_url?: string };
+        livestream?: unknown;
+      }[];
+    }>("https://kick.com/api/v2/channels/followed", account);
+
+    const list = json?.data ?? [];
+    return list.map((entry) => ({
+      channelId: String(entry.user_id ?? entry.id ?? entry.slug ?? ""),
+      name: entry.user?.username ?? entry.slug ?? "Unknown",
+      handle: entry.slug ?? null,
+      thumbnail: entry.user?.profile_image_url ?? null,
+      description: null,
+    }));
+  },
+
+  unlink() {
+    /* the token simply stops being used */
+  },
+};
+
+async function kickApi<T>(
+  url: string,
+  account: ProviderAccount,
+): Promise<T | null> {
+  try {
+    const res = await fetch(url, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${account.token}`,
+        Referer: "https://kick.com/",
+      },
+    });
+    if (!res.ok) return null;
+    return (await res.json()) as T;
+  } catch {
+    return null;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* CHZZK — Naver's session cookie                                              */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * CHZZK — Naver's streaming platform, and the biggest Korean VTuber scene.
+ *
+ * There is no public OAuth, so the user supplies their Naver session cookie.
+ * The followed-channel list is published by
+ * `api.chzzk.naver.com/service/v1/channels/followings`, which is what the
+ * CHZZK web app itself calls.
+ */
+export const chzzkProvider: AuthProvider = {
+  id: "chzzk",
+  label: "CHZZK",
+  color: "#03c75a",
+
+  isConfigured() {
+    return true;
+  },
+
+  unavailableReason() {
+    return null;
+  },
+
+  async link(): Promise<ProviderAccount | null> {
+    const token = window.prompt(
+      [
+        "CHZZK does not offer a public OAuth for your follow list.",
+        "",
+        "1. Open https://chzzk.naver.com and sign in.",
+        "2. Open the developer tools → Application → Cookies.",
+        "3. Copy the value of the `NaverLogin` cookie.",
+        "",
+        "It is stored only in this browser and is never sent anywhere except",
+        "Naver's own API.",
+      ].join("\n"),
+    );
+    if (!token?.trim()) return null;
+
+    const account: ProviderAccount = {
+      provider: "chzzk",
+      name: null,
+      picture: null,
+      token: token.trim(),
+      expiresAt: null,
+    };
+
+    // Verify the cookie and read the user's own channels.
+    const mine = await chzzkApi<{
+      code: number;
+      content?: { channelId?: string; channelName?: string };
+    }>("https://api.chzzk.naver.com/service/v1/users/me/channels", account);
+    if (mine?.code !== 200) return null;
+    account.name = mine.content?.channelName ?? null;
+    account.extra = { channelId: mine.content?.channelId ?? "" };
+    return account;
+  },
+
+  async subscriptions(account: ProviderAccount): Promise<RemoteSubscription[]> {
+    const out: RemoteSubscription[] = [];
+    let page = 0;
+    do {
+      const json = await chzzkApi<{
+        code: number;
+        content?: {
+          channelFollowings?: {
+            channelId?: string;
+            channelName?: string;
+            channelImageUrl?: string;
+          }[];
+        } | {
+          channelId?: string;
+          channelName?: string;
+          channelImageUrl?: string;
+        }[];
+      }>(
+        `https://api.chzzk.naver.com/service/v1/channels/followings?page=${page}&size=50&sortType=FOLLOW`,
+        account,
+      );
+      if (json?.code !== 200) break;
+
+      /**
+       * The payload is a list of channels, either directly or under a
+       * `channelFollowings` key — both shapes are accepted.
+       */
+      const content = json.content as
+        | { channelFollowings?: unknown[] }
+        | unknown[];
+      const list = Array.isArray(content)
+        ? content
+        : ((content?.channelFollowings ?? []) as unknown[]);
+
+      for (const raw of list) {
+        const entry = raw as {
+          channelId?: string;
+          channelName?: string;
+          channelImageUrl?: string;
+        };
+        if (!entry.channelId) continue;
+        out.push({
+          channelId: entry.channelId,
+          name: entry.channelName ?? "Unknown",
+          handle: entry.channelId,
+          thumbnail: entry.channelImageUrl ?? null,
+          description: null,
+        });
+      }
+      page++;
+    } while (out.length > 0 && out.length % 50 === 0 && page < 40);
+
+    return out;
+  },
+
+  unlink() {
+    /* the cookie simply stops being used */
+  },
+};
+
+async function chzzkApi<T>(
+  url: string,
+  account: ProviderAccount,
+): Promise<T | null> {
+  try {
+    const res = await fetch(url, {
+      headers: {
+        Accept: "application/json",
+        Cookie: `NaverLogin=${account.token}`,
+        Referer: "https://chzzk.naver.com/",
+        "User-Agent": "Mozilla/5.0",
+      },
+    });
+    if (!res.ok) return null;
+    return (await res.json()) as T;
+  } catch {
+    return null;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* Niconico — the session cookie                                               */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * Niconico.
+ *
+ * The API is the v2 one, and it needs the `X-Frontend-Id` headers the web
+ * app sends — without them the request never reaches the application. The
+ * session cookie is `user_session`.
+ */
+export const niconicoProvider: AuthProvider = {
+  id: "niconico",
+  label: "Niconico",
+  color: "#252525",
+
+  isConfigured() {
+    return true;
+  },
+
+  unavailableReason() {
+    return null;
+  },
+
+  async link(): Promise<ProviderAccount | null> {
+    const token = window.prompt(
+      [
+        "Niconico does not offer a public OAuth for your follow list.",
+        "",
+        "1. Open https://www.nicovideo.jp and sign in.",
+        "2. Open the developer tools → Application → Cookies.",
+        "3. Copy the value of the `user_session` cookie.",
+        "",
+        "It is stored only in this browser and is never sent anywhere except",
+        "Niconico's own API.",
+      ].join("\n"),
+    );
+    if (!token?.trim()) return null;
+
+    const account: ProviderAccount = {
+      provider: "niconico",
+      name: null,
+      picture: null,
+      token: token.trim(),
+      expiresAt: null,
+    };
+
+    const nickname = await niconicoApi<{
+      data?: { nickname?: string; user_id?: string };
+    }>("https://api.nicovideo.jp/api/v2/user/my/nickname", account);
+    if (!nickname?.data) return null;
+    account.name = nickname.data.nickname ?? null;
+    account.extra = { userId: nickname.data.user_id ?? "" };
+    return account;
+  },
+
+  async subscriptions(account: ProviderAccount): Promise<RemoteSubscription[]> {
+    const out: RemoteSubscription[] = [];
+    let offset = 0;
+    let items: {
+      id?: string;
+      nickname?: string;
+      description?: string;
+      icon_url?: string;
+    }[] = [];
+    do {
+      const json = await niconicoApi<{
+        data?: {
+          items?: {
+            id?: string;
+            nickname?: string;
+            description?: string;
+            icon_url?: string;
+          }[];
+        };
+      }>(
+        `https://api.nicovideo.jp/api/v2/user/my/follow?limit=50&offset=${offset}`,
+        account,
+      );
+      items = json?.data?.items ?? [];
+      for (const entry of items) {
+        if (!entry.id) continue;
+        out.push({
+          channelId: entry.id,
+          name: entry.nickname ?? "Unknown",
+          handle: entry.id,
+          thumbnail: entry.icon_url ?? null,
+          description: entry.description ?? null,
+        });
+      }
+      offset += 50;
+    } while (items.length > 0 && out.length < 500);
+
+    return out;
+  },
+
+  unlink() {
+    /* the cookie simply stops being used */
+  },
+};
+
+async function niconicoApi<T>(
+  url: string,
+  account: ProviderAccount,
+): Promise<T | null> {
+  try {
+    const res = await fetch(url, {
+      headers: {
+        Accept: "application/json",
+        Cookie: `user_session=${account.token}`,
+        Referer: "https://www.nicovideo.jp/",
+        "User-Agent":
+          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36",
+        // The API rejects a request without the web client's headers.
+        "X-Frontend-Id": "2",
+        "X-Frontend-Version": "9.46",
+        "X-Niconico-Language": "ja-jp",
+        "X-Client-Os-Type": "others",
+      },
+    });
+    if (!res.ok) return null;
+    return (await res.json()) as T;
+  } catch {
+    return null;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
 /* Registry                                                                   */
 /* -------------------------------------------------------------------------- */
 
@@ -696,7 +1149,10 @@ export const AUTH_PROVIDERS: AuthProvider[] = [
   youtubeProvider,
   twitchProvider,
   bilibiliProvider,
+  niconicoProvider,
   vkProvider,
+  chzzkProvider,
+  kickProvider,
 ];
 
 

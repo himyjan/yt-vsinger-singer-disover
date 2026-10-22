@@ -187,3 +187,12 @@ export function mergeById<
 
   return [...map.values()].sort((a, b) => a.id.localeCompare(b.id));
 }
+
+/**
+ * How long a network request is given before it is abandoned.
+ *
+ * A fetch with no timeout never rejects — it simply hangs, and a hung
+ * request in a loop of thousands stalls the whole run with no output and no
+ * error. Every network call in the pipeline carries this.
+ */
+export const REQUEST_TIMEOUT_MS = 20_000;

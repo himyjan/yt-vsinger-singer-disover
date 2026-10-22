@@ -20,6 +20,7 @@ import type {
   PlatformChannel,
   PlatformUpload,
 } from "../platforms";
+import { REQUEST_TIMEOUT_MS } from "../io";
 
 const API = "https://api.vk.com/method";
 
@@ -76,6 +77,7 @@ export class VkAdapter implements PlatformAdapter {
       url.searchParams.set("access_token", this.token);
       url.searchParams.set("v", "5.199");
       const res = await fetch(url.toString(), {
+        signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
         headers: { Accept: "application/json" },
       });
       if (!res.ok) return null;

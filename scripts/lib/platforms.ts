@@ -339,3 +339,29 @@ export function normalizeHandle(input: string): string {
 
 /** Default activity for an unknown channel. */
 export const UNKNOWN_ACTIVITY: Activity = "unknown";
+
+/**
+ * The names a platform uses when a channel no longer exists.
+ *
+ * A deleted account still answers the profile endpoint, but with a
+ * placeholder instead of a name — 「账号已注销」 on Bilibili, 「(알 수 없음)」
+ * on CHZZK. Renaming a record to one of those would replace a real name
+ * with a tombstone, so they are rejected.
+ */
+const PLACEHOLDER_NAMES = new Set([
+  "账号已注销",
+  "帳號已注销",
+  "账号注销",
+  "(알 수 없음)",
+  "알 수 없음",
+  "unknown",
+  "unknown channel",
+  "暂无",
+  "no name",
+]);
+
+export function isPlaceholderName(name: string | null | undefined): boolean {
+  const trimmed = (name ?? "").trim();
+  if (!trimmed) return true;
+  return PLACEHOLDER_NAMES.has(trimmed.toLowerCase());
+}
