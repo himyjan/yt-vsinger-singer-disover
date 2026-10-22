@@ -75,6 +75,7 @@ The record for one performer.
 | `isAi` | boolean | AI-generated performer (AI VTuber, AI singer) |
 | `variant` | see below | The combined label |
 | `verification` | `Verification \| null` | What was actually looked up, and where — see below |
+| `confidence` | `ClassificationConfidence` | *Optional.* The confidence estimate — see below |
 | `source` | `"api"` \| `"seed"` \| `"manual"` | Provenance |
 | `addedAt` | string | ISO timestamp of first sighting |
 | `updatedAt` | string | ISO timestamp of last refresh |
@@ -105,6 +106,46 @@ type CountRef =
 
 This mirrors the pattern used by the reference `TaiwanVTuberTrackingDataJson`
 API, which gets it right.
+
+### `confidence` — the estimate
+
+**Optional, and not populated by the current dataset.** The type allows it and
+the shape is defined, but the sync does not write it — because a computed
+number is a guess dressed up as a measurement, and the `verification` record
+below says whether anyone actually checked.
+
+The shape, when a producer does want to record an estimate:
+
+| Axis | What it measures | `1` means |
+| --- | --- | --- |
+| `kind` | virtual or real | a source stated it |
+| `region` | where the performer belongs | the roster or the performer stated it |
+| `role` | what they do | a role marker matched |
+| `gender` | self-described gender | the channel or agency stated it |
+| `ai` | whether the performer is AI-generated | the AiSList listed it |
+| `overall` | the weakest meaningful axis | curated by hand |
+
+`overall` is `min(kind, region)`, because a record with the wrong region is in
+the wrong place and a record with the wrong kind is in the wrong dataset. The
+role, the gender and the AI flag are recorded but do **not** drag the record
+down: a channel that never states its gender is still a perfectly good
+record.
+
+The values are coarse on purpose — `1` means a source stated it, `0` means
+the source is silent, and the values in between mean it was inferred. A
+number with three decimal places would look more precise than it is.
+
+**What it is used for**, when it is present:
+
+1. **Ordering the verification queue.** The records that are most uncertain
+   are the ones worth looking up. The queue in `scripts/verify.ts` is
+   actually ordered by *what is missing* — an unknown region, an unknown
+   role, no description — which is a stricter and more useful signal than
+   any score.
+2. **Review in the UI.** The channel drawer names the uncertain axes, so a
+   reader can see *which* field is shaky rather than just that something is.
+3. **The merge.** When two records are merged, the stronger value wins per
+   axis, so a curated field is never downgraded by an inferred one.
 
 ### `verification` — what was actually looked up
 

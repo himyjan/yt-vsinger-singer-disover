@@ -77,11 +77,14 @@ per-view `kind` check.
 
 ### 2. A confidence score is not a fact
 
-There is deliberately **no** `confidence` field on the records. A computed
-number is a guess dressed up as a measurement. What a record says instead is
-`verification`: what was looked up, by what, and what was found. The
-verification queue is ordered by *what is not known* — an unknown region, an
-unknown role, no description — not by a score.
+`confidence` is **optional** and the dataset does not populate it. A computed
+number is a guess dressed up as a measurement, and what a record needs to say
+is `verification`: what was looked up, by what, and what was found.
+
+The verification queue is ordered by *what is not known* — an unknown region,
+an unknown role, no description — not by a score. The type still allows
+`confidence` for a producer that wants to record an estimate, and
+`docs/DATA-SCHEMA.md` documents its shape.
 
 ### 3. The classifier is deterministic
 
