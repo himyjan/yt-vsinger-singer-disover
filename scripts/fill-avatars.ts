@@ -39,12 +39,19 @@
 
 import fs from "node:fs";
 import path from "node:path";
-import { DATA_DIR, ensureDir, readJson, writeJson } from "./lib/io";
+import {
+  DATA_DIR,
+  ensureDir,
+  readJson,
+  writeJson,
+  acquireRunLock,
+} from "./lib/io";
 import {
   ALL_BUCKETS,
   bucketFor,
   layout,
   toSummary,
+  writeChannelShards,
 } from "./lib/dataset";
 import { InnerTubeSource } from "./lib/youtubei";
 import { TwitchGqlSource } from "./lib/twitch-gql";
@@ -85,6 +92,20 @@ interface Options {
   nameOnly: boolean;
 }
 
+/**
+ * The spellings of the name pass.
+ *
+ * `npm run data:avatars --nameOnly` is what a person actually types, so the
+ * dashes and the case are not something to be strict about.
+ */
+const NAME_ONLY_FLAGS = new Set([
+  "--name-only",
+  "--nameonly",
+  "--names-only",
+  "--namesonly",
+  "--only",
+]);
+
 function parseArgs(argv: string[]): Options {
   const options: Options = {
     limit: 500,
@@ -103,7 +124,7 @@ function parseArgs(argv: string[]): Options {
       options.intervalMs = Number(argv[++i] ?? options.intervalMs);
     } else if (arg === "--dry-run") options.dryRun = true;
     else if (arg === "--force") options.force = true;
-    else if (arg === "--name-only" || arg === "--only") {
+    else if (NAME_ONLY_FLAGS.has(arg.toLowerCase())) {
       const value = argv[i + 1];
       if (value && !value.startsWith("--")) {
         i++;
@@ -268,15 +289,30 @@ async function fetchProfile(
  * and the brackets separate them.
  */
 export function splitName(title: string): string[] {
-  return title
-    .split(/[\/|｜]/)
-    .map((part) =>
-      part
-        .replace(/[【\[（(].*?[】\]）)]/g, "")
-        .replace(/[【\[（(].*$/g, "")
-        .trim(),
-    )
-    .filter((part) => part.length > 1);
+  const out: string[] = [];
+  const add = (value: string) => {
+    const trimmed = value.trim();
+    if (trimmed.length > 1 && !out.includes(trimmed)) out.push(trimmed);
+  };
+
+  for (const part of title.split(/[\/|｜]/)) {
+    const bare = part
+      .replace(/[【\[（(].*?[】\]）)]/g, "")
+      .replace(/[【\[（(].*$/g, "")
+      .trim();
+    add(bare);
+
+    /**
+     * 「Name Ch. 中之人」 — the YouTube channel-title convention.
+     *
+     * The part after `Ch.` is the performer's own name, and it is the part
+     * someone searches for; the part before is the channel they publish on.
+     */
+    const suffix = /\sCh\.?\s+(.+)$/i.exec(bare);
+    if (suffix) add(suffix[1]!);
+  }
+
+  return out;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -395,6 +431,13 @@ function applyProfile(
 
 async function main(): Promise<void> {
   const options = parseArgs(process.argv.slice(2));
+  /**
+   * One writer at a time.
+   *
+   * The run reads the whole dataset before it writes it, so a sync running
+   * at the same time would lose its work to this run's snapshot.
+   */
+  const releaseLock = acquireRunLock("avatars");
   const overrides = readJson<Record<string, { name?: string }>>(
     layout.overrides,
     {},
@@ -504,7 +547,8 @@ async function main(): Promise<void> {
 
     if (fetched % 50 === 0) {
       log(
-        `${fetched}/${pending.length} fetched · ${filled} avatar(s) filled · ` +
+        `${fetched}/${pending.length} fetched · ` +
+          (options.nameOnly ? "" : `${filled} avatar(s) filled · `) +
           `${renamed} renamed · ${failed} failed`,
       );
     }
@@ -512,8 +556,9 @@ async function main(): Promise<void> {
   }
 
   log(
-    `${fetched} fetched · ${filled} avatar(s) filled · ${renamed} renamed · ` +
-      `${failed} failed`,
+    `${fetched} fetched · ` +
+      (options.nameOnly ? "" : `${filled} avatar(s) filled · `) +
+      `${renamed} renamed · ${failed} failed`,
   );
   const struggling = [...consecutiveFailures.entries()].filter(
     ([, streak]) => streak >= 20,
@@ -528,56 +573,53 @@ async function main(): Promise<void> {
 
   if (options.dryRun) {
     log("dry run — nothing written");
+    releaseLock();
     return;
   }
 
   /* --- write the records back ----------------------------------------- */
   /**
-   * The shard is **re-read** before it is written.
+   * The dataset is **re-read** before it is written, and every copy of it is
+   * written.
    *
-   * The run reads the dataset at the start and writes it at the end, and a
-   * sync that runs in between would have its changes clobbered by the stale
-   * snapshot — a channel that the sync had just renamed would go back to
-   * the roster's name. Reading the shard again and merging the changes into
-   * it means only the fields this run actually fetched are written.
+   * Two things go wrong otherwise. A run reads the dataset at the start and
+   * writes it at the end, so a sync that ran in between would have its work
+   * replaced by the stale snapshot. And the records live in three places —
+   * `regions/`, `virtual/` and `real/` — so writing only the one this script
+   * happens to read leaves the copies disagreeing, and the next sync, which
+   * reads `virtual/`, puts the old name back.
+   *
+   * So: read the current records again, apply the fields this run fetched to
+   * the ones it touched, and write them all out.
    */
   const now = new Date().toISOString();
+  const fresh = readChannelFiles().flatMap((f) => f.data.channels);
   const written = new Set<string>();
-  for (const { file } of files) {
-    const fresh = readJson<ChannelFile>(file, {
-      schemaVersion: 1,
-      generatedAt: "",
-      channels: [],
-    });
-    let changed = false;
-    for (const record of fresh.channels) {
-      const updated = updatedById.get(record.id);
-      if (!updated) continue;
-      record.avatar = updated.avatar;
-      record.name = updated.name;
-      record.aliases = updated.aliases;
-      record.nameSource = updated.nameSource;
-      record.description = updated.description;
-      record.activity = updated.activity;
-      record.affiliation = updated.affiliation;
-      record.isSinging = updated.isSinging;
-      record.subscribers = updated.subscribers;
-      record.videoCount = updated.videoCount;
-      for (const link of record.platforms) {
-        const updatedLink = updated.platforms.find(
-          (p) => p.platform === link.platform,
-        );
-        if (!updatedLink) continue;
-        link.name = updatedLink.name;
-        link.avatar = updatedLink.avatar;
-        link.subscribers = updatedLink.subscribers;
-      }
-      changed = true;
-      written.add(record.id);
+  for (const record of fresh) {
+    const updated = updatedById.get(record.id);
+    if (!updated) continue;
+    record.avatar = updated.avatar;
+    record.name = updated.name;
+    record.aliases = updated.aliases;
+    record.nameSource = updated.nameSource;
+    record.description = updated.description;
+    record.activity = updated.activity;
+    record.affiliation = updated.affiliation;
+    record.isSinging = updated.isSinging;
+    record.subscribers = updated.subscribers;
+    record.videoCount = updated.videoCount;
+    for (const link of record.platforms) {
+      const updatedLink = updated.platforms.find(
+        (p) => p.platform === link.platform,
+      );
+      if (!updatedLink) continue;
+      link.name = updatedLink.name;
+      link.avatar = updatedLink.avatar;
+      link.subscribers = updatedLink.subscribers;
     }
-    if (!changed) continue;
-    writeJson(file, { ...fresh, generatedAt: now } satisfies ChannelFile);
+    written.add(record.id);
   }
+  writeChannelShards(fresh, now);
   log(`${written.size} channel(s) written back`);
 
   /* --- the summaries ---------------------------------------------------- */
@@ -588,7 +630,9 @@ async function main(): Promise<void> {
   const summariesRoot = path.join(DATA_DIR, "channels", "summaries");
   let summaryFiles = 0;
   if (fs.existsSync(summariesRoot)) {
-    const byId = new Map(all.map((c) => [c.id, updatedById.get(c.id) ?? c]));
+    // Only the channels this run changed — an untouched summary is left
+    // alone, so a sync's changes to it are not reverted by this snapshot.
+    const byId = updatedById;
     for (const region of fs.readdirSync(summariesRoot)) {
       const dir = path.join(summariesRoot, region);
       if (!fs.statSync(dir).isDirectory()) continue;
@@ -617,6 +661,7 @@ async function main(): Promise<void> {
     }
   }
   log(`${summaryFiles} summary shard(s) updated`);
+  releaseLock();
 }
 
 main().catch((err) => {

@@ -39,8 +39,29 @@ free tier allows 10,000 units a day; the quota guard in
 `https://vdb.vtbs.moe/json/list.json`
 
 ~10,100 performers, each with their accounts on up to 35 platforms, their
-group and the language they list. It is the backbone of the roster: it is
-where most of the platform identities come from.
+group and the names they use in each language — `cn`, `jp`, `en` and
+`extra`. It is the backbone of the roster: it is where most of the platform
+identities come from.
+
+Every locale name is kept as an alias, and the name the record *shows*
+follows the region — a Japanese performer is listed as 「巫てんり」, not as
+the Chinese rendition 「巫天翼」.
+
+`name.default` is **not** a declaration of origin. It is the language the
+catalogue displays, and vdb is a Chinese wiki: 「巫てんり / Kannagi Tenri」,
+a Japanese VTuber with a Bilibili mirror, is listed with `default: "cn"`.
+Taking that at face value put **163 performers in the wrong region** — 135
+Japanese ones under China, and the Hololive EN members under China too.
+
+The region is now settled in this order:
+
+1. **`group_name`** — the agency branch. Hololive EN → `en`, VirtuaReal →
+   `cn`, NIJISANJI → `jp`. 「安堂いなり」 is Chinese despite the Japanese
+   name; she is VirtuaReal Link.
+2. **The platform**, for a performer with a Bilibili account and no YouTube
+   account.
+3. **A Japanese name and a YouTube channel** — kana are decisive.
+4. **`name.default`**, and finally the script of the name.
 
 The JSON has no avatar and no description — those come from the platform
 APIs and from Wikipedia.

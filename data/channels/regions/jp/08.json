@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T08:03:49.812Z",
+  "generatedAt": "2026-10-22T09:07:29.944Z",
   "channels": [
     {
       "id": "UC_82HBGtvwN1hcGeOGHzUBQ",
@@ -2371,7 +2371,7 @@
     },
     {
       "id": "youtube:Unifee_akechi",
-      "name": "明智光月",
+      "name": "明智光月 / akechi mitsuki",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -2383,9 +2383,9 @@
       "statedLanguages": [],
       "agency": "ゆにふぃ！",
       "affiliation": "group",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/1UuYAQ6OmITs3HUHV-4FbvKGgUwK6VN--WmvRoe3Tpf2EWENOExXu_sazQuspo-6yEOXSr37=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "Vの世界を天下統一！ ゆにふぃ！所属戦国武将Vtuber ﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏ ☾⊹ 𝙏𝘼𝙂 - 配信 : #光月見参 - 総合 : #明智光月 - スケジュール : #こよみつき - FA : #みっちゃん絵巻 - 汎用タグ : #みっちゃんみるのじゃ ﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏...",
       "subscribers": {
         "tag": "hidden"
       },
@@ -2412,12 +2412,12 @@
           "platform": "youtube",
           "id": "Unifee_akechi",
           "handle": "Unifee_akechi",
-          "name": "明智光月",
+          "name": "明智光月 / akechi mitsuki",
           "url": "https://www.youtube.com/@Unifee_akechi",
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
+          "avatar": "https://yt3.googleusercontent.com/1UuYAQ6OmITs3HUHV-4FbvKGgUwK6VN--WmvRoe3Tpf2EWENOExXu_sazQuspo-6yEOXSr37=s900-c-k-c0x00ffffff-no-rj",
           "activity": "unknown",
           "lastCheckedAt": "2026-10-22T06:58:08.372Z"
         },
@@ -2437,8 +2437,11 @@
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "明智光月",
+        "akechi mitsuki"
+      ]
     }
   ]
 }

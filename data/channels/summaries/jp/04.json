@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T08:05:32.768Z",
+  "generatedAt": "2026-10-22T09:07:29.944Z",
   "channels": [
     {
       "id": "UC_a1ZYZ8ZTXpjg9xUY9sj8w",
@@ -1513,8 +1513,12 @@
     },
     {
       "id": "youtube:mayuru_24",
-      "name": "茉綽",
-      "aliases": [],
+      "name": "まゆる / mayuru",
+      "aliases": [
+        "茉綽",
+        "まゆる",
+        "mayuru"
+      ],
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -1524,8 +1528,8 @@
         "ja"
       ],
       "agency": null,
-      "affiliation": "unknown",
-      "avatar": null,
+      "affiliation": "independent",
+      "avatar": "https://yt3.googleusercontent.com/1MWdBPOYmppBkFdxZ8yDwlqtJOYj4jSCaebkumIqAFES-3U83ZgtO1X6SBUHXRi75ljSVaLEHQ=s900-c-k-c0x00ffffff-no-rj",
       "subscribers": null,
       "isSinging": false,
       "activity": "unknown",

@@ -27,6 +27,7 @@ import type {
   Channel,
   NameSource,
   RegionCode,
+  RegionSource,
 } from "./types";
 import { pickAvatar } from "./platforms";
 import { mergeLanguages } from "./regions";
@@ -57,6 +58,36 @@ function keysFor(channel: Channel): string[] {
  * also has a YouTube channel should stay in China, even if their YouTube
  * name happens to be written in Japanese.
  */
+/**
+ * How much each region source is worth when two records disagree.
+ *
+ * The order is not the order the sources are *tried* in — it is what each one
+ * actually knows:
+ *
+ * - `override` is a human's final word.
+ * - `roster` is the Taiwan track list's nationality column: a stated fact.
+ * - `country` is the channel's own published country: also a stated fact.
+ * - `agency` is the branch the performer belongs to — Hololive EN is English,
+ *   VirtuaReal is Chinese, whatever the name looks like.
+ * - `name` is kana in a Japanese name, which occur in Japanese and nowhere
+ *   else.
+ * - `platform` is where the account is hosted, which a *mirror* breaks.
+ * - `declared` is the language vdb displays — a Chinese wiki lists a Japanese
+ *   performer under their Chinese name, so it says little about origin.
+ * - `script` is a guess from characters shared between languages.
+ */
+const REGION_TRUST: Record<RegionSource, number> = {
+  override: 8,
+  roster: 7,
+  country: 6,
+  agency: 5,
+  name: 4,
+  platform: 3,
+  declared: 2,
+  script: 1,
+  unknown: 0,
+};
+
 function platformRegionOf(channel: Channel): RegionCode | null {
   const platforms = new Set(channel.platforms.map((p) => p.platform));
   if (platforms.size !== 1) return null;
@@ -180,27 +211,37 @@ export function mergeChannels(target: Channel, other: Channel): Channel {
     handle: target.handle ?? other.handle,
     kind: target.kind === "virtual" ? target.kind : other.kind,
     role: target.role === "unknown" ? other.role : target.role,
-    regionSource: (() => {
-      // The source has to match whichever region won.
-      const fromTarget = platformRegionOf(target);
-      const fromOther = platformRegionOf(other);
-      if (fromTarget && !fromOther) return "platform";
-      if (fromOther && !fromTarget) return "platform";
-      if (target.regionSource && target.regionSource !== "unknown") {
-        return target.regionSource;
+    ...(() => {
+      /**
+       * The region, and the source that decided it, together.
+       *
+       * The region with the more trusted source wins, and a tie goes to the
+       * **target** — in the sync's roster merge the target was rebuilt from
+       * the upstream data moments ago.
+       *
+       * Weighting the sources is what stops a mirror deciding a performer's
+       * origin. The record already on disk says `declared`, because vdb is a
+       * Chinese wiki that lists 「巫てんり」 under its Chinese name; the fresh
+       * roster says `name`, because the Japanese name has kana. The kana win,
+       * and the performer moves to Japan.
+       */
+      const candidates = [target, other]
+        .filter((c) => c.region && c.region !== "unknown")
+        .map((c) => ({
+          region: c.region,
+          regionSource: (c.regionSource ?? "unknown") as RegionSource,
+          trust: REGION_TRUST[c.regionSource ?? "unknown"],
+        }))
+        .sort((a, b) => b.trust - a.trust);
+      const best = candidates[0];
+      if (best) {
+        return { region: best.region, regionSource: best.regionSource };
       }
-      return other.regionSource ?? "unknown";
-    })(),
-    region: (() => {
-      // A platform-implied region wins over a name-derived one.
-      const fromTarget = platformRegionOf(target);
-      const fromOther = platformRegionOf(other);
-      if (fromTarget && fromOther) return fromTarget;
-      if (fromTarget) return fromTarget;
-      if (fromOther) return fromOther;
-      return target.region !== "unknown"
-        ? target.region
-        : (other.region as RegionCode);
+      // Neither record knows — fall back to the platform they are on.
+      const implied = platformRegionOf(target) ?? platformRegionOf(other);
+      return implied
+        ? { region: implied, regionSource: "platform" as const }
+        : { region: "unknown" as RegionCode, regionSource: "unknown" as const };
     })(),
     // The target's languages come first — the target is the fresher record in
     // the sync's roster merge, and the languages are a fact that should not

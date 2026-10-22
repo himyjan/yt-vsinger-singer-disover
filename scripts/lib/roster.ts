@@ -302,12 +302,9 @@ export async function buildRoster(
       kind: entry.kind,
       role: classification.role === "unknown" ? "vtuber" : classification.role,
       region: entry.region,
-      regionSource:
-        entry.regionSource === "declared"
-          ? "declared"
-          : entry.regionSource === "platform"
-            ? "platform"
-            : "script",
+      // The source travels with the region — a region whose provenance is
+      // lost cannot be weighed against the region already on disk.
+      regionSource: entry.regionSource,
       /**
        * A performer who lists a language *and* is in a region with a
        * different one speaks both: a Japanese VTuber who lists English

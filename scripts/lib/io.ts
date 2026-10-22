@@ -196,3 +196,83 @@ export function mergeById<
  * error. Every network call in the pipeline carries this.
  */
 export const REQUEST_TIMEOUT_MS = 20_000;
+
+/* -------------------------------------------------------------------------- */
+/* One writer at a time                                                       */
+/* -------------------------------------------------------------------------- */
+
+/** The file that records which process is writing the dataset. */
+const RUN_LOCK = path.join(DATA_DIR, ".lock");
+
+interface LockRecord {
+  pid: number;
+  tool: string;
+  startedAt: string;
+}
+
+/** True when a process is still running. */
+function isAlive(pid: number): boolean {
+  try {
+    process.kill(pid, 0);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Claims the dataset for this process.
+ *
+ * The sync and the fill script both read the whole dataset at the start and
+ * write it back at the end, so two of them running at once lose each other's
+ * work — a sync that renamed a channel is undone by a fill that had read the
+ * old name before the sync started. That is exactly how a platform-confirmed
+ * name reverted to the roster's name.
+ *
+ * Returns the function that releases the lock. Call it when the run ends; an
+ * interrupted run leaves a stale lock, and the next run takes it over because
+ * the recorded process is gone.
+ */
+export function acquireRunLock(tool: string): () => void {
+  ensureDir(DATA_DIR);
+
+  const existing = readJson<LockRecord | null>(RUN_LOCK, null);
+  if (existing && existing.pid !== process.pid && isAlive(existing.pid)) {
+    throw new Error(
+      `another run is writing the dataset: ${existing.tool} ` +
+        `(pid ${existing.pid}, started ${existing.startedAt}). ` +
+        `Wait for it to finish, or stop it first.`,
+    );
+  }
+
+  const record: LockRecord = {
+    pid: process.pid,
+    tool,
+    startedAt: new Date().toISOString(),
+  };
+  writeJson(RUN_LOCK, record);
+
+  let released = false;
+  const release = () => {
+    if (released) return;
+    released = true;
+    try {
+      const current = readJson<LockRecord | null>(RUN_LOCK, null);
+      if (current?.pid === process.pid) fs.rmSync(RUN_LOCK, { force: true });
+    } catch {
+      // A lock that cannot be removed is stale, not fatal.
+    }
+  };
+
+  process.once("exit", release);
+  process.once("SIGINT", () => {
+    release();
+    process.exit(130);
+  });
+  process.once("SIGTERM", () => {
+    release();
+    process.exit(143);
+  });
+
+  return release;
+}

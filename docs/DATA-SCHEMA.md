@@ -302,16 +302,39 @@ provenance is stored with it.
 | --- | --- | --- |
 | `override` | Curated by hand in `data/overrides.json` | certain |
 | `roster` | The **Taiwan VTuber Tracking Data** nationality column | authoritative |
-| `declared` | The performer listed their own language (vdb) | authoritative |
+| `declared` | The language vdb lists for display (`name.default`) | weak — a display choice, not an origin |
 | `platform` | The platform they are on — Bilibili → China, Niconico → Japan | strong |
 | `agency` | Their agency's branch | strong |
 | `country` | The channel's published country | strong |
-| `script` | The characters in the name | a guess |
+| `script` | The characters in the name — kana are decisive for Japanese | a guess, unless kana is the signal |
 
 The platform prior applies when a performer has a Bilibili account and **no
 YouTube account**: their audience is mainland Chinese, so that is their
 region. A performer with a YouTube account is presenting to a global
-audience, so the language they listed is the better signal.
+audience.
+
+**A mirror is not an origin.** A Japanese performer with a Bilibili channel
+is Japanese, and the region records where the performer comes from, not
+where each account is hosted. The order of authority:
+
+1. **The agency branch.** vdb records the agency in `group_name`, and the
+   branch is the strongest signal there is: a Hololive EN member is `en` and
+   a VirtuaReal member is `cn`, whatever language their name is written in.
+   「安堂いなり」 is Chinese — she is VirtuaReal Link — and
+   「小鳥遊キアラ」 is English — she is Hololive EN.
+2. **A Japanese name and a YouTube channel.** Kana occur in Japanese and
+   nowhere else, so a `jp` variant containing them belongs to a Japanese
+   performer — 「巫てんり / Kannagi Tenri」, 「博衣こより」, 「獅白ぼたん」.
+3. **`name.default` is the weakest signal.** It is the language vdb
+   *displays*, and vdb is a Chinese wiki: it lists 「巫てんり」 with
+   `default: "cn"` because the Chinese rendition of the name
+   (「巫天翼」) is the one it shows. A performer listed that way is not
+   thereby Chinese.
+
+The region a merge keeps is the **fresher record's**. A roster is rebuilt
+from the upstream data on every run, so its answer beats the one already on
+disk; the hand-written override and the Taiwan track list are applied after
+the merge and outrank both.
 
 ### `affiliation`
 
@@ -355,17 +378,20 @@ and shown in the channel drawer.
 | --- | --- | --- |
 | `override` | Curated by hand in `data/overrides.json` | certain |
 | `roster` | The **Taiwan VTuber Tracking Data** nationality column | authoritative |
-| `declared` | The performer listed their own language (vdb `name.default`) | authoritative |
+| `declared` | The language vdb lists for display (`name.default`) | weak — a display choice, not an origin |
 | `platform` | The platform they are on — Bilibili → China, Niconico → Japan | strong |
 | `country` | The channel's published country | strong |
 | `agency` | Their agency's branch | strong |
-| `script` | The characters in the name | a guess |
+| `script` | The characters in the name — kana are decisive for Japanese | a guess, unless kana is the signal |
 | `unknown` | | |
 
 The platform rule matters more than it looks: a Chinese VTuber whose name is
 written in characters shared with Japanese (「樱咲奈央」, 「川烈」) would
-otherwise be filed in Japan. A performer who *only* exists on Bilibili is
-mainland Chinese by definition, and one who only exists on Niconico is
+otherwise be filed in Japan. But a Bilibili *mirror* does not make a
+Japanese performer Chinese — kana in the Japanese name and a YouTube channel
+are the signals that keep them in `jp`. A performer who *only* exists on
+Bilibili is mainland Chinese by definition, and one who only exists on
+Niconico is
 Japanese.
 
 The current split, with the provenance:

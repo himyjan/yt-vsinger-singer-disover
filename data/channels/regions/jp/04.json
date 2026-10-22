@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T08:03:49.812Z",
+  "generatedAt": "2026-10-22T09:07:29.944Z",
   "channels": [
     {
       "id": "UC_a1ZYZ8ZTXpjg9xUY9sj8w",
@@ -2065,7 +2065,7 @@
     },
     {
       "id": "youtube:mayuru_24",
-      "name": "茉綽",
+      "name": "まゆる / mayuru",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -2076,10 +2076,10 @@
       ],
       "statedLanguages": [],
       "agency": null,
-      "affiliation": "unknown",
-      "avatar": null,
+      "affiliation": "independent",
+      "avatar": "https://yt3.googleusercontent.com/1MWdBPOYmppBkFdxZ8yDwlqtJOYj4jSCaebkumIqAFES-3U83ZgtO1X6SBUHXRi75ljSVaLEHQ=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "コントラスト抜群に歌います 個人Vsinger ┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈ 2024/04/13 初配信",
       "subscribers": {
         "tag": "hidden"
       },
@@ -2106,12 +2106,12 @@
           "platform": "youtube",
           "id": "mayuru_24",
           "handle": "mayuru_24",
-          "name": "茉綽",
+          "name": "まゆる / mayuru",
           "url": "https://www.youtube.com/@mayuru_24",
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
+          "avatar": "https://yt3.googleusercontent.com/1MWdBPOYmppBkFdxZ8yDwlqtJOYj4jSCaebkumIqAFES-3U83ZgtO1X6SBUHXRi75ljSVaLEHQ=s900-c-k-c0x00ffffff-no-rj",
           "activity": "unknown",
           "lastCheckedAt": "2026-10-22T06:58:08.146Z"
         },
@@ -2119,12 +2119,12 @@
           "platform": "youtube",
           "id": "mayuru_ninjaninja",
           "handle": "mayuru_ninjaninja",
-          "name": "茉綽",
+          "name": "まゆる / mayuru",
           "url": "https://www.youtube.com/@mayuru_ninjaninja",
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
+          "avatar": "https://yt3.googleusercontent.com/1MWdBPOYmppBkFdxZ8yDwlqtJOYj4jSCaebkumIqAFES-3U83ZgtO1X6SBUHXRi75ljSVaLEHQ=s900-c-k-c0x00ffffff-no-rj",
           "activity": "unknown",
           "lastCheckedAt": "2026-10-22T06:58:08.146Z"
         },
@@ -2144,8 +2144,12 @@
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "茉綽",
+        "まゆる",
+        "mayuru"
+      ]
     }
   ]
 }

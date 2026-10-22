@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T08:05:32.768Z",
+  "generatedAt": "2026-10-22T09:07:29.944Z",
   "channels": [
     {
       "id": "UCJFZiqLMntJufDCHc6bQixg",
@@ -101,8 +101,11 @@
     },
     {
       "id": "youtube:Sanavtuber12",
-      "name": "sanachanvt",
-      "aliases": [],
+      "name": "SanachanVT",
+      "aliases": [
+        "sanachanvt",
+        "SanachanVT"
+      ],
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -113,7 +116,7 @@
       ],
       "agency": null,
       "affiliation": "unknown",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/AW09fec2lzfHVhATzNB71RTUFeCsyOE9POjgLVbo6Brlsx3KFcalpFmf7-i5zds4PSD1ZALKZTM=s900-c-k-c0x00ffffff-no-rj",
       "subscribers": null,
       "isSinging": false,
       "activity": "unknown",

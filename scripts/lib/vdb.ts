@@ -26,9 +26,10 @@
  * ## Why it matters here
  *
  * - **10,134 performers**, mostly Chinese, where the other sources are thin.
- * - **`name.default` is the performer's own language**, which is an
- *   *authoritative* region signal — far better than inferring one from
- *   characters shared between Japanese and Chinese.
+ * - **`name.default` is the language the catalogue displays**, which is a
+ *   weak region signal: vdb is a Chinese wiki, so a Japanese performer is
+ *   listed with `default: "cn"` whenever a Chinese rendition of the name
+ *   exists. Kana in the `jp` name and a YouTube channel say more.
  * - **`bot` marks AI performers**, which is exactly the `isAi` flag the
  *   project needs.
  * - **`accounts[]` spans 35 platforms**, and `meta.linkSyntax` gives the URL
@@ -42,6 +43,15 @@ import type { ArtistKind, PlatformId, RegionCode } from "./types";
 import type { PlatformLink } from "./types";
 
 const LIST_URL = "https://vdb.vtbs.moe/json/list.json";
+
+/**
+ * Hiragana and katakana.
+ *
+ * They occur in Japanese and nowhere else — not in Chinese, not in Korean —
+ * so their presence in a name is a decisive statement that the name is
+ * Japanese.
+ */
+const KANA = /[\u3040-\u309f\u30a0-\u30ff]/;
 
 interface VdbAccount {
   id: string;
@@ -107,6 +117,61 @@ const REGION_BY_LANGUAGE: Record<string, RegionCode> = {
   KR: "kr",
 };
 
+/**
+ * The region a vdb group belongs to.
+ *
+ * vdb records the agency in `group_name`, and an agency's branch is one of
+ * the strongest region signals there is: a Hololive EN member is English, a
+ * VirtuaReal member is Chinese, a Hololive member is Japanese — whatever
+ * language their name is written in.
+ *
+ * The keys are matched against the lowercased group name, longest first, so
+ * `hololive en` always beats `hololive`.
+ */
+const GROUP_REGION: Record<string, RegionCode> = {
+  hololive: "jp",
+  "hololive en": "en",
+  "hololive english": "en",
+  "hololive indonesia": "id",
+  "hololive id": "id",
+  "hololive dev_is": "id",
+  "hololivecn": "cn",
+  nijisanji: "jp",
+  "nijisanji en": "en",
+  "nijisanji id": "id",
+  "nijisanji kr": "kr",
+  "nijisanji cn": "cn",
+  virtuareal: "cn",
+  "propro production": "jp",
+  entum: "jp",
+  upd8: "jp",
+  noripro: "jp",
+  noreact: "jp",
+  "re:act": "jp",
+  "vspo!": "jp",
+  vspo: "jp",
+  "honey strap": "jp",
+  "riot music": "jp",
+  kamitsubaki: "jp",
+  "kamitsubaki studio": "jp",
+  winks: "jp",
+  "神楽组": "jp",
+  wactor: "jp",
+};
+
+/** The region of the longest group name that matches, if any. */
+function regionOfGroup(group: string | null | undefined): RegionCode | null {
+  if (!group) return null;
+  const needle = group.trim().toLowerCase();
+  if (!needle) return null;
+  let best: string | null = null;
+  for (const key of Object.keys(GROUP_REGION)) {
+    if (!needle.includes(key)) continue;
+    if (!best || key.length > best.length) best = key;
+  }
+  return best ? (GROUP_REGION[best] ?? null) : null;
+}
+
 export interface VdbVTuber {
   /** vdb's own uuid. */
   uuid: string;
@@ -121,7 +186,7 @@ export interface VdbVTuber {
   /** The region, from the performer's own language listing. */
   region: RegionCode;
   /** How the region was determined. */
-  regionSource: "declared" | "platform" | "script";
+  regionSource: "declared" | "platform" | "script" | "agency" | "name";
   /** Agency or group. */
   group: string | null;
   /** True for AI / bot accounts. */
@@ -214,10 +279,18 @@ export class VdbSource {
         }
       }
     }
-    // The name the record shows is not an alias of itself.
-    const uniqueAliases = aliases.filter(
-      (a) => a.toLowerCase() !== name.trim().toLowerCase(),
-    );
+    // Every variant, once. Which one the record *shows* is decided below,
+    // from the region — so 「巫天翼」 is not filtered out here.
+    const uniqueAliases: string[] = [];
+    for (const alias of aliases) {
+      if (
+        !uniqueAliases.some(
+          (a) => a.toLowerCase() === alias.toLowerCase(),
+        )
+      ) {
+        uniqueAliases.push(alias);
+      }
+    }
 
     /* --- platform identities ------------------------------------------- */
     const platforms: PlatformLink[] = [];
@@ -253,62 +326,56 @@ export class VdbSource {
 
     /* --- region ---------------------------------------------------------- */
     /**
-     * Three sources, in order of authority:
+     * Where the performer belongs.
      *
-     * 1. `name.default` — the performer's own listing of their language.
-     *    This is authoritative.
-     * 2. The platform the performer is on — a channel that only exists on
-     *    Bilibili is mainland Chinese, one that only exists on Niconico is
-     *    Japanese. This matters because a Chinese name written entirely in
-     *    characters shared with Japanese (「樱咲奈央」, 「川烈」) would
-     *    otherwise be read as Japanese.
-     * 3. Script detection on the name — the weakest signal.
+     * vdb offers three signals, and they are **not** equally good:
+     *
+     * 1. **The platforms.** A performer who only exists on Bilibili is
+     *    mainland Chinese; one who only exists on Niconico is Japanese. A
+     *    name written entirely in characters shared with Japanese
+     *    (「樱咲奈央」, 「川烈」) would otherwise be read as Japanese.
+     * 2. **A Japanese name and a YouTube channel.** Kana are unique to
+     *    Japanese, so a `jp` variant that contains them belongs to a
+     *    Japanese performer — and a performer with a YouTube channel who is
+     *    also mirrored to Bilibili is still Japanese.
+     * 3. **`name.default`** — the language the catalogue *displays*. It is
+     *    the weakest of the three, and it is not a declaration of origin:
+     *    vdb is a Chinese wiki, so 「巫てんり / Kannagi Tenri」 — a Japanese
+     *    VTuber — is listed with `default: "cn"` because the Chinese
+     *    rendition of her name (「巫天翼」) is the one the wiki shows.
+     * 4. **The script of the name** — a guess, for everything left over.
      */
     const defaultLanguage =
       typeof names.default === "string" ? names.default : "";
     let region: RegionCode = "unknown";
-    let regionSource: "declared" | "platform" | "script" = "declared";
+    let regionSource: "declared" | "platform" | "script" | "agency" | "name" =
+      "declared";
 
-    /**
-     * The platform comes **first**.
-     *
-     * `name.default` says which of the performer's name variants to display,
-     * which is a good proxy for their primary language — but a Chinese
-     * performer who uses a Japanese stage name would be listed as `jp`, and
-     * would then be filed in the wrong region.
-     *
-     * A performer who *only* exists on Bilibili is a mainland Chinese
-     * VTuber, and one who only exists on Niconico is Japanese. That is a
-     * statement about where they stream, which is what the region means.
-     */
-    /**
-     * The platform prior.
-     *
-     * A performer with a **Bilibili account and no YouTube account** presents
-     * to a mainland Chinese audience — that is where their audience is, and
-     * the region records where they stream. The same goes for Niconico and
-     * Japan.
-     *
-     * A performer who *also* has a YouTube account is presenting to a global
-     * audience, so the language they listed in vdb is the better signal.
-     */
     const platformSet = new Set(platforms.map((p) => p.platform));
     const hasYouTube = platformSet.has("youtube");
 
     /**
-     * The platform prior.
+     * The agency branch comes first.
      *
+     * It is a statement about the group the performer belongs to, and it is
+     * the same priority the classifier gives it — stronger than the platform
+     * they stream on. A Hololive EN member with a Bilibili mirror is English,
+     * and a VirtuaReal member with a Japanese-style name is Chinese.
+     */
+    const groupRegion = regionOfGroup(record.group_name ?? record.group);
+    if (groupRegion) {
+      region = groupRegion;
+      regionSource = "agency";
+    }
+
+    /**
      * A performer with a **Bilibili account and no YouTube account** presents
      * to a mainland Chinese audience — that is where their audience is, and
      * the region records where they stream. The same goes for Niconico and
-     * Japan.
-     *
-     * A performer who *also* has a YouTube account is presenting to a global
-     * audience, so the language they listed in vdb is the better signal.
-     * Their Chinese-subtitled Bilibili channel does not make them a Chinese
-     * speaker.
+     * Japan. Their Chinese-subtitled Bilibili channel does not make a
+     * YouTube performer a Chinese speaker.
      */
-    if (!hasYouTube) {
+    if (!hasYouTube && region === "unknown") {
       if (platformSet.has("bilibili")) {
         region = "cn";
         regionSource = "platform";
@@ -318,8 +385,23 @@ export class VdbSource {
       }
     }
 
+    /**
+     * A Japanese name and a YouTube channel.
+     *
+     * Kana are unique to Japanese — no Chinese or Korean name contains them —
+     * so a `jp` variant with kana is a Japanese performer. That is a stronger
+     * statement than `name.default`, and it is what keeps a Japanese VTuber
+     * with a Bilibili mirror out of the Chinese region.
+     */
+    const jpName = typeof names.jp === "string" ? names.jp : "";
+    if (region === "unknown" && hasYouTube && KANA.test(jpName)) {
+      region = "jp";
+      regionSource = "name";
+    }
+
     if (region === "unknown") {
       region = REGION_BY_LANGUAGE[defaultLanguage] ?? "unknown";
+      if (region !== "unknown") regionSource = "declared";
     }
 
     if (region === "unknown") {
@@ -332,9 +414,22 @@ export class VdbSource {
       regionSource = "script";
     }
 
+    /**
+     * The name the record shows follows the region.
+     *
+     * vdb lists one name per locale, and picking `cn` first would show the
+     * Chinese rendition of a Japanese performer's name — 「巫天翼」 for
+     * 「巫てんり」. The region is the fact; the name should agree with it.
+     */
+    const displayName =
+      (region === "jp" && typeof names.jp === "string" && names.jp) ||
+      (region === "cn" && typeof names.cn === "string" && names.cn) ||
+      (region === "tw" && typeof names.cn === "string" && names.cn) ||
+      name;
+
     /* --- kind and role --------------------------------------------------- */
     const classification = classifyChannel({
-      name,
+      name: displayName,
       description: null,
       tags: [],
       country: null,
@@ -343,8 +438,10 @@ export class VdbSource {
     return {
       uuid: record.uuid,
       id,
-      name,
-      aliases: uniqueAliases,
+      name: displayName,
+      aliases: uniqueAliases.filter(
+        (a) => a.toLowerCase() !== displayName.trim().toLowerCase(),
+      ),
       kind: "virtual",
       region,
       regionSource,

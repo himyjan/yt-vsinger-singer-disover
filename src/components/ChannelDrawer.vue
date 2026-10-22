@@ -121,11 +121,12 @@ const LANGUAGE_LABELS: Record<string, string> = {
 const REGION_SOURCE_LABELS: Record<string, string> = {
   override: "from a manual override",
   roster: "from the Taiwan VTuber roster",
-  declared: "from the performer's own listing",
+  declared: "from the language the roster lists",
   platform: "from the platform they are on",
   country: "from the channel's published country",
   agency: "from their agency",
-  script: "guessed from the characters in the name",
+  name: "from a Japanese name",
+  script: "from the characters in the name",
   unknown: "unknown",
 };
 

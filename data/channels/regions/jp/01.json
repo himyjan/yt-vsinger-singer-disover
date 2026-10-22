@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T08:03:49.812Z",
+  "generatedAt": "2026-10-22T09:07:29.944Z",
   "channels": [
     {
       "id": "UC_4tXjqecqox5Uc05ncxpxg",
@@ -1583,7 +1583,7 @@
     },
     {
       "id": "youtube:amaeten_fsp",
-      "name": "夜廻いくら",
+      "name": "天廻てん / Amae Ten【活動終了】",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -1595,9 +1595,9 @@
       "statedLanguages": [],
       "agency": null,
       "affiliation": "unknown",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/P1QVoWIytgbV2U1qjA5-ZJ6xkWgDzK9Rd1RIVbyTJPjjVlqryHTpM49RdXNSBsHkVowGqulTOrg=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "あまえてんです。ニートゲーマー天使です。",
       "subscribers": {
         "tag": "hidden"
       },
@@ -1616,7 +1616,7 @@
       "updatedAt": "2026-10-22T06:58:05.126Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
-      "activity": "unknown",
+      "activity": "graduated",
       "debutDate": null,
       "graduateDate": null,
       "platforms": [
@@ -1624,12 +1624,12 @@
           "platform": "youtube",
           "id": "amaeten_fsp",
           "handle": "amaeten_fsp",
-          "name": "夜廻いくら",
+          "name": "天廻てん / Amae Ten【活動終了】",
           "url": "https://www.youtube.com/@amaeten_fsp",
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
+          "avatar": "https://yt3.googleusercontent.com/P1QVoWIytgbV2U1qjA5-ZJ6xkWgDzK9Rd1RIVbyTJPjjVlqryHTpM49RdXNSBsHkVowGqulTOrg=s900-c-k-c0x00ffffff-no-rj",
           "activity": "unknown",
           "lastCheckedAt": "2026-10-22T06:58:08.270Z"
         },
@@ -1649,8 +1649,12 @@
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "夜廻いくら",
+        "天廻てん",
+        "Amae Ten"
+      ]
     }
   ]
 }

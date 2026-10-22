@@ -184,7 +184,10 @@ export type Affiliation = "independent" | "community" | "group" | "unknown";
  * | --- | --- |
  * | `override` | Curated by hand in `data/overrides.json` — certain |
  * | `roster` | The Taiwan VTuber track list's nationality column — authoritative |
- * | `declared` | The performer listed their own language (vdb) — authoritative |
+ * | `declared` | The language vdb lists for display — a display choice |
+ * | `country` | The channel's published country — a stated fact |
+ * | `agency` | Their agency's branch — strong |
+ * | `name` | Kana in a Japanese name — decisive for Japanese |
  * | `platform` | The platform they are on (Bilibili → China, Niconico → Japan) — strong |
  * | `country` | The channel's published country — strong |
  * | `agency` | Their agency's branch — strong |
@@ -197,6 +200,7 @@ export type RegionSource =
   | "platform"
   | "country"
   | "agency"
+  | "name"
   | "script"
   | "unknown";
 

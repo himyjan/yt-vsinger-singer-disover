@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T08:05:32.768Z",
+  "generatedAt": "2026-10-22T09:07:29.944Z",
   "channels": [
     {
       "id": "UC_GCs6GARLxEHxy1w40d6VQ",
@@ -1835,8 +1835,11 @@
     },
     {
       "id": "youtube:DEV_IS_FLOWGLOW",
-      "name": "hololive DEV_IS FLOW GLOW",
-      "aliases": [],
+      "name": "hololive FLOW GLOW",
+      "aliases": [
+        "hololive DEV_IS FLOW GLOW",
+        "hololive FLOW GLOW"
+      ],
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -1847,7 +1850,7 @@
       ],
       "agency": "Hololive",
       "affiliation": "group",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/f9oGulIUN9RbJyNpc-WT3d5aJGJ_9p1Mug3WV6ZkBBQtImvYSusfmMbW03KMY8jZf1kJsHu3jOs=s900-c-k-c0x00ffffff-no-rj",
       "subscribers": null,
       "isSinging": true,
       "activity": "unknown",
@@ -1887,8 +1890,12 @@
     },
     {
       "id": "youtube:lotus_hoshimori",
-      "name": "星守莲花",
-      "aliases": [],
+      "name": "星守れんげ / Hoshimori Renge",
+      "aliases": [
+        "星守莲花",
+        "星守れんげ",
+        "Hoshimori Renge"
+      ],
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -1899,7 +1906,7 @@
       ],
       "agency": null,
       "affiliation": "unknown",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/Jz8Ul_8kfb07BYAp8NecyDdg2r2ZX949OcSzgWftQ8wFBTVTIw_hPdl6Gm0OypHIo4T_5dlUwQ=s900-c-k-c0x00ffffff-no-rj",
       "subscribers": null,
       "isSinging": false,
       "activity": "unknown",

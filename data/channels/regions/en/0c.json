@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T08:03:49.812Z",
+  "generatedAt": "2026-10-22T09:07:29.944Z",
   "channels": [
     {
       "id": "UCJFZiqLMntJufDCHc6bQixg",
@@ -137,7 +137,7 @@
     },
     {
       "id": "youtube:Sanavtuber12",
-      "name": "sanachanvt",
+      "name": "SanachanVT",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -149,9 +149,9 @@
       "statedLanguages": [],
       "agency": null,
       "affiliation": "unknown",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/AW09fec2lzfHVhATzNB71RTUFeCsyOE9POjgLVbo6Brlsx3KFcalpFmf7-i5zds4PSD1ZALKZTM=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "اسمي سانا 🌸 «من بين البتلات، بدأت حكايتي»",
       "subscribers": {
         "tag": "hidden"
       },
@@ -191,20 +191,23 @@
           "platform": "youtube",
           "id": "Sanavtuber12",
           "handle": "Sanavtuber12",
-          "name": "sanachanvt",
+          "name": "SanachanVT",
           "url": "https://www.youtube.com/@Sanavtuber12",
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
+          "avatar": "https://yt3.googleusercontent.com/AW09fec2lzfHVhATzNB71RTUFeCsyOE9POjgLVbo6Brlsx3KFcalpFmf7-i5zds4PSD1ZALKZTM=s900-c-k-c0x00ffffff-no-rj",
           "activity": "unknown",
           "lastCheckedAt": "2026-10-22T06:58:08.138Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "sanachanvt",
+        "SanachanVT"
+      ]
     }
   ]
 }

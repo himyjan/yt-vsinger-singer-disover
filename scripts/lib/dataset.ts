@@ -610,6 +610,69 @@ export function readAllChannelRecords(): Channel[] {
   return out;
 }
 
+/**
+ * Writes the full channel records to **every** copy of the store.
+ *
+ * The dataset keeps three: `regions/` holds every channel, and `virtual/` and
+ * `real/` hold the two split datasets — which is what the pipeline reads back
+ * through `readAllChannelRecords()`. Writing only one of them is how the same
+ * channel ended up with two different names: a details run corrected the name
+ * in `regions/` and the next sync, reading `virtual/`, put the old one back.
+ *
+ * The records are grouped by region and sharded by id, so the same id always
+ * lands in the same file.
+ */
+export function writeChannelShards(channels: Channel[], now: string): number {
+  const write = (list: Channel[], fileFor: (r: string, b: string) => string) => {
+    const byRegion = new Map<string, Map<string, Channel[]>>();
+    for (const channel of list) {
+      const bucket = bucketFor(channel.id);
+      const region = byRegion.get(channel.region) ?? new Map();
+      byRegion.set(channel.region, region);
+      const bucketList = region.get(bucket) ?? [];
+      bucketList.push(channel);
+      region.set(bucket, bucketList);
+    }
+    for (const [region, byBucket] of byRegion) {
+      ensureDir(path.dirname(fileFor(region, "00")));
+      for (const [bucket, bucketList] of byBucket) {
+        bucketList.sort((a, b) => a.id.localeCompare(b.id));
+        /**
+         * An unchanged shard is not rewritten.
+         *
+         * A details run touches a few hundred channels out of fourteen
+         * thousand, and rewriting every shard would change `generatedAt` in
+         * every file and bury the real change in the diff.
+         */
+        const file = fileFor(region, bucket);
+        const existing = readJson<{ channels: Channel[] } | null>(file, null);
+        if (
+          existing &&
+          JSON.stringify(existing.channels) === JSON.stringify(bucketList)
+        ) {
+          continue;
+        }
+        writeJson(file, {
+          schemaVersion: SCHEMA_VERSION,
+          generatedAt: now,
+          channels: bucketList,
+        } satisfies { schemaVersion: number; generatedAt: string; channels: Channel[] });
+      }
+    }
+  };
+
+  write(channels, layout.channelRegion);
+  write(
+    channels.filter((c) => c.kind === "virtual"),
+    layout.channelsVirtual,
+  );
+  write(
+    channels.filter((c) => c.kind === "real"),
+    layout.channelsReal,
+  );
+  return channels.length;
+}
+
 /** Reads the full channel records for one region. */
 export function readChannelRecords(region: RegionCode): Channel[] {
   const out: Channel[] = [];

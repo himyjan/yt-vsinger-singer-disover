@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T08:03:49.812Z",
+  "generatedAt": "2026-10-22T09:07:29.944Z",
   "channels": [
     {
       "id": "UC69URn8iP4u8D_zUp-IJ1sg",
@@ -2203,7 +2203,7 @@
     },
     {
       "id": "youtube:05_ok",
-      "name": "お子ASMR-OCO",
+      "name": "お子₀₅",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -2215,9 +2215,9 @@
       "statedLanguages": [],
       "agency": null,
       "affiliation": "unknown",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/VRgJu8TSVhpDEAWYP5UZG2GjC4eGmmxSVbr9SYuGANGdSXxETT2U6O1Gstcj4DPUYgXJixhk=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "୨୧ 23:30～ ASMR୨୧",
       "subscribers": {
         "tag": "hidden"
       },
@@ -2257,20 +2257,23 @@
           "platform": "youtube",
           "id": "05_ok",
           "handle": "05_ok",
-          "name": "お子ASMR-OCO",
+          "name": "お子₀₅",
           "url": "https://www.youtube.com/@05_ok",
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
+          "avatar": "https://yt3.googleusercontent.com/VRgJu8TSVhpDEAWYP5UZG2GjC4eGmmxSVbr9SYuGANGdSXxETT2U6O1Gstcj4DPUYgXJixhk=s900-c-k-c0x00ffffff-no-rj",
           "activity": "unknown",
           "lastCheckedAt": "2026-10-22T06:58:08.142Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "お子ASMR-OCO",
+        "お子₀₅"
+      ]
     }
   ]
 }

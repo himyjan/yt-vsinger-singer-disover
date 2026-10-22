@@ -105,7 +105,18 @@ same: vdb lists a name per locale, and they all become aliases.
 name on disk is at least as fresh. So a merge never lets a roster's name
 replace one the platform has confirmed.
 
-### 3. A confidence score is not a fact
+### 3. A mirror is not an origin
+
+A performer's region is where they belong, not where their accounts are
+hosted. A Japanese VTuber with a Bilibili mirror is `jp`: kana occur in
+Japanese and nowhere else, and a `jp` name that contains them settles it.
+The Bilibili prior is for a performer who **only** exists on Bilibili.
+
+vdb's `name.default` is the language the catalogue *displays* — it is a
+Chinese wiki, so it lists 「巫てんり」 as `cn` — and it is the weakest region
+signal, never the decisive one.
+
+### 4. A confidence score is not a fact
 
 `confidence` is **optional** and the dataset does not populate it. A computed
 number is a guess dressed up as a measurement, and what a record needs to say
@@ -116,25 +127,25 @@ an unknown role, no description — not by a score. The type still allows
 `confidence` for a producer that wants to record an estimate, and
 `docs/DATA-SCHEMA.md` documents its shape.
 
-### 4. The classifier is deterministic
+### 5. The classifier is deterministic
 
 `scripts/lib/classify.ts` has no randomness and no network calls. The same
 input always produces the same record. This is what keeps the git history of
 `data/` readable — do not introduce `Math.random()`, timestamps or
 network-derived values into a record's classification.
 
-### 5. Never write a file over the size budget
+### 6. Never write a file over the size budget
 
 `scripts/lib/io.ts` throws when a file exceeds 8 MB, and `data/` is capped at
 180 MB. GitHub Free allows ~1 GB for the whole repository. If a change makes
 the dataset grow, add a retention rule rather than raising the budget.
 
-### 6. Every record keeps its provenance
+### 7. Every record keeps its provenance
 
 `mergeById()` preserves `addedAt`, and preserves `source: "seed"` and
 `source: "manual"` across API refreshes. Do not overwrite provenance.
 
-### 7. Never let a failing source break the run
+### 8. Never let a failing source break the run
 
 Every network call in the pipeline is wrapped, and every one of them carries
 a timeout — a `fetch` with no timeout never rejects, it just hangs, and a
@@ -146,13 +157,13 @@ When a source pushes back — Bilibili's risk control, for instance — the
 run **backs off and leaves it alone** rather than grinding through
 thousands of doomed requests.
 
-### 8. Quota is a hard constraint
+### 9. Quota is a hard constraint
 
 The YouTube free tier is 10,000 units/day and `search.list` costs 100. The
 `QuotaBudget` refuses calls that would exceed the limit. Never bypass it with
 a direct `fetch` to the API.
 
-### 9. `better-sqlite3` is an optional dependency
+### 10. `better-sqlite3` is an optional dependency
 
 It is only used by the one-off legacy migration. The CI path must stay free
 of native modules.

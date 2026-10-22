@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T08:03:49.812Z",
+  "generatedAt": "2026-10-22T09:07:29.944Z",
   "channels": [
     {
       "id": "UC_GCs6GARLxEHxy1w40d6VQ",
@@ -2505,7 +2505,7 @@
     },
     {
       "id": "youtube:DEV_IS_FLOWGLOW",
-      "name": "hololive DEV_IS FLOW GLOW",
+      "name": "hololive FLOW GLOW",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -2517,9 +2517,9 @@
       "statedLanguages": [],
       "agency": "Hololive",
       "affiliation": "group",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/f9oGulIUN9RbJyNpc-WT3d5aJGJ_9p1Mug3WV6ZkBBQtImvYSusfmMbW03KMY8jZf1kJsHu3jOs=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "FLOW GLOW（フロウ グロウ）は hololiveに所属する音楽アーティストVTuberグループです 各タレント・公式チャンネルのチャンネル登録をよろしくお願いします！ ------------------------------------------- ＜FLOW GLOW＞ 響咲リオナ/ Isaki ...",
       "subscribers": {
         "tag": "hidden"
       },
@@ -2559,24 +2559,27 @@
           "platform": "youtube",
           "id": "DEV_IS_FLOWGLOW",
           "handle": "DEV_IS_FLOWGLOW",
-          "name": "hololive DEV_IS FLOW GLOW",
+          "name": "hololive FLOW GLOW",
           "url": "https://www.youtube.com/@DEV_IS_FLOWGLOW",
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
+          "avatar": "https://yt3.googleusercontent.com/f9oGulIUN9RbJyNpc-WT3d5aJGJ_9p1Mug3WV6ZkBBQtImvYSusfmMbW03KMY8jZf1kJsHu3jOs=s900-c-k-c0x00ffffff-no-rj",
           "activity": "unknown",
           "lastCheckedAt": "2026-10-22T06:58:08.131Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "hololive DEV_IS FLOW GLOW",
+        "hololive FLOW GLOW"
+      ]
     },
     {
       "id": "youtube:lotus_hoshimori",
-      "name": "星守莲花",
+      "name": "星守れんげ / Hoshimori Renge",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -2588,9 +2591,9 @@
       "statedLanguages": [],
       "agency": null,
       "affiliation": "unknown",
-      "avatar": null,
+      "avatar": "https://yt3.googleusercontent.com/Jz8Ul_8kfb07BYAp8NecyDdg2r2ZX949OcSzgWftQ8wFBTVTIw_hPdl6Gm0OypHIo4T_5dlUwQ=s900-c-k-c0x00ffffff-no-rj",
       "banner": null,
-      "description": null,
+      "description": "得意なイラストや大好きな歌を楽しみながらも、目標のために努力を欠かさない女の子。 今は夢を叶えるために師匠の手伝いをしながら秘伝の技を学んでいる… 配信確率 日：10%（ほぼできない） 月：80%（ほぼできる） 火：70%（たぶんやる） 水：20%（たぶんむり） 木：50%（やる気次第） 金：90%（なるべくやる...",
       "subscribers": {
         "tag": "hidden"
       },
@@ -2630,20 +2633,24 @@
           "platform": "youtube",
           "id": "lotus_hoshimori",
           "handle": "lotus_hoshimori",
-          "name": "星守莲花",
+          "name": "星守れんげ / Hoshimori Renge",
           "url": "https://www.youtube.com/@lotus_hoshimori",
           "subscribers": {
             "tag": "hidden"
           },
-          "avatar": null,
+          "avatar": "https://yt3.googleusercontent.com/Jz8Ul_8kfb07BYAp8NecyDdg2r2ZX949OcSzgWftQ8wFBTVTIw_hPdl6Gm0OypHIo4T_5dlUwQ=s900-c-k-c0x00ffffff-no-rj",
           "activity": "unknown",
           "lastCheckedAt": "2026-10-22T06:58:08.375Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "星守莲花",
+        "星守れんげ",
+        "Hoshimori Renge"
+      ]
     }
   ]
 }
