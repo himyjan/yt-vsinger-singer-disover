@@ -376,6 +376,8 @@ export interface ItemQuery {
   language?: string | "all";
   /** `ai` shows only AI performers, `human` hides them, `all` shows both. */
   ai?: "ai" | "human" | "all";
+  /** `oac` shows only channels with the 🎵 Official Artist badge. */
+  oac?: "all" | "oac";
   /** Free-text filter over title / song / channel. */
   text?: string;
   limit?: number;
@@ -441,6 +443,7 @@ export function filterChannels(
   const affiliation = query.affiliation ?? "all";
   const language = query.language ?? "all";
   const singing = query.singing ?? "all";
+  const oac = query.oac ?? "all";
   const text = query.text?.trim().toLowerCase() ?? "";
 
   return channels.filter((channel) => {
@@ -460,6 +463,7 @@ export function filterChannels(
     }
     if (singing === "singing" && !channel.isSinging) return false;
     if (singing === "not-singing" && channel.isSinging) return false;
+    if (oac === "oac" && !channel.isOfficialArtist) return false;
     if (text) {
       const haystack = `${channel.name} ${channel.handle ?? ""} ${
         channel.agency ?? ""

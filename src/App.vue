@@ -60,6 +60,7 @@ import {
   normalizeForMatch,
   type AuthProvider,
 } from "@/lib/auth";
+import { parseTakeoutCsv } from "@/lib/takeout";
 import { channelLinks, itemUrl, platformMeta } from "@/lib/links";
 import LiveCard from "@/components/LiveCard.vue";
 import ChannelCard from "@/components/ChannelCard.vue";
@@ -264,6 +265,7 @@ const visibleChannels = computed(() => {
     affiliation: state.affiliation,
     language: state.language,
     singing: state.singing,
+    oac: state.oac,
     text: state.query.trim() || undefined,
     limit: 400,
   });
@@ -584,10 +586,19 @@ async function linkProvider(provider: AuthProvider): Promise<void> {
         10000,
       );
     } else {
+      /**
+       * Google reports how many subscriptions the account has. If the API
+       * hands back fewer, say so — a silently truncated list looks complete.
+       */
+      const total = state.subscriptionsProgress?.total ?? null;
+      const truncated = total !== null && mapped.length < total;
       showToast(
-        "success",
-        `${provider.label}: ${mapped.length} subscription(s) linked, ${mapped.filter((m) => m.known).length} already tracked.`,
-        6000,
+        truncated ? "info" : "success",
+        truncated
+          ? `${provider.label}: ${mapped.length} of ${total} subscriptions returned — Google reports ${total}, the API stopped at ${mapped.length}.`
+          : `${provider.label}: ${mapped.length} subscription(s) linked, ${mapped.filter((m) => m.known).length} already tracked.` +
+              (total !== null ? ` (Google total: ${total})` : ""),
+        truncated ? 12000 : 6000,
       );
     }
   } catch (err) {
@@ -599,6 +610,7 @@ async function linkProvider(provider: AuthProvider): Promise<void> {
     );
   } finally {
     state.subscriptionsLoading = false;
+    state.subscriptionsProgress = null;
   }
 }
 
@@ -612,37 +624,115 @@ function unlinkProvider(provider: AuthProvider, accountId: string): void {
 }
 
 async function reloadSubscriptions(): Promise<void> {
-  for (const provider of linkedProviders.value) {
-    const account = activeAccount(provider.id);
-    if (!account) continue;
-    try {
-      const remote = await provider.subscriptions(account as unknown as LinkedAccount);
-      const byName = new Map<string, ChannelSummary>();
-      for (const summary of summaries.value) {
-        byName.set(normalizeForMatch(summary.name), summary);
+  state.subscriptionsLoading = true;
+  try {
+    for (const provider of linkedProviders.value) {
+      const account = activeAccount(provider.id);
+      if (!account) continue;
+      try {
+        const remote = await provider.subscriptions(
+          account as unknown as LinkedAccount,
+          (progress) => {
+            state.subscriptionsProgress = progress;
+          },
+        );
+        const byName = new Map<string, ChannelSummary>();
+        for (const summary of summaries.value) {
+          byName.set(normalizeForMatch(summary.name), summary);
+        }
+        setSubscriptions(
+          subscriptionKey(provider.id, account.id),
+          remote.map((entry) => {
+            const exact = summaries.value.find((s) => s.id === entry.channelId);
+            const match = exact ?? byName.get(normalizeForMatch(entry.name));
+            return {
+              provider: provider.id,
+              channelId: entry.channelId,
+              title: entry.name,
+              handle: entry.handle,
+              thumbnail: entry.thumbnail,
+              description: entry.description,
+              kind: match?.kind ?? "unknown",
+              region: match?.region ?? null,
+              known: !!match,
+            };
+          }),
+        );
+      } catch (err) {
+        /**
+         * Keeping the previous list is right, but swallowing the reason is
+         * not: an expired token made "Refresh" do nothing at all.
+         */
+        console.error("[auth] refresh failed", err);
+        showToast(
+          "error",
+          `${provider.label}: ${(err as Error).message}`,
+          12000,
+        );
       }
-      setSubscriptions(
-        subscriptionKey(provider.id, account.id),
-        remote.map((entry) => {
-          const exact = summaries.value.find((s) => s.id === entry.channelId);
-          const match = exact ?? byName.get(normalizeForMatch(entry.name));
-          return {
-            provider: provider.id,
-            channelId: entry.channelId,
-            title: entry.name,
-            handle: entry.handle,
-            thumbnail: entry.thumbnail,
-            description: entry.description,
-            kind: match?.kind ?? "unknown",
-            region: match?.region ?? null,
-            known: !!match,
-          };
-        }),
-      );
-    } catch {
-      /* keep the previous list */
     }
+  } finally {
+    state.subscriptionsLoading = false;
+    state.subscriptionsProgress = null;
   }
+}
+
+/**
+ * Imports YouTube subscriptions from Google Takeout.
+ *
+ * The Data API stops at about 1,000, so an account with more cannot be read
+ * through it. Takeout's `subscriptions.csv` has no such limit and needs no
+ * OAuth; the rows are stored under the synthetic account `takeout`, which a
+ * refresh never overwrites.
+ */
+async function importTakeout(file: File): Promise<void> {
+  try {
+    const entries = parseTakeoutCsv(await file.text());
+    if (entries.length === 0) {
+      showToast(
+        "error",
+        "No subscriptions found — is this the subscriptions.csv from Google Takeout?",
+        10000,
+      );
+      return;
+    }
+    const byName = new Map<string, ChannelSummary>();
+    for (const summary of summaries.value) {
+      byName.set(normalizeForMatch(summary.name), summary);
+    }
+    const mapped: Subscription[] = entries.map((entry) => {
+      const exact = summaries.value.find((s) => s.id === entry.channelId);
+      const match = exact ?? byName.get(normalizeForMatch(entry.title));
+      return {
+        provider: "youtube",
+        channelId: entry.channelId,
+        title: entry.title,
+        handle: null,
+        thumbnail: null,
+        description: entry.url,
+        kind: match?.kind ?? "unknown",
+        region: match?.region ?? null,
+        known: !!match,
+      };
+    });
+    setSubscriptions(subscriptionKey("youtube", "takeout"), mapped);
+    state.view = "subs";
+    showToast(
+      "success",
+      `YouTube: ${mapped.length} subscription(s) imported from Takeout, ${mapped.filter((m) => m.known).length} already tracked.`,
+      8000,
+    );
+  } catch (err) {
+    console.error("[takeout] import failed", err);
+    showToast("error", `Import failed: ${(err as Error).message}`, 10000);
+  }
+}
+
+function onTakeoutFile(event: Event): void {
+  const input = event.target as HTMLInputElement;
+  const file = input.files?.[0];
+  input.value = "";
+  if (file) void importTakeout(file);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -1126,6 +1216,22 @@ onMounted(async () => {
           🤖 AI performers
         </button>
 
+        <!-- Official Artist Channel (the 🎵 badge) -->
+        <button
+          type="button"
+          class="shrink-0 rounded-full border px-3 py-1.5 text-xs font-semibold whitespace-nowrap transition"
+          :class="
+            state.oac === 'oac'
+              ? 'border-violet-500 bg-violet-500/15 text-violet-700 dark:text-violet-400'
+              : 'border-black/10 bg-white text-neutral-500 hover:text-neutral-800 dark:border-white/12 dark:bg-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100'
+          "
+          :aria-pressed="state.oac === 'oac'"
+          title="Only channels with YouTube's 🎵 Official Artist Channel badge — releases managed through YouTube Music"
+          @click="state.oac = state.oac === 'oac' ? 'all' : 'oac'"
+        >
+          🎵 Official artist
+        </button>
+
         <!-- Scope switch (mobile) -->
         <div
           class="ml-auto flex shrink-0 items-center rounded-full border border-black/10 bg-white p-0.5 md:hidden dark:border-white/12 dark:bg-neutral-900"
@@ -1367,6 +1473,15 @@ onMounted(async () => {
             <span class="ml-1 text-sm font-normal text-neutral-500">
               {{ visibleSubscriptions.length }}
             </span>
+            <span
+              v-if="state.subscriptionsProgress"
+              class="ml-2 text-xs font-normal text-neutral-500"
+            >
+              loading {{ state.subscriptionsProgress.loaded
+              }}<template v-if="state.subscriptionsProgress.total">
+                / {{ state.subscriptionsProgress.total }}</template
+              >…
+            </span>
           </h2>
           <div class="flex items-center gap-2">
             <!-- Tracked / untracked filter -->
@@ -1394,10 +1509,24 @@ onMounted(async () => {
               </button>
             </div>
 
+            <label
+              class="shrink-0 cursor-pointer rounded-full border border-black/10 bg-white px-3 py-1.5 text-xs font-semibold dark:border-white/12 dark:bg-neutral-900"
+              title="Import subscriptions.csv from Google Takeout — no 1,000 limit"
+            >
+              Import CSV
+              <input
+                type="file"
+                accept=".csv,text/csv"
+                class="hidden"
+                @change="onTakeoutFile"
+              />
+            </label>
+
             <button
               v-if="hasAnyAccount"
               type="button"
-              class="shrink-0 rounded-full border border-black/10 bg-white px-3 py-1.5 text-xs font-semibold dark:border-white/12 dark:bg-neutral-900"
+              class="shrink-0 rounded-full border border-black/10 bg-white px-3 py-1.5 text-xs font-semibold disabled:opacity-40 dark:border-white/12 dark:bg-neutral-900"
+              :disabled="state.subscriptionsLoading"
               @click="reloadSubscriptions"
             >
               Refresh
@@ -1435,6 +1564,18 @@ onMounted(async () => {
           >
             Waiting for the sign-in window — finish signing in there, then come
             back to this tab.
+          </p>
+          <p class="mt-3 text-xs text-neutral-500">
+            More than 1,000 subscriptions? The API stops there — import
+            <span class="font-semibold">subscriptions.csv</span> from
+            <a
+              class="underline"
+              href="https://takeout.google.com/settings/takeout"
+              target="_blank"
+              rel="noopener"
+              >Google Takeout</a
+            >
+            instead; it has no limit and needs no sign-in.
           </p>
         </div>
 

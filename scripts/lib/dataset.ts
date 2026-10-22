@@ -41,6 +41,7 @@ import {
   writeJson,
 } from "./io";
 import { ALL_REGIONS, SCHEMA_VERSION } from "./types";
+import { buildRegionMeta } from "./regions";
 import type {
   Channel,
   ChannelFile,
@@ -633,6 +634,103 @@ export function writeChannelShards(
     layout.channelsReal,
   );
   return { records: channels.length, files };
+}
+
+/**
+ * Rebuilds `data/channels/manifest.json` from the records on disk.
+ *
+ * `writeChannelShards()` writes only the records; the shard **map** is what
+ * tells the browser which files exist. A producer that adds a channel without
+ * a full sync — the subscription import, for instance — therefore has to
+ * rebuild the map, or `validate.ts` fails on a shard the manifest does not
+ * name and the app never downloads it.
+ *
+ * The shape is identical to the one `writeDataset()` writes.
+ */
+export function rebuildChannelsManifest(
+  channels: Channel[],
+  now: string,
+): ChannelsManifest {
+  const byRegion = new Map<
+    string,
+    { virtual: Map<string, number>; real: Map<string, number> }
+  >();
+
+  for (const channel of channels) {
+    const region = channel.region ?? "unknown";
+    let entry = byRegion.get(region);
+    if (!entry) {
+      entry = { virtual: new Map(), real: new Map() };
+      byRegion.set(region, entry);
+    }
+    const buckets = channel.kind === "real" ? entry.real : entry.virtual;
+    const bucket = bucketFor(channel.id);
+    buckets.set(bucket, (buckets.get(bucket) ?? 0) + 1);
+  }
+
+  const regions: ChannelRegionMeta[] = [];
+  for (const code of ALL_REGIONS) {
+    const entry = byRegion.get(code);
+    if (!entry) continue;
+    const virtualBuckets = [...entry.virtual.keys()].sort();
+    const realBuckets = [...entry.real.keys()].sort();
+    regions.push({
+      code,
+      channels:
+        [...entry.virtual.values()].reduce((a, b) => a + b, 0) +
+        [...entry.real.values()].reduce((a, b) => a + b, 0),
+      virtual: {
+        channels: [...entry.virtual.values()].reduce((a, b) => a + b, 0),
+        buckets: virtualBuckets,
+      },
+      real: {
+        channels: [...entry.real.values()].reduce((a, b) => a + b, 0),
+        buckets: realBuckets,
+      },
+    });
+  }
+
+  const manifest: ChannelsManifest = {
+    schemaVersion: SCHEMA_VERSION,
+    generatedAt: now,
+    total: channels.length,
+    regions,
+  };
+  writeJson(layout.channelsManifest, manifest);
+  return manifest;
+}
+
+/**
+ * Refreshes the channel counts in the root manifest after an incremental
+ * write. The item counts and the notes are left exactly as the last sync
+ * wrote them — this function did not touch any items.
+ */
+export function refreshManifestChannelCounts(
+  channels: Channel[],
+  now: string,
+): void {
+  const manifest = readJson<Manifest | null>(layout.manifest, null);
+  if (!manifest) return;
+
+  const counts = new Map<RegionCode, { channels: number; items: number }>();
+  for (const region of manifest.regions) {
+    counts.set(region.code, { channels: 0, items: region.items ?? 0 });
+  }
+  for (const channel of channels) {
+    const entry = counts.get(channel.region) ?? { channels: 0, items: 0 };
+    entry.channels++;
+    counts.set(channel.region, entry);
+  }
+
+  manifest.generatedAt = now;
+  manifest.counts.channels = channels.length;
+  manifest.counts.channelsVirtual = channels.filter(
+    (c) => c.kind === "virtual",
+  ).length;
+  manifest.counts.channelsReal = channels.filter((c) => c.kind === "real").length;
+  manifest.counts.channelsSinging = channels.filter((c) => c.isSinging).length;
+  manifest.regions = buildRegionMeta(counts);
+  writeJson(layout.manifest, manifest);
 }
 
 export function readItemsManifest(): ItemsManifest {

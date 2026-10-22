@@ -140,6 +140,8 @@ export const state = reactive({
   affiliation: "all" as Affiliation | "all",
   /** AI filter: show AI performers, hide them, or show both. */
   ai: "all" as "ai" | "human" | "all",
+  /** Official Artist Channel filter: the 🎵 badge only. */
+  oac: "all" as "all" | "oac",
   /**
    * Subscription filter: show every subscription, only the ones already in
    * the dataset, or only the ones that are not tracked yet.

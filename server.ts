@@ -5,6 +5,12 @@ import { Innertube } from "youtubei.js";
 import path from "path";
 import fs from "fs";
 import { fileURLToPath } from "url";
+import {
+  addSuggestions,
+  listSuggestions,
+  removeSuggestions,
+} from "./scripts/lib/suggestions";
+import { importYouTubeChannels } from "./scripts/lib/import-channels";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -168,6 +174,98 @@ async function startServer() {
   // Health check
   app.get("/api/health", (req, res) => {
     res.json({ status: "ok", timestamp: new Date().toISOString() });
+  });
+
+  /* ------------------------------------------------------------------------ */
+  /* Dataset suggestions and import (development only)                        */
+  /* ------------------------------------------------------------------------ */
+  /**
+   * The production app is static: it reads `data/` from GitHub Pages and has
+   * no server to write to. These endpoints exist on the local dev server,
+   * where the dataset is a checkout on disk — which is exactly where somebody
+   * curating their subscriptions runs the app.
+   *
+   * The app probes `GET /api/dataset/suggestions`; when it answers, the
+   * Suggest / Import buttons work. On a static build the probe fails and the
+   * UI falls back to a downloadable `suggestions.json`.
+   */
+  app.get("/api/dataset/suggestions", (_req, res) => {
+    try {
+      const suggestions = listSuggestions();
+      res.json({ ok: true, count: suggestions.length, suggestions });
+    } catch (error) {
+      res.status(500).json({ ok: false, error: (error as Error).message });
+    }
+  });
+
+  app.post("/api/dataset/suggestions", (req, res) => {
+    try {
+      const entries = Array.isArray(req.body?.entries) ? req.body.entries : [];
+      if (entries.length === 0) {
+        return res.status(400).json({ ok: false, error: "entries is empty" });
+      }
+      // A request that tries to fill the list in one go is capped; the list
+      // is a curated queue, not a bulk import.
+      const result = addSuggestions(entries.slice(0, 5000));
+      res.json({ ok: true, ...result });
+    } catch (error) {
+      res.status(500).json({ ok: false, error: (error as Error).message });
+    }
+  });
+
+  app.post("/api/dataset/suggestions/remove", (req, res) => {
+    try {
+      const keys = Array.isArray(req.body?.keys)
+        ? req.body.keys.map((k: unknown) => String(k))
+        : [];
+      res.json({ ok: true, removed: removeSuggestions(keys) });
+    } catch (error) {
+      res.status(500).json({ ok: false, error: (error as Error).message });
+    }
+  });
+
+  /**
+   * Imports channel ids into the dataset.
+   *
+   * `consent` is not decoration: importing a linked account's subscriptions
+   * writes third-party channel data into a public repository, so the caller
+   * must state that they own the account or have permission. A request
+   * without it is refused before a single network call is made.
+   *
+   * The list is processed in batches by `offset`/`limit`; the caller loops
+   * until `remaining` is zero and asks for the index rebuild on the last
+   * batch. That keeps each HTTP request short even for thousands of ids.
+   */
+  app.post("/api/dataset/sync", async (req, res) => {
+    try {
+      const body = req.body ?? {};
+      if (body.consent !== true) {
+        return res.status(403).json({
+          ok: false,
+          error:
+            "Importing a subscription list needs explicit permission: pass consent: true. Only sync an account you own or have permission to use.",
+        });
+      }
+      const ids = Array.isArray(body.ids) ? body.ids : [];
+      if (ids.length === 0) {
+        return res.status(400).json({ ok: false, error: "ids is empty" });
+      }
+      if (ids.length > 10_000) {
+        return res
+          .status(413)
+          .json({ ok: false, error: "at most 10,000 ids per request" });
+      }
+
+      const result = await importYouTubeChannels(ids, {
+        offset: Number(body.offset) || 0,
+        limit: Number(body.limit) || 12,
+        rebuildIndex: body.rebuildIndex === true,
+      });
+      res.json({ ok: true, ...result });
+    } catch (error) {
+      console.error("[import] failed:", error);
+      res.status(500).json({ ok: false, error: (error as Error).message });
+    }
   });
 
   const getTitle = (item: any) => {

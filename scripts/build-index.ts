@@ -12,6 +12,7 @@
 
 import fs from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { DATA_DIR, ensureDir, formatBytes, readJson, writeJson } from "./lib/io";
 import { layout, readAllChannelRecords } from "./lib/dataset";
 import { ALL_REGIONS, SCHEMA_VERSION } from "./lib/types";
@@ -152,7 +153,14 @@ export function buildPack(
 /* Main                                                                       */
 /* -------------------------------------------------------------------------- */
 
-function main(): void {
+/**
+ * Rebuilds every search pack.
+ *
+ * Exported because the subscription import creates channel records after the
+ * app has started, and a record that is not in a pack is not searchable —
+ * the list would show the channel while the search box did not.
+ */
+export function buildSearchIndex(): void {
   const now = new Date().toISOString();
 
   // Full channel records live in the kind datasets, sharded by region; the
@@ -248,4 +256,12 @@ function main(): void {
   }
 }
 
-main();
+/**
+ * `npm run data:index` runs this file directly; importing it (the import
+ * endpoint does) must not rebuild a 30 MB index as a side effect.
+ */
+const invokedDirectly =
+  process.argv[1] !== undefined &&
+  path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+
+if (invokedDirectly) buildSearchIndex();

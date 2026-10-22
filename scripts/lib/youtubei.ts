@@ -52,6 +52,15 @@ export interface InnerTubeProfile {
   /** The links the channel publishes. */
   links: string[];
   /**
+   * True when YouTube shows the 🎵 **Official Artist Channel** badge.
+   *
+   * The badge is `AUDIO_BADGE` / `BADGE_STYLE_TYPE_VERIFIED_ARTIST` in the
+   * channel page data, and it is the only reliable way to tell an OAC: the
+   * Data API does not expose it. It says the artist's releases are managed
+   * through YouTube Music — an album/single catalogue rather than uploads.
+   */
+  officialArtist: boolean;
+  /**
    * The country the channel publishes, as an ISO code.
    *
    * Read from the about page, which is the only place YouTube states it. It
@@ -133,6 +142,26 @@ function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T | null> {
     promise,
     new Promise<null>((resolve) => setTimeout(() => resolve(null), ms)),
   ]);
+}
+
+/**
+ * Detects the 🎵 Official Artist Channel badge in a parsed channel header.
+ *
+ * YouTube renders the badge as an image named `AUDIO_BADGE` and tags the
+ * owner with `is_verified_artist` / `BADGE_STYLE_TYPE_VERIFIED_ARTIST`
+ * depending on the endpoint, so all three spellings are checked. The header
+ * is already fetched for the profile, so this costs no request.
+ */
+function hasAudioBadge(value: unknown, depth = 0): boolean {
+  if (!value || typeof value !== "object" || depth > 12) return false;
+  const record = value as Record<string, unknown>;
+  if (record.imageName === "AUDIO_BADGE") return true;
+  if (record.is_verified_artist === true) return true;
+  if (record.style === "BADGE_STYLE_TYPE_VERIFIED_ARTIST") return true;
+  for (const child of Object.values(record)) {
+    if (hasAudioBadge(child, depth + 1)) return true;
+  }
+  return false;
 }
 
 export class InnerTubeSource {
@@ -354,6 +383,7 @@ export class InnerTubeSource {
         handle,
         links,
         country,
+        officialArtist: hasAudioBadge(channel?.header),
       };
     } catch (err) {
       const message = (err as Error).message;
