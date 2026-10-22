@@ -229,6 +229,114 @@ const SINGING_MARKERS = [
 ];
 
 /**
+ * The singing markers that are unambiguous enough to look for **anywhere** in
+ * a description.
+ *
+ * The markers above are only read in the first 320 characters of a
+ * description — the "identity line" — because the broad ones (`歌`, `live`,
+ * `song`) mean something different in the middle of a paragraph about
+ * something else.
+ *
+ * These are different: 「歌勢」 and 「翻唱」 mean the channel sings, in every
+ * language and in every position, and they are what the Chinese and
+ * Japanese scenes actually write. A channel that says 「翻唱」 in its bio is
+ * a singing channel, and it should be marked as one whether the word is in
+ * the first line or the last.
+ */
+const SINGING_DESCRIPTION_MARKERS = [
+  /* Chinese — 歌勢 is the term the Chinese scene uses for a singing VTuber */
+  "歌勢",
+  "歌势",
+  "歌唱勢",
+  "歌唱势",
+  "翻唱",
+  "翻唱自",
+  "演唱",
+  "歌声",
+  "唱歌",
+  "歌唱",
+  "原创歌曲",
+  "原創歌曲",
+  "原创曲",
+  "原創曲",
+  "自创曲",
+  "虚拟歌手",
+  "虛擬歌手",
+  "歌姬",
+  "歌姫",
+  "唱见",
+  "點歌",
+  "点歌",
+  "歌单",
+  "歌單",
+  "合唱",
+  "声乐",
+  "聲樂",
+  "原创音乐",
+  "原創音樂",
+  /* Japanese */
+  "歌ってみた",
+  "歌って",
+  "カバー",
+  "カバ",
+  "弾き語り",
+  "オリジナル曲",
+  "自作曲",
+  "歌い手",
+  "シンガー",
+  "歌唱",
+  "ボカロ",
+  "歌枠",
+  "歌回",
+  "ライブ歌唱",
+  /* Korean */
+  "노래",
+  "커버",
+  "보컬",
+  "sing",
+  "유커버",
+  "작곡",
+  "노래방",
+  /* English */
+  "song cover",
+  "cover song",
+  "covers songs",
+  "cover songs",
+  "cover of",
+  "covers of",
+  "acoustic cover",
+  "vtuber cover",
+  "vocal cover",
+  "singing covers",
+  "music covers",
+  "a cappella",
+  "singing stream",
+  "original song",
+  "original songs",
+  "singing vtuber",
+  "vtuber singer",
+  "virtual singer",
+  "voice synthesizer",
+  /* Russian */
+  "кавер",
+  "вокал",
+  "припев",
+  "поет",
+  "поёт",
+  "песня",
+  "песни",
+  "музыка",
+  /* Spanish / Portuguese / Italian */
+  "canto",
+  "cantante",
+  "canción",
+  "musica",
+  "música",
+  "voz",
+  "acústico",
+];
+
+/**
  * Agencies, with the region each branch belongs to.
  * A longer needle wins, so `hololive id` beats `hololive`.
  */
@@ -547,10 +655,15 @@ export function classifyChannel(signals: ChannelSignals): ChannelClassification 
   }
 
   /* --- singing ----------------------------------------------------------- */
+  /**
+   * The whole description is searched for the unambiguous markers, and the
+   * first 320 characters for the broad ones.
+   */
   const singingHits =
     countHits(name, SINGING_MARKERS) +
     countHits(intro, SINGING_MARKERS) +
-    countHits(tags, SINGING_MARKERS);
+    countHits(tags, SINGING_MARKERS) +
+    countHits(description, SINGING_DESCRIPTION_MARKERS);
   const isSinging =
     !isAggregator && (singingHits > 0 || role === "vsinger" || role === "singer");
 

@@ -68,6 +68,21 @@ interface Options {
   dryRun: boolean;
   /** The gap between requests to one platform, in milliseconds. */
   intervalMs: number;
+  /**
+   * Do the work even when the record looks finished.
+   *
+   * By default the name pass skips a channel the platform has already
+   * named, so a second run costs nothing.
+   */
+  force: boolean;
+  /**
+   * Only the name and the aliases — no avatar, no description, no counts.
+   *
+   * The name is the field a roster gets wrong most often, and it is the one
+   * that is cheapest to correct: it comes from the same profile request
+   * that carries the avatar.
+   */
+  nameOnly: boolean;
 }
 
 function parseArgs(argv: string[]): Options {
@@ -76,6 +91,8 @@ function parseArgs(argv: string[]): Options {
     platform: null,
     dryRun: false,
     intervalMs: 450,
+    nameOnly: false,
+    force: false,
   };
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i];
@@ -85,6 +102,16 @@ function parseArgs(argv: string[]): Options {
     } else if (arg === "--interval") {
       options.intervalMs = Number(argv[++i] ?? options.intervalMs);
     } else if (arg === "--dry-run") options.dryRun = true;
+    else if (arg === "--force") options.force = true;
+    else if (arg === "--name-only" || arg === "--only") {
+      const value = argv[i + 1];
+      if (value && !value.startsWith("--")) {
+        i++;
+        options.nameOnly = value.toLowerCase() === "name";
+      } else {
+        options.nameOnly = true;
+      }
+    }
   }
   if (!Number.isFinite(options.limit) || options.limit <= 0) options.limit = 500;
   return options;
@@ -175,10 +202,17 @@ async function fetchProfile(
        * own id format — a handle record is stored as `youtube:user-<handle>`,
        * so the handle is what has to be handed over.
        */
-      const youtubeId = channel.id.startsWith("UC")
-        ? channel.id
+      /**
+       * A YouTube channel id, cleaned up.
+       *
+       * Two records were built from a channel *URL*, so their id carries the
+       * tab: `UC…/featured`, `UC…/videos`. The tab is not part of the id.
+       */
+      const raw = channel.id.split("/")[0]!;
+      const youtubeId = raw.startsWith("UC")
+        ? raw
         : await ctx.innertube.resolveHandle(
-            channel.id.replace(/^youtube:user-/, ""),
+            raw.replace(/^youtube:(user-)?/, ""),
           );
       if (!youtubeId) return null;
       const profile = await ctx.innertube.profile(youtubeId);
@@ -226,6 +260,25 @@ async function fetchProfile(
   }
 }
 
+/**
+ * The names inside one channel title.
+ *
+ * A title like 「空星きらめ/Sorahoshi Kirame【にじさんじ】」 carries three
+ * things: the Japanese name, the romanised name and the agency. The slash
+ * and the brackets separate them.
+ */
+export function splitName(title: string): string[] {
+  return title
+    .split(/[\/|｜]/)
+    .map((part) =>
+      part
+        .replace(/[【\[（(].*?[】\]）)]/g, "")
+        .replace(/[【\[（(].*$/g, "")
+        .trim(),
+    )
+    .filter((part) => part.length > 1);
+}
+
 /* -------------------------------------------------------------------------- */
 /* Applying a profile                                                          */
 /* -------------------------------------------------------------------------- */
@@ -242,18 +295,21 @@ function applyProfile(
   platform: PlatformId,
   profile: Profile,
   overrides: Record<string, { name?: string }>,
+  nameOnly = false,
 ): void {
   const link = channel.platforms.find((p) => p.platform === platform);
   if (!link) return;
 
-  if (profile.avatar) link.avatar = profile.avatar;
-  if (profile.description && !channel.description) {
-    channel.description = profile.description.slice(0, 1000);
+  if (!nameOnly) {
+    if (profile.avatar) link.avatar = profile.avatar;
+    if (profile.description && !channel.description) {
+      channel.description = profile.description.slice(0, 1000);
+    }
+    if (profile.subscribers !== null) {
+      link.subscribers = { tag: "has", count: profile.subscribers };
+    }
+    if (profile.videoCount !== null) channel.videoCount = profile.videoCount;
   }
-  if (profile.subscribers !== null) {
-    link.subscribers = { tag: "has", count: profile.subscribers };
-  }
-  if (profile.videoCount !== null) channel.videoCount = profile.videoCount;
 
   /**
    * The name.
@@ -276,6 +332,20 @@ function applyProfile(
     if (!channel.aliases.includes(channel.name)) {
       channel.aliases.push(channel.name);
     }
+    /**
+     * The **parts** of the platform's name.
+     *
+     * A channel title is often several names in one string —
+     * 「空星きらめ/Sorahoshi Kirame【にじさんじ】」 is the Japanese name, the
+     * romanised name and the agency. Each part is a name the performer is
+     * known by, so each one becomes an alias and a search for any of them
+     * finds the channel.
+     */
+    for (const part of splitName(profile.name)) {
+      if (part !== channel.name && !channel.aliases.includes(part)) {
+        channel.aliases.push(part);
+      }
+    }
     if (channel.aliases.length > 12) {
       channel.aliases = channel.aliases.slice(-12);
     }
@@ -289,7 +359,7 @@ function applyProfile(
    * The record's own avatar is the **primary** platform's avatar, so it is
    * only replaced when the profile came from the primary platform.
    */
-  if (profile.avatar && primaryPlatformOf(channel) === platform) {
+  if (!nameOnly && profile.avatar && primaryPlatformOf(channel) === platform) {
     channel.avatar = profile.avatar;
   }
 
@@ -344,8 +414,22 @@ async function main(): Promise<void> {
    */
   const pending = all
     .filter((c) => {
-      if (c.avatar) return false;
       if (options.platform && primaryPlatformOf(c) !== options.platform) {
+        return false;
+      }
+      // In name-only mode every channel is a candidate: the point is to
+      // correct the name, whether or not the avatar is already there.
+      if (!options.nameOnly && c.avatar) return false;
+      /**
+       * A channel the platform has already named is done — unless the run
+       * was asked to do everything anyway.
+       */
+      if (
+        options.nameOnly &&
+        !options.force &&
+        c.nameSource === "platform" &&
+        !overrides[c.id]?.name
+      ) {
         return false;
       }
       return c.platforms.length > 0;
@@ -359,7 +443,11 @@ async function main(): Promise<void> {
     })
     .slice(0, options.limit);
 
-  log(`${pending.length} channel(s) need an avatar`);
+  log(
+    options.nameOnly
+      ? `${pending.length} channel(s) to rename`
+      : `${pending.length} channel(s) need an avatar`,
+  );
 
   const innertube = new InnerTubeSource({
     delayMs: options.intervalMs,
@@ -378,25 +466,23 @@ async function main(): Promise<void> {
   }
 
   const ctx = { innertube, twitch, adapters };
-  const touched = new Set<string>();
+  /** Every record this run changed, by id. */
+  const updatedById = new Map<string, Channel>();
 
   /**
-   * How many consecutive failures one platform may have before the run
-   * leaves it alone.
+   * The failures of one platform in a row.
    *
-   * Bilibili's risk control rejects a burst for a while, and every rejected
-   * request costs a backoff. Grinding through thousands of them would take
-   * hours and fill nothing, so the platform is dropped for the rest of the
-   * run and the others carry on.
+   * A source that is pushing back — Bilibili's risk control, for instance —
+   * is handled by the adapter's own circuit breaker, which stops calling it
+   * rather than waiting out a backoff on every channel. So the run does not
+   * give up on a platform here: a channel that no longer exists is a fact
+   * about the channel, not a reason to stop.
    */
-  const MAX_CONSECUTIVE_FAILURES = 8;
   const consecutiveFailures = new Map<PlatformId, number>();
-  const abandoned = new Set<PlatformId>();
 
   for (const channel of pending) {
     const platform = primaryPlatformOf(channel);
     if (!platform) continue;
-    if (abandoned.has(platform)) continue;
 
     const profile = await fetchProfile(channel, platform, ctx);
     fetched++;
@@ -405,14 +491,6 @@ async function main(): Promise<void> {
       failed++;
       const streak = (consecutiveFailures.get(platform) ?? 0) + 1;
       consecutiveFailures.set(platform, streak);
-      if (streak >= MAX_CONSECUTIVE_FAILURES) {
-        abandoned.add(platform);
-        log(
-          `bilibili: giving up on this platform for this run — ` +
-            `${streak} consecutive failures`,
-        );
-        continue;
-      }
       // The source is pushing back — wait a little longer before the next.
       await sleep(options.intervalMs * 2);
       continue;
@@ -420,9 +498,9 @@ async function main(): Promise<void> {
     consecutiveFailures.set(platform, 0);
 
     const before = channel.avatar;
-    applyProfile(channel, platform, profile, overrides);
+    applyProfile(channel, platform, profile, overrides, options.nameOnly);
     if (channel.avatar && channel.avatar !== before) filled++;
-    touched.add(channel.id);
+    updatedById.set(channel.id, channel);
 
     if (fetched % 50 === 0) {
       log(
@@ -437,8 +515,15 @@ async function main(): Promise<void> {
     `${fetched} fetched · ${filled} avatar(s) filled · ${renamed} renamed · ` +
       `${failed} failed`,
   );
-  if (abandoned.size) {
-    log(`abandoned: ${[...abandoned].join(", ")} — run them again later`);
+  const struggling = [...consecutiveFailures.entries()].filter(
+    ([, streak]) => streak >= 20,
+  );
+  if (struggling.length) {
+    log(
+      `struggling: ${struggling
+        .map(([p, streak]) => `${p} ${streak} in a row`)
+        .join(", ")} — the source may be pushing back`,
+    );
   }
 
   if (options.dryRun) {
@@ -447,13 +532,53 @@ async function main(): Promise<void> {
   }
 
   /* --- write the records back ----------------------------------------- */
+  /**
+   * The shard is **re-read** before it is written.
+   *
+   * The run reads the dataset at the start and writes it at the end, and a
+   * sync that runs in between would have its changes clobbered by the stale
+   * snapshot — a channel that the sync had just renamed would go back to
+   * the roster's name. Reading the shard again and merging the changes into
+   * it means only the fields this run actually fetched are written.
+   */
   const now = new Date().toISOString();
-  for (const { file, data } of files) {
-    const changed = data.channels.some((c) => touched.has(c.id));
+  const written = new Set<string>();
+  for (const { file } of files) {
+    const fresh = readJson<ChannelFile>(file, {
+      schemaVersion: 1,
+      generatedAt: "",
+      channels: [],
+    });
+    let changed = false;
+    for (const record of fresh.channels) {
+      const updated = updatedById.get(record.id);
+      if (!updated) continue;
+      record.avatar = updated.avatar;
+      record.name = updated.name;
+      record.aliases = updated.aliases;
+      record.nameSource = updated.nameSource;
+      record.description = updated.description;
+      record.activity = updated.activity;
+      record.affiliation = updated.affiliation;
+      record.isSinging = updated.isSinging;
+      record.subscribers = updated.subscribers;
+      record.videoCount = updated.videoCount;
+      for (const link of record.platforms) {
+        const updatedLink = updated.platforms.find(
+          (p) => p.platform === link.platform,
+        );
+        if (!updatedLink) continue;
+        link.name = updatedLink.name;
+        link.avatar = updatedLink.avatar;
+        link.subscribers = updatedLink.subscribers;
+      }
+      changed = true;
+      written.add(record.id);
+    }
     if (!changed) continue;
-    writeJson(file, { ...data, generatedAt: now } satisfies ChannelFile);
+    writeJson(file, { ...fresh, generatedAt: now } satisfies ChannelFile);
   }
-  log(`${touched.size} channel(s) written back`);
+  log(`${written.size} channel(s) written back`);
 
   /* --- the summaries ---------------------------------------------------- */
   /**
@@ -463,7 +588,7 @@ async function main(): Promise<void> {
   const summariesRoot = path.join(DATA_DIR, "channels", "summaries");
   let summaryFiles = 0;
   if (fs.existsSync(summariesRoot)) {
-    const byId = new Map(all.map((c) => [c.id, c]));
+    const byId = new Map(all.map((c) => [c.id, updatedById.get(c.id) ?? c]));
     for (const region of fs.readdirSync(summariesRoot)) {
       const dir = path.join(summariesRoot, region);
       if (!fs.statSync(dir).isDirectory()) continue;

@@ -95,6 +95,16 @@ A rename is **recorded**: the old name goes into `aliases`, and the aliases
 are indexed for search, so a channel that renamed is still findable under
 the name someone remembers.
 
+A channel title is often **several names in one string** —
+「空星きらめ/Sorahoshi Kirame【にじさんじ】」 is the Japanese name, the
+romanised name and the agency. Every part becomes an alias, so a search for
+any of them finds the channel. The rosters' own language variants do the
+same: vdb lists a name per locale, and they all become aliases.
+
+**The roster does not own the name.** A roster's name is a snapshot; the
+name on disk is at least as fresh. So a merge never lets a roster's name
+replace one the platform has confirmed.
+
 ### 3. A confidence score is not a fact
 
 `confidence` is **optional** and the dataset does not populate it. A computed
@@ -152,7 +162,7 @@ of native modules.
 | Task | Where |
 | --- | --- |
 | Fix a misclassified channel | `data/overrides.json`, then `npm run data:sync -- --no-search` |
-| Fix an outdated channel name | the platform corrects it; `npm run data:avatars` to apply it now |
+| Fix an outdated channel name | the platform corrects it; `npm run data:avatars -- --name-only` to apply it now |
 | Fill the missing avatars | `npm run data:avatars -- --limit 2000` |
 | Fix the classifier itself | `scripts/lib/classify.ts` |
 | Add a curated channel | `scripts/lib/seeds.ts` |
@@ -172,6 +182,7 @@ npm run data:sync -- --keyword "…"   # run one discovery query
 npm run data:verify                   # verify classifications with search grounding
 npm run data:index                   # rebuild the search index
 npm run data:avatars -- --limit 2000 # fill the missing avatars
+npm run data:avatars -- --name-only  # correct the names and the aliases
 npm run data:avatars -- --platform bilibili --dry-run
 npm run data:validate                # structure + budgets
 npm run data:import-legacy           # migrate the old SQLite database

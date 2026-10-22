@@ -291,6 +291,10 @@ is published.
 - `[x]` The aliases the public rosters publish are kept too — the Taiwan
       track list records alias names that its own JSON API drops, and vdb
       lists the performer's name in every locale.
+- `[x]` A channel title is often **several names in one string** —
+      「空星きらめ/Sorahoshi Kirame【にじさんじ】」. Every part becomes an
+      alias, so a search for the Japanese name, the romanised name or the
+      agency all find the same channel.
 
 ## 5l. The avatars
 
@@ -301,6 +305,11 @@ is published.
 - `[x]` A dedicated script fills the backlog:
       `npm run data:avatars -- --limit 2000`, with `--platform` to target
       one platform and `--dry-run` to preview.
+- `[x]` `--name-only` corrects the names and the aliases without touching
+      anything else — the cheapest pass, because the name comes from the
+      same request as the avatar.
+- `[x]` The script **re-reads each shard before writing it**, so a sync
+      that runs at the same time is not clobbered by a stale snapshot.
 - `[x]` It writes **only** what it fetched — the avatar, the current name,
       the description, the follower count — and leaves the rest of the
       record and the file layout untouched.
