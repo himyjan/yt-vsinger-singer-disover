@@ -117,6 +117,7 @@ export function toSummary(c: Channel): ChannelSummary {
   return {
     id: c.id,
     name: c.name,
+    aliases: c.aliases ?? [],
     handle: c.handle,
     kind: c.kind,
     role: c.role,

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T05:55:18.059Z",
+  "generatedAt": "2026-10-22T06:58:03.071Z",
   "channels": [
     {
       "id": "UCJFZiqLMntJufDCHc6bQixg",
@@ -34,7 +34,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T05:55:19.855Z",
+      "updatedAt": "2026-10-22T06:58:05.126Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -52,7 +52,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T05:55:22.236Z"
+          "lastCheckedAt": "2026-10-22T06:58:08.081Z"
         },
         {
           "platform": "bilibili",
@@ -65,11 +65,13 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T05:55:22.236Z"
+          "lastCheckedAt": "2026-10-22T06:58:08.081Z"
         }
       ],
       "externals": {},
-      "popularVideoId": null
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": []
     },
     {
       "id": "UCSc_KzY_9WYAx9LghggjVRA",
@@ -103,7 +105,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T05:55:19.855Z",
+      "updatedAt": "2026-10-22T06:58:05.126Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -121,11 +123,13 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T05:55:22.268Z"
+          "lastCheckedAt": "2026-10-22T06:58:08.126Z"
         }
       ],
       "externals": {},
-      "popularVideoId": null
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": []
     },
     {
       "id": "youtube:Sanavtuber12",
@@ -159,7 +163,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T05:55:19.855Z",
+      "updatedAt": "2026-10-22T06:58:05.126Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -177,7 +181,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T05:55:22.278Z"
+          "lastCheckedAt": "2026-10-22T06:58:08.138Z"
         },
         {
           "platform": "youtube",
@@ -190,11 +194,13 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T05:55:22.278Z"
+          "lastCheckedAt": "2026-10-22T06:58:08.138Z"
         }
       ],
       "externals": {},
-      "popularVideoId": null
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": []
     }
   ]
 }

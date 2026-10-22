@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T05:55:18.059Z",
+  "generatedAt": "2026-10-22T06:58:03.071Z",
   "channels": [
     {
       "id": "UC8rcEBzJSleTkf_-agPM20g",
@@ -36,7 +36,7 @@
       "verification": null,
       "source": "seed",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T05:55:19.855Z",
+      "updatedAt": "2026-10-22T06:58:05.126Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -54,11 +54,13 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T05:55:19.855Z"
+          "lastCheckedAt": "2026-10-22T06:58:05.126Z"
         }
       ],
       "externals": {},
-      "popularVideoId": null
+      "popularVideoId": null,
+      "nameSource": "seed",
+      "aliases": []
     },
     {
       "id": "UC9ad82fASVVMQLsJbshxdfA",
@@ -92,7 +94,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T05:55:19.855Z",
+      "updatedAt": "2026-10-22T06:58:05.126Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -110,7 +112,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T05:55:22.245Z"
+          "lastCheckedAt": "2026-10-22T06:58:08.095Z"
         },
         {
           "platform": "bilibili",
@@ -123,11 +125,13 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T05:55:22.245Z"
+          "lastCheckedAt": "2026-10-22T06:58:08.095Z"
         }
       ],
       "externals": {},
-      "popularVideoId": null
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": []
     },
     {
       "id": "UCu-J8uIXuLZh16gG-cT1naw",
@@ -161,7 +165,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T05:55:19.855Z",
+      "updatedAt": "2026-10-22T06:58:05.126Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -179,11 +183,13 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T05:55:22.233Z"
+          "lastCheckedAt": "2026-10-22T06:58:08.078Z"
         }
       ],
       "externals": {},
-      "popularVideoId": null
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": []
     }
   ]
 }

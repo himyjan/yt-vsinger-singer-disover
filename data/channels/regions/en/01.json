@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T05:55:18.059Z",
+  "generatedAt": "2026-10-22T06:58:03.071Z",
   "channels": [
     {
       "id": "UC2c8dQYdDadn7tmK_d7o-HQ",
@@ -34,7 +34,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T05:55:19.855Z",
+      "updatedAt": "2026-10-22T06:58:05.126Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -52,7 +52,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T05:55:22.242Z"
+          "lastCheckedAt": "2026-10-22T06:58:08.090Z"
         },
         {
           "platform": "bilibili",
@@ -65,11 +65,13 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T05:55:22.242Z"
+          "lastCheckedAt": "2026-10-22T06:58:08.090Z"
         }
       ],
       "externals": {},
-      "popularVideoId": null
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": []
     },
     {
       "id": "UCu6IFOMX4F8xn1NIc0DQ2Mg",
@@ -103,7 +105,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T05:55:19.855Z",
+      "updatedAt": "2026-10-22T06:58:05.126Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -121,7 +123,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T05:55:22.250Z"
+          "lastCheckedAt": "2026-10-22T06:58:08.103Z"
         },
         {
           "platform": "bilibili",
@@ -134,11 +136,13 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T05:55:22.250Z"
+          "lastCheckedAt": "2026-10-22T06:58:08.103Z"
         }
       ],
       "externals": {},
-      "popularVideoId": null
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": []
     },
     {
       "id": "UCYKX4HL54erXdCyMj7TpFyg",
@@ -172,7 +176,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T05:55:19.855Z",
+      "updatedAt": "2026-10-22T06:58:05.126Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -190,7 +194,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T05:55:22.259Z"
+          "lastCheckedAt": "2026-10-22T06:58:08.116Z"
         },
         {
           "platform": "twitch",
@@ -203,7 +207,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T05:55:22.259Z"
+          "lastCheckedAt": "2026-10-22T06:58:08.116Z"
         },
         {
           "platform": "youtube",
@@ -216,11 +220,13 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T05:55:22.259Z"
+          "lastCheckedAt": "2026-10-22T06:58:08.116Z"
         }
       ],
       "externals": {},
-      "popularVideoId": null
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": []
     },
     {
       "id": "vdb:f2fd7bb2-a25a-597e-bf64-9bb35241fccb",
@@ -254,7 +260,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T05:55:19.855Z",
+      "updatedAt": "2026-10-22T06:58:05.126Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -262,7 +268,9 @@
       "graduateDate": null,
       "platforms": [],
       "externals": {},
-      "popularVideoId": null
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": []
     }
   ]
 }

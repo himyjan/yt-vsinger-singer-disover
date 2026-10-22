@@ -16,6 +16,7 @@ import type {
   PlatformChannel,
   PlatformUpload,
 } from "../platforms";
+import { REQUEST_TIMEOUT_MS } from "../io";
 
 const API = "https://api.chzzk.naver.com/service/v1";
 const LIVE_API = "https://api.chzzk.naver.com/service/v3/channels";
@@ -42,6 +43,7 @@ export class ChzzkAdapter implements PlatformAdapter {
   private async getJson<T>(url: string): Promise<T | null> {
     try {
       const res = await fetch(url, {
+        signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
         headers: {
           Accept: "application/json",
           "User-Agent":

@@ -23,6 +23,7 @@
  */
 
 import { RateLimiter } from "./rate-limit";
+import { REQUEST_TIMEOUT_MS } from "./io";
 
 const GQL = "https://gql.twitch.tv/gql";
 
@@ -105,6 +106,7 @@ export class TwitchGqlSource {
     try {
       await this.throttle();
       const res = await fetch(GQL, {
+        signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
         method: "POST",
         headers: {
           "Client-Id": this.clientId,

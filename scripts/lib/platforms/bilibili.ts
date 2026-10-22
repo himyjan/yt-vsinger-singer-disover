@@ -37,6 +37,7 @@ import type {
   PlatformChannel,
   PlatformUpload,
 } from "../platforms";
+import { REQUEST_TIMEOUT_MS } from "../io";
 
 const API = "https://api.bilibili.com";
 
@@ -70,6 +71,7 @@ async function getMixinKey(buvid: string | null): Promise<string | null> {
   }
   try {
     const res = await fetch(`${API}/x/web-interface/nav`, {
+        signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
       headers: {
         "User-Agent": USER_AGENT,
         Referer: "https://www.bilibili.com/",
@@ -284,6 +286,7 @@ export class BilibiliAdapter implements PlatformAdapter {
     this.buvidFetched = true;
     try {
       const res = await fetch(`${API}/x/frontend/finger/spi`, {
+        signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
         headers: { "User-Agent": USER_AGENT, Referer: "https://www.bilibili.com/" },
       });
       if (!res.ok) return null;
@@ -327,6 +330,7 @@ export class BilibiliAdapter implements PlatformAdapter {
 
     try {
       const res = await fetch(url, {
+        signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
         headers: {
           "User-Agent": USER_AGENT,
           Accept: "application/json, text/plain, */*",

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T05:55:18.059Z",
+  "generatedAt": "2026-10-22T06:58:03.071Z",
   "channels": [
     {
       "id": "UC-3piUPtXhIu-KAdEs7fT8A",
@@ -34,7 +34,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T05:55:19.855Z",
+      "updatedAt": "2026-10-22T06:58:05.126Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -52,7 +52,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T05:55:22.249Z"
+          "lastCheckedAt": "2026-10-22T06:58:08.102Z"
         },
         {
           "platform": "bilibili",
@@ -65,11 +65,13 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T05:55:22.249Z"
+          "lastCheckedAt": "2026-10-22T06:58:08.102Z"
         }
       ],
       "externals": {},
-      "popularVideoId": null
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": []
     },
     {
       "id": "UCIM92Ok_spNKLVB5TsgwseQ",
@@ -103,7 +105,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T05:55:19.855Z",
+      "updatedAt": "2026-10-22T06:58:05.126Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -121,7 +123,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T05:55:22.245Z"
+          "lastCheckedAt": "2026-10-22T06:58:08.095Z"
         },
         {
           "platform": "bilibili",
@@ -134,11 +136,13 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T05:55:22.245Z"
+          "lastCheckedAt": "2026-10-22T06:58:08.095Z"
         }
       ],
       "externals": {},
-      "popularVideoId": null
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": []
     }
   ]
 }

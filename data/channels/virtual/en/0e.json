@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T05:55:18.059Z",
+  "generatedAt": "2026-10-22T06:58:03.071Z",
   "channels": [
     {
       "id": "UCMCAh6rwRtoGDtF7lXj0gNw",
@@ -34,7 +34,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T05:55:19.855Z",
+      "updatedAt": "2026-10-22T06:58:05.126Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -52,7 +52,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T05:55:22.767Z"
+          "lastCheckedAt": "2026-10-22T06:58:08.613Z"
         },
         {
           "platform": "youtube",
@@ -65,7 +65,7 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T05:55:22.767Z"
+          "lastCheckedAt": "2026-10-22T06:58:08.613Z"
         },
         {
           "platform": "twitch",
@@ -78,11 +78,13 @@
           },
           "avatar": null,
           "activity": "unknown",
-          "lastCheckedAt": "2026-10-22T05:55:22.767Z"
+          "lastCheckedAt": "2026-10-22T06:58:08.613Z"
         }
       ],
       "externals": {},
-      "popularVideoId": null
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": []
     }
   ]
 }

@@ -1309,8 +1309,8 @@ onMounted(async () => {
           <p class="text-sm font-semibold">Link your accounts</p>
           <p class="mt-2 text-xs text-neutral-500">
             See every VTuber and singer you subscribe to on YouTube, Twitch,
-            Bilibili and VK, matched against the dataset. Your token stays in
-            this browser.
+            Bilibili, Niconico, VK, CHZZK and KICK, matched against the
+            dataset. Your token stays in this browser.
           </p>
           <div class="mt-4 flex flex-wrap justify-center gap-2">
             <button

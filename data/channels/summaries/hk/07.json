@@ -1,10 +1,11 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T05:55:18.059Z",
+  "generatedAt": "2026-10-22T06:58:03.071Z",
   "channels": [
     {
       "id": "UC1j4g0vSBT4fgLNr-mvMaWg",
       "name": "Kani可兒",
+      "aliases": [],
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -45,6 +46,7 @@
     {
       "id": "UC3bFz-8TTu7h0W9DyqSpCGQ",
       "name": "侑里",
+      "aliases": [],
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -85,6 +87,7 @@
     {
       "id": "UC70SnzS9Zb_gEXP2WCx34eg",
       "name": "淡水魚",
+      "aliases": [],
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -125,6 +128,7 @@
     {
       "id": "UC8lYKWs12u3UXLx4Omt15mw",
       "name": "鵑嗚曉春",
+      "aliases": [],
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -165,6 +169,7 @@
     {
       "id": "UC9md1FF9llPruMsiIeJ7Kqg",
       "name": "夢宮色羽",
+      "aliases": [],
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -205,6 +210,7 @@
     {
       "id": "UCA-fOslAD1Q0BG1TtwPWYiQ",
       "name": "桃野薔薇",
+      "aliases": [],
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -245,6 +251,7 @@
     {
       "id": "UCaHT2ZlIYtaDyqeT5tqt4LA",
       "name": "社畜A星野ニア",
+      "aliases": [],
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -285,6 +292,7 @@
     {
       "id": "UCaYwqXbi1SXI73mhlSrHabA",
       "name": "鈴鹿沙織",
+      "aliases": [],
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -325,6 +333,7 @@
     {
       "id": "UCbHoXyU9Hnk_5T_VJLeb2xg",
       "name": "丁香いおり",
+      "aliases": [],
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -376,6 +385,7 @@
     {
       "id": "UCbn5UYDxFciNg7OJPHr4Cnw",
       "name": "Loxy",
+      "aliases": [],
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -416,6 +426,7 @@
     {
       "id": "UCbPf1QCN0NrOVnPjqR6uxSA",
       "name": "力崎",
+      "aliases": [],
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -467,6 +478,7 @@
     {
       "id": "UCDZoqqguj2RYbve4ZX_pgtA",
       "name": "風子ひかり",
+      "aliases": [],
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -507,6 +519,7 @@
     {
       "id": "UCFL6LIO2r5SM3-jT8nUgrlw",
       "name": "伊織なお",
+      "aliases": [],
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -547,6 +560,7 @@
     {
       "id": "UCjQ4iz2YI_-4Gue8Gtmx0tQ",
       "name": "月永アイオ",
+      "aliases": [],
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -587,6 +601,7 @@
     {
       "id": "UCjvxwgi4cXs0IGJAzasCFtA",
       "name": "夢原ねむる",
+      "aliases": [],
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -627,6 +642,7 @@
     {
       "id": "UCKwTTU3yaNWVv7H1_G1YW5Q",
       "name": "星空宙",
+      "aliases": [],
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -678,6 +694,7 @@
     {
       "id": "UCMYrDS6Jy23FrKqVC9scMEQ",
       "name": "桃瀬結兎",
+      "aliases": [],
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -718,6 +735,7 @@
     {
       "id": "UCNCnzukYO1ZawMztRwfUqMw",
       "name": "寂仙譜名",
+      "aliases": [],
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -758,6 +776,7 @@
     {
       "id": "UCQa-7tpKlLW3pnPGAyMPgsA",
       "name": "榎川幸",
+      "aliases": [],
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -798,6 +817,9 @@
     {
       "id": "UCRde8hYd6S87ymokJjt5aAQ",
       "name": "海月月",
+      "aliases": [
+        "月月_しず"
+      ],
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -849,6 +871,7 @@
     {
       "id": "UCTZip2uMRGOO6gBU4rv2eTw",
       "name": "白鳥千和",
+      "aliases": [],
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -889,6 +912,7 @@
     {
       "id": "UCUoxyUU0ikJ3a_Mi_elYAIQ",
       "name": "月川 MoonRiver",
+      "aliases": [],
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -929,6 +953,9 @@
     {
       "id": "UCv1VGynICF42l4Nke0vYVaw",
       "name": "哈里クエーサー",
+      "aliases": [
+        "哈里博士"
+      ],
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -969,6 +996,7 @@
     {
       "id": "UCVDrzfo7NnOvNx8dU-Ebitg",
       "name": "米亞",
+      "aliases": [],
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -1009,6 +1037,7 @@
     {
       "id": "UCW8G8aeRjbIOlL-Fgms8hEQ",
       "name": "綽貓喵",
+      "aliases": [],
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -1049,6 +1078,7 @@
     {
       "id": "UCwCHcn_SOY931vN02fQkWTQ",
       "name": "暴言公仔_布伽",
+      "aliases": [],
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -1100,6 +1130,7 @@
     {
       "id": "UCwFDleRWnE7jXvPvntrwjIQ",
       "name": "凌仲",
+      "aliases": [],
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -1140,6 +1171,7 @@
     {
       "id": "UCyLDUjWZelOQfh5aTfCKujA",
       "name": "櫻庭良",
+      "aliases": [],
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -1180,6 +1212,7 @@
     {
       "id": "UCZh1JJ_SgkIblVriZz3pUNg",
       "name": "希米",
+      "aliases": [],
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",

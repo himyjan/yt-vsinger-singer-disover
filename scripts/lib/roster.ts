@@ -65,6 +65,13 @@ export async function buildRoster(
     byId.set(youtubeId, {
       id: youtubeId,
       name: record.name,
+      nameSource: "roster",
+      /**
+       * The track list records the alias names the JSON API drops — the
+       * Chinese and Japanese names of the same performer. They keep one
+       * record reachable under every name it is known by.
+       */
+      aliases: [...record.aliases],
       handle: null,
       kind: "virtual",
       role: classification.role === "unknown" ? "vtuber" : classification.role,
@@ -172,6 +179,8 @@ export async function buildRoster(
     byId.set(seed.channelId, {
       id: seed.channelId,
       name: seed.name,
+      nameSource: "seed",
+      aliases: [],
       handle: seed.handle ?? null,
       kind: seed.kind,
       role: seed.role,
@@ -274,6 +283,9 @@ export async function buildRoster(
     byId.set(entry.id, {
       id: entry.id,
       name: entry.name,
+      nameSource: "roster",
+      // vdb lists the performer's names in every locale.
+      aliases: [...entry.aliases],
       handle: null,
       kind: entry.kind,
       role: classification.role === "unknown" ? "vtuber" : classification.role,
@@ -360,6 +372,8 @@ export async function buildRoster(
           byId.set(id, {
             id,
             name: channel.name ?? channel.handle ?? channel.id,
+            nameSource: "platform",
+            aliases: [],
             handle: channel.handle,
             verification: null,
             kind: classification.kind,

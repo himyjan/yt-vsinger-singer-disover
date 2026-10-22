@@ -17,6 +17,7 @@ import type {
   PlatformChannel,
   PlatformUpload,
 } from "../platforms";
+import { REQUEST_TIMEOUT_MS } from "../io";
 
 const API = "https://kick.com/api/v2";
 
@@ -46,6 +47,7 @@ export class KickAdapter implements PlatformAdapter {
   private async getJson<T>(url: string): Promise<T | null> {
     try {
       const res = await fetch(url, {
+        signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
         headers: {
           Accept: "application/json",
           "User-Agent":

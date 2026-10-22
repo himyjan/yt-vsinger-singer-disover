@@ -26,6 +26,7 @@
 
 import { Innertube } from "youtubei.js";
 import { RateLimiter } from "./rate-limit";
+import { REQUEST_TIMEOUT_MS } from "./io";
 
 export interface InnerTubeProfile {
   /** The channel id. */
@@ -63,6 +64,20 @@ export interface InnerTubeOptions {
   /** Pause between requests, in milliseconds — InnerTube rate-limits. */
   delayMs?: number;
   onLog?: (message: string) => void;
+}
+
+/**
+ * Abandons a promise that takes too long.
+ *
+ * InnerTube's client has no timeout of its own, so a request that never
+ * answers would hang the run forever. The promise is abandoned instead, and
+ * the caller treats the result as "no data".
+ */
+function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T | null> {
+  return Promise.race([
+    promise,
+    new Promise<null>((resolve) => setTimeout(() => resolve(null), ms)),
+  ]);
 }
 
 export class InnerTubeSource {
@@ -121,7 +136,11 @@ export class InnerTubeSource {
     if (!this.client) return null;
     try {
       await this.throttle();
-      const channel: any = await this.client.getChannel(channelId);
+      const channel: any = await withTimeout(
+        this.client.getChannel(channelId),
+        REQUEST_TIMEOUT_MS,
+      );
+      if (!channel) return null;
       const meta = channel?.metadata ?? {};
 
       const avatar =
@@ -183,8 +202,16 @@ export class InnerTubeSource {
     if (!this.client) return [];
     try {
       await this.throttle();
-      const channel: any = await this.client.getChannel(channelId);
-      const grid = await channel.getVideos();
+      const channel: any = await withTimeout(
+        this.client.getChannel(channelId),
+        REQUEST_TIMEOUT_MS,
+      );
+      if (!channel) return [];
+      const grid: any = await withTimeout(
+        channel.getVideos(),
+        REQUEST_TIMEOUT_MS,
+      );
+      if (!grid) return [];
       const list: any[] = grid?.videos ?? [];
 
       const out: InnerTubeUpload[] = [];
@@ -227,8 +254,16 @@ export class InnerTubeSource {
     if (!this.client) return [];
     try {
       await this.throttle();
-      const channel: any = await this.client.getChannel(channelId);
-      const grid = await channel.getLiveStreams();
+      const channel: any = await withTimeout(
+        this.client.getChannel(channelId),
+        REQUEST_TIMEOUT_MS,
+      );
+      if (!channel) return [];
+      const grid: any = await withTimeout(
+        channel.getLiveStreams(),
+        REQUEST_TIMEOUT_MS,
+      );
+      if (!grid) return [];
       const list: any[] = grid?.videos ?? grid?.items ?? [];
 
       const out: InnerTubeUpload[] = [];

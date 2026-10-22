@@ -22,7 +22,12 @@
  */
 
 import { IdentityRegistry, type Candidate } from "./identity";
-import type { Affiliation, Channel, RegionCode } from "./types";
+import type {
+  Affiliation,
+  Channel,
+  NameSource,
+  RegionCode,
+} from "./types";
 import { pickAvatar } from "./platforms";
 import { mergeLanguages } from "./regions";
 
@@ -68,6 +73,67 @@ function platformRegionOf(channel: Channel): RegionCode | null {
  * other's facts fill in its gaps. The canonical id is the one that looks
  * like a real channel id (`UC…` for YouTube) rather than a namespaced one.
  */
+/**
+ * How much a name is trusted.
+ *
+ * A hand-written override is the final word; the platform's name is the
+ * current one; a seed's name is hand-verified but as old as the seed file; a
+ * roster's name is whatever the roster said when it was written.
+ */
+const NAME_TRUST: Record<NameSource, number> = {
+  manual: 4,
+  platform: 3,
+  seed: 2,
+  roster: 1,
+  unknown: 0,
+};
+
+/**
+ * The name of two records that describe the same performer.
+ *
+ * The more trusted name wins, and the other one becomes an alias — so
+ * 「克蕾雅」 stays findable after the platform corrected the name to
+ * 「シスター・クレア」.
+ */
+export function pickName(target: Channel, other: Channel): string {
+  const targetTrust = NAME_TRUST[target.nameSource ?? "unknown"];
+  const otherTrust = NAME_TRUST[other.nameSource ?? "unknown"];
+  return targetTrust >= otherTrust
+    ? (target.name || other.name)
+    : (other.name || target.name);
+}
+
+/**
+ * The union of two records' aliases.
+ *
+ * The names themselves are included when they differ, because a merge means
+ * two sources described the same performer — and if they disagreed on the
+ * name, one of them was stale.
+ */
+export function mergeAliases(target: Channel, other: Channel): string[] {
+  const out: string[] = [];
+  const seen = new Set<string>();
+  const add = (name: string | null | undefined) => {
+    const trimmed = (name ?? "").trim();
+    if (!trimmed) return;
+    const key = trimmed.toLowerCase();
+    if (seen.has(key)) return;
+    seen.add(key);
+    out.push(trimmed);
+  };
+
+  for (const alias of target.aliases ?? []) add(alias);
+  for (const alias of other.aliases ?? []) add(alias);
+  if (target.name !== other.name) {
+    add(other.name);
+    add(target.name);
+  }
+
+  // A name that is the current one is not an alias.
+  const current = (target.name || other.name).trim().toLowerCase();
+  return out.filter((a) => a.trim().toLowerCase() !== current);
+}
+
 export function mergeChannels(target: Channel, other: Channel): Channel {
   const preferOther =
     !target.id.startsWith("UC") && other.id.startsWith("UC");
@@ -80,7 +146,14 @@ export function mergeChannels(target: Channel, other: Channel): Channel {
     ...other,
     ...target,
     ...(preferOther ? { id: other.id } : {}),
-    name: target.name || other.name,
+    name: pickName(target, other),
+    /**
+     * The aliases of both records are kept, and the name the loser had
+     * becomes an alias. A performer known as 「克蕾雅」 on one platform and
+     * 「シスター・クレア」 on another is one person, and both names have to
+     * stay reachable.
+     */
+    aliases: mergeAliases(target, other),
     handle: target.handle ?? other.handle,
     kind: target.kind === "virtual" ? target.kind : other.kind,
     role: target.role === "unknown" ? other.role : target.role,

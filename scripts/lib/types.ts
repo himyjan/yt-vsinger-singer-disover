@@ -126,6 +126,26 @@ export type CountRef =
 export type Activity = "active" | "preparing" | "graduated" | "unknown";
 
 /** Streaming platform a record originates from. */
+/**
+ * Where a record's display name came from.
+ *
+ * The platforms are authoritative for a name: a performer renames and the
+ * platform knows. The rosters record the name they saw, which can be months
+ * out of date. Keeping the provenance stops a stale roster from undoing a
+ * platform's correction on the next run.
+ */
+export type NameSource =
+  /** Hand-written in `data/overrides.json`. */
+  | "manual"
+  /** Read from the platform itself — the current name. */
+  | "platform"
+  /** Hand-verified in `scripts/lib/seeds.ts`. */
+  | "seed"
+  /** Taken from a public roster, which may be out of date. */
+  | "roster"
+  /** Not known. */
+  | "unknown";
+
 export type PlatformId =
   | "youtube"
   | "twitch"
@@ -325,6 +345,23 @@ export interface Channel {
   id: string;
   /** Display name. */
   name: string;
+  /**
+   * Where the display name came from.
+   *
+   * A roster's name can be months old, and the platform's is the current
+   * one. Without this, a roster would overwrite the platform's correction on
+   * every run.
+   */
+  nameSource: NameSource;
+  /**
+   * The other names this performer is known by.
+   *
+   * Performers rename, and every roster records the name it saw, so a record
+   * can be months out of date. The aliases keep the old names **searchable**
+   * without showing them in the UI, and they are how a cross-language name —
+   * 「克蕾雅」 and 「シスター・クレア」 — stays connected to one record.
+   */
+  aliases: string[];
   /** `@handle` without the leading `@`, when known. */
   handle: string | null;
   /** Virtual performer or real human artist. */
@@ -504,6 +541,8 @@ export interface PlatformFollower {
 export interface ChannelSummary {
   id: string;
   name: string;
+  /** The other names the performer is known by. */
+  aliases: string[];
   handle: string | null;
   kind: ArtistKind;
   role: ArtistRole;

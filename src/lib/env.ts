@@ -18,4 +18,14 @@ export const env = {
   twitchClientId: envString("VITE_TWITCH_CLIENT_ID"),
   /** VK application id. */
   vkClientId: envString("VITE_VK_CLIENT_ID"),
+  /** KICK application client id — a registered app on KICK. */
+  kickClientId: envString("VITE_KICK_CLIENT_ID"),
+  /**
+   * KICK application client secret.
+   *
+   * KICK's token endpoint asks for it, so a purely client-side exchange is
+   * not possible without exposing it. The cookie-based route below needs no
+   * secret at all.
+   */
+  kickClientSecret: envString("VITE_KICK_CLIENT_SECRET"),
 };

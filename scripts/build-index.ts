@@ -96,6 +96,7 @@ function haystackFor(record: SearchEntryRecord): string {
   return parts.filter(Boolean).join(" ");
 }
 
+
 /* -------------------------------------------------------------------------- */
 /* Inverted index                                                             */
 /* -------------------------------------------------------------------------- */
@@ -104,13 +105,18 @@ export function buildPack(
   region: string,
   records: SearchEntryRecord[],
   generatedAt: string,
+  aliasText: Map<string, string> = new Map(),
 ): SearchPack {
   /** token → Set of entry indices. */
   const inverted = new Map<string, number[]>();
   const seen = new Set<number>();
 
   for (let idx = 0; idx < records.length; idx++) {
-    const tokens = tokenize(haystackFor(records[idx]!));
+    const record = records[idx]!;
+    const extra = aliasText.get(record.id);
+    const tokens = tokenize(
+      extra ? `${haystackFor(record)} ${extra}` : haystackFor(record),
+    );
     for (const token of tokens) {
       const list = inverted.get(token);
       if (!list) {
@@ -171,6 +177,14 @@ function main(): void {
     }
   }
 
+  /**
+   * The extra text indexed for a channel — its other names.
+   *
+   * A performer is found under the name they used to have, so the aliases
+   * have to be searchable even though they are not displayed.
+   */
+  const aliasText = new Map<string, string>();
+
   const byRegion = new Map<RegionCode, SearchEntryRecord[]>();
   const push = (r: RegionCode, rec: SearchEntryRecord) => {
     const list = byRegion.get(r) ?? [];
@@ -178,7 +192,16 @@ function main(): void {
     byRegion.set(r, list);
   };
 
-  for (const c of channels) push(c.region, channelRecord(c));
+  for (const c of channels) {
+    const record = channelRecord(c);
+    const aliases = c.aliases ?? [];
+    if (aliases.length) {
+      // The aliases are indexed but not stored, so the pack stays small; the
+      // full record keeps them for the drawer.
+      aliasText.set(record.id, aliases.join(" "));
+    }
+    push(c.region, record);
+  }
   for (const i of items) push(i.region, itemRecord(i));
 
   const searchDir = path.join(DATA_DIR, "search");
@@ -191,7 +214,7 @@ function main(): void {
   for (const region of ALL_REGIONS) {
     const records = byRegion.get(region);
     if (!records?.length) continue;
-    const pack = buildPack(region, records, now);
+    const pack = buildPack(region, records, now, aliasText);
     const file = `${region}.json`;
     keep.add(file);
     writeJson(layout.searchRegion(region), pack);
