@@ -28,11 +28,14 @@ import type {
 export const REGION_SOURCE_CONFIDENCE: Record<RegionSource, number> = {
   override: 1,
   roster: 1,
-  declared: 1,
-  platform: 0.9,
+  country: 0.95,
   agency: 0.9,
-  country: 0.85,
-  script: 0.6,
+  // Kana occur in Japanese and nowhere else, so their presence settles it.
+  name: 0.9,
+  platform: 0.85,
+  // vdb's `name.default` is a display choice, not a statement of origin.
+  declared: 0.5,
+  script: 0.4,
   unknown: 0.1,
 };
 

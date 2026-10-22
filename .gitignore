@@ -10,6 +10,9 @@ coverage/
 # Disposable pipeline cache (HTTP responses, quota state).
 .cache/
 
+# The run lock: one writer at a time.
+data/.lock
+
 # Local secrets for the sync pipeline.
 .env.local
 .env.sync

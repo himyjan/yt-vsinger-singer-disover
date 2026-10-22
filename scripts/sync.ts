@@ -70,6 +70,7 @@ import {
   paths,
   readJson,
   mergeById,
+  acquireRunLock,
   ROOT,
 } from "./lib/io";
 import {
@@ -538,6 +539,14 @@ async function fetchVideoDetails(
 async function main(): Promise<void> {
   const args = parseArgs(process.argv.slice(2));
 
+  /**
+   * One writer at a time.
+   *
+   * The sync and the details fill both read the whole dataset before they
+   * write it, so two of them at once lose each other's work.
+   */
+  const releaseLock = acquireRunLock("sync");
+
   const apiKey =
     process.env.YOUTUBE_API_KEY ?? process.env.YT_API_KEY ?? "";
 
@@ -890,7 +899,15 @@ async function main(): Promise<void> {
       if (override.activity) channel.activity = override.activity;
       if (override.kind) channel.kind = override.kind;
       if (override.role) channel.role = override.role;
-      if (override.region) channel.region = override.region;
+      if (override.region && override.region !== channel.region) {
+        log(`override: ${channel.name} region ${channel.region} → ${override.region}`);
+        channel.region = override.region;
+        // The provenance has to say who decided it — a hand-written region is
+        // the final word, and the record should show that.
+        channel.regionSource = "override";
+      } else if (override.region) {
+        channel.regionSource = "override";
+      }
       if (override.agency !== undefined) channel.agency = override.agency;
       if (override.gender) channel.gender = override.gender;
       if (override.isAi !== undefined) channel.isAi = override.isAi;
@@ -2075,6 +2092,7 @@ async function main(): Promise<void> {
   if (args.dryRun) {
     log("dry run — nothing written");
     printSummary(manifest, channels, items);
+    releaseLock();
     return;
   }
 
@@ -2085,6 +2103,7 @@ async function main(): Promise<void> {
   if (result.removed.length) {
     log(`pruned ${result.removed.length} stale shard(s)`);
   }
+  releaseLock();
 }
 
 /* -------------------------------------------------------------------------- */
