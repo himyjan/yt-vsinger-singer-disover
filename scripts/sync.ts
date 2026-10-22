@@ -41,6 +41,7 @@ import {
 } from "./lib/twitch";
 import { createAdapters } from "./lib/platform-registry";
 import { InnerTubeSource } from "./lib/youtubei";
+import { checkUpstreams, writeRevisions } from "./lib/upstream";
 import { TwitchGqlSource } from "./lib/twitch-gql";
 import {
   orderPlatformLinks,
@@ -159,6 +160,7 @@ interface SyncConfig {
   maxItemAgeDays: number;
   maxLiveChannelsPerRun: number;
   maxChannelDetailsPerRun: number;
+  maxTwitchResolutionsPerRun: number;
   detailsDelayMs: number;
   innertubeDelayMs: number;
   searchResultsPerKeyword: number;
@@ -175,7 +177,8 @@ const config: SyncConfig = readJson(
     maxItemsPerChannelRetained: 30,
     maxItemAgeDays: 365,
     maxLiveChannelsPerRun: 60,
-    maxChannelDetailsPerRun: 900,
+    maxChannelDetailsPerRun: 500,
+    maxTwitchResolutionsPerRun: 150,
     detailsDelayMs: 700,
     innertubeDelayMs: 250,
     searchResultsPerKeyword: 25,
@@ -576,6 +579,28 @@ async function main(): Promise<void> {
 
   const now = nowIso();
 
+  /* --- upstream revisions ---------------------------------------------- */
+  /**
+   * Record which revision of each upstream the dataset is built from.
+   *
+   * The revisions are committed, so the next run can tell what moved — and a
+   * change in the data can be traced back to the upstream commit that caused
+   * it.
+   */
+  {
+    const upstreamPath = path.join(ROOT, "data", "upstream.json");
+    const { file, changed } = await checkUpstreams(upstreamPath, (m) =>
+      log(`upstream: ${m}`),
+    );
+    if (!args.dryRun) writeRevisions(upstreamPath, file);
+    if (changed.length) {
+      log(
+        `upstream: ${changed.length} source(s) changed since the last run ` +
+          changed.map((c) => c.id).join(", "),
+      );
+    }
+  }
+
   /* --- load current dataset ------------------------------------------- */
   const existingChannels = readAllChannelRecords();
 
@@ -852,7 +877,14 @@ async function main(): Promise<void> {
      */
     const needDetails = channels
       .filter((c) => {
-        const resolvable = c.platforms.some((p) => adapterById.has(p.platform));
+        /**
+         * A channel is resolvable if **any** of its platforms has an adapter
+         * — including YouTube, which is resolved by InnerTube rather than by
+         * the platform adapters.
+         */
+        const resolvable =
+          c.id.startsWith("UC") ||
+          c.platforms.some((p) => adapterById.has(p.platform));
         if (!resolvable) return false;
         return (
           !c.description ||
@@ -900,8 +932,19 @@ async function main(): Promise<void> {
           (p) => p.platform === "twitch",
         );
         if (twitchLink) {
-          const login = twitchLink.handle ?? twitchLink.id;
-          const profile = await twitchGql.profile(login);
+          /**
+           * Ask by the **numeric id** when there is one.
+           *
+           * The id is stable; the login changes when a performer renames
+           * their channel. The track list keeps the old login — 「樞木黎月」
+           * is `kururugi_reitsuki` on Twitch, but the list still says
+           * `kururugiliyue_0413` — so the login cannot be trusted and the
+           * profile has to correct it.
+           */
+          const query = /^\d+$/.test(twitchLink.id)
+            ? twitchLink.id
+            : (twitchLink.handle ?? twitchLink.id);
+          const profile = await twitchGql.profile(query);
           if (profile) {
             if (profile.description && !channel.description) {
               channel.description = profile.description.slice(0, 1000);
@@ -915,6 +958,14 @@ async function main(): Promise<void> {
                 count: profile.followers,
               };
             }
+            // The profile knows the **current** login, so a renamed channel
+            // gets a link that resolves.
+            if (profile.login && profile.login !== twitchLink.handle) {
+              twitchLink.handle = profile.login;
+              twitchLink.url = `https://www.twitch.tv/${profile.login}`;
+            }
+            if (profile.id) twitchLink.id = profile.id;
+            if (profile.displayName) twitchLink.name = profile.displayName;
             if (profile.live) {
               // The channel is live right now.
               const item = innertubeLiveToItem(profile.live, channel, now);
@@ -952,6 +1003,10 @@ async function main(): Promise<void> {
             link.subscribers = profile.subscribers;
           }
           if (profile.handle) link.handle = profile.handle;
+          if (profile.videoCount) {
+            link.videoCount = profile.videoCount;
+            if (!channel.videoCount) channel.videoCount = profile.videoCount;
+          }
           if (profile.subscribers && profile.subscribers.tag !== "hidden") {
             link.subscribers = profile.subscribers;
           } else if (adapter.followers) {
@@ -982,6 +1037,45 @@ async function main(): Promise<void> {
     }
     if (needDetails.length) {
       log(`details: resolved ${resolved}/${needDetails.length} channel profile(s)`);
+    }
+
+    /**
+     * Re-classify the channels whose description just arrived.
+     *
+     * The description is where a performer states what they do — a channel
+     * that says 「VTuber / VSinger」 or 「歌い手」 in its bio is a singing
+     * channel, and the first classification could not know that because the
+     * description had not been fetched yet.
+     */
+    {
+      let reclassified = 0;
+      for (const channel of channels) {
+        if (!channel.description) continue;
+        const fresh = classifyChannel({
+          name: channel.name,
+          description: channel.description,
+          tags: channel.tags,
+          country: channel.country,
+        });
+        if (fresh.isSinging && !channel.isSinging) {
+          channel.isSinging = true;
+          reclassified++;
+        }
+        if (fresh.role !== "unknown" && channel.role === "unknown") {
+          channel.role = fresh.role;
+        }
+        if (fresh.gender !== "unknown" && channel.gender === "unknown") {
+          channel.gender = fresh.gender;
+        }
+        if (fresh.agency && !channel.agency) {
+          channel.agency = fresh.agency;
+        }
+      }
+      if (reclassified) {
+        log(
+          `details: ${reclassified} channel(s) marked as singing from their description`,
+        );
+      }
     }
 
     /**
@@ -1093,6 +1187,14 @@ async function main(): Promise<void> {
   }
 
   /* --- Taiwan VTuber Tracking Data: authoritative region + lifecycle --- */
+  /**
+   * Resolving a Twitch login costs a request, and there are thousands of
+   * Twitch links. The budget keeps a run bounded; the rest are corrected on
+   * later runs.
+   */
+  const twitchBudget = config.maxTwitchResolutionsPerRun;
+  let twitchResolutions = 0;
+
   const tracked = await fetchTrackedVtubers();
   if (tracked.size) {
     let enriched = 0;
@@ -1108,17 +1210,48 @@ async function main(): Promise<void> {
       channel.debutDate = record.debutDate ?? channel.debutDate;
       if (record.group && !channel.agency) channel.agency = record.group;
       if (record.twitchId) {
+        /**
+         * The **login** is what goes in a Twitch URL.
+         *
+         * The track list stores the numeric user id in one column and the
+         * login in another. Using the id in the URL gives a link that does
+         * not resolve — `twitch.tv/45375753` is not a channel.
+         */
+        /**
+         * The **numeric id** is the stable identifier, so it is what the
+         * Twitch API is asked about — the answer is the current login, which
+         * corrects the track list's often-stale one.
+         *
+         * The list's login is only the fallback, for when the API cannot be
+         * reached.
+         */
+        let login: string | null = null;
+        if (/^\d+$/.test(record.twitchId) && twitchResolutions < twitchBudget) {
+          twitchResolutions++;
+          const profile = await twitchGql.profile(record.twitchId);
+          if (profile?.login) {
+            login = profile.login;
+            if (login !== record.twitchLogin) {
+              log(
+                `twitch: ${channel.name} → ${login} (the list says ${record.twitchLogin ?? "?"})`,
+              );
+            }
+          }
+        }
+        login ??= record.twitchLogin ?? record.twitchId;
+
         const link = channel.platforms.find((p) => p.platform === "twitch");
         if (link) {
           link.id = record.twitchId;
-          link.handle = record.twitchId;
+          link.handle = login;
+          link.url = `https://www.twitch.tv/${login}`;
         } else {
           channel.platforms.push({
             platform: "twitch",
             id: record.twitchId,
-            handle: record.twitchId,
+            handle: login,
             name: channel.name,
-            url: `https://www.twitch.tv/${record.twitchId}`,
+            url: `https://www.twitch.tv/${login}`,
             subscribers: { tag: "hidden" },
             avatar: null,
             activity: channel.activity,
@@ -1597,13 +1730,26 @@ async function main(): Promise<void> {
    * uploads, not assumed. A channel with a cover, an MV, an original song or
    * a live performance is a singing channel.
    */
+  /**
+   * A channel is a singing channel when it has singing **content** — a
+   * cover, an MV, an original song or a performance.
+   *
+   * A live stream on its own is not evidence: every channel streams. It
+   * counts only when the channel is already known to be a singing one, which
+   * is what makes 「歌枠」 a marker rather than a rule.
+   */
   const singingChannelsFound = new Set(
     items
       .filter((i) =>
-        ["cover", "mv", "original", "performance", "live"].includes(i.category),
+        ["cover", "mv", "original", "performance"].includes(i.category),
       )
       .map((i) => i.channelId),
   );
+  for (const item of items) {
+    if (item.category !== "live") continue;
+    const channel = channelById.get(item.channelId);
+    if (channel?.isSinging) singingChannelsFound.add(item.channelId);
+  }
   for (const channel of channels) {
     if (singingChannelsFound.has(channel.id)) channel.isSinging = true;
   }

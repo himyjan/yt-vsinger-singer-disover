@@ -32,7 +32,10 @@ export type SourceId =
   | "aivtuberdb"
   | "pvc-moe"
   | "vtuber-hk"
-  | "streamscharts";
+  | "streamscharts"
+  | "justoneapi"
+  | "chzzk"
+  | "kick";
 
 export interface SourceInfo {
   id: SourceId;
@@ -239,6 +242,37 @@ export const SOURCES: SourceInfo[] = [
     access: "none",
     used: false,
     usedFor: "The page is server-rendered but has no documented data format",
+  },
+  {
+    id: "chzzk",
+    label: "CHZZK — Naver's streaming platform",
+    url: "https://chzzk.naver.com",
+    provides:
+      "Korean VTuber channels, descriptions, follower counts and live streams",
+    access: "api",
+    used: true,
+    usedFor:
+      "The Korean VTuber scene — the largest one after Japan and China",
+  },
+  {
+    id: "kick",
+    label: "KICK",
+    url: "https://kick.com",
+    provides: "Channel profiles, follower counts and live streams",
+    access: "api",
+    used: true,
+    usedFor: "The growing Western VTuber scene on KICK",
+  },
+  {
+    id: "justoneapi",
+    label: "JustOneAPI",
+    url: "https://github.com/justoneapi/justoneapi-python",
+    provides:
+      "A hosted API over YouTube, Bilibili, TikTok, Douyin, Weibo and more",
+    access: "api",
+    used: false,
+    usedFor:
+      "A token-based proxy for the platforms whose public endpoints are protected. It is a paid service, so the pipeline prefers the free sources — but its generated resources are a good catalogue of which endpoints exist",
   },
   {
     id: "streamscharts",

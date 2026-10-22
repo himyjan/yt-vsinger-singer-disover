@@ -39,6 +39,10 @@ export interface PlatformChannel {
   description: string | null;
   /** Declared tags / keywords. */
   tags: string[];
+  /** The number of published videos, when the platform reports it. */
+  videoCount?: number | null;
+  /** The total number of likes, when the platform reports it. */
+  likeCount?: number | null;
 }
 
 /** A single upload / stream on some platform. */
@@ -117,6 +121,8 @@ export const PLATFORM_PRIORITY: PlatformId[] = [
   "bilibili",
   "niconico",
   "twitch",
+  "chzzk",
+  "kick",
   "vk",
 ];
 
@@ -264,6 +270,8 @@ export const PLATFORM_URLS: Record<PlatformId, (id: string) => string> = {
   bilibili: (id) => `https://space.bilibili.com/${id}`,
   niconico: (id) => `https://www.nicovideo.jp/user/${id}`,
   vk: (id) => `https://vk.com/${id}`,
+  chzzk: (id) => `https://chzzk.naver.com/${id}`,
+  kick: (id) => `https://kick.com/${id}`,
 };
 
 /**
@@ -280,6 +288,8 @@ export function detectPlatform(input: string): PlatformId | null {
     [/(?:bilibili\.com|b23\.tv)/, "bilibili"],
     [/(?:nicovideo\.jp|niconico\.com)/, "niconico"],
     [/(?:vk\.com|vkvideo\.ru)/, "vk"],
+    [/(?:chzzk\.naver\.com)/, "chzzk"],
+    [/(?:kick\.com)/, "kick"],
   ];
   for (const [re, platform] of rules) {
     if (re.test(value)) return platform;
@@ -303,6 +313,8 @@ export function extractPlatformId(input: string): {
     ["bilibili", /(?:space\.bilibili\.com\/|bilibili\.com\/)(?:(\d+)|([A-Za-z0-9_-]+))/],
     ["niconico", /nicovideo\.jp\/user\/(\d+)/],
     ["vk", /vk\.com\/([A-Za-z0-9_.]+)/],
+    ["chzzk", /chzzk\.naver\.com\/([A-Za-z0-9_-]+)/],
+    ["kick", /kick\.com\/([A-Za-z0-9_]+)/],
   ];
 
   for (const [platform, re] of patterns) {

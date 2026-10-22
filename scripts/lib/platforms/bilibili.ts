@@ -317,6 +317,10 @@ export class BilibiliAdapter implements PlatformAdapter {
     headers: Record<string, string> = {},
     attempt = 0,
   ): Promise<T | null> {
+    // The circuit breaker: once Bilibili has pushed back hard enough, stop
+    // calling it rather than waiting out the backoff on every channel.
+    if (this.limiter.isTripped()) return null;
+
     await this.limiter.wait();
 
     const buvid = await this.getBuvid();
@@ -384,11 +388,19 @@ export class BilibiliAdapter implements PlatformAdapter {
       data?: {
         card?: { name?: string; sign?: string; face?: string; mid?: number };
         follower?: number;
+        /** The number of published videos. */
+        archive_count?: number;
+        /** The total number of likes. */
+        like_num?: number;
       };
     }>(`${API}/x/web-interface/card?mid=${uid}&photo=false`);
 
     const card = profile?.code === 0 ? profile.data : undefined;
     const info = card?.card ?? {};
+    /** The published video count, when the endpoint reports it. */
+    const archiveCount = card?.archive_count ?? null;
+    /** The total likes, when the endpoint reports them. */
+    const likeCount = card?.like_num ?? null;
 
     const followers =
       card?.follower && card.follower > 0
@@ -407,6 +419,8 @@ export class BilibiliAdapter implements PlatformAdapter {
       avatar: absoluteUrl(info.face),
       description: info.sign ?? null,
       tags: [],
+      videoCount: archiveCount,
+      likeCount,
     };
   }
 

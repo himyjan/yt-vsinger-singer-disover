@@ -131,7 +131,9 @@ export type PlatformId =
   | "twitch"
   | "bilibili"
   | "niconico"
-  | "vk";
+  | "vk"
+  | "chzzk"
+  | "kick";
 
 /**
  * Performer's gender, as self-described.
@@ -252,6 +254,8 @@ export const ALL_PLATFORMS: PlatformId[] = [
   "bilibili",
   "niconico",
   "vk",
+  "chzzk",
+  "kick",
 ];
 
 /**
@@ -275,6 +279,8 @@ export interface PlatformLink {
   url: string;
   /** Subscriber / follower count on that platform. */
   subscribers: CountRef;
+  /** The number of published videos on that platform, when it is known. */
+  videoCount?: number | null;
   /** Avatar / profile image. */
   avatar: string | null;
   /** Streaming activity on that platform. */
@@ -490,6 +496,8 @@ export interface PlatformFollower {
   n: number | null;
   /** True when the platform does not publish a count at all. */
   hidden: boolean;
+  /** The number of published videos on that platform, when it is known. */
+  v?: number | null;
 }
 
 /** Compact projection used by list views and the search index. */
@@ -515,11 +523,15 @@ export interface ChannelSummary {
   affiliation: Affiliation;
   /** The verification record — what was looked up, and where. */
   verification: Verification | null;
+  /** When the record was first seen, for the "recent" sort. */
+  addedAt: string;
+  /** True when the channel publishes singing content. */
+  isSinging: boolean;
+  /** True when the channel publishes singing content. */
   /** The confidence estimate — optional, see `Channel.confidence`. */
   confidence?: ClassificationConfidence;
   avatar: string | null;
   subscribers: number | null;
-  isSinging: boolean;
   activity: Activity;
   /** True when the subscriber count is known and public. */
   subscribersHidden: boolean;

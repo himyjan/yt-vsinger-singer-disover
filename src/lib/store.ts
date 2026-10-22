@@ -117,6 +117,22 @@ export const state = reactive({
   gender: "all" as Gender | "all",
   /** A language filter — the performers who stream in it. */
   language: "all" as string | "all",
+  /** Only the channels that publish singing content. */
+  singing: "all" as "all" | "singing" | "not-singing",
+  /**
+   * The sort order of each view.
+   *
+   * Every tab sorts — the live tab by how long the stream has been running,
+   * the songs tab by when they were published, the channels tab by followers.
+   */
+  sort: {
+    live: "recent" as "recent" | "viewers" | "subscribers" | "title",
+    upcoming: "soon" as "soon" | "title" | "subscribers",
+    songs: "recent" as "recent" | "oldest" | "title" | "views" | "duration",
+    channels: "subscribers" as "subscribers" | "name" | "recent" | "region",
+    subs: "name" as "name" | "platform" | "tracked",
+    saved: "recent" as "recent" | "oldest" | "title",
+  },
   /**
    * Business filter: independent performers, agency performers, or both.
    * `unknown` means the sources do not say.

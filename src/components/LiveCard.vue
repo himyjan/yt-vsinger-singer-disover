@@ -7,7 +7,7 @@
  * here is the *all links* row, which lists every platform the performer is
  * present on.
  */
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import type { Item } from "@shared/lib/types";
 import { formatCount, formatDuration, formatRelative } from "@/lib/dataset";
 import { channelLinks, itemUrl, platformMeta } from "@/lib/links";
@@ -23,6 +23,9 @@ const props = defineProps<{
 const emit = defineEmits<{ (e: "open", item: Item): void }>();
 
 const links = computed(() => channelLinks(props.channel));
+
+/** Set when the thumbnail URL does not load. */
+const thumbFailed = ref(false);
 
 const thumbnail = computed(() => {
   if (props.item.thumbnail) return props.item.thumbnail;
@@ -55,12 +58,21 @@ const kindLabel = computed(() =>
       @click="emit('open', item)"
     >
       <img
+        v-if="!thumbFailed"
         :src="thumbnail"
         :alt="item.title"
         loading="lazy"
         decoding="async"
         class="h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]"
+        @error="thumbFailed = true"
       />
+      <span
+        v-else
+        class="grid h-full w-full place-items-center bg-neutral-200 text-2xl dark:bg-neutral-800"
+        aria-hidden="true"
+      >
+        ♪
+      </span>
 
       <!-- Status pill -->
       <span

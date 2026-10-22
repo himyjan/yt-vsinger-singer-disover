@@ -51,8 +51,20 @@ export interface TrackedVTuber {
   graduateDate: string | null;
   /** Subscriber count, with the hidden/unknown distinction. */
   subscribers: CountRef;
-  /** Twitch user id. */
+  /** Twitch numeric user id. */
   twitchId: string | null;
+  /**
+   * The Twitch **login** — the name in the URL.
+   *
+   * The track list stores the numeric id in one column and the login in
+   * another. The **id** is the stable identifier and the only one that is
+   * needed: Twitch's own API resolves an id to the current login, which
+   * matters because channels get renamed — 樞木黎月 is `kururugi_reitsuki` on
+   * Twitch, but the list still says `kururugiliyue_0413`.
+   *
+   * So this is a **fallback**, used only when the API cannot be reached.
+   */
+  twitchLogin: string | null;
   /** Profile image. */
   avatar: string | null;
   /** Agency / group. */
@@ -143,6 +155,8 @@ async function fetchNationality(
         graduateDate: entry.graduateDate ?? null,
         subscribers: toCountRef(entry.YouTube?.subscriber),
         twitchId: entry.Twitch?.id ?? null,
+        // The JSON API's `Twitch.id` is already the login.
+        twitchLogin: entry.Twitch?.id ?? null,
         avatar: entry.imgUrl ?? null,
         group: entry.group ?? null,
         // The JSON API does not distinguish "no group" from "not listed".
@@ -191,6 +205,7 @@ export async function fetchTrackedVtubers(): Promise<
     existing.graduateDate = entry.graduateDate ?? existing.graduateDate;
     existing.debutDate = entry.debutDate ?? existing.debutDate;
     existing.twitchId = entry.twitchId ?? existing.twitchId;
+    existing.twitchLogin = entry.twitchLogin ?? existing.twitchLogin;
     existing.group = entry.group ?? existing.group;
     // The track list is the only source that states "no group" positively.
     existing.isIndependent = entry.isIndependent;
@@ -282,6 +297,7 @@ export async function fetchTrackList(): Promise<TrackedVTuber[]> {
       alias: col("alias names"),
       youtube: col("youtube channel id"),
       twitch: col("twitch channel id"),
+      twitchName: col("twitch channel name"),
       debut: col("debut date"),
       graduate: col("graduation date"),
       activity: col("activity"),
@@ -315,6 +331,9 @@ export async function fetchTrackList(): Promise<TrackedVTuber[]> {
         graduateDate: c.graduate >= 0 ? toIsoDate(cells[c.graduate]) : null,
         subscribers: { tag: "hidden" },
         twitchId: c.twitch >= 0 && cells[c.twitch] ? cells[c.twitch]! : null,
+        // The "Twitch Channel Name" column is the login, not a display name.
+        twitchLogin:
+          c.twitchName >= 0 && cells[c.twitchName] ? cells[c.twitchName]! : null,
         avatar: null,
         group: c.group >= 0 ? cells[c.group] || null : null,
         // An empty group column means the track list says they are solo.

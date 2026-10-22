@@ -24,6 +24,8 @@ const PLATFORM_META: Record<
   bilibili: { label: "Bilibili", color: "#fb7299", icon: "📺" },
   niconico: { label: "Niconico", color: "#252525", icon: "🎬" },
   vk: { label: "VK", color: "#0077ff", icon: "◈" },
+  chzzk: { label: "CHZZK", color: "#03c75a", icon: "🟢" },
+  kick: { label: "KICK", color: "#53fc18", icon: "🟣" },
 };
 
 const EXTERNAL_META: Record<string, { label: string; icon: string }> = {
@@ -109,7 +111,15 @@ export function channelLinks(
   }
 
   // Order: the primary platform first, then YouTube, then everything else.
-  const order = ["youtube", "twitch", "bilibili", "niconico", "vk"];
+  const order = [
+    "youtube",
+    "twitch",
+    "bilibili",
+    "niconico",
+    "chzzk",
+    "kick",
+    "vk",
+  ];
   out.sort((a, b) => {
     const ai = order.indexOf(a.platform);
     const bi = order.indexOf(b.platform);

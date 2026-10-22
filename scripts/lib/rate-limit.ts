@@ -77,6 +77,19 @@ export class RateLimiter {
   }
 
   /**
+   * True when the source has pushed back hard enough that it should be left
+   * alone for a while.
+   *
+   * This is the circuit breaker. Without it, a source that is banning us
+   * costs fifteen seconds *per channel* — a run of nine hundred channels
+   * would take hours. With it, the run notices, stops calling that source
+   * and moves on to the next one.
+   */
+  isTripped(): boolean {
+    return this.interval >= this.maxInterval;
+  }
+
+  /**
    * Records that a request was rate limited.
    *
    * The interval doubles, up to the ceiling, and the caller should back off
