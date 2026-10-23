@@ -32,8 +32,10 @@ decided the region; `Channel.verification` says what was actually looked up.
 YouTube is the primary platform. InnerTube (`youtubei.js`) is the default
 source for handle resolution, channel profiles and uploads, and needs no API
 key. The optional YouTube Data API v3 is used for discovery search,
-live-broadcast data and detailed video metadata, with fallback to it when
-InnerTube cannot retrieve a channel profile or uploads. Its free tier allows
+live-broadcast data and detailed video metadata. InnerTube channel search is
+the discovery fallback when the API key is absent or the search budget runs
+out; profile and upload requests can also fall back to the Data API when
+InnerTube cannot retrieve them. Its free tier allows
 10,000 units a day; the quota guard in `scripts/lib/youtube.ts` refuses
 any call that would exceed it. See `docs/YOUTUBE-API.md` for the Data API and
 quota details.
@@ -154,7 +156,9 @@ read from the linked VTuber Music Dataset and VocaDB rather than scraped from
 
 ### 9–13. The platform APIs
 
-Bilibili, Niconico, Twitch and VK — see `docs/PLATFORMS.md`.
+The sync adapters support Bilibili, Niconico, Twitch, VK, CHZZK, KICK, SOOP
+and CI.ME with different discovery and media coverage. For the endpoint-level
+details and limitations, see `docs/PLATFORMS.md`.
 
 ### The quota-free sources
 
@@ -162,18 +166,19 @@ The Data API's 10,000 units a day is a hard ceiling: the catalogue is
 fourteen thousand channels, and at one unit per channel plus one per fifty
 videos, a full refresh would take days of the allowance.
 
-Each platform has an unofficial route that costs **nothing** — the same trade
-InnerTube offers on YouTube:
+Several platforms expose public or quota-free routes, but their availability,
+credentials and coverage differ. A public endpoint is not necessarily a
+stable or complete search API:
 
 | Platform | Official | Quota-free equivalent | Gives |
 | --- | --- | --- | --- |
 | YouTube | Data API v3 | **InnerTube** (`youtubei.js`) | description, avatar, subscribers, uploads, live |
-| Twitch | Helix (client id **and** secret) | **GQL** (`gql.twitch.tv`) | description, avatar, followers, live |
+| Twitch | Helix (client id **and** secret) | **GQL** (`gql.twitch.tv`) for browser account features | description, avatar, followers, live; sync keyword discovery uses Helix |
 | Bilibili | — | **WBI-signed public API** | description, avatar, followers, uploads, live |
-| CHZZK | — | **the public API** | description, image, followers, live |
-| KICK | — | **the public API** | description, image, followers, live |
-| SOOP | — | **the public live-list API** | live titles, channel names, viewer counts |
-| [CI.ME Open API](https://developers.ci.me/docs/api-channels) | **Open API** (`Client-Id` / `Client-Secret`) | **the public API** | channel profile and follower count for known channel IDs |
+| CHZZK | — | **the public API** | channel search, profile, followers, live |
+| KICK | — | **the public API** | profile and live data for known channels; no usable public keyword search |
+| SOOP | — | **the public live-list API** | first-page live titles, channel names, viewer counts |
+| [CI.ME Open API](https://developers.ci.me/docs/api-channels) | **Open API** (`Client-Id` / `Client-Secret`) | same API | channel profile and follower count for known channel IDs; no documented search/media API |
 
 **InnerTube** (`scripts/lib/youtubei.ts`) — the channel's *description* is the
 richest field in the project: it is where a performer states their own
@@ -262,9 +267,9 @@ fields go first:
 
 | Field | Where it comes from |
 | --- | --- |
-| the **description** | InnerTube (YouTube), GQL (Twitch), the Bilibili `card` endpoint, the CHZZK and KICK profile endpoints |
-| the **avatar** | the same three sources |
-| the **follower count** | InnerTube, GQL, `x/relation/stat` (Bilibili) |
+| the **description** | InnerTube (YouTube), Helix (Twitch), the Bilibili `card` endpoint, CHZZK and KICK profile endpoints |
+| the **avatar** | the same profile sources |
+| the **follower count** | InnerTube, Helix (Twitch), `x/relation/stat` (Bilibili), CHZZK and KICK profile endpoints |
 | the **country** | YouTube's about page — the record's own statement of where it belongs |
 | the **links** | the channel's own published links |
 

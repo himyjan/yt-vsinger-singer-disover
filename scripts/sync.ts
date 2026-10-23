@@ -1200,10 +1200,21 @@ async function main(): Promise<void> {
    * The platform adapters. YouTube and Twitch are handled by their own
    * clients above; these are the ones that discover channels on their own.
    */
+  const twitch = TwitchClient.fromEnv(
+    process.env,
+    path.join(CACHE_DIR, "twitch"),
+  );
   const adapters = createAdapters({
     youtubeClient: null,
-    twitchClient: null,
+    twitchClient: twitch,
+    onLog: log,
   });
+  if (!twitch) {
+    log("twitch: discovery and live checks unavailable; configure TWITCH_CLIENT_ID and TWITCH_CLIENT_SECRET");
+  }
+  if (!adapters.some((adapter) => adapter.id === "ci.me")) {
+    log("ci.me: profile refresh unavailable; configure CI_ME_CLIENT_ID and CI_ME_CLIENT_SECRET");
+  }
 
   /* --- platform profile details ----------------------------------------- */
   /**
@@ -1552,7 +1563,10 @@ async function main(): Promise<void> {
           }
           link.lastCheckedAt = now;
           try {
-            const uploads = await adapter.live(profile);
+            const uploads = await adapter.uploads(
+              profile,
+              config.maxItemsPerChannel,
+            );
             for (const upload of uploads) {
               const item = platformUploadToItem(upload, now, channel);
               if (!item) continue;
@@ -1564,12 +1578,15 @@ async function main(): Promise<void> {
             }
           } catch (error) {
             log(
-              `warn: ${adapter.id} live lookup failed for ${link.id}: ${(error as Error).message}`,
+              `warn: ${adapter.id} media lookup failed for ${link.id}: ${(error as Error).message}`,
             );
           }
           resolved++;
-        } catch {
-          /* a profile that cannot be fetched is not a reason to fail */
+        } catch (error) {
+          log(
+            `warn: ${adapter.id} profile refresh failed for ${link.id}: ` +
+              `${(error as Error).message}`,
+          );
         }
         channel.lastDetailsFetchedAt = now;
         if (resolved >= budget) break;
@@ -1761,10 +1778,6 @@ async function main(): Promise<void> {
   }
 
   /* --- Twitch enrichment (optional) ------------------------------------ */
-  const twitch = TwitchClient.fromEnv(
-    process.env,
-    path.join(CACHE_DIR, "twitch"),
-  );
   if (twitch) {
     /**
      * The Twitch identity lives in `platforms[]`, so the enrichment updates
@@ -1927,9 +1940,9 @@ async function main(): Promise<void> {
     log("aislist: unavailable — falling back to heuristic AI detection");
   }
 
-  /* --- other platforms: bilibili / niconico / vk ----------------------- */
+  /* --- other streaming platforms --------------------------------------- */
   const extraPlatforms = adapters.filter(
-    (a) => a.id !== "youtube" && a.id !== "twitch",
+    (a) => a.id !== "youtube",
   );
 
   /**
@@ -1954,16 +1967,33 @@ async function main(): Promise<void> {
       log(`bilibili: ${mids.size} known VTuber account(s) for the live filter`);
     }
   }
-  if (extraPlatforms.length) {
+  if (extraPlatforms.length && !args.noSearch) {
     const platformKeywords = readJson<Record<string, string[]>>(
       path.join(ROOT, "config", "platform-keywords.json"),
       {},
     );
     for (const adapter of extraPlatforms) {
-      const queries = platformKeywords[adapter.id] ?? [];
+      if (
+        adapter.id === "vk" &&
+        "hasToken" in adapter &&
+        adapter.hasToken === false
+      ) {
+        log("vk: discovery requires VK_ACCESS_TOKEN; refreshing linked accounts only");
+        continue;
+      }
+      const queries = args.keywords.length
+        ? args.keywords
+        : platformKeywords[adapter.id] ?? [];
+      if (!adapter.search) {
+        log(`${adapter.id}: channel discovery unavailable; refreshing linked accounts only`);
+        continue;
+      }
+      if (!queries.length) {
+        log(`${adapter.id}: no discovery keywords configured`);
+        continue;
+      }
       let found = 0;
       for (const query of queries) {
-        if (!adapter.search) continue;
         try {
           const channels = await adapter.search(query, 10);
           for (const foundChannel of channels) {
@@ -1982,21 +2012,49 @@ async function main(): Promise<void> {
     }
 
     /**
-     * Collect the uploads the adapters found while discovering channels.
+     * Collect the media the adapters found while discovering channels.
      *
      * Bilibili's live list is partition-wide, so the adapter hands back the
-     * live streams it saw; they become dataset items like any other upload.
+     * live streams it saw. Niconico search likewise returns videos before
+     * their author channels; those media items are retained directly.
      */
-    for (const { adapter, channel } of platformCandidates) {
-      const liveUploads = (adapter as unknown as { liveUploads?: any[] })
-        .liveUploads;
-      if (Array.isArray(liveUploads)) {
-        for (const upload of liveUploads) {
+    for (const adapter of new Set(
+      platformCandidates.map((candidate) => candidate.adapter),
+    )) {
+      const searchResults = adapter as PlatformAdapter & {
+        liveUploads?: PlatformUpload[];
+        discoveredUploads?: PlatformUpload[];
+      };
+      for (const uploads of [
+        searchResults.liveUploads,
+        searchResults.discoveredUploads,
+      ]) {
+        if (!Array.isArray(uploads)) continue;
+        for (const upload of uploads) {
           const item = platformUploadToItem(upload, now);
           if (!item) continue;
           const prev = itemById.get(item.id);
           itemById.set(item.id, { ...item, addedAt: prev?.addedAt ?? item.addedAt });
         }
+      }
+    }
+    for (const { adapter, channel } of platformCandidates) {
+      try {
+        const uploads = await adapter.uploads(channel, 5);
+        for (const upload of uploads) {
+          const item = platformUploadToItem(upload, now);
+          if (!item) continue;
+          const prev = itemById.get(item.id);
+          itemById.set(item.id, {
+            ...item,
+            addedAt: prev?.addedAt ?? item.addedAt,
+          });
+        }
+      } catch (err) {
+        log(
+          `warn: ${adapter.id} media lookup failed for discovered ${channel.id}: ` +
+            `${(err as Error).message}`,
+        );
       }
     }
 
@@ -2028,6 +2086,8 @@ async function main(): Promise<void> {
     channels = [...channelById.values()].filter(
       (c) => !overrides[c.id]?.hidden,
     );
+  } else if (args.noSearch) {
+    log("platform discovery skipped (--no-search)");
   }
 
   /* --- fetch items ----------------------------------------------------- */

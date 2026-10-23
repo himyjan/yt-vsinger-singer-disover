@@ -202,6 +202,23 @@ class TwitchAdapter implements PlatformAdapter {
     };
   }
 
+  async search(query: string, limit: number): Promise<PlatformChannel[]> {
+    const results = await this.client.searchChannels(query, limit);
+    return results.map((result: any) => ({
+      platform: "twitch",
+      id: String(result.id),
+      handle: result.broadcaster_login ?? null,
+      name: result.display_name ?? result.broadcaster_login ?? null,
+      url: result.broadcaster_login
+        ? `https://www.twitch.tv/${result.broadcaster_login}`
+        : `https://www.twitch.tv/${result.id}`,
+      subscribers: { tag: "hidden" },
+      avatar: result.thumbnail_url ?? null,
+      description: result.title ?? null,
+      tags: Array.isArray(result.tags) ? result.tags : [],
+    }));
+  }
+
   async uploads(
     channel: PlatformChannel,
     limit: number,
@@ -251,6 +268,7 @@ class TwitchAdapter implements PlatformAdapter {
 export interface RegistryOptions {
   youtubeClient: YouTubeClient | null;
   twitchClient: TwitchClient | null;
+  onLog?: (message: string) => void;
 }
 
 /** Builds every adapter that can run in this environment. */
@@ -267,18 +285,18 @@ export function createAdapters(opts: RegistryOptions): PlatformAdapter[] {
   const bili = new BilibiliAdapter();
   if (bili.isConfigured()) adapters.push(bili);
 
-  const nico = new NiconicoAdapter();
+  const nico = new NiconicoAdapter({ onLog: opts.onLog });
   if (nico.isConfigured()) adapters.push(nico);
 
-  const vk = new VkAdapter();
+  const vk = new VkAdapter(undefined, opts.onLog);
   if (vk.isConfigured()) adapters.push(vk);
 
   // CHZZK — Naver's platform, and the biggest Korean VTuber scene.
-  const chzzk = new ChzzkAdapter();
+  const chzzk = new ChzzkAdapter({ onLog: opts.onLog });
   if (chzzk.isConfigured()) adapters.push(chzzk);
 
   // KICK.
-  const kick = new KickAdapter();
+  const kick = new KickAdapter({ onLog: opts.onLog });
   if (kick.isConfigured()) adapters.push(kick);
 
   const soop = new SoopAdapter();

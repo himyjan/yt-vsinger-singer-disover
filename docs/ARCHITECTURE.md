@@ -111,8 +111,8 @@ scripts/
     ├── innertube-subs.ts    signed-in FEchannels subscription feed
     ├── youtube-channel.ts   one-channel snapshot for the subscription cards
     ├── twitch.ts            Twitch Helix client
-    ├── platforms/           Bilibili, Niconico, VK, CHZZK, KICK and SOOP
-    │                        adapters
+    ├── platforms/           Bilibili, Niconico, VK, CHZZK, KICK, SOOP and
+    │                        CI.ME adapters
     ├── platform-registry.ts assembles every adapter
     ├── platforms.ts         the PlatformAdapter interface
     ├── classify.ts          virtual/real, role, region, gender, AI, category

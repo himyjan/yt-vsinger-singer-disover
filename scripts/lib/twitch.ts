@@ -12,6 +12,7 @@
  *   - Get Users        (`GET  /helix/users?login=...`)
  *   - Get Channels     (`GET  /helix/channels?broadcaster_id=...`)
  *   - Get Streams      (`GET  /helix/streams?user_id=...`)
+ *   - Search Channels  (`GET  /helix/search/channels?query=...`)
  *   - Get Followers    (`GET  /helix/channels/followers?broadcaster_id=...`)
  *
  * Twitch follower counts are *always* public, so they map to the `has` tag of
@@ -21,6 +22,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import type { CountRef } from "./types";
+import { REQUEST_TIMEOUT_MS } from "./io";
 
 const HELIX = "https://api.twitch.tv/helix";
 const OAUTH = "https://id.twitch.tv/oauth2/token";
@@ -77,6 +79,7 @@ export class TwitchClient {
     }
     const res = await fetch(OAUTH, {
       method: "POST",
+      signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: new URLSearchParams({
         client_id: this.clientId,
@@ -124,6 +127,7 @@ export class TwitchClient {
     for (const [k, v] of Object.entries(params)) url.searchParams.set(k, v);
 
     const res = await fetch(url.toString(), {
+      signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
       headers: {
         "Client-Id": this.clientId,
         Authorization: `Bearer ${token}`,
@@ -155,6 +159,17 @@ export class TwitchClient {
       out.push(...(res.data ?? []));
     }
     return out;
+  }
+
+  /** Search public Twitch channels by name or title. */
+  async searchChannels(query: string, limit = 10): Promise<any[]> {
+    const needle = query.trim();
+    if (!needle || limit <= 0) return [];
+    const res = await this.request<{ data?: any[] }>("search/channels", {
+      query: needle,
+      first: String(Math.min(limit, 100)),
+    });
+    return res.data ?? [];
   }
 
   /** Channel metadata (title, category, language) for broadcasters. */

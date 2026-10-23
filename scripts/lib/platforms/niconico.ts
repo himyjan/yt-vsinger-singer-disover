@@ -44,10 +44,20 @@ interface NicoChannel {
   thumbnailUrl?: string;
 }
 
+export interface NiconicoOptions {
+  onLog?: (message: string) => void;
+}
+
 export class NiconicoAdapter implements PlatformAdapter {
   readonly id: PlatformId = "niconico";
   readonly label = "Niconico";
   readonly color = "#252525";
+  discoveredUploads: PlatformUpload[] = [];
+  private readonly onLog: (message: string) => void;
+
+  constructor(options: NiconicoOptions = {}) {
+    this.onLog = options.onLog ?? (() => {});
+  }
 
   isConfigured(): boolean {
     return true;
@@ -64,9 +74,13 @@ export class NiconicoAdapter implements PlatformAdapter {
           "User-Agent": "Mozilla/5.0",
         },
       });
-      if (!res.ok) return null;
+      if (!res.ok) {
+        this.onLog(`niconico: ${path} returned HTTP ${res.status}`);
+        return null;
+      }
       return (await res.json()) as T;
-    } catch {
+    } catch (error) {
+      this.onLog(`niconico: ${path} request failed: ${(error as Error).message}`);
       return null;
     }
   }
@@ -117,7 +131,7 @@ export class NiconicoAdapter implements PlatformAdapter {
   ): Promise<PlatformUpload[]> {
     const data = await this.getJson<{ data?: NicoVideo[] }>("video", {
       query: channel.id,
-      targets: "tagsExact",
+      targets: "userId",
       fields: "contentId,title,tags,viewCounter,startTime,contentType",
       _sort: "-startTime",
       _limit: String(Math.min(100, limit)),
@@ -171,6 +185,47 @@ export class NiconicoAdapter implements PlatformAdapter {
       _limit: String(Math.min(100, limit)),
     });
     const list = data?.data ?? [];
+    const discoveredUploads = list.flatMap((video) => {
+      const author = (video as NicoVideo & { user?: string }).user;
+      if (!author || !video.contentId) return [];
+      const classified = classifyItem({
+        title: video.title ?? "",
+        description: video.description ?? null,
+        tags: video.tags ?? [],
+        channelKind: "virtual",
+        status: "past",
+        isShort: false,
+        durationSeconds: null,
+        channelRegion: "jp",
+      });
+      return [{
+        platform: "niconico" as const,
+        id: video.contentId,
+        channelId: author,
+        title: video.title ?? "",
+        description: video.description ?? null,
+        thumbnail: `https://img1.ssl.nimg.jp/thumb/${video.contentId}`,
+        publishedAt: video.startTime
+          ? new Date(video.startTime * 1000).toISOString()
+          : null,
+        scheduledStart: null,
+        duration: null,
+        status: "past" as const,
+        category: classified.category,
+        songTitle: classified.songTitle,
+        originalArtist: classified.originalArtist,
+        viewCount: video.viewCounter ?? null,
+        url: `https://www.nicovideo.jp/watch/${video.contentId}`,
+      } satisfies PlatformUpload];
+    });
+    this.discoveredUploads = [
+      ...new Map(
+        [...this.discoveredUploads, ...discoveredUploads].map((upload) => [
+          upload.id,
+          upload,
+        ]),
+      ).values(),
+    ];
 
     // Niconico's search API returns videos rather than channels, so group by
     // the `user` field to derive candidate channels.

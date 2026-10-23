@@ -133,9 +133,4 @@ export class CiMeAdapter implements PlatformAdapter {
     return [];
   }
 
-  async search(query: string, limit: number): Promise<PlatformChannel[]> {
-    void query;
-    void limit;
-    return [];
-  }
 }

@@ -74,24 +74,23 @@ even when a platform does not have a dedicated profile adapter.
 
 | Platform | Dataset support | Secrets needed |
 | --- | --- | --- |
-| YouTube | Channel profiles and uploads via InnerTube; Data API adds discovery and specialized live/video metadata | Optional `YOUTUBE_API_KEY` |
-| Twitch | Channel profiles, uploads, live streams and follower counts | Optional `TWITCH_CLIENT_ID` and `TWITCH_CLIENT_SECRET`; public GQL is also used |
-| Bilibili | Channel profiles, uploads and follower counts | None |
-| Niconico | Search for video/channel metadata, including original songs and covers; no live listing | None |
-| VK | Channel profiles, uploads and follower counts | Optional `VK_ACCESS_TOKEN` |
-| CHZZK | Refresh known profiles and current live streams | None |
-| KICK | Refresh known profiles and current live streams | None |
-| SOOP | Discover current broadcasts from its public live list; no offline profile lookup | None |
-| CI.ME | Refresh profiles for known channel IDs; no uploads or live lookup | `CI_ME_CLIENT_ID` and `CI_ME_CLIENT_SECRET` |
+| YouTube | Channel discovery, profiles, uploads, and live/video metadata | Optional `YOUTUBE_API_KEY`; InnerTube is the discovery fallback |
+| Twitch | Keyword channel discovery and live streams; linked profiles and follower counts | `TWITCH_CLIENT_ID` and `TWITCH_CLIENT_SECRET` are required for sync discovery |
+| Bilibili | VTuber-partition discovery and live streams; channel uploads and profiles | None |
+| Niconico | Keyword video discovery and uploads; authors are inferred from matching videos; no live listing | None |
+| VK | User discovery, channel profiles, uploads and follower counts | `VK_ACCESS_TOKEN` is required for discovery |
+| CHZZK | Public keyword channel discovery, profiles and current live streams | None |
+| KICK | Refresh known profiles and current live streams; no usable public keyword search | None |
+| SOOP | Match current broadcasts from the first page of its public live list; no offline profile lookup | None |
+| CI.ME | Refresh profiles for known channel IDs; no public search, uploads or live lookup | `CI_ME_CLIENT_ID` and `CI_ME_CLIENT_SECRET` |
 
-CHZZK and KICK do not offer public channel search here, so their known channel
-IDs come from the cross-platform roster and existing records. Their live state
-is refreshed during the six-hour sync cycle, subject to the per-run details
-budget. SOOP only exposes a public live list; offline profile lookup and broad
-historical uploads are not available through this adapter. CI.ME refreshes
-known profiles but currently does not provide media or live-stream data through
-this integration. Configure the CI.ME credentials under **Settings → Secrets
-and variables → Actions** in the repository to enable its profile refresh.
+Discovery coverage varies: KICK identities are sourced from the global roster
+and existing records because its current web search endpoint is not a usable
+public API. SOOP only exposes a public live list, so discovery is limited to
+matching broadcasts on its first page. CI.ME can refresh known profiles only;
+configure its credentials under **Settings → Secrets and variables → Actions**
+to enable that refresh. See [docs/PLATFORMS.md](docs/PLATFORMS.md) for platform
+endpoints, discovery limitations and account-linking details.
 
 A quota budget refuses any YouTube Data API v3 call that would exceed the
 daily allowance. InnerTube requests do not use Data API quota, and cached
@@ -121,7 +120,13 @@ data/
 The scheduled GitHub Actions workflow refreshes the roster and supported
 platform data every six hours, rebuilds search, validates the dataset and
 commits changes. The manual workflow also supports quota budgets, discovery
-skip and dry-run options. See [docs/DEPLOY.md](docs/DEPLOY.md).
+skip, dry-run and a custom keyword used by the enabled platform searches.
+Scheduled searches use the per-platform terms in
+[`config/platform-keywords.json`](config/platform-keywords.json). Twitch and VK
+discovery need their respective Actions secrets. `--no-search` (or the manual
+workflow's **Skip discovery searches** option) skips keyword discovery across
+platforms while continuing profile and media refreshes for known channels.
+See [docs/DEPLOY.md](docs/DEPLOY.md) and [docs/PLATFORMS.md](docs/PLATFORMS.md).
 
 Everything is sharded so no single file grows large — see
 [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md#2-sharding-is-a-product-decision-not-an-implementation-detail).

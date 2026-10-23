@@ -95,24 +95,28 @@ Every record carries `source`:
 
 ## 5. Multi-platform support
 
-- `[x]` YouTube — primary. YouTube Data API v3 (free tier) + optional
-      `youtubei.js` for the local dev server.
-- `[x]` Twitch — Helix API, optional (`TWITCH_CLIENT_ID` /
-      `TWITCH_CLIENT_SECRET`).
+- `[x]` YouTube — primary. InnerTube is the default pipeline source; the
+      optional YouTube Data API v3 adds search and metadata, with InnerTube
+      channel-search fallback when the key is missing or quota is exhausted.
+- `[x]` Twitch — Helix API adapter with keyword discovery and live data when
+      `TWITCH_CLIENT_ID` and `TWITCH_CLIENT_SECRET` are configured.
 - `[x]` Bilibili — public web API, no credentials needed.
-- `[x]` Niconico — public search API v2, no credentials needed.
-- `[x]` VK — official API with `VK_ACCESS_TOKEN`; degrades to profile-only
-      without it.
-- `[x]` **CHZZK** (Naver) — the public API, no credentials. The biggest Korean
-      VTuber scene.
-- `[x]` **KICK** — the public API, no credentials. Where a lot of the
-      Western scene has moved.
+- `[x]` Niconico — public video search API v2; discovery stores matched videos
+      and derives their author channels. The public endpoint may be unavailable
+      in some environments.
+- `[x]` VK — official API with `VK_ACCESS_TOKEN` for keyword discovery and
+      uploads; without it, known identities can only be refreshed in reduced
+      mode.
+- `[x]` **CHZZK** (Naver) — public keyword search, profile and live endpoints;
+      no credentials required.
+- `[x]` **KICK** — public known-channel profile and live endpoints; a usable
+      public keyword-search endpoint is not available.
 - `[x]` **SOOP** — public live-list adapter for discoverable public
       broadcasts; offline profile lookup is unavailable through a verified
       endpoint.
 - `[x]` **CI.ME** — profile adapter for known channel IDs using the official
       Open API; requires server-side app credentials and does not expose
-      undocumented search or live endpoints.
+      documented public search, uploads or live endpoints.
 - `[x]` A common `PlatformAdapter` interface so adding a platform is one file.
 - `[x]` A channel record carries a **list** of platform identities
       (`platforms[]`), so one performer can be present on YouTube *and*

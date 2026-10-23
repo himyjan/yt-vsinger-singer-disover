@@ -10,17 +10,23 @@
 ```yaml
 on:
   schedule:
-    - cron: "17 */6 * * *"   # every 6 hours
+    - cron: "17 */6 * * *" # every 6 hours
   workflow_dispatch:
     inputs:
       budget: { default: "2500" }
       no-search: { default: "false" }
+      keyword: { default: "" }
       dry-run: { default: "false" }
 ```
 
 Steps: checkout → install LFS → install dependencies → restore the quota
 cache → sync → append daily analytics to the separate archive (when configured)
 → build the search index → validate → commit `data/`.
+
+The manual `keyword` input replaces the configured discovery terms for
+platforms that support keyword search. The `no-search` input skips discovery
+and still refreshes known records. Platform search coverage and credential
+requirements vary; see [PLATFORMS.md](PLATFORMS.md).
 
 The commit uses `stefanzweifel/git-auto-commit-action@v5`, so a run that
 finds nothing new produces no commit and the git history stays clean.
@@ -43,15 +49,15 @@ dataset or a broken build never reaches `main`.
 
 Add these under **Settings → Secrets and variables → Actions**:
 
-| Secret | Required | Purpose |
-| --- | --- | --- |
-| `YOUTUBE_API_KEY` | no | Optional YouTube Data API v3 discovery, live, and video metadata |
-| `TWITCH_CLIENT_ID` | no | Twitch application client id |
-| `TWITCH_CLIENT_SECRET` | no | Twitch application client secret |
-| `VK_ACCESS_TOKEN` | no | VK service token |
-| `CI_ME_CLIENT_ID` | no | CI.ME Open API application client ID |
-| `CI_ME_CLIENT_SECRET` | no | CI.ME Open API application client secret |
-| `ANALYTICS_REPO_TOKEN` | no | Fine-grained token with Contents read/write access to `himyjan/yt-vsinger-singer-disover-analytics`; enables daily analytics archiving |
+| Secret                 | Required | Purpose                                                                                                                                |
+| ---------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `YOUTUBE_API_KEY`      | no       | YouTube Data API v3 discovery and additional live/video metadata; InnerTube provides channel-search fallback                          |
+| `TWITCH_CLIENT_ID`     | no       | Twitch application client ID; used with the secret for sync channel discovery and live data                                            |
+| `TWITCH_CLIENT_SECRET` | no       | Twitch application client secret; used with the client ID for sync channel discovery and live data                                     |
+| `VK_ACCESS_TOKEN`      | no       | VK service token; required for keyword discovery and API-backed upload collection                                                     |
+| `CI_ME_CLIENT_ID`      | no       | CI.ME Open API application client ID; enables profile refresh for known channel IDs                                                   |
+| `CI_ME_CLIENT_SECRET`  | no       | CI.ME Open API application client secret; enables profile refresh for known channel IDs                                                |
+| `ANALYTICS_REPO_TOKEN` | no       | Fine-grained token with Contents read/write access to `himyjan/yt-vsinger-singer-disover-analytics`; enables daily analytics archiving |
 
 `GITHUB_TOKEN` is provided automatically and needs no configuration.
 
@@ -73,20 +79,20 @@ those limitations rather than treating missing metrics as zero.
 
 ## Repository variables
 
-| Variable | Default | Purpose |
-| --- | --- | --- |
-| `VITE_BASE_PATH` | `/` | Set to `/<repo-name>/` for a project page |
+| Variable         | Default | Purpose                                   |
+| ---------------- | ------- | ----------------------------------------- |
+| `VITE_BASE_PATH` | `/`     | Set to `/<repo-name>/` for a project page |
 
 ## Build-time variables for the web app
 
 These are **not** secret — they are baked into the public bundle. They are
-set as repository *variables* so the deploy workflow can inject them.
+set as repository _variables_ so the deploy workflow can inject them.
 
-| Variable | Purpose |
-| --- | --- |
+| Variable                | Purpose                                                    |
+| ----------------------- | ---------------------------------------------------------- |
 | `VITE_GOOGLE_CLIENT_ID` | Enables YouTube account linking (Google Identity Services) |
-| `VITE_TWITCH_CLIENT_ID` | Enables Twitch account linking (public client, PKCE) |
-| `VITE_VK_CLIENT_ID` | Enables VK account linking |
+| `VITE_TWITCH_CLIENT_ID` | Enables Twitch account linking (public client, PKCE)       |
+| `VITE_VK_CLIENT_ID`     | Enables VK account linking                                 |
 
 Bilibili account linking needs no configuration — the user supplies their own
 `SESSDATA`.
@@ -121,14 +127,14 @@ remain repository secrets; never configure them as frontend build variables.
 
 ## Enabling GitHub Pages
 
-1. **Settings → Pages → Build and deployment → Source**: *GitHub Actions*.
+1. **Settings → Pages → Build and deployment → Source**: _GitHub Actions_.
 2. Push to `main`, or run the `deploy-pages.yml` workflow manually.
 
 For a project page (`https://<user>.github.io/<repo>/`), set the repository
 variable `VITE_BASE_PATH` to `/<repo>/`. The Vite config reads it:
 
 ```ts
-base: env.VITE_BASE_PATH || '/'
+base: env.VITE_BASE_PATH || "/";
 ```
 
 and the data loader prefixes every request with `import.meta.env.BASE_URL`,
@@ -198,6 +204,11 @@ npm run data:sync -- --keyword "vtuber 歌い手"
 npm run data:index                      # rebuild the search index
 npm run data:validate                   # check structure and budgets
 ```
+
+`--keyword` uses the same query on each enabled platform adapter that
+implements search; it does not enable search on platforms without a usable
+public search endpoint. The scheduled run uses the per-platform queries in
+[`../config/platform-keywords.json`](../config/platform-keywords.json).
 
 ## Troubleshooting
 
