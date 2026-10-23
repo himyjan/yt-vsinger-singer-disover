@@ -14,6 +14,7 @@ import type { YouTubeChannelItem } from "@shared/lib/types";
 import type { Subscription } from "@/lib/store";
 import type { YouTubeChannelDetail } from "@/lib/youtube-detail";
 import { formatCount } from "@/lib/dataset";
+import { imageUrl } from "@/lib/image";
 import OfficialArtistBadge from "@/components/OfficialArtistBadge.vue";
 
 const props = defineProps<{
@@ -74,8 +75,9 @@ function itemUrl(item: YouTubeChannelItem): string {
               class="flex items-start gap-3 border-b border-black/8 p-4 dark:border-white/10"
             >
               <img
-                :src="detail?.avatar ?? sub.thumbnail ?? ''"
+                :src="imageUrl(detail?.avatar ?? sub.thumbnail)"
                 :alt="detail?.title ?? sub.title"
+                referrerpolicy="no-referrer"
                 class="h-14 w-14 shrink-0 rounded-full object-cover ring-2 ring-black/5 dark:ring-white/10"
               />
               <div class="min-w-0 flex-1">
@@ -163,8 +165,9 @@ function itemUrl(item: YouTubeChannelItem): string {
                   >
                     <img
                       v-if="detail.live.thumbnail"
-                      :src="detail.live.thumbnail"
+                      :src="imageUrl(detail.live.thumbnail)"
                       :alt="detail.live.title"
+                      referrerpolicy="no-referrer"
                       class="h-12 w-20 shrink-0 rounded-lg object-cover"
                     />
                     <span class="line-clamp-2 text-xs font-semibold">
@@ -188,8 +191,9 @@ function itemUrl(item: YouTubeChannelItem): string {
                   >
                     <img
                       v-if="detail.upcoming.thumbnail"
-                      :src="detail.upcoming.thumbnail"
+                      :src="imageUrl(detail.upcoming.thumbnail)"
                       :alt="detail.upcoming.title"
+                      referrerpolicy="no-referrer"
                       class="h-12 w-20 shrink-0 rounded-lg object-cover"
                     />
                     <span class="line-clamp-2 text-xs font-semibold">
@@ -219,8 +223,9 @@ function itemUrl(item: YouTubeChannelItem): string {
                     >
                       <img
                         v-if="release.thumbnail"
-                        :src="release.thumbnail"
+                        :src="imageUrl(release.thumbnail)"
                         :alt="release.title"
+                        referrerpolicy="no-referrer"
                         loading="lazy"
                         class="h-9 w-9 shrink-0 rounded object-cover"
                       />

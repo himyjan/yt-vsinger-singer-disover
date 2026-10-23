@@ -154,6 +154,16 @@ The `x/web-interface/card` endpoint is the workhorse: it is **not** behind
 the wall, and it carries the name, the avatar, the signature, the follower
 count and the video count in one request. `space/*` is behind it.
 
+### Avatars are HTTPS and no-referrer
+
+The profile `face` is usually `http://i0.hdslb.com/…`. The app is served over
+HTTPS, so the adapter rewrites it to `https://` (`absoluteUrl()`), and the
+committed dataset stores only the HTTPS form. Bilibili's CDN also answers
+**403** when the request carries a foreign `Referer` (the deployed site's
+own origin), so every rendered `<img>` sets `referrerpolicy="no-referrer"`.
+`src/lib/image.ts` applies the HTTPS rewrite once more at render time, which
+covers cached or older JSON.
+
 > **Note on the WBI signature.** In 2023 Bilibili added a WBI signature
 > requirement to `space/arc/search` and `space/wbi/acc/info`. The signature
 > is `md5(sortedQuery + wts + mixinKey)`, where the mixin key comes from

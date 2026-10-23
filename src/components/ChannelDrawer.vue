@@ -9,6 +9,7 @@
 import { computed } from "vue";
 import type { Channel, ChannelSummary, Item } from "@shared/lib/types";
 import { formatCount, formatDuration, formatRelative } from "@/lib/dataset";
+import { imageUrl } from "@/lib/image";
 import { channelLinks, itemUrl, platformMeta } from "@/lib/links";
 import { toLanguageList } from "@shared/lib/regions";
 import { state, toggleSaved } from "@/lib/store";
@@ -220,8 +221,9 @@ const saved = computed(() =>
               class="sticky top-0 z-10 flex items-start gap-3 border-b border-black/8 bg-[#f6f5f1]/95 p-4 backdrop-blur-xl dark:border-white/10 dark:bg-neutral-950/95"
             >
               <img
-                :src="channel.avatar ?? ''"
+                :src="imageUrl(channel.avatar)"
                 :alt="channel.name"
+                referrerpolicy="no-referrer"
                 class="h-16 w-16 shrink-0 rounded-full object-cover ring-2 ring-black/5 dark:ring-white/10"
               />
               <div class="min-w-0 flex-1">
@@ -516,10 +518,12 @@ const saved = computed(() =>
                   >
                     <img
                       :src="
-                        upload.thumbnail ??
-                        `https://i.ytimg.com/vi/${upload.id}/default.jpg`
+                        upload.thumbnail
+                          ? imageUrl(upload.thumbnail)
+                          : `https://i.ytimg.com/vi/${upload.id}/default.jpg`
                       "
                       :alt="upload.title"
+                      referrerpolicy="no-referrer"
                       loading="lazy"
                       class="h-10 w-16 shrink-0 rounded object-cover"
                     />

@@ -159,6 +159,15 @@ just its bare form: 「活動終了」 alone missed 「活動を終了しまし�
 a Japanese channel usually announces it, and 「停止活動」/「停止活动」 is the
 Chinese way of saying the same thing (「目前停止活動中」, 「无限期停止活动」).
 
+A marker is only evidence when it is **not negated**. 「不會畢業」, 「不畢業」
+and 「永不毕业」 contain 「畢業」 but say the opposite, just as 「卒業しません」
+contains 「卒業」, 「은퇴하지 않습니다」 contains 「은퇴」, «не закрыт» contains
+«закрыт», and "not graduated" contains "graduated". `detectActivity()` checks
+each occurrence in its own clause, with the negators of the language that
+marker belongs to; a positive occurrence elsewhere in the description still
+wins. It is not a whole-description veto: 「我不會後悔畢業」 and "I did not know
+she graduated" remain graduations.
+
 ### `CountRef`
 
 A subscriber count is not a plain number, because YouTube *omits* the field

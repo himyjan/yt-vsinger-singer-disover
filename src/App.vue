@@ -72,6 +72,7 @@ import {
 import { parseSubscriptionsFile } from "@/lib/takeout";
 import { SUBS_EXPORT_SCRIPT } from "@/lib/subs-export";
 import { fetchYouTubeChannel, type YouTubeChannelDetail } from "@/lib/youtube-detail";
+import { imageUrl } from "@/lib/image";
 import { channelLinks, itemUrl, platformMeta } from "@/lib/links";
 import LiveCard from "@/components/LiveCard.vue";
 import ChannelCard from "@/components/ChannelCard.vue";
@@ -2136,8 +2137,9 @@ onMounted(async () => {
               class="block aspect-video w-full overflow-hidden bg-neutral-200 dark:bg-neutral-800"
             >
               <img
-                :src="hit.th ?? ''"
+                :src="imageUrl(hit.th)"
                 :alt="hit.n"
+                referrerpolicy="no-referrer"
                 loading="lazy"
                 decoding="async"
                 class="h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]"
@@ -2625,8 +2627,9 @@ onMounted(async () => {
               @click="openSubscription(sub)"
             >
               <img
-                :src="sub.thumbnail ?? ''"
+                :src="imageUrl(sub.thumbnail)"
                 :alt="sub.title"
+                referrerpolicy="no-referrer"
                 loading="lazy"
                 class="h-16 w-16 rounded-full object-cover ring-2 ring-black/5 dark:ring-white/10"
               />

@@ -9,6 +9,7 @@
  */
 import type { ChannelSummary } from "@shared/lib/types";
 import { formatCount } from "@/lib/dataset";
+import { imageUrl } from "@/lib/image";
 import OfficialArtistBadge from "@/components/OfficialArtistBadge.vue";
 
 defineProps<{ channel: ChannelSummary }>();
@@ -23,8 +24,9 @@ const emit = defineEmits<{ (e: "open", channel: ChannelSummary): void }>();
     @click="emit('open', channel)"
   >
     <img
-      :src="channel.avatar ?? ''"
+      :src="imageUrl(channel.avatar)"
       :alt="channel.name"
+      referrerpolicy="no-referrer"
       loading="lazy"
       class="h-16 w-16 rounded-full object-cover ring-2 ring-black/5 transition group-hover:ring-purple-400 dark:ring-white/10"
     />
