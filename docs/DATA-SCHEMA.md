@@ -31,6 +31,13 @@ data/
     └── <region>.json           SearchPack — the inverted index
 ```
 
+Historical platform analytics are intentionally stored outside this
+repository in `himyjan/yt-vsinger-singer-disover-analytics`. Its
+`data/index.json` lists available dates and `data/daily/YYYY-MM-DD.json`
+contains platform/channel metric snapshots and top-content view counts. The
+separate archive keeps unbounded history from exceeding this repository's
+dataset size budget.
+
 A channel is stored **once**, in `virtual/` or `real/` — the dataset of its
 kind. The two are separate because the scope switch has to be served without
 downloading both: `virtual` is 14,000 records, `real` is a handful.

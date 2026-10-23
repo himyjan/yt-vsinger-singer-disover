@@ -43,6 +43,12 @@ import {
 } from "./lib/twitch";
 import { createAdapters } from "./lib/platform-registry";
 import { InnerTubeSource } from "./lib/youtubei";
+import {
+  clearPendingAnalytics,
+  writePendingAnalytics,
+  type AnalyticsContentObservation,
+  type AnalyticsObservation,
+} from "./lib/analytics";
 import { checkUpstreams, writeRevisions } from "./lib/upstream";
 import { TwitchGqlSource } from "./lib/twitch-gql";
 import {
@@ -87,6 +93,7 @@ import {
   readAllChannelRecords,
 } from "./lib/dataset";
 import { buildRegionMeta } from "./lib/regions";
+import { ALL_PLATFORMS } from "./lib/types";
 import type {
   Channel,
   ChannelFile,
@@ -241,6 +248,31 @@ const overrides: OverrideMap = readJson<OverrideMap>(paths.overrides, {});
 
 const nowIso = () => new Date().toISOString();
 
+function itemUrlForAnalytics(item: Item): string {
+  switch (item.platform) {
+    case "youtube":
+      return `https://www.youtube.com/watch?v=${encodeURIComponent(item.id)}`;
+    case "bilibili":
+      return `https://www.bilibili.com/video/${encodeURIComponent(item.id)}`;
+    case "niconico":
+      return `https://www.nicovideo.jp/watch/${encodeURIComponent(item.id)}`;
+    case "twitch":
+      return `https://www.twitch.tv/videos/${encodeURIComponent(item.id)}`;
+    case "chzzk":
+      return `https://chzzk.naver.com/live/${encodeURIComponent(item.id)}`;
+    case "kick":
+      return `https://kick.com/video/${encodeURIComponent(item.id)}`;
+    case "soop":
+      return `https://play.sooplive.com/${encodeURIComponent(item.id)}`;
+    case "vk":
+      return `https://vk.com/video${encodeURIComponent(item.id)}`;
+    case "ci.me":
+      return `https://ci.me/${encodeURIComponent(item.id)}`;
+    default:
+      return "";
+  }
+}
+
 
 function log(msg: string): void {
   console.log(`[sync] ${msg}`);
@@ -370,6 +402,8 @@ function channelFromApi(
         name: snippet.title ?? null,
         url: `https://www.youtube.com/channel/${raw.id}`,
         subscribers: toCountRef(stats.subscriberCount),
+        videoCount: toNumber(stats.videoCount),
+        viewCount: toNumber(stats.viewCount),
         avatar: pickThumbnail(snippet.thumbnails, "high"),
         lastCheckedAt: now,
       },
@@ -400,7 +434,11 @@ function channelFromInnerTubeProfile(
           : [],
         tags: [],
       },
-      statistics: { subscriberCount: profile.subscribers },
+      statistics: {
+        subscriberCount: profile.subscribers,
+        viewCount: profile.views,
+        videoCount: profile.videos,
+      },
       contentDetails: {},
       brandingSettings: {},
     },
@@ -585,6 +623,7 @@ async function main(): Promise<void> {
    * write it, so two of them at once lose each other's work.
    */
   const releaseLock = acquireRunLock("sync");
+  clearPendingAnalytics();
 
   const apiKey = args.offline
     ? ""
@@ -1186,7 +1225,10 @@ async function main(): Promise<void> {
         const lastDetailsAt = c.lastDetailsFetchedAt
           ? Date.parse(c.lastDetailsFetchedAt)
           : Number.NaN;
-        const liveRefreshDue =
+          const metricsRefreshDue =
+            !Number.isFinite(lastDetailsAt) ||
+            Date.now() - lastDetailsAt >= 6 * 60 * 60 * 1000;
+          const liveRefreshDue =
           c.platforms.some((platform) =>
             livePlatforms.has(platform.platform),
           ) &&
@@ -1195,6 +1237,7 @@ async function main(): Promise<void> {
         return (
           !c.description ||
           c.platforms.some((p) => p.subscribers.tag === "hidden") ||
+          metricsRefreshDue ||
           liveRefreshDue
         );
       })
@@ -1321,6 +1364,16 @@ async function main(): Promise<void> {
             const link = channel.platforms.find((p) => p.platform === "youtube");
             if (link) link.name = channel.name;
           }
+          {
+            const link = channel.platforms.find((p) => p.platform === "youtube");
+            if (link) {
+              link.lastCheckedAt = now;
+              if (profile.views != null) link.viewCount = profile.views;
+              if (profile.videos != null) link.videoCount = profile.videos;
+            }
+            if (profile.views != null) channel.viewCount = profile.views;
+            if (profile.videos != null) channel.videoCount = profile.videos;
+          }
           if (profile.description && !channel.description) {
             channel.description = profile.description.slice(0, 1000);
           }
@@ -1381,6 +1434,7 @@ async function main(): Promise<void> {
                 count: profile.followers,
               };
             }
+            twitchLink.lastCheckedAt = now;
             // The profile knows the **current** display name, which
             // corrects a stale roster entry.
             /**
@@ -1445,17 +1499,23 @@ async function main(): Promise<void> {
             channel.description = profile.description.slice(0, 1000);
           }
           if (profile.avatar && !channel.avatar) channel.avatar = profile.avatar;
-          if (profile.subscribers.tag === "has") {
+          if (profile.subscribers.tag !== "hidden") {
             link.subscribers = profile.subscribers;
           }
           if (profile.handle) link.handle = profile.handle;
-          if (profile.videoCount) {
+          if (profile.videoCount !== undefined) {
             link.videoCount = profile.videoCount;
-            if (!channel.videoCount) channel.videoCount = profile.videoCount;
+            if (profile.videoCount !== null && !channel.videoCount) {
+              channel.videoCount = profile.videoCount;
+            }
           }
-          if (profile.subscribers && profile.subscribers.tag !== "hidden") {
-            link.subscribers = profile.subscribers;
-          } else if (adapter.followers) {
+          if (profile.viewCount !== undefined) {
+            link.viewCount = profile.viewCount;
+            if (profile.viewCount !== null && !channel.viewCount) {
+              channel.viewCount = profile.viewCount;
+            }
+          }
+          if (profile.subscribers.tag === "hidden" && adapter.followers) {
             // Some platforms publish the count on a different endpoint.
             const followers = await adapter.followers({
               platform: adapter.id,
@@ -1472,6 +1532,7 @@ async function main(): Promise<void> {
               link.subscribers = followers;
             }
           }
+          link.lastCheckedAt = now;
           try {
             const uploads = await adapter.live(profile);
             for (const upload of uploads) {
@@ -2287,8 +2348,34 @@ async function main(): Promise<void> {
   }
 
   /* --- merge with the on-disk dataset ---------------------------------- */
+  const existingThumbnailById = new Map(
+    existingItems
+      .filter((item) => item.thumbnail)
+      .map((item) => [item.id, item.thumbnail!]),
+  );
+  let thumbnailsFilled = 0;
+  let thumbnailLookups = 0;
+  for (const item of itemById.values()) {
+    if (item.platform !== "bilibili" || item.thumbnail) continue;
+    if (!/^BV[\w]+$/i.test(item.id)) continue;
+    if (thumbnailLookups >= 20) break;
+    const adapter = adapters.find((entry) => entry.id === "bilibili");
+    if (!adapter?.thumbnailForItem) break;
+    thumbnailLookups++;
+    const thumbnail = await adapter.thumbnailForItem(item.id);
+    if (!thumbnail) continue;
+    item.thumbnail = thumbnail;
+    thumbnailsFilled++;
+  }
+  if (thumbnailsFilled) {
+    log(`bilibili: filled ${thumbnailsFilled} missing media thumbnail(s)`);
+  }
+
   channels = mergeById(existingChannels, channels);
-  items = mergeById(existingItems, items);
+  items = mergeById(existingItems, items).map((item) => ({
+    ...item,
+    thumbnail: item.thumbnail ?? existingThumbnailById.get(item.id) ?? null,
+  }));
 
   /**
    * Items carry denormalised copies of their channel's classification, so
@@ -2410,6 +2497,88 @@ async function main(): Promise<void> {
   }
 
   const result = writeDataset(channels, items, manifest, now);
+  const liveViewers = new Map<string, number>();
+  const content: AnalyticsContentObservation[] = [];
+  const contentViews = new Map<string, number[]>();
+  for (const item of items) {
+    if (item.updatedAt !== now) continue;
+    const platform = item.platform as KnownPlatformId;
+    if (!ALL_PLATFORMS.includes(platform)) continue;
+    if (item.status === "live" && item.concurrentViewers !== null) {
+      liveViewers.set(
+        `${item.channelId}:${platform}`,
+        item.concurrentViewers,
+      );
+    }
+    if (
+      item.viewCount !== null &&
+      item.status !== "live" &&
+      item.status !== "upcoming"
+    ) {
+      content.push({
+        platform,
+        channelId: item.channelId,
+        channelName: item.channelName,
+        kind: item.channelKind,
+        region: item.region,
+        title: item.title,
+        url: itemUrlForAnalytics(item),
+        publishedAt: item.publishedAt,
+        views: item.viewCount,
+      });
+      const key = `${item.channelId}:${platform}`;
+      const values = contentViews.get(key) ?? [];
+      values.push(item.viewCount);
+      contentViews.set(key, values);
+    }
+  }
+  const observations: AnalyticsObservation[] = [];
+  for (const channel of channels) {
+    for (const link of channel.platforms) {
+      if (link.lastCheckedAt !== now || !ALL_PLATFORMS.includes(link.platform as KnownPlatformId)) {
+        continue;
+      }
+      const platform = link.platform as KnownPlatformId;
+      const liveCount = liveViewers.get(`${channel.id}:${platform}`);
+      const recentViews = contentViews.get(`${channel.id}:${platform}`);
+      const observation: AnalyticsObservation = {
+        date: now.slice(0, 10),
+        sampledAt: now,
+        channelId: channel.id,
+        channelName: channel.name,
+        kind: channel.kind,
+        region: channel.region,
+        platform,
+      };
+      if (link.subscribers.tag === "has") {
+        observation.followers = link.subscribers.count;
+      } else if (link.subscribers.tag === "no") {
+        observation.followers = 0;
+      }
+      if (link.viewCount != null) observation.views = link.viewCount;
+      if (link.videoCount != null) observation.videos = link.videoCount;
+      if (liveCount != null) observation.liveViewers = liveCount;
+      if (recentViews?.length) {
+        observation.recentContentViews = Math.round(
+          recentViews.reduce((total, value) => total + value, 0) /
+            recentViews.length,
+        );
+      }
+      if (
+        observation.followers !== undefined ||
+        observation.views !== undefined ||
+        observation.videos !== undefined ||
+        observation.liveViewers !== undefined ||
+        observation.recentContentViews !== undefined
+      ) {
+        observations.push(observation);
+      }
+    }
+  }
+  writePendingAnalytics(observations, content, new Date(now));
+  log(
+    `analytics: prepared ${observations.length} channel/platform snapshots and ${content.length} content records`,
+  );
   printSummary(manifest, channels, items);
   log(`quota used: ${budget.used}/${budget.limit}`);
   log(`dataset: ${result.files} files · ${describeDatasetSize()}`);

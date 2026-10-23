@@ -313,6 +313,8 @@ export interface PlatformLink {
   subscribers: CountRef;
   /** The number of published videos on that platform, when it is known. */
   videoCount?: number | null;
+  /** Lifetime views on this platform, when publicly available. */
+  viewCount?: number | null;
   /** Avatar / profile image. */
   avatar: string | null;
   /**

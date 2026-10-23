@@ -19,7 +19,8 @@ on:
 ```
 
 Steps: checkout → install LFS → install dependencies → restore the quota
-cache → sync → build the search index → validate → commit `data/`.
+cache → sync → append daily analytics to the separate archive (when configured)
+→ build the search index → validate → commit `data/`.
 
 The commit uses `stefanzweifel/git-auto-commit-action@v5`, so a run that
 finds nothing new produces no commit and the git history stays clean.
@@ -50,8 +51,25 @@ Add these under **Settings → Secrets and variables → Actions**:
 | `VK_ACCESS_TOKEN` | no | VK service token |
 | `CI_ME_CLIENT_ID` | no | CI.ME Open API application client ID |
 | `CI_ME_CLIENT_SECRET` | no | CI.ME Open API application client secret |
+| `ANALYTICS_REPO_TOKEN` | no | Fine-grained token with Contents read/write access to `himyjan/yt-vsinger-singer-disover-analytics`; enables daily analytics archiving |
 
 `GITHUB_TOKEN` is provided automatically and needs no configuration.
+
+Analytics is optional for the original site and appears automatically when
+the public archive has daily data. The site checks the archive index once at
+startup; when the index is unavailable or empty, it hides the Analytics view
+and does not fetch history shards. The sync workflow can collect the archive
+independently.
+
+When available, the Analytics view reads daily snapshots from the public
+[`yt-vsinger-singer-disover-analytics`](https://github.com/himyjan/yt-vsinger-singer-disover-analytics)
+repository. The sync workflow samples platform profiles incrementally and
+appends date-sharded JSON there, keeping unbounded history out of this
+repository's 180 MB dataset budget. Without `ANALYTICS_REPO_TOKEN`, sync
+continues normally but emits a workflow warning and skips the history archive.
+Some metrics are unavailable unless their platform publishes them or the
+corresponding API credentials are configured; the Analytics view identifies
+those limitations rather than treating missing metrics as zero.
 
 ## Repository variables
 

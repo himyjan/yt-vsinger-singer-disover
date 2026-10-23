@@ -22,6 +22,7 @@ interface SoopBroadcast {
   user_nick?: string;
   broad_no?: string | number;
   broad_title?: string;
+  broad_thumb?: string;
   current_view_cnt?: string | number;
   broad_start?: string;
   is_password?: string | number;
@@ -151,7 +152,11 @@ export class SoopAdapter implements PlatformAdapter {
       channelId: channel.id,
       title,
       description: null,
-      thumbnail: null,
+      thumbnail: broadcast.broad_thumb
+        ? broadcast.broad_thumb.startsWith("//")
+          ? `https:${broadcast.broad_thumb}`
+          : broadcast.broad_thumb
+        : null,
       publishedAt: startedAt,
       scheduledStart: startedAt,
       duration: null,

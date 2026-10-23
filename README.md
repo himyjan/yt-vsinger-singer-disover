@@ -20,14 +20,14 @@ channel and media details from supported platform APIs.
 
 ```bash
 npm install
-cp .env.example .env        # add YOUTUBE_API_KEY
+cp .env.example .env        # optional platform API credentials
 npm run dev:web             # the web app on :5173
 ```
 
 The web app reads the committed dataset in `data/`. To refresh it:
 
 ```bash
-npm run data:sync           # YouTube Data API v3 + youtubei.js + platform adapters
+npm run data:sync           # InnerTube + optional Data API + platform adapters
 npm run data:index          # rebuild the search index
 npm run data:validate       # check structure and size budgets
 ```
@@ -45,6 +45,7 @@ npm run data:validate       # check structure and size budgets
 | [docs/PLATFORMS.md](docs/PLATFORMS.md) | Platform identities, adapters and account-linking coverage |
 | [docs/SOURCES.md](docs/SOURCES.md) | Every data source, and which are read |
 | [docs/DEPLOY.md](docs/DEPLOY.md) | GitHub Actions, Pages, secrets, LFS |
+| [docs/ANALYTICS.md](docs/ANALYTICS.md) | Historical platform metrics and dashboard |
 | [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) | How to add a channel, a region, a platform |
 | [AGENTS.md](AGENTS.md) | Guide for AI agents |
 
@@ -53,16 +54,16 @@ npm run data:validate       # check structure and size budgets
 ```
 scripts/sync.ts
   ├── roster and music sources
-  ├── YouTube: Data API v3 (primary) + youtubei.js (supplemental)
+  ├── YouTube: InnerTube (primary) + Data API v3 (optional metadata/discovery)
   └── platform adapters: YouTube, Twitch, Bilibili, Niconico, VK,
                          CHZZK, KICK, SOOP and CI.ME
           ↓
        classify → data/*.json → committed → GitHub Pages
 ```
 
-YouTube is the primary platform, and the YouTube Data API v3 is the primary
-source for its channel and media data. InnerTube (`youtubei.js`) supplements it
-with quota-free profile and upload data where enabled. The sync pipeline also
+YouTube is the primary platform, and InnerTube (`youtubei.js`) is the primary
+source for its channel profiles and uploads. The optional YouTube Data API v3
+adds discovery and specialized live/video metadata. The sync pipeline also
 reads the global vdb roster (including links across many platforms), Taiwan
 VTuber Tracking Data, VocaDB and curated music datasets. The Data API free tier
 allows 10,000 quota units a day. The app supports YouTube, Twitch, Bilibili,
@@ -73,7 +74,7 @@ even when a platform does not have a dedicated profile adapter.
 
 | Platform | Dataset support | Secrets needed |
 | --- | --- | --- |
-| YouTube | Channel profiles, uploads, live and upcoming streams, statistics and discovery | `YOUTUBE_API_KEY`; InnerTube (`youtubei.js`) also provides quota-free profile and upload data |
+| YouTube | Channel profiles and uploads via InnerTube; Data API adds discovery and specialized live/video metadata | Optional `YOUTUBE_API_KEY` |
 | Twitch | Channel profiles, uploads, live streams and follower counts | Optional `TWITCH_CLIENT_ID` and `TWITCH_CLIENT_SECRET`; public GQL is also used |
 | Bilibili | Channel profiles, uploads and follower counts | None |
 | Niconico | Search for video/channel metadata, including original songs and covers; no live listing | None |
@@ -98,6 +99,13 @@ responses avoid spending quota on unchanged Data API results.
 
 GitHub Actions refreshes the dataset every six hours, validates it, and
 commits the result.
+
+The Analytics view charts daily platform snapshots and ranks available metrics.
+History is stored in the separate
+[`yt-vsinger-singer-disover-analytics`](https://github.com/himyjan/yt-vsinger-singer-disover-analytics)
+repository so it does not consume the main dataset size budget. Enable the
+`ANALYTICS_REPO_TOKEN` Actions secret as described in
+[docs/DEPLOY.md](docs/DEPLOY.md).
 
 ## The data layout
 

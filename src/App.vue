@@ -12,7 +12,14 @@
  * is why the switch works in every part of the app without each view having
  * to know about it.
  */
-import { computed, onMounted, reactive, ref, watch } from "vue";
+import {
+  computed,
+  defineAsyncComponent,
+  onMounted,
+  reactive,
+  ref,
+  watch,
+} from "vue";
 import { ALL_PLATFORMS } from "@shared/lib/types";
 import type {
   Channel,
@@ -77,11 +84,16 @@ import { SUBS_EXPORT_SCRIPT } from "@/lib/subs-export";
 import { fetchYouTubeChannel, type YouTubeChannelDetail } from "@/lib/youtube-detail";
 import { imageUrl } from "@/lib/image";
 import { channelLinks, itemUrl, platformMeta } from "@/lib/links";
+import { detectAnalyticsArchive } from "@/lib/analytics";
 import LiveCard from "@/components/LiveCard.vue";
 import ChannelCard from "@/components/ChannelCard.vue";
 import ChannelDrawer from "@/components/ChannelDrawer.vue";
 import SubscriptionDetail from "@/components/SubscriptionDetail.vue";
 import OfficialArtistBadge from "@/components/OfficialArtistBadge.vue";
+
+const AnalyticsPanel = defineAsyncComponent(
+  () => import("@/components/AnalyticsPanel.vue"),
+);
 
 /* -------------------------------------------------------------------------- */
 /* State                                                                      */
@@ -94,6 +106,7 @@ const live = ref<Item[]>([]);
 const upcoming = ref<Item[]>([]);
 const allItems = ref<Item[]>([]);
 const loading = ref(true);
+const analyticsAvailable = ref(false);
 const searchHits = ref<any[]>([]);
 const searching = ref(false);
 
@@ -267,6 +280,7 @@ const SORTS: Record<
     { id: "duration", label: "Longest" },
     { id: "title", label: "Title" },
   ],
+  analytics: [],
   channels: [
     { id: "subscribers", label: "Most followers" },
     { id: "name", label: "Name" },
@@ -662,14 +676,17 @@ async function runSearch(): Promise<void> {
 /* Actions                                                                    */
 /* -------------------------------------------------------------------------- */
 
-const VIEWS: { id: ViewId; label: string; short: string }[] = [
+const VIEWS = computed<{ id: ViewId; label: string; short: string }[]>(() => [
   { id: "live", label: "Live now", short: "Live" },
   { id: "upcoming", label: "Upcoming", short: "Upcoming" },
   { id: "songs", label: "Songs", short: "Songs" },
+  ...(analyticsAvailable.value
+    ? [{ id: "analytics" as const, label: "Analytics", short: "Stats" }]
+    : []),
   { id: "channels", label: "Channels", short: "Channels" },
   { id: "subs", label: "My subscriptions", short: "Subs" },
   { id: "saved", label: "Saved", short: "Saved" },
-];
+]);
 
 function selectScope(scope: Scope): void {
   setScope(scope);
@@ -1638,6 +1655,9 @@ async function reloadDataset(): Promise<void> {
 
 onMounted(async () => {
   initTheme();
+  void detectAnalyticsArchive().then((available) => {
+    analyticsAvailable.value = available;
+  });
   await probeDatasetApi();
   await loadDataset();
 });
@@ -1920,7 +1940,7 @@ onMounted(async () => {
         </nav>
 
         <!-- The sort control, for the current tab -->
-        <div class="flex items-center justify-end gap-2 pb-2">
+        <div v-if="state.view !== 'analytics'" class="flex items-center justify-end gap-2 pb-2">
           <label class="flex items-center gap-1.5 text-[11px] font-semibold text-neutral-500">
             <span class="hidden sm:inline">Sort</span>
             <select
@@ -2327,6 +2347,15 @@ onMounted(async () => {
         <p v-else class="py-16 text-center text-sm text-neutral-500">
           No songs for this filter yet.
         </p>
+      </section>
+
+      <!-- Channels -->
+      <section v-else-if="state.view === 'analytics'" aria-label="Analytics">
+        <AnalyticsPanel
+          :scope="state.scope"
+          :region="state.region"
+          :platform="state.platform"
+        />
       </section>
 
       <!-- Channels -->
@@ -2841,7 +2870,8 @@ onMounted(async () => {
 
     <!-- ───────────────────────── Mobile nav ───────────────────────── -->
     <nav
-      class="fixed inset-x-0 bottom-0 z-40 grid grid-cols-6 border-t border-black/8 bg-[#f6f5f1]/95 backdrop-blur-xl md:hidden dark:border-white/10 dark:bg-neutral-950/95"
+      class="fixed inset-x-0 bottom-0 z-40 grid border-t border-black/8 bg-[#f6f5f1]/95 backdrop-blur-xl md:hidden dark:border-white/10 dark:bg-neutral-950/95"
+      :style="{ gridTemplateColumns: `repeat(${VIEWS.length}, minmax(0, 1fr))` }"
       aria-label="Primary"
     >
       <button
@@ -2864,6 +2894,8 @@ onMounted(async () => {
                 ? "📅"
                 : view.id === "songs"
                   ? "🎵"
+                  : view.id === "analytics"
+                    ? "📈"
                   : view.id === "channels"
                     ? "👥"
                     : view.id === "subs"

@@ -47,6 +47,10 @@ export interface InnerTubeProfile {
   avatar: string | null;
   /** The subscriber count, when the channel publishes it. */
   subscribers: number | null;
+  /** Lifetime channel views, when exposed in channel metadata. */
+  views?: number | null;
+  /** Number of channel uploads, when exposed in channel metadata. */
+  videos?: number | null;
   /** The channel's custom URL handle, when it has one. */
   handle: string | null;
   /** The links the channel publishes. */
@@ -349,6 +353,18 @@ export class InnerTubeSource {
         }
         return null;
       })();
+      const countValue = (value: unknown): number | null => {
+        const raw =
+          typeof value === "object" && value !== null
+            ? String(
+                (value as { content?: unknown; text?: unknown }).content ??
+                  (value as { text?: unknown }).text ??
+                  "",
+              )
+            : String(value ?? "");
+        const parsed = Number(raw.replace(/[^\d]/g, ""));
+        return Number.isFinite(parsed) && parsed > 0 ? parsed : null;
+      };
 
       const links: string[] = [];
       const rawLinks = meta.links ?? channel?.links ?? [];
@@ -402,6 +418,8 @@ export class InnerTubeSource {
         description: meta.description ?? null,
         avatar: avatar ?? null,
         subscribers,
+        views: countValue(meta.viewCount ?? meta.view_count),
+        videos: countValue(meta.videoCount ?? meta.video_count),
         handle,
         links,
         country,
