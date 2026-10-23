@@ -141,6 +141,8 @@ const badgeSync = reactive({
   done: 0,
   total: 0,
   failed: 0,
+  saved: 0,
+  saveFailed: 0,
   stopped: false,
   error: "",
 });
@@ -389,7 +391,21 @@ const visibleSongs = computed(() =>
 );
 
 const visibleChannels = computed(() => {
-  const channels = filterChannels(summaries.value, {
+  const badgeAwareSummaries = summaries.value.map((summary) => {
+    const youtubeId =
+      summary.id.startsWith("UC")
+        ? summary.id
+        : summary.links
+            .find((link) => link.p === "youtube")
+            ?.u.match(/youtube\.com\/channel\/(UC[\w-]+)/)?.[1];
+    const checkedBadge = youtubeId
+      ? state.youtubeBadges[youtubeId]
+      : undefined;
+    return checkedBadge
+      ? { ...summary, isOfficialArtist: checkedBadge.officialArtist }
+      : summary;
+  });
+  const channels = filterChannels(badgeAwareSummaries, {
     kind: state.scope,
     region: state.region,
     platform: state.platform,
@@ -826,6 +842,7 @@ function missingYouTubeBadgeIds(): string[] {
     const cached = state.youtubeBadges[id];
     return (
       !cached ||
+      cached.datasetSaveFailed === true ||
       typeof cached.checkedAt !== "number" ||
       !Number.isFinite(cached.checkedAt) ||
       now - cached.checkedAt > YOUTUBE_BADGE_TTL_MS
@@ -872,6 +889,8 @@ async function startBadgeSync(): Promise<void> {
   badgeSync.stopped = false;
   badgeSync.done = 0;
   badgeSync.failed = 0;
+  badgeSync.saved = 0;
+  badgeSync.saveFailed = 0;
   badgeSync.total = ids.length;
   badgeSync.error = "";
   badgeAbort = new AbortController();
@@ -920,7 +939,32 @@ async function startBadgeSync(): Promise<void> {
             officialArtist?: unknown;
           };
           if (json?.ok) {
-            setYouTubeBadge(channelId, json.officialArtist === true);
+            const officialArtist = json.officialArtist === true;
+            try {
+              const saved = await fetch("/api/dataset/youtube-official-artist", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Accept: "application/json",
+                },
+                body: JSON.stringify({ id: channelId, officialArtist }),
+                signal,
+              });
+              if (!saved.ok) {
+                throw new Error(`Dataset save returned HTTP ${saved.status}`);
+              }
+              const result = (await saved.json()) as { saved?: boolean };
+              if (result.saved) badgeSync.saved += 1;
+              setYouTubeBadge(channelId, officialArtist);
+            } catch (error) {
+              if (signal.aborted) break;
+              setYouTubeBadge(channelId, officialArtist, true);
+              badgeSync.saveFailed += 1;
+              console.error(
+                `Could not save Official Artist status for ${channelId}:`,
+                error,
+              );
+            }
             consecutiveFailures = 0;
           } else {
             badgeSync.failed += 1;
@@ -962,6 +1006,13 @@ async function startBadgeSync(): Promise<void> {
       "info",
       `${badgeSync.failed} channel(s) could not be checked; the rest are cached.`,
       8000,
+    );
+  }
+  if (badgeSync.saveFailed > 0) {
+    showToast(
+      "info",
+      `${badgeSync.saveFailed} Official Artist result(s) are browser-cached but could not be saved to data/.`,
+      10000,
     );
   }
 }
@@ -2634,7 +2685,16 @@ onMounted(async () => {
           </p>
           <p v-else class="mt-1 text-[11px] leading-relaxed text-neutral-500">
             Reading the 🎵 badge from each YouTube channel header. Results are
-            cached for 30 days; the TV subscription feed does not carry it.
+            cached for 30 days; results for tracked channels are also written
+            to their `data/` records by the local dev server.
+          </p>
+          <p
+            v-if="badgeSync.saved || badgeSync.saveFailed"
+            class="mt-1 text-[11px] text-neutral-500"
+          >
+            {{ badgeSync.saved }} dataset records saved<span v-if="badgeSync.saveFailed">
+              · {{ badgeSync.saveFailed }} save failures</span
+            >
           </p>
         </div>
 

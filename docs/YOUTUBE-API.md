@@ -7,9 +7,12 @@ YouTube is the project's primary platform. InnerTube (`youtubei.js`) is the
 default source for handle resolution, channel profiles and uploads. The
 YouTube Data API v3 is optional and supplements InnerTube with discovery,
 live-broadcast data and detailed video metadata; it is also a fallback when
-InnerTube cannot retrieve a channel profile or uploads. These are access
-methods for YouTube data, not separate platforms. See `docs/SOURCES.md` for
-the source overview.
+InnerTube cannot retrieve a channel profile or uploads. When the API key is
+missing or the search quota runs out, channel discovery falls back to
+InnerTube's public channel search (no Data API quota). InnerTube fallback
+currently discovers channels only; video search and its richer metadata
+require the Data API. These are access methods for YouTube data, not separate
+platforms. See `docs/SOURCES.md` for the source overview.
 
 ## Optional API key
 
@@ -181,11 +184,13 @@ committed.
 ## InnerTube and authentication
 
 The pipeline uses **`youtubei.js`** (InnerTube) by default for quota-free
-profile and upload data. It is an unofficial interface and can change without
-notice; when configured, the Data API is used for discovery, live-broadcast
-data, detailed video metadata and as a fallback for failed InnerTube lookups.
-The optional local dev server also uses InnerTube for interactive YouTube
-features.
+profile, upload and channel-discovery data. It is an unofficial interface and
+can change without notice; when configured, the Data API is used for
+discovery, live-broadcast data, detailed video metadata and as a fallback for
+failed InnerTube lookups. The `Sync dataset` GitHub Action runs the configured
+searches; a manual run can provide a custom `keyword` instead. Without an API
+key, channel keyword searches still run through InnerTube. The optional local
+dev server also uses InnerTube for interactive YouTube features.
 
 The pipeline reads public data only, so no OAuth token is required
 server-side. The browser app uses OAuth for account-scoped features such as

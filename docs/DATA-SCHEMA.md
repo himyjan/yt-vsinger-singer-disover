@@ -124,7 +124,7 @@ The record for one performer.
 | `isSinging` | boolean | Publishes singing content |
 | `gender` | `"female"` \| `"male"` \| `"unknown"` | Self-described |
 | `isAi` | boolean | AI-generated performer (AI VTuber, AI singer) |
-| `isOfficialArtist` | boolean? | The 🎵 **Official Artist Channel** badge. *Optional*: filled by the details pass and the import; absent means "not asked yet", not "no" |
+| `isOfficialArtist` | boolean? | The 🎵 **Official Artist Channel** badge. *Optional*: filled by the details pass and the local subscription badge sync; absent means "not asked yet", not "no" |
 | `variant` | see below | The combined label |
 | `verification` | `Verification \| null` | What was actually looked up, and where — see below |
 | `confidence` | `ClassificationConfidence` | *Optional.* The confidence estimate — see below |
@@ -592,7 +592,7 @@ One upload.
 
 | Field | Type | Notes |
 | --- | --- | --- |
-| `id` | string | Video id or playlist id |
+| `id` | string | Platform-native video id or playlist id |
 | `type` | `"video"` \| `"short"` \| `"live"` \| `"playlist"` | |
 | `channelId` | string | |
 | `channelName` | string | Denormalised for offline display |
@@ -621,6 +621,10 @@ One upload.
 | `concurrentViewers` | number \| null | While live |
 | `source` | `RecordSource` | |
 | `addedAt` / `updatedAt` | string | ISO timestamps |
+
+`playlist` items tagged `youtube-music` and `release` are albums or singles
+read from an Official Artist Channel's YouTube Music Releases tab. They are
+kept as playlists, not counted as individual song performances.
 
 ### `category`
 
@@ -789,6 +793,7 @@ Enforced by `scripts/lib/io.ts` (on write) and `scripts/validate.ts` (in CI).
 | `maxSearchIndexBytes` | 40 MB | |
 | `maxLfsBytes` | 2 GB | GitHub's LFS per-file ceiling |
 
-Retention rules keep the dataset inside those budgets: at most 30 items per
-channel, items older than 365 days dropped, live and upcoming items always
-kept, and signature uploads (covers, MVs, originals) kept preferentially.
+Retention rules keep the dataset inside those budgets: up to 30 routine items
+per channel plus a preferential set of covers, MVs, originals and YouTube Music
+releases; items older than 365 days are dropped except for live/upcoming items
+and that preferential set.
