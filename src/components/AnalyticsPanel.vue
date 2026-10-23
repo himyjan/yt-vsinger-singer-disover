@@ -149,12 +149,7 @@ const topContent = computed(() => {
           <span v-if="latestDate"> Latest sample: {{ latestDate }}</span>
         </p>
       </div>
-      <button
-        type="button"
-        class="rounded-full border border-black/10 px-3 py-1.5 text-xs font-semibold dark:border-white/12"
-        :disabled="loading"
-        @click="refresh"
-      >
+      <button type="button" class="rounded-full border border-black/10 px-3 py-1.5 text-xs font-semibold dark:border-white/12" :disabled="loading" @click="refresh">
         {{ loading ? "Loading…" : "Refresh" }}
       </button>
     </div>
@@ -223,13 +218,7 @@ const topContent = computed(() => {
           </tr>
         </thead>
         <tbody>
-          <tr
-            v-for="(entry, index) in ranked"
-            :key="identity(entry.latest)"
-            class="cursor-pointer border-b border-black/5 last:border-0 hover:bg-purple-500/5 dark:border-white/5"
-            :class="identity(entry.latest) === selectedKey ? 'bg-purple-500/10' : ''"
-            @click="selectedKey = identity(entry.latest)"
-          >
+          <tr v-for="(entry, index) in ranked" :key="identity(entry.latest)" class="cursor-pointer border-b border-black/5 last:border-0 hover:bg-purple-500/5 dark:border-white/5" :class="identity(entry.latest) === selectedKey ? 'bg-purple-500/10' : ''" @click="selectedKey = identity(entry.latest)">
             <td class="px-3 py-2 text-neutral-500">{{ index + 1 }}</td>
             <td class="px-3 py-2 font-semibold">{{ entry.latest.channelName }}</td>
             <td class="px-3 py-2">{{ platformMeta(entry.latest.platform).label }}</td>
@@ -246,11 +235,7 @@ const topContent = computed(() => {
     <div v-if="topContent.length" class="rounded-xl border border-black/8 bg-white p-4 dark:border-white/10 dark:bg-neutral-900">
       <h3 class="text-sm font-bold">Top content in the selected period</h3>
       <ol class="mt-3 grid gap-2 md:grid-cols-2">
-        <li
-          v-for="item in topContent"
-          :key="`${item.platform}:${item.url || item.title}`"
-          class="flex items-start justify-between gap-3 rounded-lg bg-neutral-50 p-2 text-xs dark:bg-neutral-800"
-        >
+        <li v-for="item in topContent" :key="`${item.platform}:${item.url || item.title}`" class="flex items-start justify-between gap-3 rounded-lg bg-neutral-50 p-2 text-xs dark:bg-neutral-800">
           <a v-if="item.url" :href="item.url" target="_blank" rel="noopener noreferrer" class="min-w-0 truncate font-semibold hover:underline">{{ item.channelName }} — {{ item.title }}</a>
           <span v-else class="min-w-0 truncate font-semibold">{{ item.channelName }} — {{ item.title }}</span>
           <span class="shrink-0 text-neutral-500">{{ formatMetric(item.views, "views") }}</span>

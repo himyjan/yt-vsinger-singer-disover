@@ -104,6 +104,14 @@ channel id before writing a channel record.
 The catalog is validated when the sync pipeline loads it. A handle that
 cannot be resolved does not become a channel record.
 
+Curated seeds are an explicit admission path. Automatic discovery is stricter:
+non-YouTube adapters only accept identities already present in vdb, the
+dataset, or the seed catalog. YouTube can add a new virtual channel only when
+at least two distinct videos each contain both virtual-creator identity and
+singing evidence in their available titles, descriptions, or tags. Add a
+verified channel to `data/seed-catalog.json` when it should not depend on
+automated discovery.
+
 ## Adding a region
 
 1. Add the code to `RegionCode` in `scripts/lib/types.ts`.

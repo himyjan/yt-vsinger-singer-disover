@@ -14,6 +14,18 @@ currently discovers channels only; video search and its richer metadata
 require the Data API. These are access methods for YouTube data, not separate
 platforms. See `docs/SOURCES.md` for the source overview.
 
+Search hits are candidates, not automatic channel admissions. For a new
+YouTube identity to enter the virtual dataset, sync checks two or more distinct
+uploads and requires each video to show both virtual-creator identity (such as
+VTuber, VSinger, or localized equivalents) and singing evidence (such as
+歌枠, 歌ってみた, 弾き語り, KARAOKE, or a singing-relay hashtag) in its
+title, description, or tags. With InnerTube-only discovery, verification uses
+the upload titles it can retrieve; with the Data API, video descriptions and
+tags are available too. An existing dataset, vdb, or curated seed identity
+does not need to pass this new-channel gate. This rejects ordinary singers and
+karaoke streamers based on singing terms alone while allowing varying event
+hashtag names.
+
 ## Optional API key
 
 You can run the sync pipeline without a key. Add one only if you want the
@@ -71,6 +83,9 @@ uploads:
 Which is why the workflow runs every six hours with a **2,500-unit** budget
 by default: four runs a day stay comfortably inside 10,000, and the quota
 state is cached between runs so the budget is cumulative, not per-run.
+For each new YouTube candidate that reaches the qualification check, the Data
+API may additionally spend one unit on its first ten uploads and one unit on
+their video details. The quota-free InnerTube upload check is used first.
 
 ## The quota guard
 
@@ -162,12 +177,14 @@ One unit per 50 channels. `broadcastStatus=all` returns **upcoming**,
 GET /youtube/v3/search?part=snippet&type=channel|video&q=...&order=date|viewCount&maxResults=50
 ```
 
-**100 units.** `order=date` surfaces newly created channels, which is how the
-daily debut sweep finds new performers. `eventType=live` restricts the results
-to live streams.
+**100 units.** `order=date` can surface newer results; the sync uses its
+configured channel/video queries and treats hits as candidates. New YouTube
+channels must still pass the two-distinct-video virtual-identity and singing
+evidence check above. `eventType=live` restricts results to live streams.
 
-Search results are chunked into a channel list and a video list; only the
-channel list is worth spending quota on for discovery.
+Channel searches find candidate identities. Video searches can surface
+singing-related uploads; their channel still has to pass the same two-distinct
+video qualification check before a new record is admitted.
 
 ## The `UU` trick and `forHandle`
 

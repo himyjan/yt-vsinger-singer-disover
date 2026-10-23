@@ -64,6 +64,7 @@ import { languagesForRegion, mergeLanguages } from "./lib/regions";
 import { fetchAiList, isOnAiList } from "./lib/aislist";
 import { fetchTrackedVtubers } from "./lib/taiwan-vtuber-data";
 import { buildRoster } from "./lib/roster";
+import { VdbSource } from "./lib/vdb";
 import {
   canonicalizeChannelIds,
   dedupeChannels,
@@ -206,6 +207,19 @@ const config: SyncConfig = readJson(
     searches: [],
   },
 );
+
+const SINGING_DISCOVERY_TERMS =
+  /(?:vsinger|virtual\s+singer|singer|singing|karaoke|cover\s+song|music\s+video|vocaloid|歌枠|歌い手|歌ってみた|歌唱|歌姫|歌手|唱歌|翻唱|歌曲|歌回|歌回接力|接龍歌枠|歌.{0,8}(?:リレー|relay)|(?:リレー|relay).{0,8}歌|弾き語り|カラオケ|노래|가수|커버|노래방|nyanyi|menyanyi)/iu;
+const VIRTUAL_SINGER_DISCOVERY_TERMS =
+  /(?:vtuber|v[- ]?tuber|virtual\s+(?:you?tuber|singer)|vsinger|バーチャル(?:youtuber|ユーチューバー|シンガー|歌姫|歌手)|ぶいちゅーばー|虚拟(?:主播|歌姬|歌手)|虛擬(?:主播|歌姬|歌手)|버튜버|버추얼\s*유튜버)/iu;
+
+function hasSingingDiscoveryEvidence(values: (string | null | undefined)[]): boolean {
+  return values.some((value) => value && SINGING_DISCOVERY_TERMS.test(value));
+}
+
+function hasVirtualIdentityEvidence(values: (string | null | undefined)[]): boolean {
+  return values.some((value) => value && VIRTUAL_SINGER_DISCOVERY_TERMS.test(value));
+}
 
 /* -------------------------------------------------------------------------- */
 /* Overrides                                                                  */
@@ -820,9 +834,106 @@ async function main(): Promise<void> {
   }
   log(`resolved ${resolvedSeeds.length}/${ALL_SEEDS.length} seeds`);
 
+  const vdbSource = new VdbSource();
+  const vdbRoster = await vdbSource.fetch();
+  if (!vdbSource.isAvailable) {
+    log("vdb: unavailable — automatic discovery is limited to existing and seeded identities");
+  }
+
+  const knownPlatformIdentities = new Map<
+    PlatformId,
+    { ids: Set<string>; handles: Set<string> }
+  >();
+  const rememberIdentity = (
+    platform: PlatformId,
+    value: string | null | undefined,
+    kind: "id" | "handle" = "id",
+  ) => {
+    const normalized =
+      kind === "handle"
+        ? value?.trim().replace(/^@+/, "").toLowerCase()
+        : value?.trim();
+    if (!normalized) return;
+    const identities = knownPlatformIdentities.get(platform) ?? {
+      ids: new Set<string>(),
+      handles: new Set<string>(),
+    };
+    identities[kind === "handle" ? "handles" : "ids"].add(normalized);
+    knownPlatformIdentities.set(platform, identities);
+  };
+  const rememberPlatformLink = (link: PlatformLink) => {
+    rememberIdentity(link.platform, link.id);
+    rememberIdentity(link.platform, link.handle, "handle");
+    if (link.platform === "youtube" && link.id && !link.id.startsWith("UC")) {
+      rememberIdentity("youtube", link.id, "handle");
+    }
+  };
+  const rememberChannel = (channel: Channel) => {
+    if (channel.id.includes(":")) {
+      const separator = channel.id.indexOf(":");
+      const platform = channel.id.slice(0, separator);
+      const id = channel.id.slice(separator + 1);
+      rememberIdentity(platform, id);
+      if (platform === "youtube" && !id.startsWith("UC")) {
+        rememberIdentity("youtube", id, "handle");
+      }
+    } else {
+      rememberIdentity("youtube", channel.id);
+    }
+    for (const link of channel.platforms ?? []) rememberPlatformLink(link);
+  };
+  for (const channel of channels) rememberChannel(channel);
+  for (const performer of vdbRoster) {
+    rememberIdentity("vdb", performer.uuid);
+    rememberIdentity("vdb", performer.id);
+    for (const link of performer.platforms) rememberPlatformLink(link);
+  }
+  for (const seed of ALL_SEEDS) {
+    if (seed.channelId) rememberIdentity("youtube", seed.channelId);
+    if (seed.handle) rememberIdentity("youtube", seed.handle, "handle");
+    for (const [platform, identity] of Object.entries(seed.platformUrls ?? {})) {
+      const parsed = extractPlatformId(identity.url);
+      if (parsed) {
+        rememberIdentity(platform, parsed.id);
+        if (platform === "youtube" && !parsed.id.startsWith("UC")) {
+          rememberIdentity("youtube", parsed.id, "handle");
+        }
+      }
+    }
+  }
+  for (const raw of resolvedSeeds) rememberIdentity("youtube", raw.id);
+
+  const isKnownPlatformIdentity = (
+    platform: PlatformId,
+    id?: string | null,
+    handle?: string | null,
+  ): boolean => {
+    const identities = knownPlatformIdentities.get(platform);
+    const normalizedId = id?.trim();
+    const normalizedHandle = handle?.trim().replace(/^@+/, "").toLowerCase();
+    return (
+      (!!normalizedId && identities?.ids.has(normalizedId) === true) ||
+      (!!normalizedHandle && identities?.handles.has(normalizedHandle) === true)
+    );
+  };
+
   /* --- discovery searches --------------------------------------------- */
   const discoveredChannelIds = new Set<string>();
   const discoveredVideoIds = new Set<string>();
+  const youtubeVideoEvidence = new Map<string, Map<string, string[]>>();
+  const rememberYouTubeVideoEvidence = (
+    channelId: string,
+    videoId: string,
+    ...values: unknown[]
+  ) => {
+    const evidence = values.filter(
+      (value): value is string => typeof value === "string" && value.length > 0,
+    );
+    if (!evidence.length) return;
+    const videos = youtubeVideoEvidence.get(channelId) ?? new Map<string, string[]>();
+    videos.set(videoId, [...(videos.get(videoId) ?? []), ...evidence]);
+    youtubeVideoEvidence.set(channelId, videos);
+  };
   const platformChannelIds = new Set<string>();
   const platformCandidates: {
     adapter: PlatformAdapter;
@@ -855,10 +966,12 @@ async function main(): Promise<void> {
           spec.query,
           config.searchResultsPerKeyword,
         );
-        for (const id of channelIds) discoveredChannelIds.add(id);
+        for (const id of channelIds) {
+          discoveredChannelIds.add(id);
+        }
         log(
           `InnerTube search "${spec.query}" (channel) → ` +
-            `${channelIds.length} channel(s), no Data API quota`,
+            `${channelIds.length} candidate channel(s) for video verification, no Data API quota`,
         );
         continue;
       }
@@ -872,17 +985,46 @@ async function main(): Promise<void> {
           },
           budget,
         );
+        let allowedHits = 0;
         for (const r of results) {
           const sn = r?.snippet ?? {};
           const channelId =
             sn?.channelId ?? (spec.type === "channel" ? r?.id?.channelId : null);
-          if (channelId) discoveredChannelIds.add(channelId);
-          if (spec.type === "video" && r?.id?.videoId) {
+          const singingEvidence = hasSingingDiscoveryEvidence([
+            sn.title,
+            sn.description,
+          ]);
+          const virtualAndSingingEvidence =
+            hasVirtualIdentityEvidence([sn.title, sn.description]) &&
+            singingEvidence;
+          const knownChannel =
+            channelId && isKnownPlatformIdentity("youtube", channelId);
+          if (
+            channelId &&
+            (spec.type === "channel" || knownChannel || virtualAndSingingEvidence)
+          ) {
+            discoveredChannelIds.add(channelId);
+            allowedHits++;
+          }
+          if (
+            channelId &&
+            spec.type === "video" &&
+            (knownChannel || virtualAndSingingEvidence) &&
+            r?.id?.videoId
+          ) {
             discoveredVideoIds.add(r.id.videoId);
+            if (!knownChannel) {
+              rememberYouTubeVideoEvidence(
+                channelId,
+                r.id.videoId,
+                sn.title,
+                sn.description,
+              );
+            }
           }
         }
         log(
-          `search "${spec.query}" (${spec.type}${spec.eventType ? `/${spec.eventType}` : ""}) → ${results.length} hits`,
+          `search "${spec.query}" (${spec.type}${spec.eventType ? `/${spec.eventType}` : ""}) → ${allowedHits}/${results.length} known or singing-relevant hits`,
         );
       } catch (err) {
         if (err instanceof QuotaExceededError) {
@@ -907,9 +1049,32 @@ async function main(): Promise<void> {
    * the curated seeds cover the virtual and real artists outside that scene.
    */
   if (args.roster || !client) {
-    const roster = await buildRoster({
+    const rosterCandidates = await buildRoster({
       onLog: (m) => log(m),
+      vdbSource,
+      includeOtherPlatforms: false,
     });
+    const roster = rosterCandidates.filter((channel) => {
+      const separator = channel.id.indexOf(":");
+      const knownById =
+        separator > 0
+          ? isKnownPlatformIdentity(
+              channel.id.slice(0, separator),
+              channel.id.slice(separator + 1),
+            )
+          : isKnownPlatformIdentity("youtube", channel.id);
+      return (
+        knownById ||
+        channel.platforms.some((link) =>
+          isKnownPlatformIdentity(link.platform, link.id, link.handle),
+        )
+      );
+    });
+    if (roster.length !== rosterCandidates.length) {
+      log(
+        `roster: retained ${roster.length}/${rosterCandidates.length} identities from vdb, existing data, and seeds`,
+      );
+    }
     /**
      * The roster knows handles, the dataset knows channel ids.
      *
@@ -1033,12 +1198,97 @@ async function main(): Promise<void> {
     .filter((id) => !channelById.has(id) || args.force)
     .slice(0, config.maxChannelsPerRun);
 
+  const hasTwoVirtualSingingVideos = async (channelId: string): Promise<boolean> => {
+    const videos =
+      youtubeVideoEvidence.get(channelId) ?? new Map<string, string[]>();
+    const matches = new Set(
+      [...videos.entries()]
+        .filter(([, values]) =>
+          hasVirtualIdentityEvidence(values) && hasSingingDiscoveryEvidence(values),
+        )
+        .map(([videoId]) => videoId),
+    );
+    if (matches.size >= 2) return true;
+
+    for (const upload of await innertube.uploads(channelId, 10)) {
+      if (
+        hasVirtualIdentityEvidence([upload.title]) &&
+        hasSingingDiscoveryEvidence([upload.title])
+      ) {
+        matches.add(upload.id);
+        rememberYouTubeVideoEvidence(channelId, upload.id, upload.title);
+      }
+    }
+    if (matches.size >= 2) return true;
+
+    const playlistId = uploadsPlaylistId(channelId);
+    if (!client || !playlistId || !budget.canAfford(
+      API_COST.playlistItems + API_COST.videos,
+    )) {
+      return false;
+    }
+    try {
+      const entries = await client.playlistItems(playlistId, 10);
+      const videoIds = entries
+        .map((entry: any) => entry?.snippet?.resourceId?.videoId)
+        .filter((id: unknown): id is string => typeof id === "string" && !!id);
+      const details = videoIds.length ? await client.videos(videoIds) : [];
+      for (const video of details) {
+        const evidence = [
+          video.snippet?.title,
+          video.snippet?.description,
+          ...(video.snippet?.tags ?? []),
+        ];
+        if (
+          hasVirtualIdentityEvidence(evidence) &&
+          hasSingingDiscoveryEvidence(evidence)
+        ) {
+          matches.add(video.id);
+          rememberYouTubeVideoEvidence(channelId, video.id, ...evidence);
+        }
+      }
+    } catch (err) {
+      log(
+        `warn: YouTube singing evidence lookup failed for ${channelId}: ${(err as Error).message}`,
+      );
+    }
+    return matches.size >= 2;
+  };
+
+  const classifyAsVirtualSingingChannel = (channel: Channel, channelId: string) => {
+    const evidence = [
+      ...(youtubeVideoEvidence.get(channelId)?.values() ?? []),
+    ].flat();
+    channel.kind = "virtual";
+    channel.isSinging = true;
+    if (
+      hasVirtualIdentityEvidence(evidence) &&
+      /(?:vsinger|virtual\s+singer|バーチャルシンガー|虚拟歌姬|虛擬歌姬)/iu.test(
+        evidence.join(" "),
+      )
+    ) {
+      channel.role = "vsinger";
+    } else {
+      channel.role = "vtuber";
+    }
+    channel.variant = deriveVariant(channel.role, channel.gender, channel.isAi);
+  };
+
   if (toRefresh.length) {
     let refreshed = 0;
+    let rejected = 0;
     const failedIds: string[] = [];
     if (innertube.isAvailable) {
       for (const id of toRefresh) {
         const profile = await innertube.profile(id);
+        if (
+          profile &&
+          !isKnownPlatformIdentity("youtube", id) &&
+          !(await hasTwoVirtualSingingVideos(id))
+        ) {
+          rejected++;
+          continue;
+        }
         const ch = channelFromInnerTubeProfile(
           profile,
           now,
@@ -1046,6 +1296,9 @@ async function main(): Promise<void> {
           overrides[id],
         );
         if (ch) {
+          if (!isKnownPlatformIdentity("youtube", id)) {
+            classifyAsVirtualSingingChannel(ch, id);
+          }
           channelById.set(ch.id, ch);
           refreshed++;
         } else {
@@ -1059,8 +1312,18 @@ async function main(): Promise<void> {
       try {
         const raws = await client.channels(failedIds);
         for (const raw of raws) {
+          if (
+            !isKnownPlatformIdentity("youtube", raw.id) &&
+            !(await hasTwoVirtualSingingVideos(raw.id))
+          ) {
+            rejected++;
+            continue;
+          }
           const ch = channelFromApi(raw, "api", now, overrides[raw.id]);
           if (ch) {
+            if (!isKnownPlatformIdentity("youtube", raw.id)) {
+              classifyAsVirtualSingingChannel(ch, raw.id);
+            }
             channelById.set(ch.id, ch);
             refreshed++;
           }
@@ -1069,7 +1332,9 @@ async function main(): Promise<void> {
         log(`warn: Data API channel fallback failed: ${(err as Error).message}`);
       }
     }
-    log(`refreshed ${refreshed}/${toRefresh.length} discovered channels`);
+    log(
+      `refreshed ${refreshed}/${toRefresh.length} discovered channels; rejected ${rejected} without singing evidence`,
+    );
   }
 
   // 3. Use the Data API for known channel profiles only when InnerTube is down.
@@ -1946,7 +2211,9 @@ async function main(): Promise<void> {
   );
 
   /**
-   * Tell the Bilibili adapter which accounts belong to VTubers.
+   * Tell the Bilibili adapter which accounts are in the shared discovery
+   * allowlist. Its live endpoint is broad, so the adapter needs the same
+   * identity gate before returning candidates or live uploads.
    *
    * Its live endpoint returns the general live feed rather than the VTuber
    * partition, so the roster is the filter that keeps gaming and news streams
@@ -1957,14 +2224,13 @@ async function main(): Promise<void> {
       | (typeof adapters)[number] & { knownMids?: Set<string> }
       | undefined;
     if (bili) {
-      const mids = new Set<string>();
-      for (const channel of channels) {
-        for (const link of channel.platforms) {
-          if (link.platform === "bilibili") mids.add(link.id);
-        }
-      }
+      const biliIdentities = knownPlatformIdentities.get("bilibili");
+      const mids = new Set([
+        ...(biliIdentities?.ids ?? []),
+        ...(biliIdentities?.handles ?? []),
+      ]);
       bili.knownMids = mids;
-      log(`bilibili: ${mids.size} known VTuber account(s) for the live filter`);
+      log(`bilibili: ${mids.size} allowlisted account(s) for discovery`);
     }
   }
   if (extraPlatforms.length && !args.noSearch) {
@@ -1993,10 +2259,21 @@ async function main(): Promise<void> {
         continue;
       }
       let found = 0;
+      let rejected = 0;
       for (const query of queries) {
         try {
-          const channels = await adapter.search(query, 10);
-          for (const foundChannel of channels) {
+          const results = await adapter.search(query, 10);
+          for (const foundChannel of results) {
+            if (
+              !isKnownPlatformIdentity(
+                adapter.id,
+                foundChannel.id,
+                foundChannel.handle,
+              )
+            ) {
+              rejected++;
+              continue;
+            }
             const key = `${adapter.id}:${foundChannel.id}`;
             if (platformChannelIds.has(key)) continue;
             platformChannelIds.add(key);
@@ -2008,7 +2285,7 @@ async function main(): Promise<void> {
           break;
         }
       }
-      log(`${adapter.id}: discovered ${found} channel(s)`);
+      log(`${adapter.id}: discovered ${found} allowlisted channel(s), rejected ${rejected}`);
     }
 
     /**
@@ -2031,6 +2308,7 @@ async function main(): Promise<void> {
       ]) {
         if (!Array.isArray(uploads)) continue;
         for (const upload of uploads) {
+          if (!isKnownPlatformIdentity(adapter.id, upload.channelId)) continue;
           const item = platformUploadToItem(upload, now);
           if (!item) continue;
           const prev = itemById.get(item.id);
@@ -2307,6 +2585,7 @@ async function main(): Promise<void> {
       const details = await fetchVideoDetails(client, ids);
       for (const raw of details) {
         const channel = channelById.get(raw.snippet?.channelId ?? "");
+        if (!channel) continue;
         const item = itemFromApi(raw, channel, "api", now);
         if (!item) continue;
         const prev = itemById.get(item.id);

@@ -3,7 +3,7 @@
 > GitHub Actions, GitHub Pages, secrets, Git LFS and the size limits that
 > shape all of it.
 
-## The two workflows that matter
+## The workflows that matter
 
 ### `sync-data.yml` — refresh the dataset
 
@@ -21,15 +21,21 @@ on:
 
 Steps: checkout → install LFS → install dependencies → restore the quota
 cache → sync → append daily analytics to the separate archive (when configured)
-→ build the search index → validate → commit `data/`.
+→ build the search index → validate → rebase generated data onto the latest
+branch → commit `data/`.
 
 The manual `keyword` input replaces the configured discovery terms for
 platforms that support keyword search. The `no-search` input skips discovery
 and still refreshes known records. Platform search coverage and credential
-requirements vary; see [PLATFORMS.md](PLATFORMS.md).
+requirements vary; see [PLATFORMS.md](PLATFORMS.md). Non-YouTube discovery
+only accepts identities already in vdb, the dataset, or the seed catalog.
+YouTube adds a new channel to virtual data only after at least two distinct
+videos each show both virtual-creator identity and singing evidence.
 
-The commit uses `stefanzweifel/git-auto-commit-action@v5`, so a run that
+The commit uses `stefanzweifel/git-auto-commit-action@v7`, so a run that
 finds nothing new produces no commit and the git history stays clean.
+The sync and verification workflows share a repository-wide concurrency group
+and rebase generated changes onto the latest branch before committing.
 
 ### `deploy-pages.yml` — publish the site
 
@@ -209,6 +215,11 @@ npm run data:validate                   # check structure and budgets
 implements search; it does not enable search on platforms without a usable
 public search endpoint. The scheduled run uses the per-platform queries in
 [`../config/platform-keywords.json`](../config/platform-keywords.json).
+Non-YouTube search results do not add arbitrary accounts: sync only admits
+identities already present in vdb, the dataset, or the curated seed catalog.
+YouTube additionally admits a new channel into virtual data only after at
+least two distinct videos mention both VTuber/VSinger identity and singing in
+their titles, descriptions, or tags.
 
 ## Troubleshooting
 

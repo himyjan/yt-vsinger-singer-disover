@@ -41,7 +41,7 @@ on:
         default: "false"
 
 concurrency:
-  group: sync-dataset
+  group: dataset-writer-${{ github.repository }}
   cancel-in-progress: false
 
 permissions:
@@ -142,6 +142,13 @@ jobs:
 
       - name: Validate dataset
         run: npm run data:validate
+
+      - name: Rebase data changes onto the latest branch
+        env:
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          git fetch origin "$BRANCH"
+          git rebase --autostash "origin/$BRANCH"
 
       - name: Commit dataset
         uses: stefanzweifel/git-auto-commit-action@v7

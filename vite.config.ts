@@ -11,6 +11,9 @@ export default defineConfig(({ mode }) => {
     base: env.VITE_BASE_PATH || '/',
     plugins: [
       vue({
+        features: {
+          vapor: true
+        },
         template: {
           compilerOptions: {
             isCustomElement: (tag: string) => tag === 'iconify-icon'

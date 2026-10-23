@@ -681,6 +681,8 @@ for discovery/profile refresh do not by themselves provide account linking.
 - `[x]` A second workflow builds the app and deploys it to GitHub Pages.
 - `[x]` A third workflow validates the dataset and builds the app on every
       push and pull request.
+- `[x]` Dataset-writing workflows share a concurrency group and rebase
+      generated data changes onto the latest branch before committing.
 - `[x]` Everything runs with plain Node — **no native modules in the CI path**
       (`better-sqlite3` is an `optionalDependency`; only the local migration
       script uses it).
@@ -743,8 +745,12 @@ maximum for a single Git LFS file.
       - **Virtual YouTuber Wiki (Fandom)** — MediaWiki API, free, no key.
         Its `{{Character}}` infobox carries debut date, retirement date,
         YouTube channel, X handle and affiliation.
-      - **YouTube** — `search.list?type=channel&order=date` surfaces newly
-        created channels.
+      - **YouTube** — channel/video search results are candidates only. A new
+        channel enters virtual data after at least two distinct videos each
+        show virtual-creator identity and singing evidence in their available
+        titles, descriptions, or tags. This allows singing-stream and relay
+        hashtag variants without admitting ordinary karaoke channels based
+        on singing terms alone.
       - **X (Twitter)** — token-gated (`X_BEARER_TOKEN`); also harvests X
         handles from wiki infoboxes for free.
       - **Facebook** — token-gated (`FACEBOOK_ACCESS_TOKEN`,
