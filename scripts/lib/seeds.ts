@@ -16,13 +16,25 @@
  * handles are skipped silently by the sync — a bad handle never breaks a run.
  */
 
-import type { ArtistKind, ArtistRole, RegionCode } from "./types";
+import type {
+  ArtistKind,
+  ArtistRole,
+  KnownPlatformId,
+  RegionCode,
+} from "./types";
+
+export interface SeedPlatformIdentity {
+  /** Profile URL; sync extracts the platform id and refreshes its profile. */
+  url: string;
+}
 
 export interface SeedEntry {
   /** YouTube handle without `@`. Resolved at sync time. */
   handle?: string;
   /** Canonical channel id. Used when known. */
   channelId?: string;
+  /** Profile URLs on supported platforms, keyed by platform id. */
+  platformUrls?: Partial<Record<KnownPlatformId, SeedPlatformIdentity>>;
   /** Display name (only used as a fallback when the API is unavailable). */
   name: string;
   kind: ArtistKind;
@@ -107,6 +119,27 @@ export const VIRTUAL_CN: SeedEntry[] = [
   { handle: "rikka_lu", name: "鹿鸣", kind: "virtual", role: "vtuber", region: "cn", agency: "hololivecn", isSinging: true },
   { handle: "Lumi_Ch", name: "A-SOUL 珈乐", kind: "virtual", role: "vtuber", region: "cn", agency: null, isSinging: true },
   { handle: "ShigureUi", name: "時雨 Shigure Ui", kind: "virtual", role: "vsinger", region: "cn", agency: null, isSinging: true },
+];
+
+/* -------------------------------------------------------------------------- */
+/* Virtual performers — Korea                                                 */
+/* -------------------------------------------------------------------------- */
+
+export const VIRTUAL_KR: SeedEntry[] = [
+  {
+    handle: "tokinomarychannel",
+    platformUrls: {
+      chzzk: {
+        url: "https://m.chzzk.naver.com/792acf9ca28b42918710327e14b06b68",
+      },
+    },
+    name: "Tokino Mary",
+    kind: "virtual",
+    role: "vtuber",
+    region: "kr",
+    agency: null,
+    isSinging: true,
+  },
 ];
 
 /* -------------------------------------------------------------------------- */
@@ -202,6 +235,7 @@ export const ALL_SEEDS: SeedEntry[] = [
   ...VIRTUAL_EN,
   ...VIRTUAL_ID,
   ...VIRTUAL_CN,
+  ...VIRTUAL_KR,
   ...REAL_ARTISTS,
 ];
 
@@ -214,4 +248,5 @@ export const VIRTUAL_SEEDS = [
   ...VIRTUAL_EN,
   ...VIRTUAL_ID,
   ...VIRTUAL_CN,
+  ...VIRTUAL_KR,
 ];

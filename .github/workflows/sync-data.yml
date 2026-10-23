@@ -1,13 +1,13 @@
 name: Sync dataset
 
-# Refreshes the committed dataset from the YouTube Data API (and, when
-# configured, Twitch / Bilibili / Niconico / VK).
+# Refreshes the global roster and cross-platform records from the public
+# catalogs, then enriches channel profiles and media through configured APIs.
 #
 # The YouTube Data API free tier allows 10,000 units per day. Each run spends
 # at most `--budget` units and the remaining balance is cached between runs,
 # so several runs a day can never exceed the daily allowance.
 #
-# Required repository secrets:
+# Repository secrets:
 #   YOUTUBE_API_KEY       — YouTube Data API v3 key (required)
 #   TWITCH_CLIENT_ID      — Twitch application client id     (optional)
 #   TWITCH_CLIENT_SECRET  — Twitch application client secret (optional)
@@ -101,7 +101,7 @@ jobs:
         with:
           commit_user_name: github-actions[bot]
           commit_user_email: github-actions[bot]@users.noreply.github.com
-          commit_message: "data: sync from YouTube Data API (${{ github.run_number }})"
+          commit_message: "data: sync global cross-platform roster (${{ github.run_number }})"
           file_pattern: "data/*"
           branch: ${{ github.ref_name }}
         env:
@@ -114,6 +114,8 @@ jobs:
             echo ""
             echo "| Metric | Value |"
             echo "| --- | --- |"
+            echo "| Roster and music catalogs | vdb, Taiwan VTuber Tracking Data, VocaDB, VTuber Music Dataset |"
+            echo "| Platform identities | All valid accounts published by vdb; adapter coverage varies by platform |"
             echo "| Quota used | ${{ steps.quota.outputs.used || 'n/a' }} |"
             echo "| Committed | \`data/\` |"
           } >> "$GITHUB_STEP_SUMMARY"

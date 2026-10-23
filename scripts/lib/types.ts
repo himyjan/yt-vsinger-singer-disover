@@ -146,7 +146,7 @@ export type NameSource =
   /** Not known. */
   | "unknown";
 
-export type PlatformId =
+export type KnownPlatformId =
   | "youtube"
   | "twitch"
   | "bilibili"
@@ -156,6 +156,9 @@ export type PlatformId =
   | "kick"
   | "soop"
   | "ci.me";
+
+/** Known adapter ids plus any additional platform identity from public rosters. */
+export type PlatformId = KnownPlatformId | (string & {});
 
 /**
  * Performer's gender, as self-described.
@@ -274,7 +277,8 @@ export const ALL_VARIANTS: Variant[] = [
   "unknown",
 ];
 
-export const ALL_PLATFORMS: PlatformId[] = [
+/** Platforms with native adapters; roster links may contain additional ids. */
+export const ALL_PLATFORMS: KnownPlatformId[] = [
   "youtube",
   "twitch",
   "bilibili",
@@ -628,6 +632,8 @@ export interface ChannelSummary {
 export interface Item {
   /** Platform-native content id, or playlist id for YouTube playlists. */
   id: string;
+  /** Platform that published this item; absent on older records. */
+  platform?: PlatformId;
   /** Canonical URL supplied by the platform adapter, when available. */
   url?: string;
   /** Media kind. */

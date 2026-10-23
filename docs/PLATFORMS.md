@@ -1,7 +1,7 @@
-# Platforms
+# Platform adapters and identities
 
-> The five platforms the project tracks, how each adapter works, and what
-> each one can and cannot do.
+> The platforms with profile/media adapters, plus the wider set of
+> cross-platform identities retained from public rosters.
 
 ## The adapter interface
 
@@ -23,9 +23,11 @@ export interface PlatformAdapter {
 }
 ```
 
-`scripts/lib/platform-registry.ts` assembles the concrete adapters. Adding a
-platform means writing one file and registering it — nothing else in the
-pipeline changes.
+`scripts/lib/platform-registry.ts` assembles the concrete adapters. The
+currently implemented adapters cover YouTube, Twitch, Bilibili, Niconico, VK,
+CHZZK, KICK, SOOP and CI.ME. Public roster links from vdb are retained for
+additional platforms even when this project does not yet have a profile or
+media adapter for them.
 
 The important rule: **an adapter that fails must never break the run**. Every
 network call is wrapped so that a changed API, a rate limit or an outage
@@ -76,7 +78,10 @@ streams on Twitch be recognised.
 **Client:** `scripts/lib/youtube.ts`
 **Credentials:** `YOUTUBE_API_KEY` (required)
 
-The primary platform. See `docs/YOUTUBE-API.md` for the quota details.
+YouTube is the primary platform. The YouTube Data API v3 is the primary API
+source for channel and media data; the pipeline also uses InnerTube
+(`youtubei.js`) for quota-free profile and upload data where enabled. See
+`docs/YOUTUBE-API.md` for the Data API quota details.
 
 - `resolve()` — `channels.list?forHandle=@handle` (1 unit).
 - `uploads()` — the `UU` trick plus `playlistItems.list` and `videos.list`
@@ -270,10 +275,10 @@ no credentials.
 | | `GET kick.com/api/v2/channels/followed` | the user's followed channels (needs a token) |
 | | `GET api.kick.com/public/v1/users` | the signed-in user (needs a token) |
 
-CHZZK is the biggest Korean VTuber scene and KICK is where a lot of the
-Western scene has moved, so both are in the dataset. Neither has a public
-*search*, so the channels come from the rosters and from account linking
-rather than from discovery.
+The sync refreshes profiles for known CHZZK and KICK identities and checks
+their current live streams. Neither has a public channel search here, so
+identities come from the global roster and existing records rather than
+discovery search.
 
 SOOP's unauthenticated `main_broad_list_api.php` endpoint provides a
 paginated global live list with broadcast titles, streamer IDs and viewer

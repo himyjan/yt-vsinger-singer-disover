@@ -25,14 +25,16 @@ decided the region; `Channel.verification` says what was actually looked up.
 
 ## What the pipeline reads
 
-### 1. YouTube Data API v3 — the primary source
+### 1. YouTube — the primary platform
 
 `https://developers.google.com/youtube/v3`
 
-Channels, uploads, live and upcoming streams, statistics, descriptions. The
-free tier allows 10,000 units a day; the quota guard in
-`scripts/lib/youtube.ts` refuses any call that would exceed it. See
-`docs/YOUTUBE-API.md`.
+YouTube is the primary platform, and the YouTube Data API v3 is the primary
+source for its channel and media data. InnerTube (`youtubei.js`) supplements it
+with quota-free profile and upload data where enabled. The Data API free tier
+allows 10,000 units a day; the quota guard in `scripts/lib/youtube.ts` refuses
+any call that would exceed it. See `docs/YOUTUBE-API.md` for the Data API and
+quota details.
 
 ### 2. vdb — the Virtual YouTuber Name List Database
 
@@ -41,7 +43,9 @@ free tier allows 10,000 units a day; the quota guard in
 ~10,100 performers, each with their accounts on up to 35 platforms, their
 group and the names they use in each language — `cn`, `jp`, `en` and
 `extra`. It is the backbone of the roster: it is where most of the platform
-identities come from.
+identities come from. All valid account platform keys are retained, not just
+the platforms with an API adapter in this project. The app's platform filter
+therefore includes these additional roster identities too.
 
 Every locale name is kept as an alias, and the name the record *shows*
 follows the region — a Japanese performer is listed as 「巫てんり」, not as
@@ -88,6 +92,10 @@ the activity status for ~4,400 performers. The nationality column is the
 single most valuable field in the whole project: it is a stated fact, where
 every other region signal is an inference.
 
+This source enriches Taiwan, Hong Kong and Malaysia records; it is not the
+only source of regional coverage. vdb and the other classification sources
+provide global roster coverage.
+
 ### 4. VocaDB
 
 `https://vocadb.net`
@@ -133,6 +141,14 @@ source of the human-written descriptions and the verified avatars.
 The text and the image are only used when the article is actually *about the
 performer* — an article about someone who later became a VTuber often leads
 with their pre-fame career, and its infobox image is a photograph of them.
+
+### Holodex and Music Holodex
+
+The Holodex sites are useful discovery references, but their website pages are
+not ingested by this pipeline. Holodex API ingestion would require an API
+adapter and a `HOLODEX_API_KEY` repository secret. Music metadata is currently
+read from the linked VTuber Music Dataset and VocaDB rather than scraped from
+`music.holodex.net`.
 
 ### 9–13. The platform APIs
 

@@ -3,6 +3,12 @@
 > How the pipeline talks to YouTube, what it costs, and how to stay inside the
 > free tier.
 
+YouTube is the project's primary platform, and the YouTube Data API v3 is its
+primary source for channel and media data. The pipeline also uses InnerTube
+(`youtubei.js`) as a quota-free supplemental source where enabled. These are
+access methods for YouTube data, not separate platforms. See `docs/SOURCES.md`
+for the source overview.
+
 ## Getting a key
 
 1. Open the [Google Cloud console](https://console.cloud.google.com/apis/credentials).
@@ -168,14 +174,17 @@ One unit per handle. The curated seed list uses handles, and each one costs a
 unit to resolve — so the seed list is resolved once and the result is
 committed.
 
-## What the pipeline does **not** use
+## InnerTube and authentication
 
-- **`youtubei.js`** — used only by the optional local dev server
-  (`server.ts`) for interactive search. The committed dataset never depends
-  on it, so the GitHub Actions workflow has no scraping dependency.
-- **The authenticated API** — the pipeline reads public data only, so no
-  OAuth token is required server-side. The browser app uses OAuth, but only
-  for the user's own subscriptions.
+The pipeline can use **`youtubei.js`** (InnerTube) for quota-free profile and
+upload data. It is an unofficial interface and can change without notice; the
+Data API remains the supported, quota-guaranteed route when an API key is
+configured. The optional local dev server also uses InnerTube for interactive
+YouTube features.
+
+The pipeline reads public data only, so no OAuth token is required
+server-side. The browser app uses OAuth for account-scoped features such as
+the user's own subscriptions.
 
 ## Troubleshooting
 

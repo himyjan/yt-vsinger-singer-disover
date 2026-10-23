@@ -50,6 +50,8 @@ import {
   pickAvatar,
   pickSubscribers,
   primaryPlatformOf,
+  PLATFORM_URLS,
+  extractPlatformId,
 } from "./lib/platforms";
 import { languagesForRegion, mergeLanguages } from "./lib/regions";
 import { fetchAiList, isOnAiList } from "./lib/aislist";
@@ -91,6 +93,7 @@ import type {
   ItemFile,
   Manifest,
   ManifestCounts,
+  KnownPlatformId,
   PlatformId,
   RecordSource,
 } from "./lib/types";
@@ -445,6 +448,7 @@ function itemFromApi(
 
   return {
     id: raw.id,
+    platform: "youtube",
     type,
     channelId: channel?.id ?? snippet.channelId ?? "",
     channelName: channel?.name ?? snippet.channelTitle ?? "Unknown",
@@ -671,10 +675,22 @@ async function main(): Promise<void> {
 
   /* --- resolve seeds --------------------------------------------------- */
   const seedByChannelId = new Map<string, SeedEntry>();
-  const seedHandles: SeedEntry[] = [];
+  const seedHandles: { seed: SeedEntry; handle: string }[] = [];
   for (const seed of ALL_SEEDS) {
-    if (seed.channelId) seedByChannelId.set(seed.channelId, seed);
-    else if (seed.handle) seedHandles.push(seed);
+    let channelId = seed.channelId;
+    let handle = seed.handle;
+    const youtubeUrl = seed.platformUrls?.youtube?.url;
+    if (youtubeUrl) {
+      const parsed = extractPlatformId(youtubeUrl);
+      if (parsed?.platform === "youtube") {
+        if (parsed.id.startsWith("UC")) channelId ??= parsed.id;
+        else handle ??= parsed.id;
+      } else {
+        log(`warn: invalid YouTube seed URL for ${seed.name}: ${youtubeUrl}`);
+      }
+    }
+    if (channelId) seedByChannelId.set(channelId, seed);
+    else if (handle) seedHandles.push({ seed, handle });
   }
 
   const seedIds = [...seedByChannelId.keys()];
@@ -684,7 +700,9 @@ async function main(): Promise<void> {
   }
   if (client && seedHandles.length) {
     try {
-      resolvedSeeds.push(...(await client.resolveHandles(seedHandles.map((s) => s.handle!))));
+      resolvedSeeds.push(
+        ...(await client.resolveHandles(seedHandles.map((entry) => entry.handle))),
+      );
     } catch (err) {
       log(`warn: seed handle resolution failed: ${(err as Error).message}`);
     }
@@ -843,7 +861,9 @@ async function main(): Promise<void> {
   for (const raw of resolvedSeeds) {
     const seed =
       seedByChannelId.get(raw.id) ??
-      seedHandles.find((s) => s.handle && raw.snippet?.customUrl?.endsWith(s.handle));
+      seedHandles.find((entry) =>
+        raw.snippet?.customUrl?.endsWith(entry.handle),
+      )?.seed;
     const override = seed
       ? {
           kind: seed.kind,
@@ -854,7 +874,30 @@ async function main(): Promise<void> {
         }
       : undefined;
     const ch = channelFromApi(raw, "seed", now, override);
-    if (ch) channelById.set(ch.id, ch);
+    if (ch) {
+      for (const [platform, identity] of Object.entries(seed?.platformUrls ?? {})) {
+        const platformId = platform as KnownPlatformId;
+        if (ch.platforms.some((link) => link.platform === platformId)) continue;
+        const parsed = extractPlatformId(identity.url);
+        if (!parsed || parsed.platform !== platformId) {
+          log(
+            `warn: invalid ${platformId} seed URL for ${seed?.name ?? ch.name}: ${identity.url}`,
+          );
+          continue;
+        }
+        ch.platforms.push({
+          platform: platformId,
+          id: parsed.id,
+          handle: null,
+          name: null,
+          url: PLATFORM_URLS[platformId](parsed.id),
+          subscribers: { tag: "hidden" },
+          avatar: null,
+          lastCheckedAt: now,
+        });
+      }
+      channelById.set(ch.id, ch);
+    }
   }
 
   // 2. Discovered channels (refresh details for up to maxChannelsPerRun).
@@ -1021,6 +1064,8 @@ async function main(): Promise<void> {
   {
     const budget = config.maxChannelDetailsPerRun;
     const adapterById = new Map(adapters.map((a) => [a.id as string, a]));
+    const livePlatforms = new Set(["chzzk", "kick", "soop"]);
+    const liveRefreshIntervalMs = 6 * 60 * 60 * 1000;
 
     /**
      * Only the channels this pass can actually improve.
@@ -1040,9 +1085,19 @@ async function main(): Promise<void> {
           c.id.startsWith("UC") ||
           c.platforms.some((p) => adapterById.has(p.platform));
         if (!resolvable) return false;
+        const lastDetailsAt = c.lastDetailsFetchedAt
+          ? Date.parse(c.lastDetailsFetchedAt)
+          : Number.NaN;
+        const liveRefreshDue =
+          c.platforms.some((platform) =>
+            livePlatforms.has(platform.platform),
+          ) &&
+          (!Number.isFinite(lastDetailsAt) ||
+            Date.now() - lastDetailsAt >= liveRefreshIntervalMs);
         return (
           !c.description ||
-          c.platforms.some((p) => p.subscribers.tag === "hidden")
+          c.platforms.some((p) => p.subscribers.tag === "hidden") ||
+          liveRefreshDue
         );
       })
       .sort((a, b) =>
@@ -1318,6 +1373,22 @@ async function main(): Promise<void> {
             if (followers && followers.tag !== "hidden") {
               link.subscribers = followers;
             }
+          }
+          try {
+            const uploads = await adapter.live(profile);
+            for (const upload of uploads) {
+              const item = platformUploadToItem(upload, now, channel);
+              if (!item) continue;
+              const previous = itemById.get(item.id);
+              itemById.set(item.id, {
+                ...item,
+                addedAt: previous?.addedAt ?? item.addedAt,
+              });
+            }
+          } catch (error) {
+            log(
+              `warn: ${adapter.id} live lookup failed for ${link.id}: ${(error as Error).message}`,
+            );
           }
           resolved++;
         } catch {
@@ -1922,6 +1993,7 @@ async function main(): Promise<void> {
               : "past";
         const item: Item = {
           id: b.id,
+          platform: "youtube",
           type: "live",
           channelId: channel.id,
           channelName: channel.name,
@@ -2262,6 +2334,7 @@ export function innertubeLiveToItem(
   if (!live?.id) return null;
   return {
     id: live.id,
+    platform: "youtube",
     type: "live",
     channelId: channel.id,
     channelName: channel.name,
@@ -2351,6 +2424,7 @@ export function innertubeUploadToItem(
 
   return {
     id: upload.id,
+    platform: "youtube",
     type: "video",
     channelId: channel.id,
     channelName: channel.name,
@@ -2406,25 +2480,26 @@ export function innertubeUploadToItem(
 export function platformUploadToItem(
   upload: PlatformUpload,
   now: string,
+  owner?: Channel,
 ): Item | null {
   if (!upload?.id) return null;
   return {
     id: upload.id,
+    platform: upload.platform,
     url: upload.url,
     type: upload.status === "live" ? "live" : "video",
     channelId:
       upload.platform === "youtube"
         ? upload.channelId
         : `${upload.platform}:${upload.channelId}`,
-    channelName: "",
-    channelKind: "virtual",
-    region: upload.region ?? "cn",
-    gender: "unknown",
-    languages: [],
+    channelName: owner?.name ?? upload.channelId,
+    channelKind: owner?.kind ?? "virtual",
+    region: upload.region ?? owner?.region ?? "unknown",
+    gender: owner?.gender ?? "unknown",
+    languages: owner?.languages ?? [],
 
-
-    isAi: false,
-    variant: "unknown",
+    isAi: owner?.isAi ?? false,
+    variant: owner?.variant ?? "unknown",
     title: upload.title ?? "Untitled",
     description: upload.description ?? null,
     thumbnail: upload.thumbnail ?? null,
@@ -2438,7 +2513,14 @@ export function platformUploadToItem(
     songTitle: upload.songTitle ?? null,
     originalArtist: upload.originalArtist ?? null,
     isCollab: false,
-    collaborators: [],
+    collaborators: owner
+      ? [{
+          channelId: owner.id,
+          name: owner.name,
+          kind: owner.kind,
+          region: owner.region,
+        }]
+      : [],
     isAcoustic: false,
     tags: [],
     viewCount: upload.viewCount ?? null,

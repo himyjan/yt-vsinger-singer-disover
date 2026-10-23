@@ -13,6 +13,7 @@
  * to know about it.
  */
 import { computed, onMounted, reactive, ref, watch } from "vue";
+import { ALL_PLATFORMS } from "@shared/lib/types";
 import type {
   Channel,
   ChannelSummary,
@@ -29,6 +30,7 @@ import {
   filterChannels,
   filterItems,
   formatCount,
+  platformOfItem,
   resetDatasetCache,
   search,
   sortChannels,
@@ -46,6 +48,7 @@ import {
   markSuggested,
   removeAccount,
   setActiveAccount,
+  setPlatform,
   setRegion,
   setScope,
   setSubscriptions,
@@ -161,6 +164,17 @@ const summaryByName = computed(() => {
   }
   return map;
 });
+
+const availablePlatforms = computed(() =>
+  [...new Set([
+    ...ALL_PLATFORMS,
+    ...summaries.value.flatMap((summary) => [
+      ...summary.links.map((link) => link.p),
+      ...Object.keys(summary.externals ?? {}),
+    ]),
+  ])]
+    .sort((a, b) => platformMeta(a).label.localeCompare(platformMeta(b).label)),
+);
 
 /**
  * Per-channel projections used by the subscription cards.
@@ -314,6 +328,7 @@ const visibleLive = computed(() =>
   sortItems(filterItems(live.value, {
     kind: state.scope,
     region: state.region,
+    platform: state.platform,
     categories: state.categories,
     gender: state.gender,
     ai: state.ai,
@@ -327,6 +342,7 @@ const visibleUpcoming = computed(() =>
   sortItems(filterItems(upcoming.value, {
     kind: state.scope,
     region: state.region,
+    platform: state.platform,
     gender: state.gender,
     ai: state.ai,
     affiliation: state.affiliation,
@@ -344,6 +360,7 @@ const visibleSongs = computed(() =>
       {
         kind: state.scope,
         region: state.region,
+        platform: state.platform,
         categories: state.categories,
         acoustic: state.acousticOnly,
         gender: state.gender,
@@ -361,6 +378,7 @@ const visibleChannels = computed(() => {
   const channels = filterChannels(summaries.value, {
     kind: state.scope,
     region: state.region,
+    platform: state.platform,
     gender: state.gender,
     ai: state.ai,
     affiliation: state.affiliation,
@@ -428,6 +446,9 @@ const visibleSubscriptions = computed(() =>
   allSubscriptions().filter((sub) => {
     if (state.scope !== "both" && sub.kind !== state.scope) return false;
     if (state.region !== "all" && sub.region && sub.region !== state.region) {
+      return false;
+    }
+    if (state.platform !== "all" && sub.provider !== state.platform) {
       return false;
     }
     if (state.subsTracked === "tracked" && !sub.known) return false;
@@ -499,6 +520,13 @@ const savedChannels = computed<ChannelSummary[]>(() => {
       summaryById.value.get(entry.id) ?? savedChannelCache.value.get(entry.id);
     if (!channel) continue;
     if (state.scope !== "both" && channel.kind !== state.scope) continue;
+    if (
+      state.platform !== "all" &&
+      !channel.links.some((link) => link.p === state.platform) &&
+      !channel.externals?.[state.platform]
+    ) {
+      continue;
+    }
     out.push(channel);
   }
   return sortChannels(out, state.sort.saved);
@@ -513,8 +541,14 @@ const visibleSaved = computed(() => {
   }
   return sortItems(
     state.scope === "both"
-      ? items
-      : items.filter((item) => item.channelKind === state.scope),
+      ? items.filter((item) =>
+          state.platform === "all" || platformOfItem(item) === state.platform,
+        )
+      : items.filter(
+          (item) =>
+            item.channelKind === state.scope &&
+            (state.platform === "all" || platformOfItem(item) === state.platform),
+        ),
     state.sort.saved,
   );
 });
@@ -580,7 +614,7 @@ watch(
 let searchTimer: number | undefined;
 
 watch(
-  () => [state.query, state.scope, state.region],
+  () => [state.query, state.scope, state.region, state.platform],
   () => {
     window.clearTimeout(searchTimer);
     searchTimer = window.setTimeout(runSearch, 180);
@@ -600,7 +634,23 @@ async function runSearch(): Promise<void> {
       region: state.region,
       limit: 120,
     });
-    searchHits.value = hits.map((h) => h.entry);
+    searchHits.value = hits
+      .map((h) => h.entry)
+      .filter((hit) => {
+        if (state.platform === "all") return true;
+        if (hit.k === "c") {
+          const channel = summaryById.value.get(hit.id);
+          return Boolean(
+            channel &&
+              (channel.links.some((link) => link.p === state.platform) ||
+                channel.externals?.[state.platform]),
+          );
+        }
+        const item = [...allItems.value, ...live.value, ...upcoming.value].find(
+          (candidate) => candidate.id === hit.id,
+        );
+        return item ? platformOfItem(item) === state.platform : false;
+      });
   } catch (err) {
     console.error(err);
   } finally {
@@ -1916,6 +1966,25 @@ onMounted(async () => {
               :value="region.code"
             >
               {{ region.badge }} {{ region.label }} ({{ region.channels }})
+            </option>
+          </select>
+        </label>
+
+        <!-- Platform -->
+        <label class="shrink-0">
+          <span class="sr-only">Platform</span>
+          <select
+            :value="state.platform"
+            class="rounded-full border border-black/10 bg-white px-3 py-1.5 text-xs font-semibold outline-none dark:border-white/12 dark:bg-neutral-900"
+            @change="setPlatform(($event.target as HTMLSelectElement).value)"
+          >
+            <option value="all">🔗 All platforms</option>
+            <option
+              v-for="platform in availablePlatforms"
+              :key="platform"
+              :value="platform"
+            >
+              {{ platformMeta(platform).label }}
             </option>
           </select>
         </label>
