@@ -40,6 +40,13 @@ InnerTube cannot retrieve them. Its free tier allows
 any call that would exceed it. See `docs/YOUTUBE-API.md` for the Data API and
 quota details.
 
+YouTube search discovers candidates; it does not by itself establish that a
+channel belongs in the virtual catalogue. New YouTube records must have at
+least two distinct videos that each contain both virtual-creator identity and
+singing evidence in the available title, description, or tag metadata. A
+channel already identified by vdb, the committed dataset, or a curated seed
+does not need this admission check.
+
 ### 2. vdb — the Virtual YouTuber Name List Database
 
 `https://vdb.vtbs.moe/json/list.json`
@@ -50,6 +57,11 @@ group and the names they use in each language — `cn`, `jp`, `en` and
 identities come from. All valid account platform keys are retained, not just
 the platforms with an API adapter in this project. The app's platform filter
 therefore includes these additional roster identities too.
+
+For keyword discovery, vdb is also an identity allowlist: non-YouTube platform
+searches may refresh only identities already in vdb, the dataset, or the seed
+catalog. When vdb is unavailable, new automatic discoveries fail closed;
+existing and explicitly curated records continue to refresh.
 
 Every locale name is kept as an alias, and the name the record *shows*
 follows the region — a Japanese performer is listed as 「巫てんり」, not as

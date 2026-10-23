@@ -63,7 +63,11 @@ scripts/sync.ts
 
 YouTube is the primary platform, and InnerTube (`youtubei.js`) is the primary
 source for its channel profiles and uploads. The optional YouTube Data API v3
-adds discovery and specialized live/video metadata. The sync pipeline also
+adds search and specialized live/video metadata. A newly discovered YouTube
+channel is added to virtual data only after two distinct videos each show
+both virtual-creator identity and singing evidence; non-YouTube discovery
+only accepts identities already in vdb, the dataset, or the seed catalog.
+The sync pipeline also
 reads the global vdb roster (including links across many platforms), Taiwan
 VTuber Tracking Data, VocaDB and curated music datasets. The Data API free tier
 allows 10,000 quota units a day. The app supports YouTube, Twitch, Bilibili,
@@ -76,8 +80,8 @@ even when a platform does not have a dedicated profile adapter.
 | --- | --- | --- |
 | YouTube | Channel discovery, profiles, uploads, and live/video metadata | Optional `YOUTUBE_API_KEY`; InnerTube is the discovery fallback |
 | Twitch | Keyword channel discovery and live streams; linked profiles and follower counts | `TWITCH_CLIENT_ID` and `TWITCH_CLIENT_SECRET` are required for sync discovery |
-| Bilibili | VTuber-partition discovery and live streams; channel uploads and profiles | None |
-| Niconico | Keyword video discovery and uploads; authors are inferred from matching videos; no live listing | None |
+| Bilibili | Ranking/live results filtered to vdb, existing or seeded identities; uploads and profiles | None |
+| Niconico | Keyword-video authors filtered to vdb, existing or seeded identities; uploads; no live listing | None |
 | VK | User discovery, channel profiles, uploads and follower counts | `VK_ACCESS_TOKEN` is required for discovery |
 | CHZZK | Public keyword channel discovery, profiles and current live streams | None |
 | KICK | Refresh known profiles and current live streams; no usable public keyword search | None |
@@ -126,6 +130,12 @@ Scheduled searches use the per-platform terms in
 discovery need their respective Actions secrets. `--no-search` (or the manual
 workflow's **Skip discovery searches** option) skips keyword discovery across
 platforms while continuing profile and media refreshes for known channels.
+Automatic discovery on non-YouTube platforms only admits identities already
+present in vdb, the dataset, or the curated seed catalog. YouTube can also add
+new virtual channels when at least two distinct videos mention both virtual
+singer/VTuber identity and singing in their titles, descriptions, or tags.
+Sync and verification workflows serialize dataset writes and rebase generated
+changes onto the latest branch before committing.
 See [docs/DEPLOY.md](docs/DEPLOY.md) and [docs/PLATFORMS.md](docs/PLATFORMS.md).
 
 Everything is sharded so no single file grows large — see

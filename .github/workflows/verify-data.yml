@@ -36,7 +36,7 @@ on:
     - cron: "43 4 * * *"
 
 concurrency:
-  group: verify-dataset
+  group: dataset-writer-${{ github.repository }}
   cancel-in-progress: false
 
 permissions:
@@ -78,6 +78,13 @@ jobs:
           npm run data:sync -- --no-search
           npm run data:index
           npm run data:validate
+
+      - name: Rebase data changes onto the latest branch
+        env:
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          git fetch origin "$BRANCH"
+          git rebase --autostash "origin/$BRANCH"
 
       - name: Commit corrections
         uses: stefanzweifel/git-auto-commit-action@v7

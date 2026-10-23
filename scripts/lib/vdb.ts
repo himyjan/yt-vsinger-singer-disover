@@ -206,6 +206,11 @@ const LOCALE_KEYS = new Set([
 export class VdbSource {
   private cache: VdbVTuber[] | null = null;
   private linkSyntax: Record<string, string> = {};
+  private available = false;
+
+  get isAvailable(): boolean {
+    return this.available;
+  }
 
   /** Fetches and parses the roster. Cached for the process lifetime. */
   async fetch(): Promise<VdbVTuber[]> {
@@ -220,6 +225,7 @@ export class VdbSource {
       });
       if (!res.ok) return [];
       const json = (await res.json()) as VdbFile;
+      if (!Array.isArray(json.vtbs) || json.vtbs.length === 0) return [];
       this.linkSyntax = json.meta?.linkSyntax ?? {};
 
       const out: VdbVTuber[] = [];
@@ -227,6 +233,7 @@ export class VdbSource {
         const parsed = this.parse(record);
         if (parsed) out.push(parsed);
       }
+      this.available = out.length > 0;
       this.cache = out;
       return out;
     } catch {

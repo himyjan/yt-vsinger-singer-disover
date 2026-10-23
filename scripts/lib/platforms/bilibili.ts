@@ -624,6 +624,7 @@ export class BilibiliAdapter implements PlatformAdapter {
     for (const video of ranking?.data?.list ?? []) {
       const owner = video.owner;
       if (!owner?.mid) continue;
+      if (this.knownMids && !this.knownMids.has(String(owner.mid))) continue;
       if (!byId.has(String(owner.mid))) {
         byId.set(String(owner.mid), {
           platform: "bilibili",

@@ -51,8 +51,10 @@ npm run data:index
 npm run data:validate
 ```
 
-`--no-search` is important: it refreshes known channels for 1 unit each
-instead of spending 100 on a discovery sweep.
+`--no-search` skips keyword searches, avoiding their 100-unit search cost.
+Without a YouTube API key, the sync may still rebuild its roster; automatic
+roster additions are limited to vdb, existing dataset identities, and curated
+seeds. See the `sync-dataset` skill for the discovery admission rules.
 
 ## The classifier
 

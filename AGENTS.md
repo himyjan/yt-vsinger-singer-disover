@@ -226,6 +226,29 @@ the browser; the server only forwards it to YouTube and never stores or logs
 it. Do not change the scope back to read-only — that breaks Refresh for
 accounts above 1,000.
 
+### 15. Automatic discovery has admission gates
+
+Non-YouTube automatic discovery only accepts platform identities already
+listed in vdb, present in the dataset, or explicitly added through
+`data/seed-catalog.json`. If vdb is unavailable, do not admit new
+non-YouTube identities automatically. Existing records are never deleted by
+this discovery filter.
+
+YouTube has a deliberate discovery exception because singing-stream and relay
+hashtags vary. A new YouTube identity can enter virtual data only after at
+least two distinct videos each show both virtual-creator identity (VTuber,
+VSinger, or localized equivalents) and singing evidence (for example 歌枠,
+歌ってみた, 弾き語り, KARAOKE, or relay hashtags) in available titles,
+descriptions, or tags. Singing evidence alone must not classify an ordinary
+singer or karaoke streamer as virtual. `--no-search` skips keyword searches,
+but a run without a Data API key may still rebuild the roster; that roster is
+filtered against vdb, existing records, and curated seeds.
+
+The sync and verification GitHub workflows both write `data/`. Keep them in
+the same repository-wide concurrency group and rebase generated changes onto
+the latest branch before committing, so concurrent dataset writers do not
+create non-fast-forward push failures.
+
 ## Common tasks
 
 | Task | Where |

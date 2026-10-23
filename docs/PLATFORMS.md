@@ -335,6 +335,22 @@ The sync logs when a platform is skipped because credentials are missing or
 discovery is unavailable. `--no-search` skips keyword discovery across all
 platforms while still refreshing known records.
 
+Search results are only candidates, not proof that an account belongs in the
+catalogue. Before adding a channel or its discovered media, sync requires its
+platform ID or handle to match vdb, an existing dataset record, or the curated
+seed catalog on non-YouTube platforms, including Niconico authors and broad
+live feeds. YouTube is also allowed to add results from singing-focused
+queries, but a new YouTube channel is added to the virtual dataset only after
+at least two distinct videos mention both a VTuber/VSinger identity and
+singing evidence in their titles, descriptions, or tags. Singing evidence
+includes terms such as 歌枠, 歌枠リレー, 歌ってみた, 弾き語り, KARAOKE,
+singing, or nyanyi. This supports changing relay hashtags (for example,
+`#UNKNOWN歌枠リレー`) without maintaining a fixed list of event names, while
+preventing an ordinary singer or karaoke streamer from being labelled virtual
+based on singing terms alone. Existing records are never removed by these
+filters. If vdb is unavailable, non-YouTube discovery fails closed and
+accepts only existing or seeded identities.
+
 ### Discovery keywords and manual queries
 
 The scheduled sync uses the per-platform terms in
@@ -342,7 +358,8 @@ The scheduled sync uses the per-platform terms in
 workflow run can supply one `keyword` to query the enabled platforms instead
 of their configured terms. Results vary by platform: some searches find
 channels directly, while Niconico finds videos and infers their authors, and
-SOOP only checks its first page of live broadcasts.
+SOOP only checks its first page of live broadcasts. All results still pass
+through the identity allowlist above.
 
 The YouTube API key is optional. YouTube discovery falls back to InnerTube
 channel search when the Data API key is absent or the search budget is

@@ -305,9 +305,15 @@ same `parseSubscriptionsFile()`, but neither is required for a large account.
 
 | Workflow | Trigger | Does |
 | --- | --- | --- |
-| `sync-data.yml` | every 6 hours + manual | fetch → classify → index → validate → commit `data/` |
+| `sync-data.yml` | every 6 hours + manual | fetch → qualify discovery candidates → classify → index → validate → rebase → commit `data/` |
+| `verify-data.yml` | daily + manual | verify uncertain records → re-apply corrections → index → validate → rebase → commit `data/` |
 | `deploy-pages.yml` | push to `main` | validate → build → publish to Pages |
 | `ci.yml` | push + pull request | validate → type-check → build |
+
+The sync and verification workflows share one repository-wide dataset-writer
+concurrency group. Before committing, each fetches and rebases its generated
+data changes onto the latest branch head so intervening commits do not cause a
+non-fast-forward push failure.
 
 The quota spent by a sync is cached between workflow runs, so several runs a
 day can never exceed the 10,000-unit daily allowance.

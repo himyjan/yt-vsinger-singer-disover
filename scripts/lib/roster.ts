@@ -42,6 +42,7 @@ export interface RosterOptions {
   /** Include performers discovered on the other platforms. */
   includeOtherPlatforms?: boolean;
   onLog?: (message: string) => void;
+  vdbSource?: VdbSource;
 }
 
 /**
@@ -253,7 +254,7 @@ export async function buildRoster(
   log(`roster: ${ALL_SEEDS.length} curated seeds applied`);
 
   /* --- vdb: the Virtual YouTuber Name List Database --------------------- */
-  const vdb = new VdbSource();
+  const vdb = options.vdbSource ?? new VdbSource();
   const vdbList = await vdb.fetch();
   let vdbAdded = 0;
   for (const entry of vdbList) {
@@ -364,6 +365,11 @@ export async function buildRoster(
     const adapters = createAdapters({ youtubeClient: null, twitchClient: null });
     for (const adapter of adapters) {
       if (adapter.id === "youtube" || adapter.id === "twitch") continue;
+      if (adapter.id === "bilibili") {
+        // A broad ranking search can return ordinary creator accounts.
+        // Sync discovery applies the vdb/existing-account allowlist instead.
+        continue;
+      }
       try {
         const found = (await adapter.search?.("", 0)) ?? [];
         for (const channel of found) {

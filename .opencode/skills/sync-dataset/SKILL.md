@@ -11,7 +11,7 @@ The pipeline refreshes `data/` from the platform APIs and commits the result.
 
 ```bash
 npm install
-export YOUTUBE_API_KEY=...   # required
+export YOUTUBE_API_KEY=...   # optional; enables Data API search and rich video metadata
 ```
 
 The pipeline must run with **plain Node** — no native modules. `better-sqlite3`
@@ -23,7 +23,7 @@ is an `optionalDependency` used only by the one-off legacy migration.
 npm run data:sync                     # normal run
 npm run data:sync -- --dry-run        # fetch + classify, write nothing
 npm run data:sync -- --budget 500     # cap this run at 500 quota units
-npm run data:sync -- --no-search      # refresh known channels only (1 unit each)
+npm run data:sync -- --no-search      # skip keyword searches; refresh known channels
 npm run data:sync -- --keyword "…"    # run one discovery query
 npm run data:sync -- --force          # reset the quota counter and refetch
 npm run data:index                    # rebuild the inverted search index
@@ -31,6 +31,8 @@ npm run data:validate                 # structure + size budgets (CI gate)
 ```
 
 Always finish with `npm run data:index && npm run data:validate`.
+Without a Data API key, sync may still rebuild the roster; `--no-search` is
+not a promise that no new roster records can be added.
 
 ## How the run works
 
@@ -39,17 +41,22 @@ Always finish with `npm run data:index && npm run data:validate`.
 1. **Load** the current dataset from `data/`.
 2. **Resolve seeds** — `data/seed-catalog.json` holds curated records; handles
    are resolved with `channels.list?forHandle=` (1 unit each).
-3. **Discover** — `search.list` (100 units each), bounded by
-   `maxSearchesPerRun`.
-4. **Refresh channels** — `channels.list` (1 unit per 50).
-5. **Enrich** — Twitch, AiSList, and the other platform adapters.
-6. **Fetch items** — `playlistItems.list` + `videos.list` per channel.
-7. **Fetch live** — `liveBroadcasts.list` (1 unit per 50 channels).
-8. **Backfill durations** — `videos.list` for records that have no duration.
-9. **Enrich songs** — the VTuber Music Dataset overrides the heuristic song
+3. **Discover candidates** — `search.list` (100 units each), bounded by
+   `maxSearchesPerRun`; InnerTube channel search is the no-quota fallback.
+4. **Qualify new YouTube channels** — require at least two distinct videos
+   that each contain virtual-creator identity and singing evidence in
+   available titles, descriptions, or tags. Existing vdb/dataset/seed
+   identities are retained without this check. Non-YouTube search results
+   must match vdb, the dataset, or the seed catalog.
+5. **Refresh channels** — `channels.list` (1 unit per 50).
+6. **Enrich** — Twitch, AiSList, and the other platform adapters.
+7. **Fetch items** — `playlistItems.list` + `videos.list` per channel.
+8. **Fetch live** — `liveBroadcasts.list` (1 unit per 50 channels).
+9. **Backfill durations** — `videos.list` for records that have no duration.
+10. **Enrich songs** — the VTuber Music Dataset overrides the heuristic song
    extraction.
-10. **Retain** — apply the age and per-channel caps.
-11. **Merge and write** — `scripts/lib/dataset.ts` writes every shard.
+11. **Retain** — apply the age and per-channel caps.
+12. **Merge and write** — `scripts/lib/dataset.ts` writes every shard.
 
 Two passes near the end are worth knowing about because they change records
 without any request:
@@ -136,7 +143,11 @@ The log prints, per step: what was fetched, what was skipped, and why.
 `.github/workflows/sync-data.yml` runs every 6 hours. It restores
 `.cache` between runs so the quota budget is cumulative across the day, then
 commits `data/` with `git-auto-commit-action`. A run that finds nothing new
-produces no commit.
+produces no commit. The sync and verification workflows use the same
+repository-wide concurrency group and rebase generated data onto the latest
+branch before committing, preventing overlapping dataset writes and
+non-fast-forward pushes.
 
-The required secret is `YOUTUBE_API_KEY`. Optional: `TWITCH_CLIENT_ID`,
+`YOUTUBE_API_KEY` is optional; it enables Data API search and richer video
+metadata. Optional platform credentials: `TWITCH_CLIENT_ID`,
 `TWITCH_CLIENT_SECRET`, `VK_ACCESS_TOKEN`.

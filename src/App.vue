@@ -396,8 +396,8 @@ const visibleChannels = computed(() => {
       summary.id.startsWith("UC")
         ? summary.id
         : summary.links
-            .find((link) => link.p === "youtube")
-            ?.u.match(/youtube\.com\/channel\/(UC[\w-]+)/)?.[1];
+          .find((link) => link.p === "youtube")
+          ?.u.match(/youtube\.com\/channel\/(UC[\w-]+)/)?.[1];
     const checkedBadge = youtubeId
       ? state.youtubeBadges[youtubeId]
       : undefined;
@@ -429,10 +429,10 @@ const visibleChannels = computed(() => {
     !hasAnyAccount.value || state.channelSubs === "all"
       ? channels
       : channels.filter((channel) =>
-          state.channelSubs === "subscribed"
-            ? subscribedChannelIds.value.has(channel.id)
-            : !subscribedChannelIds.value.has(channel.id),
-        );
+        state.channelSubs === "subscribed"
+          ? subscribedChannelIds.value.has(channel.id)
+          : !subscribedChannelIds.value.has(channel.id),
+      );
 
   return sortChannels(filtered, state.sort.channels);
 });
@@ -572,13 +572,13 @@ const visibleSaved = computed(() => {
   return sortItems(
     state.scope === "both"
       ? items.filter((item) =>
-          state.platform === "all" || platformOfItem(item) === state.platform,
-        )
+        state.platform === "all" || platformOfItem(item) === state.platform,
+      )
       : items.filter(
-          (item) =>
-            item.channelKind === state.scope &&
-            (state.platform === "all" || platformOfItem(item) === state.platform),
-        ),
+        (item) =>
+          item.channelKind === state.scope &&
+          (state.platform === "all" || platformOfItem(item) === state.platform),
+      ),
     state.sort.saved,
   );
 });
@@ -672,8 +672,8 @@ async function runSearch(): Promise<void> {
           const channel = summaryById.value.get(hit.id);
           return Boolean(
             channel &&
-              (channel.links.some((link) => link.p === state.platform) ||
-                channel.externals?.[state.platform]),
+            (channel.links.some((link) => link.p === state.platform) ||
+              channel.externals?.[state.platform]),
           );
         }
         const item = [...allItems.value, ...live.value, ...upcoming.value].find(
@@ -1113,9 +1113,9 @@ async function linkProvider(
     const account: LinkedAccount = existing
       ? { ...existing, ...linked, id: existing.id }
       : {
-          ...linked,
-          id: `${linked.provider}:${randomId()}`,
-        };
+        ...linked,
+        id: `${linked.provider}:${randomId()}`,
+      };
     addAccount(account);
 
     const remote = await provider.subscriptions(account, (progress) => {
@@ -1156,7 +1156,7 @@ async function linkProvider(
       showToast(
         "info",
         `${provider.label}: account ${existing ? "reconnected" : "linked"}, but it returned no subscriptions. ` +
-          `Check that this account has subscriptions and, on a static build, that YouTube Data API v3 is enabled for the project.`,
+        `Check that this account has subscriptions and, on a static build, that YouTube Data API v3 is enabled for the project.`,
         10000,
       );
     } else {
@@ -1171,7 +1171,7 @@ async function linkProvider(
         truncated
           ? `${provider.label}: ${mapped.length} of ${total} subscriptions returned — the YouTube Data API returns at most 1,000 items for a list, whatever the account holds. Use Linked accounts → Reconnect (full permission; the local dev server reads InnerTube's complete list) or “Export from YouTube” for the complete file.`
           : `${provider.label}: ${mapped.length} subscription(s) ${existing ? "reconnected" : "linked"}, ${mapped.filter((m) => m.known).length} already tracked.` +
-              (total !== null ? ` (Google total: ${total})` : ""),
+          (total !== null ? ` (Google total: ${total})` : ""),
         truncated ? 14000 : 6000,
       );
     }
@@ -1573,7 +1573,7 @@ async function syncSuggested(): Promise<void> {
       if (json.processed === 0 && json.nextOffset <= offset) {
         throw new Error(
           json.failed?.[0]?.reason ??
-            "the server could not fetch any of the suggested channels",
+          "the server could not fetch any of the suggested channels",
         );
       }
       offset = json.nextOffset;
@@ -1602,8 +1602,8 @@ async function syncSuggested(): Promise<void> {
     showToast(
       failed > 0 ? "info" : "success",
       `${added} channel(s) added to the dataset` +
-        (failed > 0 ? `, ${failed} could not be fetched` : "") +
-        ".",
+      (failed > 0 ? `, ${failed} could not be fetched` : "") +
+      ".",
       10000,
     );
     if (added > 0) await reloadDataset();
@@ -1715,25 +1715,14 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div
-    class="min-h-screen bg-[#f6f5f1] text-neutral-900 transition-colors duration-200 dark:bg-neutral-950 dark:text-neutral-100"
-  >
+  <div class="min-h-screen bg-[#f6f5f1] text-neutral-900 transition-colors duration-200 dark:bg-neutral-950 dark:text-neutral-100">
     <!-- ───────────────────────── Header ───────────────────────── -->
-    <header
-      class="sticky top-0 z-40 border-b border-black/8 bg-[#f6f5f1]/90 backdrop-blur-xl dark:border-white/10 dark:bg-neutral-950/90"
-    >
+    <header class="sticky top-0 z-40 border-b border-black/8 bg-[#f6f5f1]/90 backdrop-blur-xl dark:border-white/10 dark:bg-neutral-950/90">
       <div class="mx-auto max-w-[1600px] px-3 sm:px-5">
         <!-- Top row -->
         <div class="flex items-center gap-2 py-2.5 sm:gap-3 sm:py-3">
-          <button
-            type="button"
-            class="flex shrink-0 items-center gap-2"
-            @click="setView('live')"
-          >
-            <span
-              class="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 text-base font-black text-white shadow-sm"
-              aria-hidden="true"
-            >
+          <button type="button" class="flex shrink-0 items-center gap-2" @click="setView('live')">
+            <span class="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 text-base font-black text-white shadow-sm" aria-hidden="true">
               ♪
             </span>
             <span class="hidden text-lg font-bold tracking-tight sm:block">
@@ -1743,48 +1732,20 @@ onMounted(async () => {
 
           <!-- Search -->
           <div class="relative min-w-0 flex-1">
-            <input
-              v-model="state.query"
-              type="search"
-              placeholder="Search channels, songs, covers, MVs…"
-              class="w-full rounded-full border border-black/10 bg-white py-2 pr-9 pl-9 text-sm outline-none transition placeholder:text-neutral-400 focus:border-purple-400 focus:ring-2 focus:ring-purple-500/20 dark:border-white/12 dark:bg-neutral-900 dark:placeholder:text-neutral-500"
-              aria-label="Search"
-            />
-            <svg
-              class="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-neutral-400"
-              viewBox="0 0 20 20"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              aria-hidden="true"
-            >
+            <input v-model="state.query" type="search" placeholder="Search channels, songs, covers, MVs…" class="w-full rounded-full border border-black/10 bg-white py-2 pr-9 pl-9 text-sm outline-none transition placeholder:text-neutral-400 focus:border-purple-400 focus:ring-2 focus:ring-purple-500/20 dark:border-white/12 dark:bg-neutral-900 dark:placeholder:text-neutral-500" aria-label="Search" />
+            <svg class="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-neutral-400" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <circle cx="9" cy="9" r="6" />
               <path d="m14 14 4 4" stroke-linecap="round" />
             </svg>
-            <span
-              v-if="searching"
-              class="absolute top-1/2 right-3 h-3.5 w-3.5 -translate-y-1/2 animate-spin rounded-full border-2 border-neutral-300 border-t-purple-500"
-            />
+            <span v-if="searching" class="absolute top-1/2 right-3 h-3.5 w-3.5 -translate-y-1/2 animate-spin rounded-full border-2 border-neutral-300 border-t-purple-500" />
           </div>
 
           <!-- Scope switch -->
-          <div
-            class="hidden shrink-0 items-center rounded-full border border-black/10 bg-white p-0.5 md:flex dark:border-white/12 dark:bg-neutral-900"
-            role="group"
-            aria-label="Artist scope"
-          >
-            <button
-              v-for="option in (['virtual', 'real', 'both'] as Scope[])"
-              :key="option"
-              type="button"
-              class="rounded-full px-3 py-1.5 text-xs font-semibold transition"
-              :class="
-                state.scope === option
-                  ? 'bg-purple-600 text-white shadow-sm'
-                  : 'text-neutral-500 hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-100'
-              "
-              @click="selectScope(option)"
-            >
+          <div class="hidden shrink-0 items-center rounded-full border border-black/10 bg-white p-0.5 md:flex dark:border-white/12 dark:bg-neutral-900" role="group" aria-label="Artist scope">
+            <button v-for="option in (['virtual', 'real', 'both'] as Scope[])" :key="option" type="button" class="rounded-full px-3 py-1.5 text-xs font-semibold transition" :class="state.scope === option
+                ? 'bg-purple-600 text-white shadow-sm'
+                : 'text-neutral-500 hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-100'
+              " @click="selectScope(option)">
               {{
                 option === "virtual"
                   ? "Virtual"
@@ -1796,166 +1757,83 @@ onMounted(async () => {
           </div>
 
           <!-- Theme -->
-          <button
-            type="button"
-            class="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-black/10 bg-white text-neutral-600 transition hover:bg-neutral-100 dark:border-white/12 dark:bg-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800"
-            :aria-label="state.theme === 'dark' ? 'Switch to light' : 'Switch to dark'"
-            @click="toggleTheme"
-          >
+          <button type="button" class="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-black/10 bg-white text-neutral-600 transition hover:bg-neutral-100 dark:border-white/12 dark:bg-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800" :aria-label="state.theme === 'dark' ? 'Switch to light' : 'Switch to dark'" @click="toggleTheme">
             <span v-if="state.theme === 'dark'" aria-hidden="true">☀</span>
             <span v-else aria-hidden="true">☾</span>
           </button>
 
           <!-- Account -->
           <div class="relative shrink-0">
-            <button
-              type="button"
-              class="grid h-9 w-9 place-items-center overflow-hidden rounded-full border border-black/10 bg-white text-neutral-600 transition hover:bg-neutral-100 dark:border-white/12 dark:bg-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800"
-              title="Linked accounts"
-              aria-label="Linked accounts"
-              :aria-expanded="showAccountMenu"
-              @click="showAccountMenu = !showAccountMenu"
-            >
-              <img
-                v-if="activeAccount('youtube')?.picture"
-                :src="activeAccount('youtube')!.picture!"
-                alt="Your account"
-                class="h-full w-full object-cover"
-              />
+            <button type="button" class="grid h-9 w-9 place-items-center overflow-hidden rounded-full border border-black/10 bg-white text-neutral-600 transition hover:bg-neutral-100 dark:border-white/12 dark:bg-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800" title="Linked accounts" aria-label="Linked accounts" :aria-expanded="showAccountMenu" @click="showAccountMenu = !showAccountMenu">
+              <img v-if="activeAccount('youtube')?.picture" :src="activeAccount('youtube')!.picture!" alt="Your account" class="h-full w-full object-cover" />
               <span v-else-if="hasAnyAccount" aria-hidden="true">✓</span>
               <span v-else aria-hidden="true">👤</span>
             </button>
 
             <!-- Account menu -->
-            <Transition
-              enter-active-class="transition duration-150 ease-out"
-              enter-from-class="scale-95 opacity-0"
-              leave-active-class="transition duration-100 ease-in"
-              leave-to-class="scale-95 opacity-0"
-            >
-              <div
-                v-if="showAccountMenu"
-                class="absolute top-11 right-0 z-50 w-72 overflow-hidden rounded-xl border border-black/10 bg-white shadow-xl dark:border-white/12 dark:bg-neutral-900"
-              >
-                <p
-                  class="border-b border-black/8 px-3 py-2 text-[11px] font-bold tracking-wide text-neutral-500 uppercase dark:border-white/10"
-                >
+            <Transition enter-active-class="transition duration-150 ease-out" enter-from-class="scale-95 opacity-0" leave-active-class="transition duration-100 ease-in" leave-to-class="scale-95 opacity-0">
+              <div v-if="showAccountMenu" class="absolute top-11 right-0 z-50 w-72 overflow-hidden rounded-xl border border-black/10 bg-white shadow-xl dark:border-white/12 dark:bg-neutral-900">
+                <p class="border-b border-black/8 px-3 py-2 text-[11px] font-bold tracking-wide text-neutral-500 uppercase dark:border-white/10">
                   Linked accounts
                 </p>
 
                 <!-- Linked accounts, with switch + logout -->
-                <div
-                  v-for="provider in AUTH_PROVIDERS"
-                  :key="provider.id"
-                  class="border-b border-black/5 last:border-b-0 dark:border-white/5"
-                >
-                  <p
-                    class="flex items-center gap-1.5 px-3 pt-2 pb-1 text-[10px] font-bold tracking-wide text-neutral-400 uppercase"
-                  >
-                    <span
-                      class="inline-block h-2 w-2 rounded-full"
-                      :style="{ backgroundColor: provider.color }"
-                      aria-hidden="true"
-                    />
+                <div v-for="provider in AUTH_PROVIDERS" :key="provider.id" class="border-b border-black/5 last:border-b-0 dark:border-white/5">
+                  <p class="flex items-center gap-1.5 px-3 pt-2 pb-1 text-[10px] font-bold tracking-wide text-neutral-400 uppercase">
+                    <span class="inline-block h-2 w-2 rounded-full" :style="{ backgroundColor: provider.color }" aria-hidden="true" />
                     {{ provider.label }}
                   </p>
 
-                  <div
-                    v-for="account in state.accounts[provider.id] ?? []"
-                    :key="account.id"
-                    class="flex items-center gap-2 px-3 py-1.5"
-                  >
-                    <button
-                      type="button"
-                      class="flex min-w-0 flex-1 items-center gap-2 text-left"
-                      @click="
-                        setActiveAccount(provider.id, account.id);
-                        reloadSubscriptions();
-                      "
-                    >
-                      <img
-                        v-if="account.picture"
-                        :src="account.picture"
-                        alt=""
-                        class="h-6 w-6 shrink-0 rounded-full object-cover"
-                      />
-                      <span
-                        v-else
-                        class="grid h-6 w-6 shrink-0 place-items-center rounded-full text-[10px] font-bold text-white"
-                        :style="{ backgroundColor: provider.color }"
-                        aria-hidden="true"
-                      >
+                  <div v-for="account in state.accounts[provider.id] ?? []" :key="account.id" class="flex items-center gap-2 px-3 py-1.5">
+                    <button type="button" class="flex min-w-0 flex-1 items-center gap-2 text-left" @click="
+                      setActiveAccount(provider.id, account.id);
+                    reloadSubscriptions();
+                    ">
+                      <img v-if="account.picture" :src="account.picture" alt="" class="h-6 w-6 shrink-0 rounded-full object-cover" />
+                      <span v-else class="grid h-6 w-6 shrink-0 place-items-center rounded-full text-[10px] font-bold text-white" :style="{ backgroundColor: provider.color }" aria-hidden="true">
                         {{ (account.name ?? provider.label)[0] }}
                       </span>
                       <span class="min-w-0 flex-1">
                         <span class="block truncate text-xs font-semibold">
                           {{ account.name ?? provider.label }}
                         </span>
-                        <span
-                          v-if="
-                            activeAccount(provider.id)?.id === account.id
-                          "
-                          class="block text-[10px] text-emerald-600 dark:text-emerald-400"
-                        >
+                        <span v-if="
+                          activeAccount(provider.id)?.id === account.id
+                        " class="block text-[10px] text-emerald-600 dark:text-emerald-400">
                           Active
                         </span>
                       </span>
                     </button>
 
                     <!-- Switch -->
-                    <button
-                      v-if="activeAccount(provider.id)?.id !== account.id"
-                      type="button"
-                      class="shrink-0 rounded px-1.5 py-0.5 text-[10px] font-semibold text-neutral-500 transition hover:bg-black/5 hover:text-neutral-800 dark:hover:bg-white/10 dark:hover:text-neutral-100"
-                      title="Switch to this account"
-                      @click="
-                        setActiveAccount(provider.id, account.id);
-                        reloadSubscriptions();
-                      "
-                    >
+                    <button v-if="activeAccount(provider.id)?.id !== account.id" type="button" class="shrink-0 rounded px-1.5 py-0.5 text-[10px] font-semibold text-neutral-500 transition hover:bg-black/5 hover:text-neutral-800 dark:hover:bg-white/10 dark:hover:text-neutral-100" title="Switch to this account" @click="
+                      setActiveAccount(provider.id, account.id);
+                    reloadSubscriptions();
+                    ">
                       Switch
                     </button>
 
                     <!-- Reconnect (expired OAuth token) -->
-                    <button
-                      v-if="account.provider === 'youtube'"
-                      type="button"
-                      class="shrink-0 rounded px-1.5 py-0.5 text-[10px] font-semibold text-neutral-500 transition hover:bg-black/5 hover:text-neutral-800 dark:hover:bg-white/10 dark:hover:text-neutral-100"
-                      title="Reconnect this account and refresh its token"
-                      @click="
-                        showAccountMenu = false;
-                        linkProvider(provider, account);
-                      "
-                    >
+                    <button v-if="account.provider === 'youtube'" type="button" class="shrink-0 rounded px-1.5 py-0.5 text-[10px] font-semibold text-neutral-500 transition hover:bg-black/5 hover:text-neutral-800 dark:hover:bg-white/10 dark:hover:text-neutral-100" title="Reconnect this account and refresh its token" @click="
+                      showAccountMenu = false;
+                    linkProvider(provider, account);
+                    ">
                       Reconnect
                     </button>
 
                     <!-- Logout -->
-                    <button
-                      type="button"
-                      class="shrink-0 rounded px-1.5 py-0.5 text-[10px] font-semibold text-red-500 transition hover:bg-red-500/10"
-                      title="Sign out of this account"
-                      @click="unlinkProvider(provider, account.id)"
-                    >
+                    <button type="button" class="shrink-0 rounded px-1.5 py-0.5 text-[10px] font-semibold text-red-500 transition hover:bg-red-500/10" title="Sign out of this account" @click="unlinkProvider(provider, account.id)">
                       Sign out
                     </button>
                   </div>
 
                   <!-- Link another -->
-                  <button
-                    type="button"
-                    class="w-full px-3 py-2 text-left text-[11px] font-semibold text-neutral-500 transition hover:bg-black/5 hover:text-neutral-800 dark:hover:bg-white/10 dark:hover:text-neutral-100"
-                    @click="linkProvider(provider)"
-                  >
+                  <button type="button" class="w-full px-3 py-2 text-left text-[11px] font-semibold text-neutral-500 transition hover:bg-black/5 hover:text-neutral-800 dark:hover:bg-white/10 dark:hover:text-neutral-100" @click="linkProvider(provider)">
                     + Link another {{ provider.label }} account
                   </button>
                 </div>
 
-                <button
-                  type="button"
-                  class="w-full border-t border-black/8 px-3 py-2 text-left text-[11px] font-semibold text-neutral-500 transition hover:bg-black/5 hover:text-neutral-800 dark:border-white/10 dark:hover:bg-white/10 dark:hover:text-neutral-100"
-                  @click="showAccountMenu = false"
-                >
+                <button type="button" class="w-full border-t border-black/8 px-3 py-2 text-left text-[11px] font-semibold text-neutral-500 transition hover:bg-black/5 hover:text-neutral-800 dark:border-white/10 dark:hover:bg-white/10 dark:hover:text-neutral-100" @click="showAccountMenu = false">
                   Close
                 </button>
               </div>
@@ -1964,27 +1842,13 @@ onMounted(async () => {
         </div>
 
         <!-- View tabs -->
-        <nav
-          class="-mx-3 flex gap-1 overflow-x-auto px-3 pb-2 sm:-mx-5 sm:px-5"
-          aria-label="Views"
-        >
-          <button
-            v-for="view in VIEWS"
-            :key="view.id"
-            type="button"
-            class="shrink-0 rounded-full px-3 py-1.5 text-xs font-semibold whitespace-nowrap transition"
-            :class="
-              state.view === view.id
-                ? 'bg-neutral-900 text-white dark:bg-white dark:text-neutral-900'
-                : 'text-neutral-500 hover:bg-black/5 hover:text-neutral-800 dark:text-neutral-400 dark:hover:bg-white/8 dark:hover:text-neutral-100'
-            "
-            @click="setView(view.id)"
-          >
+        <nav class="-mx-3 flex gap-1 overflow-x-auto px-3 pb-2 sm:-mx-5 sm:px-5" aria-label="Views">
+          <button v-for="view in VIEWS" :key="view.id" type="button" class="shrink-0 rounded-full px-3 py-1.5 text-xs font-semibold whitespace-nowrap transition" :class="state.view === view.id
+              ? 'bg-neutral-900 text-white dark:bg-white dark:text-neutral-900'
+              : 'text-neutral-500 hover:bg-black/5 hover:text-neutral-800 dark:text-neutral-400 dark:hover:bg-white/8 dark:hover:text-neutral-100'
+            " @click="setView(view.id)">
             {{ view.label }}
-            <span
-              v-if="view.id === 'live' && visibleLive.length"
-              class="ml-1 rounded-full bg-red-500/15 px-1.5 text-[10px] font-bold text-red-500"
-            >
+            <span v-if="view.id === 'live' && visibleLive.length" class="ml-1 rounded-full bg-red-500/15 px-1.5 text-[10px] font-bold text-red-500">
               {{ visibleLive.length }}
             </span>
           </button>
@@ -1994,17 +1858,8 @@ onMounted(async () => {
         <div v-if="state.view !== 'analytics'" class="flex items-center justify-end gap-2 pb-2">
           <label class="flex items-center gap-1.5 text-[11px] font-semibold text-neutral-500">
             <span class="hidden sm:inline">Sort</span>
-            <select
-              :value="state.sort[state.view]"
-              class="rounded-full border border-black/10 bg-white px-2.5 py-1 text-[11px] font-semibold outline-none dark:border-white/12 dark:bg-neutral-900"
-              :aria-label="`Sort the ${state.view} view`"
-              @change="setSort(state.view, ($event.target as HTMLSelectElement).value)"
-            >
-              <option
-                v-for="option in SORTS[state.view]"
-                :key="option.id"
-                :value="option.id"
-              >
+            <select :value="state.sort[state.view]" class="rounded-full border border-black/10 bg-white px-2.5 py-1 text-[11px] font-semibold outline-none dark:border-white/12 dark:bg-neutral-900" :aria-label="`Sort the ${state.view} view`" @change="setSort(state.view, ($event.target as HTMLSelectElement).value)">
+              <option v-for="option in SORTS[state.view]" :key="option.id" :value="option.id">
                 {{ option.label }}
               </option>
             </select>
@@ -2014,28 +1869,16 @@ onMounted(async () => {
     </header>
 
     <!-- ───────────────────────── Filters ───────────────────────── -->
-    <div
-      class="sticky top-[104px] z-30 border-b border-black/6 bg-[#f6f5f1]/95 backdrop-blur-xl dark:border-white/8 dark:bg-neutral-950/95 sm:top-[112px]"
-    >
-      <div
-        class="mx-auto flex max-w-[1600px] items-center gap-2 overflow-x-auto px-3 py-2 sm:px-5"
-      >
+    <div class="sticky top-[104px] z-30 border-b border-black/6 bg-[#f6f5f1]/95 backdrop-blur-xl dark:border-white/8 dark:bg-neutral-950/95 sm:top-[112px]">
+      <div class="mx-auto flex max-w-[1600px] items-center gap-2 overflow-x-auto px-3 py-2 sm:px-5">
         <!-- Region -->
         <label class="shrink-0">
           <span class="sr-only">Region</span>
-          <select
-            :value="state.region"
-            class="rounded-full border border-black/10 bg-white px-3 py-1.5 text-xs font-semibold outline-none dark:border-white/12 dark:bg-neutral-900"
-            @change="
-              setRegion(($event.target as HTMLSelectElement).value as RegionCode | 'all')
-            "
-          >
+          <select :value="state.region" class="rounded-full border border-black/10 bg-white px-3 py-1.5 text-xs font-semibold outline-none dark:border-white/12 dark:bg-neutral-900" @change="
+            setRegion(($event.target as HTMLSelectElement).value as RegionCode | 'all')
+            ">
             <option value="all">🌐 All regions</option>
-            <option
-              v-for="region in manifest?.regions ?? []"
-              :key="region.code"
-              :value="region.code"
-            >
+            <option v-for="region in manifest?.regions ?? []" :key="region.code" :value="region.code">
               {{ region.badge }} {{ region.label }} ({{ region.channels }})
             </option>
           </select>
@@ -2044,190 +1887,88 @@ onMounted(async () => {
         <!-- Platform -->
         <label class="shrink-0">
           <span class="sr-only">Platform</span>
-          <select
-            :value="state.platform"
-            class="rounded-full border border-black/10 bg-white px-3 py-1.5 text-xs font-semibold outline-none dark:border-white/12 dark:bg-neutral-900"
-            @change="setPlatform(($event.target as HTMLSelectElement).value)"
-          >
+          <select :value="state.platform" class="rounded-full border border-black/10 bg-white px-3 py-1.5 text-xs font-semibold outline-none dark:border-white/12 dark:bg-neutral-900" @change="setPlatform(($event.target as HTMLSelectElement).value)">
             <option value="all">🔗 All platforms</option>
-            <option
-              v-for="platform in availablePlatforms"
-              :key="platform"
-              :value="platform"
-            >
+            <option v-for="platform in availablePlatforms" :key="platform" :value="platform">
               {{ platformMeta(platform).label }}
             </option>
           </select>
         </label>
 
         <!-- Categories — multi-select, so MV + Covers can be combined -->
-        <button
-          v-if="state.categories.length"
-          type="button"
-          class="shrink-0 rounded-full border border-purple-500 bg-purple-500/12 px-3 py-1.5 text-xs font-semibold whitespace-nowrap text-purple-700 transition dark:text-purple-300"
-          @click="state.categories.splice(0)"
-        >
+        <button v-if="state.categories.length" type="button" class="shrink-0 rounded-full border border-purple-500 bg-purple-500/12 px-3 py-1.5 text-xs font-semibold whitespace-nowrap text-purple-700 transition dark:text-purple-300" @click="state.categories.splice(0)">
           Clear filters
         </button>
-        <button
-          v-for="category in CATEGORIES"
-          :key="category.id"
-          type="button"
-          class="shrink-0 rounded-full border px-3 py-1.5 text-xs font-semibold whitespace-nowrap transition"
-          :class="
-            state.categories.includes(category.id)
-              ? 'border-purple-500 bg-purple-500/12 text-purple-700 dark:text-purple-300'
-              : 'border-black/10 bg-white text-neutral-500 hover:text-neutral-800 dark:border-white/12 dark:bg-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100'
-          "
-          :aria-pressed="state.categories.includes(category.id)"
-          @click="toggleCategory(category.id)"
-        >
+        <button v-for="category in CATEGORIES" :key="category.id" type="button" class="shrink-0 rounded-full border px-3 py-1.5 text-xs font-semibold whitespace-nowrap transition" :class="state.categories.includes(category.id)
+            ? 'border-purple-500 bg-purple-500/12 text-purple-700 dark:text-purple-300'
+            : 'border-black/10 bg-white text-neutral-500 hover:text-neutral-800 dark:border-white/12 dark:bg-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100'
+          " :aria-pressed="state.categories.includes(category.id)" @click="toggleCategory(category.id)">
           {{ category.label }}
-          <span
-            v-if="state.categories.includes(category.id)"
-            class="ml-1 opacity-70"
-            aria-hidden="true"
-            >✓</span
-          >
+          <span v-if="state.categories.includes(category.id)" class="ml-1 opacity-70" aria-hidden="true">✓</span>
         </button>
 
         <!-- Acoustic / 弾き語り -->
-        <button
-          type="button"
-          class="shrink-0 rounded-full border px-3 py-1.5 text-xs font-semibold whitespace-nowrap transition"
-          :class="
-            state.acousticOnly
-              ? 'border-amber-500 bg-amber-500/15 text-amber-700 dark:text-amber-400'
-              : 'border-black/10 bg-white text-neutral-500 hover:text-neutral-800 dark:border-white/12 dark:bg-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100'
-          "
-          :aria-pressed="state.acousticOnly"
-          title="Singing while playing an instrument — 弾き語り / 彈唱 / acoustic"
-          @click="state.acousticOnly = !state.acousticOnly"
-        >
+        <button type="button" class="shrink-0 rounded-full border px-3 py-1.5 text-xs font-semibold whitespace-nowrap transition" :class="state.acousticOnly
+            ? 'border-amber-500 bg-amber-500/15 text-amber-700 dark:text-amber-400'
+            : 'border-black/10 bg-white text-neutral-500 hover:text-neutral-800 dark:border-white/12 dark:bg-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100'
+          " :aria-pressed="state.acousticOnly" title="Singing while playing an instrument — 弾き語り / 彈唱 / acoustic" @click="state.acousticOnly = !state.acousticOnly">
           🎸 Acoustic / 弾き語り
         </button>
 
         <!-- Gender -->
-        <button
-          v-for="option in GENDERS"
-          :key="option.id"
-          type="button"
-          class="shrink-0 rounded-full border px-3 py-1.5 text-xs font-semibold whitespace-nowrap transition"
-          :class="
-            state.gender === option.id
-              ? 'border-sky-500 bg-sky-500/15 text-sky-700 dark:text-sky-400'
-              : 'border-black/10 bg-white text-neutral-500 hover:text-neutral-800 dark:border-white/12 dark:bg-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100'
-          "
-          :aria-pressed="state.gender === option.id"
-          @click="state.gender = option.id"
-        >
+        <button v-for="option in GENDERS" :key="option.id" type="button" class="shrink-0 rounded-full border px-3 py-1.5 text-xs font-semibold whitespace-nowrap transition" :class="state.gender === option.id
+            ? 'border-sky-500 bg-sky-500/15 text-sky-700 dark:text-sky-400'
+            : 'border-black/10 bg-white text-neutral-500 hover:text-neutral-800 dark:border-white/12 dark:bg-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100'
+          " :aria-pressed="state.gender === option.id" @click="state.gender = option.id">
           {{ option.label }}
         </button>
 
         <!-- Independent vs. agency -->
-        <button
-          v-for="option in AFFILIATION_FILTERS"
-          :key="option.id"
-          type="button"
-          class="shrink-0 rounded-full border px-3 py-1.5 text-xs font-semibold whitespace-nowrap transition"
-          :class="
-            state.affiliation === option.id
-              ? 'border-indigo-500 bg-indigo-500/15 text-indigo-700 dark:text-indigo-400'
-              : 'border-black/10 bg-white text-neutral-500 hover:text-neutral-800 dark:border-white/12 dark:bg-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100'
-          "
-          :aria-pressed="state.affiliation === option.id"
-          :title="option.title"
-          @click="state.affiliation = option.id"
-        >
+        <button v-for="option in AFFILIATION_FILTERS" :key="option.id" type="button" class="shrink-0 rounded-full border px-3 py-1.5 text-xs font-semibold whitespace-nowrap transition" :class="state.affiliation === option.id
+            ? 'border-indigo-500 bg-indigo-500/15 text-indigo-700 dark:text-indigo-400'
+            : 'border-black/10 bg-white text-neutral-500 hover:text-neutral-800 dark:border-white/12 dark:bg-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100'
+          " :aria-pressed="state.affiliation === option.id" :title="option.title" @click="state.affiliation = option.id">
           {{ option.label }}
         </button>
 
         <!-- Languages -->
-        <button
-          v-for="option in LANGUAGES"
-          :key="option.id"
-          type="button"
-          class="shrink-0 rounded-full border px-3 py-1.5 text-xs font-semibold whitespace-nowrap transition"
-          :class="
-            state.language === option.id
-              ? 'border-teal-500 bg-teal-500/15 text-teal-700 dark:text-teal-400'
-              : 'border-black/10 bg-white text-neutral-500 hover:text-neutral-800 dark:border-white/12 dark:bg-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100'
-          "
-          :aria-pressed="state.language === option.id"
-          :title="option.title"
-          @click="state.language = option.id"
-        >
+        <button v-for="option in LANGUAGES" :key="option.id" type="button" class="shrink-0 rounded-full border px-3 py-1.5 text-xs font-semibold whitespace-nowrap transition" :class="state.language === option.id
+            ? 'border-teal-500 bg-teal-500/15 text-teal-700 dark:text-teal-400'
+            : 'border-black/10 bg-white text-neutral-500 hover:text-neutral-800 dark:border-white/12 dark:bg-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100'
+          " :aria-pressed="state.language === option.id" :title="option.title" @click="state.language = option.id">
           {{ option.label }}
         </button>
 
         <!-- Singing content -->
-        <button
-          v-for="option in SINGING_FILTERS"
-          :key="option.id"
-          type="button"
-          class="shrink-0 rounded-full border px-3 py-1.5 text-xs font-semibold whitespace-nowrap transition"
-          :class="
-            state.singing === option.id
-              ? 'border-rose-500 bg-rose-500/15 text-rose-700 dark:text-rose-400'
-              : 'border-black/10 bg-white text-neutral-500 hover:text-neutral-800 dark:border-white/12 dark:bg-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100'
-          "
-          :aria-pressed="state.singing === option.id"
-          :title="option.title"
-          @click="state.singing = option.id"
-        >
+        <button v-for="option in SINGING_FILTERS" :key="option.id" type="button" class="shrink-0 rounded-full border px-3 py-1.5 text-xs font-semibold whitespace-nowrap transition" :class="state.singing === option.id
+            ? 'border-rose-500 bg-rose-500/15 text-rose-700 dark:text-rose-400'
+            : 'border-black/10 bg-white text-neutral-500 hover:text-neutral-800 dark:border-white/12 dark:bg-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100'
+          " :aria-pressed="state.singing === option.id" :title="option.title" @click="state.singing = option.id">
           {{ option.label }}
         </button>
 
         <!-- AI -->
-        <button
-          type="button"
-          class="shrink-0 rounded-full border px-3 py-1.5 text-xs font-semibold whitespace-nowrap transition"
-          :class="
-            state.ai === 'ai'
-              ? 'border-fuchsia-500 bg-fuchsia-500/15 text-fuchsia-700 dark:text-fuchsia-400'
-              : 'border-black/10 bg-white text-neutral-500 hover:text-neutral-800 dark:border-white/12 dark:bg-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100'
-          "
-          :aria-pressed="state.ai === 'ai'"
-          title="Show only AI-generated performers (AI VTuber, AI singer)"
-          @click="state.ai = state.ai === 'ai' ? 'all' : 'ai'"
-        >
+        <button type="button" class="shrink-0 rounded-full border px-3 py-1.5 text-xs font-semibold whitespace-nowrap transition" :class="state.ai === 'ai'
+            ? 'border-fuchsia-500 bg-fuchsia-500/15 text-fuchsia-700 dark:text-fuchsia-400'
+            : 'border-black/10 bg-white text-neutral-500 hover:text-neutral-800 dark:border-white/12 dark:bg-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100'
+          " :aria-pressed="state.ai === 'ai'" title="Show only AI-generated performers (AI VTuber, AI singer)" @click="state.ai = state.ai === 'ai' ? 'all' : 'ai'">
           🤖 AI performers
         </button>
 
         <!-- Official Artist Channel (the 🎵 badge) -->
-        <button
-          type="button"
-          class="shrink-0 rounded-full border px-3 py-1.5 text-xs font-semibold whitespace-nowrap transition"
-          :class="
-            state.oac === 'oac'
-              ? 'border-violet-500 bg-violet-500/15 text-violet-700 dark:text-violet-400'
-              : 'border-black/10 bg-white text-neutral-500 hover:text-neutral-800 dark:border-white/12 dark:bg-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100'
-          "
-          :aria-pressed="state.oac === 'oac'"
-          title="Only channels with YouTube's 🎵 Official Artist Channel badge — releases managed through YouTube Music"
-          @click="state.oac = state.oac === 'oac' ? 'all' : 'oac'"
-        >
+        <button type="button" class="shrink-0 rounded-full border px-3 py-1.5 text-xs font-semibold whitespace-nowrap transition" :class="state.oac === 'oac'
+            ? 'border-violet-500 bg-violet-500/15 text-violet-700 dark:text-violet-400'
+            : 'border-black/10 bg-white text-neutral-500 hover:text-neutral-800 dark:border-white/12 dark:bg-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100'
+          " :aria-pressed="state.oac === 'oac'" title="Only channels with YouTube's 🎵 Official Artist Channel badge — releases managed through YouTube Music" @click="state.oac = state.oac === 'oac' ? 'all' : 'oac'">
           🎵 Official artist
         </button>
 
         <!-- Scope switch (mobile) -->
-        <div
-          class="ml-auto flex shrink-0 items-center rounded-full border border-black/10 bg-white p-0.5 md:hidden dark:border-white/12 dark:bg-neutral-900"
-          role="group"
-          aria-label="Artist scope"
-        >
-          <button
-            v-for="option in (['virtual', 'real', 'both'] as Scope[])"
-            :key="option"
-            type="button"
-            class="rounded-full px-2.5 py-1 text-[11px] font-semibold transition"
-            :class="
-              state.scope === option
-                ? 'bg-purple-600 text-white'
-                : 'text-neutral-500'
-            "
-            @click="selectScope(option)"
-          >
+        <div class="ml-auto flex shrink-0 items-center rounded-full border border-black/10 bg-white p-0.5 md:hidden dark:border-white/12 dark:bg-neutral-900" role="group" aria-label="Artist scope">
+          <button v-for="option in (['virtual', 'real', 'both'] as Scope[])" :key="option" type="button" class="rounded-full px-2.5 py-1 text-[11px] font-semibold transition" :class="state.scope === option
+              ? 'bg-purple-600 text-white'
+              : 'text-neutral-500'
+            " @click="selectScope(option)">
             {{
               option === "virtual"
                 ? "Virtual"
@@ -2244,11 +1985,7 @@ onMounted(async () => {
     <main class="mx-auto max-w-[1600px] px-3 pt-4 pb-24 sm:px-5 sm:pb-8">
       <!-- Loading -->
       <div v-if="loading" class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
-        <div
-          v-for="n in 12"
-          :key="n"
-          class="aspect-[3/4] animate-pulse rounded-xl bg-black/5 dark:bg-white/5"
-        />
+        <div v-for="n in 12" :key="n" class="aspect-[3/4] animate-pulse rounded-xl bg-black/5 dark:bg-white/5" />
       </div>
 
       <!-- Search results -->
@@ -2257,33 +1994,13 @@ onMounted(async () => {
           {{ searchHits.length }} result{{ searchHits.length === 1 ? "" : "s" }} for
           “{{ state.query }}”
         </h2>
-        <div
-          v-if="searchHits.length"
-          class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6"
-        >
-          <article
-            v-for="hit in searchHits"
-            :key="`${hit.k}:${hit.id}`"
-            class="group overflow-hidden rounded-xl border border-black/8 bg-white shadow-sm transition hover:shadow-md dark:border-white/10 dark:bg-neutral-900"
-          >
-            <a
-              :href="
-                hit.k === 'c'
-                  ? `https://www.youtube.com/channel/${hit.id}`
-                  : `https://www.youtube.com/watch?v=${hit.id}`
-              "
-              target="_blank"
-              rel="noopener noreferrer"
-              class="block aspect-video w-full overflow-hidden bg-neutral-200 dark:bg-neutral-800"
-            >
-              <img
-                :src="imageUrl(hit.th)"
-                :alt="hit.n"
-                referrerpolicy="no-referrer"
-                loading="lazy"
-                decoding="async"
-                class="h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]"
-              />
+        <div v-if="searchHits.length" class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
+          <article v-for="hit in searchHits" :key="`${hit.k}:${hit.id}`" class="group overflow-hidden rounded-xl border border-black/8 bg-white shadow-sm transition hover:shadow-md dark:border-white/10 dark:bg-neutral-900">
+            <a :href="hit.k === 'c'
+                ? `https://www.youtube.com/channel/${hit.id}`
+                : `https://www.youtube.com/watch?v=${hit.id}`
+              " target="_blank" rel="noopener noreferrer" class="block aspect-video w-full overflow-hidden bg-neutral-200 dark:bg-neutral-800">
+              <img :src="imageUrl(hit.th)" :alt="hit.n" referrerpolicy="no-referrer" loading="lazy" decoding="async" class="h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]" />
             </a>
             <div class="space-y-1 p-2.5">
               <h3 class="line-clamp-2 text-xs leading-snug font-semibold">
@@ -2293,21 +2010,13 @@ onMounted(async () => {
                 {{ hit.cn }}
               </p>
               <div class="flex flex-wrap items-center gap-1">
-                <span
-                  class="rounded px-1.5 py-0.5 text-[10px] font-semibold text-white"
-                  :class="hit.g === 'virtual' ? 'bg-purple-600' : 'bg-emerald-600'"
-                >
+                <span class="rounded px-1.5 py-0.5 text-[10px] font-semibold text-white" :class="hit.g === 'virtual' ? 'bg-purple-600' : 'bg-emerald-600'">
                   {{ hit.g === "virtual" ? "Virtual" : "Real" }}
                 </span>
-                <span
-                  class="rounded bg-black/5 px-1.5 py-0.5 text-[10px] font-semibold text-neutral-600 dark:bg-white/10 dark:text-neutral-300"
-                >
+                <span class="rounded bg-black/5 px-1.5 py-0.5 text-[10px] font-semibold text-neutral-600 dark:bg-white/10 dark:text-neutral-300">
                   {{ hit.r.toUpperCase() }}
                 </span>
-                <span
-                  v-if="hit.c"
-                  class="rounded bg-black/5 px-1.5 py-0.5 text-[10px] font-semibold text-neutral-600 dark:bg-white/10 dark:text-neutral-300"
-                >
+                <span v-if="hit.c" class="rounded bg-black/5 px-1.5 py-0.5 text-[10px] font-semibold text-neutral-600 dark:bg-white/10 dark:text-neutral-300">
                   {{ hit.c }}
                 </span>
               </div>
@@ -2331,18 +2040,8 @@ onMounted(async () => {
           </h2>
           <span class="text-xs text-neutral-500">refreshes every 6 hours</span>
         </div>
-        <div
-          v-if="visibleLive.length"
-          class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"
-        >
-          <LiveCard
-            v-for="item in visibleLive"
-            :key="item.id"
-            :item="item"
-            :channel="summaryById.get(item.channelId) ?? null"
-            live
-            @open="openItem"
-          />
+        <div v-if="visibleLive.length" class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+          <LiveCard v-for="item in visibleLive" :key="item.id" :item="item" :channel="summaryById.get(item.channelId) ?? null" live @open="openItem" />
         </div>
         <p v-else class="py-16 text-center text-sm text-neutral-500">
           No live streams right now for this filter. Check the
@@ -2358,17 +2057,8 @@ onMounted(async () => {
             {{ visibleUpcoming.length }}
           </span>
         </h2>
-        <div
-          v-if="visibleUpcoming.length"
-          class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"
-        >
-          <LiveCard
-            v-for="item in visibleUpcoming"
-            :key="item.id"
-            :item="item"
-            :channel="summaryById.get(item.channelId) ?? null"
-            @open="openItem"
-          />
+        <div v-if="visibleUpcoming.length" class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+          <LiveCard v-for="item in visibleUpcoming" :key="item.id" :item="item" :channel="summaryById.get(item.channelId) ?? null" @open="openItem" />
         </div>
         <p v-else class="py-16 text-center text-sm text-neutral-500">
           Nothing scheduled.
@@ -2383,17 +2073,8 @@ onMounted(async () => {
             {{ visibleSongs.length }}
           </span>
         </h2>
-        <div
-          v-if="visibleSongs.length"
-          class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"
-        >
-          <LiveCard
-            v-for="item in visibleSongs"
-            :key="item.id"
-            :item="item"
-            :channel="summaryById.get(item.channelId) ?? null"
-            @open="openItem"
-          />
+        <div v-if="visibleSongs.length" class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+          <LiveCard v-for="item in visibleSongs" :key="item.id" :item="item" :channel="summaryById.get(item.channelId) ?? null" @open="openItem" />
         </div>
         <p v-else class="py-16 text-center text-sm text-neutral-500">
           No songs for this filter yet.
@@ -2402,11 +2083,7 @@ onMounted(async () => {
 
       <!-- Channels -->
       <section v-else-if="state.view === 'analytics'" aria-label="Analytics">
-        <AnalyticsPanel
-          :scope="state.scope"
-          :region="state.region"
-          :platform="state.platform"
-        />
+        <AnalyticsPanel :scope="state.scope" :region="state.region" :platform="state.platform" />
       </section>
 
       <!-- Channels -->
@@ -2419,37 +2096,17 @@ onMounted(async () => {
             </span>
           </h2>
           <!-- Subscribed / not subscribed, once an account is linked -->
-          <div
-            v-if="hasAnyAccount"
-            class="flex shrink-0 items-center rounded-full border border-black/10 bg-white p-0.5 dark:border-white/12 dark:bg-neutral-900"
-            role="group"
-            aria-label="Subscription filter"
-          >
-            <button
-              v-for="option in CHANNEL_SUB_FILTERS"
-              :key="option.id"
-              type="button"
-              class="rounded-full px-2.5 py-1 text-[11px] font-semibold whitespace-nowrap transition"
-              :class="
-                state.channelSubs === option.id
-                  ? 'bg-purple-600 text-white'
-                  : 'text-neutral-500 hover:text-neutral-800 dark:hover:text-neutral-100'
-              "
-              @click="state.channelSubs = option.id"
-            >
+          <div v-if="hasAnyAccount" class="flex shrink-0 items-center rounded-full border border-black/10 bg-white p-0.5 dark:border-white/12 dark:bg-neutral-900" role="group" aria-label="Subscription filter">
+            <button v-for="option in CHANNEL_SUB_FILTERS" :key="option.id" type="button" class="rounded-full px-2.5 py-1 text-[11px] font-semibold whitespace-nowrap transition" :class="state.channelSubs === option.id
+                ? 'bg-purple-600 text-white'
+                : 'text-neutral-500 hover:text-neutral-800 dark:hover:text-neutral-100'
+              " @click="state.channelSubs = option.id">
               {{ option.label }}
             </button>
           </div>
         </div>
-        <div
-          class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6"
-        >
-          <ChannelCard
-            v-for="channel in visibleChannels"
-            :key="channel.id"
-            :channel="channel"
-            @open="openChannel"
-          />
+        <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
+          <ChannelCard v-for="channel in visibleChannels" :key="channel.id" :channel="channel" @open="openChannel" />
         </div>
       </section>
 
@@ -2461,161 +2118,82 @@ onMounted(async () => {
             <span class="ml-1 text-sm font-normal text-neutral-500">
               {{ visibleSubscriptions.length }}
             </span>
-            <span
-              v-if="state.subscriptionsProgress"
-              class="ml-2 text-xs font-normal text-neutral-500"
-            >
+            <span v-if="state.subscriptionsProgress" class="ml-2 text-xs font-normal text-neutral-500">
               loading {{ state.subscriptionsProgress.loaded
               }}<template v-if="state.subscriptionsProgress.total">
-                / {{ state.subscriptionsProgress.total }}</template
-              >…
+                / {{ state.subscriptionsProgress.total }}</template>…
             </span>
           </h2>
           <div class="flex items-center gap-2">
             <!-- Tracked / untracked filter -->
-            <div
-              class="flex shrink-0 items-center rounded-full border border-black/10 bg-white p-0.5 dark:border-white/12 dark:bg-neutral-900"
-              role="group"
-              aria-label="Subscription status"
-            >
-              <button
-                v-for="option in SUB_FILTERS"
-                :key="option.id"
-                type="button"
-                class="rounded-full px-2.5 py-1 text-[11px] font-semibold whitespace-nowrap transition"
-                :class="
-                  state.subsTracked === option.id
-                    ? 'bg-purple-600 text-white'
-                    : 'text-neutral-500 hover:text-neutral-800 dark:hover:text-neutral-100'
-                "
-                @click="state.subsTracked = option.id"
-              >
+            <div class="flex shrink-0 items-center rounded-full border border-black/10 bg-white p-0.5 dark:border-white/12 dark:bg-neutral-900" role="group" aria-label="Subscription status">
+              <button v-for="option in SUB_FILTERS" :key="option.id" type="button" class="rounded-full px-2.5 py-1 text-[11px] font-semibold whitespace-nowrap transition" :class="state.subsTracked === option.id
+                  ? 'bg-purple-600 text-white'
+                  : 'text-neutral-500 hover:text-neutral-800 dark:hover:text-neutral-100'
+                " @click="state.subsTracked = option.id">
                 {{ option.label }}
                 <span class="opacity-70">{{
                   subscriptionCounts[option.countKey]
-                }}</span>
+                  }}</span>
               </button>
             </div>
 
-            <label
-              class="shrink-0 cursor-pointer rounded-full border border-black/10 bg-white px-3 py-1.5 text-xs font-semibold dark:border-white/12 dark:bg-neutral-900"
-              title="Import a Takeout subscriptions.csv, a PocketTube backup, or the CSV from Export from YouTube"
-            >
+            <label class="shrink-0 cursor-pointer rounded-full border border-black/10 bg-white px-3 py-1.5 text-xs font-semibold dark:border-white/12 dark:bg-neutral-900" title="Import a Takeout subscriptions.csv, a PocketTube backup, or the CSV from Export from YouTube">
               Import CSV / JSON
-              <input
-                type="file"
-                accept=".csv,.json,text/csv,application/json"
-                class="hidden"
-                @change="onSubscriptionsFile"
-              />
+              <input type="file" accept=".csv,.json,text/csv,application/json" class="hidden" @change="onSubscriptionsFile" />
             </label>
 
-            <button
-              type="button"
-              class="shrink-0 rounded-full border border-black/10 bg-white px-3 py-1.5 text-xs font-semibold dark:border-white/12 dark:bg-neutral-900"
-              title="Read your subscriptions straight from the signed-in YouTube page — no Takeout queue"
-              @click="showSubsExport = true"
-            >
+            <button type="button" class="shrink-0 rounded-full border border-black/10 bg-white px-3 py-1.5 text-xs font-semibold dark:border-white/12 dark:bg-neutral-900" title="Read your subscriptions straight from the signed-in YouTube page — no Takeout queue" @click="showSubsExport = true">
               Export from YouTube
             </button>
 
-            <button
-              v-if="hasAnyAccount"
-              type="button"
-              class="shrink-0 rounded-full border border-black/10 bg-white px-3 py-1.5 text-xs font-semibold disabled:opacity-40 dark:border-white/12 dark:bg-neutral-900"
-              :disabled="state.subscriptionsLoading"
-              @click="reloadSubscriptions"
-            >
+            <button v-if="hasAnyAccount" type="button" class="shrink-0 rounded-full border border-black/10 bg-white px-3 py-1.5 text-xs font-semibold disabled:opacity-40 dark:border-white/12 dark:bg-neutral-900" :disabled="state.subscriptionsLoading" @click="reloadSubscriptions">
               Refresh
             </button>
           </div>
         </div>
 
         <!-- Suggest / import -->
-        <div
-          v-if="hasAnyAccount && subscriptionCounts.all > 0"
-          class="mb-3 flex flex-wrap items-center gap-2 rounded-xl border border-black/8 bg-white p-2 text-xs shadow-sm dark:border-white/10 dark:bg-neutral-900"
-        >
+        <div v-if="hasAnyAccount && subscriptionCounts.all > 0" class="mb-3 flex flex-wrap items-center gap-2 rounded-xl border border-black/8 bg-white p-2 text-xs shadow-sm dark:border-white/10 dark:bg-neutral-900">
           <span class="font-semibold">
             {{ subscriptionCounts.untracked }} not tracked
           </span>
-          <button
-            type="button"
-            class="rounded-full border border-purple-500/40 px-2.5 py-1 text-[11px] font-semibold text-purple-700 transition hover:bg-purple-500/10 disabled:opacity-40 dark:text-purple-300"
-            :disabled="untrackedSubscriptions.length === 0 || syncing"
-            title="Add every untracked subscription to the suggestion list"
-            @click="suggestAllUntracked"
-          >
+          <button type="button" class="rounded-full border border-purple-500/40 px-2.5 py-1 text-[11px] font-semibold text-purple-700 transition hover:bg-purple-500/10 disabled:opacity-40 dark:text-purple-300" :disabled="untrackedSubscriptions.length === 0 || syncing" title="Add every untracked subscription to the suggestion list" @click="suggestAllUntracked">
             ＋ Suggest all
           </button>
-          <span
-            v-if="suggestedCount > 0"
-            class="flex items-center gap-1 text-neutral-500"
-          >
+          <span v-if="suggestedCount > 0" class="flex items-center gap-1 text-neutral-500">
             {{ suggestedCount }} suggested
-            <button
-              type="button"
-              class="rounded-full px-1.5 py-0.5 text-[10px] font-semibold text-neutral-500 underline-offset-2 hover:text-red-600 hover:underline"
-              title="Remove every channel from the suggestion list"
-              @click="clearAllSuggestions"
-            >
+            <button type="button" class="rounded-full px-1.5 py-0.5 text-[10px] font-semibold text-neutral-500 underline-offset-2 hover:text-red-600 hover:underline" title="Remove every channel from the suggestion list" @click="clearAllSuggestions">
               clear
             </button>
           </span>
 
-          <span
-            class="mx-1 hidden h-4 w-px bg-black/10 sm:block dark:bg-white/10"
-          ></span>
+          <span class="mx-1 hidden h-4 w-px bg-black/10 sm:block dark:bg-white/10"></span>
 
-          <label
-            class="flex cursor-pointer items-center gap-1.5 text-neutral-600 dark:text-neutral-300"
-            title="Importing a subscription list publishes third-party channel records — only do it for an account you own or are allowed to use"
-          >
-            <input
-              v-model="syncConsent"
-              type="checkbox"
-              class="h-3.5 w-3.5 accent-purple-600"
-            />
+          <label class="flex cursor-pointer items-center gap-1.5 text-neutral-600 dark:text-neutral-300" title="Importing a subscription list publishes third-party channel records — only do it for an account you own or are allowed to use">
+            <input v-model="syncConsent" type="checkbox" class="h-3.5 w-3.5 accent-purple-600" />
             I own this account or have permission
           </label>
-          <button
-            type="button"
-            class="rounded-full bg-purple-600 px-2.5 py-1 text-[11px] font-semibold text-white transition hover:opacity-90 disabled:opacity-40"
-            :disabled="
-              !syncConsent ||
-              syncing ||
-              suggestedCount === 0 ||
-              datasetApi !== 'available'
-            "
-            :title="
-              datasetApi === 'available'
+          <button type="button" class="rounded-full bg-purple-600 px-2.5 py-1 text-[11px] font-semibold text-white transition hover:opacity-90 disabled:opacity-40" :disabled="!syncConsent ||
+            syncing ||
+            suggestedCount === 0 ||
+            datasetApi !== 'available'
+            " :title="datasetApi === 'available'
                 ? 'Fetch each suggested channel and write it into data/'
                 : 'Needs the local dev server (npm run dev)'
-            "
-            @click="syncSuggested"
-          >
+              " @click="syncSuggested">
             {{ syncing ? "Adding…" : `Add ${suggestedCount} to dataset` }}
           </button>
-          <button
-            v-if="datasetApi === 'unavailable'"
-            type="button"
-            class="rounded-full border border-black/10 px-2.5 py-1 text-[11px] font-semibold dark:border-white/12"
-            title="The static build cannot write to data/ — download the list and commit it"
-            @click="downloadSuggestions"
-          >
+          <button v-if="datasetApi === 'unavailable'" type="button" class="rounded-full border border-black/10 px-2.5 py-1 text-[11px] font-semibold dark:border-white/12" title="The static build cannot write to data/ — download the list and commit it" @click="downloadSuggestions">
             ⬇ suggestions.json
           </button>
 
           <span v-if="syncState" class="text-neutral-500">
             {{ syncState.done }}/{{ syncState.total }} ·
             {{ syncState.added }} added<template v-if="syncState.failed">
-              · {{ syncState.failed }} failed</template
-            >
+              · {{ syncState.failed }} failed</template>
           </span>
-          <span
-            v-else-if="datasetApi === 'unavailable'"
-            class="basis-full text-[11px] leading-relaxed text-neutral-500"
-          >
+          <span v-else-if="datasetApi === 'unavailable'" class="basis-full text-[11px] leading-relaxed text-neutral-500">
             Static build: suggestions are kept in this browser. Download them,
             commit <code>data/suggestions.json</code>, then import with the local
             dev server.
@@ -2623,15 +2201,11 @@ onMounted(async () => {
         </div>
 
         <!-- Official Artist badge sync: background, one channel at a time -->
-        <div
-          v-if="
-            hasAnyAccount &&
-            subscriptionCounts.all > 0 &&
-            (badgeSync.running || badgeSync.error || badgeSync.stopped)
-          "
-          class="mb-3 rounded-xl border border-black/8 bg-white p-2.5 text-xs shadow-sm dark:border-white/10 dark:bg-neutral-900"
-          aria-live="polite"
-        >
+        <div v-if="
+          hasAnyAccount &&
+          subscriptionCounts.all > 0 &&
+          (badgeSync.running || badgeSync.error || badgeSync.stopped)
+        " class="mb-3 rounded-xl border border-black/8 bg-white p-2.5 text-xs shadow-sm dark:border-white/10 dark:bg-neutral-900" aria-live="polite">
           <div class="flex flex-wrap items-center gap-2">
             <span class="font-semibold">🎵 Official Artist badges</span>
             <span v-if="badgeSync.running" class="text-neutral-500">
@@ -2643,44 +2217,22 @@ onMounted(async () => {
             <span v-else class="text-neutral-500">
               stopped at {{ badgeSync.done }}/{{ badgeSync.total }}
             </span>
-            <div
-              class="h-1.5 min-w-24 flex-1 overflow-hidden rounded-full bg-black/8 dark:bg-white/10"
-              role="progressbar"
-              :aria-valuenow="badgeSync.done"
-              :aria-valuemin="0"
-              :aria-valuemax="badgeSync.total"
-            >
-              <div
-                class="h-full rounded-full bg-purple-600 transition-all"
-                :style="{
-                  width:
-                    (badgeSync.total
-                      ? Math.round((badgeSync.done / badgeSync.total) * 100)
-                      : 0) + '%',
-                }"
-              ></div>
+            <div class="h-1.5 min-w-24 flex-1 overflow-hidden rounded-full bg-black/8 dark:bg-white/10" role="progressbar" :aria-valuenow="badgeSync.done" :aria-valuemin="0" :aria-valuemax="badgeSync.total">
+              <div class="h-full rounded-full bg-purple-600 transition-all" :style="{
+                width:
+                  (badgeSync.total
+                    ? Math.round((badgeSync.done / badgeSync.total) * 100)
+                    : 0) + '%',
+              }"></div>
             </div>
-            <button
-              v-if="badgeSync.running"
-              type="button"
-              class="rounded-full border border-black/10 px-2.5 py-1 text-[11px] font-semibold dark:border-white/12"
-              @click="stopBadgeSync"
-            >
+            <button v-if="badgeSync.running" type="button" class="rounded-full border border-black/10 px-2.5 py-1 text-[11px] font-semibold dark:border-white/12" @click="stopBadgeSync">
               Stop
             </button>
-            <button
-              v-else
-              type="button"
-              class="rounded-full border border-purple-500/40 px-2.5 py-1 text-[11px] font-semibold text-purple-700 dark:text-purple-300"
-              @click="resumeBadgeSync"
-            >
+            <button v-else type="button" class="rounded-full border border-purple-500/40 px-2.5 py-1 text-[11px] font-semibold text-purple-700 dark:text-purple-300" @click="resumeBadgeSync">
               Resume
             </button>
           </div>
-          <p
-            v-if="badgeSync.error"
-            class="mt-1 text-[11px] leading-relaxed text-amber-700 dark:text-amber-400"
-          >
+          <p v-if="badgeSync.error" class="mt-1 text-[11px] leading-relaxed text-amber-700 dark:text-amber-400">
             {{ badgeSync.error }}
           </p>
           <p v-else class="mt-1 text-[11px] leading-relaxed text-neutral-500">
@@ -2688,20 +2240,13 @@ onMounted(async () => {
             cached for 30 days; results for tracked channels are also written
             to their `data/` records by the local dev server.
           </p>
-          <p
-            v-if="badgeSync.saved || badgeSync.saveFailed"
-            class="mt-1 text-[11px] text-neutral-500"
-          >
+          <p v-if="badgeSync.saved || badgeSync.saveFailed" class="mt-1 text-[11px] text-neutral-500">
             {{ badgeSync.saved }} dataset records saved<span v-if="badgeSync.saveFailed">
-              · {{ badgeSync.saveFailed }} save failures</span
-            >
+              · {{ badgeSync.saveFailed }} save failures</span>
           </p>
         </div>
 
-        <div
-          v-if="!hasAnyAccount"
-          class="mx-auto max-w-md rounded-xl border border-black/8 bg-white p-6 text-center shadow-sm dark:border-white/10 dark:bg-neutral-900"
-        >
+        <div v-if="!hasAnyAccount" class="mx-auto max-w-md rounded-xl border border-black/8 bg-white p-6 text-center shadow-sm dark:border-white/10 dark:bg-neutral-900">
           <p class="text-sm font-semibold">Link your accounts</p>
           <p class="mt-2 text-xs text-neutral-500">
             See every VTuber and singer you subscribe to on YouTube, Twitch,
@@ -2715,23 +2260,11 @@ onMounted(async () => {
             browser; the local dev server only forwards it to YouTube.
           </p>
           <div class="mt-4 flex flex-wrap justify-center gap-2">
-            <button
-              v-for="provider in AUTH_PROVIDERS"
-              :key="provider.id"
-              type="button"
-              class="rounded-full px-3 py-2 text-xs font-bold text-white transition hover:opacity-85 disabled:opacity-40"
-              :style="{ backgroundColor: provider.color }"
-              :title="provider.unavailableReason() ?? ''"
-              :disabled="state.subscriptionsLoading"
-              @click="linkProvider(provider)"
-            >
+            <button v-for="provider in AUTH_PROVIDERS" :key="provider.id" type="button" class="rounded-full px-3 py-2 text-xs font-bold text-white transition hover:opacity-85 disabled:opacity-40" :style="{ backgroundColor: provider.color }" :title="provider.unavailableReason() ?? ''" :disabled="state.subscriptionsLoading" @click="linkProvider(provider)">
               {{ provider.label }}
             </button>
           </div>
-          <p
-            v-if="state.subscriptionsLoading"
-            class="mt-3 text-xs text-neutral-500"
-          >
+          <p v-if="state.subscriptionsLoading" class="mt-3 text-xs text-neutral-500">
             Waiting for the sign-in window — finish signing in there, then come
             back to this tab.
           </p>
@@ -2739,13 +2272,8 @@ onMounted(async () => {
             More than 1,000 subscriptions? With the local dev server, Refresh
             reads the complete list through InnerTube. A static build still
             stops at 1,000, so
-            <button
-              type="button"
-              class="font-semibold underline"
-              @click="showSubsExport = true"
-            >
-              Export from YouTube</button
-            >
+            <button type="button" class="font-semibold underline" @click="showSubsExport = true">
+              Export from YouTube</button>
             remains the no-link path — it pages the signed-in session, so the
             page's 1,000-card limit does not apply — or import a
             <span class="font-semibold">PocketTube backup</span> (Backup →
@@ -2754,127 +2282,57 @@ onMounted(async () => {
           </p>
         </div>
 
-        <div
-          v-else-if="visibleSubscriptions.length"
-          class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6"
-        >
-          <div
-            v-for="sub in visibleSubscriptions"
-            :key="sub.channelId"
-            v-memo="[
-              sub,
-              state.youtubeBadges[sub.channelId],
-              state.youtubeDetails[sub.channelId],
-              summaryById,
-              summaryByName,
-              liveByChannel,
-              upcomingByChannel,
-              songCountByChannel,
-              state.suggested,
-            ]"
-            class="group flex flex-col overflow-hidden rounded-xl border border-black/8 bg-white shadow-sm transition hover:shadow-md dark:border-white/10 dark:bg-neutral-900"
-          >
-            <button
-              type="button"
-              class="flex flex-1 flex-col items-center gap-2 p-3 text-center"
-              :title="
-                knownSubscription(sub)
-                  ? 'Open the channel'
-                  : 'Load this channel’s YouTube details'
-              "
-              @click="openSubscription(sub)"
-            >
-              <img
-                :src="imageUrl(sub.thumbnail)"
-                :alt="sub.title"
-                referrerpolicy="no-referrer"
-                loading="lazy"
-                class="h-16 w-16 rounded-full object-cover ring-2 ring-black/5 dark:ring-white/10"
-              />
+        <div v-else-if="visibleSubscriptions.length" class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
+          <div v-for="sub in visibleSubscriptions" :key="sub.channelId" class="group flex flex-col overflow-hidden rounded-xl border border-black/8 bg-white shadow-sm transition hover:shadow-md dark:border-white/10 dark:bg-neutral-900">
+            <button type="button" class="flex flex-1 flex-col items-center gap-2 p-3 text-center" :title="knownSubscription(sub)
+                ? 'Open the channel'
+                : 'Load this channel’s YouTube details'
+              " @click="openSubscription(sub)">
+              <img :src="imageUrl(sub.thumbnail)" :alt="sub.title" referrerpolicy="no-referrer" loading="lazy" class="h-16 w-16 rounded-full object-cover ring-2 ring-black/5 dark:ring-white/10" />
               <span class="line-clamp-2 text-xs leading-tight font-semibold">
                 {{ sub.title
-                }}<OfficialArtistBadge
-                  v-if="hasOfficialArtistBadge(sub)"
-                  size="xs"
-                  class="ml-1"
-                />
+                }}
+                <OfficialArtistBadge v-if="hasOfficialArtistBadge(sub)" size="xs" class="ml-1" />
               </span>
               <span class="flex flex-wrap justify-center gap-1">
-                <span
-                  class="rounded px-1.5 py-0.5 text-[10px] font-semibold text-white"
-                  :style="{
-                    backgroundColor:
-                      AUTH_PROVIDERS.find((p) => p.id === sub.provider)
-                        ?.color ?? '#6b7280',
-                  }"
-                >
+                <span class="rounded px-1.5 py-0.5 text-[10px] font-semibold text-white" :style="{
+                  backgroundColor:
+                    AUTH_PROVIDERS.find((p) => p.id === sub.provider)
+                      ?.color ?? '#6b7280',
+                }">
                   {{
                     AUTH_PROVIDERS.find((p) => p.id === sub.provider)?.label ??
                     sub.provider
                   }}
                 </span>
-                <span
-                  class="rounded px-1.5 py-0.5 text-[10px] font-semibold"
-                  :class="
-                    sub.known
-                      ? 'bg-purple-600/15 text-purple-700 dark:text-purple-300'
-                      : 'bg-amber-500/15 text-amber-700 dark:text-amber-400'
-                  "
-                >
+                <span class="rounded px-1.5 py-0.5 text-[10px] font-semibold" :class="sub.known
+                    ? 'bg-purple-600/15 text-purple-700 dark:text-purple-300'
+                    : 'bg-amber-500/15 text-amber-700 dark:text-amber-400'
+                  ">
                   {{ sub.known ? "In dataset" : "Not tracked yet" }}
                 </span>
-                <span
-                  v-if="subscriptionIsLive(sub)"
-                  class="rounded bg-red-500/15 px-1.5 py-0.5 text-[10px] font-semibold text-red-700 dark:text-red-400"
-                  title="Streaming live on YouTube now"
-                >
+                <span v-if="subscriptionIsLive(sub)" class="rounded bg-red-500/15 px-1.5 py-0.5 text-[10px] font-semibold text-red-700 dark:text-red-400" title="Streaming live on YouTube now">
                   🔴 Live
                 </span>
-                <span
-                  v-if="subscriptionIsUpcoming(sub)"
-                  class="rounded bg-amber-500/15 px-1.5 py-0.5 text-[10px] font-semibold text-amber-700 dark:text-amber-400"
-                  title="A scheduled stream or premiere is listed"
-                >
+                <span v-if="subscriptionIsUpcoming(sub)" class="rounded bg-amber-500/15 px-1.5 py-0.5 text-[10px] font-semibold text-amber-700 dark:text-amber-400" title="A scheduled stream or premiere is listed">
                   📅 Upcoming
                 </span>
-                <span
-                  v-if="subscriptionSongCount(sub) > 0"
-                  class="rounded bg-emerald-500/15 px-1.5 py-0.5 text-[10px] font-semibold text-emerald-700 dark:text-emerald-400"
-                  title="Songs and releases known for this channel"
-                >
+                <span v-if="subscriptionSongCount(sub) > 0" class="rounded bg-emerald-500/15 px-1.5 py-0.5 text-[10px] font-semibold text-emerald-700 dark:text-emerald-400" title="Songs and releases known for this channel">
                   🎼 {{ subscriptionSongCount(sub) }}
                 </span>
               </span>
             </button>
 
             <!-- Suggest an untracked channel; remove a suggested one -->
-            <div
-              v-if="!sub.known || isSubSuggested(sub)"
-              class="px-2 pb-2"
-            >
-              <button
-                v-if="!isSubSuggested(sub)"
-                type="button"
-                class="w-full rounded-full border border-purple-500/40 px-2 py-1 text-[10px] font-semibold text-purple-700 transition hover:bg-purple-500/10 disabled:opacity-40 dark:text-purple-300"
-                :disabled="syncing"
-                title="Add this channel to the suggestion list"
-                @click.stop="suggestSubscriptions([sub])"
-              >
+            <div v-if="!sub.known || isSubSuggested(sub)" class="px-2 pb-2">
+              <button v-if="!isSubSuggested(sub)" type="button" class="w-full rounded-full border border-purple-500/40 px-2 py-1 text-[10px] font-semibold text-purple-700 transition hover:bg-purple-500/10 disabled:opacity-40 dark:text-purple-300" :disabled="syncing" title="Add this channel to the suggestion list" @click.stop="suggestSubscriptions([sub])">
                 ＋ Suggest
               </button>
               <div v-else class="flex items-center gap-1">
-                <span
-                  class="flex-1 rounded-full bg-emerald-500/10 px-2 py-1 text-center text-[10px] font-semibold text-emerald-700 dark:text-emerald-400"
-                >
+                <span class="flex-1 rounded-full bg-emerald-500/10 px-2 py-1 text-center text-[10px] font-semibold text-emerald-700 dark:text-emerald-400">
                   Suggested ✓
                 </span>
-                <button
-                  type="button"
-                  class="rounded-full px-1.5 py-1 text-[10px] font-semibold text-neutral-400 transition hover:text-red-600"
-                  title="Remove this channel from the suggestion list"
-                  aria-label="Remove from the suggestion list"
-                  @click.stop="unsuggestSubscriptions([sub])"
-                >
+                <button type="button" class="rounded-full px-1.5 py-1 text-[10px] font-semibold text-neutral-400 transition hover:text-red-600" title="Remove this channel from the suggestion list" aria-label="Remove from the suggestion list" @click.stop="unsuggestSubscriptions([sub])">
                   ✕
                 </button>
               </div>
@@ -2897,29 +2355,12 @@ onMounted(async () => {
         </h2>
         <template v-if="savedChannels.length || visibleSaved.length">
           <!-- Channels are the common case: the drawer's Save button -->
-          <div
-            v-if="savedChannels.length"
-            class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6"
-          >
-            <ChannelCard
-              v-for="channel in savedChannels"
-              :key="channel.id"
-              :channel="channel"
-              @open="openChannel"
-            />
+          <div v-if="savedChannels.length" class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
+            <ChannelCard v-for="channel in savedChannels" :key="channel.id" :channel="channel" @open="openChannel" />
           </div>
           <!-- Items (videos) are saved from the player view -->
-          <div
-            v-if="visibleSaved.length"
-            class="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"
-          >
-            <LiveCard
-              v-for="item in visibleSaved"
-              :key="item.id"
-              :item="item"
-              :channel="summaryById.get(item.channelId) ?? null"
-              @open="openItem"
-            />
+          <div v-if="visibleSaved.length" class="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+            <LiveCard v-for="item in visibleSaved" :key="item.id" :item="item" :channel="summaryById.get(item.channelId) ?? null" @open="openItem" />
           </div>
         </template>
         <p v-else class="py-16 text-center text-sm text-neutral-500">
@@ -2929,23 +2370,11 @@ onMounted(async () => {
     </main>
 
     <!-- ───────────────────────── Mobile nav ───────────────────────── -->
-    <nav
-      class="fixed inset-x-0 bottom-0 z-40 grid border-t border-black/8 bg-[#f6f5f1]/95 backdrop-blur-xl md:hidden dark:border-white/10 dark:bg-neutral-950/95"
-      :style="{ gridTemplateColumns: `repeat(${VIEWS.length}, minmax(0, 1fr))` }"
-      aria-label="Primary"
-    >
-      <button
-        v-for="view in VIEWS"
-        :key="view.id"
-        type="button"
-        class="flex flex-col items-center gap-0.5 py-2 text-[10px] font-semibold transition"
-        :class="
-          state.view === view.id
-            ? 'text-purple-600 dark:text-purple-400'
-            : 'text-neutral-500'
-        "
-        @click="setView(view.id)"
-      >
+    <nav class="fixed inset-x-0 bottom-0 z-40 grid border-t border-black/8 bg-[#f6f5f1]/95 backdrop-blur-xl md:hidden dark:border-white/10 dark:bg-neutral-950/95" :style="{ gridTemplateColumns: `repeat(${VIEWS.length}, minmax(0, 1fr))` }" aria-label="Primary">
+      <button v-for="view in VIEWS" :key="view.id" type="button" class="flex flex-col items-center gap-0.5 py-2 text-[10px] font-semibold transition" :class="state.view === view.id
+          ? 'text-purple-600 dark:text-purple-400'
+          : 'text-neutral-500'
+        " @click="setView(view.id)">
         <span class="text-base leading-none" aria-hidden="true">
           {{
             view.id === "live"
@@ -2956,11 +2385,11 @@ onMounted(async () => {
                   ? "🎵"
                   : view.id === "analytics"
                     ? "📈"
-                  : view.id === "channels"
-                    ? "👥"
-                    : view.id === "subs"
-                      ? "👤"
-                      : "🔖"
+                    : view.id === "channels"
+                      ? "👥"
+                      : view.id === "subs"
+                        ? "👤"
+                        : "🔖"
           }}
         </span>
         {{ view.short }}
@@ -2968,49 +2397,18 @@ onMounted(async () => {
     </nav>
 
     <!-- ───────────────────────── Drawer ───────────────────────── -->
-    <ChannelDrawer
-      :channel="drawerChannel"
-      :item="drawerItem"
-      :items="allItems"
-      :summaries="summaries"
-      :badge-override="drawerBadgeOverride"
-      @close="
-        drawerChannel = null;
-        drawerItem = null;
-      "
-      @open-item="openItem"
-      @open-channel="openChannel"
-    />
+    <ChannelDrawer :channel="drawerChannel" :item="drawerItem" :items="allItems" :summaries="summaries" :badge-override="drawerBadgeOverride" @close="
+      drawerChannel = null;
+    drawerItem = null;
+    " @open-item="openItem" @open-channel="openChannel" />
 
     <!-- Untracked subscription: YouTube details fetched on open -->
-    <SubscriptionDetail
-      v-if="activeSub"
-      :sub="activeSub"
-      :detail="activeSubDetail"
-      :loading="subDetailLoading"
-      :error="subDetailError"
-      @close="closeSubDetail"
-      @retry="retrySubDetail"
-    />
+    <SubscriptionDetail v-if="activeSub" :sub="activeSub" :detail="activeSubDetail" :loading="subDetailLoading" :error="subDetailError" @close="closeSubDetail" @retry="retrySubDetail" />
 
     <!-- ─────────────────── No-Takeout subscription export ─────────────────── -->
-    <Transition
-      enter-active-class="transition duration-200 ease-out"
-      enter-from-class="opacity-0"
-      leave-active-class="transition duration-150 ease-in"
-      leave-to-class="opacity-0"
-    >
-      <div
-        v-if="showSubsExport"
-        class="fixed inset-0 z-50 flex items-end justify-center bg-black/50 p-3 sm:items-center"
-        @click.self="showSubsExport = false"
-      >
-        <div
-          class="max-h-[90vh] w-full max-w-2xl overflow-auto rounded-2xl border border-black/10 bg-white p-4 shadow-xl dark:border-white/10 dark:bg-neutral-900"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="subs-export-title"
-        >
+    <Transition enter-active-class="transition duration-200 ease-out" enter-from-class="opacity-0" leave-active-class="transition duration-150 ease-in" leave-to-class="opacity-0">
+      <div v-if="showSubsExport" class="fixed inset-0 z-50 flex items-end justify-center bg-black/50 p-3 sm:items-center" @click.self="showSubsExport = false">
+        <div class="max-h-[90vh] w-full max-w-2xl overflow-auto rounded-2xl border border-black/10 bg-white p-4 shadow-xl dark:border-white/10 dark:bg-neutral-900" role="dialog" aria-modal="true" aria-labelledby="subs-export-title">
           <div class="flex items-start justify-between gap-3">
             <div>
               <p id="subs-export-title" class="text-sm font-bold">
@@ -3025,28 +2423,15 @@ onMounted(async () => {
                 and nothing is uploaded.
               </p>
             </div>
-            <button
-              type="button"
-              class="shrink-0 rounded-full px-2 py-1 text-xs text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-100"
-              aria-label="Close"
-              @click="showSubsExport = false"
-            >
+            <button type="button" class="shrink-0 rounded-full px-2 py-1 text-xs text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-100" aria-label="Close" @click="showSubsExport = false">
               ✕
             </button>
           </div>
 
-          <ol
-            class="mt-3 list-decimal space-y-1 pl-5 text-xs leading-relaxed text-neutral-600 dark:text-neutral-300"
-          >
+          <ol class="mt-3 list-decimal space-y-1 pl-5 text-xs leading-relaxed text-neutral-600 dark:text-neutral-300">
             <li>
               Open
-              <a
-                class="underline"
-                href="https://www.youtube.com/feed/channels"
-                target="_blank"
-                rel="noopener"
-                >youtube.com/feed/channels</a
-              >
+              <a class="underline" href="https://www.youtube.com/feed/channels" target="_blank" rel="noopener">youtube.com/feed/channels</a>
               while signed in.
             </li>
             <li>Open DevTools (⌥⌘I / F12) → Console.</li>
@@ -3062,9 +2447,7 @@ onMounted(async () => {
             </li>
           </ol>
 
-          <p
-            class="mt-3 rounded-lg border border-emerald-500/30 bg-emerald-500/10 p-2 text-[11px] leading-relaxed text-emerald-900 dark:text-emerald-200"
-          >
+          <p class="mt-3 rounded-lg border border-emerald-500/30 bg-emerald-500/10 p-2 text-[11px] leading-relaxed text-emerald-900 dark:text-emerald-200">
             <span class="font-semibold">The whole list, not the first page.</span>
             The page renders at most 1,000 cards, but the script keeps asking
             YouTube's signed-in API for the next page until it ends. It reads
@@ -3080,26 +2463,13 @@ onMounted(async () => {
             your own browser — the list is never uploaded.
           </p>
 
-          <textarea
-            readonly
-            :value="SUBS_EXPORT_SCRIPT"
-            spellcheck="false"
-            class="mt-3 h-40 w-full resize-y rounded-lg border border-black/10 bg-neutral-50 p-2 font-mono text-[10px] leading-snug text-neutral-700 dark:border-white/10 dark:bg-neutral-950 dark:text-neutral-300"
-          ></textarea>
+          <textarea readonly :value="SUBS_EXPORT_SCRIPT" spellcheck="false" class="mt-3 h-40 w-full resize-y rounded-lg border border-black/10 bg-neutral-50 p-2 font-mono text-[10px] leading-snug text-neutral-700 dark:border-white/10 dark:bg-neutral-950 dark:text-neutral-300"></textarea>
 
           <div class="mt-3 flex flex-wrap justify-end gap-2">
-            <button
-              type="button"
-              class="rounded-full border border-black/10 px-3 py-1.5 text-xs font-semibold dark:border-white/12"
-              @click="showSubsExport = false"
-            >
+            <button type="button" class="rounded-full border border-black/10 px-3 py-1.5 text-xs font-semibold dark:border-white/12" @click="showSubsExport = false">
               Close
             </button>
-            <button
-              type="button"
-              class="rounded-full bg-purple-600 px-3 py-1.5 text-xs font-semibold text-white transition hover:opacity-90"
-              @click="copySubsScript"
-            >
+            <button type="button" class="rounded-full bg-purple-600 px-3 py-1.5 text-xs font-semibold text-white transition hover:opacity-90" @click="copySubsScript">
               {{ subsScriptCopied ? "Copied ✓" : "Copy script" }}
             </button>
           </div>
@@ -3108,24 +2478,13 @@ onMounted(async () => {
     </Transition>
 
     <!-- ───────────────────────── Toast ───────────────────────── -->
-    <Transition
-      enter-active-class="transition duration-200 ease-out"
-      enter-from-class="translate-y-2 opacity-0"
-      leave-active-class="transition duration-150 ease-in"
-      leave-to-class="translate-y-2 opacity-0"
-    >
-      <div
-        v-if="state.toast"
-        class="fixed bottom-20 left-1/2 z-50 -translate-x-1/2 rounded-full px-4 py-2 text-xs font-semibold shadow-lg md:bottom-6"
-        :class="
-          state.toast.type === 'error'
-            ? 'bg-red-600 text-white'
-            : state.toast.type === 'success'
-              ? 'bg-emerald-600 text-white'
-              : 'bg-neutral-900 text-white dark:bg-white dark:text-neutral-900'
-        "
-        role="status"
-      >
+    <Transition enter-active-class="transition duration-200 ease-out" enter-from-class="translate-y-2 opacity-0" leave-active-class="transition duration-150 ease-in" leave-to-class="translate-y-2 opacity-0">
+      <div v-if="state.toast" class="fixed bottom-20 left-1/2 z-50 -translate-x-1/2 rounded-full px-4 py-2 text-xs font-semibold shadow-lg md:bottom-6" :class="state.toast.type === 'error'
+          ? 'bg-red-600 text-white'
+          : state.toast.type === 'success'
+            ? 'bg-emerald-600 text-white'
+            : 'bg-neutral-900 text-white dark:bg-white dark:text-neutral-900'
+        " role="status">
         {{ state.toast.text }}
       </div>
     </Transition>
