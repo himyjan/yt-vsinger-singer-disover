@@ -94,5 +94,8 @@ jobs:
           commit_message: "data: verify classifications (${{ github.run_number }})"
           file_pattern: "data/*"
           branch: ${{ github.ref_name }}
+          # The explicit rebase above is the only branch update. A second
+          # fetch/rebase inside this action can conflict with generated shards.
+          skip_fetch: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
