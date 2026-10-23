@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-23T10:02:56.253Z",
+  "generatedAt": "2026-10-23T10:27:34.818Z",
   "channels": [
     {
       "id": "bilibili:1095372350",
@@ -35,9 +35,9 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T10:03:47.608Z",
+      "updatedAt": "2026-10-23T10:28:20.247Z",
       "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": "2026-10-23T10:02:56.253Z",
+      "lastDetailsFetchedAt": "2026-10-23T10:27:34.818Z",
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -53,7 +53,7 @@
             "count": 1175
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.326Z",
+          "lastCheckedAt": "2026-10-23T10:28:22.173Z",
           "videoCount": 194
         }
       ],
@@ -97,7 +97,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T10:03:47.608Z",
+      "updatedAt": "2026-10-23T10:28:20.247Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -115,7 +115,7 @@
             "count": 2904
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.318Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.158Z"
         }
       ],
       "externals": {},
@@ -156,9 +156,9 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T10:03:47.608Z",
+      "updatedAt": "2026-10-23T10:28:20.247Z",
       "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": "2026-10-23T10:02:56.253Z",
+      "lastDetailsFetchedAt": "2026-10-23T10:27:34.818Z",
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -174,7 +174,7 @@
             "count": 8539
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.076Z",
+          "lastCheckedAt": "2026-10-23T10:28:21.730Z",
           "videoCount": 123
         }
       ],
@@ -216,7 +216,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T10:03:47.608Z",
+      "updatedAt": "2026-10-23T10:28:20.247Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -234,7 +234,7 @@
             "count": 58095
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.197Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.941Z"
         }
       ],
       "externals": {},
@@ -277,9 +277,9 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T10:03:47.608Z",
+      "updatedAt": "2026-10-23T10:28:20.247Z",
       "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": "2026-10-23T10:02:56.253Z",
+      "lastDetailsFetchedAt": "2026-10-23T10:27:34.818Z",
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -295,7 +295,7 @@
             "count": 18719
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.629Z",
+          "lastCheckedAt": "2026-10-23T10:28:22.717Z",
           "videoCount": 72
         }
       ],
@@ -337,7 +337,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T10:03:47.608Z",
+      "updatedAt": "2026-10-23T10:28:20.247Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -355,7 +355,7 @@
             "count": 2744
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.707Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.855Z"
         }
       ],
       "externals": {},
@@ -365,7 +365,7 @@
     },
     {
       "id": "bilibili:302010674",
-      "name": "真理シンリ",
+      "name": "真理シンリ_Official",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -375,29 +375,30 @@
         "ja"
       ],
       "statedLanguages": [],
-      "agency": null,
-      "affiliation": "unknown",
-      "avatar": null,
+      "agency": "momolive",
+      "affiliation": "group",
+      "avatar": "https://i2.hdslb.com/bfs/face/e87cf8f0902ba96131764f73fdfc345d6dc799c9.jpg",
       "banner": null,
-      "description": null,
+      "description": "momolive所属個人勢vtb，未成年不要關注我，謝謝！！！",
       "subscribers": {
-        "tag": "hidden"
+        "tag": "has",
+        "count": 1153
       },
-      "videoCount": null,
+      "videoCount": 1,
       "viewCount": null,
       "uploadsPlaylistId": null,
       "country": null,
       "tags": [],
-      "isSinging": false,
+      "isSinging": true,
       "gender": "unknown",
       "isAi": false,
       "variant": "vtuber",
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T10:03:47.608Z",
+      "updatedAt": "2026-10-23T10:28:20.247Z",
       "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-23T10:27:34.818Z",
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -405,24 +406,28 @@
         {
           "platform": "bilibili",
           "id": "302010674",
-          "handle": null,
-          "name": "真理シンリ",
+          "handle": "302010674",
+          "name": "真理シンリ_Official",
           "url": "https://space.bilibili.com/302010674",
           "subscribers": {
-            "tag": "hidden"
+            "tag": "has",
+            "count": 1153
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.593Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.646Z",
+          "videoCount": 1
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "真理シンリ"
+      ]
     },
     {
       "id": "bilibili:3060972",
-      "name": "百夜りんや",
+      "name": "百夜凛夜Rinya",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -434,27 +439,28 @@
       "statedLanguages": [],
       "agency": "V_G研究所",
       "affiliation": "group",
-      "avatar": null,
+      "avatar": "https://i0.hdslb.com/bfs/face/9697337b58cf90a3a6c36f811c02f3bf191e5cf9.jpg",
       "banner": null,
-      "description": null,
+      "description": "❈个人势vup兼配音演员❈ \n✨让我超天才魔法少女给你施个幸福好运魔法吧！\n✨商务合作｜无偿配音｜配音统筹欢迎私信！",
       "subscribers": {
-        "tag": "hidden"
+        "tag": "has",
+        "count": 31474
       },
-      "videoCount": null,
+      "videoCount": 563,
       "viewCount": null,
       "uploadsPlaylistId": null,
       "country": null,
       "tags": [],
       "isSinging": false,
-      "gender": "unknown",
+      "gender": "female",
       "isAi": false,
       "variant": "vtuber",
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T10:03:47.608Z",
+      "updatedAt": "2026-10-23T10:28:20.247Z",
       "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-23T10:27:34.818Z",
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -462,20 +468,24 @@
         {
           "platform": "bilibili",
           "id": "3060972",
-          "handle": null,
-          "name": "百夜りんや",
+          "handle": "3060972",
+          "name": "百夜凛夜Rinya",
           "url": "https://space.bilibili.com/3060972",
           "subscribers": {
-            "tag": "hidden"
+            "tag": "has",
+            "count": 31474
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.587Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.636Z",
+          "videoCount": 563
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "百夜りんや"
+      ]
     },
     {
       "id": "bilibili:3537119630854578",
@@ -509,7 +519,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T10:03:47.608Z",
+      "updatedAt": "2026-10-23T10:28:20.247Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -526,7 +536,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.534Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.541Z"
         }
       ],
       "externals": {},
@@ -566,7 +576,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T10:03:47.608Z",
+      "updatedAt": "2026-10-23T10:28:20.247Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -583,7 +593,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.216Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.976Z"
         }
       ],
       "externals": {},
@@ -625,7 +635,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T10:03:47.608Z",
+      "updatedAt": "2026-10-23T10:28:20.247Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -642,7 +652,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.369Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.248Z"
         }
       ],
       "externals": {},
@@ -684,7 +694,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T10:03:47.608Z",
+      "updatedAt": "2026-10-23T10:28:20.247Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -701,7 +711,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.575Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.614Z"
         }
       ],
       "externals": {},
@@ -741,7 +751,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T10:03:47.608Z",
+      "updatedAt": "2026-10-23T10:28:20.247Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -758,7 +768,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.778Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.980Z"
         }
       ],
       "externals": {},
@@ -798,7 +808,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T10:03:47.608Z",
+      "updatedAt": "2026-10-23T10:28:20.247Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -815,7 +825,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.114Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.793Z"
         }
       ],
       "externals": {},
@@ -855,7 +865,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T10:03:47.608Z",
+      "updatedAt": "2026-10-23T10:28:20.247Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -872,7 +882,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.392Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.289Z"
         }
       ],
       "externals": {},
@@ -912,7 +922,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T10:03:47.608Z",
+      "updatedAt": "2026-10-23T10:28:20.247Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -929,7 +939,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.430Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.356Z"
         }
       ],
       "externals": {},
@@ -969,7 +979,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T10:03:47.608Z",
+      "updatedAt": "2026-10-23T10:28:20.247Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -986,7 +996,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.165Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.883Z"
         }
       ],
       "externals": {},
@@ -1026,7 +1036,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T10:03:47.608Z",
+      "updatedAt": "2026-10-23T10:28:20.247Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1043,7 +1053,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.115Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.795Z"
         }
       ],
       "externals": {},
@@ -1083,7 +1093,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T10:03:47.608Z",
+      "updatedAt": "2026-10-23T10:28:20.247Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1100,7 +1110,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/H1OhDDgcUXxiH2ouEi26INuwoPQIxwVztXjTLPXB9u4obXN49fWUeNIaUZo7vC7oEw5C5RmdeQ=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-23T10:03:52.070Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.721Z"
         },
         {
           "platform": "booth",
@@ -1112,7 +1122,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.070Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.721Z"
         },
         {
           "platform": "twitter",
@@ -1124,7 +1134,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.070Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.721Z"
         },
         {
           "platform": "bilibili",
@@ -1136,7 +1146,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.070Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.721Z"
         }
       ],
       "externals": {},
@@ -1178,7 +1188,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T10:03:47.608Z",
+      "updatedAt": "2026-10-23T10:28:20.247Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1195,7 +1205,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/hypZwbpSfWbceR8ZaYkxRtwZF7F6wTU96JvihtOtUKmFvIhJtIaGej3pzupwA2y_emziSAj2cg=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-23T10:03:52.262Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.060Z"
         },
         {
           "platform": "bilibili",
@@ -1207,7 +1217,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.262Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.060Z"
         },
         {
           "platform": "twitter",
@@ -1219,7 +1229,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.262Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.060Z"
         }
       ],
       "externals": {},
@@ -1264,7 +1274,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T10:03:47.608Z",
+      "updatedAt": "2026-10-23T10:28:20.247Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1281,7 +1291,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/rmX8Eivd_F0pceSa9cIhdrYH4ByXGBqylVWb_SN6CsfjA3QtZmG1z-AwM07J3BY2ubmRqjWo=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-23T10:03:52.117Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.800Z"
         },
         {
           "platform": "bilibili",
@@ -1293,7 +1303,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.117Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.800Z"
         },
         {
           "platform": "twitter",
@@ -1305,7 +1315,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.117Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.800Z"
         },
         {
           "platform": "userlocal",
@@ -1317,7 +1327,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.117Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.800Z"
         }
       ],
       "externals": {},
@@ -1361,7 +1371,7 @@
       "verification": null,
       "source": "seed",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T10:02:56.253Z",
+      "updatedAt": "2026-10-23T10:27:34.818Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1378,7 +1388,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_kLDBK5ksSvk5-XJ6S8e0kWfjy7mVl3jyUkgDeMQ7rlCpU=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-23T10:02:56.253Z"
+          "lastCheckedAt": "2026-10-23T10:27:34.818Z"
         }
       ],
       "externals": {
@@ -1422,7 +1432,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T10:03:47.608Z",
+      "updatedAt": "2026-10-23T10:28:20.247Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1439,7 +1449,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/w74JmCk66EU2I-nZtlr2qsbeC-_F6gC2mm8LVGwjFiE-SsfsuuKkcCTxfT32czstMB05MBP4=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-23T10:03:52.499Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.479Z"
         },
         {
           "platform": "twitter",
@@ -1451,7 +1461,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.499Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.479Z"
         }
       ],
       "externals": {},
@@ -1495,7 +1505,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T10:03:47.608Z",
+      "updatedAt": "2026-10-23T10:28:20.247Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1512,7 +1522,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/3CeLWGYb6cLUywTJzNt-UpITviNxeGNvtjhIqbV-AIybCqCoFw9onWtg91bjwpqvfEP9mfqIR4Q=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-23T10:03:52.588Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.638Z"
         },
         {
           "platform": "bilibili",
@@ -1524,7 +1534,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.588Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.638Z"
         },
         {
           "platform": "twitter",
@@ -1536,7 +1546,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.588Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.638Z"
         },
         {
           "platform": "userlocal",
@@ -1548,7 +1558,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.588Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.638Z"
         }
       ],
       "externals": {},
@@ -1593,7 +1603,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T10:03:47.608Z",
+      "updatedAt": "2026-10-23T10:28:20.247Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1610,7 +1620,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_n1iAdn7rwdvm6cQF28aNlJM--sYm5dvrW8PCaxarA78Nw=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-23T10:03:52.172Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.896Z"
         },
         {
           "platform": "bilibili",
@@ -1622,7 +1632,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.172Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.896Z"
         },
         {
           "platform": "twitter",
@@ -1634,7 +1644,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.172Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.896Z"
         }
       ],
       "externals": {},
@@ -1677,7 +1687,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T10:03:47.608Z",
+      "updatedAt": "2026-10-23T10:28:20.247Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1694,7 +1704,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/KcyIv0pSkO_STbvBc6P4OhoxasD7wGrYaOsxNMIlItkmaKKMIk-YcbG6VMKBs1qtZfo_iugb=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-23T10:03:52.585Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.631Z"
         },
         {
           "platform": "bilibili",
@@ -1706,7 +1716,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.585Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.631Z"
         },
         {
           "platform": "twitter",
@@ -1718,7 +1728,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.585Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.631Z"
         },
         {
           "platform": "userlocal",
@@ -1730,7 +1740,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.585Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.631Z"
         }
       ],
       "externals": {},
@@ -1774,7 +1784,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T10:03:47.608Z",
+      "updatedAt": "2026-10-23T10:28:20.247Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1791,7 +1801,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_mwH6JIRk6ZSZODlOv2IOPNwcytW9VpmtkjRi7RaYW6_w=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-23T10:03:52.343Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.202Z"
         },
         {
           "platform": "bilibili",
@@ -1803,7 +1813,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.343Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.202Z"
         },
         {
           "platform": "marshmallow",
@@ -1815,7 +1825,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.343Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.202Z"
         },
         {
           "platform": "twitter",
@@ -1827,7 +1837,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.343Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.202Z"
         }
       ],
       "externals": {},
@@ -1872,7 +1882,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T10:03:47.608Z",
+      "updatedAt": "2026-10-23T10:28:20.247Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1889,7 +1899,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/OiqpO6yzxz4jW-9FBbG20qg-VODNxebH-6PS2HFKMu9uO7wRXv-w3H3ESoriTH6ZnqgBPkK-nyk=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-23T10:03:52.121Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.808Z"
         },
         {
           "platform": "bilibili",
@@ -1901,7 +1911,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.121Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.808Z"
         },
         {
           "platform": "twitter",
@@ -1913,7 +1923,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.121Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.808Z"
         },
         {
           "platform": "userlocal",
@@ -1925,7 +1935,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.121Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.808Z"
         }
       ],
       "externals": {},
@@ -1968,7 +1978,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T10:03:47.608Z",
+      "updatedAt": "2026-10-23T10:28:20.247Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1985,7 +1995,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_kBItEak0Q29QO-KzOEpFWRlchI3abcn18ieOSetWhTYfM=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-23T10:03:52.111Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.787Z"
         },
         {
           "platform": "twitter",
@@ -1997,7 +2007,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.111Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.787Z"
         },
         {
           "platform": "userlocal",
@@ -2009,7 +2019,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.111Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.787Z"
         }
       ],
       "externals": {},
@@ -2051,7 +2061,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T10:03:47.608Z",
+      "updatedAt": "2026-10-23T10:28:20.247Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -2068,7 +2078,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/cCZHhPBp_5JcVLUZmlp594ppNapLHCrfW1J05T_G1xbrgZrGwN0TLe91HF-Fx9qJdbLAoFy3Pg=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-23T10:03:52.225Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.995Z"
         },
         {
           "platform": "twitter",
@@ -2080,7 +2090,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.225Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.995Z"
         },
         {
           "platform": "userlocal",
@@ -2092,7 +2102,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.225Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.995Z"
         },
         {
           "platform": "bilibili",
@@ -2104,7 +2114,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.225Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.995Z"
         }
       ],
       "externals": {},
@@ -2149,7 +2159,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T10:03:47.608Z",
+      "updatedAt": "2026-10-23T10:28:20.247Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -2166,7 +2176,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_mX9S_nkRRv8Mk7hqcb_S4c4awLoeI0mIbZRQWMoO3ox9I=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-23T10:03:52.121Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.808Z"
         },
         {
           "platform": "twitter",
@@ -2178,7 +2188,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.121Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.808Z"
         },
         {
           "platform": "bilibili",
@@ -2190,7 +2200,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.121Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.808Z"
         }
       ],
       "externals": {},
@@ -2236,7 +2246,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T10:03:47.608Z",
+      "updatedAt": "2026-10-23T10:28:20.247Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -2253,7 +2263,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_npLeRrjNdn1QODGfIxd-DvqZMep4zCzRcxf332kKsIwaI=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-23T10:03:52.600Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.658Z"
         },
         {
           "platform": "twitter",
@@ -2265,7 +2275,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.600Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.658Z"
         },
         {
           "platform": "userlocal",
@@ -2277,7 +2287,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.600Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.658Z"
         },
         {
           "platform": "bilibili",
@@ -2289,7 +2299,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.600Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.658Z"
         }
       ],
       "externals": {},
@@ -2331,7 +2341,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T10:03:47.608Z",
+      "updatedAt": "2026-10-23T10:28:20.247Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -2348,7 +2358,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/u54vK_1O3u7vtMEIqbhr3DiLbx3pkYxZVq3pwp7vAgvbQYV3n0IgnBXpMuBCqmk96sKTu_IneWI=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-23T10:03:52.804Z"
+          "lastCheckedAt": "2026-10-23T10:28:23.027Z"
         },
         {
           "platform": "twitter",
@@ -2360,7 +2370,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.804Z"
+          "lastCheckedAt": "2026-10-23T10:28:23.027Z"
         },
         {
           "platform": "userlocal",
@@ -2372,7 +2382,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.804Z"
+          "lastCheckedAt": "2026-10-23T10:28:23.027Z"
         },
         {
           "platform": "bilibili",
@@ -2384,7 +2394,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.804Z"
+          "lastCheckedAt": "2026-10-23T10:28:23.027Z"
         }
       ],
       "externals": {},
@@ -2426,7 +2436,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T10:03:47.608Z",
+      "updatedAt": "2026-10-23T10:28:20.247Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -2443,7 +2453,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/ioN9bWoABHf3gIAqv7EXqtcMb8KyKizN9DZHnCvU_DB32xmBsfKQYffFebz-PG-ERsa1vVmeb8s=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-23T10:03:52.197Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.942Z"
         },
         {
           "platform": "twitter",
@@ -2455,7 +2465,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.197Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.942Z"
         },
         {
           "platform": "userlocal",
@@ -2467,7 +2477,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.197Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.942Z"
         }
       ],
       "externals": {},
@@ -2511,7 +2521,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T10:03:47.608Z",
+      "updatedAt": "2026-10-23T10:28:20.247Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -2528,7 +2538,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/-BQkUr0GB6GZ9czZXAPKlaXeDcYc90wxi_PvkAdDVgGCTokzRlxtl0YxDJogAhh-S16ouY40=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-23T10:03:52.109Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.785Z"
         },
         {
           "platform": "bilibili",
@@ -2540,7 +2550,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.109Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.785Z"
         },
         {
           "platform": "twitter",
@@ -2552,7 +2562,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.109Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.785Z"
         }
       ],
       "externals": {},
@@ -2595,7 +2605,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T10:03:47.608Z",
+      "updatedAt": "2026-10-23T10:28:20.247Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -2612,7 +2622,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/_nzHgKwwML-Xvoyzw9jaPYc01xcIDzcKxE1kr0vKc9yOuKZnmy5ZTSCL_YMlX5lqc-adnELCVrA=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-23T10:03:52.804Z"
+          "lastCheckedAt": "2026-10-23T10:28:23.027Z"
         },
         {
           "platform": "bilibili",
@@ -2624,7 +2634,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.804Z"
+          "lastCheckedAt": "2026-10-23T10:28:23.027Z"
         },
         {
           "platform": "twitter",
@@ -2636,7 +2646,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.804Z"
+          "lastCheckedAt": "2026-10-23T10:28:23.027Z"
         },
         {
           "platform": "userlocal",
@@ -2648,7 +2658,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.804Z"
+          "lastCheckedAt": "2026-10-23T10:28:23.027Z"
         }
       ],
       "externals": {},
@@ -2692,7 +2702,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T10:03:47.608Z",
+      "updatedAt": "2026-10-23T10:28:20.247Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -2709,7 +2719,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/57H2NBeQP6kAutCj3U_zCGW3by24Y43lF2HPfMNf8JHvkJxPnLrVncn2sESoXCttpHuETikKQA=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-23T10:03:52.291Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.111Z"
         },
         {
           "platform": "bilibili",
@@ -2721,7 +2731,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.291Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.111Z"
         },
         {
           "platform": "twitter",
@@ -2733,7 +2743,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.291Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.111Z"
         },
         {
           "platform": "pixiv",
@@ -2745,7 +2755,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.291Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.111Z"
         }
       ],
       "externals": {},
@@ -2788,7 +2798,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T10:03:47.608Z",
+      "updatedAt": "2026-10-23T10:28:20.247Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -2805,7 +2815,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/Ftva_fHTz2tEoxOG6Mum6cm59x5RDvM4QeF_ikX5ZNqdG4ZJaRYWB78M6fAjMM8xibJ35oOXjA=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-23T10:03:52.110Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.785Z"
         },
         {
           "platform": "twitter",
@@ -2817,7 +2827,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.110Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.785Z"
         }
       ],
       "externals": {},
@@ -2861,7 +2871,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T10:03:47.608Z",
+      "updatedAt": "2026-10-23T10:28:20.247Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -2878,7 +2888,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/JV8VdQFA7eZk5H1cRxHyIdLKQ5wD6EBywjxLzrne2EpY9LSiVgtapvh0iQA6plVNxdIKNxK0NRU=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-23T10:03:52.269Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.072Z"
         },
         {
           "platform": "bilibili",
@@ -2890,7 +2900,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.269Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.072Z"
         },
         {
           "platform": "twitter",
@@ -2902,7 +2912,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.269Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.072Z"
         },
         {
           "platform": "userlocal",
@@ -2914,7 +2924,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.269Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.072Z"
         }
       ],
       "externals": {},
@@ -2957,7 +2967,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T10:03:47.608Z",
+      "updatedAt": "2026-10-23T10:28:20.247Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -2974,7 +2984,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_mkkYnyLIim2g7-0S_y48Le4mcbhXcZFM5sVZSiNQH_oA=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-23T10:03:52.456Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.403Z"
         },
         {
           "platform": "twitter",
@@ -2986,7 +2996,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.456Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.403Z"
         },
         {
           "platform": "userlocal",
@@ -2998,7 +3008,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.456Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.403Z"
         }
       ],
       "externals": {},
@@ -3040,7 +3050,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T10:03:47.608Z",
+      "updatedAt": "2026-10-23T10:28:20.247Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -3057,7 +3067,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.115Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.797Z"
         },
         {
           "platform": "twitter",
@@ -3069,7 +3079,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.115Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.797Z"
         },
         {
           "platform": "userlocal",
@@ -3081,7 +3091,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.115Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.797Z"
         },
         {
           "platform": "bilibili",
@@ -3093,7 +3103,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.115Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.797Z"
         }
       ],
       "externals": {},
@@ -3135,7 +3145,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T10:03:47.608Z",
+      "updatedAt": "2026-10-23T10:28:20.247Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -3152,7 +3162,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/jqa21VQlm5H8S7h0S7flUT18lGt30ynTZPW2JUnF-ET5Wi8idRjOn6orVhsYnvIOUIzafUYa6w=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-23T10:03:52.120Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.806Z"
         },
         {
           "platform": "twitter",
@@ -3164,7 +3174,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.120Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.806Z"
         },
         {
           "platform": "bilibili",
@@ -3176,7 +3186,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.120Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.806Z"
         }
       ],
       "externals": {},
@@ -3221,7 +3231,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T10:03:47.608Z",
+      "updatedAt": "2026-10-23T10:28:20.247Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -3238,7 +3248,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/Jz8Ul_8kfb07BYAp8NecyDdg2r2ZX949OcSzgWftQ8wFBTVTIw_hPdl6Gm0OypHIo4T_5dlUwQ=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-23T10:03:52.394Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.293Z"
         },
         {
           "platform": "bilibili",
@@ -3250,7 +3260,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.394Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.293Z"
         }
       ],
       "externals": {},
@@ -3297,7 +3307,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T10:03:47.608Z",
+      "updatedAt": "2026-10-23T10:28:20.247Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -3314,7 +3324,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/3-V2vQlWUGwu-hbRdPi1SQfPALipf_X--uEG52b0ppKmNMRWVV7lm7WQN3_fV0mvT1Yp5hrhwpc=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-23T10:03:52.145Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.850Z"
         },
         {
           "platform": "twitter",
@@ -3326,7 +3336,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.145Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.850Z"
         },
         {
           "platform": "bilibili",
@@ -3338,7 +3348,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.145Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.850Z"
         },
         {
           "platform": "userlocal",
@@ -3350,7 +3360,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.145Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.850Z"
         }
       ],
       "externals": {},
@@ -3396,7 +3406,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T10:03:47.608Z",
+      "updatedAt": "2026-10-23T10:28:20.247Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -3413,7 +3423,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/2Cf2JpP4QbGb9LTpVkpyo9Iw14k22x_RqEFTCq8HB4qG0QKeDbLESUZ-sTXcDGcUb05YC2rT=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-23T10:03:52.752Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.935Z"
         },
         {
           "platform": "twitter",
@@ -3425,7 +3435,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.752Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.935Z"
         },
         {
           "platform": "userlocal",
@@ -3437,7 +3447,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.752Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.935Z"
         },
         {
           "platform": "bilibili",
@@ -3449,7 +3459,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.752Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.935Z"
         }
       ],
       "externals": {},
@@ -3492,7 +3502,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T10:03:47.608Z",
+      "updatedAt": "2026-10-23T10:28:20.247Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -3509,7 +3519,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_kkT3jDljNPbm4xkVN6CEdPkO-nvWoAoDehkcJvdLcql8I=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-23T10:03:52.165Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.884Z"
         },
         {
           "platform": "twitter",
@@ -3521,7 +3531,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.165Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.884Z"
         },
         {
           "platform": "userlocal",
@@ -3533,7 +3543,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.165Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.884Z"
         },
         {
           "platform": "bilibili",
@@ -3545,7 +3555,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.165Z"
+          "lastCheckedAt": "2026-10-23T10:28:21.884Z"
         }
       ],
       "externals": {},
@@ -3587,7 +3597,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T10:03:47.608Z",
+      "updatedAt": "2026-10-23T10:28:20.247Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -3604,7 +3614,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/dWD2bE7d17FzCyq969mj1LPYOpTTHu-R_OBPpx2_SaCa-9Fa5bbLaxMfgDj0sgqLQhKPpreuhw=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-23T10:03:52.759Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.947Z"
         },
         {
           "platform": "twitter",
@@ -3616,7 +3626,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.759Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.947Z"
         }
       ],
       "externals": {},
@@ -3658,7 +3668,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T10:03:47.608Z",
+      "updatedAt": "2026-10-23T10:28:20.247Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -3675,7 +3685,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/62gVOJZDVb-9pPCbljnoRlwqEuvcGk0pNl32GNi_GA_KQS3N7X6-B660Pk3crHh3zi1XSzHMNQ=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-23T10:03:52.673Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.794Z"
         },
         {
           "platform": "twitter",
@@ -3687,7 +3697,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.673Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.794Z"
         },
         {
           "platform": "userlocal",
@@ -3699,7 +3709,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T10:03:52.673Z"
+          "lastCheckedAt": "2026-10-23T10:28:22.794Z"
         }
       ],
       "externals": {},
