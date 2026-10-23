@@ -338,6 +338,10 @@ is published.
       was recognised but 「活動を終了」 was not, so 14 channels that had
       announced a retirement were still `unknown` or `active`.
 - `[x]` The markers are multilingual, because the performers are.
+- `[x]` A negated marker is **not** evidence: 「不會畢業」, 「不畢業」,
+      「永不毕业」, 「卒業しません」, 「은퇴하지 않습니다», «не закрыт» and
+      "not graduated" do not mark a channel as graduated. The check is per
+      occurrence and clause-aware, so a positive marker elsewhere still wins.
 - `[x]` The status is a fact about the **performer**, not about one account:
       the record carries one `activity` and the platform links carry none.
 - `[x]` A graduation is **never downgraded**. The classifier's silence is

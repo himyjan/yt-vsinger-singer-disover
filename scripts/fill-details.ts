@@ -499,7 +499,9 @@ function applyProfile(
    * 「已畢業」 in a bio means the performer has graduated, 「個人勢」 means
    * they are independent, and a channel that says it publishes songs is a
    * singing one. None of that was available when the record was first
-   * classified.
+   * classified. The same bio can also say the opposite — 「不會畢業」,
+   * 「不畢業」, 「卒業しません」, "not graduated" — so `detectActivity()`
+   * checks each marker in context instead of trusting the bare word.
    *
    * It is also where the agency is stated: 「にじさんじ所属」, 「所属：彩虹社」,
    * 「니지산지 소속」, "affiliated with Nijisanji" all name the group, in the

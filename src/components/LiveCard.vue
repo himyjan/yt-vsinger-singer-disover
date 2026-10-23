@@ -10,6 +10,7 @@
 import { computed, ref } from "vue";
 import type { Item } from "@shared/lib/types";
 import { formatCount, formatDuration, formatRelative } from "@/lib/dataset";
+import { imageUrl } from "@/lib/image";
 import { channelLinks, itemUrl, platformMeta } from "@/lib/links";
 import type { ChannelSummary } from "@shared/lib/types";
 
@@ -28,7 +29,7 @@ const links = computed(() => channelLinks(props.channel));
 const thumbFailed = ref(false);
 
 const thumbnail = computed(() => {
-  if (props.item.thumbnail) return props.item.thumbnail;
+  if (props.item.thumbnail) return imageUrl(props.item.thumbnail);
   return `https://i.ytimg.com/vi/${props.item.id}/hqdefault.jpg`;
 });
 
@@ -61,6 +62,7 @@ const kindLabel = computed(() =>
         v-if="!thumbFailed"
         :src="thumbnail"
         :alt="item.title"
+        referrerpolicy="no-referrer"
         loading="lazy"
         decoding="async"
         class="h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]"
@@ -126,8 +128,9 @@ const kindLabel = computed(() =>
       <div class="flex items-center gap-2 text-xs text-neutral-600 dark:text-neutral-400">
         <img
           v-if="channel?.avatar"
-          :src="channel.avatar"
+          :src="imageUrl(channel.avatar)"
           :alt="channel.name"
+          referrerpolicy="no-referrer"
           loading="lazy"
           class="h-5 w-5 shrink-0 rounded-full"
         />

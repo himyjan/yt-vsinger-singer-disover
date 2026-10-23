@@ -1922,6 +1922,151 @@ const GRADUATED_MARKERS = [
   "si è ritirato",
 ];
 
+/**
+ * The markers above are matched as plain substrings, so an occurrence has to
+ * be checked in context before it is believed: 「不會畢業」 and 「不畢業」 both
+ * contain 「畢業」, "not graduated" contains "graduated", and
+ * 「卒業しません」 contains 「卒業」. This block teaches the check which
+ * constructions negate a marker in each language the dataset covers.
+ *
+ * A negator is not accepted anywhere in the description: it must belong to
+ * the marker's own clause, and only a small set of function words, particles
+ * and auxiliaries may sit between them. That is what keeps 「我不會後悔畢業」
+ * ("I will not regret graduating") and "I did not know she graduated" from
+ * cancelling a real graduation.
+ */
+function clauseBefore(text: string, index: number): string {
+  const prefix = text.slice(0, index);
+  return prefix.match(/[^,.!?;:\n\r、。，！？；：]*$/)?.[0] ?? prefix;
+}
+
+function clauseAfter(text: string, index: number): string {
+  return text.slice(index).match(/^[^,.!?;:\n\r、。，！？；：]*/)?.[0] ?? "";
+}
+
+/** Chinese / Japanese negators that precede the marker. */
+const CJK_NEGATED_BEFORE =
+  /(?:不會|不会|沒有|没有|不打算|不準備|不准备|沒有打算|没有打算|不可能|無意|无意|不是|并非|並非|未曾|沒|没|未|不)(?:\s*(?:在|於|于|今年|明年|後年|后年|內|内|近期|最近|現在|现在|目前|這麼快|这么快|那麼快|那么快|這麼早|这么早|那麼早|那么早|再|會|会|要|想|願意|愿意|肯|敢|打算|準備|准备|計劃|计划|預計|预计|马上|馬上|立刻|急著|急着|就|又|也|還|还|才|能|可能|有|是|曾|已|已經|已经|正式|真的|需要|用|必|太|大|怎麼|怎么|至於|至于))*\s*$/u;
+
+/** Japanese negators that can stand immediately before the marker. */
+const JA_NEGATED_BEFORE = /(?:未|未だ)\s*$/u;
+
+/** English negators, with only function words allowed before the marker. */
+const EN_NEGATED_BEFORE =
+  /\b(?:not|never|no|none|without|isn't|isnt|aren't|arent|wasn't|wasnt|weren't|werent|don't|dont|doesn't|doesnt|didn't|didnt|won't|wont|wouldn't|wouldnt|can't|cant|cannot|couldn't|couldnt|shouldn't|shouldnt|hasn't|hasnt|haven't|havent|hadn't|hadnt|ain't|aint)\b(?:\s+(?:the|a|an|on|in|at|to|of|for|with|any|yet|ever|really|actually|officially|currently|longer|going|gonna|plan|plans|planning|intend|intends|intending|intention|intentions|about|soon|be|been|being|get|getting|have|has|had|having|taking|entering|will|would|is|are|was|were|do|does|did|my|your|his|her|their|our|this|that|these|those|fully|completely|technically|formally|considered|official|real|necessarily))*\s*$/i;
+
+/** Russian negators before the marker, e.g. «не будет закрыт». */
+const RU_NEGATED_BEFORE =
+  /(?:^|[^а-яё])не(?:\s+(?:будет|будут|был|была|было|были|есть|планируется|планируются|планировал|планировала|планировали|планирую|планируем|собирается|собираются|собирался|собиралась|собирались|сейчас|ещё|еще|уже|пока|так|скоро|в|на|до|по|это|является|являлся|являлась|являлись|официально|полностью))*\s*$/u;
+
+/** Romance negators before the marker, e.g. «no se ha retirado». */
+const ROMANCE_NEGATED_BEFORE =
+  /(?:^|[\s(])(?:no|nunca|jamás|jamas|não|nao|jamais|non|mai)(?:\s+(?:se|ha|han|fue|foi|está|esta|estaba|estavam|è|e|si|sido|estado|retirado|actualmente|todavía|todavia|aún|ainda|ya|già|gia|ancora))*\s*$/u;
+
+/**
+ * Chinese negators after the marker, e.g. 「畢業是不可能的」 or
+ * 「畢業未定」. The bare 「沒有」 is deliberately not enough here: 「畢業是沒有
+ * 問題的」 says graduation is fine, not that it will not happen.
+ */
+const CN_NEGATED_AFTER =
+  /^(?:\s*(?:是|絕對|绝对|完全|根本|當然|当然|也|都|再|會|会|要|想|可能|已經|已经|正式|真的))*\s*(?:不可能(?:發生|发生|舉辦|举办|實現|实现)?|不會(?:發生|发生|舉辦|举办|實現|实现)?|沒有(?:發生|发生|要|打算|計劃|计划|準備|准备|舉辦|举办)|未有(?:發生|发生|打算|計劃|计划|準備|准备)|不存在|未(?:發生|发生|舉辦|举办|確定|确定|定)|尚未(?:發生|发生|舉辦|举办|確定|确定)|免談|免谈)/u;
+
+/** 「畢業日期未定」 is not a graduation that happened. */
+const CN_UNCERTAIN_AFTER = /(?:未定|未確定|未确定|尚未確定|尚未确定)/u;
+
+/** Japanese negative predicates, e.g. 「卒業しません」 / 「卒業しない」. */
+const JA_NEGATED_AFTER =
+  /(?:ません|ない|無い|なし|未定|未確定|予定はありません|つもりはありません|予定はない|つもりはない)/u;
+
+/**
+ * Korean negation follows the marker: 「은퇴하지 않습니다」,
+ * 「은퇴 안 합니다」, 「은퇴는 없습니다」, 「최종 방송이 아닙니다」.
+ *
+ * The optional words before the negative form are the ones that can appear in
+ * these constructions. They are not a licence to find a stray 없습니다 later
+ * in the clause: 「은퇴했지만 미련은 없습니다」 ("retired, but no regrets") must
+ * stay retired.
+ */
+const KO_NEGATED_AFTER =
+  /^\s*(?:(?:하|할|한|하는|두|둘|둔|두는|두지|두지는|두지도|하지|하지는|하지도)?\s*(?:않|안\s*하|안\s*합|안\s*해|안\s*할|안\s*함|못\s*하|못\s*합|못\s*해|못\s*했|못\s*할|못\s*함)|(?:은|는|이|가|을|를|도|만)?\s*(?:전혀|정말|진짜|아직|당장|곧|결국|절대|별로|딱히)?\s*(?:없|없습니다|없어요|없다)|(?:할|한|하는|하|둘|둔|두는|두)?\s*(?:계획|생각|예정|소식|것|거)\s*(?:이|은|는|가|도)?\s*(?:전혀|정말|진짜|아직|당장|곧|결국|절대|별로|딱히)?\s*(?:없|없습니다|없어요|없다)|(?:은|는|이|가)?\s*(?:아니|아닙|아닙니다|아니에요|아니야))/u;
+
+/** Russian negation after the marker, e.g. «закрыт не будет». */
+const RU_NEGATED_AFTER =
+  /^\s*[аоы]?\s*(?:(?:канала|канал|проекта|деятельности|стримов|творчества|контента|аккаунта)\s+)*не(?:\s+(?:будет|будут|был|была|было|были|есть|планируется|планируются|планировал|планировала|планировали|планирую|планируем|собирается|собираются|собирался|собиралась|собирались|сейчас|ещё|еще|уже|пока|так|скоро|в|на|до|по|это|является|являлся|являлась|являлись|официально|полностью|состоится|состоятся))*\s*$/u;
+
+const NEGATED_BEFORE = [
+  CJK_NEGATED_BEFORE,
+  JA_NEGATED_BEFORE,
+  EN_NEGATED_BEFORE,
+  RU_NEGATED_BEFORE,
+  ROMANCE_NEGATED_BEFORE,
+];
+
+const NEGATED_AFTER = [
+  CN_NEGATED_AFTER,
+  CN_UNCERTAIN_AFTER,
+  JA_NEGATED_AFTER,
+  KO_NEGATED_AFTER,
+  RU_NEGATED_AFTER,
+];
+
+/**
+ * The longest marker first, so that 「已畢業」 is checked as one phrase rather
+ * than twice (once as 「已畢業」 and once as the 「畢業」 inside it). A negated
+ * longer phrase also covers the shorter marker it contains.
+ */
+const GRADUATED_MARKERS_LONGEST_FIRST = [...new Set(GRADUATED_MARKERS)].sort(
+  (a, b) => b.length - a.length,
+);
+
+function isGraduationMarkerNegated(
+  text: string,
+  index: number,
+  length: number,
+): boolean {
+  const before = clauseBefore(text, index);
+  const after = clauseAfter(text, index + length);
+  return (
+    NEGATED_BEFORE.some((re) => re.test(before)) ||
+    NEGATED_AFTER.some((re) => re.test(after))
+  );
+}
+
+/**
+ * True when at least one graduation marker is not negated.
+ *
+ * The check is per occurrence, not per description: 「卒業しません。でも、
+ * 卒業しました」 still contains a real graduation, and 「不會畢業，但已畢業」
+ * still says it happened in the second clause.
+ */
+function hasUnnegatedGraduationMarker(text: string): boolean {
+  const covered: Array<[number, number]> = [];
+
+  for (const marker of GRADUATED_MARKERS_LONGEST_FIRST) {
+    let from = 0;
+    while (from <= text.length - marker.length) {
+      const at = text.indexOf(marker, from);
+      if (at === -1) break;
+
+      const end = at + marker.length;
+      const inside = covered.some(
+        ([start, stop]) => at >= start && end <= stop,
+      );
+
+      if (!inside) {
+        if (!isGraduationMarkerNegated(text, at, marker.length)) {
+          return true;
+        }
+        covered.push([at, end]);
+      }
+
+      from = at + 1;
+    }
+  }
+
+  return false;
+}
+
 const PREPARING_MARKERS = [
   "デビュー予定",
   "デビューします",
@@ -1949,7 +2094,7 @@ export function detectActivity(
 ): Activity {
   const all = normalize(`${name ?? ""} ${description ?? ""}`);
 
-  if (has(all, GRADUATED_MARKERS)) return "graduated";
+  if (hasUnnegatedGraduationMarker(all)) return "graduated";
   if (has(all, PREPARING_MARKERS)) return "preparing";
 
   if (newestUploadAt) {

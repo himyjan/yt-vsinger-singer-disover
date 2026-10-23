@@ -103,7 +103,7 @@ sample as `localeHints` so that a kanji-only name can be disambiguated
 | `category` | cover / mv / original / live / premiere / performance |
 | `isAcoustic` | a **flag**, not a category, so acoustic covers stay in the cover bucket |
 | `variant` | the combined label: `female_vtuber`, `ai_vsinger`, … |
-| `activity` | active / preparing / graduated / unknown — a graduation marker in the **name or the description** wins over anything a roster says |
+| `activity` | active / preparing / graduated / unknown — an unnegated graduation marker in the **name or the description** wins over anything a roster says |
 
 ### The region is never decided by a link
 
@@ -145,6 +145,14 @@ only the dictionary form:
 
 A channel that says it has retired is graduated even if a tracker still lists
 it as `active`: `mergeActivity()` never downgrades a graduation.
+
+But the marker must not be **negated**. 「不會畢業」, 「不畢業」 and 「永不毕业」
+contain 「畢業」; 「卒業しません」 contains 「卒業」; 「은퇴하지 않습니다」
+contains 「은퇴」; «не закрыт» contains «закрыт»; "not graduated" contains
+"graduated". `detectActivity()` checks the occurrence in its own clause, with
+that language's negators. It is per occurrence: 「不會畢業，但已畢業」 still
+counts the second, positive clause. A negator far away in another clause does
+not cancel a real marker, so 「我不會後悔畢業」 stays graduated.
 
 ### Aggregators are not performers
 

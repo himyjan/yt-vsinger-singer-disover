@@ -160,9 +160,18 @@ function biliDurationToSeconds(length: string | number | undefined): number | nu
   return seconds;
 }
 
+/**
+ * Bilibili returns protocol-relative and plain-HTTP CDN URLs — the profile
+ * `face` is usually `http://i0.hdslb.com/…`. The app is served over HTTPS, so
+ * an `http:` avatar is blocked as mixed content (or silently upgraded by the
+ * browser and still reported in the console). Everything on Bilibili's CDN is
+ * available over HTTPS, so normalise it here rather than at every `<img>`.
+ */
 function absoluteUrl(url: string | undefined | null): string | null {
   if (!url) return null;
-  return url.startsWith("//") ? `https:${url}` : url;
+  if (url.startsWith("//")) return `https:${url}`;
+  if (url.startsWith("http://")) return `https://${url.slice("http://".length)}`;
+  return url;
 }
 
 /** Bilibili titles carry the format `【歌】Song / Artist` — reuse the classifier. */

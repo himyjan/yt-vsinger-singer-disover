@@ -236,6 +236,7 @@ accounts above 1,000.
 | Change an untracked subscription's detail modal | `src/components/SubscriptionDetail.vue`, `src/lib/youtube-detail.ts`, `src/lib/store.ts` (`vst.youtubeDetails`) |
 | Suggest channels for the dataset | Subs view → **＋ Suggest** / **Suggest all** (`data/suggestions.json`), then **Add to dataset** |
 | Fix an outdated channel name | the platform corrects it; `npm run data:details -- --name-only` to apply it now |
+| Fix a Bilibili avatar (mixed content / 403) | `scripts/lib/platforms/bilibili.ts` (`absoluteUrl`), `src/lib/image.ts`, and `referrerpolicy="no-referrer"` on `<img>` |
 | A record keyed by a handle | `npm run data:ids` — resolves it to the `UC…` id |
 | Fill the missing avatars | `npm run data:details -- --limit 2000` |
 | Fix the classifier itself | `scripts/lib/classify.ts` |
