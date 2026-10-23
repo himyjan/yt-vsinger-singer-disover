@@ -76,6 +76,7 @@ import {
 import { REGION_LANGUAGE, profileLanguage } from "./lib/regions";
 import { splitName } from "./lib/names";
 import { pickAvatar, pickSubscribers } from "./lib/platforms";
+import { extractExternalLinks } from "./lib/twitch";
 import type { Channel, PlatformId } from "./lib/types";
 
 /* -------------------------------------------------------------------------- */
@@ -241,6 +242,8 @@ interface Profile {
    * Only YouTube states one, and it is the fact a mirror cannot corrupt.
    */
   country?: string | null;
+  /** URLs from the YouTube channel's dedicated Links section. */
+  links?: string[];
 }
 
 /**
@@ -305,6 +308,7 @@ async function fetchProfile(
         handle: profile.handle,
         country: profile.country,
         officialArtist: profile.officialArtist,
+        links: profile.links,
       };
     }
 
@@ -383,6 +387,13 @@ function applyProfile(
 ): void {
   const link = channel.platforms.find((p) => p.platform === platform);
   if (!link) return;
+
+  if (!nameOnly && profile.links?.length) {
+    channel.externals = {
+      ...channel.externals,
+      ...extractExternalLinks(profile.links.join(" ")),
+    };
+  }
 
   /**
    * The identity is the platform's immutable id.

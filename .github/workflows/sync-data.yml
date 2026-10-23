@@ -55,7 +55,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
           lfs: true
@@ -115,7 +115,7 @@ jobs:
 
       - name: Checkout analytics archive
         if: steps.analytics-auth.outputs.enabled == 'true'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           repository: himyjan/yt-vsinger-singer-disover-analytics
           token: ${{ secrets.ANALYTICS_REPO_TOKEN }}
