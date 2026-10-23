@@ -46,6 +46,7 @@ export function toSummary(c: Channel): ChannelSummary {
       u: p.url,
       h: p.handle,
     })),
+    externals: c.externals,
     addedAt: c.addedAt,
     followers: c.platforms.map((p) => ({
       p: p.platform,

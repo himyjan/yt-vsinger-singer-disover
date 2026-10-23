@@ -90,6 +90,32 @@ const cache = {
   packRegions: null as RegionCode[] | null,
 };
 
+/**
+ * Drops every cached fetch.
+ *
+ * The local dev server can write new channel records into `data/` (the
+ * subscription import), and the page has to read them back without a full
+ * browser reload — so the cache must be clearable.
+ */
+export function resetDatasetCache(): void {
+  cache.manifest = null;
+  cache.channelManifest = null;
+  cache.channelManifestPending = null;
+  cache.summaries = null;
+  cache.summariesByRegion.clear();
+  cache.summariesPending.clear();
+  cache.channelsByKind.clear();
+  cache.channelsPending.clear();
+  cache.shards.clear();
+  cache.virtual = null;
+  cache.real = null;
+  cache.live = null;
+  cache.upcoming = null;
+  cache.items.clear();
+  cache.packs.clear();
+  cache.packRegions = null;
+}
+
 /* -------------------------------------------------------------------------- */
 /* Public API                                                                 */
 /* -------------------------------------------------------------------------- */

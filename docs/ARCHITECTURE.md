@@ -15,6 +15,8 @@
 │         │                              │ YouTube Data API v3       │
 │         │                              │ Twitch Helix              │
 │         │                              │ Bilibili / Niconico / VK  │
+│         │                              │ CHZZK / KICK / SOOP       │
+│         │                              │ CI.ME profile links       │
 │         │                              │ AiSList                   │
 │         │                              │ VTuber Music Dataset      │
 │         │                              ▼                          │
@@ -104,8 +106,12 @@ scripts/
 └── lib/
     ├── types.ts             the canonical data model (shared with the app)
     ├── youtube.ts           YouTube Data API v3 client + quota budget
+    ├── youtubei.ts          InnerTube: profile, uploads, live, OAC header
+    ├── innertube-subs.ts    signed-in FEchannels subscription feed
+    ├── youtube-channel.ts   one-channel snapshot for the subscription cards
     ├── twitch.ts            Twitch Helix client
-    ├── platforms/           Bilibili, Niconico, VK adapters
+    ├── platforms/           Bilibili, Niconico, VK, CHZZK, KICK and SOOP
+    │                        adapters
     ├── platform-registry.ts assembles every adapter
     ├── platforms.ts         the PlatformAdapter interface
     ├── classify.ts          virtual/real, role, region, gender, AI, category
@@ -121,6 +127,8 @@ scripts/
     ├── dedupe.ts            identity-based de-duplication
     ├── music-dataset.ts     curated cover-song metadata
     ├── seeds.ts             curated starting catalogue
+    ├── suggestions.ts       data/suggestions.json — the import queue
+    ├── import-channels.ts   suggestions → InnerTube → classified records
     ├── dataset.ts           the on-disk layout and the writers
     └── io.ts                file helpers and size budgets
 ```
@@ -134,11 +142,17 @@ src/
 │   ├── store.ts             reactive state: scope, filters, accounts, theme
 │   ├── dataset.ts           loads and filters the committed dataset
 │   ├── auth.ts              account linking for four platforms
+│   ├── takeout.ts           reads a Takeout/export subscriptions.csv
+│   ├── subs-export.ts       the in-page script that writes that CSV
+│   ├── youtube-detail.ts    browser client for the one-channel bridge
 │   ├── links.ts             builds the "all links" block
 │   └── env.ts               build-time environment
 └── components/
     ├── LiveCard.vue         thumbnail + info block + all links
-    └── ChannelDrawer.vue    channel detail, links and recent uploads
+    ├── ChannelCard.vue      channel badge, name, followers
+    ├── ChannelDrawer.vue    channel detail, links and recent uploads
+    ├── OfficialArtistBadge.vue  YouTube's inline SVG, right of the name
+    └── SubscriptionDetail.vue  untracked subscription fetched on open
 ```
 
 `scripts/lib/types.ts` and `scripts/lib/search.ts` are imported by **both**
@@ -204,6 +218,87 @@ keeps a registry of identity keys:
 Records that share a key are merged, never duplicated. The registry also
 enriches channels the YouTube API knows nothing about — the wiki supplies
 debut dates and graduation dates, which the API does not expose.
+
+## Growing the catalogue from a subscription list
+
+Discovery finds performers by searching; it cannot reproduce a person's
+subscriptions, because the list is private. The app therefore has a second,
+deliberate path in:
+
+```
+subscriptions (API, Takeout CSV, or the in-page export script)
+        │
+        ▼
+data/suggestions.json        ← an input file; cheap, reviewable, not records
+        │  POST /api/dataset/sync  (consent: true)
+        ▼
+import-channels.ts
+   InnerTube profile → region → profile in that language
+   classifyChannel() → the same evidence a sync uses
+   mergeById() → writeChannelShards() → manifest → search index
+```
+
+Three points hold it together:
+
+- **The list is not the dataset.** A suggestion is a candidate with a name
+  the suggester saw; importing fetches the platform's profile and the
+  platform wins. That is the same rule as a roster name.
+- **Writing needs a server.** GitHub Pages is static. The endpoints live on
+  the local dev server (`server.ts`); a static build keeps the same keys in
+  `localStorage` and downloads `suggestions.json` for the user to commit.
+- **Writing needs permission.** `consent: true` is checked before the first
+  network call, and the UI asks the user to confirm they own the account or
+  have permission. Importing someone's subscriptions publishes third-party
+  data.
+
+**Refresh reads the signed-in feed, not the Data API.** The YouTube link asks
+for the full `youtube` scope because InnerTube refuses `youtube.readonly` with
+`insufficientPermissions`. `youtube.com` sends no CORS headers, so the browser
+cannot call it; `server.ts` exposes `POST /api/youtube/subscriptions`, backed by
+`scripts/lib/innertube-subs.ts`, which uses the bearer token, the **TVHTML5**
+client and `browseId: "FEchannels"`. The TV feed answers with channel
+`tileRenderer`s (id, title, handle, avatar), not `channelRenderer`s. A live
+account returned **4,804 subscriptions in 5 pages** (~2.4 s). The token is
+forwarded only to `youtube.com`, is never stored or logged by the server, and a
+static build falls back to the Data API. The **Reconnect** action in the account
+menu replaces an expired token without creating a second account.
+
+**The subscription cards also read the channel page, for one reason: the 🎵
+badge.** The TV `FEchannels` feed returns id, title, handle and avatar, but no
+`AUDIO_BADGE`; the badge exists only in the channel page header. `server.ts`
+therefore exposes a second, unauthenticated endpoint,
+`POST /api/youtube/channel`, backed by `scripts/lib/youtube-channel.ts`. It
+returns one `YouTubeChannelSnapshot`:
+
+- with `detail: false` (the background sync) it performs one
+  `getChannel(id)` and reads the header — the badge, title, avatar, handle and
+  subscriber count;
+- with `detail: true` (a card the user opened) it additionally calls
+  `getLiveStreams()` and `getReleases()`, and returns the current live stream,
+  the next upcoming stream, and up to twelve releases plus the total count.
+
+The two paths are deliberately separate. Checking 4,800 subscriptions must not
+open 4,800 Live and Releases tabs. The server limits itself to two channel
+requests in flight, the browser uses two workers with a 120 ms gap, and a 429
+stops the run. Results are cached in the browser by immutable channel id:
+`vst.youtubeBadges` for 30 days, `vst.youtubeDetails` for the last 200 opened
+channels. They are not part of the subscription list, so a Refresh cannot erase
+them. A tracked subscription reads live/upcoming/songs from the dataset; only
+an untracked card fetches the detail snapshot on open. The same route is
+local-only and is not available on GitHub Pages.
+
+The YouTube Data API stops a `mine=true` subscription list at **1,000**
+items. Takeout has no such limit but is queued for hours, so the app offers
+**Export from YouTube** as the no-link path: a script run on
+`youtube.com/feed/channels` that uses the page's own session — `SAPISIDHASH`
+from the `SAPISID` cookie — to walk the `FEchannels` continuation through
+`/youtubei/v1/browse` and download a three-column CSV, the exact format the
+importer accepts. The page renders only the first 1,000 cards, but the
+continuation keeps going: a live 4,804-subscription account exported all 4,804
+in 49 pages. Nothing leaves the browser, the cookie is never logged, and if the
+signed request is refused the script falls back to the rendered page and says
+so. A **PocketTube backup** (JSON) and a Takeout CSV still import through the
+same `parseSubscriptionsFile()`, but neither is required for a large account.
 
 ## GitHub Actions
 

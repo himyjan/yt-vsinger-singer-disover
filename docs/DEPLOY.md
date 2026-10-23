@@ -48,6 +48,8 @@ Add these under **Settings → Secrets and variables → Actions**:
 | `TWITCH_CLIENT_ID` | no | Twitch application client id |
 | `TWITCH_CLIENT_SECRET` | no | Twitch application client secret |
 | `VK_ACCESS_TOKEN` | no | VK service token |
+| `CI_ME_CLIENT_ID` | no | CI.ME Open API application client ID |
+| `CI_ME_CLIENT_SECRET` | no | CI.ME Open API application client secret |
 
 `GITHUB_TOKEN` is provided automatically and needs no configuration.
 
@@ -71,9 +73,27 @@ set as repository *variables* so the deploy workflow can inject them.
 Bilibili account linking needs no configuration — the user supplies their own
 `SESSDATA`.
 
+The Google OAuth client must list the app's origin, and `http://localhost:3000`
+for development, and allow the `https://www.googleapis.com/auth/youtube` scope.
+That full scope is deliberate: InnerTube's subscription feed refuses
+`youtube.readonly` above 1,000, so **Refresh** asks for “Manage your YouTube
+account” and reads the complete list through the local dev server bridge (see
+`docs/ARCHITECTURE.md`). A static build has no bridge and falls back to the Data
+API's 1,000-item cap. The token is never stored server-side.
+
+The local dev server also exposes the unauthenticated
+`POST /api/youtube/channel` bridge for subscription cards. It reads the channel
+header (the 🎵 Official Artist badge) and, on an untracked card that is opened,
+the Live and Releases tabs. It makes no OAuth call, uses no token, and is not
+part of the static build: on GitHub Pages the dataset's own badges still show,
+but the per-subscription sync and the untracked-card detail modal are off.
+
 > **Never put a client secret in a `VITE_*` variable.** Anything prefixed
 > `VITE_` ends up in the public bundle. The Twitch flow is deliberately
 > PKCE-based so that a secret is never needed in the browser.
+
+CI.ME credentials are only used by the scheduled data-sync pipeline and must
+remain repository secrets; never configure them as frontend build variables.
 
 ## Enabling GitHub Pages
 

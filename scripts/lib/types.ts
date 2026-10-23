@@ -153,7 +153,9 @@ export type PlatformId =
   | "niconico"
   | "vk"
   | "chzzk"
-  | "kick";
+  | "kick"
+  | "soop"
+  | "ci.me";
 
 /**
  * Performer's gender, as self-described.
@@ -280,6 +282,8 @@ export const ALL_PLATFORMS: PlatformId[] = [
   "vk",
   "chzzk",
   "kick",
+  "soop",
+  "ci.me",
 ];
 
 /**
@@ -605,6 +609,8 @@ export interface ChannelSummary {
   variant: Variant;
   /** Every platform identity, for the "all links" info block. */
   links: ChannelLink[];
+  /** Other profile handles found in the channel description. */
+  externals?: Record<string, string>;
   /**
    * The follower count of each platform.
    *
@@ -620,8 +626,10 @@ export interface ChannelSummary {
 /* -------------------------------------------------------------------------- */
 
 export interface Item {
-  /** Video id (`youtube.com/watch?v=`) or playlist id. */
+  /** Platform-native content id, or playlist id for YouTube playlists. */
   id: string;
+  /** Canonical URL supplied by the platform adapter, when available. */
+  url?: string;
   /** Media kind. */
   type: ItemType;
   /** Owning channel id. */
@@ -915,6 +923,47 @@ export interface SearchIndexFile {
   schemaVersion: number;
   generatedAt: string;
   entries: SearchEntry[];
+}
+
+/* -------------------------------------------------------------------------- */
+/* YouTube channel snapshots (local bridge)                                   */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * A live/upcoming stream or a release returned by the local YouTube bridge.
+ *
+ * This is not part of the committed dataset: it is a short-lived snapshot the
+ * browser asks for when it needs one channel's current state.
+ */
+export interface YouTubeChannelItem {
+  /** Video id for a stream, playlist id for a release. */
+  id: string;
+  title: string;
+  thumbnail: string | null;
+  /** A watchable video, or an album/single release playlist. */
+  kind: "video" | "playlist";
+}
+
+/**
+ * One channel's current YouTube state, fetched through `youtubei.js`.
+ *
+ * `officialArtist` is YouTube's 🎵 Official Artist Channel badge. The Data API
+ * does not expose it; the TV subscription feed does not either. It is read
+ * from the channel page header (`AUDIO_BADGE` /
+ * `BADGE_STYLE_TYPE_VERIFIED_ARTIST`).
+ */
+export interface YouTubeChannelSnapshot {
+  id: string;
+  title: string | null;
+  handle: string | null;
+  avatar: string | null;
+  subscribers: number | null;
+  officialArtist: boolean;
+  live: YouTubeChannelItem | null;
+  upcoming: YouTubeChannelItem | null;
+  releases: YouTubeChannelItem[];
+  /** How many releases the Releases tab listed in this snapshot. */
+  releaseCount: number;
 }
 
 /* -------------------------------------------------------------------------- */

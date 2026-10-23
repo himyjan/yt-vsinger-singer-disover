@@ -35,7 +35,9 @@ export type SourceId =
   | "streamscharts"
   | "justoneapi"
   | "chzzk"
-  | "kick";
+  | "kick"
+  | "soop"
+  | "ci.me";
 
 export interface SourceInfo {
   id: SourceId;
@@ -262,6 +264,26 @@ export const SOURCES: SourceInfo[] = [
     access: "api",
     used: true,
     usedFor: "The growing Western VTuber scene on KICK",
+  },
+  {
+    id: "soop",
+    label: "SOOP live broadcast list",
+    url: "https://live.sooplive.co.kr/api/main_broad_list_api.php",
+    provides: "Public live broadcast titles, channel names and viewer counts",
+    access: "api",
+    used: true,
+    usedFor:
+      "Live channels in the public list; offline channel profiles are not available from a verified endpoint",
+  },
+  {
+    id: "ci.me",
+    label: "CI.ME Open API",
+    url: "https://developers.ci.me/docs/api-channels",
+    provides: "Channel names, handles, profile images, descriptions and follower counts",
+    access: "api",
+    used: true,
+    usedFor:
+      "Profile refresh for CI.ME channel IDs; app Client ID and Client Secret are required",
   },
   {
     id: "justoneapi",

@@ -22,6 +22,7 @@ import type {
   ItemCategory,
   RegionCode,
 } from "@shared/lib/types";
+import type { YouTubeChannelDetail } from "./youtube-detail";
 
 export type Scope = "virtual" | "real" | "both";
 export type ViewId =
@@ -42,6 +43,25 @@ const VIEW_KEY = "vst.view";
 const ACCOUNT_KEY = "vst.accounts";
 const ACTIVE_KEY = "vst.activeAccount";
 const SUBS_KEY = "vst.subscriptions";
+const SUGGESTED_KEY = "vst.suggested";
+const BADGES_KEY = "vst.youtubeBadges";
+const DETAILS_KEY = "vst.youtubeDetails";
+
+/**
+ * How long a cached 🎵 result is trusted.
+ *
+ * The badge is a fact about the channel, not a live state: it rarely changes,
+ * and re-checking 4,800 channels every visit would be abusive. Thirty days is
+ * long enough to make the sync a one-off and short enough to pick up an artist
+ * who joins YouTube Music later.
+ */
+export const YOUTUBE_BADGE_TTL_MS = 30 * 24 * 60 * 60 * 1000;
+
+/** One cached Official Artist check. */
+export interface YouTubeBadgeEntry {
+  officialArtist: boolean;
+  checkedAt: number;
+}
 
 export interface SavedEntry {
   id: string;
@@ -84,6 +104,27 @@ function writeStorage(key: string, value: unknown): void {
   } catch {
     /* private browsing / quota — ignore */
   }
+}
+
+/**
+ * Reads the suggestion queue.
+ *
+ * The stored value has changed shape across builds — a `platform:id` array
+ * now, a keyed object before — and a leftover object would make
+ * `includes`/`filter` throw on every click. Normalizing on read means an old
+ * `localStorage` cannot break the Suggest / Remove buttons.
+ */
+function readSuggestedKeys(): string[] {
+  const raw = readStorage<unknown>(SUGGESTED_KEY, []);
+  if (Array.isArray(raw)) {
+    return raw.filter((key): key is string => typeof key === "string");
+  }
+  if (raw && typeof raw === "object") {
+    return Object.keys(raw as Record<string, unknown>).filter(
+      (key) => Boolean((raw as Record<string, unknown>)[key]),
+    );
+  }
+  return [];
 }
 
 const initialTheme: Theme = (() => {
@@ -146,7 +187,7 @@ export const state = reactive({
    * Subscription filter: show every subscription, only the ones already in
    * the dataset, or only the ones that are not tracked yet.
    */
-  subsTracked: "all" as "all" | "tracked" | "untracked",
+  subsTracked: "all" as "all" | "tracked" | "untracked" | "suggested",
   /**
    * Subscription filter for the **channels** view: every channel, only the
    * ones the linked accounts follow, or only the ones they do not — the
@@ -182,6 +223,33 @@ export const state = reactive({
     SUBS_KEY,
     {},
   ),
+  /**
+   * The 🎵 Official Artist result per YouTube channel.
+   *
+   * Kept beside the subscriptions, not inside them: a Refresh replaces the
+   * list, and the badge must survive that. The key is the immutable `UC…` id.
+   */
+  youtubeBadges: readStorage<Record<string, YouTubeBadgeEntry>>(
+    BADGES_KEY,
+    {},
+  ),
+  /**
+   * The last detailed YouTube snapshot per channel, written only when a
+   * subscription card is opened. The list is pruned on write so opening a few
+   * hundred channels cannot fill localStorage.
+   */
+  youtubeDetails: readStorage<Record<string, YouTubeChannelDetail>>(
+    DETAILS_KEY,
+    {},
+  ),
+  /**
+   * `platform:id` keys already suggested for the dataset.
+   *
+   * The list itself lives in `data/suggestions.json` on disk, written by the
+   * dev server; this is the browser's copy so a suggestion stays ticked
+   * across reloads even when the API is not reachable.
+   */
+  suggested: readSuggestedKeys(),
   /** True while a subscription list is loading. */
   subscriptionsLoading: false,
   /**
@@ -318,8 +386,96 @@ export function setSubscriptions(
 }
 
 /** Every subscription from every linked account, flattened. */
+/**
+ * Every stored subscription, once.
+ *
+ * A channel can be in two lists at the same time — the API's copy under the
+ * linked account and an imported PocketTube/Takeout row under `takeout` — and
+ * flattening both would draw the card twice. The entry that knows the channel
+ * (the API/profile one, `known: true`) wins; the order of first appearance is
+ * kept.
+ */
 export function allSubscriptions(): Subscription[] {
-  return Object.values(state.subscriptions).flat();
+  const merged = new Map<string, Subscription>();
+  for (const sub of Object.values(state.subscriptions).flat()) {
+    const key = `${sub.provider}:${sub.channelId}`;
+    const existing = merged.get(key);
+    if (!existing || (!existing.known && sub.known)) merged.set(key, sub);
+  }
+  return [...merged.values()];
+}
+
+/* -------------------------------------------------------------------------- */
+/* YouTube badges and detailed snapshots                                      */
+/* -------------------------------------------------------------------------- */
+
+let badgeWriteTimer: ReturnType<typeof setTimeout> | null = null;
+
+/** The badge sync writes thousands of entries; batch the localStorage write. */
+function persistBadgesSoon(): void {
+  if (badgeWriteTimer) return;
+  badgeWriteTimer = setTimeout(() => {
+    badgeWriteTimer = null;
+    writeStorage(BADGES_KEY, state.youtubeBadges);
+  }, 1200);
+}
+
+/** Records one official-artist check. */
+export function setYouTubeBadge(
+  channelId: string,
+  officialArtist: boolean,
+): void {
+  state.youtubeBadges[channelId] = {
+    officialArtist,
+    checkedAt: Date.now(),
+  };
+  persistBadgesSoon();
+}
+
+/**
+ * Remembers one opened channel's live/upcoming/releases snapshot.
+ *
+ * Old entries are pruned by fetch time; the detail cache is a convenience,
+ * not the source of truth, so losing old ones is harmless.
+ */
+export function setYouTubeDetail(detail: YouTubeChannelDetail): void {
+  state.youtubeDetails[detail.id] = detail;
+  const entries = Object.entries(state.youtubeDetails)
+    .sort((a, b) => b[1].fetchedAt - a[1].fetchedAt)
+    .slice(0, 200);
+  state.youtubeDetails = Object.fromEntries(entries) as Record<
+    string,
+    YouTubeChannelDetail
+  >;
+  writeStorage(DETAILS_KEY, state.youtubeDetails);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Suggestions                                                                */
+/* -------------------------------------------------------------------------- */
+
+/** `<platform>:<channelId>` — the same key `data/suggestions.json` uses. */
+export function suggestedKey(provider: string, channelId: string): string {
+  return `${provider}:${channelId}`;
+}
+
+export function isSuggested(provider: string, channelId: string): boolean {
+  return state.suggested.includes(suggestedKey(provider, channelId));
+}
+
+export function markSuggested(keys: string[]): void {
+  if (keys.length === 0) return;
+  const set = new Set(state.suggested);
+  for (const key of keys) set.add(key);
+  state.suggested = [...set];
+  writeStorage(SUGGESTED_KEY, state.suggested);
+}
+
+export function clearSuggested(keys: string[]): void {
+  if (keys.length === 0) return;
+  const drop = new Set(keys);
+  state.suggested = state.suggested.filter((key) => !drop.has(key));
+  writeStorage(SUGGESTED_KEY, state.suggested);
 }
 
 /** Every linked account, flattened. */

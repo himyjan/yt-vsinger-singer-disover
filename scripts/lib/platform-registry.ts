@@ -16,6 +16,8 @@ import { NiconicoAdapter } from "./platforms/niconico";
 import { VkAdapter } from "./platforms/vk";
 import { ChzzkAdapter } from "./platforms/chzzk";
 import { KickAdapter } from "./platforms/kick";
+import { SoopAdapter } from "./platforms/soop";
+import { CiMeAdapter } from "./platforms/ci-me";
 import { classifyItem } from "./classify";
 import { pickThumbnail, parseIsoDuration } from "./youtube";
 import type { CountRef, PlatformId } from "./types";
@@ -279,6 +281,12 @@ export function createAdapters(opts: RegistryOptions): PlatformAdapter[] {
   const kick = new KickAdapter();
   if (kick.isConfigured()) adapters.push(kick);
 
+  const soop = new SoopAdapter();
+  if (soop.isConfigured()) adapters.push(soop);
+
+  const ciMe = new CiMeAdapter();
+  if (ciMe.isConfigured()) adapters.push(ciMe);
+
   return adapters;
 }
 
@@ -291,4 +299,6 @@ export const PLATFORM_LABELS: Record<PlatformId, string> = {
   vk: "VK",
   chzzk: "CHZZK",
   kick: "KICK",
+  soop: "SOOP",
+  "ci.me": "CI.ME",
 };

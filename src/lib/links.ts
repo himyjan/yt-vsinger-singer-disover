@@ -26,6 +26,8 @@ const PLATFORM_META: Record<
   vk: { label: "VK", color: "#0077ff", icon: "◈" },
   chzzk: { label: "CHZZK", color: "#03c75a", icon: "🟢" },
   kick: { label: "KICK", color: "#53fc18", icon: "🟣" },
+  soop: { label: "SOOP", color: "#ff6a00", icon: "🔴" },
+  "ci.me": { label: "CI.ME", color: "#7b34f3", icon: "🟣" },
 };
 
 const EXTERNAL_META: Record<string, { label: string; icon: string }> = {
@@ -37,6 +39,7 @@ const EXTERNAL_META: Record<string, { label: string; icon: string }> = {
   niconico: { label: "Niconico", icon: "🎬" },
   discord: { label: "Discord", icon: "🎮" },
   spotify: { label: "Spotify", icon: "🎧" },
+  "ci.me": { label: "CI.ME", icon: "🔗" },
 };
 
 export function platformMeta(platform: string): {
@@ -93,20 +96,19 @@ export function channelLinks(
   for (const link of platformLinks) push(link);
 
   // Extra external handles found in the channel description.
-  if (full.externals) {
-    for (const [platform, handles] of Object.entries(full.externals)) {
+  const externals = full.externals ?? summary.externals;
+  if (externals) {
+    for (const [platform, handle] of Object.entries(externals)) {
       const meta = EXTERNAL_META[platform] ?? {
         label: platform,
         icon: "🔗",
       };
-      for (const handle of handles) {
-        push({
-          platform,
-          label: meta.label,
-          url: externalUrl(platform, handle),
-          handle,
-        });
-      }
+      push({
+        platform,
+        label: meta.label,
+        url: externalUrl(platform, handle),
+        handle,
+      });
     }
   }
 
@@ -118,6 +120,8 @@ export function channelLinks(
     "niconico",
     "chzzk",
     "kick",
+    "soop",
+    "ci.me",
     "vk",
   ];
   out.sort((a, b) => {
@@ -147,6 +151,8 @@ export function externalUrl(platform: string, handle: string): string {
       return `https://discord.gg/${handle}`;
     case "spotify":
       return `https://open.spotify.com/artist/${handle}`;
+    case "soop":
+      return `https://www.sooplive.com/station/${handle}`;
     default:
       return `https://${platform}/${handle}`;
   }
@@ -157,7 +163,9 @@ export function itemUrl(item: {
   id: string;
   type: string;
   platform?: string;
+  url?: string;
 }): string {
+  if (item.url) return item.url;
   if (item.platform === "twitch") return `https://www.twitch.tv/`;
   if (item.platform === "bilibili") {
     return `https://www.bilibili.com/video/${item.id}`;

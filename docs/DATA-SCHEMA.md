@@ -9,6 +9,7 @@
 data/
 ├── manifest.json               counts, region table, quota usage
 ├── overrides.json              manual corrections (input, not output)
+├── suggestions.json            channels suggested for import (input, not output)
 ├── identities.json             the de-duplication registry
 ├── channels/
 │   ├── manifest.json           the shard map, per kind and region
@@ -115,6 +116,7 @@ The record for one performer.
 | `isSinging` | boolean | Publishes singing content |
 | `gender` | `"female"` \| `"male"` \| `"unknown"` | Self-described |
 | `isAi` | boolean | AI-generated performer (AI VTuber, AI singer) |
+| `isOfficialArtist` | boolean? | The 🎵 **Official Artist Channel** badge. *Optional*: filled by the details pass and the import; absent means "not asked yet", not "no" |
 | `variant` | see below | The combined label |
 | `verification` | `Verification \| null` | What was actually looked up, and where — see below |
 | `confidence` | `ClassificationConfidence` | *Optional.* The confidence estimate — see below |
@@ -723,6 +725,41 @@ Manual corrections, keyed by channel id. A file the humans edit.
 `region` also sets `regionSource: "override"`, so the drawer shows that a
 human decided it. `note` is not stored on the record — it is the reason,
 kept for whoever reads the file next.
+
+## `suggestions.json`
+
+Channels suggested for import — an **input**, like `overrides.json`. A sync
+never reads it; a suggestion becomes a record only when
+`importYouTubeChannels()` resolves it and writes the shard.
+
+```jsonc
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-22T14:02:57.339Z",
+  "suggestions": [
+    {
+      "platform": "youtube",
+      "id": "UCqECaJ8Gagnn7YCbPEzWH6g",
+      "name": "Taylor Swift",          // the suggester's label; the platform decides
+      "url": "https://www.youtube.com/channel/UCqECaJ8Gagnn7YCbPEzWH6g",
+      "kind": null,                     // optional hint, not a classification
+      "note": null,
+      "source": "subscription",         // "subscription" | "manual"
+      "addedAt": "2026-10-22T14:02:57.320Z"
+    }
+  ]
+}
+```
+
+A suggestion is unique per `platform:id`; `removeSuggestions()` rewrites the
+file sorted by that key, so the diff stays stable. The local dev server writes
+it (`POST /api/dataset/suggestions`,
+`POST /api/dataset/suggestions/remove`); a static build keeps the same keys in
+`localStorage` and can download the file.
+
+The name is explicitly a **hint.** Importing fetches the profile and the
+platform's name, region and classification win — a suggestion is a candidate,
+never a record.
 
 ## Size budgets
 

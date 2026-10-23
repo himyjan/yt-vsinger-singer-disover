@@ -154,11 +154,20 @@ InnerTube offers on YouTube:
 | Bilibili | — | **WBI-signed public API** | description, avatar, followers, uploads, live |
 | CHZZK | — | **the public API** | description, image, followers, live |
 | KICK | — | **the public API** | description, image, followers, live |
+| SOOP | — | **the public live-list API** | live titles, channel names, viewer counts |
+| [CI.ME Open API](https://developers.ci.me/docs/api-channels) | **Open API** (`Client-Id` / `Client-Secret`) | **the public API** | channel profile and follower count for known channel IDs |
 
 **InnerTube** (`scripts/lib/youtubei.ts`) — the channel's *description* is the
 richest field in the project: it is where a performer states their own
 language, their agency and their links. It also gives the avatar, the
 subscriber count and the upload list.
+
+**The app's subscription Refresh is the other InnerTube use.** It does not go
+through the pipeline: `scripts/lib/innertube-subs.ts` reads the signed-in
+account's `FEchannels` feed with the TVHTML5 client and the OAuth bearer token
+(full `youtube` scope, because `youtube.readonly` is refused with
+`insufficientPermissions`). The browser cannot call it directly — no CORS — so
+the local server proxies it. See `docs/ARCHITECTURE.md`.
 
 Two things about it are easy to miss, and both were wrong for a long time:
 
@@ -171,6 +180,44 @@ Two things about it are easy to miss, and both were wrong for a long time:
   `profile(id, { about: true })` reads it (`"country":"日本"`) and normalizes
   the localized label to an ISO code, because the country is the one region
   fact a mirror cannot corrupt.
+- **The 🎵 badge is an Official Artist Channel.** The Data API does not
+  expose it; the channel page renders it as `AUDIO_BADGE` /
+  `BADGE_STYLE_TYPE_VERIFIED_ARTIST`. `profile()` already has the header, so
+  `officialArtist` costs no request. The details pass stores it as
+  `isOfficialArtist`.
+- **The subscription list needs a separate one-channel read.** The TV
+  `FEchannels` feed has no badge, so `server.ts` exposes
+  `POST /api/youtube/channel` over `scripts/lib/youtube-channel.ts`. It reads
+  one header for the background badge sync (cached 30 days by `UC…` id), and
+  optionally `getLiveStreams()` + `getReleases()` when an untracked card is
+  opened. Tracked cards use the committed dataset instead. The route is
+  unauthenticated, local-only, and limited to two requests in flight.
+
+### The subscription export
+
+A person's subscription list is not in any public source, so the app grows the
+catalogue from the one list the user already owns:
+
+| Route | Limit | Cost | Works when |
+| --- | --- | --- | --- |
+| **InnerTube `FEchannels`** (`server.ts` bridge, **Refresh**) | none | no quota | the dev server runs and the account is linked (full `youtube` scope) |
+| Data API `subscriptions.list(mine=true)` | **1,000 items** | quota | signed in (the API itself reads with `youtube.readonly`; the app asks full for InnerTube) |
+| Google Takeout `subscriptions/subscriptions.csv` | none | hours of queue | the export is not empty |
+| **`youtube.com/feed/channels` script** (`src/lib/subs-export.ts`) | none | seconds | signed in to the browser |
+
+The file routes (Takeout and the script) end as the same
+`Channel Id, Channel Url, Channel Title` CSV, read by `parseTakeoutCsv()`; the
+InnerTube route stores the same channel ids directly. It is described above
+and in `docs/ARCHITECTURE.md`. The script signs the session's `SAPISID` cookie
+(`SAPISIDHASH`) and walks the `FEchannels` continuation through
+`/youtubei/v1/browse`, falling back to the rendered page if the signed request
+is refused; it downloads the file locally — the list never leaves the browser.
+This is also the route that works for legacy accounts whose Takeout zip is
+empty.
+
+The CSV is a **subscription**, not a record: it is stored under the synthetic
+account `youtube:takeout`, marked as untracked or tracked against the
+dataset, and only an explicit import writes channel records.
 
 **Twitch GQL** (`scripts/lib/twitch-gql.ts`) — the same GraphQL endpoint the
 Twitch website itself uses. It needs only the **public web client id** that
