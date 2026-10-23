@@ -139,7 +139,7 @@ export type NameSource =
   | "manual"
   /** Read from the platform itself — the current name. */
   | "platform"
-  /** Hand-verified in `scripts/lib/seeds.ts`. */
+  /** Hand-verified in `data/seed-catalog.json`. */
   | "seed"
   /** Taken from a public roster, which may be out of date. */
   | "roster"

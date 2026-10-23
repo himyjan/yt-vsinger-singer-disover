@@ -241,7 +241,7 @@ accounts above 1,000.
 | A record keyed by a handle | `npm run data:ids` — resolves it to the `UC…` id |
 | Fill the missing avatars | `npm run data:details -- --limit 2000` |
 | Fix the classifier itself | `scripts/lib/classify.ts` |
-| Add a curated channel | `scripts/lib/seeds.ts` |
+| Add a curated channel | `data/seed-catalog.json` |
 | Add a region | `scripts/lib/types.ts`, `scripts/lib/regions.ts` |
 | Add a platform | `scripts/lib/platforms/<name>.ts` + `platform-registry.ts` |
 | Add a discovery source | `scripts/lib/debut-sources/<name>.ts` |
@@ -297,7 +297,7 @@ Load one with the `skill` tool, e.g. `skill({ id: "sync-dataset" })`.
 
 | Source | URL | Used for |
 | --- | --- | --- |
-| YouTube Data API v3 | `developers.google.com/youtube/v3` | The primary source for YouTube channel and media data; InnerTube (`youtubei.js`) supplements profile and upload data where enabled |
+| YouTube Data API v3 | `developers.google.com/youtube/v3` | Optional discovery, live-broadcast and detailed video metadata; InnerTube (`youtubei.js`) is the default for profiles and uploads |
 | AiSList | `github.com/Override92/AiSList` | Which channels are AI-generated |
 | VTuber Music Dataset | `github.com/meihei3/VTuber-music-dataset` | Curated song and original-artist metadata |
 | Virtual YouTuber Wiki | `virtualyoutuber.fandom.com/api.php` | Debut dates, graduation dates, wiki identities |

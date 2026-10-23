@@ -9,6 +9,7 @@
 data/
 ├── manifest.json               counts, region table, quota usage
 ├── overrides.json              manual corrections (input, not output)
+├── seed-catalog.json           curated starting records (input, not output)
 ├── suggestions.json            channels suggested for import (input, not output)
 ├── identities.json             the de-duplication registry
 ├── channels/

@@ -76,16 +76,18 @@ streams on Twitch be recognised.
 
 **Adapter:** `scripts/lib/platform-registry.ts` → `YouTubeAdapter`
 **Client:** `scripts/lib/youtube.ts`
-**Credentials:** `YOUTUBE_API_KEY` (required)
+**Credentials:** `YOUTUBE_API_KEY` (optional)
 
-YouTube is the primary platform. The YouTube Data API v3 is the primary API
-source for channel and media data; the pipeline also uses InnerTube
-(`youtubei.js`) for quota-free profile and upload data where enabled. See
-`docs/YOUTUBE-API.md` for the Data API quota details.
+YouTube is the primary platform. The pipeline uses InnerTube (`youtubei.js`)
+for handle resolution, channel profiles and uploads without an API key. When
+configured, the Data API supplements that path with discovery search,
+live-broadcast data, and detailed video statistics; it falls back to the Data
+API for a channel only when InnerTube cannot retrieve its profile or uploads.
+See `docs/YOUTUBE-API.md` for quota details.
 
-- `resolve()` — `channels.list?forHandle=@handle` (1 unit).
-- `uploads()` — the `UU` trick plus `playlistItems.list` and `videos.list`
-  (2 units per channel for 50 videos).
+- `resolve()` — InnerTube handle resolution; Data API fallback (1 unit).
+- `uploads()` — InnerTube channel uploads; Data API fallback using the `UU`
+  trick plus `playlistItems.list` and `videos.list` (2 units per 50 videos).
 - `live()` — `liveBroadcasts.list` (1 unit per 50 channels).
 
 ## Twitch

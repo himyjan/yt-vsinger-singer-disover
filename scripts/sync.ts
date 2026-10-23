@@ -1,17 +1,18 @@
 #!/usr/bin/env tsx
 /**
- * YouTube Data API v3 sync pipeline.
+ * YouTube channel and media sync pipeline.
  *
  * Reads the current dataset from `data/`, refreshes it from the YouTube Data
- * API within a fixed quota budget, and writes the new snapshot back to `data/`.
+ * InnerTube is the primary YouTube source. The Data API is optional and is
+ * used for discovery and additional live/video metadata when configured.
  *
- *   npm run sync              # normal run (uses YOUTUBE_API_KEY)
+ *   npm run sync              # InnerTube sync; optionally uses YOUTUBE_API_KEY
  *   npm run sync -- --dry-run # fetch + classify, print summary, write nothing
  *   npm run sync -- --no-search # only refresh known channels (1 unit each)
  *   npm run sync -- --budget 500 # cap this run at 500 quota units
  *
- * The script is designed to run unchanged in GitHub Actions: it only needs
- * `YOUTUBE_API_KEY` and writes exclusively inside the repository.
+ * The script is designed to run unchanged in GitHub Actions and writes
+ * exclusively inside the repository. InnerTube works without an API key.
  */
 
 import path from "node:path";
@@ -34,7 +35,7 @@ import {
   extractCollaboratorNames,
   isShortItem,
 } from "./lib/classify";
-import { ALL_SEEDS, type SeedEntry } from "./lib/seeds";
+import { ALL_SEEDS, type SeedEntry } from "./lib/seed-catalog";
 import {
   extractExternalLinks,
   extractTwitchLogin,
@@ -111,7 +112,7 @@ import type {
 interface Args {
   dryRun: boolean;
   noSearch: boolean;
-  /** Skip every YouTube API call; only apply the external enrichments. */
+  /** Skip YouTube Data API calls; InnerTube remains available. */
   offline: boolean;
   /**
    * Rebuild the channel roster from the authoritative public sources
@@ -379,6 +380,36 @@ function channelFromApi(
   };
 }
 
+function channelFromInnerTubeProfile(
+  profile: Awaited<ReturnType<InnerTubeSource["profile"]>>,
+  now: string,
+  source: RecordSource,
+  override?: Override,
+  fallbackName = "Unknown",
+): Channel | null {
+  if (!profile) return null;
+  return channelFromApi(
+    {
+      id: profile.id,
+      snippet: {
+        title: profile.title || fallbackName,
+        description: profile.description ?? "",
+        customUrl: profile.handle ? `@${profile.handle}` : null,
+        thumbnails: profile.avatar
+          ? [{ url: profile.avatar, width: 800, height: 800 }]
+          : [],
+        tags: [],
+      },
+      statistics: { subscriberCount: profile.subscribers },
+      contentDetails: {},
+      brandingSettings: {},
+    },
+    source,
+    now,
+    override,
+  );
+}
+
 /* -------------------------------------------------------------------------- */
 /* Normalisation: API → Item                                                  */
 /* -------------------------------------------------------------------------- */
@@ -555,32 +586,19 @@ async function main(): Promise<void> {
    */
   const releaseLock = acquireRunLock("sync");
 
-  const apiKey =
-    process.env.YOUTUBE_API_KEY ?? process.env.YT_API_KEY ?? "";
-
-  /**
-   * Offline mode applies the external enrichment sources — the Taiwan VTuber
-   * roster, AiSList and the music dataset — to the existing dataset without
-   * touching the YouTube API. It needs no API key and spends no quota.
-   */
-  if (!apiKey && !args.offline) {
-    console.error(
-      "[sync] YOUTUBE_API_KEY is not set. Get a free key at https://console.cloud.google.com/apis/credentials and enable 'YouTube Data API v3'.\n" +
-        "       (Use --offline to apply the external enrichments only, without an API key.)",
-    );
-    process.exit(1);
-  }
+  const apiKey = args.offline
+    ? ""
+    : (process.env.YOUTUBE_API_KEY ?? process.env.YT_API_KEY ?? "");
 
   const quotaPath = path.join(CACHE_DIR, "quota.json");
   const budget = new QuotaBudget(quotaPath, args.quotaLimit);
   if (args.force) budget.overrideUsed(0);
 
   /**
-   * The InnerTube client — the quota-free source.
+   * The InnerTube client — the primary, quota-free source.
    *
-   * It fetches the channel descriptions, avatars, subscriber counts and
-   * upload lists without spending a single Data API unit, so the pipeline
-   * produces a complete dataset even with no API key at all.
+   * It fetches channel profiles and upload lists without spending Data API
+   * units, so the pipeline can run without an API key.
    */
   const innertube = new InnerTubeSource({
     enabled: process.env.YOUTUBE_USE_INNERTUBE !== "0",
@@ -606,6 +624,13 @@ async function main(): Promise<void> {
         onLog: (m) => log(m),
       })
     : null;
+  if (!client) {
+    log(
+      args.offline
+        ? "YouTube Data API disabled (--offline); using InnerTube"
+        : "YouTube Data API key not set — using InnerTube; API-only discovery and live extras are skipped",
+    );
+  }
 
   const now = nowIso();
 
@@ -669,10 +694,6 @@ async function main(): Promise<void> {
   let items = existingItems;
   log(`loaded ${channels.length} channels / ${items.length} items from disk`);
 
-  if (!client) {
-    log("offline mode — skipping every YouTube API call");
-  }
-
   /* --- resolve seeds --------------------------------------------------- */
   const seedByChannelId = new Map<string, SeedEntry>();
   const seedHandles: { seed: SeedEntry; handle: string }[] = [];
@@ -693,19 +714,70 @@ async function main(): Promise<void> {
     else if (handle) seedHandles.push({ seed, handle });
   }
 
-  const seedIds = [...seedByChannelId.keys()];
   const resolvedSeeds: any[] = [];
-  if (client && seedIds.length) {
-    resolvedSeeds.push(...(await client.channels(seedIds)));
+  const resolvedSeedIds = new Set<string>();
+  const resolveSeedProfile = async (seed: SeedEntry, id: string) => {
+    const profile = await innertube.profile(id);
+    const channel = channelFromInnerTubeProfile(profile, now, "seed", {
+      kind: seed.kind,
+      role: seed.role,
+      region: seed.region,
+      agency: seed.agency ?? null,
+      isSinging: seed.isSinging,
+    }, seed.name);
+    if (!channel) return false;
+    seedByChannelId.set(channel.id, seed);
+    resolvedSeedIds.add(channel.id);
+    resolvedSeeds.push({
+      id: channel.id,
+      snippet: {
+        title: channel.name,
+        description: channel.description ?? "",
+        customUrl: channel.handle ? `@${channel.handle}` : null,
+        thumbnails: channel.avatar
+          ? [{ url: channel.avatar, width: 800, height: 800 }]
+          : [],
+        tags: [],
+      },
+      statistics: { subscriberCount: channel.subscribers.tag === "has" ? channel.subscribers.count : null },
+      contentDetails: {},
+      brandingSettings: {},
+    });
+    return true;
+  };
+
+  for (const [id, seed] of seedByChannelId) {
+    await resolveSeedProfile(seed, id);
   }
-  if (client && seedHandles.length) {
-    try {
-      resolvedSeeds.push(
-        ...(await client.resolveHandles(seedHandles.map((entry) => entry.handle))),
-      );
-    } catch (err) {
-      log(`warn: seed handle resolution failed: ${(err as Error).message}`);
+
+  const unresolvedSeedHandles: typeof seedHandles = [];
+  for (const entry of seedHandles) {
+    const id = await innertube.resolveHandle(entry.handle);
+    if (!id || !(await resolveSeedProfile(entry.seed, id))) {
+      unresolvedSeedHandles.push(entry);
     }
+  }
+
+  if (client) {
+    const fallbackIds = [...seedByChannelId.keys()].filter(
+      (id) => !resolvedSeedIds.has(id),
+    );
+    if (fallbackIds.length) {
+      resolvedSeeds.push(...(await client.channels(fallbackIds)));
+    }
+    if (unresolvedSeedHandles.length) {
+      try {
+        resolvedSeeds.push(
+          ...(await client.resolveHandles(
+            unresolvedSeedHandles.map((entry) => entry.handle),
+          )),
+        );
+      } catch (err) {
+        log(`warn: seed handle resolution failed: ${(err as Error).message}`);
+      }
+    }
+  } else if (unresolvedSeedHandles.length || resolvedSeedIds.size < seedByChannelId.size) {
+    log("warn: some YouTube seeds could not be resolved through InnerTube");
   }
   log(`resolved ${resolvedSeeds.length}/${ALL_SEEDS.length} seeds`);
 
@@ -905,22 +977,48 @@ async function main(): Promise<void> {
     .filter((id) => !channelById.has(id) || args.force)
     .slice(0, config.maxChannelsPerRun);
 
-  if (client && toRefresh.length) {
-    try {
-      const raws = await client.channels(toRefresh);
-      for (const raw of raws) {
-        const ch = channelFromApi(raw, "api", now, overrides[raw.id]);
-        if (ch) channelById.set(ch.id, ch);
+  if (toRefresh.length) {
+    let refreshed = 0;
+    const failedIds: string[] = [];
+    if (innertube.isAvailable) {
+      for (const id of toRefresh) {
+        const profile = await innertube.profile(id);
+        const ch = channelFromInnerTubeProfile(
+          profile,
+          now,
+          "api",
+          overrides[id],
+        );
+        if (ch) {
+          channelById.set(ch.id, ch);
+          refreshed++;
+        } else {
+          failedIds.push(id);
+        }
       }
-      log(`refreshed ${raws.length} discovered channels`);
-    } catch (err) {
-      log(`warn: channel refresh failed: ${(err as Error).message}`);
+    } else {
+      failedIds.push(...toRefresh);
     }
+    if (client && failedIds.length) {
+      try {
+        const raws = await client.channels(failedIds);
+        for (const raw of raws) {
+          const ch = channelFromApi(raw, "api", now, overrides[raw.id]);
+          if (ch) {
+            channelById.set(ch.id, ch);
+            refreshed++;
+          }
+        }
+      } catch (err) {
+        log(`warn: Data API channel fallback failed: ${(err as Error).message}`);
+      }
+    }
+    log(`refreshed ${refreshed}/${toRefresh.length} discovered channels`);
   }
 
-  // 3. Refresh details of known channels (cheap: 1 unit per 50).
+  // 3. Use the Data API for known channel profiles only when InnerTube is down.
   const knownIds = [...channelById.keys()];
-  if (client && knownIds.length) {
+  if (!innertube.isAvailable && client && knownIds.length) {
     try {
       const raws = await client.channels(knownIds);
       for (const raw of raws) {
@@ -1909,11 +2007,10 @@ async function main(): Promise<void> {
 
   for (const channel of channelList) {
     /**
-     * Without an API key the uploads come from InnerTube, so the dataset
-     * still fills up. With a key, the Data API is used — it is the
-     * supported, quota-guaranteed route — and InnerTube is the fallback.
+     * InnerTube is the primary upload source. The Data API is the fallback
+     * when InnerTube cannot return uploads for this channel.
      */
-    if (!client && innertube.isAvailable && channel.id.startsWith("UC")) {
+    if (innertube.isAvailable && channel.id.startsWith("UC")) {
       try {
         const uploads = await innertube.uploads(
           channel.id,
@@ -1929,14 +2026,17 @@ async function main(): Promise<void> {
           });
           fetchedVideos++;
         }
-        channel.lastItemsFetchedAt = now;
+        if (uploads.length) {
+          channel.lastItemsFetchedAt = now;
+          continue;
+        }
       } catch {
-        /* a channel that cannot be fetched is not a reason to fail */
+        log(`warn: InnerTube uploads failed for ${channel.id}`);
       }
-      continue;
     }
 
-    if (!client || !budget.canAfford(2)) break;
+    if (!client) continue;
+    if (!budget.canAfford(2)) break;
     try {
       const rawVideos = await fetchChannelVideos(
         client,

@@ -37,7 +37,7 @@ Always finish with `npm run data:index && npm run data:validate`.
 `scripts/sync.ts` executes in this order:
 
 1. **Load** the current dataset from `data/`.
-2. **Resolve seeds** — `scripts/lib/seeds.ts` holds curated records; handles
+2. **Resolve seeds** — `data/seed-catalog.json` holds curated records; handles
    are resolved with `channels.list?forHandle=` (1 unit each).
 3. **Discover** — `search.list` (100 units each), bounded by
    `maxSearchesPerRun`.

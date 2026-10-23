@@ -1,14 +1,15 @@
 name: Sync dataset
 
 # Refreshes the global roster and cross-platform records from the public
-# catalogs, then enriches channel profiles and media through configured APIs.
+# catalogs, then enriches channel profiles and media. InnerTube is the default
+# YouTube source; configured APIs add discovery and specialized metadata.
 #
 # The YouTube Data API free tier allows 10,000 units per day. Each run spends
 # at most `--budget` units and the remaining balance is cached between runs,
 # so several runs a day can never exceed the daily allowance.
 #
 # Repository secrets:
-#   YOUTUBE_API_KEY       — YouTube Data API v3 key (required)
+#   YOUTUBE_API_KEY       — YouTube Data API v3 key (optional)
 #   TWITCH_CLIENT_ID      — Twitch application client id     (optional)
 #   TWITCH_CLIENT_SECRET  — Twitch application client secret (optional)
 #   VK_ACCESS_TOKEN       — VK service token                 (optional)

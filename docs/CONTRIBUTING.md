@@ -6,7 +6,7 @@
 
 ```bash
 npm install
-cp .env.example .env      # add YOUTUBE_API_KEY
+cp .env.example .env      # YOUTUBE_API_KEY is optional
 ```
 
 Useful commands:
@@ -17,7 +17,7 @@ npm run dev:web           # Vite dev server (static dataset)
 npm run build             # prepare the dataset and build for production
 npm run lint              # vue-tsc type check
 
-npm run data:sync         # refresh the dataset from the platform APIs
+npm run data:sync         # refresh with InnerTube; API features are optional
 npm run data:index        # rebuild the inverted search index
 npm run data:validate     # check the dataset (runs in CI)
 npm run data:all          # all three in order
@@ -82,25 +82,27 @@ const ACOUSTIC_MARKERS   = [...];
 "Vocaloid producer and virtual singer" is a *producer* — the strong real
 marker wins over the weak virtual one.
 
-## Adding a channel to the curated seed list
+## Adding a channel to the curated catalog
 
-`scripts/lib/seeds.ts` holds the hand-verified starting catalogue. It is the
-highest-precedence source, so a seeded record always has `confidence: 1`.
+`data/seed-catalog.json` holds the hand-verified starting catalog. It is the
+highest-precedence source during sync. Use a canonical YouTube `channelId`
+when known; otherwise use a `handle`, which sync resolves to the immutable
+channel id before writing a channel record.
 
-```ts
+```json
 {
-  handle: "somehandle",              // or channelId: "UC…"
-  name: "Display Name",
-  kind: "virtual",
-  role: "vsinger",
-  region: "jp",
-  agency: "hololive",
-  isSinging: true,
+  "handle": "somehandle",
+  "name": "Display Name",
+  "kind": "virtual",
+  "role": "vsinger",
+  "region": "jp",
+  "agency": "hololive",
+  "isSinging": true
 }
 ```
 
-Handles that cannot be resolved are skipped silently, so a typo never breaks
-a run.
+The catalog is validated when the sync pipeline loads it. A handle that
+cannot be resolved does not become a channel record.
 
 ## Adding a region
 

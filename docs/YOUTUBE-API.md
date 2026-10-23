@@ -3,14 +3,18 @@
 > How the pipeline talks to YouTube, what it costs, and how to stay inside the
 > free tier.
 
-YouTube is the project's primary platform, and the YouTube Data API v3 is its
-primary source for channel and media data. The pipeline also uses InnerTube
-(`youtubei.js`) as a quota-free supplemental source where enabled. These are
-access methods for YouTube data, not separate platforms. See `docs/SOURCES.md`
-for the source overview.
+YouTube is the project's primary platform. InnerTube (`youtubei.js`) is the
+default source for handle resolution, channel profiles and uploads. The
+YouTube Data API v3 is optional and supplements InnerTube with discovery,
+live-broadcast data and detailed video metadata; it is also a fallback when
+InnerTube cannot retrieve a channel profile or uploads. These are access
+methods for YouTube data, not separate platforms. See `docs/SOURCES.md` for
+the source overview.
 
-## Getting a key
+## Optional API key
 
+You can run the sync pipeline without a key. Add one only if you want the
+Data API features listed above:
 1. Open the [Google Cloud console](https://console.cloud.google.com/apis/credentials).
 2. Create a project.
 3. Enable **YouTube Data API v3**.
@@ -176,11 +180,12 @@ committed.
 
 ## InnerTube and authentication
 
-The pipeline can use **`youtubei.js`** (InnerTube) for quota-free profile and
-upload data. It is an unofficial interface and can change without notice; the
-Data API remains the supported, quota-guaranteed route when an API key is
-configured. The optional local dev server also uses InnerTube for interactive
-YouTube features.
+The pipeline uses **`youtubei.js`** (InnerTube) by default for quota-free
+profile and upload data. It is an unofficial interface and can change without
+notice; when configured, the Data API is used for discovery, live-broadcast
+data, detailed video metadata and as a fallback for failed InnerTube lookups.
+The optional local dev server also uses InnerTube for interactive YouTube
+features.
 
 The pipeline reads public data only, so no OAuth token is required
 server-side. The browser app uses OAuth for account-scoped features such as
