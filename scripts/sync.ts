@@ -42,7 +42,7 @@ import {
   TwitchClient,
 } from "./lib/twitch";
 import { createAdapters } from "./lib/platform-registry";
-import { InnerTubeSource } from "./lib/youtubei";
+import { InnerTubeSource, type InnerTubeRelease } from "./lib/youtubei";
 import {
   clearPendingAnalytics,
   writePendingAnalytics,
@@ -839,11 +839,28 @@ async function main(): Promise<void> {
       : config.searches
   ).slice(0, config.maxSearchesPerRun);
 
-  if (!args.noSearch && client) {
+  if (!args.noSearch) {
     for (const spec of searchSpecs) {
-      if (!budget.canAfford(API_COST.search)) {
-        log("search budget exhausted — skipping remaining searches");
-        break;
+      if (!client || !budget.canAfford(API_COST.search)) {
+        if (spec.type !== "channel" || !innertube.isAvailable) {
+          log(
+            `skip "${spec.query}" (${spec.type}) — ` +
+              (client
+                ? "Data API search budget exhausted"
+                : "InnerTube fallback supports channel discovery only"),
+          );
+          continue;
+        }
+        const channelIds = await innertube.searchChannels(
+          spec.query,
+          config.searchResultsPerKeyword,
+        );
+        for (const id of channelIds) discoveredChannelIds.add(id);
+        log(
+          `InnerTube search "${spec.query}" (channel) → ` +
+            `${channelIds.length} channel(s), no Data API quota`,
+        );
+        continue;
       }
       try {
         const results = await client.search(
@@ -1380,6 +1397,7 @@ async function main(): Promise<void> {
           if (profile.avatar && !channel.avatar) {
             channel.avatar = profile.avatar;
           }
+          channel.isOfficialArtist = profile.officialArtist;
           if (profile.subscribers) {
             const link = channel.platforms.find((p) => p.platform === "youtube");
             if (link) {
@@ -2064,6 +2082,7 @@ async function main(): Promise<void> {
       : refreshable.slice(0, config.maxChannelsPerRun);
 
   let fetchedVideos = 0;
+  let fetchedReleases = 0;
   let fetchedDetails = 0;
 
   for (const channel of channelList) {
@@ -2073,11 +2092,12 @@ async function main(): Promise<void> {
      */
     if (innertube.isAvailable && channel.id.startsWith("UC")) {
       try {
-        const uploads = await innertube.uploads(
+        const catalog = await innertube.channelCatalog(
           channel.id,
           config.maxItemsPerChannel,
         );
-        for (const upload of uploads) {
+        channel.isOfficialArtist = catalog.officialArtist;
+        for (const upload of catalog.uploads) {
           const item = innertubeUploadToItem(upload, channel, now);
           if (!item) continue;
           const prev = itemById.get(item.id);
@@ -2087,7 +2107,16 @@ async function main(): Promise<void> {
           });
           fetchedVideos++;
         }
-        if (uploads.length) {
+        for (const release of catalog.releases) {
+          const item = innertubeReleaseToItem(release, channel, now);
+          const prev = itemById.get(item.id);
+          itemById.set(item.id, {
+            ...item,
+            addedAt: prev?.addedAt ?? item.addedAt,
+          });
+          fetchedReleases++;
+        }
+        if (catalog.uploads.length || catalog.releases.length) {
           channel.lastItemsFetchedAt = now;
           continue;
         }
@@ -2131,7 +2160,10 @@ async function main(): Promise<void> {
       log(`warn: item fetch failed for ${channel.id}: ${(err as Error).message}`);
     }
   }
-  log(`fetched ${fetchedVideos} videos / ${fetchedDetails} details`);
+  log(
+    `fetched ${fetchedVideos} videos / ${fetchedDetails} details / ` +
+      `${fetchedReleases} YouTube Music releases`,
+  );
 
   /* --- live + upcoming broadcasts -------------------------------------- */
   if (client && config.refreshLiveEveryRun && budget.canAfford(API_COST.liveBroadcasts)) {
@@ -2739,6 +2771,57 @@ export function innertubeUploadToItem(
   };
 }
 
+/** Converts an Official Artist Channel album/single into a playlist item. */
+export function innertubeReleaseToItem(
+  release: InnerTubeRelease,
+  channel: Channel,
+  now: string,
+): Item {
+  return {
+    id: release.id,
+    platform: "youtube",
+    url: `https://www.youtube.com/playlist?list=${encodeURIComponent(release.id)}`,
+    type: "playlist",
+    channelId: channel.id,
+    channelName: channel.name,
+    channelKind: channel.kind,
+    region: channel.region,
+    gender: channel.gender,
+    languages: channel.languages,
+    isAi: channel.isAi,
+    variant: channel.variant,
+    title: release.title,
+    description: null,
+    thumbnail: release.thumbnail,
+    publishedAt: null,
+    scheduledStart: null,
+    actualStart: null,
+    actualEnd: null,
+    duration: null,
+    status: "past",
+    category: "other",
+    songTitle: null,
+    originalArtist: null,
+    isCollab: false,
+    collaborators: [{
+      channelId: channel.id,
+      name: channel.name,
+      kind: channel.kind,
+      region: channel.region,
+    }],
+    isAcoustic: false,
+    tags: ["youtube-music", "release"],
+    viewCount: null,
+    likeCount: null,
+    concurrentViewers: null,
+    source: "api",
+    addedAt: now,
+    updatedAt: now,
+    lastItemsFetchedAt: null,
+    lastDetailsFetchedAt: null,
+  };
+}
+
 /**
  * Converts a platform upload into a dataset item.
  *
@@ -2942,18 +3025,23 @@ export function applyRetention(
   const kept: Item[] = [];
   for (const list of byChannel.values()) {
     const relevant = list.filter((i) => {
+      if (i.type === "playlist" && i.tags.includes("youtube-music")) return true;
       if (i.status === "live" || i.status === "upcoming") return true;
       const ts = i.publishedAt ? Date.parse(i.publishedAt) : 0;
       if (!ts) return false;
       return ts >= cutoff;
     });
 
-    // Signature uploads are worth keeping even when they are old.
+    // Signature uploads and YouTube Music releases are worth keeping even
+    // when they are old and do not have a publish timestamp.
     const signature = relevant.filter((i) =>
-      ["cover", "mv", "original"].includes(i.category),
+      ["cover", "mv", "original"].includes(i.category) ||
+      (i.type === "playlist" && i.tags.includes("youtube-music")),
     );
     const routine = relevant.filter(
-      (i) => !["cover", "mv", "original"].includes(i.category),
+      (i) =>
+        !["cover", "mv", "original"].includes(i.category) &&
+        !(i.type === "playlist" && i.tags.includes("youtube-music")),
     );
 
     const sorted = (a: Item, b: Item) =>

@@ -107,7 +107,7 @@ scripts/
 └── lib/
     ├── types.ts             the canonical data model (shared with the app)
     ├── youtube.ts           YouTube Data API v3 client + quota budget
-    ├── youtubei.ts          InnerTube: profile, uploads, live, OAC header
+    ├── youtubei.ts          InnerTube: profile, uploads, OAC badge, Music releases
     ├── innertube-subs.ts    signed-in FEchannels subscription feed
     ├── youtube-channel.ts   one-channel snapshot for the subscription cards
     ├── twitch.ts            Twitch Helix client

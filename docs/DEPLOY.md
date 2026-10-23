@@ -106,6 +106,12 @@ the Live and Releases tabs. It makes no OAuth call, uses no token, and is not
 part of the static build: on GitHub Pages the dataset's own badges still show,
 but the per-subscription sync and the untracked-card detail modal are off.
 
+When the subscription badge sync runs locally, checked badge values for
+channels already in `data/` are also written to their channel shards. The
+**Official artist** channel filter immediately uses the browser's fresh badge
+cache while this write is running. On the static site, badge values remain
+browser-only because GitHub Pages cannot write to the repository.
+
 > **Never put a client secret in a `VITE_*` variable.** Anything prefixed
 > `VITE_` ends up in the public bundle. The Twitch flow is deliberately
 > PKCE-based so that a secret is never needed in the browser.

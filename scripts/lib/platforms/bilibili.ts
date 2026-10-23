@@ -339,6 +339,7 @@ export class BilibiliAdapter implements PlatformAdapter {
     url: string,
     headers: Record<string, string> = {},
     attempt = 0,
+    includeVisitorCookie = true,
   ): Promise<T | null> {
     // The circuit breaker: once Bilibili has pushed back hard enough, stop
     // calling it rather than waiting out the backoff on every channel.
@@ -346,7 +347,7 @@ export class BilibiliAdapter implements PlatformAdapter {
 
     await this.limiter.wait();
 
-    const buvid = await this.getBuvid();
+    const buvid = includeVisitorCookie ? await this.getBuvid() : null;
 
     try {
       const res = await fetch(url, {
@@ -385,7 +386,7 @@ export class BilibiliAdapter implements PlatformAdapter {
           this.buvidFetched = false;
           this.buvid3 = null;
           await new Promise((r) => setTimeout(r, wait));
-          return this.getJson<T>(url, headers, attempt + 1);
+          return this.getJson<T>(url, headers, attempt + 1, includeVisitorCookie);
         }
         return null;
       }
@@ -533,7 +534,12 @@ export class BilibiliAdapter implements PlatformAdapter {
     const json = await this.getJson<{
       code: number;
       data?: { pic?: string };
-    }>(`${API}/x/web-interface/view?bvid=${encodeURIComponent(bvid)}`);
+    }>(
+      `${API}/x/web-interface/view?bvid=${encodeURIComponent(bvid)}`,
+      {},
+      0,
+      false,
+    );
     if (json?.code !== 0) return null;
     return absoluteUrl(json.data?.pic);
   }

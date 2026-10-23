@@ -17,6 +17,12 @@ import {
   isChannelNotFound,
   isRateLimited,
 } from "./scripts/lib/youtube-channel";
+import { acquireRunLock } from "./scripts/lib/io";
+import {
+  readAllChannelRecords,
+  rebuildChannelsManifest,
+  writeChannelShards,
+} from "./scripts/lib/dataset";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -277,6 +283,46 @@ async function startServer() {
     }
   });
 
+  app.post("/api/dataset/youtube-official-artist", (req, res) => {
+    const origin = req.get("origin");
+    if (origin && !/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
+      return res.status(403).json({ ok: false, error: "This endpoint is local only." });
+    }
+    const channelId =
+      typeof req.body?.id === "string" ? req.body.id.trim() : "";
+    const officialArtist = req.body?.officialArtist;
+    if (!/^UC[\w-]{20,}$/.test(channelId)) {
+      return res.status(400).json({ ok: false, error: "A YouTube UC… channel id is required." });
+    }
+    if (typeof officialArtist !== "boolean") {
+      return res.status(400).json({ ok: false, error: "officialArtist must be a boolean." });
+    }
+
+    let releaseLock: (() => void) | undefined;
+    try {
+      releaseLock = acquireRunLock("youtube-official-artist");
+      const channels = readAllChannelRecords();
+      const channel = channels.find((record) => record.id === channelId);
+      if (!channel) return res.json({ ok: true, saved: false });
+      if (channel.isOfficialArtist === officialArtist) {
+        return res.json({ ok: true, saved: true, changed: false });
+      }
+
+      channel.isOfficialArtist = officialArtist;
+      const now = new Date().toISOString();
+      writeChannelShards(channels, now);
+      rebuildChannelsManifest(channels, now);
+      return res.json({ ok: true, saved: true, changed: true });
+    } catch (error) {
+      const message = (error as Error).message || "Could not save Official Artist status.";
+      const conflict = message.includes("another run is writing the dataset");
+      if (!conflict) console.error("[dataset] Official Artist save failed:", error);
+      return res.status(conflict ? 409 : 500).json({ ok: false, error: message });
+    } finally {
+      releaseLock?.();
+    }
+  });
+
   /* ------------------------------------------------------------------------ */
   /* Dataset suggestions and import (development only)                        */
   /* ------------------------------------------------------------------------ */
@@ -379,34 +425,37 @@ async function startServer() {
     return 'Untitled';
   };
 
-  // Helper to extract thumbnail from YouTube.js objects
-  const getThumb = (item: any) => {
+  // Media cards must use the video's own thumbnail, never its owner's avatar.
+  const getThumb = (item: any, includeChannelAvatar = false) => {
     if (!item) return null;
 
-    // 1. Try arrays of thumbnails
-    const thumbs = item.secondary_info?.owner?.thumbnails ||
-      item.thumbnails ||
+    const thumbs = item.thumbnails ||
       item.thumbnail?.contents ||
-      item.thumbnail?.thumbnail || // PlaylistVideoThumbnail
+      item.thumbnail?.thumbnail ||
       (Array.isArray(item.thumbnail) ? item.thumbnail : null) ||
-      (Array.isArray(item.video_thumbnails) && item.video_thumbnails.length > 0 ? (item.video_thumbnails[0].contents || item.video_thumbnails[0].thumbnail) : null) ||
-      item.author?.thumbnails ||
-      item.author?.thumbnail?.contents ||
+      (Array.isArray(item.video_thumbnails) && item.video_thumbnails.length > 0
+        ? item.video_thumbnails[0].contents || item.video_thumbnails[0].thumbnail
+        : null) ||
       item.cover?.thumbnails ||
       item.cover?.thumbnail?.contents ||
-      item.channel?.thumbnails ||
-      item.avatar?.contents;
+      (includeChannelAvatar ? item.secondary_info?.owner?.thumbnails : null) ||
+      (includeChannelAvatar ? item.secondary_info?.owner?.author?.thumbnails : null) ||
+      (includeChannelAvatar ? item.author?.thumbnails : null) ||
+      (includeChannelAvatar ? item.author?.thumbnail?.contents : null) ||
+      (includeChannelAvatar ? item.channel?.thumbnails : null) ||
+      (includeChannelAvatar ? item.channel?.thumbnail?.contents : null) ||
+      (includeChannelAvatar ? item.avatar?.contents : null);
 
     if (Array.isArray(thumbs) && thumbs.length > 0) {
       return thumbs[thumbs.length - 1].url;
     }
 
-    // 2. Try single thumbnail objects
     const singleThumb = item.thumbnail ||
-      item.author?.thumbnail ||
       item.cover?.thumbnail ||
-      item.channel?.thumbnail ||
-      item.avatar;
+      (includeChannelAvatar ? item.secondary_info?.owner?.thumbnail : null) ||
+      (includeChannelAvatar ? item.author?.thumbnail : null) ||
+      (includeChannelAvatar ? item.channel?.thumbnail : null) ||
+      (includeChannelAvatar ? item.avatar : null);
 
     if (typeof singleThumb === 'string') return singleThumb;
     if (singleThumb?.url) return singleThumb.url;
@@ -414,18 +463,7 @@ async function startServer() {
       return singleThumb.contents[singleThumb.contents.length - 1].url;
     }
 
-    // 3. Last resort: check if item itself is a thumbnail object
     if (item.url && (item.width || item.height)) return item.url;
-
-    console.warn("getThumb failed for item:", {
-      type: item.type,
-      constructor: item.constructor?.name,
-      hasThumbnails: !!item.thumbnails,
-      hasThumbnail: !!item.thumbnail,
-      hasAuthor: !!item.author,
-      hasCover: !!item.cover,
-      hasAvatar: !!item.avatar
-    });
     return null;
   };
 
@@ -511,7 +549,8 @@ async function startServer() {
       const keywords = req.query.keywords ? (req.query.keywords as string).split(',') : [];
 
       let query = `
-        SELECT items.*, channels.name as channel_name 
+        SELECT items.*, channels.name as channel_name,
+          channels.thumbnail as channel_thumbnail
         FROM items 
         LEFT JOIN channels ON items.channel_id = channels.id 
         WHERE (items.channel_id IS NULL OR items.channel_id NOT IN (SELECT id FROM blacklist))
@@ -548,8 +587,22 @@ async function startServer() {
 
       query += ` ORDER BY ${orderBy} LIMIT 500`;
 
-      const items = db.prepare(query).all(...params);
-      res.json(items);
+      const items = db.prepare(query).all(...params) as Array<{
+        id: string;
+        type: string;
+        thumbnail: string | null;
+        channel_thumbnail: string | null;
+        [key: string]: unknown;
+      }>;
+      res.json(items.map(({ channel_thumbnail, ...item }) => ({
+        ...item,
+        thumbnail:
+          item.type === "video" &&
+          item.thumbnail &&
+          item.thumbnail === channel_thumbnail
+            ? null
+            : item.thumbnail,
+      })));
     } catch (error) {
       console.error("Error fetching items:", error);
       res.status(500).json({ error: (error as Error).message });
@@ -575,7 +628,7 @@ async function startServer() {
       // If itemData is provided (from search results), ensure it exists in DB
       if (itemData) {
         if (type === "channel") {
-          const thumbUrl = getThumb(itemData);
+          const thumbUrl = getThumb(itemData, true);
           const channelName = getChannelName(itemData);
           db.prepare(`
             INSERT INTO channels (id, name, handle, thumbnail, last_synced, discovered_at)
@@ -590,7 +643,13 @@ async function startServer() {
           const channelId = getChannelId(itemData);
           const channelName = getChannelName(itemData);
           const channelHandle = itemData.secondary_info?.owner?.author?.handle || itemData.author?.handle || itemData.channel?.handle;
-          const channelThumbUrl = getThumb(itemData); // This will now check secondary_info.owner.thumbnails
+          const channelThumbUrl = getThumb(
+            itemData.secondary_info?.owner?.author ||
+              itemData.secondary_info?.owner ||
+              itemData.author ||
+              itemData.channel,
+            true,
+          );
 
           if (channelId && channelId !== id) {
             db.prepare(`
@@ -611,6 +670,7 @@ async function startServer() {
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
             ON CONFLICT(id) DO UPDATE SET 
               title = excluded.title, 
+              thumbnail = COALESCE(excluded.thumbnail, items.thumbnail),
               tags = COALESCE(excluded.tags, items.tags),
               video_count = COALESCE(excluded.video_count, items.video_count)
           `).run(
@@ -926,7 +986,7 @@ async function startServer() {
           if (isBlacklisted) continue;
 
           if (item.type === 'Channel' || item.constructor.name.includes('Channel')) {
-            const thumbUrl = getThumb(item);
+            const thumbUrl = getThumb(item, true);
             const channelName = getChannelName(item);
             const channelId = item.id?.toString() || item.id;
             db.prepare(`
@@ -961,7 +1021,7 @@ async function startServer() {
             const channelName = getChannelName(item);
             const channelHandle = item.author?.handle || item.channel?.handle;
             if (channelId && channelId !== itemId) {
-              const channelThumbUrl = getThumb(item.author || item.channel);
+              const channelThumbUrl = getThumb(item.author || item.channel, true);
               db.prepare(`
                 INSERT INTO channels (id, name, handle, thumbnail, last_synced, discovered_at)
                 VALUES (?, ?, ?, ?, ?, ?)

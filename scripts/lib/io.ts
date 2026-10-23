@@ -253,9 +253,15 @@ export function acquireRunLock(tool: string): () => void {
   writeJson(RUN_LOCK, record);
 
   let released = false;
+  let onExit: (() => void) | undefined;
+  let onSigint: (() => void) | undefined;
+  let onSigterm: (() => void) | undefined;
   const release = () => {
     if (released) return;
     released = true;
+    if (onExit) process.off("exit", onExit);
+    if (onSigint) process.off("SIGINT", onSigint);
+    if (onSigterm) process.off("SIGTERM", onSigterm);
     try {
       const current = readJson<LockRecord | null>(RUN_LOCK, null);
       if (current?.pid === process.pid) fs.rmSync(RUN_LOCK, { force: true });
@@ -264,15 +270,18 @@ export function acquireRunLock(tool: string): () => void {
     }
   };
 
-  process.once("exit", release);
-  process.once("SIGINT", () => {
+  onExit = release;
+  onSigint = () => {
     release();
     process.exit(130);
-  });
-  process.once("SIGTERM", () => {
+  };
+  onSigterm = () => {
     release();
     process.exit(143);
-  });
+  };
+  process.once("exit", onExit);
+  process.once("SIGINT", onSigint);
+  process.once("SIGTERM", onSigterm);
 
   return release;
 }

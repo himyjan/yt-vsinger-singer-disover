@@ -35,24 +35,16 @@ const thumbnail = computed(() => {
   }
   return "";
 });
-const fallbackThumbnail = computed(() => imageUrl(props.channel?.avatar));
 const activeThumbnail = ref("");
 watch(
-  [thumbnail, fallbackThumbnail],
-  () => {
-    activeThumbnail.value = thumbnail.value || fallbackThumbnail.value;
+  thumbnail,
+  (url) => {
+    activeThumbnail.value = url;
   },
   { immediate: true },
 );
 
 function onThumbnailError(): void {
-  if (
-    activeThumbnail.value !== fallbackThumbnail.value &&
-    fallbackThumbnail.value
-  ) {
-    activeThumbnail.value = fallbackThumbnail.value;
-    return;
-  }
   activeThumbnail.value = "";
 }
 

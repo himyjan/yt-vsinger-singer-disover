@@ -68,6 +68,7 @@ export const YOUTUBE_BADGE_TTL_MS = 30 * 24 * 60 * 60 * 1000;
 export interface YouTubeBadgeEntry {
   officialArtist: boolean;
   checkedAt: number;
+  datasetSaveFailed?: boolean;
 }
 
 export interface SavedEntry {
@@ -438,10 +439,12 @@ function persistBadgesSoon(): void {
 export function setYouTubeBadge(
   channelId: string,
   officialArtist: boolean,
+  datasetSaveFailed = false,
 ): void {
   state.youtubeBadges[channelId] = {
     officialArtist,
     checkedAt: Date.now(),
+    datasetSaveFailed,
   };
   persistBadgesSoon();
 }

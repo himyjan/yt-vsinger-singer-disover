@@ -74,6 +74,23 @@ const uploads = computed(() => {
     .slice(0, 24);
 });
 
+function uploadThumbnail(upload: Item): string {
+  if (
+    upload.thumbnail &&
+    imageUrl(upload.thumbnail) !== imageUrl(props.channel?.avatar)
+  ) {
+    return imageUrl(upload.thumbnail);
+  }
+  if (
+    (upload.platform === "youtube" || !upload.platform) &&
+    upload.type !== "playlist" &&
+    /^[\w-]{11}$/.test(upload.id)
+  ) {
+    return `https://i.ytimg.com/vi/${upload.id}/default.jpg`;
+  }
+  return "";
+}
+
 const activityLabel = computed(() => {
   switch (props.channel?.activity) {
     case "active":
@@ -517,11 +534,8 @@ const saved = computed(() =>
                     class="flex items-center gap-2.5 rounded-lg border border-black/6 bg-white p-2 dark:border-white/8 dark:bg-neutral-900"
                   >
                     <img
-                      :src="
-                        upload.thumbnail
-                          ? imageUrl(upload.thumbnail)
-                          : `https://i.ytimg.com/vi/${upload.id}/default.jpg`
-                      "
+                      v-if="uploadThumbnail(upload)"
+                      :src="uploadThumbnail(upload)"
                       :alt="upload.title"
                       referrerpolicy="no-referrer"
                       loading="lazy"
@@ -537,7 +551,12 @@ const saved = computed(() =>
                         {{ upload.title }}
                       </a>
                       <p class="text-[10px] text-neutral-500">
-                        {{ upload.category }} ·
+                        {{
+                          upload.type === "playlist"
+                            ? "YouTube Music release"
+                            : upload.category
+                        }}
+                        ·
                         {{ formatRelative(upload.publishedAt) }}
                         <span v-if="upload.duration">
                           · {{ formatDuration(upload.duration) }}

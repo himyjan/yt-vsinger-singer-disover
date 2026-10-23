@@ -108,6 +108,46 @@ export interface InnerTubeUpload {
   views: number | null;
 }
 
+export interface InnerTubeRelease {
+  /** YouTube Music playlist id. */
+  id: string;
+  /** Release title. */
+  title: string;
+  /** Cover art URL. */
+  thumbnail: string | null;
+}
+
+export interface InnerTubeChannelCatalog {
+  uploads: InnerTubeUpload[];
+  releases: InnerTubeRelease[];
+  officialArtist: boolean;
+}
+
+const YOUTUBE_CHANNEL_ID = /^UC[\w-]{20,}$/;
+
+function collectChannelIds(
+  value: unknown,
+  found: Set<string>,
+  visited: WeakSet<object>,
+  depth = 0,
+): void {
+  if (!value || typeof value !== "object" || depth > 8 || visited.has(value)) {
+    return;
+  }
+  visited.add(value);
+
+  const record = value as Record<string, unknown>;
+  for (const key of ["id", "channel_id", "channelId", "browseId"]) {
+    const candidate = record[key];
+    if (typeof candidate === "string" && YOUTUBE_CHANNEL_ID.test(candidate)) {
+      found.add(candidate);
+    }
+  }
+  for (const child of Object.values(record)) {
+    collectChannelIds(child, found, visited, depth + 1);
+  }
+}
+
 export interface InnerTubeOptions {
   /** Turn the client off entirely. */
   enabled?: boolean;
@@ -290,6 +330,35 @@ export class InnerTubeSource {
   }
 
   /**
+   * Discovers channel ids from YouTube's public channel search results.
+   * This uses InnerTube rather than `search.list`, so it does not consume
+   * YouTube Data API quota.
+   */
+  async searchChannels(query: string, limit = 25): Promise<string[]> {
+    if (!this.client || !query.trim() || limit <= 0) return [];
+    try {
+      await this.throttle();
+      const result: any = await withTimeout(
+        this.client.search(query, { type: "channel" }),
+        REQUEST_TIMEOUT_MS,
+      );
+      if (!result) return [];
+      const found = new Set<string>();
+      const visited = new WeakSet<object>();
+      for (const entry of (result.results ?? []).slice(0, limit)) {
+        collectChannelIds(entry, found, visited);
+      }
+      this.limiter.reward();
+      return [...found].slice(0, limit);
+    } catch (err) {
+      const message = (err as Error).message;
+      if (!isNotRateLimited(message)) this.limiter.penalise();
+      this.onLog(`innertube: channel search failed for "${query}" — ${message}`);
+      return [];
+    }
+  }
+
+  /**
    * The client for a language.
    *
    * `en` is the default client; every other language gets its own, built on
@@ -446,41 +515,104 @@ export class InnerTubeSource {
     channelId: string,
     limit = 30,
   ): Promise<InnerTubeUpload[]> {
-    if (!this.client) return [];
+    return (await this.channelCatalog(channelId, limit)).uploads;
+  }
+
+  /**
+   * The channel's uploads and, for an Official Artist Channel, its YouTube
+   * Music releases. The badge and both tabs come from one channel fetch.
+   */
+  async channelCatalog(
+    channelId: string,
+    uploadLimit = 30,
+    releaseLimit = 12,
+  ): Promise<InnerTubeChannelCatalog> {
+    const empty: InnerTubeChannelCatalog = {
+      uploads: [],
+      releases: [],
+      officialArtist: false,
+    };
+    if (!this.client) return empty;
     try {
       await this.throttle();
       const channel: any = await withTimeout(
         this.client.getChannel(channelId),
         REQUEST_TIMEOUT_MS,
       );
-      if (!channel) return [];
-      const grid: any = await withTimeout(
-        channel.getVideos(),
-        REQUEST_TIMEOUT_MS,
-      );
-      if (!grid) return [];
-      const list: any[] = grid?.videos ?? [];
-
-      const out: InnerTubeUpload[] = [];
-      for (const item of list.slice(0, limit)) {
-        const id = item?.content_id ?? item?.id;
-        if (!id) continue;
-        const title =
-          item?.metadata?.title?.text ?? item?.title?.text ?? "";
-        const thumbnail =
-          item?.content_image?.image?.[0]?.url ??
-          item?.thumbnails?.[0]?.url ??
-          null;
-        out.push({
-          id,
-          title,
-          thumbnail: thumbnail ? thumbnail.split("?")[0]! : null,
-          published: null,
-          views: null,
-        });
+      if (!channel) return empty;
+      const officialArtist = hasAudioBadge(channel.header);
+      const uploads: InnerTubeUpload[] = [];
+      try {
+        const grid: any = await withTimeout(
+          channel.getVideos(),
+          REQUEST_TIMEOUT_MS,
+        );
+        const list: any[] = grid?.videos ?? [];
+        for (const item of list.slice(0, uploadLimit)) {
+          const id = item?.content_id ?? item?.id;
+          if (typeof id !== "string" || !id) continue;
+          const title = item?.metadata?.title?.text ?? item?.title?.text ?? "";
+          const thumbnail =
+            item?.content_image?.image?.at(-1)?.url ??
+            item?.thumbnails?.at(-1)?.url ??
+            null;
+          uploads.push({
+            id,
+            title,
+            thumbnail: thumbnail ? thumbnail.split("?")[0]! : null,
+            published: null,
+            views: null,
+          });
+        }
+      } catch (err) {
+        this.onLog(
+          `innertube: uploads failed for ${channelId} — ${(err as Error).message}`,
+        );
       }
+
+      const releases: InnerTubeRelease[] = [];
+      if (officialArtist) {
+        try {
+          await this.throttle();
+          const releaseTab: any = await withTimeout(
+            channel.getReleases(),
+            REQUEST_TIMEOUT_MS,
+          );
+          const releaseList: any[] =
+            releaseTab?.playlists ?? releaseTab?.videos ?? releaseTab?.items ?? [];
+          for (const item of releaseList.slice(0, releaseLimit)) {
+            const id =
+              item?.content_id ??
+              item?.playlist_id ??
+              item?.playlistId ??
+              item?.id;
+            if (typeof id !== "string" || !id) continue;
+            const title =
+              item?.metadata?.title?.text ??
+              item?.title?.text ??
+              item?.title ??
+              "";
+            const thumbnail =
+              item?.content_image?.image?.at(-1)?.url ??
+              item?.thumbnails?.at(-1)?.url ??
+              item?.thumbnail?.contents?.at(-1)?.url ??
+              null;
+            if (!title) continue;
+            releases.push({
+              id,
+              title: typeof title === "string" ? title : title.toString(),
+              thumbnail: thumbnail ? thumbnail.split("?")[0]! : null,
+            });
+          }
+        } catch (err) {
+          this.onLog(
+            `innertube: releases failed for ${channelId} — ${(err as Error).message}`,
+          );
+        }
+      }
+
       this.limiter.reward();
-      return out;
+      return { uploads, releases, officialArtist };
     } catch (err) {
       // A channel with no videos tab, or one that is only Shorts, is normal.
       const message = (err as Error).message;
@@ -490,7 +622,7 @@ export class InnerTubeSource {
           `innertube: uploads failed for ${channelId} — ${message}`,
         );
       }
-      return [];
+      return empty;
     }
   }
 

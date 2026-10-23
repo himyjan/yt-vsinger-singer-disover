@@ -31,6 +31,10 @@ on:
         description: "Skip discovery searches (refresh known channels only)"
         required: false
         default: "false"
+      keyword:
+        description: "Custom YouTube channel query, replacing configured searches"
+        required: false
+        default: ""
       dry-run:
         description: "Fetch and classify but do not write anything"
         required: false
@@ -89,11 +93,13 @@ jobs:
           VK_ACCESS_TOKEN: ${{ secrets.VK_ACCESS_TOKEN }}
           CI_ME_CLIENT_ID: ${{ secrets.CI_ME_CLIENT_ID }}
           CI_ME_CLIENT_SECRET: ${{ secrets.CI_ME_CLIENT_SECRET }}
+          SYNC_KEYWORD: ${{ inputs.keyword }}
         run: |
-          ARGS="--budget ${{ inputs.budget || 2500 }} --roster"
-          if [ "${{ inputs.no-search }}" = "true" ]; then ARGS="$ARGS --no-search"; fi
-          if [ "${{ inputs.dry-run }}" = "true" ]; then ARGS="$ARGS --dry-run"; fi
-          npm run data:sync -- $ARGS
+          ARGS=(--budget "${{ inputs.budget || 2500 }}" --roster)
+          if [ "${{ inputs.no-search }}" = "true" ]; then ARGS+=(--no-search); fi
+          if [ "${{ inputs.dry-run }}" = "true" ]; then ARGS+=(--dry-run); fi
+          if [ -n "$SYNC_KEYWORD" ]; then ARGS+=(--keyword "$SYNC_KEYWORD"); fi
+          npm run data:sync -- "${ARGS[@]}"
 
       - name: Check analytics archive credentials
         id: analytics-auth
