@@ -44,7 +44,7 @@ Add these under **Settings → Secrets and variables → Actions**:
 
 | Secret | Required | Purpose |
 | --- | --- | --- |
-| `YOUTUBE_API_KEY` | **yes** | YouTube Data API v3 key |
+| `YOUTUBE_API_KEY` | no | Optional YouTube Data API v3 discovery, live, and video metadata |
 | `TWITCH_CLIENT_ID` | no | Twitch application client id |
 | `TWITCH_CLIENT_SECRET` | no | Twitch application client secret |
 | `VK_ACCESS_TOKEN` | no | VK service token |

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T12:45:03.106Z",
+  "generatedAt": "2026-10-23T10:02:56.253Z",
   "channels": [
     {
       "id": "bilibili:1113185260",
@@ -35,7 +35,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -53,7 +53,7 @@
             "count": 152828
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.399Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.032Z"
         }
       ],
       "externals": {},
@@ -93,7 +93,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -110,7 +110,19 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/4Ay8lJB9IAcN9YF0xH5k_NywDJi2OJsxqIdtSj9qA7V8CYIOpf7P7Py0sRuZIxVCgaKyCg4MOUE=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:07.452Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.079Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "Rosemi_Lovelock",
+          "handle": null,
+          "name": "Rosemi Lovelock",
+          "url": "https://twitter.com/Rosemi_Lovelock",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.079Z"
         }
       ],
       "externals": {},
@@ -155,7 +167,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -172,7 +184,19 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.440Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.069Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "Vtuber_Moe",
+          "handle": null,
+          "name": "夏实萌惠",
+          "url": "https://twitter.com/Vtuber_Moe",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.069Z"
         },
         {
           "platform": "bilibili",
@@ -184,7 +208,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.440Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.069Z"
         }
       ],
       "externals": {},
@@ -227,7 +251,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -244,7 +268,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/ZY7zs2YGhTzvN-le5kUi8ckpJsP_fjaicEp8scIlHG4rsghPmiDtY5JN3pSnGJkEEa7bVbApGRQ=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:07.439Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.068Z"
         },
         {
           "platform": "bilibili",
@@ -256,7 +280,19 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.439Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.068Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "NOA_Talent",
+          "handle": null,
+          "name": "NOA Talent",
+          "url": "https://twitter.com/NOA_Talent",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.068Z"
         },
         {
           "platform": "twitch",
@@ -268,7 +304,19 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.439Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.068Z"
+        },
+        {
+          "platform": "other",
+          "id": "https://www.noatalent.com/",
+          "handle": null,
+          "name": "NOA Talent",
+          "url": "https%3A%2F%2Fwww.noatalent.com%2F",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.068Z"
         }
       ],
       "externals": {},
@@ -308,7 +356,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -325,7 +373,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/Z26kUjXxJ24ots7xAt_8kOl3kwxvGpfm99RuTlh32GP403NK-M-HG2dvq05rTJQZT8vdfAuCYA=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:07.451Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.078Z"
         },
         {
           "platform": "bilibili",
@@ -337,7 +385,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.451Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.078Z"
         },
         {
           "platform": "twitch",
@@ -349,7 +397,67 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.451Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.078Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "RiiKami",
+          "handle": null,
+          "name": "RiiKami",
+          "url": "https://twitter.com/RiiKami",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.078Z"
+        },
+        {
+          "platform": "tiktok",
+          "id": "riikami",
+          "handle": null,
+          "name": "RiiKami",
+          "url": "https://www.tiktok.com/@riikami",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.078Z"
+        },
+        {
+          "platform": "instagram",
+          "id": "riikamivt",
+          "handle": null,
+          "name": "RiiKami",
+          "url": "https://www.instagram.com/riikamivt/",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.078Z"
+        },
+        {
+          "platform": "patreon",
+          "id": "RiiKami",
+          "handle": null,
+          "name": "RiiKami",
+          "url": "https://www.patreon.com/RiiKami",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.078Z"
+        },
+        {
+          "platform": "other",
+          "id": "https://open.spotify.com/artist/5dDz6fCUgwJw9POKl4rsVs?si=OE6777JnT8GZUfdXKNvj8w&nd=1&dlsi=638a747030ea42c7",
+          "handle": null,
+          "name": "RiiKami",
+          "url": "https%3A%2F%2Fopen.spotify.com%2Fartist%2F5dDz6fCUgwJw9POKl4rsVs%3Fsi%3DOE6777JnT8GZUfdXKNvj8w%26nd%3D1%26dlsi%3D638a747030ea42c7",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.078Z"
         }
       ],
       "externals": {},
@@ -358,6 +466,66 @@
       "aliases": [
         "RiiKami"
       ]
+    },
+    {
+      "id": "UCO5Jvsc_sKuZi3MhnJxrlzQ",
+      "name": "Nyanners",
+      "nameSource": "platform",
+      "aliases": [],
+      "handle": "Nyanners",
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "en",
+      "regionSource": "override",
+      "languages": [
+        "en"
+      ],
+      "statedLanguages": [],
+      "agency": "vshojo",
+      "affiliation": "group",
+      "avatar": "https://yt3.googleusercontent.com/qu6mXmNrKuBrCfCoAKNeKMgOhcE1IkvYRWUcZk4TemJUNvk733YOW7pP3ism4oTEdpSfYQh5HA=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "twitch.tv/nyanners twitter.com/NyanNyanners tiktok.com/@nyan.nyanners Hello everynyan! I'm Nyatasha Nyanners, a horrible creature that was summoned to take o...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": true,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "seed",
+      "addedAt": "2026-10-23T10:02:56.253Z",
+      "updatedAt": "2026-10-23T10:02:56.253Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCO5Jvsc_sKuZi3MhnJxrlzQ",
+          "handle": "Nyanners",
+          "name": "Nyanners",
+          "url": "https://www.youtube.com/channel/UCO5Jvsc_sKuZi3MhnJxrlzQ",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/qu6mXmNrKuBrCfCoAKNeKMgOhcE1IkvYRWUcZk4TemJUNvk733YOW7pP3ism4oTEdpSfYQh5HA=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-23T10:02:56.253Z"
+        }
+      ],
+      "externals": {
+        "twitter": "NyanNyanners",
+        "tiktok": "nyan.nyanners"
+      },
+      "popularVideoId": null
     },
     {
       "id": "UCuuAb_72QzK0M1USPMEl1yw",
@@ -391,7 +559,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -408,7 +576,19 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/f9e1apz6Pgrbx9tD0EEKDDmSCMo7Zcopq2lo-_snLXG6Al-i63HsWxa1WHWBiUJ3iih8fK_5xk0=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:07.458Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.084Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "sonny_brisko",
+          "handle": null,
+          "name": "Sonny Brisko",
+          "url": "https://twitter.com/sonny_brisko",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.084Z"
         }
       ],
       "externals": {},
@@ -450,7 +630,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",

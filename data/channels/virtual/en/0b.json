@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T12:45:03.106Z",
+  "generatedAt": "2026-10-23T10:02:56.253Z",
   "channels": [
     {
       "id": "bilibili:1278419509",
@@ -35,7 +35,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -53,7 +53,7 @@
             "count": 124860
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.458Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.084Z"
         }
       ],
       "externals": {},
@@ -94,7 +94,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -112,7 +112,7 @@
             "count": 141133
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.462Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.087Z"
         }
       ],
       "externals": {},
@@ -152,7 +152,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -169,7 +169,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.416Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.048Z"
         }
       ],
       "externals": {},
@@ -209,7 +209,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -226,7 +226,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/pubqT6sYLzsAsAj8tNh8rLwZwtfvZHQybIhOpu97MkCqDPbaq4T-DApLqFgtCatXjPS3BmtHaF4=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:07.416Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.048Z"
         },
         {
           "platform": "bilibili",
@@ -238,7 +238,19 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.416Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.048Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "Fulgur_Ovid",
+          "handle": null,
+          "name": "Fulgur-Official",
+          "url": "https://twitter.com/Fulgur_Ovid",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.048Z"
         }
       ],
       "externals": {},
@@ -247,6 +259,63 @@
       "aliases": [
         "Fulgur-Official"
       ]
+    },
+    {
+      "id": "UCO_aKKYxn4tvrqPjcTzZ6EQ",
+      "name": "Ceres Fauna Ch. hololive-EN",
+      "nameSource": "platform",
+      "aliases": [],
+      "handle": "CeresFauna",
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "en",
+      "regionSource": "override",
+      "languages": [
+        "en"
+      ],
+      "statedLanguages": [],
+      "agency": "vshojo",
+      "affiliation": "group",
+      "avatar": "https://yt3.googleusercontent.com/TxZ0xm54BKwYJGEoMPda7gK5iPu7Eh0CxLPM4EU9blg4m6ATy5d8NtwBVSOOZFbRdB67PtUf=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "[January 3, 2025 Graduated.] Gaming idol kirin from hololive English! 🌿 For Inquiries Cover Corp: http://cover-corp.com/ Official Twitter: https://twitter.co...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": true,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "seed",
+      "addedAt": "2026-10-23T10:02:56.253Z",
+      "updatedAt": "2026-10-23T10:02:56.253Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "graduated",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCO_aKKYxn4tvrqPjcTzZ6EQ",
+          "handle": "CeresFauna",
+          "name": "Ceres Fauna Ch. hololive-EN",
+          "url": "https://www.youtube.com/channel/UCO_aKKYxn4tvrqPjcTzZ6EQ",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/TxZ0xm54BKwYJGEoMPda7gK5iPu7Eh0CxLPM4EU9blg4m6ATy5d8NtwBVSOOZFbRdB67PtUf=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-23T10:02:56.253Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
     },
     {
       "id": "UCoLHE6uhg5lNqTM4q8l4bqw",
@@ -280,7 +349,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -297,7 +366,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/fjiLjH83q2xADZ50UtzQiteiUC3aeERE-GgSax-shiX0D9sNMy93rUfTrrMNXqMIs3_1QTfhSA8=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:08.164Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.740Z"
         },
         {
           "platform": "bilibili",
@@ -309,7 +378,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:08.164Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.740Z"
         }
       ],
       "externals": {},
@@ -351,7 +420,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -368,7 +437,19 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/Cn3yTxP-Q6Fx6FX-1B5S1zljPiewlVzOeC4UoDV_I2AFTD6yI883az0YKSIUmuwbBuYJ42xJkFw=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:07.402Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.035Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "AsterArcadia",
+          "handle": null,
+          "name": "Aster Arcadia",
+          "url": "https://twitter.com/AsterArcadia",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.035Z"
         }
       ],
       "externals": {},
@@ -410,7 +491,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -427,7 +508,19 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/seL5IxcrXydLiLrqoJdZ1ShXJyQh5yjtRU8sr69K_lEXMfOvRV0XCkwgEhOl9snpoe3wwb_N=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:07.399Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.032Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "alban_knox",
+          "handle": null,
+          "name": "Alban Knox",
+          "url": "https://twitter.com/alban_knox",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.032Z"
         }
       ],
       "externals": {},
@@ -469,7 +562,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "preparing",
@@ -486,7 +579,43 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/2sAxZj5IAU1_ig8wLmTB4S-TKqJ5atc0-tQ6x8RNyHO6gyio4peZSuS71FvSxQVKb9UJ6VvwRw=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:07.409Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.042Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "Dadidabest",
+          "handle": null,
+          "name": "Dadi",
+          "url": "https://twitter.com/Dadidabest",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.042Z"
+        },
+        {
+          "platform": "telegram",
+          "id": "dadisecrets",
+          "handle": null,
+          "name": "Dadi",
+          "url": "https://t.me/dadisecrets",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.042Z"
+        },
+        {
+          "platform": "other",
+          "id": "https://discord.com/invite/5v69Djpq9d",
+          "handle": null,
+          "name": "Dadi",
+          "url": "https%3A%2F%2Fdiscord.com%2Finvite%2F5v69Djpq9d",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.042Z"
         }
       ],
       "externals": {},

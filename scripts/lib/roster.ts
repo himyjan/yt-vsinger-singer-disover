@@ -10,14 +10,14 @@
  * | Source | What it contributes |
  * | --- | --- |
  * | Taiwan VTuber Tracking Data | ~2,900 Chinese-language VTubers with YouTube ids, subscriber counts, debut dates, activity status and Twitch links |
- * | `scripts/lib/seeds.ts` | Hand-verified virtual and real performers |
+ * | `data/seed-catalog.json` | Hand-verified virtual and real performers |
  * | Bilibili / Niconico / VK | Performers who only exist on those platforms |
  *
  * Everything here is free and needs no credentials, so the dataset is real
  * and correct from the first run — no API key required.
  */
 
-import { ALL_SEEDS } from "./seeds";
+import { ALL_SEEDS } from "./seed-catalog";
 import { fetchTrackedVtubers } from "./taiwan-vtuber-data";
 import { languagesForRegion, mergeLanguages } from "./regions";
 import { VdbSource } from "./vdb";

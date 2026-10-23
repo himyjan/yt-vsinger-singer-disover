@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T12:45:03.106Z",
+  "generatedAt": "2026-10-23T10:02:56.253Z",
   "channels": [
     {
       "id": "bilibili:3546711096035969",
@@ -35,7 +35,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -52,13 +52,70 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:08.070Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.659Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
       "nameSource": "roster",
       "aliases": []
+    },
+    {
+      "id": "UCOyYb1c43VlX9rc_lT6NKQw",
+      "name": "Ayunda Risu Ch. hololive",
+      "nameSource": "platform",
+      "aliases": [],
+      "handle": "ayundarisu",
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "id",
+      "regionSource": "override",
+      "languages": [
+        "id"
+      ],
+      "statedLanguages": [],
+      "agency": "hololive",
+      "affiliation": "group",
+      "avatar": "https://yt3.googleusercontent.com/8dYniYG0Fm49TBxwOW39wDzM25P3aAU7r-wecNaOz5a3I1t8dsYbS5OPZXFeHYQpmVRrY9KrSg=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "Hai, aku Ayunda Risu dari hololive~! Aku seekor tupai imut dari hutan ajaib yang datang(nyasar) ke dunia manusia, dan suka sekali bernyanyi~!! Aku sangat suk...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": true,
+      "gender": "male",
+      "isAi": false,
+      "variant": "male_vtuber",
+      "verification": null,
+      "source": "seed",
+      "addedAt": "2026-10-23T10:02:56.253Z",
+      "updatedAt": "2026-10-23T10:02:56.253Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCOyYb1c43VlX9rc_lT6NKQw",
+          "handle": "ayundarisu",
+          "name": "Ayunda Risu Ch. hololive",
+          "url": "https://www.youtube.com/channel/UCOyYb1c43VlX9rc_lT6NKQw",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/8dYniYG0Fm49TBxwOW39wDzM25P3aAU7r-wecNaOz5a3I1t8dsYbS5OPZXFeHYQpmVRrY9KrSg=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-23T10:02:56.253Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
     }
   ]
 }

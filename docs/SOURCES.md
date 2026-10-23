@@ -29,10 +29,12 @@ decided the region; `Channel.verification` says what was actually looked up.
 
 `https://developers.google.com/youtube/v3`
 
-YouTube is the primary platform, and the YouTube Data API v3 is the primary
-source for its channel and media data. InnerTube (`youtubei.js`) supplements it
-with quota-free profile and upload data where enabled. The Data API free tier
-allows 10,000 units a day; the quota guard in `scripts/lib/youtube.ts` refuses
+YouTube is the primary platform. InnerTube (`youtubei.js`) is the default
+source for handle resolution, channel profiles and uploads, and needs no API
+key. The optional YouTube Data API v3 is used for discovery search,
+live-broadcast data and detailed video metadata, with fallback to it when
+InnerTube cannot retrieve a channel profile or uploads. Its free tier allows
+10,000 units a day; the quota guard in `scripts/lib/youtube.ts` refuses
 any call that would exceed it. See `docs/YOUTUBE-API.md` for the Data API and
 quota details.
 

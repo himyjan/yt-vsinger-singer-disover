@@ -1,7 +1,76 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T12:45:03.106Z",
+  "generatedAt": "2026-10-23T10:02:56.253Z",
   "channels": [
+    {
+      "id": "twitter:hitorino_tv",
+      "name": "hitorino",
+      "nameSource": "roster",
+      "aliases": [],
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "en",
+      "regionSource": "declared",
+      "languages": [
+        "en"
+      ],
+      "statedLanguages": [],
+      "agency": "4d66bbfb-bee8-59ec-88f6-495507330f10",
+      "affiliation": "group",
+      "avatar": null,
+      "banner": null,
+      "description": null,
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": false,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-23T10:03:47.608Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "twitter",
+          "id": "hitorino_tv",
+          "handle": null,
+          "name": "hitorino",
+          "url": "https://twitter.com/hitorino_tv",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.100Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "hitorino_JP",
+          "handle": null,
+          "name": "hitorino",
+          "url": "https://twitter.com/hitorino_JP",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.100Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
+    },
     {
       "id": "UC4yNIKGvy-YUrwYupVdLDXA",
       "name": "Ike Eveland【NIJISANJI EN】",
@@ -34,7 +103,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -51,7 +120,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/kJCFm1WPQnsavK2Sx7Npk5VzE2E4BvRqZyOcXIAwmv3j6aHVHOtcAfCCa7hLnEyjZPATSO8lzw=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:07.420Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.052Z"
         },
         {
           "platform": "bilibili",
@@ -63,7 +132,19 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.420Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.052Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "ike_eveland",
+          "handle": null,
+          "name": "Ike_Official",
+          "url": "https://twitter.com/ike_eveland",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.052Z"
         }
       ],
       "externals": {},
@@ -105,7 +186,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -122,7 +203,19 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/EOhdbdcntWg50PqiDk5wqe1c29qx3Cb7LTKYgco4EDBVFSedPSzfULwlB7uxrgXMK8g7xFumnQ=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:07.462Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.087Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "uki_violeta",
+          "handle": null,
+          "name": "Uki Violeta",
+          "url": "https://twitter.com/uki_violeta",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.087Z"
         }
       ],
       "externals": {},
@@ -131,6 +224,65 @@
       "aliases": [
         "Uki Violeta"
       ]
+    },
+    {
+      "id": "UCjLEmnpCNeisMxy134KPwWw",
+      "name": "Kobo Kanaeru Ch. hololive",
+      "nameSource": "platform",
+      "aliases": [],
+      "handle": "KoboKanaeru",
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "en",
+      "regionSource": "override",
+      "languages": [
+        "en"
+      ],
+      "statedLanguages": [],
+      "agency": "hololive",
+      "affiliation": "group",
+      "avatar": "https://yt3.googleusercontent.com/XRCP2PC-lvvielp04Eq8KyBzgd3_bFc_DNfptN5s-ftd1v6SadGuMChY6Jm3elaqaK7xwE1B=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "Bokobokobo- Kobo Kanaeru at your service! Your cool swaggy rain shaman from hololive holoh3ro is here baby ;) 【Twitter】 https://twitter.com/kobokanaeru 【Inst...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": true,
+      "gender": "male",
+      "isAi": false,
+      "variant": "male_vtuber",
+      "verification": null,
+      "source": "seed",
+      "addedAt": "2026-10-23T10:02:56.253Z",
+      "updatedAt": "2026-10-23T10:02:56.253Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCjLEmnpCNeisMxy134KPwWw",
+          "handle": "KoboKanaeru",
+          "name": "Kobo Kanaeru Ch. hololive",
+          "url": "https://www.youtube.com/channel/UCjLEmnpCNeisMxy134KPwWw",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/XRCP2PC-lvvielp04Eq8KyBzgd3_bFc_DNfptN5s-ftd1v6SadGuMChY6Jm3elaqaK7xwE1B=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-23T10:02:56.253Z"
+        }
+      ],
+      "externals": {
+        "twitter": "kobokanaeru"
+      },
+      "popularVideoId": null
     },
     {
       "id": "UCN68LoM3khS4gdBMiWJO8WA",
@@ -164,7 +316,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -181,7 +333,19 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/OZCrdJ0j_HALe3aIL20IDVL-2hWvpVE0xcFn4Xl77m_Q-9remZ9g_cV__y4eLawPsu_FSPYWLw=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:07.398Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.030Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "AiaAmare",
+          "handle": null,
+          "name": "Aia Amare",
+          "url": "https://twitter.com/AiaAmare",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.030Z"
         }
       ],
       "externals": {},
@@ -223,7 +387,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -240,7 +404,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/y5Cxd-oTGNRZlwZT1LyeQcXm7eKw-6Tn3fyGSg7LF5bY8nz5wh7liX7cTjgSTDJsc1HPgQNM=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:07.449Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.077Z"
         },
         {
           "platform": "bilibili",
@@ -252,7 +416,19 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.449Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.077Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "rae_severin",
+          "handle": null,
+          "name": "Rae Severin",
+          "url": "https://twitter.com/rae_severin",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.077Z"
         },
         {
           "platform": "twitch",
@@ -264,7 +440,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.449Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.077Z"
         }
       ],
       "externals": {},
@@ -306,7 +482,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",

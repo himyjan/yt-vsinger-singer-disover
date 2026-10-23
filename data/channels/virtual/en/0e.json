@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T12:45:03.106Z",
+  "generatedAt": "2026-10-23T10:02:56.253Z",
   "channels": [
     {
       "id": "bilibili:1730051024",
@@ -35,7 +35,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "graduated",
@@ -53,7 +53,7 @@
             "count": 33302
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.421Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.052Z"
         }
       ],
       "externals": {},
@@ -93,7 +93,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -110,7 +110,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/S5_mU5n-KM_2UXod45MyjlUB21awI_jyc2zb1cmGZ6Mb-sYq-49mAsncaI6R0IdIUomqEKfI=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:07.469Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.092Z"
         },
         {
           "platform": "twitch",
@@ -122,13 +122,106 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.469Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.092Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "YUY_IX",
+          "handle": null,
+          "name": "YUY",
+          "url": "https://twitter.com/YUY_IX",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.092Z"
+        },
+        {
+          "platform": "web",
+          "id": "yuyix.com",
+          "handle": null,
+          "name": "YUY",
+          "url": "yuyix.com",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.092Z"
+        },
+        {
+          "platform": "tiktok",
+          "id": "yuy_ix",
+          "handle": null,
+          "name": "YUY",
+          "url": "https://www.tiktok.com/@yuy_ix",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.092Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
       "nameSource": "roster",
       "aliases": []
+    },
+    {
+      "id": "UCAvLrC1G9Lt9thVTfd10udQ",
+      "name": "Raora",
+      "nameSource": "platform",
+      "aliases": [],
+      "handle": "Raora",
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "en",
+      "regionSource": "override",
+      "languages": [
+        "en"
+      ],
+      "statedLanguages": [],
+      "agency": "hololive",
+      "affiliation": "group",
+      "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_nXFillUDBxO8zNWA2NeJJO2b1En7IU2khoLCqwoG8=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": null,
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": true,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "seed",
+      "addedAt": "2026-10-23T10:02:56.253Z",
+      "updatedAt": "2026-10-23T10:02:56.253Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCAvLrC1G9Lt9thVTfd10udQ",
+          "handle": "Raora",
+          "name": "Raora",
+          "url": "https://www.youtube.com/channel/UCAvLrC1G9Lt9thVTfd10udQ",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_nXFillUDBxO8zNWA2NeJJO2b1En7IU2khoLCqwoG8=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-23T10:02:56.253Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
     },
     {
       "id": "UCMCAh6rwRtoGDtF7lXj0gNw",
@@ -162,7 +255,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -179,7 +272,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/WoTBjhDEq83n6PgYbgDnXy30iSgzelUxDOIertGS8Cyi2I37WtppzTK51YbJ6ec-E0_GblmRMQ=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:08.102Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.686Z"
         },
         {
           "platform": "bilibili",
@@ -191,7 +284,31 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:08.102Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.686Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "NekumaVT",
+          "handle": null,
+          "name": "草莓猫Taffy",
+          "url": "https://twitter.com/NekumaVT",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.686Z"
+        },
+        {
+          "platform": "tiktok",
+          "id": "taffynekuma",
+          "handle": null,
+          "name": "草莓猫Taffy",
+          "url": "https://www.tiktok.com/@taffynekuma",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.686Z"
         },
         {
           "platform": "twitch",
@@ -203,7 +320,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:08.102Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.686Z"
         }
       ],
       "externals": {},
@@ -245,7 +362,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -262,7 +379,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/AO9vPByJgA2hVTYqV-H28FtXQU_3Z4zUUDx38ysplUjYQAP2w1z7OtZ_yiPqP8Sy2dDf377Raw=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:07.771Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.382Z"
         },
         {
           "platform": "bilibili",
@@ -274,7 +391,19 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.771Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.382Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "LutoAraka",
+          "handle": null,
+          "name": "新火ると_Official",
+          "url": "https://twitter.com/LutoAraka",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.382Z"
         }
       ],
       "externals": {},

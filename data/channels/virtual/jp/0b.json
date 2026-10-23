@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T12:45:03.106Z",
+  "generatedAt": "2026-10-23T10:02:56.253Z",
   "channels": [
     {
       "id": "bilibili:15513977",
@@ -35,7 +35,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -53,7 +53,7 @@
             "count": 6469
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.984Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.587Z"
         }
       ],
       "externals": {},
@@ -94,7 +94,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -112,7 +112,7 @@
             "count": 34738
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.563Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.186Z"
         }
       ],
       "externals": {},
@@ -134,13 +134,14 @@
       "statedLanguages": [],
       "agency": null,
       "affiliation": "unknown",
-      "avatar": null,
+      "avatar": "https://i0.hdslb.com/bfs/face/d86480c163c571351e51d8c047bcb0b487b7249d.jpg",
       "banner": null,
-      "description": null,
+      "description": "兴趣使然的虚拟人频道，佛性游戏，随缘直播。\n一号机：神造マリア，二号机：方糖子，隐藏角色：画师妈妈CirCle",
       "subscribers": {
-        "tag": "hidden"
+        "tag": "has",
+        "count": 380
       },
-      "videoCount": null,
+      "videoCount": 51,
       "viewCount": null,
       "uploadsPlaylistId": null,
       "country": null,
@@ -152,9 +153,9 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-23T10:02:56.253Z",
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -162,14 +163,16 @@
         {
           "platform": "bilibili",
           "id": "28821597",
-          "handle": null,
+          "handle": "28821597",
           "name": "マ-ほChannel",
           "url": "https://space.bilibili.com/28821597",
           "subscribers": {
-            "tag": "hidden"
+            "tag": "has",
+            "count": 380
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.495Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.120Z",
+          "videoCount": 51
         }
       ],
       "externals": {},
@@ -179,7 +182,7 @@
     },
     {
       "id": "bilibili:290474",
-      "name": "雷凌レイリン",
+      "name": "雷凛凛",
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
@@ -190,14 +193,15 @@
       ],
       "statedLanguages": [],
       "agency": null,
-      "affiliation": "unknown",
-      "avatar": null,
+      "affiliation": "independent",
+      "avatar": "https://i2.hdslb.com/bfs/face/a8001b806187c70b91f9ec21ae3cc4f3b2406da6.jpg",
       "banner": null,
-      "description": null,
+      "description": "个人势，无口系视频势vup，非直播势！是白毛狼狼，喜欢拍虚拟世界的视频，禁止称呼钢板！！合作请私信",
       "subscribers": {
-        "tag": "hidden"
+        "tag": "has",
+        "count": 70204
       },
-      "videoCount": null,
+      "videoCount": 467,
       "viewCount": null,
       "uploadsPlaylistId": null,
       "country": null,
@@ -209,9 +213,9 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-23T10:02:56.253Z",
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -219,20 +223,24 @@
         {
           "platform": "bilibili",
           "id": "290474",
-          "handle": null,
-          "name": "雷凌レイリン",
+          "handle": "290474",
+          "name": "雷凛凛",
           "url": "https://space.bilibili.com/290474",
           "subscribers": {
-            "tag": "hidden"
+            "tag": "has",
+            "count": 70204
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:08.215Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.783Z",
+          "videoCount": 467
         }
       ],
       "externals": {},
       "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
+      "nameSource": "platform",
+      "aliases": [
+        "雷凌レイリン"
+      ]
     },
     {
       "id": "bilibili:307406424",
@@ -266,7 +274,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -283,7 +291,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.781Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.391Z"
         }
       ],
       "externals": {},
@@ -323,7 +331,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -340,7 +348,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.864Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.471Z"
         }
       ],
       "externals": {},
@@ -380,7 +388,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -397,7 +405,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:08.241Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.806Z"
         }
       ],
       "externals": {},
@@ -437,7 +445,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -454,7 +462,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.557Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.180Z"
         }
       ],
       "externals": {},
@@ -496,7 +504,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -513,7 +521,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.487Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.112Z"
         }
       ],
       "externals": {},
@@ -555,7 +563,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -572,7 +580,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.443Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.071Z"
         }
       ],
       "externals": {},
@@ -612,7 +620,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -629,7 +637,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.488Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.113Z"
         }
       ],
       "externals": {},
@@ -669,7 +677,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -686,7 +694,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.644Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.259Z"
         }
       ],
       "externals": {},
@@ -726,7 +734,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -743,7 +751,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.709Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.323Z"
         }
       ],
       "externals": {},
@@ -783,7 +791,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -800,7 +808,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.488Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.113Z"
         }
       ],
       "externals": {},
@@ -840,7 +848,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -857,7 +865,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.857Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.465Z"
         }
       ],
       "externals": {},
@@ -897,7 +905,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -914,7 +922,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:08.033Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.628Z"
         }
       ],
       "externals": {},
@@ -954,7 +962,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -971,7 +979,31 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_nLL0CMyZ5dzz4jYjnxCYs1piRphHzr1P4JQfpRmwBYEQ=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:07.630Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.246Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "siyo_floral",
+          "handle": null,
+          "name": "四四四",
+          "url": "https://twitter.com/siyo_floral",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.246Z"
+        },
+        {
+          "platform": "marshmallow",
+          "id": "siyo_floral",
+          "handle": null,
+          "name": "四四四",
+          "url": "https://marshmallow-qa.com/siyo_floral",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.246Z"
         }
       ],
       "externals": {},
@@ -1015,7 +1047,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "graduated",
@@ -1032,7 +1064,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/YFD87IueOX8p7UcywKgJmTIlsxlbhxTACJZTiAAp2rBPT3_AeQMliFFdX-zFrlAq0FQan9_nvQ=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:08.090Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.675Z"
         },
         {
           "platform": "bilibili",
@@ -1044,7 +1076,31 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:08.090Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.675Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "Kyo_Hanabasami",
+          "handle": null,
+          "name": "花鋏響",
+          "url": "https://twitter.com/Kyo_Hanabasami",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.675Z"
+        },
+        {
+          "platform": "userlocal",
+          "id": "15B2A757B57F2768_9abbd7",
+          "handle": null,
+          "name": "花鋏響",
+          "url": "https://virtual-youtuber.userlocal.jp/user/15B2A757B57F2768_9abbd7",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.675Z"
         }
       ],
       "externals": {},
@@ -1090,7 +1146,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1107,7 +1163,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_nKzs_uuBK3pEhF46U6BUKeu02PLu4zAacAquO5fPg0EQ=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:08.231Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.797Z"
         },
         {
           "platform": "bilibili",
@@ -1119,7 +1175,19 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:08.231Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.797Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "Yuika_Kazami",
+          "handle": null,
+          "name": "风见唯花",
+          "url": "https://twitter.com/Yuika_Kazami",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.797Z"
         }
       ],
       "externals": {},
@@ -1163,7 +1231,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "graduated",
@@ -1180,7 +1248,19 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/i0PRMJxOR1NaZQp_YuPNp9q6FsyBq3Mlj3RIbtFtPAYUYAx9HcDZn18xFXRHFiXosJBmGl2mGA=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:08.083Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.669Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "miyabihanasaki",
+          "handle": null,
+          "name": "花咲みやび",
+          "url": "https://twitter.com/miyabihanasaki",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.669Z"
         },
         {
           "platform": "bilibili",
@@ -1192,7 +1272,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:08.083Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.669Z"
         }
       ],
       "externals": {},
@@ -1236,7 +1316,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1253,7 +1333,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/gBGl8G5HT4sST7Igc3dZxJIKXbZyNpDqq-lKFIsJvVlBcwU9hebmD8WapL7-bDsHTi1z0NH9-zE=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:08.004Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.606Z"
         },
         {
           "platform": "bilibili",
@@ -1265,7 +1345,19 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:08.004Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.605Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "kamitsubaki_jp",
+          "handle": null,
+          "name": "神椿工作室",
+          "url": "https://twitter.com/kamitsubaki_jp",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.605Z"
         }
       ],
       "externals": {},
@@ -1307,7 +1399,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1324,7 +1416,31 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_nF_zM9j81NvbzSuFlbZBwHcFmHaMFM7oeshyhEujsCNNw=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:07.843Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.452Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "shibayama_azuki",
+          "handle": null,
+          "name": "柴山あずき",
+          "url": "https://twitter.com/shibayama_azuki",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.452Z"
+        },
+        {
+          "platform": "userlocal",
+          "id": "02C50E78887F69F0_24e339",
+          "handle": null,
+          "name": "柴山あずき",
+          "url": "https://virtual-youtuber.userlocal.jp/user/02C50E78887F69F0_24e339",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.452Z"
         }
       ],
       "externals": {},
@@ -1364,7 +1480,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1381,7 +1497,19 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/IEPC5fvbZV-ovSe3_-PDMMsS3bKRGVboFDp6tMjLd4nyskxB7qaw1TRaEi2P6DfDnSzLJ2lxIQ=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:07.402Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.035Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "azuma_lim",
+          "handle": null,
+          "name": "Azulim",
+          "url": "https://twitter.com/azuma_lim",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.035Z"
         },
         {
           "platform": "bilibili",
@@ -1393,7 +1521,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.402Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.035Z"
         }
       ],
       "externals": {},
@@ -1436,7 +1564,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1453,7 +1581,19 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_lT54fhCevB7QTvjLsnrvJjGx1PWNsxVa0O6kyzzhV04g=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:08.265Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.827Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "mayuzumi_X",
+          "handle": null,
+          "name": "黛灰",
+          "url": "https://twitter.com/mayuzumi_X",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.827Z"
         },
         {
           "platform": "bilibili",
@@ -1465,7 +1605,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:08.265Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.827Z"
         }
       ],
       "externals": {},
@@ -1507,7 +1647,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1524,7 +1664,19 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.941Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.547Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "keitonekomata",
+          "handle": null,
+          "name": "猫又佳斗",
+          "url": "https://twitter.com/keitonekomata",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.547Z"
         }
       ],
       "externals": {},
@@ -1564,7 +1716,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1581,7 +1733,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_kPVdAguMmwqLhhH_HTXfDkJW1RanR2RkZCm6p6N7-EAUk=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:07.601Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.218Z"
         },
         {
           "platform": "bilibili",
@@ -1593,7 +1745,19 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.601Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.218Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "mai_futari",
+          "handle": null,
+          "name": "双理マイ",
+          "url": "https://twitter.com/mai_futari",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.218Z"
         }
       ],
       "externals": {},
@@ -1635,7 +1799,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1652,7 +1816,31 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_l8baA3dYapy4e0VtWPz_1U7lrV2-YM_Wm6KDGoENx1BA=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:07.512Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.137Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "Tia_Ushio",
+          "handle": null,
+          "name": "丑牡てぃあ",
+          "url": "https://twitter.com/Tia_Ushio",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.137Z"
+        },
+        {
+          "platform": "userlocal",
+          "id": "A65AE63187FD0567_8e08be",
+          "handle": null,
+          "name": "丑牡てぃあ",
+          "url": "https://virtual-youtuber.userlocal.jp/user/A65AE63187FD0567_8e08be",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.137Z"
         }
       ],
       "externals": {},
@@ -1694,7 +1882,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1711,7 +1899,31 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.493Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.118Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "JeanV_019",
+          "handle": null,
+          "name": "ジーン・ウィンクルム",
+          "url": "https://twitter.com/JeanV_019",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.118Z"
+        },
+        {
+          "platform": "userlocal",
+          "id": "13C5C9CCA968B01F_314759",
+          "handle": null,
+          "name": "ジーン・ウィンクルム",
+          "url": "https://virtual-youtuber.userlocal.jp/user/13C5C9CCA968B01F_314759",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.118Z"
         }
       ],
       "externals": {},
@@ -1753,7 +1965,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1770,7 +1982,19 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_nCQZegeRx1G_oVEThRQL0UIWnZsOhhnrqg1MWVo4bcLw=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:07.497Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.122Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "rukiroki_ch",
+          "handle": null,
+          "name": "ルキロキチャンネル",
+          "url": "https://twitter.com/rukiroki_ch",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.122Z"
         },
         {
           "platform": "bilibili",
@@ -1782,7 +2006,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.497Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.122Z"
         }
       ],
       "externals": {},
@@ -1825,7 +2049,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1842,7 +2066,31 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_nRRKW1ZpQhXS1Cvz3eBk0owgY4vV79mZUeIzmcnAcn4l4=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:08.210Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.778Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "setsuna2434",
+          "handle": null,
+          "name": "雪汝",
+          "url": "https://twitter.com/setsuna2434",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.778Z"
+        },
+        {
+          "platform": "userlocal",
+          "id": "31723F8BCF8C3F4D_ccec6c",
+          "handle": null,
+          "name": "雪汝",
+          "url": "https://virtual-youtuber.userlocal.jp/user/31723F8BCF8C3F4D_ccec6c",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.778Z"
         }
       ],
       "externals": {},
@@ -1887,7 +2135,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1904,7 +2152,19 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/0Nx9jWdjiUrkizCVCDZg_MasdF6b85DAsQATmAkNC2A8b3Y89vXlnSDZ_v1fM_X4w3088sJnmA=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:07.491Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.116Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "akirosenthal",
+          "handle": null,
+          "name": "亚绮·罗森塔尔",
+          "url": "https://twitter.com/akirosenthal",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.116Z"
         },
         {
           "platform": "bilibili",
@@ -1916,7 +2176,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.491Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.116Z"
         }
       ],
       "externals": {},
@@ -1960,7 +2220,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -1977,7 +2237,19 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_lO0L1OVrs6ndr2yWCUrQdgiN1aa4g7hJFEET2mMYY_OA=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:07.787Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.397Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "neu_hoshiduki",
+          "handle": null,
+          "name": "星月ノイ",
+          "url": "https://twitter.com/neu_hoshiduki",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.397Z"
         }
       ],
       "externals": {},
@@ -2020,7 +2292,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -2037,7 +2309,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/v2c8m0vQheBnkOr7aByavAOue4aZSzkpvmy9kvk8Qkm2bVmFrhgvKinkSw8c7bXNp_SvuEUWWQ=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:07.753Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.365Z"
         },
         {
           "platform": "bilibili",
@@ -2049,7 +2321,19 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.753Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.365Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "koinoya_mai",
+          "handle": null,
+          "name": "恋乃夜舞",
+          "url": "https://twitter.com/koinoya_mai",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.365Z"
         }
       ],
       "externals": {},
@@ -2095,7 +2379,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -2112,7 +2396,31 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/CH65w54beY2Y7pzSzIKNeuMwyZMa_1tf_eyvMudhMI3GuTQqAUNGUiBNUIk2fum7k106KJJLyw=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:07.817Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.427Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "Alicemana_v",
+          "handle": null,
+          "name": "有栖mana",
+          "url": "https://twitter.com/Alicemana_v",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.427Z"
+        },
+        {
+          "platform": "userlocal",
+          "id": "127884E3538F6478_d85296",
+          "handle": null,
+          "name": "有栖mana",
+          "url": "https://virtual-youtuber.userlocal.jp/user/127884E3538F6478_d85296",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.427Z"
         }
       ],
       "externals": {},
@@ -2159,7 +2467,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T10:46:36.248Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -2176,7 +2484,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/2QGkD3hn6XQvwUbJpD6I8U0C7GDcTnz_u-e36aLVZu0Gwk7Vni6BGzLzN50mWNtn2MIr9ABd=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:07.752Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.364Z"
         },
         {
           "platform": "bilibili",
@@ -2188,7 +2496,67 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.752Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.364Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "hosinonyan",
+          "handle": null,
+          "name": "怠惰",
+          "url": "https://twitter.com/hosinonyan",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.364Z"
+        },
+        {
+          "platform": "amazon.co.jp",
+          "id": "5NTR66DPTUPK?ref_=wl_share",
+          "handle": null,
+          "name": "怠惰",
+          "url": "https://www.amazon.co.jp/hz/wishlist/ls/5NTR66DPTUPK%3Fref_%3Dwl_share",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.364Z"
+        },
+        {
+          "platform": "fantia",
+          "id": "282876 ",
+          "handle": null,
+          "name": "怠惰",
+          "url": "https://fantia.jp/fanclubs/282876%20",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.364Z"
+        },
+        {
+          "platform": "booth",
+          "id": "hosinonyan",
+          "handle": null,
+          "name": "怠惰",
+          "url": "https://hosinonyan.booth.pm",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.364Z"
+        },
+        {
+          "platform": "tiktok",
+          "id": "taidachan0105",
+          "handle": null,
+          "name": "怠惰",
+          "url": "https://www.tiktok.com/@taidachan0105",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.364Z"
         }
       ],
       "externals": {},
@@ -2228,7 +2596,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "preparing",
@@ -2245,7 +2613,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/06iLnQWcYhdAALdlT-K5GgyErwOD7DfBcjRZnQB23jCO4lifUHtRXQgQNK05j-l9g0BupGOVbxA=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:07.544Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.167Z"
         },
         {
           "platform": "bilibili",
@@ -2257,7 +2625,19 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.544Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.167Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "SaohimeYue",
+          "handle": null,
+          "name": "佐保姬夕映",
+          "url": "https://twitter.com/SaohimeYue",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.167Z"
         }
       ],
       "externals": {},
@@ -2302,7 +2682,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -2319,7 +2699,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/V0ziWxUn2mNZeC-PtVQua8ffwVBMfiYhlhQ1V3CHLXqbWh4-S55i15fQ3yvXl2xDOEtYUgqGeA=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:07.786Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.396Z"
         },
         {
           "platform": "bilibili",
@@ -2331,7 +2711,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.786Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.396Z"
         }
       ],
       "externals": {},
@@ -2373,7 +2753,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -2390,7 +2770,19 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_k_ihxcX6fNk1DRia7yfsS1tWRfuRbfOinQzb8ZCseFcQ=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:08.264Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.826Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "kurone_urara",
+          "handle": null,
+          "name": "黒音うらら",
+          "url": "https://twitter.com/kurone_urara",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.826Z"
         }
       ],
       "externals": {},
@@ -2433,7 +2825,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -2450,7 +2842,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/oUNhwGz6KC01AoOWLQ6zKFSGUtV0yZe-BsapvmvPPHmNzNedDvKmndY06FupLZxk6KddfQs=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:07.686Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.301Z"
         },
         {
           "platform": "bilibili",
@@ -2462,7 +2854,55 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.686Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.301Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "AndyFubuki",
+          "handle": null,
+          "name": "安梦梦",
+          "url": "https://twitter.com/AndyFubuki",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.301Z"
+        },
+        {
+          "platform": "pixiv",
+          "id": "32989185",
+          "handle": null,
+          "name": "安梦梦",
+          "url": "https://www.pixiv.net/member.php?id=32989185",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.301Z"
+        },
+        {
+          "platform": "afdian",
+          "id": "andydreamer",
+          "handle": null,
+          "name": "安梦梦",
+          "url": "https://afdian.net/@andydreamer",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.301Z"
+        },
+        {
+          "platform": "marshmallow",
+          "id": "andyfubuki",
+          "handle": null,
+          "name": "安梦梦",
+          "url": "https://marshmallow-qa.com/andyfubuki",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.301Z"
         },
         {
           "platform": "twitch",
@@ -2474,7 +2914,19 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.686Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.301Z"
+        },
+        {
+          "platform": "acfun",
+          "id": "72772418",
+          "handle": null,
+          "name": "安梦梦",
+          "url": "https://www.acfun.cn/u/72772418",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.301Z"
         }
       ],
       "externals": {},
@@ -2517,7 +2969,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -2534,7 +2986,19 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_lqukeXju4vDeUAm1lQYYR4fVXcy9C1BrO6ZkbGQ7uw3A=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:07.613Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.229Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "Suo_Sango",
+          "handle": null,
+          "name": "周央サンゴ",
+          "url": "https://twitter.com/Suo_Sango",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.229Z"
         }
       ],
       "externals": {},
@@ -2578,7 +3042,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -2595,7 +3059,43 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_mtOqMlsU4VVmFivOPIfoQ_ZilBqxXU-XnyN2emr3jAQW8=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:08.247Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.811Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "camomi_camomi",
+          "handle": null,
+          "name": "鴨見カモミ",
+          "url": "https://twitter.com/camomi_camomi",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.811Z"
+        },
+        {
+          "platform": "pixiv",
+          "id": "711569",
+          "handle": null,
+          "name": "鴨見カモミ",
+          "url": "https://www.pixiv.net/member.php?id=711569",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.811Z"
+        },
+        {
+          "platform": "booth",
+          "id": "camomi-camomi",
+          "handle": null,
+          "name": "鴨見カモミ",
+          "url": "https://camomi-camomi.booth.pm",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.811Z"
         },
         {
           "platform": "bilibili",
@@ -2607,7 +3107,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:08.247Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.811Z"
         }
       ],
       "externals": {},
@@ -2652,7 +3152,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -2669,7 +3169,19 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_nUODT-7u3UPXs3gx8uYf3Kvvwyy9TdLAiX7KjbZ6RaRg=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:07.914Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.520Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "kyty_ikn",
+          "handle": null,
+          "name": "清露郁奈",
+          "url": "https://twitter.com/kyty_ikn",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.520Z"
         }
       ],
       "externals": {},
@@ -2714,7 +3226,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -2731,7 +3243,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/sTtYNCSKudf1FclMj9cbv1DD_feWLMrvXktHiAXhu7XuCc07fYU_n3QQpCi454fnf9T_w0YEjQ=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:07.829Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.438Z"
         },
         {
           "platform": "bilibili",
@@ -2743,7 +3255,55 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.829Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.438Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "Raiaxxxia",
+          "handle": null,
+          "name": "来栖らいあ",
+          "url": "https://twitter.com/Raiaxxxia",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.438Z"
+        },
+        {
+          "platform": "booth",
+          "id": "raiaxxxia",
+          "handle": null,
+          "name": "来栖らいあ",
+          "url": "https://raiaxxxia.booth.pm",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.438Z"
+        },
+        {
+          "platform": "pixiv",
+          "id": "32431409",
+          "handle": null,
+          "name": "来栖らいあ",
+          "url": "https://www.pixiv.net/member.php?id=32431409",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.438Z"
+        },
+        {
+          "platform": "marshmallow",
+          "id": "raiaxxxia",
+          "handle": null,
+          "name": "来栖らいあ",
+          "url": "https://marshmallow-qa.com/raiaxxxia",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.438Z"
         }
       ],
       "externals": {},
@@ -2786,7 +3346,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -2803,7 +3363,19 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_mHIwb4jyFPK16GcOdXIiqTrC8N9zRnM1_Hf6jwOVV1=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:07.493Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.118Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "shiroikusuriv",
+          "handle": null,
+          "name": "シロイクスリ",
+          "url": "https://twitter.com/shiroikusuriv",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.118Z"
         }
       ],
       "externals": {},
@@ -2843,7 +3415,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -2860,7 +3432,19 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/4uQBqk-Qalhhr1k-oLOWoJyyTRDpCMw1FG1gVBY4LaEXL6UTFm5Txf8sm-mbqpLoPxddVKL80g=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:07.574Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.196Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "H_KAGAMI2434",
+          "handle": null,
+          "name": "加賀美ハヤト",
+          "url": "https://twitter.com/H_KAGAMI2434",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.196Z"
         },
         {
           "platform": "bilibili",
@@ -2872,7 +3456,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.574Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.196Z"
         }
       ],
       "externals": {},
@@ -2917,7 +3501,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "graduated",
@@ -2934,7 +3518,19 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_kPL5CRR2ul3Nyq1lDzd7SQ70M1_NLXTG1WJzzj-dnmLn0=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:08.263Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.825Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "Kurone_Yoru",
+          "handle": null,
+          "name": "黑音夜",
+          "url": "https://twitter.com/Kurone_Yoru",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.825Z"
         },
         {
           "platform": "bilibili",
@@ -2946,7 +3542,43 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:08.263Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.825Z"
+        },
+        {
+          "platform": "marshmallow",
+          "id": "kurone_yoru",
+          "handle": null,
+          "name": "黑音夜",
+          "url": "https://marshmallow-qa.com/kurone_yoru",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.825Z"
+        },
+        {
+          "platform": "pixiv",
+          "id": "41547220",
+          "handle": null,
+          "name": "黑音夜",
+          "url": "https://www.pixiv.net/member.php?id=41547220",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.825Z"
+        },
+        {
+          "platform": "amazon.co.jp",
+          "id": "Y1N8XBB8GYY6",
+          "handle": null,
+          "name": "黑音夜",
+          "url": "https://www.amazon.co.jp/hz/wishlist/ls/Y1N8XBB8GYY6",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.825Z"
         }
       ],
       "externals": {},
@@ -2990,7 +3622,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -3007,7 +3639,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/VRgJu8TSVhpDEAWYP5UZG2GjC4eGmmxSVbr9SYuGANGdSXxETT2U6O1Gstcj4DPUYgXJixhk=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:07.485Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.110Z"
         },
         {
           "platform": "bilibili",
@@ -3019,7 +3651,19 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.485Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.110Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "05_oco",
+          "handle": null,
+          "name": "お子ASMR-OCO",
+          "url": "https://twitter.com/05_oco",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.110Z"
         }
       ],
       "externals": {},
@@ -3061,7 +3705,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -3078,7 +3722,31 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/Zn6tAvYs9OfA8dmXRuJG8n_V6Din3BGb5kOUa2llq25ecXjwe3C1_XKPEowjlxGsfwNhpyUM=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:08.037Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.631Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "LeeShionVG",
+          "handle": null,
+          "name": "紫音VGチャンネル",
+          "url": "https://twitter.com/LeeShionVG",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.631Z"
+        },
+        {
+          "platform": "userlocal",
+          "id": "B2C327E835CF0926_c67c07",
+          "handle": null,
+          "name": "紫音VGチャンネル",
+          "url": "https://virtual-youtuber.userlocal.jp/user/B2C327E835CF0926_c67c07",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.631Z"
         }
       ],
       "externals": {},
@@ -3120,7 +3788,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -3137,7 +3805,31 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_nN1j69fJV5sBCGij_OoToo4_cz3srV1f24xfI7sokeTA=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:08.033Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.628Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "kureya_ria",
+          "handle": null,
+          "name": "紅谷リア",
+          "url": "https://twitter.com/kureya_ria",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.628Z"
+        },
+        {
+          "platform": "userlocal",
+          "id": "EC0897FA2BDD058B_418018",
+          "handle": null,
+          "name": "紅谷リア",
+          "url": "https://virtual-youtuber.userlocal.jp/user/EC0897FA2BDD058B_418018",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.628Z"
         }
       ],
       "externals": {},
@@ -3177,7 +3869,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -3194,7 +3886,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/Rqi3rL0R6t5tsleSuMGpCn8hMHI-e4bCrIYwWyG_w-ACKesSsEuxu6wxxatgUd_I6cgP1q3T=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:07.972Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.575Z"
         },
         {
           "platform": "bilibili",
@@ -3206,7 +3898,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.972Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.575Z"
         }
       ],
       "externals": {},
@@ -3250,7 +3942,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -3267,7 +3959,19 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_mvs7JZ2z4aFqcTrstAxRbCCrW1KBdIGk2sJoUztNFp4yg=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:08.228Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.794Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "SaRa_SAVW",
+          "handle": null,
+          "name": "音無咲良",
+          "url": "https://twitter.com/SaRa_SAVW",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.794Z"
         }
       ],
       "externals": {},
@@ -3312,7 +4016,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -3329,7 +4033,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/5imJp_5vOdUZjMG_e4ufIx5prDzZRhPQQJhKMvPVG8s2zvQQSttAHtOVOIiTqJm6pofjOvIYCdw=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:08.036Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.629Z"
         },
         {
           "platform": "bilibili",
@@ -3341,7 +4045,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:08.036Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.629Z"
         }
       ],
       "externals": {},
@@ -3385,7 +4089,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -3402,7 +4106,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_mPrUPNF6hB9nx9gxMXJNZi5pK0M1G0pDVh3IMyvgAWn4A=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:07.489Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.114Z"
         },
         {
           "platform": "bilibili",
@@ -3414,7 +4118,31 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.489Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.114Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "Mendako_Vtuber",
+          "handle": null,
+          "name": "めんだこちゃん",
+          "url": "https://twitter.com/Mendako_Vtuber",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.114Z"
+        },
+        {
+          "platform": "userlocal",
+          "id": "B3DD84CB4C3727F2_f20f89",
+          "handle": null,
+          "name": "めんだこちゃん",
+          "url": "https://virtual-youtuber.userlocal.jp/user/B3DD84CB4C3727F2_f20f89",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.114Z"
         }
       ],
       "externals": {},
@@ -3456,7 +4184,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "preparing",
@@ -3473,7 +4201,31 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_ntkzV8xTBHkfHx806uLrqcBudi_ZcaGNQmM5JeB1Gdng=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:08.033Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.628Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "kamikinu",
+          "handle": null,
+          "name": "紙木絹",
+          "url": "https://twitter.com/kamikinu",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.628Z"
+        },
+        {
+          "platform": "userlocal",
+          "id": "588A6B8668CB96FA_e68011",
+          "handle": null,
+          "name": "紙木絹",
+          "url": "https://virtual-youtuber.userlocal.jp/user/588A6B8668CB96FA_e68011",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.628Z"
         }
       ],
       "externals": {},
@@ -3515,7 +4267,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -3532,7 +4284,19 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/6xFhb8NOKo_Dr3V210n5FaXnVC7YPoOJ4CXA8o_8GIl7w_P1upGslMBUuRqLtkopEZq78pD-lg=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:07.487Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.112Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "narumihayase",
+          "handle": null,
+          "name": "なるはやちゃん",
+          "url": "https://twitter.com/narumihayase",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.112Z"
         },
         {
           "platform": "bilibili",
@@ -3544,7 +4308,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.487Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.112Z"
         }
       ],
       "externals": {},
@@ -3589,7 +4353,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -3606,7 +4370,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/-TBQAG0BLRGdpVG52iKBC2LGpwDFEu7HH5FoNNWF0pSL3Cwltiinvyk5OVgXNVQy7LP81AsHWQ=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:07.615Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.231Z"
         },
         {
           "platform": "bilibili",
@@ -3618,7 +4382,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.615Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.231Z"
         },
         {
           "platform": "twitch",
@@ -3630,7 +4394,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.615Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.231Z"
         }
       ],
       "externals": {},

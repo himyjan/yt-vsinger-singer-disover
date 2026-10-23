@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T12:45:03.106Z",
+  "generatedAt": "2026-10-23T10:02:56.253Z",
   "channels": [
     {
       "id": "bilibili:1292051980",
@@ -35,7 +35,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -53,7 +53,7 @@
             "count": 47604
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.415Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.047Z"
         }
       ],
       "externals": {},
@@ -94,7 +94,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -112,7 +112,7 @@
             "count": 30145
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.417Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.049Z"
         }
       ],
       "externals": {},
@@ -155,7 +155,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -173,7 +173,7 @@
             "count": 35447
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.464Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.090Z"
         }
       ],
       "externals": {},
@@ -217,7 +217,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -234,7 +234,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/hJ45UDEa_rKtqxjNcIcYYJ_3eBvl9Jj2H-gXHBwNDwKOcSvDLjSwgOVbU9tEbUQmpGnyGwQFLQ=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:07.498Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.123Z"
         },
         {
           "platform": "bilibili",
@@ -246,7 +246,19 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.498Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.123Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "ninomaeinanis",
+          "handle": null,
+          "name": "一伊那尓栖",
+          "url": "https://twitter.com/ninomaeinanis",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.123Z"
         }
       ],
       "externals": {},
@@ -260,7 +272,7 @@
     {
       "id": "UCoSrY_IQQVpmIRZ9Xf-y93g",
       "name": "Gawr Gura Ch. hololive-EN",
-      "handle": null,
+      "handle": "GawrGura",
       "kind": "virtual",
       "role": "vtuber",
       "region": "en",
@@ -268,9 +280,7 @@
       "languages": [
         "en"
       ],
-      "statedLanguages": [
-        "en"
-      ],
+      "statedLanguages": [],
       "agency": "hololive",
       "affiliation": "group",
       "avatar": "https://yt3.googleusercontent.com/6BCfAqi9yIpZbHLbw9BAWySvB3XZf9r8jFqudO5nSOsHoGzLhlKrm1M1uuMCRabi_pXGDzl7=s900-c-k-c0x00ffffff-no-rj",
@@ -281,17 +291,17 @@
       },
       "videoCount": null,
       "viewCount": null,
-      "uploadsPlaylistId": "UUoSrY_IQQVpmIRZ9Xf-y93g",
+      "uploadsPlaylistId": null,
       "country": null,
       "tags": [],
       "isSinging": true,
       "gender": "female",
       "isAi": false,
-      "variant": "vtuber",
+      "variant": "female_vtuber",
       "verification": null,
       "source": "seed",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:02:56.253Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "graduated",
@@ -301,34 +311,20 @@
         {
           "platform": "youtube",
           "id": "UCoSrY_IQQVpmIRZ9Xf-y93g",
-          "handle": null,
-          "name": "Gawr Gura",
+          "handle": "GawrGura",
+          "name": "Gawr Gura Ch. hololive-EN",
           "url": "https://www.youtube.com/channel/UCoSrY_IQQVpmIRZ9Xf-y93g",
           "subscribers": {
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/6BCfAqi9yIpZbHLbw9BAWySvB3XZf9r8jFqudO5nSOsHoGzLhlKrm1M1uuMCRabi_pXGDzl7=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:04.953Z"
-        },
-        {
-          "platform": "bilibili",
-          "id": "674600648",
-          "handle": null,
-          "name": "噶呜·古拉",
-          "url": "https://space.bilibili.com/674600648",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.630Z"
+          "lastCheckedAt": "2026-10-23T10:02:56.253Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
       "nameSource": "platform",
-      "aliases": [
-        "Gawr Gura"
-      ]
+      "aliases": []
     },
     {
       "id": "vdb:003565db-c2db-5968-ac49-b755c548a91b",
@@ -362,7 +358,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",

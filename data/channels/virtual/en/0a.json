@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T12:45:03.106Z",
+  "generatedAt": "2026-10-23T10:02:56.253Z",
   "channels": [
     {
       "id": "UC8rcEBzJSleTkf_-agPM20g",
       "name": "IRyS Ch. hololive",
-      "handle": null,
+      "handle": "IRyS",
       "kind": "virtual",
       "role": "vsinger",
       "region": "en",
@@ -13,9 +13,7 @@
       "languages": [
         "en"
       ],
-      "statedLanguages": [
-        "en"
-      ],
+      "statedLanguages": [],
       "agency": "hololive",
       "affiliation": "group",
       "avatar": "https://yt3.googleusercontent.com/zztv3u0fMtIbGu5nLjKPTwR_8-U0nSq80kmWW0xBpc42tA6dFHlDb_TG3VjSPLNFBuAIZtaFrw=s900-c-k-c0x00ffffff-no-rj",
@@ -26,7 +24,7 @@
       },
       "videoCount": null,
       "viewCount": null,
-      "uploadsPlaylistId": "UU8rcEBzJSleTkf_-agPM20g",
+      "uploadsPlaylistId": null,
       "country": null,
       "tags": [],
       "isSinging": true,
@@ -36,7 +34,7 @@
       "verification": null,
       "source": "seed",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:02:56.253Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -46,22 +44,20 @@
         {
           "platform": "youtube",
           "id": "UC8rcEBzJSleTkf_-agPM20g",
-          "handle": null,
-          "name": "IRyS",
+          "handle": "IRyS",
+          "name": "IRyS Ch. hololive",
           "url": "https://www.youtube.com/channel/UC8rcEBzJSleTkf_-agPM20g",
           "subscribers": {
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/zztv3u0fMtIbGu5nLjKPTwR_8-U0nSq80kmWW0xBpc42tA6dFHlDb_TG3VjSPLNFBuAIZtaFrw=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:04.953Z"
+          "lastCheckedAt": "2026-10-23T10:02:56.253Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
       "nameSource": "platform",
-      "aliases": [
-        "IRyS"
-      ]
+      "aliases": []
     },
     {
       "id": "UCHsx4Hqa-1ORjQTh9TYDhww",
@@ -98,7 +94,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -115,7 +111,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/vnzn_RiKneABPPnp1-0SO4IAZQRXqVsL5RNDQYGR9GhT-Flm47vM4UJeyGfn4U_gteKqJMBwNA=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:07.713Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.327Z"
         },
         {
           "platform": "bilibili",
@@ -127,7 +123,19 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.713Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.327Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "takanashikiara",
+          "handle": null,
+          "name": "小鸟游琪亚拉",
+          "url": "https://twitter.com/takanashikiara",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.327Z"
         }
       ],
       "externals": {},
@@ -171,7 +179,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -188,7 +196,19 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/xXO6UqEUCfXxrY16021Fjy6SQxv8GnPTOR_JilIwHE21yunBzMbmp4MEJEps4GOEMKZ6TvBI=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:07.415Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.047Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "FinanaRyugu",
+          "handle": null,
+          "name": "Finana Ryugu",
+          "url": "https://twitter.com/FinanaRyugu",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.047Z"
         }
       ],
       "externals": {},

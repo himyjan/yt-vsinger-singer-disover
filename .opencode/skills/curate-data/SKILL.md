@@ -14,7 +14,7 @@ you fix it.
 | --- | --- |
 | One specific channel is wrong | `data/overrides.json` |
 | A whole class of channels is wrong (a marker misfires) | `scripts/lib/classify.ts` |
-| A channel should definitely be tracked | `scripts/lib/seeds.ts` |
+| A channel should definitely be tracked | `data/seed-catalog.json` |
 | A channel should not be tracked at all | `data/overrides.json` → `"hidden": true` |
 
 ## The overrides file
@@ -174,18 +174,19 @@ heuristic. The heuristic in `classify.ts` is only the fallback.
 
 ## The curated seed list
 
-`scripts/lib/seeds.ts`. The highest-precedence source — seeded records always
-have `confidence: 1`.
+`data/seed-catalog.json` is the highest-precedence source for curated channel
+classification. Records keep `source: "seed"` as provenance; do not add a
+`confidence` value.
 
-```ts
+```json
 {
-  handle: "somehandle",        // or channelId: "UC…"
-  name: "Display Name",
-  kind: "virtual",
-  role: "vsinger",
-  region: "jp",
-  agency: "hololive",
-  isSinging: true,
+  "handle": "somehandle",
+  "name": "Display Name",
+  "kind": "virtual",
+  "role": "vsinger",
+  "region": "jp",
+  "agency": "hololive",
+  "isSinging": true
 }
 ```
 

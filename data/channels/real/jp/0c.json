@@ -1,22 +1,19 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T12:45:03.106Z",
+  "generatedAt": "2026-10-23T10:02:56.253Z",
   "channels": [
     {
       "id": "UCR1zT1s524Hbc85bdvno_8w",
       "name": "Aimer Official YouTube Channel",
-      "handle": null,
+      "handle": "aimerSMEJ",
       "kind": "real",
       "role": "singer",
       "region": "jp",
       "regionSource": "override",
       "languages": [
-        "en",
         "ja"
       ],
-      "statedLanguages": [
-        "en"
-      ],
+      "statedLanguages": [],
       "agency": null,
       "affiliation": "unknown",
       "avatar": "https://yt3.googleusercontent.com/c6kpyRRtPvXpZTDUbIXf05xvLedGuDmAbphDtsSwkPZwpcmWJgPBEYZThAImtqI9MsNM7_FYbQ=s900-c-k-c0x00ffffff-no-rj",
@@ -27,7 +24,7 @@
       },
       "videoCount": null,
       "viewCount": null,
-      "uploadsPlaylistId": "UUR1zT1s524Hbc85bdvno_8w",
+      "uploadsPlaylistId": null,
       "country": null,
       "tags": [],
       "isSinging": true,
@@ -37,7 +34,7 @@
       "verification": null,
       "source": "seed",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:02:56.253Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "preparing",
@@ -47,22 +44,20 @@
         {
           "platform": "youtube",
           "id": "UCR1zT1s524Hbc85bdvno_8w",
-          "handle": null,
-          "name": "Aimer",
+          "handle": "aimerSMEJ",
+          "name": "Aimer Official YouTube Channel",
           "url": "https://www.youtube.com/channel/UCR1zT1s524Hbc85bdvno_8w",
           "subscribers": {
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/c6kpyRRtPvXpZTDUbIXf05xvLedGuDmAbphDtsSwkPZwpcmWJgPBEYZThAImtqI9MsNM7_FYbQ=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:04.953Z"
+          "lastCheckedAt": "2026-10-23T10:02:56.253Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
       "nameSource": "platform",
-      "aliases": [
-        "Aimer"
-      ]
+      "aliases": []
     }
   ]
 }

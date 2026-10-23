@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T12:45:03.106Z",
+  "generatedAt": "2026-10-23T10:02:56.253Z",
   "channels": [
     {
       "id": "bilibili:1004638374",
@@ -35,7 +35,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -53,7 +53,7 @@
             "count": 55453
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.446Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.073Z"
         }
       ],
       "externals": {},
@@ -94,7 +94,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -112,7 +112,7 @@
             "count": 34368
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.436Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.065Z"
         }
       ],
       "externals": {},
@@ -152,7 +152,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -169,7 +169,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/103XpMqHLYhBZRaJCR05-ioI8c70ZeTFTebb-22u9s88UYbki4WJIFOes6VY7X62Y8-St0_CGUU=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:07.428Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.059Z"
         },
         {
           "platform": "bilibili",
@@ -181,7 +181,19 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.428Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.059Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "luca_kaneshiro",
+          "handle": null,
+          "name": "Luca_EN_Official",
+          "url": "https://twitter.com/luca_kaneshiro",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.059Z"
         }
       ],
       "externals": {},
@@ -190,6 +202,63 @@
       "aliases": [
         "Luca_EN_Official"
       ]
+    },
+    {
+      "id": "UCCSx-iLCcrdgqNafqfphCRw",
+      "name": "Corvuss",
+      "nameSource": "platform",
+      "aliases": [],
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "en",
+      "regionSource": "override",
+      "languages": [
+        "en"
+      ],
+      "statedLanguages": [],
+      "agency": "vshojo",
+      "affiliation": "group",
+      "avatar": "https://yt3.googleusercontent.com/7cJYzJFBFdoDOdfmXWIY2tQWvSCel4xlJ5lZg3rD7uUPKNTKpLFoHAWP-4bWWkfzVqyoCu5HgQ=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "Womp Womp UwU",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": true,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "seed",
+      "addedAt": "2026-10-23T10:02:56.253Z",
+      "updatedAt": "2026-10-23T10:02:56.253Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCCSx-iLCcrdgqNafqfphCRw",
+          "handle": null,
+          "name": "Corvuss",
+          "url": "https://www.youtube.com/channel/UCCSx-iLCcrdgqNafqfphCRw",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/7cJYzJFBFdoDOdfmXWIY2tQWvSCel4xlJ5lZg3rD7uUPKNTKpLFoHAWP-4bWWkfzVqyoCu5HgQ=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-23T10:02:56.253Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
     },
     {
       "id": "UCG0rzBZV_QMP4MtWg6IjhEA",
@@ -223,7 +292,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -240,7 +309,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/w2LaS4ankJlkf3FdjHJVSWBOTAHYfsC-RcEi95NOrgcChjJG6Lz3x_b7UPQBiZ_1HJt_GemBeR8=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:07.456Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.083Z"
         },
         {
           "platform": "bilibili",
@@ -252,7 +321,19 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.456Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.083Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "shu_yamino",
+          "handle": null,
+          "name": "Shu_Official",
+          "url": "https://twitter.com/shu_yamino",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.083Z"
         }
       ],
       "externals": {},
@@ -294,7 +375,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -311,7 +392,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_k1A0_eKZSqS6nr5PrZbZdBgLhRwBBYy08zh6y-_6jXAA=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:07.481Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.107Z"
         },
         {
           "platform": "bilibili",
@@ -323,7 +404,19 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.481Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.107Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "HlME_SUN",
+          "handle": null,
+          "name": "sunyeojin",
+          "url": "https://twitter.com/HlME_SUN",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.107Z"
         },
         {
           "platform": "twitch",
@@ -335,7 +428,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.481Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.107Z"
         }
       ],
       "externals": {},
@@ -377,7 +470,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -394,7 +487,19 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/JCyRLd80Znc5g28VztowNaT537HODqR_MbIVvwp_QfFials0GWjNXTrEI7HqqtJdmLe2s7iPKg=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:07.412Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.045Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "EliraPendora",
+          "handle": null,
+          "name": "Elira Pendora",
+          "url": "https://twitter.com/EliraPendora",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.045Z"
         }
       ],
       "externals": {},
@@ -403,6 +508,63 @@
       "aliases": [
         "Elira Pendora"
       ]
+    },
+    {
+      "id": "UCsBFeCb82qOXyUP19nmD9xw",
+      "name": "Veibae",
+      "nameSource": "platform",
+      "aliases": [],
+      "handle": "Veibae",
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "en",
+      "regionSource": "override",
+      "languages": [
+        "en"
+      ],
+      "statedLanguages": [],
+      "agency": "vshojo",
+      "affiliation": "group",
+      "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_nR35Y_uH0aasJ9nUif0bTzWiL9LZtVXjgPHjES-ibPrAo=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "The OFFICIAL YouTube channel for Veibae. Make sure to follow the live stream at www.twitch.tv/vei",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": true,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "seed",
+      "addedAt": "2026-10-23T10:02:56.253Z",
+      "updatedAt": "2026-10-23T10:02:56.253Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCsBFeCb82qOXyUP19nmD9xw",
+          "handle": "Veibae",
+          "name": "Veibae",
+          "url": "https://www.youtube.com/channel/UCsBFeCb82qOXyUP19nmD9xw",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_nR35Y_uH0aasJ9nUif0bTzWiL9LZtVXjgPHjES-ibPrAo=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-23T10:02:56.253Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
     }
   ]
 }

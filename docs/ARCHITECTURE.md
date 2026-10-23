@@ -127,7 +127,7 @@ scripts/
     ├── roster.ts            builds the channel roster from those sources
     ├── dedupe.ts            identity-based de-duplication
     ├── music-dataset.ts     curated cover-song metadata
-    ├── seeds.ts             curated starting catalogue
+    ├── seed-catalog.ts      validates and loads data/seed-catalog.json
     ├── suggestions.ts       data/suggestions.json — the import queue
     ├── import-channels.ts   suggestions → InnerTube → classified records
     ├── dataset.ts           the on-disk layout and the writers
@@ -204,8 +204,8 @@ segmenter, because `歌い手` is indexed as `歌い` + `い手`.
 | `isAcoustic` | 弾き語り / 彈唱 / acoustic — a flag, not a category, so acoustic covers stay in the cover bucket |
 | `variant` | the combined label: `female_vtuber`, `ai_vsinger`, … |
 
-Everything is overridable from `data/overrides.json`, and the curated seed
-list in `scripts/lib/seeds.ts` has the highest precedence of all.
+Everything is overridable from `data/overrides.json`, and the curated catalog
+in `data/seed-catalog.json` has the highest precedence of all.
 
 ## De-duplication
 

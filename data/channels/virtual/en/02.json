@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T12:45:03.106Z",
+  "generatedAt": "2026-10-23T10:02:56.253Z",
   "channels": [
     {
       "id": "bilibili:1763663258",
@@ -35,7 +35,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -53,7 +53,7 @@
             "count": 37788
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.421Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.052Z"
         }
       ],
       "externals": {},
@@ -93,7 +93,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -110,7 +110,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/poFnH_5AgAQoTbBtHrSxhFGLyVRCS0rduc0-5akrrnF3bZwqEvLAE-2lK_8TlFno59uqvLGjEQ=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:07.438Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.067Z"
         },
         {
           "platform": "bilibili",
@@ -122,7 +122,19 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.438Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.067Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "Mysta_Rias",
+          "handle": null,
+          "name": "Mysta_Official",
+          "url": "https://twitter.com/Mysta_Rias",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.067Z"
         }
       ],
       "externals": {},

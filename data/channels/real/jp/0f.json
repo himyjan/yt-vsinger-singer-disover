@@ -1,22 +1,19 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T12:45:03.106Z",
+  "generatedAt": "2026-10-23T10:02:56.253Z",
   "channels": [
     {
       "id": "UCUCeZaZeJbEYAAzvMgrKOPQ",
       "name": "Kenshi Yonezu 米津玄師",
-      "handle": null,
+      "handle": "KenshiYonezu",
       "kind": "real",
       "role": "singer",
       "region": "jp",
       "regionSource": "override",
       "languages": [
-        "en",
         "ja"
       ],
-      "statedLanguages": [
-        "en"
-      ],
+      "statedLanguages": [],
       "agency": null,
       "affiliation": "unknown",
       "avatar": "https://yt3.googleusercontent.com/xB24hncKVt--p4KvueOO2EffJlsQUzUGelLYpEgtuaNTq5eAYHDjypMi8tAhwli_v3QKcrnh=s900-c-k-c0x00ffffff-no-rj",
@@ -27,7 +24,7 @@
       },
       "videoCount": null,
       "viewCount": null,
-      "uploadsPlaylistId": "UUUCeZaZeJbEYAAzvMgrKOPQ",
+      "uploadsPlaylistId": null,
       "country": null,
       "tags": [],
       "isSinging": true,
@@ -37,7 +34,7 @@
       "verification": null,
       "source": "seed",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:02:56.253Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -47,22 +44,20 @@
         {
           "platform": "youtube",
           "id": "UCUCeZaZeJbEYAAzvMgrKOPQ",
-          "handle": null,
-          "name": "Kenshi Yonezu",
+          "handle": "KenshiYonezu",
+          "name": "Kenshi Yonezu 米津玄師",
           "url": "https://www.youtube.com/channel/UCUCeZaZeJbEYAAzvMgrKOPQ",
           "subscribers": {
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/xB24hncKVt--p4KvueOO2EffJlsQUzUGelLYpEgtuaNTq5eAYHDjypMi8tAhwli_v3QKcrnh=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:04.953Z"
+          "lastCheckedAt": "2026-10-23T10:02:56.253Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
       "nameSource": "platform",
-      "aliases": [
-        "Kenshi Yonezu"
-      ]
+      "aliases": []
     }
   ]
 }

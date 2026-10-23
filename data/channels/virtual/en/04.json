@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T12:45:03.106Z",
+  "generatedAt": "2026-10-23T10:02:56.253Z",
   "channels": [
     {
       "id": "bilibili:13743308",
@@ -35,7 +35,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -53,13 +53,70 @@
             "count": 110019
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.433Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.061Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
       "nameSource": "roster",
       "aliases": []
+    },
+    {
+      "id": "twitter:livecartoonjp",
+      "name": "LiveCartoon",
+      "nameSource": "roster",
+      "aliases": [],
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "en",
+      "regionSource": "declared",
+      "languages": [
+        "en"
+      ],
+      "statedLanguages": [],
+      "agency": "f2fd7bb2-a25a-597e-bf64-9bb35241fccb",
+      "affiliation": "group",
+      "avatar": null,
+      "banner": null,
+      "description": null,
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": true,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-23T10:03:47.608Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "twitter",
+          "id": "livecartoonjp",
+          "handle": null,
+          "name": "LiveCartoon",
+          "url": "https://twitter.com/livecartoonjp",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.058Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
     },
     {
       "id": "UCFgXWZOUZA2oYHNr6qDmsTQ",
@@ -93,7 +150,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -110,7 +167,19 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/2CVK0cKnt9xYLol27q9gmPGmDrL67w0BKvcvHmelALnWLl3EDS6YssvuE2-UTlF9UKiA_E7LPw=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:07.454Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.081Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "ScarleYonaguni",
+          "handle": null,
+          "name": "Scarle Yonaguni",
+          "url": "https://twitter.com/ScarleYonaguni",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.081Z"
         }
       ],
       "externals": {},
@@ -119,6 +188,63 @@
       "aliases": [
         "Scarle Yonaguni"
       ]
+    },
+    {
+      "id": "UCj_TYZ60NDQYY5QpUvOge9g",
+      "name": "Евгений Ясков",
+      "nameSource": "platform",
+      "aliases": [],
+      "handle": "IRONMOUSE",
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "en",
+      "regionSource": "override",
+      "languages": [
+        "en"
+      ],
+      "statedLanguages": [],
+      "agency": "vshojo",
+      "affiliation": "group",
+      "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_mMJJ9pebf3y5wU65kBM0jUKY6JqBuWIUM_04QMENZZDoY=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "Я кароче как \"Еее, бой\", только \"Еее, gun\". Просто я не бой, а gun.",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": true,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "seed",
+      "addedAt": "2026-10-23T10:02:56.253Z",
+      "updatedAt": "2026-10-23T10:02:56.253Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null,
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCj_TYZ60NDQYY5QpUvOge9g",
+          "handle": "IRONMOUSE",
+          "name": "Евгений Ясков",
+          "url": "https://www.youtube.com/channel/UCj_TYZ60NDQYY5QpUvOge9g",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_mMJJ9pebf3y5wU65kBM0jUKY6JqBuWIUM_04QMENZZDoY=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-23T10:02:56.253Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
     },
     {
       "id": "vdb:4d66bbfb-bee8-59ec-88f6-495507330f10",

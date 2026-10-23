@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T12:45:03.106Z",
+  "generatedAt": "2026-10-23T10:02:56.253Z",
   "channels": [
     {
       "id": "UCcpgDsHDYHO1UyfpwjyNx1g",
@@ -36,7 +36,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-22T12:45:04.953Z",
+      "updatedAt": "2026-10-23T10:03:47.608Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -53,7 +53,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/EoJLelX2dO78iVI9jvUwkiqd9LjKIqp82JluwpSKXCpFJkn0RQzkc44mFMs_rTm6JF6PXanP=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-22T12:45:07.476Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.101Z"
         },
         {
           "platform": "bilibili",
@@ -65,7 +65,19 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.476Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.101Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "KitsuiAkira",
+          "handle": null,
+          "name": "狐井アキラ",
+          "url": "https://twitter.com/KitsuiAkira",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.101Z"
         },
         {
           "platform": "twitch",
@@ -77,7 +89,67 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.476Z"
+          "lastCheckedAt": "2026-10-23T10:03:52.101Z"
+        },
+        {
+          "platform": "tiktok",
+          "id": "xkiichan",
+          "handle": null,
+          "name": "狐井アキラ",
+          "url": "https://www.tiktok.com/@xkiichan",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.101Z"
+        },
+        {
+          "platform": "instagram",
+          "id": "kitsuiakira",
+          "handle": null,
+          "name": "狐井アキラ",
+          "url": "https://www.instagram.com/kitsuiakira/",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.101Z"
+        },
+        {
+          "platform": "other",
+          "id": "https://open.spotify.com/artist/6BvTqC4B6wOX1RiUuY1vnG",
+          "handle": null,
+          "name": "狐井アキラ",
+          "url": "https%3A%2F%2Fopen.spotify.com%2Fartist%2F6BvTqC4B6wOX1RiUuY1vnG",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.101Z"
+        },
+        {
+          "platform": "facebook",
+          "id": "KitsuiAkira",
+          "handle": null,
+          "name": "狐井アキラ",
+          "url": "https://www.facebook.com/KitsuiAkira/",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.101Z"
+        },
+        {
+          "platform": "email",
+          "id": "xkiichan@yahoo.com",
+          "handle": null,
+          "name": "狐井アキラ",
+          "url": "xkiichan%40yahoo.com",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T10:03:52.101Z"
         }
       ],
       "externals": {},
