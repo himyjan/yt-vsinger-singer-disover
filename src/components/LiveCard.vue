@@ -7,7 +7,7 @@
  * here is the *all links* row, which lists every platform the performer is
  * present on.
  */
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import type { Item } from "@shared/lib/types";
 import { formatCount, formatDuration, formatRelative } from "@/lib/dataset";
 import { imageUrl } from "@/lib/image";
@@ -25,13 +25,36 @@ const emit = defineEmits<{ (e: "open", item: Item): void }>();
 
 const links = computed(() => channelLinks(props.channel));
 
-/** Set when the thumbnail URL does not load. */
-const thumbFailed = ref(false);
-
 const thumbnail = computed(() => {
   if (props.item.thumbnail) return imageUrl(props.item.thumbnail);
-  return `https://i.ytimg.com/vi/${props.item.id}/hqdefault.jpg`;
+  if (
+    props.item.platform === "youtube" ||
+    (!props.item.platform && /^[\w-]{11}$/.test(props.item.id))
+  ) {
+    return `https://i.ytimg.com/vi/${props.item.id}/hqdefault.jpg`;
+  }
+  return "";
 });
+const fallbackThumbnail = computed(() => imageUrl(props.channel?.avatar));
+const activeThumbnail = ref("");
+watch(
+  [thumbnail, fallbackThumbnail],
+  () => {
+    activeThumbnail.value = thumbnail.value || fallbackThumbnail.value;
+  },
+  { immediate: true },
+);
+
+function onThumbnailError(): void {
+  if (
+    activeThumbnail.value !== fallbackThumbnail.value &&
+    fallbackThumbnail.value
+  ) {
+    activeThumbnail.value = fallbackThumbnail.value;
+    return;
+  }
+  activeThumbnail.value = "";
+}
 
 const elapsed = computed(() => {
   const start = props.item.actualStart ?? props.item.scheduledStart;
@@ -59,14 +82,14 @@ const kindLabel = computed(() =>
       @click="emit('open', item)"
     >
       <img
-        v-if="!thumbFailed"
-        :src="thumbnail"
+        v-if="activeThumbnail"
+        :src="activeThumbnail"
         :alt="item.title"
         referrerpolicy="no-referrer"
         loading="lazy"
         decoding="async"
         class="h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]"
-        @error="thumbFailed = true"
+        @error="onThumbnailError"
       />
       <span
         v-else

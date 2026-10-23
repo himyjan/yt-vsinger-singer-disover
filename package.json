@@ -14,6 +14,7 @@
     "data:sync": "tsx scripts/sync.ts",
     "data:index": "tsx scripts/build-index.ts",
     "data:details": "tsx scripts/fill-details.ts",
+    "data:analytics:append": "tsx scripts/append-analytics.ts",
     "data:ids": "tsx scripts/fill-details.ts --normalize-ids",
     "data:avatars": "tsx scripts/fill-details.ts",
     "data:validate": "tsx scripts/validate.ts",

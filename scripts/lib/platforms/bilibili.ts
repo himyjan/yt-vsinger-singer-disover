@@ -527,6 +527,17 @@ export class BilibiliAdapter implements PlatformAdapter {
     });
   }
 
+  async thumbnailForItem(id: string): Promise<string | null> {
+    const bvid = id.trim();
+    if (!/^BV[\w]+$/i.test(bvid)) return null;
+    const json = await this.getJson<{
+      code: number;
+      data?: { pic?: string };
+    }>(`${API}/x/web-interface/view?bvid=${encodeURIComponent(bvid)}`);
+    if (json?.code !== 0) return null;
+    return absoluteUrl(json.data?.pic);
+  }
+
   async live(_channel: PlatformChannel): Promise<PlatformUpload[]> {
     /**
      * Bilibili's live list is partition-wide rather than per-channel, so the

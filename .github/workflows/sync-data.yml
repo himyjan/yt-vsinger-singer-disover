@@ -15,6 +15,7 @@ name: Sync dataset
 #   VK_ACCESS_TOKEN       — VK service token                 (optional)
 #   CI_ME_CLIENT_ID       — CI.ME Open API client id          (optional)
 #   CI_ME_CLIENT_SECRET   — CI.ME Open API client secret      (optional)
+#   ANALYTICS_REPO_TOKEN  — write access to the public analytics archive (optional)
 
 on:
   schedule:
@@ -77,6 +78,9 @@ jobs:
           restore-keys: |
             yt-quota-
 
+      - name: Clear stale analytics export
+        run: rm -f .cache/analytics-pending.json
+
       - name: Sync dataset
         env:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
@@ -90,6 +94,42 @@ jobs:
           if [ "${{ inputs.no-search }}" = "true" ]; then ARGS="$ARGS --no-search"; fi
           if [ "${{ inputs.dry-run }}" = "true" ]; then ARGS="$ARGS --dry-run"; fi
           npm run data:sync -- $ARGS
+
+      - name: Check analytics archive credentials
+        id: analytics-auth
+        env:
+          ANALYTICS_REPO_TOKEN: ${{ secrets.ANALYTICS_REPO_TOKEN }}
+        run: |
+          if [ -n "$ANALYTICS_REPO_TOKEN" ]; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::ANALYTICS_REPO_TOKEN is missing; daily analytics will not be archived."
+          fi
+
+      - name: Checkout analytics archive
+        if: steps.analytics-auth.outputs.enabled == 'true'
+        uses: actions/checkout@v4
+        with:
+          repository: himyjan/yt-vsinger-singer-disover-analytics
+          token: ${{ secrets.ANALYTICS_REPO_TOKEN }}
+          path: analytics-archive
+
+      - name: Append platform analytics
+        if: steps.analytics-auth.outputs.enabled == 'true' && inputs.dry-run != 'true'
+        run: npm run data:analytics:append -- analytics-archive
+
+      - name: Commit platform analytics
+        if: steps.analytics-auth.outputs.enabled == 'true'
+        working-directory: analytics-archive
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/
+          if ! git diff --cached --quiet; then
+            git commit -m "data: append daily platform analytics"
+            git push
+          fi
 
       - name: Build search index
         run: npm run data:index

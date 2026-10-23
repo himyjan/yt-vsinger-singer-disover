@@ -31,6 +31,7 @@ interface VkUser {
   last_name?: string;
   photo_200?: string;
   followers_count?: number;
+  video_count?: number;
   verified?: number;
   status?: string;
 }
@@ -127,6 +128,7 @@ export class VkAdapter implements PlatformAdapter {
       avatar: user.photo_200 ?? null,
       description: user.status ?? null,
       tags: [],
+      videoCount: user.video_count ?? null,
     };
   }
 

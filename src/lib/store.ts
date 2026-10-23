@@ -29,6 +29,7 @@ export type ViewId =
   | "live"
   | "upcoming"
   | "songs"
+  | "analytics"
   | "channels"
   | "subs"
   | "saved";
@@ -47,6 +48,11 @@ const SUBS_KEY = "vst.subscriptions";
 const SUGGESTED_KEY = "vst.suggested";
 const BADGES_KEY = "vst.youtubeBadges";
 const DETAILS_KEY = "vst.youtubeDetails";
+
+function initialView(): ViewId {
+  const view = readStorage<ViewId>(VIEW_KEY, "live");
+  return view === "analytics" ? "live" : view;
+}
 
 /**
  * How long a cached 🎵 result is trusted.
@@ -198,7 +204,7 @@ export const state = reactive({
    */
   channelSubs: "all" as "all" | "subscribed" | "not-subscribed",
   /** Active view. */
-  view: readStorage<ViewId>(VIEW_KEY, "live"),
+  view: initialView(),
   /** Current search query. */
   query: "",
   /** Theme. */

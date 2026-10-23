@@ -122,7 +122,12 @@ export class KickAdapter implements PlatformAdapter {
         channelId: channel.id,
         title: stream.session_title ?? "",
         description: null,
-        thumbnail: null,
+        thumbnail:
+          (typeof stream.thumbnail === "string"
+            ? stream.thumbnail
+            : stream.thumbnail?.url) ??
+          stream.thumbnail_url ??
+          null,
         publishedAt: stream.start_time ?? null,
         scheduledStart: stream.start_time ?? null,
         duration: null,

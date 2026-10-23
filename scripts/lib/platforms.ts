@@ -42,6 +42,8 @@ export interface PlatformChannel {
   tags: string[];
   /** The number of published videos, when the platform reports it. */
   videoCount?: number | null;
+  /** Lifetime views, when the platform reports them. */
+  viewCount?: number | null;
   /** The total number of likes, when the platform reports it. */
   likeCount?: number | null;
 }
@@ -98,6 +100,8 @@ export interface PlatformAdapter {
   ): Promise<PlatformUpload[]>;
   /** Lists live / upcoming streams for a channel. */
   live(channel: PlatformChannel): Promise<PlatformUpload[]>;
+  /** Fetch a media thumbnail for a platform-native item id, when supported. */
+  thumbnailForItem?(id: string): Promise<string | null>;
   /** Discovers channels by keyword. Used by the discovery sweep. */
   search?(query: string, limit: number): Promise<PlatformChannel[]>;
   /**

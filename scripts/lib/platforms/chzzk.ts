@@ -126,7 +126,11 @@ export class ChzzkAdapter implements PlatformAdapter {
         channelId: channel.id,
         title: live.title ?? "",
         description: live.admissionDescription ?? null,
-        thumbnail: null,
+        thumbnail:
+          live.liveImageUrl ??
+          live.defaultThumbnailImageUrl ??
+          live.thumbnailImageUrl ??
+          null,
         publishedAt: live.openDate ?? null,
         scheduledStart: live.openDate ?? null,
         duration: null,
