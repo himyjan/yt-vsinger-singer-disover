@@ -10,7 +10,9 @@
 
 A discovery and tracking platform for **virtual singers (VTuber / VSinger)** and
 **real human singers / music producers**, focused on **YouTube** and **Twitch**,
-with additional support for **Bilibili**, **Niconico** and **VK**.
+with additional support for **Bilibili**, **Niconico**, **VK**, **CHZZK**,
+**KICK** and **SOOP**. Available **CI.ME** profile links and other discovered
+external links are shown where present.
 
 The three things the product must do well:
 
@@ -105,6 +107,12 @@ Every record carries `source`:
       VTuber scene.
 - `[x]` **KICK** — the public API, no credentials. Where a lot of the
       Western scene has moved.
+- `[x]` **SOOP** — public live-list adapter for discoverable public
+      broadcasts; offline profile lookup is unavailable through a verified
+      endpoint.
+- `[x]` **CI.ME** — profile adapter for known channel IDs using the official
+      Open API; requires server-side app credentials and does not expose
+      undocumented search or live endpoints.
 - `[x]` A common `PlatformAdapter` interface so adding a platform is one file.
 - `[x]` A channel record carries a **list** of platform identities
       (`platforms[]`), so one performer can be present on YouTube *and*
@@ -416,7 +424,8 @@ is published.
       title · channel · viewer count · started at · elapsed duration ·
       category · region · artist kind · agency.
 - `[x]` Each entry shows **all links**: YouTube, Twitch, X/Twitter, Bilibili,
-      Niconico, VK and any other handles found in the channel description.
+      Niconico, VK, CHZZK, KICK and SOOP, plus CI.ME and any other links found in
+      the channel description when available.
 - `[x]` A channel detail view showing every live + recent upload, with the
       same all-links block.
 - `[x]` A separate **Upcoming** view for scheduled streams and premieres.
@@ -455,23 +464,27 @@ is published.
 
 ### 7.3 Account linking
 
-Every platform the dataset covers can be linked, using whatever mechanism the
-platform actually offers. The four that have no public OAuth ask the user for
-their session cookie; the three that do use it.
+Account linking is available only where the app has a provider that can fetch
+the user's follows (or the closest available equivalent). Platform adapters
+for discovery/profile refresh do not by themselves provide account linking.
 
-| Platform | Mechanism | Configuration |
+| Platform | Can import follows? | Link method / notes |
 | --- | --- | --- |
-| **YouTube** | Google Identity Services | `VITE_GOOGLE_CLIENT_ID` |
-| **Twitch** | OAuth 2.0 with PKCE | `VITE_TWITCH_CLIENT_ID` |
-| **VK** | implicit OAuth | `VITE_VK_CLIENT_ID` |
-| **KICK** | OAuth 2.1 with PKCE | `VITE_KICK_CLIENT_ID` + `VITE_KICK_CLIENT_SECRET` |
-| **Bilibili** | the `SESSDATA` cookie | none |
-| **CHZZK** | the `NaverLogin` cookie | none |
-| **Niconico** | the `user_session` cookie | none |
+| **YouTube** | Yes — subscriptions | Google Identity Services OAuth |
+| **Twitch** | Yes — followed channels | OAuth 2.0 with PKCE |
+| **Bilibili** | Yes — followed users | `SESSDATA` session cookie |
+| **Niconico** | Yes — followed users | `user_session` session cookie |
+| **CHZZK** | Yes — followed channels | `NaverLogin` session cookie |
+| **KICK** | Yes — followed channels | OAuth 2.1 with PKCE, or `kick_session` cookie |
+| **VK** | Partial — friends, not channel subscriptions | Implicit OAuth; friend list is the closest equivalent |
+| **SOOP** | No | No account-link provider; current integration reads public live listings |
+| **CI.ME** | No | Profile lookup only; no documented follow-list endpoint/provider |
 
 - `[x]` Client-side Google OAuth via Google Identity Services — works on a
       static site, no backend.
-- `[x]` Scope: `https://www.googleapis.com/auth/youtube.readonly`.
+- `[x]` Scope: `https://www.googleapis.com/auth/youtube` (the full scope;
+      InnerTube refuses `youtube.readonly` for a list above 1,000, and the
+      Data API path still only reads).
 - `[x]` **Twitch** — OAuth 2.0 with PKCE, so no client secret is needed in
       the browser.
 - `[x]` **Bilibili** — the user pastes their `SESSDATA` cookie, because
@@ -490,8 +503,11 @@ their session cookie; the three that do use it.
       client secret, so a registered KICK app is needed; without one the user
       pastes their `kick_session` cookie instead, which needs no
       configuration at all.
-- `[x]` Every provider that needs no configuration works **out of the box** —
-      four of the seven need nothing but a cookie.
+- `[x]` **SOOP** and **CI.ME** are not presented as account-link options:
+      SOOP has no follow-list provider, and CI.ME's documented API does not
+      expose a follow-list endpoint.
+- `[x]` The VK friend list is labelled as an approximation, not as channel
+      subscriptions.
 - `[x]` **Several accounts per platform** — a user can link two Twitch
       accounts, or two Google profiles.
 - `[x]` **Switch account** — the active account is stored per platform, so
@@ -519,23 +535,133 @@ their session cookie; the three that do use it.
 - `[x]` After linking, the app switches to the subscription list and reports
       how many were linked, so a link that produced nothing is never silent.
 - `[x]` A failed platform request names its cause instead of looking like an
-      empty result: `youtube.readonly` missing, YouTube Data API v3 not
-      enabled in the project, quota exhausted, account without a channel,
-      expired token, or a consent-screen refusal (`access_denied`,
-      `origin_mismatch`).
+      empty result: full YouTube permission missing (a stale read-only token),
+      YouTube Data API v3 not enabled in the project, quota exhausted, account
+      without a channel, expired token, or a consent-screen refusal
+      (`access_denied`, `origin_mismatch`).
 - `[x]` The linked account's own name and avatar come from
-      `channels.list(mine=true)`, which the `youtube.readonly` scope already
-      allows; `oauth2/v3/userinfo` needs the `profile` scope and is only a
-      fallback.
+      `channels.list(mine=true)`. The full `youtube` scope the link now
+      requests allows it (a read-only token would too); `oauth2/v3/userinfo`
+      needs the `profile` scope and is only a fallback.
 - `[x]` Subscription paging runs to the end and shows progress
       (“loading 200 / 956…”). A page is retried twice on a 5xx, so one
       transient error cannot truncate a long list.
 - `[x]` `pageInfo.totalResults` is compared with what arrived: if Google
       reports more than the API returned, the app says so instead of showing a
-      silently truncated list. (The API caps `mine=true` at ~1,000 in some
-      cases; the account's own channels count is the other common reason.)
+      silently truncated list. This is the **fallback** path (a static build,
+      or a token InnerTube refuses). The YouTube Data API returns at most
+      **1,000** items for a list such as subscriptions, whatever the account
+      holds; the account's own channels count is the other common reason the
+      numbers differ.
 - `[x]` Several accounts on the same platform are merged — a second YouTube
       channel's subscriptions add to the first rather than replacing them.
+
+### 7h. Large accounts, suggestions and Official Artist Channels
+
+- `[x]` The sign-in page states the trade-off plainly. YouTube linking asks
+      for the full `youtube` scope, not `youtube.readonly`: InnerTube's
+      `FEchannels` feed answers a read-only token with **403
+      `insufficientPermissions`**. The token still lives in `localStorage`; the
+      local dev server forwards it to `youtube.com` (which sends no CORS
+      headers) and never stores or logs it. A static build has no `/api/…`
+      JSON endpoint, and a 401/502 from the bridge means the token was refused
+      or the request failed; either way the Data API path — capped at 1,000 —
+      runs instead, and its truncation message points at **Export from
+      YouTube** and the file import.
+- `[x]` (2026-10-23) **Refresh** reads the complete list through that bridge.
+      The TV client (`TVHTML5`, `browseId: FEchannels`) accepts the OAuth
+      bearer token; the web client answers `400 invalid argument`. The TV feed
+      returns channel `tileRenderer`s (id, title, handle, avatar), not
+      `channelRenderer`s. Verified live: **4,804 subscriptions in 5 pages,
+      ~2.4 s**, and the network log showed a single
+      `/api/youtube/subscriptions` request and **no** Data API
+      `subscriptions.list` call. If the bridge fails, the Data API path and its
+      truncation warning remain.
+- `[x]` The linked-account menu has **Reconnect**. It requests a fresh token
+      (silently when the scope is already granted, otherwise with the consent
+      screen) and keeps the account id, so the stored subscription list is
+      replaced rather than duplicated. “The Google token expired” now points
+      there instead of asking for an unlink.
+- `[x]` Subscription lists are imported from a file — **Import CSV / JSON**
+      reads a Google Takeout `subscriptions.csv`, the CSV produced by
+      **Export from YouTube**, or a **PocketTube backup** (`Backup → Export`,
+      a JSON of groups → `UC…` ids). One parser
+      (`parseSubscriptionsFile()`) tells the formats apart from the content,
+      and the rows are stored under the synthetic account `youtube:takeout`,
+      so Refresh never overwrites them.
+- `[x]` **Export from YouTube** copies a script that runs on
+      `youtube.com/feed/channels` in the user's own session and downloads the
+      same three-column CSV — instantly, with no Takeout queue, and it also
+      covers legacy accounts whose Takeout zip comes out empty.
+- `[x]` (2026-10-23) The export now reads the **whole** list, not the page's
+      first 1,000 cards. It computes `SAPISIDHASH` from the session's
+      `SAPISID` and walks the `FEchannels` continuation of
+      `/youtubei/v1/browse` (~100 channels per page). Verified on a live
+      account: **4,804 subscriptions in 49 pages**, exactly the ids the page
+      rendered plus every continuation page, with names. The cookie and hash
+      are used only to sign requests to `youtube.com` and never logged. If the
+      signed request is refused, the script falls back to the rendered page and
+      says so. A PocketTube backup or a Takeout CSV remains a valid import, but
+      is no longer required for accounts above 1,000. Refresh now reads the
+      same complete list through InnerTube when the dev server is available;
+      this script remains the no-link and static-build path. The `(N)` in the
+      tab title is the **unread notification count**, not the subscription
+      count — never read it as a total.
+- `[x]` Untracked subscriptions can be marked **Suggested** — per card
+      (`＋ Suggest`) or in bulk (`Suggest all`) — which writes
+      `data/suggestions.json` through the local dev server. On a static build
+      the list stays in `localStorage` and can be downloaded as
+      `suggestions.json`.
+- `[x]` A suggestion can be removed again: per card (`✕`) or all at once
+      (`clear`). A **Suggested** filter in the subs view lists the queue —
+      including channels that are already tracked — so every suggested
+      channel has a visible remove control.
+- `[x]` Removal tells the truth about where the list lives: the dev server
+      rewrites `data/suggestions.json` through
+      `POST /api/dataset/suggestions/remove`; a failed write puts the keys
+      back instead of claiming success; a static build clears only the
+      browser copy. A `vst.suggested` value from an older build (a keyed
+      object rather than an array) is normalized on read.
+- `[x]` Importing suggestions into `data/` requires **explicit permission**
+      (`consent: true`). The server refuses without it, and the UI asks the
+      user to confirm they own the account or have permission — a
+      subscription list is private and importing it publishes third-party
+      channel records.
+- `[x]` The import is batched (`offset`/`limit`) through the dev server: each
+      id is resolved with InnerTube, re-fetched in the language of the region
+      it implies, classified exactly as a sync would, merged, written, and the
+      search index is rebuilt on the last batch.
+- `[x]` The 🎵/🎶 badge beside a YouTube name marks an **Official Artist
+      Channel**. The Data API does not expose it; it is read from the channel
+      page (`AUDIO_BADGE` / `BADGE_STYLE_TYPE_VERIFIED_ARTIST`), stored as
+      `isOfficialArtist` (filled by the details pass and the import), and the
+      Channels view has a **🎵 Official artist** filter. The badge is also
+      rendered in `ChannelCard`, `ChannelDrawer` and the subscription cards,
+      so the channel list and the subscription list agree. It is YouTube's
+      own inline SVG (`OfficialArtistBadge.vue`), not an emoji, and it sits to
+      the **right** of the name.
+- `[x]` (2026-10-23) **My subscriptions** shows the 🎵 badge too. The TV
+      `FEchannels` feed that supplies the list does **not** carry
+      `AUDIO_BADGE`, so a new local bridge,
+      `POST /api/youtube/channel` (`scripts/lib/youtube-channel.ts`), reads
+      `getChannel(id).header` one channel at a time. The result is cached per
+      immutable `UC…` id in `vst.youtubeBadges` for **30 days**, separately
+      from the subscription list, so Refresh cannot erase it. The sync starts
+      automatically when the subs view opens, keeps two requests in flight,
+      shows progress and has **Stop / Resume**; a 429 stops the run rather
+      than turning a rate limit into 4,804 failed requests. Verified samples:
+      `*HIROMI*singer` → `true`, Lofi Girl → `true`.
+- `[x]` A subscription card's **live now / upcoming / songs** state comes
+      from the dataset for a tracked channel. An untracked channel fetches it
+      once when the card is opened (`detail: true` in the same bridge request)
+      and shows a modal; a tracked card still opens the normal
+      `ChannelDrawer`. The detail request adds `getLiveStreams()` and
+      `getReleases()`; the background badge sync never asks for those tabs.
+      The last 200 detail snapshots are cached in `vst.youtubeDetails`.
+- `[x]` On a static build (`GitHub Pages`) there is no local bridge, so the
+      background badge sync and the untracked-card modal stay off; the
+      dataset's existing `isOfficialArtist` badges and its live/upcoming/song
+      data still render. The local dev server exposes the bridge.
 
 ---
 

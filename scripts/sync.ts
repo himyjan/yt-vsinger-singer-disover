@@ -1274,7 +1274,9 @@ async function main(): Promise<void> {
         }
 
         try {
-          const profile = await adapter.resolve(link.handle ?? link.id);
+          const profile = await adapter.resolve(
+            link.platform === "ci.me" ? link.id : (link.handle ?? link.id),
+          );
           if (!profile) continue;
 
           /**
@@ -2408,11 +2410,15 @@ export function platformUploadToItem(
   if (!upload?.id) return null;
   return {
     id: upload.id,
+    url: upload.url,
     type: upload.status === "live" ? "live" : "video",
-    channelId: upload.channelId,
+    channelId:
+      upload.platform === "youtube"
+        ? upload.channelId
+        : `${upload.platform}:${upload.channelId}`,
     channelName: "",
     channelKind: "virtual",
-    region: "cn",
+    region: upload.region ?? "cn",
     gender: "unknown",
     languages: [],
 

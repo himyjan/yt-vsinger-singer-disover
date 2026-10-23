@@ -242,10 +242,11 @@ Whatever a channel's description links to is harvested into
 | `niconico` | `nicovideo.jp/user/<id>` |
 | `discord` | `discord.gg/<code>` |
 | `spotify` | `open.spotify.com/artist/<id>` |
+| `ci.me` | `ci.me/<channel-handle>` |
 
 These are rendered in the "all links" block next to the platform identities.
 
-## CHZZK and KICK
+## CHZZK, KICK and SOOP
 
 Two more platforms where VTubers now stream, both with public APIs that need
 no credentials.
@@ -263,6 +264,49 @@ CHZZK is the biggest Korean VTuber scene and KICK is where a lot of the
 Western scene has moved, so both are in the dataset. Neither has a public
 *search*, so the channels come from the rosters and from account linking
 rather than from discovery.
+
+SOOP's unauthenticated `main_broad_list_api.php` endpoint provides a
+paginated global live list with broadcast titles, streamer IDs and viewer
+counts. The configured discovery terms are matched locally against the first
+page; this is not a server-side channel search. The adapter cannot resolve
+offline profiles or reliably find a channel outside that page. It filters
+password-protected broadcasts, caches the page briefly, and uses the direct
+play URL for the Watch link. SOOP's profile endpoint was not verified, so the
+adapter does not depend on it.
+
+## CI.ME
+
+The [CI.ME Open API](https://developers.ci.me/docs/api-channels) documents
+`GET /api/openapi/open/v1/channels` for
+retrieving profile data by one or more channel IDs (up to 20 per request).
+It returns channel name, handle, image, description and follower count. The
+endpoint uses the app's `Client-Id` and `Client-Secret`; configure these as
+`CI_ME_CLIENT_ID` and `CI_ME_CLIENT_SECRET` in the dataset sync environment.
+The secret is never exposed to the web app. The adapter refreshes profiles
+for known CI.ME IDs (up to 20 per API request); the documented API does not
+provide public handle search, uploads or a live-list lookup, so those methods
+return no items.
+
+The documented API does not include a user follow-list endpoint, and this
+project does not offer CI.ME account linking or subscription import.
+
+## Account-linking coverage
+
+Account linking is separate from the pipeline adapters above. A platform can
+be supported for channel profiles or live discovery without exposing a
+user's followed channels.
+
+| Platform | Followed channels available in the app | Link method / limitation |
+| --- | --- | --- |
+| YouTube | Yes — subscriptions | Google OAuth |
+| Twitch | Yes — followed channels | OAuth 2.0 with PKCE |
+| Bilibili | Yes — followed users | `SESSDATA` cookie |
+| Niconico | Yes — followed users | `user_session` cookie |
+| CHZZK | Yes — followed channels | `NaverLogin` cookie |
+| KICK | Yes — followed channels | OAuth 2.1 with PKCE, or `kick_session` cookie |
+| VK | Partial — friends, not channel subscriptions | Implicit OAuth; friend list is the closest equivalent |
+| SOOP | No | Public live-list integration only; no account-link provider |
+| CI.ME | No | Profile lookup only; no documented follow-list endpoint/provider |
 
 ## The source registry
 

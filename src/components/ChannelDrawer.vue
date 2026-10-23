@@ -12,6 +12,7 @@ import { formatCount, formatDuration, formatRelative } from "@/lib/dataset";
 import { channelLinks, itemUrl, platformMeta } from "@/lib/links";
 import { toLanguageList } from "@shared/lib/regions";
 import { state, toggleSaved } from "@/lib/store";
+import OfficialArtistBadge from "@/components/OfficialArtistBadge.vue";
 
 const props = defineProps<{
   channel: Channel | null;
@@ -19,6 +20,8 @@ const props = defineProps<{
   /** Every item in the dataset, used to list the channel's uploads. */
   items: Item[];
   summaries: ChannelSummary[];
+  /** A fresh subscription-card result, which can beat a stale dataset record. */
+  badgeOverride?: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -31,6 +34,14 @@ const links = computed(() => channelLinks(props.channel));
 
 const summary = computed(
   () => props.summaries.find((s) => s.id === props.channel?.id) ?? null,
+);
+
+/** The Official Artist badge, from the subscription, the record or its summary. */
+const officialArtist = computed(
+  () =>
+    props.badgeOverride === true ||
+    props.channel?.isOfficialArtist === true ||
+    summary.value?.isOfficialArtist === true,
 );
 
 const subscribers = computed(() => {
@@ -214,7 +225,13 @@ const saved = computed(() =>
                 class="h-16 w-16 shrink-0 rounded-full object-cover ring-2 ring-black/5 dark:ring-white/10"
               />
               <div class="min-w-0 flex-1">
-                <h2 class="truncate text-lg font-bold">{{ channel.name }}</h2>
+                <h2 class="flex min-w-0 items-center gap-1.5 text-lg font-bold">
+                  <span class="truncate">{{ channel.name }}</span>
+                  <OfficialArtistBadge
+                    v-if="officialArtist"
+                    class="shrink-0"
+                  />
+                </h2>
                 <p
                   v-if="channel.handle"
                   class="truncate text-xs text-neutral-500"

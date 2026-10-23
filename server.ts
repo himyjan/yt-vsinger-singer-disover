@@ -11,6 +11,12 @@ import {
   removeSuggestions,
 } from "./scripts/lib/suggestions";
 import { importYouTubeChannels } from "./scripts/lib/import-channels";
+import { fetchInnerTubeSubscriptions } from "./scripts/lib/innertube-subs";
+import {
+  fetchYouTubeChannelSnapshot,
+  isChannelNotFound,
+  isRateLimited,
+} from "./scripts/lib/youtube-channel";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -174,6 +180,101 @@ async function startServer() {
   // Health check
   app.get("/api/health", (req, res) => {
     res.json({ status: "ok", timestamp: new Date().toISOString() });
+  });
+
+  /* ------------------------------------------------------------------------ */
+  /* Subscriptions through InnerTube (development only)                       */
+  /* ------------------------------------------------------------------------ */
+  /**
+   * The YouTube Data API stops a subscription list at 1,000 items. The signed
+   * account's `FEchannels` feed does not. `youtube.com` sends no CORS headers,
+   * so the browser cannot call it directly; this endpoint is the local bridge.
+   * The app posts the account's short-lived OAuth token, the server follows the
+   * continuation with the TV client (the web client rejects a bearer token),
+   * and only channel records come back.
+   *
+   * The token is used for the `Authorization` header and never logged or
+   * stored; a static build has no server and the app falls back to the Data
+   * API on its own.
+   */
+  app.post("/api/youtube/subscriptions", async (req, res) => {
+    const origin = req.get("origin");
+    if (origin && !/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
+      return res.status(403).json({ ok: false, error: "This endpoint is local only." });
+    }
+    const token = typeof req.body?.token === "string" ? req.body.token.trim() : "";
+    if (!token || token.length > 4096) {
+      return res.status(400).json({ ok: false, error: "An OAuth access token is required." });
+    }
+    try {
+      const result = await fetchInnerTubeSubscriptions(token);
+      res.json({ ok: true, source: "innertube", ...result });
+    } catch (error) {
+      const message = (error as Error).message || "InnerTube request failed";
+      const rejected = /401|403|not recognise/i.test(message);
+      res.status(rejected ? 401 : 502).json({ ok: false, error: message });
+    }
+  });
+
+  /* ------------------------------------------------------------------------ */
+  /* One YouTube channel's current state (development only)                   */
+  /* ------------------------------------------------------------------------ */
+  /**
+   * The subscription list is read through the TV feed, which does **not**
+   * carry the 🎵 Official Artist badge. The badge lives in the channel page
+   * header, so the app asks for one channel at a time and caches the answer.
+   *
+   * `detail: true` additionally reads the Live and Releases tabs. That is used
+   * only when a card is opened, never for the whole subscription list.
+   *
+   * Requests are not authenticated and do not touch the account token. They
+   * are limited to two in flight so a badge sync cannot bury the dev server
+   * under thousands of simultaneous `getChannel` calls.
+   */
+  let activeChannelRequests = 0;
+  const waitingChannelRequests: Array<() => void> = [];
+  const withChannelSlot = async <T>(work: () => Promise<T>): Promise<T> => {
+    if (activeChannelRequests >= 2) {
+      await new Promise<void>((resolve) => waitingChannelRequests.push(resolve));
+    }
+    activeChannelRequests += 1;
+    try {
+      return await work();
+    } finally {
+      activeChannelRequests -= 1;
+      waitingChannelRequests.shift()?.();
+    }
+  };
+
+  app.post("/api/youtube/channel", async (req, res) => {
+    const origin = req.get("origin");
+    if (origin && !/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
+      return res.status(403).json({ ok: false, error: "This endpoint is local only." });
+    }
+    const channelId =
+      typeof req.body?.id === "string" ? req.body.id.trim() : "";
+    if (!/^UC[\w-]{20,}$/.test(channelId)) {
+      return res.status(400).json({ ok: false, error: "A YouTube UC… channel id is required." });
+    }
+    if (!youtube) {
+      return res.status(503).json({ ok: false, error: "InnerTube is unavailable in this server." });
+    }
+
+    try {
+      const snapshot = await withChannelSlot(() =>
+        fetchYouTubeChannelSnapshot(youtube, channelId, req.body?.detail === true),
+      );
+      res.set("Cache-Control", "no-store").json({ ok: true, ...snapshot });
+    } catch (error) {
+      const message = (error as Error).message || "YouTube channel request failed";
+      if (isChannelNotFound(message)) {
+        return res.status(404).json({ ok: false, error: message });
+      }
+      if (isRateLimited(message)) {
+        return res.status(429).json({ ok: false, error: message });
+      }
+      res.status(502).json({ ok: false, error: message });
+    }
   });
 
   /* ------------------------------------------------------------------------ */

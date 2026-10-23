@@ -226,6 +226,8 @@ export function extractExternalLinks(
     ["niconico", /nicovideo\.jp\/user\/(\d+)/i],
     ["discord", /discord\.gg\/([A-Za-z0-9]+)/i],
     ["spotify", /open\.spotify\.com\/artist\/([A-Za-z0-9]+)/i],
+    ["ci.me", /(?:https?:\/\/)?(?:www\.)?ci\.me\/([A-Za-z0-9_./-]+)/i],
+    ["soop", /(?:sooplive\.com\/station\/|ch\.sooplive\.co\.kr\/)([A-Za-z0-9_-]+)/i],
   ];
 
   for (const [platform, re] of patterns) {

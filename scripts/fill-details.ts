@@ -324,7 +324,9 @@ async function fetchProfile(
 
     const adapter = ctx.adapters.get(platform);
     if (!adapter) return null;
-    const profile = await adapter.resolve(query);
+    const profile = await adapter.resolve(
+      platform === "ci.me" ? link.id : query,
+    );
     if (!profile) return null;
     const count =
       profile.subscribers && profile.subscribers.tag === "has"

@@ -1,15 +1,19 @@
 /**
- * Google Takeout subscription import.
+ * Subscription-list import.
  *
  * The YouTube Data API stops returning `mine=true` subscriptions after about
- * a thousand entries, while the account itself can hold thousands. Takeout
- * has no such limit: `Takeout/YouTube and YouTube Music/subscriptions/subscriptions.csv`
- * lists every channel the account follows as `Channel Id, Channel Url,
- * Channel Title`.
+ * a thousand entries, while the account itself can hold thousands. Refresh
+ * reads the complete list through InnerTube when the local dev server is
+ * available; on a static build three files can carry the rest, and all three
+ * are read here without a single API call or OAuth popup:
  *
- * Parsing it locally means an account with 4,000 subscriptions can be
- * matched against the dataset without a single API call — and without the
- * OAuth popup.
+ *  - Google Takeout's `subscriptions.csv` — `Channel Id, Channel Url,
+ *    Channel Title` (the complete, slow path).
+ *  - The CSV written by `SUBS_EXPORT_SCRIPT`, which has the same shape.
+ *  - A **PocketTube** backup (`.json`, groups → array of `UC…` ids), which is
+ *    the fastest path for someone already using it — no Takeout queue.
+ *
+ * `parseSubscriptionsFile()` picks the right reader from the content.
  */
 
 export interface TakeoutSubscription {
@@ -60,6 +64,88 @@ export function parseTakeoutCsv(text: string): TakeoutSubscription[] {
   }
 
   return out;
+}
+
+/**
+ * Reads a **PocketTube** backup, or any JSON that contains channel ids.
+ *
+ * PocketTube's own export is JSON, not Takeout's CSV — a map of group name to
+ * an array of `UC…` ids — which is easily mistaken for "an unsupported file"
+ * and is the export that carries an account with more than a thousand
+ * subscriptions. Rather than pin one shape, every string is inspected for a
+ * channel id and every object for the usual id/title spellings; a backup
+ * from another tool is then read too.
+ */
+export function parseSubscriptionsJson(text: string): TakeoutSubscription[] {
+  let data: unknown;
+  try {
+    data = JSON.parse(text);
+  } catch {
+    return [];
+  }
+
+  const out: TakeoutSubscription[] = [];
+  const seen = new Set<string>();
+
+  const add = (rawId: unknown, rawTitle: unknown): void => {
+    const id =
+      typeof rawId === "string" ? rawId.match(/UC[\w-]{20,}/)?.[0] ?? "" : "";
+    if (!id || seen.has(id)) return;
+    seen.add(id);
+    const title =
+      typeof rawTitle === "string" && rawTitle.trim() ? rawTitle.trim() : id;
+    out.push({
+      channelId: id,
+      title,
+      url: `https://www.youtube.com/channel/${id}`,
+    });
+  };
+
+  const walk = (value: unknown, depth: number): void => {
+    if (depth > 12 || value == null) return;
+    if (typeof value === "string") {
+      add(value, null);
+      return;
+    }
+    if (Array.isArray(value)) {
+      for (const item of value) walk(item, depth + 1);
+      return;
+    }
+    if (typeof value !== "object") return;
+
+    const record = value as Record<string, unknown>;
+    add(
+      record.channelId ??
+        record.channel_id ??
+        record.browseId ??
+        record.channelUrl ??
+        record.url ??
+        record.id,
+      record.channelTitle ??
+        record.channelName ??
+        record.title ??
+        record.name,
+    );
+    for (const item of Object.values(record)) walk(item, depth + 1);
+  };
+
+  walk(data, 0);
+  return out;
+}
+
+/**
+ * Reads whichever subscription file was chosen: a CSV (Takeout or the export
+ * script) or JSON (PocketTube). The first non-space character is enough to
+ * tell them apart; a JSON file with no channel ids falls back to the CSV
+ * reader, which then reports "no subscriptions" rather than failing silently.
+ */
+export function parseSubscriptionsFile(text: string): TakeoutSubscription[] {
+  const head = text.trimStart();
+  if (head.startsWith("{") || head.startsWith("[")) {
+    const fromJson = parseSubscriptionsJson(text);
+    if (fromJson.length > 0) return fromJson;
+  }
+  return parseTakeoutCsv(text);
 }
 
 /**

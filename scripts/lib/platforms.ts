@@ -18,6 +18,7 @@ import type {
   CountRef,
   ItemCategory,
   PlatformId,
+  RegionCode,
 } from "./types";
 
 /** A channel (user / streamer / space) on some platform. */
@@ -76,6 +77,8 @@ export interface PlatformUpload {
   viewCount: number | null;
   /** Direct watch URL. */
   url: string;
+  /** Region suggested by this platform's known primary audience, when any. */
+  region?: RegionCode;
 }
 
 export interface PlatformAdapter {
@@ -123,6 +126,8 @@ export const PLATFORM_PRIORITY: PlatformId[] = [
   "twitch",
   "chzzk",
   "kick",
+  "soop",
+  "ci.me",
   "vk",
 ];
 
@@ -272,6 +277,8 @@ export const PLATFORM_URLS: Record<PlatformId, (id: string) => string> = {
   vk: (id) => `https://vk.com/${id}`,
   chzzk: (id) => `https://chzzk.naver.com/${id}`,
   kick: (id) => `https://kick.com/${id}`,
+  soop: (id) => `https://www.sooplive.com/station/${id}`,
+  "ci.me": (id) => `https://ci.me/${id}`,
 };
 
 /**
@@ -290,6 +297,8 @@ export function detectPlatform(input: string): PlatformId | null {
     [/(?:vk\.com|vkvideo\.ru)/, "vk"],
     [/(?:chzzk\.naver\.com)/, "chzzk"],
     [/(?:kick\.com)/, "kick"],
+    [/(?:sooplive\.com|sooplive\.co\.kr)/, "soop"],
+    [/(?:https?:\/\/)?(?:www\.)?ci\.me(?:\/|$)/, "ci.me"],
   ];
   for (const [re, platform] of rules) {
     if (re.test(value)) return platform;
@@ -315,6 +324,8 @@ export function extractPlatformId(input: string): {
     ["vk", /vk\.com\/([A-Za-z0-9_.]+)/],
     ["chzzk", /chzzk\.naver\.com\/([A-Za-z0-9_-]+)/],
     ["kick", /kick\.com\/([A-Za-z0-9_]+)/],
+    ["soop", /(?:sooplive\.com\/station\/|ch\.sooplive\.co\.kr\/)([A-Za-z0-9_-]+)/],
+    ["ci.me", /ci\.me\/(?:channel\/)?([A-Za-z0-9_-]+)/],
   ];
 
   for (const [platform, re] of patterns) {

@@ -152,12 +152,34 @@ function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T | null> {
  * depending on the endpoint, so all three spellings are checked. The header
  * is already fetched for the profile, so this costs no request.
  */
-function hasAudioBadge(value: unknown, depth = 0): boolean {
+export function hasAudioBadge(value: unknown, depth = 0): boolean {
   if (!value || typeof value !== "object" || depth > 12) return false;
   const record = value as Record<string, unknown>;
   if (record.imageName === "AUDIO_BADGE") return true;
   if (record.is_verified_artist === true) return true;
   if (record.style === "BADGE_STYLE_TYPE_VERIFIED_ARTIST") return true;
+
+  /**
+   * `youtubei.js` parser classes expose much of their parsed data through
+   * getters rather than enumerable own properties, so `Object.values()` does
+   * not walk the whole header. Serialising once is the reliable walk: the
+   * header is small, and the marker is unambiguous.
+   */
+  if (depth === 0) {
+    try {
+      const json = JSON.stringify(value);
+      if (
+        json.includes('"imageName":"AUDIO_BADGE"') ||
+        json.includes('"style":"BADGE_STYLE_TYPE_VERIFIED_ARTIST"') ||
+        json.includes('"is_verified_artist":true')
+      ) {
+        return true;
+      }
+    } catch {
+      /* circular or otherwise unserialisable — fall back to enumeration */
+    }
+  }
+
   for (const child of Object.values(record)) {
     if (hasAudioBadge(child, depth + 1)) return true;
   }

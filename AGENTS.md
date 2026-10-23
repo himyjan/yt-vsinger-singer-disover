@@ -213,11 +213,28 @@ a direct `fetch` to the API.
 It is only used by the one-off legacy migration. The CI path must stay free
 of native modules.
 
+### 14. YouTube Refresh needs the full scope and the local bridge
+
+The YouTube link asks for `https://www.googleapis.com/auth/youtube`, not
+`youtube.readonly`: InnerTube's `FEchannels` feed answers a read-only token with
+403 `insufficientPermissions`. The browser cannot call `youtube.com` (no CORS
+headers), so `server.ts` proxies the request to the **TVHTML5** client, which
+returns channel `tileRenderer`s rather than `channelRenderer`s. A static build
+has no bridge and falls back to the Data API's 1,000 cap. The token stays in
+the browser; the server only forwards it to YouTube and never stores or logs
+it. Do not change the scope back to read-only — that breaks Refresh for
+accounts above 1,000.
+
 ## Common tasks
 
 | Task | Where |
 | --- | --- |
 | Fix a misclassified channel | `data/overrides.json`, then `npm run data:sync -- --no-search` |
+| Import a subscription list | Subs view → **Import CSV / JSON** (Takeout CSV, PocketTube backup, or **Export from YouTube**) |
+| Refresh all YouTube subscriptions | **Refresh** (InnerTube through `server.ts`); **Reconnect** when the token expired; a static build falls back to **Export from YouTube** |
+| Fix the 🎵 badge on a subscription card | `scripts/lib/youtube-channel.ts` (header read), `server.ts` (`POST /api/youtube/channel`), `src/App.vue` (sync/cache), `src/components/OfficialArtistBadge.vue` (official icon, right of the name); cache is `vst.youtubeBadges` |
+| Change an untracked subscription's detail modal | `src/components/SubscriptionDetail.vue`, `src/lib/youtube-detail.ts`, `src/lib/store.ts` (`vst.youtubeDetails`) |
+| Suggest channels for the dataset | Subs view → **＋ Suggest** / **Suggest all** (`data/suggestions.json`), then **Add to dataset** |
 | Fix an outdated channel name | the platform corrects it; `npm run data:details -- --name-only` to apply it now |
 | A record keyed by a handle | `npm run data:ids` — resolves it to the `UC…` id |
 | Fill the missing avatars | `npm run data:details -- --limit 2000` |
@@ -289,6 +306,8 @@ Load one with the `skill` tool, e.g. `skill({ id: "sync-dataset" })`.
 | Bilibili | `api.bilibili.com` | Chinese VTuber channels |
 | CHZZK | `api.chzzk.naver.com` | The Korean VTuber scene |
 | KICK | `kick.com/api/v2` | The growing Western scene on KICK |
+| SOOP | `live.sooplive.co.kr/api/main_broad_list_api.php` | Public live streams; no verified offline profile API |
+| CI.ME | `ci.me/api/openapi/open/v1/channels` | Profile details for known CI.ME channel IDs; requires CI.ME app credentials |
 | Niconico | `api.search.nicovideo.jp/api/v2` | Japanese original songs and covers |
 | VK | `api.vk.com/method` | Russian VTuber channels |
 

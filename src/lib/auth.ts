@@ -9,11 +9,17 @@
  *
  * ## Design notes
  *
- * - **Tokens never leave the browser.** They live in `localStorage` and are
- *   only ever sent to the platform's own API.
+ * - **Tokens stay in the browser.** They live in `localStorage` and are only
+ *   sent to the platform's own API. The one exception is YouTube: the token is
+ *   posted to the app's own local dev server, which forwards it to
+ *   `youtube.com` because InnerTube sends no CORS headers. That server never
+ *   stores or logs it, and a static build has no server at all.
  * - **Twitch** uses the OAuth 2.0 authorization-code flow with PKCE. A public
  *   client needs no client secret, so this works entirely client-side.
- * - **YouTube** uses Google Identity Services.
+ * - **YouTube** uses Google Identity Services. It asks for the full `youtube`
+ *   scope, not `youtube.readonly`: InnerTube refuses the read-only token with
+ *   `insufficientPermissions` when it reads a subscription list beyond 1,000.
+ *   The Data API path only reads, whatever the scope allows.
  * - **Bilibili** has no public OAuth that exposes "who I follow", so the user
  *   pastes their `SESSDATA` cookie value. It is stored locally like any
  *   other token.
@@ -59,8 +65,12 @@ export interface AuthProvider {
   /**
    * Starts the linking flow.
    * Resolves with the linked account, or `null` when the user cancels.
+   *
+   * `prompt: ""` asks Google for a token without a consent screen when the
+   * scope is already granted — used when reconnecting an expired account.
+   * The default is the full consent flow, which is what a first link needs.
    */
-  link(): Promise<ProviderAccount | null>;
+  link(options?: { prompt?: "consent" | "" }): Promise<ProviderAccount | null>;
   /**
    * Fetches the account's followed channels / singers.
    *
@@ -114,7 +124,76 @@ export function normalizeForMatch(name: string): string {
 /* YouTube — Google Identity Services                                         */
 /* -------------------------------------------------------------------------- */
 
-const YOUTUBE_SCOPE = "https://www.googleapis.com/auth/youtube.readonly";
+/**
+ * The full YouTube scope, not `youtube.readonly`.
+ *
+ * InnerTube's `FEchannels` feed rejects a read-only token with 403
+ * `insufficientPermissions`; the signed-in web client asks for the management
+ * scope. The app uses it to read the subscription list (the Data API path
+ * still only reads), and the token stays in this browser — it is sent to the
+ * local dev server only to make the same-origin InnerTube request.
+ */
+const YOUTUBE_SCOPE = "https://www.googleapis.com/auth/youtube";
+
+/**
+ * Reads the whole subscription list through the local dev server, which can
+ * reach InnerTube (the browser cannot: `youtube.com` sends no CORS headers).
+ *
+ * Returns `null` whenever the bridge is unavailable — a static build has no
+ * `/api` at all, or an old read-only token is refused — so the caller falls
+ * back to the Data API and its own error reporting. The token is only placed
+ * in the request body to the same origin; it is not stored or logged.
+ */
+async function fetchInnerTubeSubscriptions(
+  token: string,
+  onProgress?: (progress: { loaded: number; total: number | null }) => void,
+): Promise<RemoteSubscription[] | null> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 180_000);
+  try {
+    const res = await fetch("/api/youtube/subscriptions", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify({ token }),
+      signal: controller.signal,
+    });
+    if (!res.ok) return null;
+    const json = (await res.json().catch(() => null)) as
+      | {
+          ok?: boolean;
+          items?: Array<{
+            channelId?: unknown;
+            name?: unknown;
+            handle?: unknown;
+            thumbnail?: unknown;
+            description?: unknown;
+          }>;
+        }
+      | null;
+    if (!json?.ok || !Array.isArray(json.items)) return null;
+
+    const items: RemoteSubscription[] = [];
+    for (const entry of json.items) {
+      if (typeof entry?.channelId !== "string" || !/^UC[\w-]{20,}$/.test(entry.channelId)) {
+        continue;
+      }
+      items.push({
+        channelId: entry.channelId,
+        name: typeof entry.name === "string" && entry.name ? entry.name : entry.channelId,
+        handle: typeof entry.handle === "string" ? entry.handle : null,
+        thumbnail: typeof entry.thumbnail === "string" ? entry.thumbnail : null,
+        description: typeof entry.description === "string" ? entry.description : null,
+      });
+    }
+    if (items.length === 0) return null;
+    onProgress?.({ loaded: items.length, total: null });
+    return items;
+  } catch {
+    return null;
+  } finally {
+    clearTimeout(timer);
+  }
+}
 
 export const youtubeProvider: AuthProvider = {
   id: "youtube",
@@ -131,7 +210,7 @@ export const youtubeProvider: AuthProvider = {
       : "Set VITE_GOOGLE_CLIENT_ID to enable YouTube account linking.";
   },
 
-  async link(): Promise<ProviderAccount | null> {
+  async link(options?: { prompt?: "consent" | "" }): Promise<ProviderAccount | null> {
     if (!env.googleClientId) return null;
 
     return new Promise((resolve, reject) => {
@@ -218,7 +297,7 @@ export const youtubeProvider: AuthProvider = {
             reject(new Error("Google sign-in is not available in this browser."));
             return;
           }
-          client.requestAccessToken({ prompt: "consent" });
+          client.requestAccessToken({ prompt: options?.prompt ?? "consent" });
         })
         .catch(() => {
           finish();
@@ -235,6 +314,15 @@ export const youtubeProvider: AuthProvider = {
     account: ProviderAccount,
     onProgress?: (progress: { loaded: number; total: number | null }) => void,
   ): Promise<RemoteSubscription[]> {
+    /**
+     * The Data API caps a subscription list at 1,000. The dev server can read
+     * the same account through InnerTube, which does not; when it is not
+     * available (static build) or the token is refused, the API path below is
+     * the fallback and reports its own truncation.
+     */
+    const viaInnerTube = await fetchInnerTubeSubscriptions(account.token, onProgress);
+    if (viaInnerTube) return viaInnerTube;
+
     const all: RemoteSubscription[] = [];
     let pageToken: string | undefined;
     let total: number | null = null;
@@ -333,7 +421,16 @@ function loadScript(src: string): Promise<void> {
       `script[src="${src}"]`,
     );
     if (existing) {
-      if (existing.dataset.loaded === "true") return resolve();
+      /**
+       * The script may already have run without the app having loaded it —
+       * another script tag, or a reload that kept the global. Waiting for a
+       * `load` event that already fired would hang the link forever, so the
+       * presence of the SDK is the check that matters.
+       */
+      if (existing.dataset.loaded === "true" || window.google?.accounts?.oauth2) {
+        existing.dataset.loaded = "true";
+        return resolve();
+      }
       existing.addEventListener("load", () => resolve());
       existing.addEventListener("error", () => reject(new Error("script failed")));
       return;
@@ -354,11 +451,12 @@ function loadScript(src: string): Promise<void> {
 /**
  * The linked account's own identity, for the account menu.
  *
- * `channels.list(mine=true)` needs only the `youtube.readonly` scope the
- * token was granted — `oauth2/v3/userinfo` needs `profile`, which the token
- * client never asked for, so it fails with a 403 and left the account with
- * no name and no avatar (the "the UI did not change" symptom). The channel is
- * also the better identity: the name and picture the user knows.
+ * `channels.list(mine=true)` is allowed by the full `youtube` scope the link
+ * requests (a read-only token would also allow it) — `oauth2/v3/userinfo`
+ * needs `profile`, which the token client never asked for, so it fails with a
+ * 403 and left the account with no name and no avatar (the "the UI did not
+ * change" symptom). The channel is also the better identity: the name and
+ * picture the user knows.
  */
 async function fetchProfile(
   token: string,
@@ -371,7 +469,7 @@ async function fetchProfile(
   try {
     const res = await fetch(
       "https://www.googleapis.com/youtube/v3/channels?part=snippet&mine=true",
-      { headers },
+      { headers, signal: AbortSignal.timeout(10_000) },
     );
     if (res.ok) {
       const json = await res.json();
@@ -392,7 +490,7 @@ async function fetchProfile(
 
   const res = await fetch(
     "https://www.googleapis.com/oauth2/v3/userinfo",
-    { headers },
+    { headers, signal: AbortSignal.timeout(10_000) },
   );
   if (!res.ok) throw new Error("profile request failed");
   const json = await res.json();
@@ -448,11 +546,11 @@ function googleApiError(status: number, body: string): string {
       return "this Google account has no YouTube channel.";
     case "insufficientPermissions":
     case "ACCESS_TOKEN_SCOPE_INSUFFICIENT":
-      return "the token was granted without the YouTube permission — unlink the account and link it again, leaving the YouTube checkbox ticked.";
+      return "the token was granted without the YouTube permission — use Linked accounts → Reconnect and leave the YouTube checkbox ticked.";
   }
 
   if (status === 401) {
-    return "the Google token expired — link the account again.";
+    return "the Google token expired — use Linked accounts → Reconnect.";
   }
   if (status === 403) {
     return `Google denied the request${message ? `: ${message}` : "."}`;

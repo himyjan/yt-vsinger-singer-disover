@@ -24,10 +24,10 @@ export default defineConfig(({ mode }) => {
     },
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, './src'),
+        '@': path.resolve(import.meta.dirname, './src'),
         // The data pipeline and the web app share the same type definitions
         // and the same search engine, so there is exactly one source of truth.
-        '@shared': path.resolve(__dirname, './scripts'),
+        '@shared': path.resolve(import.meta.dirname, './scripts'),
       },
     },
     server: {

@@ -9,6 +9,7 @@
  */
 import type { ChannelSummary } from "@shared/lib/types";
 import { formatCount } from "@/lib/dataset";
+import OfficialArtistBadge from "@/components/OfficialArtistBadge.vue";
 
 defineProps<{ channel: ChannelSummary }>();
 
@@ -28,7 +29,12 @@ const emit = defineEmits<{ (e: "open", channel: ChannelSummary): void }>();
       class="h-16 w-16 rounded-full object-cover ring-2 ring-black/5 transition group-hover:ring-purple-400 dark:ring-white/10"
     />
     <span class="line-clamp-2 text-xs leading-tight font-semibold">
-      {{ channel.name }}
+      {{ channel.name
+      }}<OfficialArtistBadge
+        v-if="channel.isOfficialArtist"
+        size="xs"
+        class="ml-1"
+      />
     </span>
     <span class="text-[11px] text-neutral-500">
       {{ formatCount(channel.subscribers) }} subs
