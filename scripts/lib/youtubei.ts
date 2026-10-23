@@ -87,10 +87,10 @@ export interface InnerTubeProfileOptions {
    */
   lang?: string;
   /**
-   * Whether to read the about page for the country.
+   * Whether to read the about page for the country and the channel's published
+   * external links.
    *
-   * It costs one extra request, so it is opt-in: only the details pass needs
-   * it.
+   * It costs one extra request, so it is opt-in for detail and import passes.
    */
   about?: boolean;
 }
@@ -463,6 +463,30 @@ export class InnerTubeSource {
           country = normalizeCountry(
             typeof label === "string" ? label : (label?.text ?? null),
           );
+          const aboutLinks = [
+            ...(about?.primary_links ?? []),
+            ...(about?.metadata?.links ?? []),
+          ];
+          for (const link of aboutLinks) {
+            const endpoint =
+              link?.endpoint ?? link?.link?.endpoint ?? link?.title?.endpoint;
+            const url =
+              endpoint?.toURL?.() ??
+              endpoint?.metadata?.url ??
+              endpoint?.payload?.url ??
+              link?.url ??
+              link?.href;
+            if (typeof url !== "string") continue;
+            try {
+              const parsed = new URL(url, "https://www.youtube.com");
+              const destination =
+                parsed.searchParams.get("q") ??
+                parsed.searchParams.get("url");
+              links.push(destination ?? parsed.toString());
+            } catch {
+              this.onLog(`innertube: ignored invalid channel link for ${channelId}`);
+            }
+          }
         } catch {
           /* the country is optional */
         }

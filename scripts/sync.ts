@@ -436,7 +436,7 @@ function channelFromInnerTubeProfile(
   fallbackName = "Unknown",
 ): Channel | null {
   if (!profile) return null;
-  return channelFromApi(
+  const channel = channelFromApi(
     {
       id: profile.id,
       snippet: {
@@ -460,6 +460,13 @@ function channelFromInnerTubeProfile(
     now,
     override,
   );
+  if (channel) {
+    channel.externals = {
+      ...extractExternalLinks(profile.links.join(" ")),
+      ...channel.externals,
+    };
+  }
+  return channel;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -1670,6 +1677,10 @@ async function main(): Promise<void> {
           if (profile.description && !channel.description) {
             channel.description = profile.description.slice(0, 1000);
           }
+          channel.externals = {
+            ...channel.externals,
+            ...extractExternalLinks(profile.links.join(" ")),
+          };
           if (profile.avatar && !channel.avatar) {
             channel.avatar = profile.avatar;
           }
@@ -1792,6 +1803,10 @@ async function main(): Promise<void> {
           if (profile.description && !channel.description) {
             channel.description = profile.description.slice(0, 1000);
           }
+          channel.externals = {
+            ...extractExternalLinks(profile.description),
+            ...channel.externals,
+          };
           if (profile.avatar && !channel.avatar) channel.avatar = profile.avatar;
           if (profile.subscribers.tag !== "hidden") {
             link.subscribers = profile.subscribers;
@@ -2352,6 +2367,10 @@ async function main(): Promise<void> {
         lastCheckedAt: now,
       };
       if (match) {
+        match.externals = {
+          ...extractExternalLinks(channel.description),
+          ...match.externals,
+        };
         if (!match.platforms.some((p) => p.platform === adapter.id)) {
           match.platforms.push(link);
         }
@@ -3326,7 +3345,7 @@ export function channelFromPlatform(
         lastCheckedAt: now,
       },
     ],
-    externals: {},
+    externals: extractExternalLinks(channel.description),
 
     popularVideoId: null,
   };

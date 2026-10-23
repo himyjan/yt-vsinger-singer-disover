@@ -233,21 +233,77 @@ export function extractExternalLinks(
   const out: Record<string, string> = {};
   if (!text) return out;
 
-  const patterns: [string, RegExp][] = [
-    ["twitter", /(?:twitter|x)\.com\/([A-Za-z0-9_]{2,20})/i],
-    ["instagram", /instagram\.com\/([A-Za-z0-9_.]{2,30})/i],
-    ["tiktok", /tiktok\.com\/@([A-Za-z0-9_.]{2,30})/i],
-    ["bilibili", /bilibili\.com\/([A-Za-z0-9]{1,30})/i],
-    ["niconico", /nicovideo\.jp\/user\/(\d+)/i],
-    ["discord", /discord\.gg\/([A-Za-z0-9]+)/i],
-    ["spotify", /open\.spotify\.com\/artist\/([A-Za-z0-9]+)/i],
-    ["ci.me", /(?:https?:\/\/)?(?:www\.)?ci\.me\/([A-Za-z0-9_./-]+)/i],
-    ["soop", /(?:sooplive\.com\/station\/|ch\.sooplive\.co\.kr\/)([A-Za-z0-9_-]+)/i],
+  const patterns: [string, RegExp, (match: RegExpExecArray) => string | null][] = [
+    [
+      "youtube",
+      /(?:youtube\.com\/(channel\/(UC[\w-]{22})|(@[A-Za-z0-9._-]+)|(?:user|c)\/([A-Za-z0-9._-]+)))/i,
+      (m) => m[2] ?? m[3] ?? `${m[1]!.startsWith("user/") ? "user" : "c"}/${m[4]}`,
+    ],
+    [
+      "twitch",
+      /(?:twitch\.tv\/([A-Za-z0-9_]{3,25}))/i,
+      (m) =>
+        ["directory", "videos", "p", "jobs", "settings", "downloads"].includes(
+          m[1]!.toLowerCase(),
+        )
+          ? null
+          : m[1]!.toLowerCase(),
+    ],
+    ["twitter", /(?:twitter|x)\.com\/([A-Za-z0-9_]{2,20})/i, (m) => m[1]!],
+    ["instagram", /instagram\.com\/([A-Za-z0-9_.]{2,30})/i, (m) => m[1]!],
+    ["tiktok", /tiktok\.com\/@([A-Za-z0-9_.]{2,30})/i, (m) => m[1]!],
+    [
+      "bilibili",
+      /(?:space\.bilibili\.com\/|bilibili\.com\/space\/)(\d+)/i,
+      (m) => m[1]!,
+    ],
+    [
+      "niconico",
+      /(?:nicovideo\.jp|nico\.ms)\/user\/(\d+)/i,
+      (m) => m[1]!,
+    ],
+    [
+      "discord",
+      /(?:discord\.gg\/|discord(?:app)?\.com\/invite\/)([A-Za-z0-9-]+)/i,
+      (m) => m[1]!,
+    ],
+    [
+      "spotify",
+      /open\.spotify\.com\/(artist|user)\/([A-Za-z0-9]+)/i,
+      (m) => `${m[1]}/${m[2]}`,
+    ],
+    ["vk", /vk\.com\/((?:id\d+)|[A-Za-z][A-Za-z0-9_.]{1,30})/i, (m) => m[1]!],
+    [
+      "chzzk",
+      /chzzk\.naver\.com\/([A-Za-z0-9_-]{10,})/i,
+      (m) => m[1]!,
+    ],
+    [
+      "kick",
+      /kick\.com\/([A-Za-z0-9_-]{2,30})/i,
+      (m) =>
+        ["categories", "video", "videos", "clips", "search", "api"].includes(
+          m[1]!.toLowerCase(),
+        )
+          ? null
+          : m[1]!,
+    ],
+    [
+      "soop",
+      /(?:sooplive\.com\/station\/|ch\.sooplive\.co\.kr\/|play\.sooplive\.com\/)([A-Za-z0-9_-]+)/i,
+      (m) => m[1]!,
+    ],
+    [
+      "ci.me",
+      /(?:https?:\/\/)?(?:www\.)?ci\.me\/([A-Za-z0-9_-]+)/i,
+      (m) => m[1]!,
+    ],
   ];
 
-  for (const [platform, re] of patterns) {
+  for (const [platform, re, normalize] of patterns) {
     const m = re.exec(text);
-    if (m?.[1]) out[platform] = m[1];
+    const identity = m && normalize(m);
+    if (identity) out[platform] = identity;
   }
   return out;
 }

@@ -31,12 +31,18 @@ const PLATFORM_META: Record<
 };
 
 const EXTERNAL_META: Record<string, { label: string; icon: string }> = {
+  youtube: { label: "YouTube", icon: "▶" },
+  twitch: { label: "Twitch", icon: "◢" },
   x: { label: "X", icon: "𝕏" },
   twitter: { label: "X", icon: "𝕏" },
   instagram: { label: "Instagram", icon: "◎" },
   tiktok: { label: "TikTok", icon: "♪" },
   bilibili: { label: "Bilibili", icon: "📺" },
   niconico: { label: "Niconico", icon: "🎬" },
+  vk: { label: "VK", icon: "◈" },
+  chzzk: { label: "CHZZK", icon: "🟢" },
+  kick: { label: "KICK", icon: "🟣" },
+  soop: { label: "SOOP", icon: "🔴" },
   discord: { label: "Discord", icon: "🎮" },
   spotify: { label: "Spotify", icon: "🎧" },
   "ci.me": { label: "CI.ME", icon: "🔗" },
@@ -136,6 +142,15 @@ export function channelLinks(
 /** Builds a profile URL for an external platform handle. */
 export function externalUrl(platform: string, handle: string): string {
   switch (platform) {
+    case "youtube":
+      if (handle.startsWith("user/") || handle.startsWith("c/")) {
+        return `https://www.youtube.com/${handle}`;
+      }
+      return handle.startsWith("UC")
+        ? `https://www.youtube.com/channel/${handle}`
+        : `https://www.youtube.com/@${handle.replace(/^@/, "")}`;
+    case "twitch":
+      return `https://www.twitch.tv/${handle}`;
     case "x":
     case "twitter":
       return `https://x.com/${handle}`;
@@ -147,12 +162,20 @@ export function externalUrl(platform: string, handle: string): string {
       return `https://space.bilibili.com/${handle}`;
     case "niconico":
       return `https://www.nicovideo.jp/user/${handle}`;
+    case "vk":
+      return `https://vk.com/${handle}`;
+    case "chzzk":
+      return `https://chzzk.naver.com/${handle}`;
+    case "kick":
+      return `https://kick.com/${handle}`;
     case "discord":
       return `https://discord.gg/${handle}`;
     case "spotify":
-      return `https://open.spotify.com/artist/${handle}`;
+      return `https://open.spotify.com/${handle.includes("/") ? handle : `artist/${handle}`}`;
     case "soop":
       return `https://www.sooplive.com/station/${handle}`;
+    case "ci.me":
+      return `https://ci.me/${handle}`;
     default:
       return `https://${platform}/${handle}`;
   }

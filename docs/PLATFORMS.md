@@ -251,21 +251,32 @@ surfaces. The app labels it accordingly.
 
 ## External handles
 
-Whatever a channel's description links to is harvested into
-`Channel.externals`:
+Links found in YouTube channel descriptions and its dedicated About-page
+Links section, plus other refreshed platform profile descriptions, are
+harvested into `Channel.externals`. The dedicated YouTube Links section is
+read during profile detail/import fetches:
 
 | Key | Pattern |
 | --- | --- |
+| `youtube` | `youtube.com/channel/<id>`, `youtube.com/@<handle>`, `/user/<handle>` or `/c/<handle>` |
+| `twitch` | `twitch.tv/<login>` |
 | `x` | `twitter.com/<handle>` or `x.com/<handle>` |
 | `instagram` | `instagram.com/<handle>` |
 | `tiktok` | `tiktok.com/@<handle>` |
-| `bilibili` | `bilibili.com/<space>` |
+| `bilibili` | `space.bilibili.com/<uid>` or `bilibili.com/space/<uid>` |
 | `niconico` | `nicovideo.jp/user/<id>` |
+| `vk` | `vk.com/<handle>` |
+| `chzzk` | `chzzk.naver.com/<channel-id>` |
+| `kick` | `kick.com/<slug>` |
+| `soop` | `sooplive.com/station/<id>` or `ch.sooplive.co.kr/<id>` |
 | `discord` | `discord.gg/<code>` |
-| `spotify` | `open.spotify.com/artist/<id>` |
+| `spotify` | `open.spotify.com/artist/<id>` or `/user/<id>` |
 | `ci.me` | `ci.me/<channel-handle>` |
 
-These are rendered in the "all links" block next to the platform identities.
+The YouTube channel, Twitch, Bilibili, Niconico, VK, CHZZK, KICK, SOOP and
+CI.ME patterns cover the supported streaming platforms; social and music
+links are collected as well. These are rendered in the "all links" block next
+to the platform identities.
 
 ## CHZZK, KICK and SOOP
 
