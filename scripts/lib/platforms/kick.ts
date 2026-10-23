@@ -55,9 +55,13 @@ export class KickAdapter implements PlatformAdapter {
           Referer: "https://kick.com/",
         },
       });
-      if (!res.ok) return null;
+      if (!res.ok) {
+        this.onLog(`kick: request returned HTTP ${res.status}`);
+        return null;
+      }
       return (await res.json()) as T;
-    } catch {
+    } catch (error) {
+      this.onLog(`kick: request failed: ${(error as Error).message}`);
       return null;
     }
   }
@@ -141,11 +145,4 @@ export class KickAdapter implements PlatformAdapter {
     ];
   }
 
-  async search(query: string, limit: number): Promise<PlatformChannel[]> {
-    // KICK has no public user search, so the search is a no-op; the roster
-    // and the account linking are what populate the platform.
-    void query;
-    void limit;
-    return [];
-  }
 }

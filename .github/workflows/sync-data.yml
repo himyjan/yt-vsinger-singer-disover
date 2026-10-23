@@ -32,7 +32,7 @@ on:
         required: false
         default: "false"
       keyword:
-        description: "Custom YouTube channel query, replacing configured searches"
+        description: "Custom channel discovery query across supported platforms"
         required: false
         default: ""
       dry-run:
@@ -144,7 +144,7 @@ jobs:
         run: npm run data:validate
 
       - name: Commit dataset
-        uses: stefanzweifel/git-auto-commit-action@v5
+        uses: stefanzweifel/git-auto-commit-action@v7
         with:
           commit_user_name: github-actions[bot]
           commit_user_email: github-actions[bot]@users.noreply.github.com
@@ -162,7 +162,7 @@ jobs:
             echo "| Metric | Value |"
             echo "| --- | --- |"
             echo "| Roster and music catalogs | vdb, Taiwan VTuber Tracking Data, VocaDB, VTuber Music Dataset |"
-            echo "| Platform identities | All valid accounts published by vdb; adapter coverage varies by platform |"
+            echo "| Platform discovery | YouTube, Bilibili, Niconico, CHZZK, SOOP live feed; Twitch/VK require credentials; KICK/CI.ME known IDs only |"
             echo "| Quota used | ${{ steps.quota.outputs.used || 'n/a' }} |"
             echo "| Committed | \`data/\` |"
           } >> "$GITHUB_STEP_SUMMARY"

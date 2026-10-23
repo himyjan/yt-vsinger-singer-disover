@@ -55,9 +55,14 @@ export class VkAdapter implements PlatformAdapter {
   readonly color = "#0077ff";
 
   private readonly token: string | null;
+  private readonly onLog: (message: string) => void;
 
-  constructor(token: string | null = process.env.VK_ACCESS_TOKEN ?? null) {
+  constructor(
+    token: string | null = process.env.VK_ACCESS_TOKEN ?? null,
+    onLog: (message: string) => void = () => {},
+  ) {
     this.token = token;
+    this.onLog = onLog;
   }
 
   isConfigured(): boolean {
@@ -81,11 +86,18 @@ export class VkAdapter implements PlatformAdapter {
         signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
         headers: { Accept: "application/json" },
       });
-      if (!res.ok) return null;
+      if (!res.ok) {
+        this.onLog(`vk: ${method} returned HTTP ${res.status}`);
+        return null;
+      }
       const json = (await res.json()) as { response?: T; error?: unknown };
-      if (json.error) return null;
+      if (json.error) {
+        this.onLog(`vk: ${method} returned an API error`);
+        return null;
+      }
       return json.response ?? null;
-    } catch {
+    } catch (error) {
+      this.onLog(`vk: ${method} request failed: ${(error as Error).message}`);
       return null;
     }
   }
@@ -132,15 +144,49 @@ export class VkAdapter implements PlatformAdapter {
     };
   }
 
+  async search(query: string, limit: number): Promise<PlatformChannel[]> {
+    const needle = query.trim();
+    if (!needle || limit <= 0 || !this.token) return [];
+    const result = await this.call<{ items?: VkUser[] }>("users.search", {
+      q: needle,
+      count: String(Math.min(limit, 100)),
+      fields: "screen_name,photo_200,followers_count,verified,status,video_count",
+    });
+    return (result?.items ?? []).map((user) => {
+      const name =
+        [user.first_name, user.last_name].filter(Boolean).join(" ") ||
+        user.screen_name;
+      const followers = user.followers_count ?? 0;
+      return {
+        platform: "vk",
+        id: String(user.id),
+        handle: user.screen_name,
+        name,
+        url: `https://vk.com/${user.screen_name}`,
+        subscribers:
+          followers > 0
+            ? { tag: "has" as const, count: followers }
+            : { tag: "no" as const },
+        avatar: user.photo_200 ?? null,
+        description: user.status ?? null,
+        tags: [],
+        videoCount: user.video_count ?? null,
+      };
+    });
+  }
+
   async uploads(
     channel: PlatformChannel,
     limit: number,
   ): Promise<PlatformUpload[]> {
-    const videos = await this.call<VkVideo[]>("video.get", {
+    const response = await this.call<
+      VkVideo[] | { items?: VkVideo[] }
+    >("video.get", {
       owner_id: channel.id,
       count: String(Math.min(100, limit)),
       order: "-date",
     });
+    const videos = Array.isArray(response) ? response : response?.items ?? [];
     if (!videos?.length) return [];
 
     return videos.slice(0, limit).map((video) => {

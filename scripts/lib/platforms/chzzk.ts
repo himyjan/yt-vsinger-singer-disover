@@ -51,9 +51,13 @@ export class ChzzkAdapter implements PlatformAdapter {
           Referer: "https://chzzk.naver.com/",
         },
       });
-      if (!res.ok) return null;
+      if (!res.ok) {
+        this.onLog(`chzzk: request returned HTTP ${res.status}`);
+        return null;
+      }
       return (await res.json()) as T;
-    } catch {
+    } catch (error) {
+      this.onLog(`chzzk: request failed: ${(error as Error).message}`);
       return null;
     }
   }
@@ -145,9 +149,40 @@ export class ChzzkAdapter implements PlatformAdapter {
   }
 
   async search(query: string, limit: number): Promise<PlatformChannel[]> {
-    // CHZZK has no public user search.
-    void query;
-    void limit;
-    return [];
+    if (!query.trim() || limit <= 0) return [];
+    const size = Math.min(limit, 20);
+    const url = new URL(`${API}/search/channels`);
+    url.search = new URLSearchParams({
+      keyword: query,
+      offset: "0",
+      size: String(size),
+    }).toString();
+    const response = await this.getJson<{
+      code: number;
+      content?: { data?: Array<{ channel?: any }> };
+    }>(url.toString());
+    if (response?.code !== 200) return [];
+
+    return (response.content?.data ?? [])
+      .map((entry) => entry.channel)
+      .filter((channel) => channel?.channelId)
+      .slice(0, limit)
+      .map((channel) => {
+        const followers = Number(channel.followerCount ?? 0);
+        return {
+          platform: "chzzk",
+          id: channel.channelId,
+          handle: channel.channelId,
+          name: channel.channelName ?? null,
+          url: `https://chzzk.naver.com/${channel.channelId}`,
+          subscribers:
+            followers > 0
+              ? { tag: "has" as const, count: followers }
+              : { tag: "no" as const },
+          avatar: channel.channelImageUrl ?? null,
+          description: channel.channelDescription ?? null,
+          tags: [],
+        };
+      });
   }
 }

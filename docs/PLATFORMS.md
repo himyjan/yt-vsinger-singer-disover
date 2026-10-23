@@ -103,13 +103,15 @@ credentials grant.
 | `GET /helix/users?login=…` | free |
 | `GET /helix/channels?broadcaster_id=…` | free |
 | `GET /helix/streams?user_id=…` | free |
+| `GET /helix/search/channels?query=…` | free |
 | `GET /helix/channels/followers?broadcaster_id=…` | free |
 
 Twitch follower counts are always public, so they map straight to
 `{ tag: "has", count }`.
 
-Without credentials the whole Twitch integration is skipped and the pipeline
-logs why.
+With credentials, the sync discovers channels by its configured keywords and
+checks their live streams. Without credentials, Twitch discovery and live
+checks are skipped and the pipeline logs how to enable them.
 
 ### Account linking
 
@@ -210,8 +212,9 @@ GET https://api.search.nicovideo.jp/api/v2/channel?query=…
 ```
 
 Returns `contentId`, `title`, `tags`, `viewCounter`, `startTime` and
-`contentType`. Niconico Live has no comparable public listing endpoint, so
-`live()` returns nothing.
+`contentType`. The sync stores videos returned directly by discovery and
+derives candidate channels from their authors. Niconico Live has no comparable
+public listing endpoint, so `live()` returns nothing.
 
 Niconico is where a large share of Japanese VSingers publish original songs
 and covers, so it is worth the adapter.
@@ -224,6 +227,7 @@ and covers, so it is worth the adapter.
 | Endpoint | Purpose |
 | --- | --- |
 | `GET /method/users.get` | Profile |
+| `GET /method/users.search` | Channel discovery (requires `VK_ACCESS_TOKEN`) |
 | `GET /method/video.get` | Uploads |
 | `GET /method/channels/followers` | Follower count |
 
@@ -265,8 +269,7 @@ These are rendered in the "all links" block next to the platform identities.
 
 ## CHZZK, KICK and SOOP
 
-Two more platforms where VTubers now stream, both with public APIs that need
-no credentials.
+These platforms have public endpoints that need no credentials.
 
 | Platform | Endpoint | Gives |
 | --- | --- | --- |
@@ -277,10 +280,12 @@ no credentials.
 | | `GET kick.com/api/v2/channels/followed` | the user's followed channels (needs a token) |
 | | `GET api.kick.com/public/v1/users` | the signed-in user (needs a token) |
 
-The sync refreshes profiles for known CHZZK and KICK identities and checks
-their current live streams. Neither has a public channel search here, so
-identities come from the global roster and existing records rather than
-discovery search.
+The sync discovers CHZZK channels with the public
+`GET /service/v1/search/channels` endpoint, refreshes their profiles and checks
+their current live streams. KICK profiles and live streams can be refreshed
+for known identities, but its currently served web search endpoint is not a
+usable public API, so KICK candidates come from the global roster and existing
+records rather than keyword discovery.
 
 SOOP's unauthenticated `main_broad_list_api.php` endpoint provides a
 paginated global live list with broadcast titles, streamer IDs and viewer
@@ -304,8 +309,50 @@ for known CI.ME IDs (up to 20 per API request); the documented API does not
 provide public handle search, uploads or a live-list lookup, so those methods
 return no items.
 
-The documented API does not include a user follow-list endpoint, and this
-project does not offer CI.ME account linking or subscription import.
+The documented API does not include a user follow-list endpoint, public
+channel search, uploads or live-list endpoint. CI.ME therefore refreshes only
+known IDs when credentials are configured; it does not discover channels or
+media. The project does not offer CI.ME account linking or subscription import.
+
+## Sync discovery coverage
+
+The scheduled and manually triggered sync runs the platform searches enabled
+by the configured adapters:
+
+| Platform | Discovery / collection |
+| --- | --- |
+| YouTube | InnerTube channel search; Data API search when configured and within quota |
+| Twitch | Keyword channel search and live streams; requires `TWITCH_CLIENT_ID` and `TWITCH_CLIENT_SECRET` |
+| Bilibili | VTuber partition discovery, live streams from the partition, and uploads for discovered/known channels |
+| Niconico | Keyword video search; stores matched videos and derives their author channels |
+| VK | User search and recent videos; discovery requires `VK_ACCESS_TOKEN` |
+| CHZZK | Public keyword channel search and live streams |
+| SOOP | Matches configured terms against the first page of its global live feed |
+| KICK | Refreshes known profiles and live streams; public keyword search is unavailable |
+| CI.ME | Refreshes known channel IDs with configured credentials; public search/media endpoints are unavailable |
+
+The sync logs when a platform is skipped because credentials are missing or
+discovery is unavailable. `--no-search` skips keyword discovery across all
+platforms while still refreshing known records.
+
+### Discovery keywords and manual queries
+
+The scheduled sync uses the per-platform terms in
+[`config/platform-keywords.json`](../config/platform-keywords.json). A manual
+workflow run can supply one `keyword` to query the enabled platforms instead
+of their configured terms. Results vary by platform: some searches find
+channels directly, while Niconico finds videos and infers their authors, and
+SOOP only checks its first page of live broadcasts.
+
+The YouTube API key is optional. YouTube discovery falls back to InnerTube
+channel search when the Data API key is absent or the search budget is
+exhausted. Twitch and VK discovery do need their Actions secrets. A platform
+without search support is not searched just because a manual keyword was
+provided; the run logs the limitation and continues with supported platforms.
+
+`--no-search` (or the workflow's **Skip discovery searches** input) skips
+keyword discovery on YouTube and other platforms, but still refreshes known
+channel profiles and their available media.
 
 ## Account-linking coverage
 
