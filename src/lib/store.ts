@@ -38,6 +38,7 @@ export type Theme = "light" | "dark";
 const THEME_KEY = "vst.theme";
 const SCOPE_KEY = "vst.scope";
 const REGION_KEY = "vst.region";
+const PLATFORM_KEY = "vst.platform";
 const SAVED_KEY = "vst.saved";
 const VIEW_KEY = "vst.view";
 const ACCOUNT_KEY = "vst.accounts";
@@ -144,6 +145,8 @@ export const state = reactive({
   scope: readStorage<Scope>(SCOPE_KEY, "both"),
   /** Active region filter, or `all`. */
   region: readStorage<RegionCode | "all">(REGION_KEY, "all"),
+  /** Active platform filter, or `all`. */
+  platform: readStorage<string | "all">(PLATFORM_KEY, "all"),
   /**
    * Active content-category filters.
    *
@@ -298,6 +301,11 @@ export function setScope(scope: Scope): void {
 export function setRegion(region: RegionCode | "all"): void {
   state.region = region;
   writeStorage(REGION_KEY, region);
+}
+
+export function setPlatform(platform: string | "all"): void {
+  state.platform = platform;
+  writeStorage(PLATFORM_KEY, platform);
 }
 
 export function setView(view: ViewId): void {

@@ -387,6 +387,8 @@ export async function loadSearchPacks(
 export interface ItemQuery {
   kind?: "virtual" | "real" | "both";
   region?: RegionCode | "all";
+  /** Platform whose content or channel identity must be present. */
+  platform?: string | "all";
   /** Zero or more content categories. Empty means "all". */
   categories?: string[];
   status?: string | "all";
@@ -416,9 +418,19 @@ export interface ItemQuery {
  * results through here, so `Virtual` / `Real` / `Both` works everywhere
  * without any view having to remember it.
  */
+export function platformOfItem(item: Item): string {
+  return (
+    item.platform ??
+    (item.channelId.includes(":")
+      ? item.channelId.slice(0, item.channelId.indexOf(":"))
+      : "youtube")
+  );
+}
+
 export function filterItems(items: Item[], query: ItemQuery): Item[] {
   const kind = query.kind ?? "both";
   const region = query.region ?? "all";
+  const platform = query.platform ?? "all";
   const categories = query.categories ?? [];
   const status = query.status ?? "all";
   const gender = query.gender ?? "all";
@@ -430,6 +442,7 @@ export function filterItems(items: Item[], query: ItemQuery): Item[] {
   const filtered = items.filter((item) => {
     if (kind !== "both" && item.channelKind !== kind) return false;
     if (region !== "all" && item.region !== region) return false;
+    if (platform !== "all" && platformOfItem(item) !== platform) return false;
     if (categories.length > 0 && !categories.includes(item.category)) {
       return false;
     }
@@ -464,6 +477,7 @@ export function filterChannels(
 ): ChannelSummary[] {
   const kind = query.kind ?? "both";
   const region = query.region ?? "all";
+  const platform = query.platform ?? "all";
   const gender = query.gender ?? "all";
   const ai = query.ai ?? "all";
   const affiliation = query.affiliation ?? "all";
@@ -475,6 +489,13 @@ export function filterChannels(
   return channels.filter((channel) => {
     if (kind !== "both" && channel.kind !== kind) return false;
     if (region !== "all" && channel.region !== region) return false;
+    if (
+      platform !== "all" &&
+      !channel.links.some((link) => link.p === platform) &&
+      !channel.externals?.[platform]
+    ) {
+      return false;
+    }
     if (gender !== "all" && channel.gender !== gender) return false;
     if (ai === "ai" && !channel.isAi) return false;
     if (ai === "human" && channel.isAi) return false;

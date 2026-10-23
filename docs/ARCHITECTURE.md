@@ -13,6 +13,7 @@
 │  └──────────────┘               └───────────────┘                │
 │         │                              │                          │
 │         │                              │ YouTube Data API v3       │
+│         │                              │ YouTube InnerTube          │
 │         │                              │ Twitch Helix              │
 │         │                              │ Bilibili / Niconico / VK  │
 │         │                              │ CHZZK / KICK / SOOP       │

@@ -5,8 +5,9 @@
 ## What this project is
 
 A tracker and discovery platform for **virtual singers (VTuber / VSinger)** and
-**real human singers / music producers**, across **YouTube, Twitch, Bilibili,
-Niconico and VK**.
+**real human singers / music producers**, with YouTube as the primary platform
+and supported identities across **YouTube, Twitch, Bilibili, Niconico, VK,
+CHZZK, KICK, SOOP and CI.ME**.
 
 Three things it does:
 
@@ -296,7 +297,7 @@ Load one with the `skill` tool, e.g. `skill({ id: "sync-dataset" })`.
 
 | Source | URL | Used for |
 | --- | --- | --- |
-| YouTube Data API v3 | `developers.google.com/youtube/v3` | The primary dataset |
+| YouTube Data API v3 | `developers.google.com/youtube/v3` | The primary source for YouTube channel and media data; InnerTube (`youtubei.js`) supplements profile and upload data where enabled |
 | AiSList | `github.com/Override92/AiSList` | Which channels are AI-generated |
 | VTuber Music Dataset | `github.com/meihei3/VTuber-music-dataset` | Curated song and original-artist metadata |
 | Virtual YouTuber Wiki | `virtualyoutuber.fandom.com/api.php` | Debut dates, graduation dates, wiki identities |

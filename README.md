@@ -1,17 +1,18 @@
 # VSinger & Singer Tracker
 
 A discovery and tracking platform for **virtual singers (VTuber / VSinger)** and
-**real human singers / music producers**, across **YouTube, Twitch, Bilibili,
-Niconico and VK**.
+**real human singers / music producers**. It collects public performer profiles
+and cross-platform identities from global rosters, then refreshes available
+channel and media details from supported platform APIs.
 
 - Collects VTuber singing streams, music videos, covers and original songs.
 - Keeps the dataset **in the repository** as versioned JSON, so it is
   diffable, auditable and served directly from GitHub Pages.
 - Searches it instantly with an inverted index built at pipeline time.
 - Separates the **virtual** and **real** datasets, and splits everything by
-  **region**.
-- Lets you link your YouTube, Twitch, Bilibili and VK accounts to see the
-  VTubers and singers you already follow.
+  **region**. The app can filter channels and media by region and platform.
+- Lets you link supported platform accounts to see the VTubers and singers you
+  already follow.
 
 ---
 
@@ -26,7 +27,7 @@ npm run dev:web             # the web app on :5173
 The web app reads the committed dataset in `data/`. To refresh it:
 
 ```bash
-npm run data:sync           # fetch from the platform APIs
+npm run data:sync           # YouTube Data API v3 + youtubei.js + platform adapters
 npm run data:index          # rebuild the search index
 npm run data:validate       # check structure and size budgets
 ```
@@ -41,7 +42,7 @@ npm run data:validate       # check structure and size budgets
 | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | How the pieces fit together |
 | [docs/DATA-SCHEMA.md](docs/DATA-SCHEMA.md) | Every field, every file, every enum |
 | [docs/YOUTUBE-API.md](docs/YOUTUBE-API.md) | Quota maths and endpoint costs |
-| [docs/PLATFORMS.md](docs/PLATFORMS.md) | The five platform adapters |
+| [docs/PLATFORMS.md](docs/PLATFORMS.md) | Platform identities, adapters and account-linking coverage |
 | [docs/SOURCES.md](docs/SOURCES.md) | Every data source, and which are read |
 | [docs/DEPLOY.md](docs/DEPLOY.md) | GitHub Actions, Pages, secrets, LFS |
 | [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) | How to add a channel, a region, a platform |
@@ -50,15 +51,50 @@ npm run data:validate       # check structure and size budgets
 ## How it works
 
 ```
-scripts/sync.ts   →  classify  →  data/*.json  →  committed
-                                        ↓
-                              GitHub Pages (static Vue app)
+scripts/sync.ts
+  ├── roster and music sources
+  ├── YouTube: Data API v3 (primary) + youtubei.js (supplemental)
+  └── platform adapters: YouTube, Twitch, Bilibili, Niconico, VK,
+                         CHZZK, KICK, SOOP and CI.ME
+          ↓
+       classify → data/*.json → committed → GitHub Pages
 ```
 
-The sync pipeline talks to the YouTube Data API v3 (free tier, 10,000 units a
-day), and optionally to Twitch, Bilibili, Niconico and VK. A quota budget
-refuses any call that would exceed the daily allowance, and every response is
-cached so a re-run only spends quota on genuinely new data.
+YouTube is the primary platform, and the YouTube Data API v3 is the primary
+source for its channel and media data. InnerTube (`youtubei.js`) supplements it
+with quota-free profile and upload data where enabled. The sync pipeline also
+reads the global vdb roster (including links across many platforms), Taiwan
+VTuber Tracking Data, VocaDB and curated music datasets. The Data API free tier
+allows 10,000 quota units a day. The app supports YouTube, Twitch, Bilibili,
+Niconico, VK, CHZZK, KICK, SOOP and CI.ME; public roster links are retained
+even when a platform does not have a dedicated profile adapter.
+
+### Supported platform features
+
+| Platform | Dataset support | Secrets needed |
+| --- | --- | --- |
+| YouTube | Channel profiles, uploads, live and upcoming streams, statistics and discovery | `YOUTUBE_API_KEY`; InnerTube (`youtubei.js`) also provides quota-free profile and upload data |
+| Twitch | Channel profiles, uploads, live streams and follower counts | Optional `TWITCH_CLIENT_ID` and `TWITCH_CLIENT_SECRET`; public GQL is also used |
+| Bilibili | Channel profiles, uploads and follower counts | None |
+| Niconico | Search for video/channel metadata, including original songs and covers; no live listing | None |
+| VK | Channel profiles, uploads and follower counts | Optional `VK_ACCESS_TOKEN` |
+| CHZZK | Refresh known profiles and current live streams | None |
+| KICK | Refresh known profiles and current live streams | None |
+| SOOP | Discover current broadcasts from its public live list; no offline profile lookup | None |
+| CI.ME | Refresh profiles for known channel IDs; no uploads or live lookup | `CI_ME_CLIENT_ID` and `CI_ME_CLIENT_SECRET` |
+
+CHZZK and KICK do not offer public channel search here, so their known channel
+IDs come from the cross-platform roster and existing records. Their live state
+is refreshed during the six-hour sync cycle, subject to the per-run details
+budget. SOOP only exposes a public live list; offline profile lookup and broad
+historical uploads are not available through this adapter. CI.ME refreshes
+known profiles but currently does not provide media or live-stream data through
+this integration. Configure the CI.ME credentials under **Settings → Secrets
+and variables → Actions** in the repository to enable its profile refresh.
+
+A quota budget refuses any YouTube Data API v3 call that would exceed the
+daily allowance. InnerTube requests do not use Data API quota, and cached
+responses avoid spending quota on unchanged Data API results.
 
 GitHub Actions refreshes the dataset every six hours, validates it, and
 commits the result.
@@ -68,11 +104,16 @@ commits the result.
 ```
 data/
 ├── manifest.json        counts, region table, quota usage
-├── channels/            virtual.json · real.json · regions/<r>.json
+├── channels/            virtual/<region>/<bucket>.json · real/<region>/<bucket>.json
 ├── items/               <region>/<bucket>.json · live.json · upcoming.json
 ├── songs/               the music-centric projection
 └── search/              the inverted index, per region
 ```
+
+The scheduled GitHub Actions workflow refreshes the roster and supported
+platform data every six hours, rebuilds search, validates the dataset and
+commits changes. The manual workflow also supports quota budgets, discovery
+skip and dry-run options. See [docs/DEPLOY.md](docs/DEPLOY.md).
 
 Everything is sharded so no single file grows large — see
 [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md#2-sharding-is-a-product-decision-not-an-implementation-detail).

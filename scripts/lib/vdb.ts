@@ -83,16 +83,17 @@ interface VdbFile {
   vtbs?: VdbRecord[];
 }
 
-/** Maps vdb's platform keys onto this project's platform ids. */
-const PLATFORM_MAP: Record<string, PlatformId | "other"> = {
+/** Normalizes vdb aliases for platforms with a project-wide canonical id. */
+const PLATFORM_MAP: Record<string, PlatformId> = {
   youtube: "youtube",
   youtubeAt: "youtube",
-  twitch: "twitch",
-  bilibili: "bilibili",
-  niconico: "niconico",
-  vk: "vk",
-  acfun: "bilibili",
 };
+
+function platformId(value: string): PlatformId | null {
+  const mapped = PLATFORM_MAP[value];
+  if (mapped) return mapped;
+  return /^[a-z][a-zA-Z0-9.-]{0,31}$/.test(value) ? value : null;
+}
 
 /**
  * Maps the language a performer lists as their default onto a region.
@@ -314,9 +315,9 @@ export class VdbSource {
           : 1;
     let youtubeAccount: VdbAccount | null = null;
     for (const account of record.accounts ?? []) {
-      if (!account?.id) continue;
-      const mapped = PLATFORM_MAP[account.platform];
-      if (mapped === undefined || mapped === "other") continue;
+      if (!account?.id || typeof account.platform !== "string") continue;
+      const mapped = platformId(account.platform);
+      if (!mapped) continue;
 
       /**
        * One YouTube identity per performer.
