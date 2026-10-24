@@ -477,8 +477,24 @@ export function harvestExternals(channel: Channel, text: string | null): void {
   if (!text) return;
   const found = extractExternalLinks(text);
   channel.externals = { ...(channel.externals ?? {}) };
+  /**
+   * `web:<n>` keys are **not** merged by position. The number means nothing
+   * outside the description it came from, so a second description's
+   * `web:1` is a different site; it is skipped rather than overwriting the
+   * address already stored under that key.
+   */
+  let webCount = Object.keys(channel.externals).filter((key) =>
+    key.startsWith("web:"),
+  ).length;
   for (const [platform, handle] of Object.entries(found)) {
     if (platform === "youtube_video" || platform === "youtube_playlist") continue;
+    if (platform === "web") continue;
+    if (platform.startsWith("web:")) {
+      if (webCount >= 2) continue;
+      webCount += 1;
+      channel.externals[`web:${webCount}`] = handle;
+      continue;
+    }
     if (!channel.externals[platform]) channel.externals[platform] = handle;
   }
 }

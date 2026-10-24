@@ -53,6 +53,14 @@ state.accounts     // Record<provider, LinkedAccount[]>
 state.activeAccount// Record<provider, accountId | null>
 ```
 
+## Links
+
+`channelLinks()` in `src/lib/links.ts` merges `platforms[]` (or a summary's
+`links[]`) with `externals`. An external value is either a **handle** for a
+known platform or, under `web:<n>`, an **address** — `externalUrl()` returns
+`null` for a key it cannot build a URL for, and the link is omitted. Never
+fall back to `https://<key>/<handle>`: a 404 is worse than no link.
+
 ## The 🎵 badge
 
 The badge is **in the record** (`isOfficialArtist`) and `officialArtistCheckedAt`
