@@ -27,8 +27,9 @@
  * a subscription list is not a public artefact.
  */
 
-import { acquireRunLock } from "./io";
+import { acquireRunLock, readJson } from "./io";
 import {
+  layout,
   readAllChannelRecords,
   rebuildChannelsManifest,
   refreshManifestChannelCounts,
@@ -75,6 +76,28 @@ async function innertube(): Promise<InnerTubeSource | null> {
 }
 
 /* -------------------------------------------------------------------------- */
+/* Overrides                                                                  */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * A hand-written correction from `data/overrides.json`.
+ *
+ * The ones that matter to an import are the classification fields: a curated
+ * `kind` or `isSinging` is why a channel is being imported at all — somebody
+ * filed it under 「Vtuber」 — and inferring it away would file it in the wrong
+ * half of the dataset.
+ */
+interface ChannelOverride {
+  kind?: Channel["kind"];
+  role?: Channel["role"];
+  region?: Channel["region"];
+  agency?: string | null;
+  gender?: Channel["gender"];
+  isAi?: boolean;
+  isSinging?: boolean;
+}
+
+/* -------------------------------------------------------------------------- */
 /* Profiles → records                                                         */
 /* -------------------------------------------------------------------------- */
 
@@ -85,11 +108,17 @@ async function innertube(): Promise<InnerTubeSource | null> {
  * a sync: the platform's title and description, plus the published country.
  * Nothing is invented — a field the profile does not carry stays empty, and
  * the details pass fills it later.
+ *
+ * The sync applies `data/overrides.json` to every record, so a hand-written
+ * correction is the last word there. The import has to do the same: a curated
+ * channel that is imported by inference alone would be re-classified on the
+ * next run and lose the correction it was imported for.
  */
 function recordFromProfile(
   profile: InnerTubeProfile,
   first: InnerTubeProfile,
   now: string,
+  override?: ChannelOverride,
 ): Channel | null {
   const id = normalizeChannelId(profile.id);
   if (!id.startsWith("UC")) return null;
@@ -109,6 +138,15 @@ function recordFromProfile(
     tags: [],
     country,
     platform: "youtube",
+    override: override
+      ? {
+          kind: override.kind,
+          role: override.role,
+          region: override.region,
+          agency: override.agency,
+          isSinging: override.isSinging,
+        }
+      : undefined,
   });
 
   const handle = (profile.handle ?? first.handle ?? "")
@@ -147,14 +185,14 @@ function recordFromProfile(
     uploadsPlaylistId: null,
     country,
     tags: [],
-    isSinging: classification.isSinging,
-    gender: classification.gender,
-    isAi: classification.isAi,
+    isSinging: override?.isSinging ?? classification.isSinging,
+    gender: override?.gender ?? classification.gender,
+    isAi: override?.isAi ?? classification.isAi,
     isOfficialArtist: profile.officialArtist,
     variant: deriveVariant(
       classification.role,
-      classification.gender,
-      classification.isAi,
+      override?.gender ?? classification.gender,
+      override?.isAi ?? classification.isAi,
     ),
     verification: null,
     source: "api",
@@ -248,6 +286,12 @@ export async function importYouTubeChannels(
   const now = new Date().toISOString();
 
   const existingIds = new Set(readAllChannelRecords().map((c) => c.id));
+  // The same corrections the sync applies, read once per call so a long
+  // import stays consistent with the file it started with.
+  const overrides = readJson<Record<string, ChannelOverride>>(
+    layout.overrides,
+    {},
+  );
   const records: Channel[] = [];
   const added: ImportedChannel[] = [];
   const failed: { id: string; reason: string }[] = [];
@@ -305,7 +349,7 @@ export async function importYouTubeChannels(
           : await source.profile(id, { lang, about: false });
       const profile = localized ?? first;
 
-      const record = recordFromProfile(profile, first, now);
+      const record = recordFromProfile(profile, first, now, overrides[id]);
       if (!record) {
         failed.push({ id, reason: "the channel has no usable name" });
         continue;
