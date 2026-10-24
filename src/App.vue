@@ -660,28 +660,41 @@ async function runSearch(): Promise<void> {
   }
   searching.value = true;
   try {
+    /**
+     * A **platform** filter is applied to the whole result set.
+     *
+     * It used to be applied after the search had already cut its results to
+     * 120. A channel found only on Bilibili usually belongs to a performer
+     * who also has a YouTube channel, so the first 120 hits were almost all
+     * YouTube — and switching the filter to Bilibili emptied the list. The
+     * filter has to run before the cap, or it is a filter on a filtered
+     * sample. The requested limit is 1,200 hits, about a region's worth.
+     */
+    const limit = state.platform === "all" ? 120 : 1200;
     const hits = await search(query, {
       kind: state.scope,
       region: state.region,
-      limit: 120,
+      limit,
     });
-    searchHits.value = hits
-      .map((h) => h.entry)
-      .filter((hit) => {
-        if (state.platform === "all") return true;
+    let matched = hits;
+    if (state.platform !== "all") {
+      const platform = state.platform;
+      matched = hits.filter(({ entry: hit }) => {
         if (hit.k === "c") {
           const channel = summaryById.value.get(hit.id);
           return Boolean(
             channel &&
-            (channel.links.some((link) => link.p === state.platform) ||
-              channel.externals?.[state.platform]),
+            (channel.links.some((link) => link.p === platform) ||
+              channel.externals?.[platform]),
           );
         }
         const item = [...allItems.value, ...live.value, ...upcoming.value].find(
           (candidate) => candidate.id === hit.id,
         );
-        return item ? platformOfItem(item) === state.platform : false;
+        return item ? platformOfItem(item) === platform : false;
       });
+    }
+    searchHits.value = matched.map((h) => h.entry);
   } catch (err) {
     console.error(err);
   } finally {

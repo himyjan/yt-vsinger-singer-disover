@@ -22,6 +22,7 @@ import {
   writeJsonIfChanged,
 } from "./lib/io";
 import { layout, readAllChannelRecords } from "./lib/dataset";
+import { primaryPlatformOf } from "./lib/platforms";
 import { ALL_REGIONS, SCHEMA_VERSION } from "./lib/types";
 import type {
   Channel,
@@ -90,6 +91,12 @@ function itemRecord(i: Item): SearchEntryRecord {
  *
  * Field order matters slightly: the title/name is repeated once so that
  * queries matching it get a slightly higher term frequency.
+ *
+ * There is deliberately **no** generic word here. An earlier version indexed
+ * the literal `channel` for every channel record, which made the commonest
+ * token in the corpus carry no information — it matched all 14,665 channels
+ * and buried the specific results under a limit of 120. A word that every
+ * record shares is noise, not a field.
  */
 function haystackFor(record: SearchEntryRecord): string {
   const parts: (string | null | undefined)[] = [
@@ -98,8 +105,6 @@ function haystackFor(record: SearchEntryRecord): string {
     record.cn,
     record.s,
     record.o,
-    record.c,
-    record.k === "c" ? "channel" : record.c,
   ];
   return parts.filter(Boolean).join(" ");
 }
@@ -197,6 +202,13 @@ export function buildSearchIndex(): void {
    *
    * A performer is found under the name they used to have, so the aliases
    * have to be searchable even though they are not displayed.
+   *
+   * A Bilibili record also indexes the **name its platform gave it**. vdb
+   * files 「カグラナナ / ななかぐら」 under Bilibili, and the display name is
+   * what the app shows — but the audience that found the performer on
+   * Bilibili knows the Bilibili name. Only the record's own platform may
+   * decide that name, so this is the link's name on its own platform, never
+   * another platform's.
    */
   const aliasText = new Map<string, string>();
 
@@ -209,11 +221,19 @@ export function buildSearchIndex(): void {
 
   for (const c of channels) {
     const record = channelRecord(c);
-    const aliases = c.aliases ?? [];
-    if (aliases.length) {
-      // The aliases are indexed but not stored, so the pack stays small; the
-      // full record keeps them for the drawer.
-      aliasText.set(record.id, aliases.join(" "));
+    const extra = [...(c.aliases ?? [])];
+
+    const primary = primaryPlatformOf(c);
+    if (primary && primary !== "youtube" && primary !== "twitch") {
+      const own = c.platforms?.find((p) => p.platform === primary);
+      const ownName = (own?.name ?? "").trim();
+      if (ownName && ownName !== c.name) extra.push(ownName);
+    }
+
+    if (extra.length) {
+      // Aliases are indexed but not stored, so the pack stays small; the full
+      // record keeps them for the drawer.
+      aliasText.set(record.id, extra.join(" "));
     }
     push(c.region, record);
   }

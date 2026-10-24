@@ -140,3 +140,6 @@ regions that actually exist, and the app only requests those.
 | Prefix search finds nothing | `tokens` is not sorted — `npm run data:index` |
 | Results ignore a filter | the option is not forwarded from `src/lib/dataset.ts` |
 | Search is slow | the packs ended up inside a `reactive()` object |
+| A channel that is clearly in the dataset does not come up | the value is only in a **field that is not indexed** — a YouTube handle, a Bilibili mid, a description. Index the name, never the description. |
+| Fewer results the narrower the query gets | the query matched a **context token** (a word nearly every record carries). `haystackFor()` once added the literal `channel`, so `channel` matched all 14,665 records and `channel <name>` collapsed to the same 120 hits. A token that every record shares carries no information — do not add one. |
+| A platform filter empties the list | the filter was applied *after* `search()` had already cut its results to a limit. Filter the whole result set: `src/App.vue` asks for 1,200 hits when a platform is selected. |

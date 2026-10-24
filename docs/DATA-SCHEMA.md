@@ -282,6 +282,13 @@ Every rename is **recorded**: the old name goes into `aliases`, and the
 aliases are indexed for search. A channel that renamed is still findable
 under the name someone remembers.
 
+A **Bilibili** record also indexes the name Bilibili gives its own account.
+vdb files 「Tinsgoo-Project」 under Bilibili, where the account is called
+「听世」; the display name is what the app shows, and the audience that found
+the performer on Bilibili knows the other one. Only the record's **own**
+platform may contribute that name — never another platform's, which is the
+same rule the platform name follows everywhere else.
+
 ### `confidence` — the estimate
 
 **Optional, and not populated by the current dataset.** The type allows it and
