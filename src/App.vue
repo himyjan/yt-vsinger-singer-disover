@@ -27,6 +27,7 @@ import type {
   Item,
   RegionCode,
 } from "@shared/lib/types";
+import type { SearchEntryRecord } from "@shared/lib/search";
 import {
   loadAllChannels,
   loadItems,
@@ -107,7 +108,7 @@ const upcoming = ref<Item[]>([]);
 const allItems = ref<Item[]>([]);
 const loading = ref(true);
 const analyticsAvailable = ref(false);
-const searchHits = ref<any[]>([]);
+const searchHits = ref<SearchEntryRecord[]>([]);
 const searching = ref(false);
 
 const drawerChannel = ref<Channel | null>(null);
@@ -738,6 +739,36 @@ function openItem(item: Item): void {
   drawerItem.value = item;
   drawerChannel.value = channelById.value.get(item.channelId) ?? null;
   drawerBadgeOverride.value = false;
+}
+
+/**
+ * Opens the record behind a **search hit**.
+ *
+ * A hit is a search-index entry — a channel id, a name and a thumbnail — not
+ * a channel the app has loaded. The Channels tab opens the drawer from a card
+ * it already holds, but a search can name a performer in a region filter the
+ * app has not downloaded, and passing the entry itself to the drawer shows an
+ * empty detail page. So the record is looked up first, and a summary is enough
+ * for the drawer to render until it arrives.
+ *
+ * A **video** hit belongs to a channel, not to a performer, so it opens the
+ * channel the video is filed under.
+ */
+function openSearchHit(hit: SearchEntryRecord): void {
+  const id = hit.k === "i" ? (hit.ch ?? "") : hit.id;
+  if (!id) return;
+  const full = channelById.value.get(id);
+  const summary = summaryById.value.get(id);
+  if (full || summary) {
+    openChannel(full ?? summary);
+    return;
+  }
+  // The hit points at a record this region filter has not loaded.
+  state.query = "";
+  void loadAllChannels("all").then((all) => {
+    channels.value = all;
+    openChannel(channelById.value.get(id) ?? null);
+  });
 }
 
 /** Whether a subscription's channel is in the local dataset. */
@@ -1991,25 +2022,33 @@ onMounted(async () => {
       <!-- Search results -->
       <section v-else-if="state.query.trim()" aria-label="Search results">
         <h2 class="mb-3 text-sm font-semibold text-neutral-500">
-          {{ searchHits.length }} result{{ searchHits.length === 1 ? "" : "s" }} for
-          “{{ state.query }}”
+          <template v-if="searching">Searching…</template>
+          <template v-else>
+            {{ searchHits.length }} result{{ searchHits.length === 1 ? "" : "s" }} for
+            “{{ state.query }}”
+          </template>
         </h2>
         <div v-if="searchHits.length" class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
-          <article v-for="hit in searchHits" :key="`${hit.k}:${hit.id}`" class="group overflow-hidden rounded-xl border border-black/8 bg-white shadow-sm transition hover:shadow-md dark:border-white/10 dark:bg-neutral-900">
-            <a :href="hit.k === 'c'
-                ? `https://www.youtube.com/channel/${hit.id}`
-                : `https://www.youtube.com/watch?v=${hit.id}`
-              " target="_blank" rel="noopener noreferrer" class="block aspect-video w-full overflow-hidden bg-neutral-200 dark:bg-neutral-800">
+          <article v-for="hit in searchHits" :key="`${hit.k}:${hit.id}`" class="group flex flex-col overflow-hidden rounded-xl border border-black/8 bg-white shadow-sm transition hover:shadow-md dark:border-white/10 dark:bg-neutral-900">
+            <!--
+              A hit opens the same drawer every other card opens: the
+              performer's identity, all their links and their uploads. The
+              YouTube link stays, so the record can still be checked at the
+              source.
+            -->
+            <button type="button" class="block aspect-video w-full overflow-hidden bg-neutral-200 text-left dark:bg-neutral-800" :aria-label="`Open details for ${hit.n}`" @click="openSearchHit(hit)">
               <img :src="imageUrl(hit.th)" :alt="hit.n" referrerpolicy="no-referrer" loading="lazy" decoding="async" class="h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]" />
-            </a>
-            <div class="space-y-1 p-2.5">
+            </button>
+            <div class="flex flex-1 flex-col gap-1 p-2.5">
               <h3 class="line-clamp-2 text-xs leading-snug font-semibold">
-                {{ hit.n }}
+                <button type="button" class="text-left hover:underline" @click="openSearchHit(hit)">
+                  {{ hit.n }}
+                </button>
               </h3>
               <p v-if="hit.cn && hit.k === 'i'" class="truncate text-[11px] text-neutral-500">
                 {{ hit.cn }}
               </p>
-              <div class="flex flex-wrap items-center gap-1">
+              <div class="mt-auto flex flex-wrap items-center gap-1">
                 <span class="rounded px-1.5 py-0.5 text-[10px] font-semibold text-white" :class="hit.g === 'virtual' ? 'bg-purple-600' : 'bg-emerald-600'">
                   {{ hit.g === "virtual" ? "Virtual" : "Real" }}
                 </span>
@@ -2019,11 +2058,20 @@ onMounted(async () => {
                 <span v-if="hit.c" class="rounded bg-black/5 px-1.5 py-0.5 text-[10px] font-semibold text-neutral-600 dark:bg-white/10 dark:text-neutral-300">
                   {{ hit.c }}
                 </span>
+                <span v-if="hit.k === 'c' && summaryById.get(hit.id)?.isSinging" class="rounded bg-rose-500/15 px-1.5 py-0.5 text-[10px] font-semibold text-rose-600 dark:text-rose-400" title="Publishes covers, MVs, original songs or live singing">
+                  🎤 Singing
+                </span>
+                <a :href="hit.k === 'c'
+                    ? `https://www.youtube.com/channel/${hit.id}`
+                    : `https://www.youtube.com/watch?v=${hit.id}`
+                  " target="_blank" rel="noopener noreferrer" class="ml-auto text-[10px] font-semibold text-neutral-400 hover:text-purple-600 dark:hover:text-purple-400" :aria-label="`Open ${hit.n} on YouTube`">
+                  YouTube ↗
+                </a>
               </div>
             </div>
           </article>
         </div>
-        <p v-else class="py-16 text-center text-sm text-neutral-500">
+        <p v-else-if="!searching" class="py-16 text-center text-sm text-neutral-500">
           No matches. Try a different spelling, or switch the scope to
           <strong>Both</strong>.
         </p>

@@ -259,6 +259,14 @@ loadItems(regions)      // sharded by region
 loadSearchPack(region)
 ```
 
+**A search hit is not a channel.** `search()` returns index entries — `k`
+(`c` channel / `i` item), `id`, `n`, `g`, `r`, `th` — while the drawer needs
+a `Channel`. `openSearchHit()` in `App.vue` maps one to the other: a video hit
+opens the channel it is filed under (`hit.ch`), and a hit whose record is not
+in the loaded region filter clears the query and loads all channels first.
+Passing the entry straight to `openChannel()` renders an empty drawer, which
+is what a search result with "no detail page" looks like.
+
 ## Gotchas
 
 - **`import.meta.env.BASE_URL`** — every data URL goes through `url()`, so
