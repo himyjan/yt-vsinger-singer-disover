@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-23T21:22:34.815Z",
+  "generatedAt": "2026-10-24T05:10:16.208Z",
   "channels": [
     {
       "id": "bilibili:10051195",
@@ -2119,7 +2119,7 @@
       "addedAt": "2026-10-22T03:40:51.250Z",
       "updatedAt": "2026-10-23T21:23:29.284Z",
       "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T05:10:16.208Z",
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -2135,7 +2135,8 @@
             "count": 1820
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T21:23:20.551Z"
+          "lastCheckedAt": "2026-10-24T05:10:16.208Z",
+          "videoCount": 0
         }
       ],
       "externals": {},
@@ -2339,7 +2340,7 @@
       "description": null,
       "subscribers": {
         "tag": "has",
-        "count": 29004
+        "count": 29001
       },
       "videoCount": 213,
       "viewCount": null,
@@ -2355,7 +2356,7 @@
       "addedAt": "2026-10-22T03:40:51.250Z",
       "updatedAt": "2026-10-23T21:23:29.284Z",
       "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T05:10:16.208Z",
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -2368,10 +2369,11 @@
           "url": "https://space.bilibili.com/1216158888",
           "subscribers": {
             "tag": "has",
-            "count": 29004
+            "count": 29001
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T21:23:20.985Z"
+          "lastCheckedAt": "2026-10-24T05:10:16.208Z",
+          "videoCount": 213
         }
       ],
       "externals": {},
@@ -30875,7 +30877,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T21:23:29.284Z",
+      "updatedAt": "2026-10-24T05:11:12.819Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -30919,7 +30921,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T21:23:29.284Z",
+      "updatedAt": "2026-10-24T05:11:12.819Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",

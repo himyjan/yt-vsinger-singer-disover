@@ -1,7 +1,49 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-23T21:22:34.815Z",
+  "generatedAt": "2026-10-24T05:10:16.208Z",
   "regions": [
+    {
+      "code": "jp",
+      "label": "Japan",
+      "badge": "🇯🇵",
+      "buckets": [
+        "00",
+        "01",
+        "03",
+        "04",
+        "05",
+        "06",
+        "08",
+        "09",
+        "0a",
+        "0c",
+        "0e"
+      ],
+      "items": 24
+    },
+    {
+      "code": "tw",
+      "label": "Taiwan",
+      "badge": "🇹🇼",
+      "buckets": [
+        "01",
+        "05",
+        "06",
+        "0a",
+        "0e",
+        "0f"
+      ],
+      "items": 6
+    },
+    {
+      "code": "hk",
+      "label": "Hong Kong",
+      "badge": "🇭🇰",
+      "buckets": [
+        "07"
+      ],
+      "items": 1
+    },
     {
       "code": "kr",
       "label": "Korea",
@@ -10,11 +52,34 @@
         "00"
       ],
       "items": 1
+    },
+    {
+      "code": "en",
+      "label": "English",
+      "badge": "🌐",
+      "buckets": [
+        "05",
+        "09",
+        "0c",
+        "0e"
+      ],
+      "items": 5
+    },
+    {
+      "code": "unknown",
+      "label": "Unknown",
+      "badge": "❔",
+      "buckets": [
+        "00",
+        "03",
+        "05"
+      ],
+      "items": 3
     }
   ],
   "counts": {
-    "total": 1,
-    "live": 1,
-    "upcoming": 0
+    "total": 40,
+    "live": 2,
+    "upcoming": 38
   }
 }
