@@ -282,6 +282,25 @@ export function extractExternalLinks(
       /open\.spotify\.com\/(artist|user)\/([A-Za-z0-9]+)/i,
       (m) => `${m[1]}/${m[2]}`,
     ],
+    [
+      "ci.me",
+      /(?:https?:\/\/)?(?:www\.)?ci\.me\/([A-Za-z0-9_-]+)/i,
+      (m) => m[1]!,
+    ],
+    /**
+     * Any other address the performer publishes.
+     *
+     * The list above only knows the platforms this app has adapters for. A
+     * Spotify **album** link, a personal site, a shop — the performer put it
+     * in their description and it has to stay a working link, not
+     * `https://example.com/<handle>`. `web:<n>` is the key, and the value is
+     * the URL itself rather than a handle.
+     */
+    [
+      "web",
+      /(?:https?:\/\/)?((?:www\.)?[a-z0-9](?:[a-z0-9-]*[a-z0-9])?(?:\.[a-z0-9-]+)+\.[a-z]{2,}\/[^\s"'<>()]*)/gi,
+      (m) => `https://${m[1]!.replace(/[.,;:!?)\]]+$/, "")}`,
+    ],
     ["vk", /vk\.com\/((?:id\d+)|[A-Za-z][A-Za-z0-9_.]{1,30})/i, (m) => m[1]!],
     [
       "chzzk",
@@ -303,17 +322,89 @@ export function extractExternalLinks(
       /(?:sooplive\.com\/station\/|ch\.sooplive\.co\.kr\/|play\.sooplive\.com\/)([A-Za-z0-9_-]+)/i,
       (m) => m[1]!,
     ],
-    [
-      "ci.me",
-      /(?:https?:\/\/)?(?:www\.)?ci\.me\/([A-Za-z0-9_-]+)/i,
-      (m) => m[1]!,
-    ],
   ];
 
+  /** The address itself, for the keys that keep a URL rather than a handle. */
+  const fromUrl = (value: string): string => {
+    try {
+      const url = new URL(value);
+      return `${url.hostname.replace(/^www\./, "")}${url.pathname}${url.search}`;
+    } catch {
+      return value
+        .replace(/^https?:\/\//i, "")
+        .replace(/^www\./i, "")
+        .replace(/\/$/, "");
+    }
+  };
+
   for (const [platform, re, normalize] of patterns) {
-    const m = re.exec(text);
-    const identity = m && normalize(m);
-    if (identity) out[platform] = identity;
+    const flags = re.flags.includes("g") ? re.flags : `${re.flags}g`;
+    const matches = [...text.matchAll(new RegExp(re.source, flags))];
+    for (const m of matches) {
+      const identity = normalize(m);
+      if (!identity) continue;
+      /** A site is one link: the first address on it wins. */
+      if (platform === "web") {
+        const url = fromUrl(identity);
+        const host = url.split("/")[0] ?? "";
+        const key = Object.keys(out).find(
+          (existing) =>
+            existing.startsWith("web:") && fromUrl(out[existing]!).split("/")[0] === host,
+        );
+        if (key) continue;
+        const n = Object.keys(out).filter((k) => k.startsWith("web:")).length + 1;
+        out[`web:${n}`] = url;
+        break;
+      }
+      out[platform] = identity;
+      break;
+    }
+  }
+
+  /**
+   * The known platforms are the ones that matter; the plain addresses only
+   * fill the gap. Two sites are enough — a description with ten links is a
+   * fan page listing, not a performer's own.
+   *
+   * A site that a known platform already covers — `space.bilibili.com/…`,
+   * `open.spotify.com/artist/…` — is the same link twice, so it is dropped
+   * rather than shown beside its own badge.
+   */
+  const hostOf = (value: string): string =>
+    value.replace(/^https?:\/\//, "").replace(/^www\./, "").split("/")[0] ?? "";
+  /**
+   * The domains the known platforms live on. A handle is not a URL, so the
+   * domain has to come from the table rather than from the stored value.
+   */
+  const PLATFORM_HOSTS: Record<string, string[]> = {
+    youtube: ["youtube.com", "youtu.be", "music.youtube.com"],
+    youtube_video: ["youtube.com", "youtu.be"],
+    youtube_playlist: ["music.youtube.com", "youtube.com"],
+    twitch: ["twitch.tv"],
+    twitter: ["twitter.com", "x.com"],
+    x: ["twitter.com", "x.com"],
+    instagram: ["instagram.com"],
+    tiktok: ["tiktok.com"],
+    bilibili: ["space.bilibili.com", "bilibili.com"],
+    niconico: ["nicovideo.jp", "nico.ms"],
+    discord: ["discord.gg", "discord.com"],
+    spotify: ["open.spotify.com"],
+    vk: ["vk.com"],
+    chzzk: ["chzzk.naver.com"],
+    kick: ["kick.com"],
+    soop: ["sooplive.com", "sooplive.co.kr"],
+    "ci.me": ["ci.me"],
+  };
+  const knownHosts = Object.keys(out)
+    .filter((key) => !key.startsWith("web:"))
+    .flatMap((key) => PLATFORM_HOSTS[key] ?? []);
+  for (const key of Object.keys(out)) {
+    if (!key.startsWith("web:")) continue;
+    const host = hostOf(out[key]!);
+    const covered = knownHosts.some(
+      (known) => host === known || host.endsWith(`.${known}`),
+    );
+    if (covered || Number(key.slice(4)) > 2) delete out[key];
   }
   return out;
 }

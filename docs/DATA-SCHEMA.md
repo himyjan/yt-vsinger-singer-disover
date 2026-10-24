@@ -162,7 +162,18 @@ The record for one performer.
 | `twitchId` | string \| null | |
 | `twitchLogin` | string \| null | |
 | `twitchFollowers` | `CountRef` | |
-| `externals` | `Record<string, string>` | `x`, `instagram`, `tiktok`, `discord`, `spotify`, … |
+| `externals` | `Record<string, string>` | `x`, `instagram`, `tiktok`, `discord`, `spotify`, `web:1`, `web:2`, … |
+
+`externals` holds two kinds of value. For a platform the pipeline has an
+adapter for, the value is a **handle** (`twitter: "KenshiYonezu"`) and the app
+builds the URL. For a site it does not know — a personal site, a shop, a
+Spotify **album** — the key is `web:<n>` and the value is the **address
+itself** (`web:1: "bq-uwu.github.io/"`). The number only orders them, so it is
+never merged across descriptions; a record keeps at most two, because a
+description with ten links is a fan page listing.
+
+A key with no adapter and a bare value has no URL to build, and the app omits
+it rather than inventing `https://<key>/<value>`, which 404s.
 | `popularVideoId` | string \| null | A representative upload |
 
 ### `activity` — one per performer, not one per platform

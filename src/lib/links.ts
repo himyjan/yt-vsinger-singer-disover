@@ -47,6 +47,8 @@ const EXTERNAL_META: Record<string, { label: string; icon: string }> = {
   soop: { label: "SOOP", icon: "🔴" },
   discord: { label: "Discord", icon: "🎮" },
   spotify: { label: "Spotify", icon: "🎧" },
+  /** Not a platform: the address a `web:<n>` key holds. */
+  website: { label: "Website", icon: "🌐" },
   "ci.me": { label: "CI.ME", icon: "🔗" },
 };
 
@@ -108,14 +110,19 @@ export function channelLinks(
   if (externals) {
     for (const [platform, handle] of Object.entries(externals)) {
       const meta = EXTERNAL_META[platform] ?? {
-        label: platform,
+        label: platform.startsWith("web:") ? "Website" : platform,
         icon: "🔗",
       };
+      const url = externalUrl(platform, handle);
+      // No resolvable address: the handle is not a link, and a link that 404s
+      // is worse than no link.
+      if (!url) continue;
       push({
         platform,
         label: meta.label,
-        url: externalUrl(platform, handle),
-        handle,
+        url,
+        // A `web:<n>` value is the address itself, not a handle to prefix.
+        handle: platform.startsWith("web:") ? null : handle,
       });
     }
   }
@@ -141,8 +148,31 @@ export function channelLinks(
   return out;
 }
 
-/** Builds a profile URL for an external platform handle. */
-export function externalUrl(platform: string, handle: string): string {
+/** Whether a string is already an absolute address. */
+function isAbsoluteUrl(value: string): boolean {
+  return /^https?:\/\//i.test(value);
+}
+
+/**
+ * Builds a profile URL for an external platform handle.
+ *
+ * Two shapes reach here: a **handle** for a known platform (`@KenshiYonezu`
+ * on YouTube), and the **address itself** for `web:<n>` — a Spotify album, a
+ * personal site, a shop. A key this function does not know has no URL scheme
+ * to guess, and `https://<key>/<handle>` is a broken link; `null` tells the
+ * caller to show the address instead.
+ */
+export function externalUrl(
+  platform: string,
+  handle: string,
+): string | null {
+  // `web:1` → the value is `open.spotify.com/album/…`, not a handle.
+  if (platform.startsWith("web:")) {
+    const trimmed = handle.trim();
+    if (!trimmed) return null;
+    return isAbsoluteUrl(trimmed) ? trimmed : `https://${trimmed}`;
+  }
+
   switch (platform) {
     case "youtube":
       if (handle.startsWith("user/") || handle.startsWith("c/")) {
@@ -183,7 +213,13 @@ export function externalUrl(platform: string, handle: string): string {
     case "ci.me":
       return `https://ci.me/${handle}`;
     default:
-      return `https://${platform}/${handle}`;
+      /**
+       * A key with no adapter — `other`, `email`, a platform added to the
+       * dataset but not to this table. A value that is already an address is
+       * usable; a bare handle has no site to put it on, and guessing
+       * `https://<key>/<handle>` produces a link that 404s.
+       */
+      return isAbsoluteUrl(handle) ? handle : null;
   }
 }
 
