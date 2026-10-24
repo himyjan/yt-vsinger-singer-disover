@@ -81,6 +81,9 @@ export const VIDEO_CAMP = ["視頻勢", "视频势"];
 /** 中之人 — the person behind the avatar. */
 export const PERSON_BEHIND = ["中之人", "中之人", "中ノ人"];
 
+/** 存檔 — the Chinese for an archive; 「實況存檔」 is a stream-archive channel. */
+export const STREAM_ARCHIVE = ["存檔", "存档", "實況存檔", "实况存档"];
+
 /** 切片 / 切片man / 肉片 — clip channels and the people who make them. */
 export const CLIP_CHANNELS = [
   "切片man",
