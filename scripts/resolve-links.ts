@@ -63,8 +63,8 @@ import { searchByName } from "./lib/wikidata";
 import { WebLinkFinder } from "./lib/web-links";
 import {
   addMissingLinks,
+  confirmingNames,
   harvestExternals,
-  identityNames,
   linksFromWikidata,
   linksFromXProfile,
   linksInText,
@@ -199,14 +199,19 @@ function wikidataAgrees(
   labels: string[],
   channel: Channel,
 ): boolean {
-  const names = identityNames(channel).filter((name) => name.length >= 5);
+  /**
+   * The record's **display name**, never an alias. 「维多利亚」's alias is
+   * `Victoria`, and the city of Victoria has a Wikidata item and a YouTube
+   * channel — a name match on the alias would adopt the city.
+   */
+  const names = confirmingNames(channel);
   if (!names.length) return false;
   return labels.some((label) => {
     const normalized = label
       .toLowerCase()
       .replace(/[^\p{L}\p{N}]/gu, "")
       .trim();
-    if (normalized.length < 5) return false;
+    if (!normalized) return false;
     return names.some(
       (name) => name === normalized || normalized.includes(name),
     );

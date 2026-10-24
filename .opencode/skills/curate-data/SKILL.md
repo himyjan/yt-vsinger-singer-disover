@@ -142,6 +142,12 @@ country then outranks the "only on Bilibili, so cn" prior. `country` (5) beats
 `platform` (3) and loses to `agency` (6), `roster` (7) and `override` (8), so
 running it never undoes curated work.
 
+A link the pass found by **searching a name** is confirmed against the
+record's display name only — never an alias. 「维多利亚」's alias `Victoria`
+once matched the Canadian city's YouTube channel. Hand-written names in
+`data/overrides.json` are safe from this entirely: `data:links` skips a record
+with an overridden region.
+
 Do **not** read vdb's `jp` name field as evidence: it holds kana readings of
 Chinese names (「小卯」 → 「コウサギ」), and treating them as kana would re-file
 thousands of Chinese performers as Japanese. Only the display name counts.
