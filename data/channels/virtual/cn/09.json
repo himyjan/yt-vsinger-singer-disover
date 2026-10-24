@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-24T05:10:16.208Z",
+  "generatedAt": "2026-10-24T05:58:40.197Z",
   "channels": [
     {
       "id": "bilibili:10408102",
@@ -7137,81 +7137,6 @@
       "aliases": []
     },
     {
-      "id": "bilibili:1838190318",
-      "name": "魔狼咪莉娅",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "cn",
-      "regionSource": "platform",
-      "languages": [
-        "zh-Hans"
-      ],
-      "statedLanguages": [],
-      "agency": null,
-      "affiliation": "unknown",
-      "avatar": "https://i0.hdslb.com/bfs/face/3cf84aea20a7ccbc3856d02bd904437c64563efc.jpg",
-      "banner": null,
-      "description": null,
-      "subscribers": {
-        "tag": "has",
-        "count": 176699
-      },
-      "videoCount": 1164,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [
-        "魔狼ミリヤ"
-      ],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "verification": null,
-      "source": "api",
-      "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T21:23:29.284Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "1838190318",
-          "handle": "1838190318",
-          "name": "魔狼咪莉娅",
-          "url": "https://space.bilibili.com/1838190318",
-          "subscribers": {
-            "tag": "has",
-            "count": 176699
-          },
-          "avatar": null,
-          "lastCheckedAt": "2026-10-23T21:23:21.551Z"
-        },
-        {
-          "platform": "twitter",
-          "id": "marou_miriya",
-          "handle": null,
-          "name": "魔狼咪莉娅",
-          "url": "https://twitter.com/marou_miriya",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "lastCheckedAt": "2026-10-23T21:23:21.551Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": [
-        "魔狼ミリヤ"
-      ]
-    },
-    {
       "id": "bilibili:1847473158",
       "name": "啊呜ahiru",
       "handle": null,
@@ -9573,7 +9498,7 @@
       "addedAt": "2026-10-22T03:40:51.250Z",
       "updatedAt": "2026-10-23T21:23:29.284Z",
       "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T05:54:52.762Z",
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -9588,8 +9513,8 @@
             "tag": "has",
             "count": 15120
           },
-          "avatar": null,
-          "lastCheckedAt": "2026-10-23T21:23:21.122Z"
+          "avatar": "https://i2.hdslb.com/bfs/face/feeda29514bff724f58dd610271974075420f54d.jpg",
+          "lastCheckedAt": "2026-10-24T05:49:35.522Z"
         },
         {
           "platform": "twitter",
@@ -9602,6 +9527,19 @@
           },
           "avatar": null,
           "lastCheckedAt": "2026-10-23T21:23:21.122Z"
+        },
+        {
+          "platform": "twitch",
+          "id": "754041505",
+          "handle": "rereno_reno",
+          "name": "rereno_reno",
+          "url": "https://www.twitch.tv/rereno_reno",
+          "subscribers": {
+            "tag": "has",
+            "count": 19
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-24T05:49:35.799Z"
         }
       ],
       "externals": {},
@@ -33604,10 +33542,10 @@
       "platforms": [
         {
           "platform": "youtube",
-          "id": "YukineOlwin",
+          "id": "UCHcl4W_DjHki1WaXbYUQ0Zg",
           "handle": "YukineOlwin",
           "name": "雪音芠",
-          "url": "https://www.youtube.com/@YukineOlwin",
+          "url": "https://www.youtube.com/channel/UCHcl4W_DjHki1WaXbYUQ0Zg",
           "subscribers": {
             "tag": "hidden"
           },
@@ -33639,12 +33577,17 @@
           "lastCheckedAt": "2026-10-24T05:11:05.679Z"
         }
       ],
-      "externals": {},
+      "externals": {
+        "twitter": "YukineOlwin",
+        "tiktok": "yukineolwin",
+        "bilibili": "3493297215506929"
+      },
       "popularVideoId": null,
       "nameSource": "platform",
       "aliases": [
         "雪音芠"
-      ]
+      ],
+      "isOfficialArtist": false
     },
     {
       "id": "vdb:0224316a-592e-547c-89b6-9f4f4e425779",

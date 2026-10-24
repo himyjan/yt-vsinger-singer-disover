@@ -1,7 +1,105 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-24T05:10:16.208Z",
+  "generatedAt": "2026-10-24T05:54:52.762Z",
   "channels": [
+    {
+      "id": "bilibili:1084357932",
+      "name": "森野莓洛Official",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "country",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://i0.hdslb.com/bfs/face/6ef89cc6ca04be9c8f80677493bc5265b281fe0e.jpg",
+      "banner": null,
+      "description": "我是森野莓洛，是一个住在森林里向往成为小红帽的女孩子。",
+      "subscribers": {
+        "tag": "has",
+        "count": 48522
+      },
+      "videoCount": 476,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": "JP",
+      "tags": [
+        "森野めるん"
+      ],
+      "isSinging": false,
+      "gender": "female",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-23T21:23:29.284Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T05:54:52.762Z",
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "bilibili",
+          "id": "1084357932",
+          "handle": "1084357932",
+          "name": "森野莓洛",
+          "url": "https://space.bilibili.com/1084357932",
+          "subscribers": {
+            "tag": "has",
+            "count": 48522
+          },
+          "avatar": "https://i0.hdslb.com/bfs/face/6ef89cc6ca04be9c8f80677493bc5265b281fe0e.jpg",
+          "lastCheckedAt": "2026-10-24T05:48:42.433Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "MerunMorino",
+          "handle": null,
+          "name": "森野莓洛",
+          "url": "https://twitter.com/MerunMorino",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T21:23:21.031Z"
+        },
+        {
+          "platform": "youtube",
+          "id": "UCDjutWNYx0gRgrnTLHYWgtA",
+          "handle": "MerunCh",
+          "name": "Merun Ch. MorinoMerun",
+          "url": "https://www.youtube.com/channel/UCDjutWNYx0gRgrnTLHYWgtA",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "videoCount": null,
+          "viewCount": null,
+          "avatar": "https://yt3.googleusercontent.com/s1PtSkDNYm4hwjW5tsyIRbBoRgvL0D9hvVdpvXJv9NjnrGTd46JhPO4GIDjMLa1k5eL0ZoNj-Q=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T05:48:42.684Z"
+        }
+      ],
+      "externals": {
+        "youtube": "UC3rV0-H5P47FuuiaD8ssNJg",
+        "twitch": "merunmorino",
+        "twitter": "MerunMorino",
+        "tiktok": "morinomerun",
+        "bilibili": "1084357932"
+      },
+      "popularVideoId": null,
+      "nameSource": "platform",
+      "aliases": [
+        "森野めるん",
+        "森野莓洛",
+        "Merun Ch. MorinoMerun",
+        "MorinoMerun"
+      ]
+    },
     {
       "id": "bilibili:1206440560",
       "name": "桃音诗おん",
@@ -1641,12 +1739,14 @@
       "id": "twitter:milkyqueen_idol",
       "name": "ミルキークイーン",
       "nameSource": "roster",
-      "aliases": [],
+      "aliases": [
+        "Milky Queen Vsinger"
+      ],
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
-      "regionSource": "name",
+      "regionSource": "country",
       "languages": [
         "ja"
       ],
@@ -1662,7 +1762,7 @@
       "videoCount": null,
       "viewCount": null,
       "uploadsPlaylistId": null,
-      "country": null,
+      "country": "JP",
       "tags": [],
       "isSinging": false,
       "gender": "unknown",
@@ -1673,7 +1773,7 @@
       "addedAt": "2026-10-23T10:03:47.608Z",
       "updatedAt": "2026-10-24T05:11:12.819Z",
       "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T05:54:52.762Z",
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -1689,9 +1789,27 @@
           },
           "avatar": null,
           "lastCheckedAt": "2026-10-24T05:11:04.503Z"
+        },
+        {
+          "platform": "youtube",
+          "id": "UChzCoQgVaFWv_akaA6JI7mg",
+          "handle": "MilkyQueenVsinger",
+          "name": "Milky Queen Vsinger",
+          "url": "https://www.youtube.com/channel/UChzCoQgVaFWv_akaA6JI7mg",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "videoCount": null,
+          "viewCount": null,
+          "avatar": "https://yt3.googleusercontent.com/6DpQlh6RcPria8Netas6S4Sa_GXn1ADFC_HOqLwZaW_CG3YSkmAB4kuEAsG865UEabNASgUs=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T05:51:24.948Z"
         }
       ],
-      "externals": {},
+      "externals": {
+        "twitch": "milkyqueen_idol",
+        "twitter": "milkyqueen_idol",
+        "discord": "an3vAVE4EB"
+      },
       "popularVideoId": null
     },
     {

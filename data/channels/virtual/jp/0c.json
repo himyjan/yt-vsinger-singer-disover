@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-24T05:10:16.208Z",
+  "generatedAt": "2026-10-24T05:58:40.197Z",
   "channels": [
     {
       "id": "bilibili:102600",
@@ -2524,12 +2524,15 @@
           "lastCheckedAt": "2026-10-24T05:11:05.162Z"
         }
       ],
-      "externals": {},
+      "externals": {
+        "twitter": "mizuryu"
+      },
       "popularVideoId": null,
       "nameSource": "platform",
       "aliases": [
         "水龍敬_Official"
-      ]
+      ],
+      "isOfficialArtist": false
     },
     {
       "id": "UCftJR3Qm0LyEuEQue1QYytA",

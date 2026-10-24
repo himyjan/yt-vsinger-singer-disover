@@ -123,6 +123,12 @@ costs a fraction of a cent on the free tier. The script throttles requests
 `GEMINI_API_KEY` secret, then re-applies the corrections, rebuilds the index,
 validates and commits `data/`.
 
+The same workflow runs `npm run data:links` before the re-sync: the
+`GEMINI_API_KEY` also powers the optional `--web` link discovery, which asks a
+search-grounded model for a Bilibili-only performer's official YouTube and
+Twitch accounts. The `links` input caps that pass (`0` disables it), and it is
+sharded eight ways by `GITHUB_RUN_NUMBER` so successive runs cover the backlog.
+
 ## Reviewing a verification run
 
 ```bash

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-24T05:10:16.208Z",
+  "generatedAt": "2026-10-24T05:58:40.197Z",
   "channels": [
     {
       "id": "bilibili:1162364311",
@@ -431,6 +431,96 @@
       "nameSource": "platform",
       "aliases": [
         "虹河ラキ"
+      ]
+    },
+    {
+      "id": "bilibili:2025918003",
+      "name": "夜想音息",
+      "handle": null,
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "country",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://i0.hdslb.com/bfs/face/member/noface.jpg",
+      "banner": null,
+      "description": null,
+      "subscribers": {
+        "tag": "has",
+        "count": 24017
+      },
+      "videoCount": 56,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": "JP",
+      "tags": [],
+      "isSinging": false,
+      "gender": "unknown",
+      "isAi": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-22T03:40:51.250Z",
+      "updatedAt": "2026-10-23T21:23:29.284Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T05:54:52.762Z",
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "bilibili",
+          "id": "2025918003",
+          "handle": "2025918003",
+          "name": "夜想音息",
+          "url": "https://space.bilibili.com/2025918003",
+          "subscribers": {
+            "tag": "has",
+            "count": 24017
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-24T05:49:44.702Z"
+        },
+        {
+          "platform": "twitter",
+          "id": "@yaso_toiki",
+          "handle": null,
+          "name": "夜想音息",
+          "url": "https://twitter.com/%40yaso_toiki",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-23T21:23:20.705Z"
+        },
+        {
+          "platform": "youtube",
+          "id": "UCNj88lUpk9fyzQydjbsuzRw",
+          "handle": "yasou_toiki",
+          "name": "Toiki Ch. 夜想といき",
+          "url": "https://www.youtube.com/channel/UCNj88lUpk9fyzQydjbsuzRw",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "videoCount": null,
+          "viewCount": null,
+          "avatar": "https://yt3.googleusercontent.com/dGnYQBTmBNOEK2TXwNSEzC75QcHmo4wXWoX_KDAelUBSBho0PB-Nk_kfcl5gq9jBWHUh24v1uA=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T05:49:44.972Z"
+        }
+      ],
+      "externals": {
+        "twitter": "yaso_toiki"
+      },
+      "popularVideoId": null,
+      "nameSource": "roster",
+      "aliases": [
+        "Toiki Ch. 夜想といき",
+        "夜想といき"
       ]
     },
     {
@@ -4035,9 +4125,11 @@
     },
     {
       "id": "UCZbIoAo6WRN4c5GwzpI9M3w",
-      "name": "鬼間Kima",
+      "name": "鬼間Kima【Virtuareal】",
       "nameSource": "platform",
-      "aliases": [],
+      "aliases": [
+        "鬼間Kima"
+      ],
       "handle": "%E9%AC%BC%E9%96%93Kima",
       "kind": "virtual",
       "role": "vtuber",
@@ -4078,7 +4170,7 @@
           "platform": "youtube",
           "id": "UCZbIoAo6WRN4c5GwzpI9M3w",
           "handle": "%E9%AC%BC%E9%96%93Kima",
-          "name": "鬼間Kima",
+          "name": "鬼間Kima【Virtuareal】",
           "url": "https://www.youtube.com/channel/UCZbIoAo6WRN4c5GwzpI9M3w",
           "subscribers": {
             "tag": "hidden"
@@ -4089,8 +4181,12 @@
           "lastCheckedAt": "2026-10-23T14:28:50.792Z"
         }
       ],
-      "externals": {},
-      "popularVideoId": null
+      "externals": {
+        "twitter": "Kima_virtuareal",
+        "bilibili": "1570525137"
+      },
+      "popularVideoId": null,
+      "isOfficialArtist": false
     },
     {
       "id": "vdb:02e4175f-3781-50e6-85ff-b58ba023732a",

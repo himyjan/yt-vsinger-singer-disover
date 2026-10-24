@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-24T05:10:16.208Z",
+  "generatedAt": "2026-10-24T05:58:40.197Z",
   "channels": [
     {
       "id": "acfun:62311858",
@@ -8293,7 +8293,7 @@
       "affiliation": "unknown",
       "avatar": "https://i0.hdslb.com/bfs/face/c4498cbdad0316746f0782fe7d73f00f7d350a1b.jpg",
       "banner": null,
-      "description": null,
+      "description": "AAA雪华琉音",
       "subscribers": {
         "tag": "has",
         "count": 12878
@@ -8312,7 +8312,7 @@
       "addedAt": "2026-10-22T03:40:51.250Z",
       "updatedAt": "2026-10-23T21:23:29.284Z",
       "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T05:54:52.762Z",
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -8327,8 +8327,8 @@
             "tag": "has",
             "count": 12878
           },
-          "avatar": null,
-          "lastCheckedAt": "2026-10-23T21:23:21.305Z"
+          "avatar": "https://i0.hdslb.com/bfs/face/c4498cbdad0316746f0782fe7d73f00f7d350a1b.jpg",
+          "lastCheckedAt": "2026-10-24T05:49:43.075Z"
         },
         {
           "platform": "twitter",
@@ -8341,6 +8341,19 @@
           },
           "avatar": null,
           "lastCheckedAt": "2026-10-23T21:23:21.305Z"
+        },
+        {
+          "platform": "twitch",
+          "id": "646825610",
+          "handle": "minami_tette",
+          "name": "みなみてって",
+          "url": "https://www.twitch.tv/minami_tette",
+          "subscribers": {
+            "tag": "has",
+            "count": 44002
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-24T05:49:43.614Z"
         }
       ],
       "externals": {},
@@ -30428,10 +30441,10 @@
       "platforms": [
         {
           "platform": "youtube",
-          "id": "abaddonasmr",
+          "id": "UCc7m4gI4TQS4LCSbNxuFQYQ",
           "handle": "abaddonasmr",
           "name": "AbaddonVT",
-          "url": "https://www.youtube.com/@abaddonasmr",
+          "url": "https://www.youtube.com/channel/UCc7m4gI4TQS4LCSbNxuFQYQ",
           "subscribers": {
             "tag": "hidden"
           },
@@ -30517,7 +30530,8 @@
       "aliases": [
         "Abaddon",
         "AbaddonVT"
-      ]
+      ],
+      "isOfficialArtist": false
     },
     {
       "id": "UCELb-uMjz0Bbtlg5qHooGDA",
@@ -30622,7 +30636,8 @@
       "externals": {},
       "popularVideoId": null,
       "nameSource": "roster",
-      "aliases": []
+      "aliases": [],
+      "isOfficialArtist": false
     },
     {
       "id": "UCybUlvX1pLcwwHD8ZtJWzOw",
@@ -30695,7 +30710,8 @@
       "nameSource": "platform",
       "aliases": [
         "兰笛saku"
-      ]
+      ],
+      "isOfficialArtist": false
     },
     {
       "id": "vdb:486c63ef-ef29-5ec5-8930-8ccd6dce837b",

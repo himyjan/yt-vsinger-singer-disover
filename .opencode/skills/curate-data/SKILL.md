@@ -129,10 +129,22 @@ and the name in the channel's own language:
 npm run data:details -- --weak-region --limit 500
 ```
 
-It selects the YouTube records whose `regionSource` is `declared`, `script`
-or `unknown`, re-reads the region, and re-fetches the profile in the new
+It selects the records whose `regionSource` is a **guess** — `declared`,
+`script`, `unknown` and `platform` — re-derives the non-YouTube ones from
+their own names without a request, and re-fetches the YouTube ones in the new
 region's language (so 「向葵 / あおい」 replaces `Aoi / Vtuber`, which becomes
 an alias).
+
+A Bilibili-only record is the one that needs `npm run data:links`: it finds
+the performer's YouTube/Twitch account from their own text, their X bio,
+Wikidata or the optional `--web` search, and the YouTube channel's published
+country then outranks the "only on Bilibili, so cn" prior. `country` (5) beats
+`platform` (3) and loses to `agency` (6), `roster` (7) and `override` (8), so
+running it never undoes curated work.
+
+Do **not** read vdb's `jp` name field as evidence: it holds kana readings of
+Chinese names (「小卯」 → 「コウサギ」), and treating them as kana would re-file
+thousands of Chinese performers as Japanese. Only the display name counts.
 
 ### A graduation is a phrase, not a word
 

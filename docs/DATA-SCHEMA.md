@@ -420,10 +420,11 @@ provenance is stored with it.
 | `declared` | The language vdb lists for display (`name.default`) | weak — a display choice, not an origin |
 | `script` | The characters in the name | a guess |
 
-The platform prior applies when a performer has a Bilibili account and **no
-YouTube account**: their audience is mainland Chinese, so that is their
-region. A performer with a YouTube account is presenting to a global
-audience.
+The platform prior applies when the performer exists on **one** platform
+only — a Bilibili account and nothing else. Their audience is mainland
+Chinese, so that is their region. A performer who also has a YouTube or
+Twitch account is presenting to a global audience, and their Bilibili account
+does not decide where they are from.
 
 **A mirror is not an origin.** A Japanese performer with a Bilibili channel
 is Japanese, and the region records where the performer comes from, not
@@ -549,23 +550,36 @@ and shown in the channel drawer.
 | --- | --- | --- |
 | `override` | Curated by hand in `data/overrides.json` | certain |
 | `roster` | The **Taiwan VTuber Tracking Data** nationality column | authoritative |
-| `declared` | The language vdb lists for display (`name.default`) | weak — a display choice, not an origin |
-| `platform` | The platform they are on — Bilibili → China, Niconico → Japan | strong |
-| `country` | The channel's published country | strong |
 | `agency` | Their agency's branch | strong |
 | `country` | The channel's published country | a stated fact |
-| `name` | Kana in a Japanese name | decisive for Japanese |
+| `name` | Kana in a Japanese name | evidence — decisive for Japanese, still evidence |
+| `platform` | The platform they are on — Bilibili → China, Niconico → Japan | a prior — a mirror breaks it |
+| `declared` | The language vdb lists for display (`name.default`) | weak — a display choice, not an origin |
 | `script` | The characters in the name | a guess |
 | `unknown` | | |
+
+The order is the order of **what may override what**, and `REGION_TRUST` in
+`scripts/lib/dedupe.ts` is the number behind it.
 
 The platform rule matters more than it looks: a Chinese VTuber whose name is
 written in characters shared with Japanese (「樱咲奈央」, 「川烈」) would
 otherwise be filed in Japan. But a Bilibili *mirror* does not make a
 Japanese performer Chinese — kana in the Japanese name and a YouTube channel
 are the signals that keep them in `jp`. A performer who *only* exists on
-Bilibili is mainland Chinese by definition, and one who only exists on
-Niconico is
-Japanese.
+Bilibili is mainland Chinese by default, and one who only exists on
+Niconico is Japanese.
+
+Two ways that prior is corrected, both understood by `data:links` and
+`data:details --weak-region`:
+
+- **Kana in the display name.** Two kana are a word, and they occur in
+  Japanese and nowhere else. vdb's `jp` *field* does not count — it stores
+  kana readings of Chinese names (「小卯」 → 「コウサギ」) — only the name the
+  record displays.
+- **The country of a discovered YouTube channel.** A performer whose Bilibili
+  account is a mirror has a YouTube channel, and YouTube publishes its
+  country. That is a stated fact, so it outranks the platform prior. It never
+  overwrites an agency, a roster or an override.
 
 The current split, with the provenance:
 

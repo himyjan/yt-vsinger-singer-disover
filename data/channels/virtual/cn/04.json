@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-24T05:10:16.208Z",
+  "generatedAt": "2026-10-24T06:07:33.874Z",
   "channels": [
     {
       "id": "bilibili:1001572999",
@@ -1398,7 +1398,7 @@
       "addedAt": "2026-10-22T03:40:51.250Z",
       "updatedAt": "2026-10-23T21:23:29.284Z",
       "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T06:07:33.874Z",
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -1413,8 +1413,8 @@
             "tag": "has",
             "count": 44427
           },
-          "avatar": null,
-          "lastCheckedAt": "2026-10-23T21:23:21.450Z"
+          "avatar": "https://i2.hdslb.com/bfs/face/8a60ca2885c6edc4977f0c139af71abc0a333032.jpg",
+          "lastCheckedAt": "2026-10-24T06:07:42.366Z"
         },
         {
           "platform": "twitter",
@@ -30965,7 +30965,8 @@
       "externals": {},
       "popularVideoId": null,
       "nameSource": "roster",
-      "aliases": []
+      "aliases": [],
+      "isOfficialArtist": false
     },
     {
       "id": "vdb:15e7d51c-6246-5dd0-8398-8b791c812684",

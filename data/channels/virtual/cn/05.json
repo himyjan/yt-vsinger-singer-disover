@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-24T05:10:16.208Z",
+  "generatedAt": "2026-10-24T05:58:40.197Z",
   "channels": [
     {
       "id": "bilibili:1005457213",
@@ -4823,7 +4823,7 @@
       "addedAt": "2026-10-22T03:40:51.250Z",
       "updatedAt": "2026-10-23T21:23:29.284Z",
       "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T05:54:52.762Z",
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -4838,8 +4838,8 @@
             "tag": "has",
             "count": 21223
           },
-          "avatar": null,
-          "lastCheckedAt": "2026-10-23T21:23:21.438Z"
+          "avatar": "https://i0.hdslb.com/bfs/face/fce6eadffcb15093ce64381300bc37298ddce281.jpg",
+          "lastCheckedAt": "2026-10-24T05:49:15.273Z"
         },
         {
           "platform": "twitter",
@@ -4852,6 +4852,20 @@
           },
           "avatar": null,
           "lastCheckedAt": "2026-10-23T21:23:21.438Z"
+        },
+        {
+          "platform": "youtube",
+          "id": "UCd2PQWqhUqyPdWdI6xum7pg",
+          "handle": "tensai_mera",
+          "name": "めら・α・いーにす",
+          "url": "https://www.youtube.com/channel/UCd2PQWqhUqyPdWdI6xum7pg",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "videoCount": null,
+          "viewCount": null,
+          "avatar": "https://yt3.googleusercontent.com/QR2fuzgUWIsBktqqsqc75McyCt4bRMledgFhhQ2oiK-ow7YKkK1T2P-ME7hKHW9oOnh_x4H54q0=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T05:49:15.674Z"
         }
       ],
       "externals": {},
@@ -4859,7 +4873,8 @@
       "nameSource": "platform",
       "aliases": [
         "めら",
-        "玫菈"
+        "玫菈",
+        "めら・α・いーにす"
       ]
     },
     {
@@ -8695,77 +8710,6 @@
       "aliases": [
         "樱叶卡农"
       ]
-    },
-    {
-      "id": "bilibili:2025918003",
-      "name": "夜想音息",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "cn",
-      "regionSource": "platform",
-      "languages": [
-        "zh-Hans"
-      ],
-      "statedLanguages": [],
-      "agency": null,
-      "affiliation": "unknown",
-      "avatar": "https://i0.hdslb.com/bfs/face/member/noface.jpg",
-      "banner": null,
-      "description": null,
-      "subscribers": {
-        "tag": "has",
-        "count": 24017
-      },
-      "videoCount": 56,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "verification": null,
-      "source": "api",
-      "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T21:23:29.284Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "2025918003",
-          "handle": "2025918003",
-          "name": "夜想音息",
-          "url": "https://space.bilibili.com/2025918003",
-          "subscribers": {
-            "tag": "has",
-            "count": 24017
-          },
-          "avatar": null,
-          "lastCheckedAt": "2026-10-23T21:23:20.705Z"
-        },
-        {
-          "platform": "twitter",
-          "id": "@yaso_toiki",
-          "handle": null,
-          "name": "夜想音息",
-          "url": "https://twitter.com/%40yaso_toiki",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "lastCheckedAt": "2026-10-23T21:23:20.705Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
     },
     {
       "id": "bilibili:203471128",
@@ -31401,7 +31345,7 @@
       "affiliation": "unknown",
       "avatar": null,
       "banner": null,
-      "description": null,
+      "description": "木木_official 木木，日本Vtuber，Gamer",
       "subscribers": {
         "tag": "hidden"
       },
@@ -31419,7 +31363,7 @@
       "addedAt": "2026-10-22T03:40:51.250Z",
       "updatedAt": "2026-10-23T21:23:29.284Z",
       "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T05:54:52.762Z",
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -31431,10 +31375,11 @@
           "name": "木乃伊子",
           "url": "https://space.bilibili.com/690230154",
           "subscribers": {
-            "tag": "hidden"
+            "tag": "has",
+            "count": 53127
           },
-          "avatar": null,
-          "lastCheckedAt": "2026-10-23T21:23:20.967Z"
+          "avatar": "https://i0.hdslb.com/bfs/face/0ffcd9113cb148aae8fbb0a0069fa63cae79b006.jpg",
+          "lastCheckedAt": "2026-10-24T05:50:45.996Z"
         },
         {
           "platform": "twitter",
@@ -31447,6 +31392,19 @@
           },
           "avatar": null,
           "lastCheckedAt": "2026-10-23T21:23:20.967Z"
+        },
+        {
+          "platform": "twitch",
+          "id": "880986845",
+          "handle": "mmu_uko",
+          "name": "むむ子",
+          "url": "https://www.twitch.tv/mmu_uko",
+          "subscribers": {
+            "tag": "has",
+            "count": 2973
+          },
+          "avatar": null,
+          "lastCheckedAt": "2026-10-24T05:50:46.264Z"
         }
       ],
       "externals": {},
@@ -33683,7 +33641,8 @@
       "externals": {},
       "popularVideoId": null,
       "nameSource": "roster",
-      "aliases": []
+      "aliases": [],
+      "isOfficialArtist": false
     },
     {
       "id": "vdb:07ea92be-674e-5f53-be7c-34b2e7d73ed5",

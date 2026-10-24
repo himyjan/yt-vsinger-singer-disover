@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-24T05:10:16.208Z",
+  "generatedAt": "2026-10-24T05:58:40.197Z",
   "channels": [
     {
       "id": "bilibili:1007610267",
@@ -595,82 +595,6 @@
       "popularVideoId": null,
       "nameSource": "roster",
       "aliases": []
-    },
-    {
-      "id": "bilibili:1084357932",
-      "name": "森野莓洛Official",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "cn",
-      "regionSource": "platform",
-      "languages": [
-        "zh-Hans"
-      ],
-      "statedLanguages": [],
-      "agency": null,
-      "affiliation": "unknown",
-      "avatar": "https://i0.hdslb.com/bfs/face/6ef89cc6ca04be9c8f80677493bc5265b281fe0e.jpg",
-      "banner": null,
-      "description": "我是森野莓洛，是一个住在森林里向往成为小红帽的女孩子。",
-      "subscribers": {
-        "tag": "has",
-        "count": 48522
-      },
-      "videoCount": 476,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [
-        "森野めるん"
-      ],
-      "isSinging": false,
-      "gender": "female",
-      "isAi": false,
-      "variant": "vtuber",
-      "verification": null,
-      "source": "api",
-      "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T21:23:29.284Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "1084357932",
-          "handle": "1084357932",
-          "name": "森野莓洛",
-          "url": "https://space.bilibili.com/1084357932",
-          "subscribers": {
-            "tag": "has",
-            "count": 48522
-          },
-          "avatar": null,
-          "lastCheckedAt": "2026-10-23T21:23:21.031Z"
-        },
-        {
-          "platform": "twitter",
-          "id": "MerunMorino",
-          "handle": null,
-          "name": "森野莓洛",
-          "url": "https://twitter.com/MerunMorino",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "lastCheckedAt": "2026-10-23T21:23:21.031Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null,
-      "nameSource": "platform",
-      "aliases": [
-        "森野めるん",
-        "森野莓洛"
-      ]
     },
     {
       "id": "bilibili:1085959883",
@@ -32471,10 +32395,10 @@
       "platforms": [
         {
           "platform": "youtube",
-          "id": "itsreibubbles",
+          "id": "UCkv0vMtd3Yoqfq7e48yK1_g",
           "handle": "itsreibubbles",
           "name": "Rei澪",
-          "url": "https://www.youtube.com/@itsreibubbles",
+          "url": "https://www.youtube.com/channel/UCkv0vMtd3Yoqfq7e48yK1_g",
           "subscribers": {
             "tag": "hidden"
           },
@@ -32530,12 +32454,15 @@
           "lastCheckedAt": "2026-10-24T05:11:04.426Z"
         }
       ],
-      "externals": {},
+      "externals": {
+        "discord": "Jtdv4qkQDa"
+      },
       "popularVideoId": null,
       "nameSource": "platform",
       "aliases": [
         "Rei澪"
-      ]
+      ],
+      "isOfficialArtist": false
     },
     {
       "id": "vdb:003983a6-421a-5e75-93e1-841d5c8ee9f2",

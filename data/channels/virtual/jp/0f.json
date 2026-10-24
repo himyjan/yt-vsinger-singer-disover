@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-24T05:10:16.208Z",
+  "generatedAt": "2026-10-24T05:54:52.762Z",
   "channels": [
     {
       "id": "bilibili:10842524",
@@ -1227,12 +1227,14 @@
       "id": "twitter:lychee_9jo",
       "name": "九条茘枝",
       "nameSource": "roster",
-      "aliases": [],
+      "aliases": [
+        "Lychee Kujo Official"
+      ],
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
-      "regionSource": "declared",
+      "regionSource": "country",
       "languages": [
         "ja"
       ],
@@ -1248,7 +1250,7 @@
       "videoCount": null,
       "viewCount": null,
       "uploadsPlaylistId": null,
-      "country": null,
+      "country": "JP",
       "tags": [],
       "isSinging": false,
       "gender": "unknown",
@@ -1259,7 +1261,7 @@
       "addedAt": "2026-10-23T10:03:47.608Z",
       "updatedAt": "2026-10-24T05:11:12.819Z",
       "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T05:54:52.762Z",
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -1275,9 +1277,25 @@
           },
           "avatar": null,
           "lastCheckedAt": "2026-10-24T05:11:04.549Z"
+        },
+        {
+          "platform": "youtube",
+          "id": "UCWcgVCKmV8BypUSGg2vPYOw",
+          "handle": "kujolycheeofficial6147",
+          "name": "Lychee Kujo Official",
+          "url": "https://www.youtube.com/channel/UCWcgVCKmV8BypUSGg2vPYOw",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "videoCount": null,
+          "viewCount": null,
+          "avatar": "https://yt3.googleusercontent.com/-Hbver-W0Ou5_-ESH1ZjBuDDnk7ZHKuNhLN4bp5LwxBbTHBTjnfTYv_5kVKIdeBim1wOYHeo=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T05:51:20.996Z"
         }
       ],
-      "externals": {},
+      "externals": {
+        "twitter": "lychee_9jo"
+      },
       "popularVideoId": null
     },
     {

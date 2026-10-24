@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-24T05:10:16.208Z",
+  "generatedAt": "2026-10-24T05:58:40.197Z",
   "channels": [
     {
       "id": "twitter:hitorino_tv",
@@ -386,10 +386,10 @@
       "platforms": [
         {
           "platform": "youtube",
-          "id": "rae_severinvtuber",
+          "id": "UCSeOZ1Uttta_fjsCZFCjXmQ",
           "handle": "rae_severinvtuber",
           "name": "Rae Severin",
-          "url": "https://www.youtube.com/@rae_severinvtuber",
+          "url": "https://www.youtube.com/channel/UCSeOZ1Uttta_fjsCZFCjXmQ",
           "subscribers": {
             "tag": "hidden"
           },
@@ -433,12 +433,17 @@
           "lastCheckedAt": "2026-10-24T05:11:04.425Z"
         }
       ],
-      "externals": {},
+      "externals": {
+        "twitch": "rae_severin",
+        "twitter": "rae_severin",
+        "bilibili": "652386779"
+      },
       "popularVideoId": null,
       "nameSource": "platform",
       "aliases": [
         "Rae Severin"
-      ]
+      ],
+      "isOfficialArtist": false
     },
     {
       "id": "vdb:db0ee4df-8826-507c-8cd4-dbe478f0c0a8",

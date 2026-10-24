@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-24T05:10:16.208Z",
+  "generatedAt": "2026-10-24T05:58:40.197Z",
   "channels": [
     {
       "id": "bilibili:10369514",
@@ -1830,7 +1830,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
-      "regionSource": "declared",
+      "regionSource": "name",
       "languages": [
         "ja"
       ],
@@ -4354,7 +4354,7 @@
       "kind": "virtual",
       "role": "vsinger",
       "region": "jp",
-      "regionSource": "script",
+      "regionSource": "country",
       "languages": [
         "ja"
       ],
@@ -4370,7 +4370,7 @@
       "videoCount": null,
       "viewCount": null,
       "uploadsPlaylistId": null,
-      "country": null,
+      "country": "JP",
       "tags": [],
       "isSinging": true,
       "gender": "unknown",
@@ -4402,7 +4402,8 @@
         }
       ],
       "externals": {},
-      "popularVideoId": null
+      "popularVideoId": null,
+      "isOfficialArtist": true
     },
     {
       "id": "UCQ1U65-CQdIoZ2_NA4Z4F7A",

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-24T05:10:16.208Z",
+  "generatedAt": "2026-10-24T05:58:40.197Z",
   "channels": [
     {
       "id": "UCBURM8S4LH7cRZ0Clea9RDA",
@@ -256,12 +256,17 @@
           "lastCheckedAt": "2026-10-24T05:11:04.387Z"
         }
       ],
-      "externals": {},
+      "externals": {
+        "twitch": "hiirosss",
+        "twitter": "hiiro_3341",
+        "bilibili": "508963009"
+      },
       "popularVideoId": null,
       "nameSource": "platform",
       "aliases": [
         "Hiiro"
-      ]
+      ],
+      "isOfficialArtist": false
     },
     {
       "id": "vdb:1689a361-899d-5037-bd95-c45c3adaae15",

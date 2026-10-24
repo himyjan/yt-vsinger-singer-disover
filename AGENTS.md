@@ -43,13 +43,14 @@ scripts/
 ├── sync.ts            fetch → classify → merge → write
 ├── build-index.ts     build the inverted search index
 ├── fill-details.ts    fill the missing avatars, names and details
+├── resolve-links.ts   find the missing cross-platform accounts
 ├── validate.ts        CI gate
-├── verify.ts           verify classifications with web-search grounding
+├── verify.ts          verify classifications with web-search grounding
 ├── import-legacy-db.ts  one-off SQLite migration
 ├── prepare-public.ts  copy data/ into public/ for the build
 └── lib/               types, youtube, twitch, platforms, classify, regions,
-                       identity, search, aislist, music-dataset, seeds,
-                       dataset, io
+                       identity, search, link-discovery, shard, aislist,
+                       music-dataset, seeds, dataset, io
 ```
 
 ### The web app (`src/`)
@@ -133,6 +134,20 @@ wrong:
   `space.bilibili.com` in its description; that does not make the performer
   Chinese. Only a channel that exists **only** on Bilibili gets the platform
   prior, and the country YouTube publishes outranks it.
+
+vdb files thousands of performers under Bilibili alone, which is how a
+Japanese performer ends up as `cn`: the Bilibili account is the mirror, and
+the roster has no YouTube link. `npm run data:links` finds the missing
+account, and the **country** YouTube publishes then corrects the region —
+`country` outranks `platform`, so the correction is allowed, and a stronger
+source (agency, roster, override) is never overwritten. Discovery adds
+links and a region fact; it never renames a record, because the performer's
+own platform is still the authority for the name.
+
+Note that vdb's `jp` **name field is not kana evidence**: it stores kana
+readings of Chinese names (「小卯」 → 「コウサギ」), which would re-file
+thousands of Chinese performers as Japanese. Only the display name counts,
+in both `classifyChannel()` and `vdb.ts`.
 
 ### 4. The id is the immutable platform id
 
@@ -283,6 +298,8 @@ create non-fast-forward push failures.
 | Fix a Bilibili avatar (mixed content / 403) | `scripts/lib/platforms/bilibili.ts` (`absoluteUrl`), `src/lib/image.ts`, and `referrerpolicy="no-referrer"` on `<img>` |
 | A record keyed by a handle | `npm run data:ids` — resolves it to the `UC…` id |
 | Fill the missing avatars | `npm run data:details -- --limit 2000` |
+| A Bilibili-only record with no YouTube/Twitch link | `npm run data:links -- --limit 200` (add `--platform bilibili --shard 2/4` to slice it) |
+| A record filed under `cn` that is really Japanese | `npm run data:details -- --weak-region` re-derives it; `data:links` corrects it from the discovered YouTube country |
 | Fix the classifier itself | `scripts/lib/classify.ts` |
 | Add a curated channel | `data/seed-catalog.json` |
 | Add a region | `scripts/lib/types.ts`, `scripts/lib/regions.ts` |
@@ -306,6 +323,8 @@ npm run data:index                   # rebuild the search index
 npm run data:details -- --limit 2000 # fill the missing avatars
 npm run data:details -- --name-only  # correct the names and the aliases
 npm run data:details -- --platform bilibili --dry-run
+npm run data:links -- --limit 200    # find the missing cross-platform accounts
+npm run data:links -- --shard 2/4 --web --dry-run  # + search-grounded fallback
 npm run data:ids                     # re-key handle ids to UC… ids
 npm run data:validate                # structure + budgets
 npm run data:import-legacy           # migrate the old SQLite database

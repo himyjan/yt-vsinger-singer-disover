@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-24T05:10:16.208Z",
+  "generatedAt": "2026-10-24T05:58:40.197Z",
   "channels": [
     {
       "id": "bilibili:1730051024",
@@ -102,10 +102,10 @@
       "platforms": [
         {
           "platform": "youtube",
-          "id": "YUY_IX",
+          "id": "UC93aWyXK1NuUnRumFxU7X3w",
           "handle": "YUY_IX",
           "name": "YUY",
-          "url": "https://www.youtube.com/@YUY_IX",
+          "url": "https://www.youtube.com/channel/UC93aWyXK1NuUnRumFxU7X3w",
           "subscribers": {
             "tag": "hidden"
           },
@@ -161,10 +161,15 @@
           "lastCheckedAt": "2026-10-24T05:11:04.452Z"
         }
       ],
-      "externals": {},
+      "externals": {
+        "twitch": "yuy_ix",
+        "twitter": "YUY_IX",
+        "discord": "YUY"
+      },
       "popularVideoId": null,
       "nameSource": "roster",
-      "aliases": []
+      "aliases": [],
+      "isOfficialArtist": false
     },
     {
       "id": "UCAvLrC1G9Lt9thVTfd10udQ",
@@ -325,12 +330,16 @@
           "lastCheckedAt": "2026-10-24T05:11:05.511Z"
         }
       ],
-      "externals": {},
+      "externals": {
+        "twitch": "nekumavt",
+        "twitter": "NekumaVT"
+      },
       "popularVideoId": null,
       "nameSource": "platform",
       "aliases": [
         "草莓猫Taffy"
-      ]
+      ],
+      "isOfficialArtist": false
     },
     {
       "id": "UCnYhIk9aGEx_bIgheVjs53w",

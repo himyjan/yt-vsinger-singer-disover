@@ -70,6 +70,24 @@ in two steps:
 The second step is what lets a YouTube subscription of a VTuber who also
 streams on Twitch be recognised.
 
+### Discovering the links a record is missing
+
+A vdb record often lists only a Bilibili account, so the YouTube or Twitch
+identity exists but the dataset does not know it. `npm run data:links` looks
+for it in the performer's own text (the Bilibili signature, the About page),
+their **X bio** read through FxTwitter, Wikidata by name, and — with `--web` —
+a search-grounded model.
+
+A name-search result is a candidate until the resolved profile proves it:
+the Bilibili space id or X handle has to appear in the profile, or its title
+has to be one of the record's distinctive names. Only then is the
+`PlatformLink` written.
+
+The discovered account also supplies the one fact a mirror cannot: YouTube
+publishes the channel's **country**, and a country outranks the "Bilibili
+only, so Chinese" prior. That is what moves a Japanese performer out of `cn`
+without letting a mirror rename them.
+
 ---
 
 ## YouTube

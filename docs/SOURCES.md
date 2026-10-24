@@ -149,6 +149,14 @@ Wikidata either is the same performer or is not. The same query returns the
 agency (`P463`), the gender (`P21`), the country (`P27`) and the inception
 date (`P571`).
 
+`data:links` also searches Wikidata **by name** (`wbsearchentities` in
+Japanese, Chinese and English) for a record that has no YouTube or Twitch
+link. A name is not an identifier — two performers can share one — so the
+item's labels have to agree with the record's own names, and the account it
+points at still has to confirm the identity (see
+[Finding the missing cross-platform links](#finding-the-missing-cross-platform-links)).
+A name match is a suggestion, never a merge.
+
 ### 8. Wikipedia
 
 `https://en.wikipedia.org/api/rest_v1/`
@@ -194,6 +202,7 @@ stable or complete search API:
 | KICK | — | **the public API** | profile and live data for known channels; no usable public keyword search |
 | SOOP | — | **the public live-list API** | first-page live titles, channel names, viewer counts |
 | [CI.ME Open API](https://developers.ci.me/docs/api-channels) | **Open API** (`Client-Id` / `Client-Secret`) | same API | channel profile and follower count for known channel IDs; no documented search/media API |
+| X / Twitter | — (no free read API) | [**FxTwitter**](https://github.com/FixTweet/FxTwitter) (`api.fxtwitter.com/<handle>`) | the bio, the website field and the location — where a Bilibili-only performer usually writes their YouTube link |
 
 **InnerTube** (`scripts/lib/youtubei.ts`) — the channel's *description* is the
 richest field in the project: it is where a performer states their own
@@ -303,6 +312,53 @@ the coverage climbs. The progress is visible in the summary:
 ```
 channels 14500 · with an avatar 3356 · with a description 347
 ```
+
+### Finding the missing cross-platform links
+
+vdb files **9,000+ performers under Bilibili alone** — no YouTube channel, no
+Twitch login. For some that is the truth; for many it is the roster's gap, and
+the gap is what makes their region wrong: a record whose only account is on
+Bilibili is filed under `cn`, even when the performer is Japanese and the
+Bilibili account is a mirror.
+
+`npm run data:links` closes the gap. It reads the identities a performer
+publishes about themselves, strongest first:
+
+| Source | What it is | How the link is trusted |
+| --- | --- | --- |
+| the record's description | the Bilibili signature, a YouTube about page | it is the performer's own words |
+| the record's `externals` | handles harvested from a description | the same |
+| the performer's **X profile** (FxTwitter) | the bio, the website field, the location | the same |
+| **Wikidata**, by name in `ja` / `zh` / `en` | `P2397` YouTube, `P4047` Twitch | the profile must point back at the record |
+| **web search** (`--web`, `GEMINI_API_KEY`) | a search-grounded model | the profile must point back at the record |
+
+The last two answer a **name** match, so what they return is a *candidate*,
+not a link. A candidate is accepted only when the resolved profile points back
+at the record — the Bilibili space id in the YouTube description, the same X
+handle — or when its title is one of the record's distinctive names. A
+one- or two-character name never confirms anything on its own.
+
+The new link lands in `platforms[]`, and the handles its profile publishes are
+harvested into `externals`. It never renames the record: the performer's own
+platform is still the authority for the name. The one field a discovered
+YouTube channel may decide is the **region** — YouTube publishes the channel's
+country, and that is the fact a mirror cannot corrupt. A country outranks the
+"only on Bilibili, so Chinese" prior, and never overrides an agency, a roster's
+nationality or a hand-written override.
+
+An account another record already owns is **skipped**, not duplicated: the
+right fix for that pair is a merge.
+
+Every record the pass looks at is stamped with `lastDetailsFetchedAt`,
+whether or not a link was found, and the queue is ordered oldest-first. That
+is what makes the backlog **advance**: a record that yields nothing is not a
+record to retry tomorrow, or the same hundred difficult records would be
+re-read every run and the rest never reached.
+
+Not every source is readable from every machine. Bilibili's card endpoint is
+public, but its WBI-signed upload listing returns 412 to an unauthenticated
+client, so upload descriptions are not harvested locally. X has no free read
+API at all, which is why the bio is read through FxTwitter.
 
 ### Rate limiting
 

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-24T05:10:16.208Z",
+  "generatedAt": "2026-10-24T05:58:40.197Z",
   "channels": [
     {
       "id": "bilibili:1002731313",
@@ -11373,7 +11373,7 @@
       "affiliation": "unknown",
       "avatar": null,
       "banner": null,
-      "description": null,
+      "description": "幻想口袋喵w 地铁2033吧吧主，喜欢做mmd，我很可爱    我的群号在置顶（群答案只有两个字）",
       "subscribers": {
         "tag": "has",
         "count": 80231
@@ -11392,7 +11392,7 @@
       "addedAt": "2026-10-22T03:40:51.250Z",
       "updatedAt": "2026-10-23T13:46:49.602Z",
       "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T05:54:52.762Z",
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -11407,8 +11407,8 @@
             "tag": "has",
             "count": 80231
           },
-          "avatar": null,
-          "lastCheckedAt": "2026-10-22T12:45:07.733Z",
+          "avatar": "https://i0.hdslb.com/bfs/face/cf199942589b94691e0135debd2ecf815caf6289.jpg",
+          "lastCheckedAt": "2026-10-24T05:49:48.278Z",
           "videoCount": 189
         },
         {
@@ -11422,12 +11422,31 @@
           },
           "avatar": null,
           "lastCheckedAt": "2026-10-23T12:28:32.300Z"
+        },
+        {
+          "platform": "youtube",
+          "id": "UCUz3f8O_IyeW_hRtOoIBPjw",
+          "handle": "PocketFans",
+          "name": "PocketFans",
+          "url": "https://www.youtube.com/channel/UCUz3f8O_IyeW_hRtOoIBPjw",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "videoCount": null,
+          "viewCount": null,
+          "avatar": "https://yt3.googleusercontent.com/iWxZEs9dsrV-njdJjFQ_OhNlr_4nUrm7qi8kRpLfW1nh-WDcnKPkYvdA9h3bngd9W3nrf-Kc3Jk=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T05:49:48.543Z"
         }
       ],
-      "externals": {},
+      "externals": {
+        "twitter": "fan_pocket",
+        "bilibili": "2965629"
+      },
       "popularVideoId": null,
       "nameSource": "roster",
-      "aliases": []
+      "aliases": [
+        "PocketFans"
+      ]
     },
     {
       "id": "bilibili:3020880",
@@ -31625,7 +31644,8 @@
       "nameSource": "platform",
       "aliases": [
         "鸽鹉live"
-      ]
+      ],
+      "isOfficialArtist": false
     },
     {
       "id": "vdb:5b24d707-9143-5dbe-8e3c-c38405545e77",

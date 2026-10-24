@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-24T05:10:16.208Z",
+  "generatedAt": "2026-10-24T05:58:40.197Z",
   "channels": [
     {
       "id": "bilibili:1095372350",
@@ -3025,7 +3025,7 @@
       "kind": "virtual",
       "role": "vsinger",
       "region": "jp",
-      "regionSource": "script",
+      "regionSource": "country",
       "languages": [
         "ja"
       ],
@@ -3041,7 +3041,7 @@
       "videoCount": null,
       "viewCount": null,
       "uploadsPlaylistId": null,
-      "country": null,
+      "country": "JP",
       "tags": [],
       "isSinging": true,
       "gender": "unknown",
@@ -3073,9 +3073,11 @@
         }
       ],
       "externals": {
-        "youtube": "@ridel_live"
+        "youtube": "@ridel_live",
+        "twitter": "Ridel2022"
       },
-      "popularVideoId": null
+      "popularVideoId": null,
+      "isOfficialArtist": true
     },
     {
       "id": "UCQm--lgPz5Sq_b5hW9UXXQQ",
@@ -3086,7 +3088,7 @@
       "kind": "virtual",
       "role": "vsinger",
       "region": "jp",
-      "regionSource": "script",
+      "regionSource": "country",
       "languages": [
         "ja"
       ],
@@ -3102,7 +3104,7 @@
       "videoCount": null,
       "viewCount": null,
       "uploadsPlaylistId": null,
-      "country": null,
+      "country": "JP",
       "tags": [],
       "isSinging": true,
       "gender": "male",
@@ -3133,8 +3135,15 @@
           "lastCheckedAt": "2026-10-23T14:28:50.792Z"
         }
       ],
-      "externals": {},
-      "popularVideoId": null
+      "externals": {
+        "youtube": "@aninekothe",
+        "twitter": "nekothe_jp",
+        "instagram": "nekothesappiness",
+        "tiktok": "nekothesappiness",
+        "niconico": "139991919"
+      },
+      "popularVideoId": null,
+      "isOfficialArtist": true
     },
     {
       "id": "UCSFaf99eT5T4wNN1O2Z3NZg",

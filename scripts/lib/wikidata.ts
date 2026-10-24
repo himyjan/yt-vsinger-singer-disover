@@ -394,3 +394,167 @@ export const COUNTRY_TO_REGION: Record<string, RegionCode> = {
   indonesia: "id",
   malaysia: "my",
 };
+
+/* -------------------------------------------------------------------------- */
+/* Name search — the cross-platform identities                               */
+/* -------------------------------------------------------------------------- */
+
+/** One Wikidata item, reduced to the identities the dataset can use. */
+export interface WikidataLinkMatch {
+  /** The item id, e.g. `Q22128111`. */
+  id: string;
+  /** The label in the performer's own language, when there is one. */
+  label: string;
+  /** Every label Wikidata holds in the languages that were asked for. */
+  labels: string[];
+  /** The one-line description, when Wikidata has one. */
+  description: string | null;
+  /** `P2397` — the YouTube channel id. */
+  youtubeChannelId: string | null;
+  /** `P4047` / `P2002` / `P2003` / `P856`, keyed by platform. */
+  externals: Record<string, string>;
+}
+
+const ENTITY_LANGUAGES = ["ja", "zh", "en"] as const;
+
+interface SearchEntity {
+  id?: string;
+  label?: string;
+  description?: string;
+}
+
+/**
+ * Searches Wikidata for a performer **by name**, in every language the
+ * dataset is likely to know them by.
+ *
+ * `lookupByName()` above only matches an English label, which is the wrong
+ * question for this catalogue: 「雫るる」 has no English label at all, and a
+ * Chinese Bilibili performer is usually labelled in Chinese. The search API
+ * asks for the item, and the entities API then answers with the identities —
+ * the YouTube channel id, the Twitch login, the X handle.
+ *
+ * A name match is **suggestive, never certain** (two performers can share a
+ * name), so the caller has to verify the answer before it writes it down.
+ */
+export async function searchByName(
+  name: string,
+  options: { languages?: readonly string[]; limit?: number } = {},
+): Promise<WikidataLinkMatch[]> {
+  const cleaned = name.replace(/["\\]/g, " ").trim();
+  if (!cleaned || cleaned.length < 2) return [];
+  const languages = options.languages ?? ENTITY_LANGUAGES;
+  const limit = options.limit ?? 3;
+
+  /** The item ids the search found, in the order the languages asked. */
+  const ids: string[] = [];
+  for (const language of languages) {
+    try {
+      const url = new URL("https://www.wikidata.org/w/api.php");
+      url.searchParams.set("action", "wbsearchentities");
+      url.searchParams.set("search", cleaned);
+      url.searchParams.set("language", language);
+      url.searchParams.set("uselang", language);
+      url.searchParams.set("format", "json");
+      url.searchParams.set("limit", String(limit));
+      url.searchParams.set("origin", "*");
+      const res = await fetch(url.toString(), {
+        headers: { "User-Agent": USER_AGENT, Accept: "application/json" },
+      });
+      if (!res.ok) continue;
+      const json = (await res.json()) as { search?: SearchEntity[] };
+      for (const hit of json.search ?? []) {
+        if (hit.id && !ids.includes(hit.id)) ids.push(hit.id);
+      }
+    } catch {
+      /* an unreachable search is not a reason to fail the caller */
+    }
+    if (ids.length >= 10) break;
+  }
+  if (!ids.length) return [];
+
+  try {
+    const url = new URL("https://www.wikidata.org/w/api.php");
+    url.searchParams.set("action", "wbgetentities");
+    url.searchParams.set("ids", ids.slice(0, 10).join("|"));
+    url.searchParams.set("props", "claims|labels|descriptions");
+    url.searchParams.set("languages", ENTITY_LANGUAGES.join("|"));
+    url.searchParams.set("format", "json");
+    url.searchParams.set("redirects", "yes");
+    const res = await fetch(url.toString(), {
+      headers: { "User-Agent": USER_AGENT, Accept: "application/json" },
+    });
+    if (!res.ok) return [];
+    const json = (await res.json()) as {
+      entities?: Record<string, WikidataEntity>;
+    };
+    const out: WikidataLinkMatch[] = [];
+    for (const entity of Object.values(json.entities ?? {})) {
+      const match = toLinkMatch(entity);
+      if (match) out.push(match);
+    }
+    return out;
+  } catch {
+    return [];
+  }
+}
+
+/** A Wikidata entity as the API returns it, reduced to what is read here. */
+interface WikidataEntity {
+  id?: string;
+  labels?: Record<string, { value?: string }>;
+  descriptions?: Record<string, { value?: string }>;
+  claims?: Record<
+    string,
+    {
+      mainsnak?: {
+        datavalue?: { value?: unknown };
+      };
+    }[]
+  >;
+}
+
+/** Reads the first string value of a claim, e.g. `P2397`. */
+function claimString(entity: WikidataEntity, property: string): string | null {
+  const value = entity.claims?.[property]?.[0]?.mainsnak?.datavalue?.value;
+  return typeof value === "string" && value.trim() ? value.trim() : null;
+}
+
+function toLinkMatch(entity: WikidataEntity): WikidataLinkMatch | null {
+  const id = entity.id;
+  if (!id) return null;
+
+  const labels = ENTITY_LANGUAGES.map(
+    (language) => entity.labels?.[language]?.value,
+  ).filter((value): value is string => !!value?.trim());
+
+  const description =
+    entity.descriptions?.en?.value ??
+    entity.descriptions?.ja?.value ??
+    entity.descriptions?.zh?.value ??
+    null;
+
+  const externals: Record<string, string> = {};
+  const twitch = claimString(entity, "P4047");
+  const x = claimString(entity, "P2002");
+  const instagram = claimString(entity, "P2003");
+  const website = claimString(entity, "P856");
+  if (twitch) externals.twitch = twitch;
+  if (x) externals.twitter = x;
+  if (instagram) externals.instagram = instagram;
+  if (website) externals.website = website;
+
+  const youtubeChannelId = claimString(entity, "P2397");
+
+  // An item with no platform identity at all is not worth returning: the
+  // caller is looking for a link, and there is none to give.
+  if (!youtubeChannelId && !Object.keys(externals).length) return null;
+
+  return {
+    id,
+    label: labels[0] ?? id,
+    labels,
+    description,
+    youtubeChannelId,
+    externals,
+  };
+}

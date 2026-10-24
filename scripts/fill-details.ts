@@ -55,12 +55,15 @@ import {
   bucketFor,
   layout,
   readAllChannelRecords,
+  rebuildChannelsManifest,
+  refreshManifestChannelCounts,
   writeChannelShards,
 } from "./lib/dataset";
 import { InnerTubeSource } from "./lib/youtubei";
 import { TwitchGqlSource } from "./lib/twitch-gql";
 import { createAdapters } from "./lib/platform-registry";
 import {
+  isPlaceholderAvatar,
   isPlaceholderName,
   normalizeChannelId,
   primaryPlatformOf,
@@ -77,7 +80,7 @@ import { REGION_LANGUAGE, profileLanguage } from "./lib/regions";
 import { splitName } from "./lib/names";
 import { pickAvatar, pickSubscribers } from "./lib/platforms";
 import { extractExternalLinks } from "./lib/twitch";
-import type { Channel, PlatformId } from "./lib/types";
+import type { Channel, PlatformId, RegionSource } from "./lib/types";
 
 /* -------------------------------------------------------------------------- */
 /* Arguments                                                                  */
@@ -368,6 +371,67 @@ function needsStableId(channel: Channel): boolean {
 }
 
 /* -------------------------------------------------------------------------- */
+/* Regions                                                                    */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * The region sources that are a **guess** rather than a fact or evidence.
+ *
+ * `override`, `roster` and `agency` are statements, and `name` (kana) and
+ * `country` are evidence. `platform` is a prior — "only on Bilibili, so
+ * probably Chinese" — and it is the one a mirror creates.
+ */
+const WEAK_REGION_SOURCES = new Set<string>([
+  "declared",
+  "script",
+  "unknown",
+  "platform",
+]);
+
+function weakRegionSource(channel: Channel): boolean {
+  return WEAK_REGION_SOURCES.has(channel.regionSource ?? "unknown");
+}
+
+/**
+ * Re-derives the region of a record from what is already on disk.
+ *
+ * No request: the names, the agency and the country are on the record, and
+ * the classifier is deterministic. This is what moves a Bilibili-only
+ * performer whose name is Japanese — 「雫るる」, 「神代るるる」 — out of the
+ * Chinese shard, without asking a platform anything.
+ *
+ * A weaker source never overrides a stronger one, so a roster's nationality
+ * and a hand-written override are safe.
+ */
+function recomputeRegion(channel: Channel): boolean {
+  const platform = primaryPlatformOf(channel);
+  if (!platform) return false;
+
+  const before = `${channel.region} (${channel.regionSource ?? "unknown"})`;
+  const fresh = classifyChannel({
+    name: channel.name,
+    description: channel.description,
+    tags: channel.tags,
+    country: channel.country,
+    platform,
+  });
+  const current = (channel.regionSource ?? "unknown") as RegionSource;
+  if (REGION_TRUST[fresh.regionSource] <= REGION_TRUST[current]) return false;
+
+  channel.region = fresh.region;
+  channel.regionSource = fresh.regionSource;
+  if (!(channel.statedLanguages?.length ?? 0)) {
+    const language = REGION_LANGUAGE[fresh.region];
+    if (language) channel.languages = [language];
+  }
+  regionFixed++;
+  log(
+    `region: ${before} → ${channel.region} (${fresh.regionSource}) · ${channel.name}`,
+  );
+  return true;
+}
+
+/* -------------------------------------------------------------------------- */
 /* Applying a profile                                                          */
 /* -------------------------------------------------------------------------- */
 
@@ -441,14 +505,42 @@ function applyProfile(
   }
 
   if (!nameOnly) {
-    if (profile.avatar) link.avatar = profile.avatar;
-    if (profile.description && !channel.description) {
+    // A platform's "no avatar" picture is not an avatar.
+    if (profile.avatar && !isPlaceholderAvatar(profile.avatar)) {
+      link.avatar = profile.avatar;
+    }
+    /**
+     * A description has to be a description. A deleted account answers with
+     * the tombstone 「账号已注销」 as its signature, and a record must not
+     * store that as the performer's own words.
+     */
+    if (
+      profile.description &&
+      !channel.description &&
+      !isPlaceholderName(profile.description)
+    ) {
       channel.description = profile.description.slice(0, 1000);
     }
     if (profile.subscribers !== null) {
       link.subscribers = { tag: "has", count: profile.subscribers };
     }
     if (profile.videoCount !== null) channel.videoCount = profile.videoCount;
+  }
+
+  /**
+   * Every handle the performer published, wherever they published it.
+   *
+   * A description is the one place a performer lists their other accounts,
+   * and it does not have to be a YouTube description: a Bilibili signature
+   * links YouTube and X just as often. The handles land in `externals`, where
+   * the "all links" block shows them and `data:links` can promote them into
+   * real platform identities.
+   */
+  if (!nameOnly && channel.description) {
+    channel.externals = {
+      ...extractExternalLinks(channel.description),
+      ...channel.externals,
+    };
   }
 
   /**
@@ -607,6 +699,39 @@ async function main(): Promise<void> {
   const all = readAllChannelRecords();
   log(`${all.length} channel(s) in the dataset`);
 
+  /** Every record this run changed, by the id it had when it was read. */
+  const updatedById = new Map<string, Channel>();
+
+  /**
+   * `--weak-region`, the free half.
+   *
+   * A record whose only account is on Bilibili has no YouTube profile to ask
+   * for a country — but it does have **names**, and the kana in one of them
+   * is evidence the platform prior ignored. Re-deriving the region from what
+   * is already on disk costs nothing and corrects the record in the shard the
+   * app downloads, so it runs before any request is made and is not bounded
+   * by `--limit`.
+   */
+  let locallyFixed = 0;
+  if (options.weakRegion) {
+    const local = all.filter(
+      (c) =>
+        (!options.platform || primaryPlatformOf(c) === options.platform) &&
+        primaryPlatformOf(c) !== "youtube" &&
+        primaryPlatformOf(c) !== null &&
+        weakRegionSource(c),
+    );
+    log(`${local.length} record(s) on another platform have a guessed region`);
+    for (const channel of local) {
+      if (!recomputeRegion(channel)) continue;
+      updatedById.set(channel.id, channel);
+      locallyFixed++;
+    }
+    if (locallyFixed) {
+      log(`${locallyFixed} region(s) corrected from the record's own names`);
+    }
+  }
+
   /**
    * The channels that need an avatar, worst first.
    *
@@ -625,19 +750,16 @@ async function main(): Promise<void> {
        */
       if (options.normalizeIds) return needsStableId(c);
       /**
-       * `--weak-region` touches only the records whose region is a guess.
+       * `--weak-region` asks for the records whose region is a **guess**.
        *
-       * `override` and `roster` are facts, an agency is a fact and kana is
-       * good evidence; `declared` (vdb's display language), `script` and
-       * `unknown` are the ones a mirror can get wrong.
+       * `override`, `roster` and `agency` are facts and kana is evidence,
+       * but `declared` (vdb's display language), `script`, `unknown` and
+       * `platform` are the ones a mirror gets wrong. The non-YouTube records
+       * are re-derived locally before this list is built, so only the
+       * YouTube ones are left to ask here.
        */
       if (options.weakRegion) {
-        return (
-          primaryPlatformOf(c) === "youtube" &&
-          ["declared", "script", "unknown"].includes(
-            c.regionSource ?? "unknown",
-          )
-        );
+        return weakRegionSource(c) && primaryPlatformOf(c) === "youtube";
       }
       // In name-only mode every channel is a candidate: the point is to
       // correct the name, whether or not the avatar is already there.
@@ -692,8 +814,6 @@ async function main(): Promise<void> {
   }
 
   const ctx = { innertube, twitch, adapters };
-  /** Every record this run changed, by id. */
-  const updatedById = new Map<string, Channel>();
 
   /**
    * The failures of one platform in a row.
@@ -767,8 +887,9 @@ async function main(): Promise<void> {
   log(
     `${fetched} fetched · ` +
       (options.nameOnly ? "" : `${filled} avatar(s) filled · `) +
-      `${renamed} renamed · ${regionFixed} region(s) fixed · ` +
-      `${grouped} grouped · ${rekeyed} re-keyed · ${failed} failed`,
+      `${renamed} renamed · ${regionFixed} region(s) fixed` +
+      (locallyFixed ? ` (${locallyFixed} without a request)` : "") +
+      ` · ${grouped} grouped · ${rekeyed} re-keyed · ${failed} failed`,
   );
   const struggling = [...consecutiveFailures.entries()].filter(
     ([, streak]) => streak >= 20,
@@ -817,6 +938,9 @@ async function main(): Promise<void> {
     record.aliases = updated.aliases;
     record.nameSource = updated.nameSource;
     record.description = updated.description;
+    // The handles the profile's text published, so the "all links" block
+    // keeps them and `data:links` can promote them into platform identities.
+    record.externals = updated.externals;
     record.activity = updated.activity;
     record.affiliation = updated.affiliation;
     record.agency = updated.agency;
@@ -846,6 +970,13 @@ async function main(): Promise<void> {
     byId.set(record.id, seen ? mergeChannels(record, seen) : record);
   }
   const shards = writeChannelShards([...byId.values()], now);
+  /**
+   * A corrected region moves a record to another shard, so the map of shards
+   * has to be rebuilt with it — otherwise the manifest names a file that no
+   * longer exists, or the app never downloads the one that does.
+   */
+  rebuildChannelsManifest([...byId.values()], now);
+  refreshManifestChannelCounts([...byId.values()], now);
   log(
     `${written.size} channel(s) updated · ${shards.files} shard(s) written`,
   );

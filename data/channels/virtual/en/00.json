@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-24T05:10:16.208Z",
+  "generatedAt": "2026-10-24T05:58:40.197Z",
   "channels": [
     {
       "id": "bilibili:1620495323",
@@ -163,10 +163,10 @@
       "platforms": [
         {
           "platform": "youtube",
-          "id": "KiwimiYT",
+          "id": "UC1X4_nToTNhjj6f-YIlotkw",
           "handle": "KiwimiYT",
           "name": "Kiwimi_alien",
-          "url": "https://www.youtube.com/@KiwimiYT",
+          "url": "https://www.youtube.com/channel/UC1X4_nToTNhjj6f-YIlotkw",
           "subscribers": {
             "tag": "hidden"
           },
@@ -186,12 +186,19 @@
           "lastCheckedAt": "2026-10-24T05:11:04.394Z"
         }
       ],
-      "externals": {},
+      "externals": {
+        "twitch": "kiwimi_alien",
+        "twitter": "KiwimiYT",
+        "instagram": "kiwimiyt",
+        "tiktok": "kiwimiyt",
+        "bilibili": "3707070712908035"
+      },
       "popularVideoId": null,
       "nameSource": "platform",
       "aliases": [
         "Kiwimi_alien"
-      ]
+      ],
+      "isOfficialArtist": false
     },
     {
       "id": "UCsb-1aJgiJXJH2feV-zlZRw",

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-24T05:10:16.208Z",
+  "generatedAt": "2026-10-24T05:58:40.197Z",
   "channels": [
     {
       "id": "bilibili:1512759879",
@@ -540,10 +540,10 @@
       "platforms": [
         {
           "platform": "youtube",
-          "id": "Sanavtuber12",
+          "id": "UCRG-WBu9Kc5PIHsdblCO96w",
           "handle": "Sanavtuber12",
           "name": "sanachanvt",
-          "url": "https://www.youtube.com/@Sanavtuber12",
+          "url": "https://www.youtube.com/channel/UCRG-WBu9Kc5PIHsdblCO96w",
           "subscribers": {
             "tag": "hidden"
           },
@@ -563,10 +563,15 @@
           "lastCheckedAt": "2026-10-24T05:11:04.476Z"
         }
       ],
-      "externals": {},
+      "externals": {
+        "twitch": "sanqgaming124",
+        "instagram": "sanqgaming124",
+        "tiktok": "sanqgaming"
+      },
       "popularVideoId": null,
       "nameSource": "platform",
-      "aliases": []
+      "aliases": [],
+      "isOfficialArtist": false
     },
     {
       "id": "UCwaS8_S7kMiKA3izlTWHbQg",

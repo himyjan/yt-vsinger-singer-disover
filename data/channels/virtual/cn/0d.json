@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-24T05:10:16.208Z",
+  "generatedAt": "2026-10-24T05:58:40.197Z",
   "channels": [
     {
       "id": "acfun:156843",
@@ -6172,7 +6172,7 @@
       "addedAt": "2026-10-22T03:40:51.250Z",
       "updatedAt": "2026-10-23T21:23:29.284Z",
       "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T05:54:52.762Z",
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -6187,8 +6187,8 @@
             "tag": "has",
             "count": 73092
           },
-          "avatar": null,
-          "lastCheckedAt": "2026-10-23T21:23:21.509Z"
+          "avatar": "https://i2.hdslb.com/bfs/face/7f493b10da0aeff5db29928264e7a829874c3b2c.jpg",
+          "lastCheckedAt": "2026-10-24T05:49:21.040Z"
         },
         {
           "platform": "twitter",
@@ -6201,12 +6201,28 @@
           },
           "avatar": null,
           "lastCheckedAt": "2026-10-23T21:23:21.509Z"
+        },
+        {
+          "platform": "youtube",
+          "id": "UC0sSNUaRS51NzO-6HmaT6vg",
+          "handle": "yukitorablackchannel1699",
+          "name": "YukiTora Black Channel",
+          "url": "https://www.youtube.com/channel/UC0sSNUaRS51NzO-6HmaT6vg",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "videoCount": null,
+          "viewCount": null,
+          "avatar": "https://yt3.googleusercontent.com/oWfm2WD9qPZsQSkh39qSSmLgCsh4YUgDF2E89zJWbwCRz4-5m_1GZajjxN-qymGFKBlfeHmv=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T05:49:23.109Z"
         }
       ],
       "externals": {},
       "popularVideoId": null,
       "nameSource": "roster",
-      "aliases": []
+      "aliases": [
+        "YukiTora Black Channel"
+      ]
     },
     {
       "id": "bilibili:1697694",
@@ -32767,10 +32783,10 @@
       "platforms": [
         {
           "platform": "youtube",
-          "id": "BlanchePrimrose",
+          "id": "UC80chVdzyz6TxhByjrJDJ4Q",
           "handle": "BlanchePrimrose",
           "name": "布朗什初花_Blanche",
-          "url": "https://www.youtube.com/@BlanchePrimrose",
+          "url": "https://www.youtube.com/channel/UC80chVdzyz6TxhByjrJDJ4Q",
           "subscribers": {
             "tag": "hidden"
           },
@@ -32831,7 +32847,8 @@
       "nameSource": "platform",
       "aliases": [
         "布朗什初花_Blanche"
-      ]
+      ],
+      "isOfficialArtist": false
     },
     {
       "id": "UCXAb5Ze2_rMbPhYD2KwKAQw",

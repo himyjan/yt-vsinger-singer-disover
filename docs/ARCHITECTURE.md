@@ -101,6 +101,9 @@ through the same funnel.
 ```
 scripts/
 ├── sync.ts                  orchestrator: fetch → classify → merge → write
+├── fill-details.ts          fills the missing avatars, names and regions
+├── resolve-links.ts         finds the missing cross-platform accounts
+├── verify.ts                verifies classifications with search grounding
 ├── build-index.ts           builds the inverted search index
 ├── validate.ts              CI gate: structure, consistency, size budgets
 ├── prepare-public.ts        copies data/ into public/ for the build
@@ -118,6 +121,9 @@ scripts/
     ├── platforms.ts         the PlatformAdapter interface
     ├── classify.ts          virtual/real, role, region, gender, AI, category
     ├── regions.ts           region metadata, agency → region, script detection
+    ├── link-discovery.ts    the identities a performer publishes, resolved
+    ├── web-links.ts         optional search-grounded link finder (`--web`)
+    ├── shard.ts             the deterministic shard, shared by every pass
     ├── identity.ts          de-duplication registry
     ├── search.ts            tokenizer + inverted index + query engine
     ├── aislist.ts           AI-channel list
@@ -160,6 +166,20 @@ the scheduled workflow rotates the index with `GITHUB_RUN_NUMBER`, and within a
 shard the channels that have gone longest without a refresh are taken first.
 The union of successive runs therefore covers the catalogue without a cursor
 file, and every run still commits its own slice.
+
+`scripts/lib/shard.ts` holds that hash, so the sync, the details fill and the
+link resolver put a channel in the same shard.
+
+### The link resolver
+
+`scripts/resolve-links.ts` is the pass for the records whose platform list is
+incomplete — 9,000+ of them, filed under Bilibili alone. It reads what the
+performer publishes about themselves (description, X bio through FxTwitter),
+then Wikidata by name, then — with `--web` — a search-grounded model, and
+writes the accounts it can **prove** belong to the record. A discovered
+YouTube channel's published country may correct the region; nothing else about
+the record is rewritten. It never renames and never merges, and it skips an
+account another record already owns.
 
 ### The web app (`src/`)
 

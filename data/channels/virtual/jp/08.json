@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-24T05:10:16.208Z",
+  "generatedAt": "2026-10-24T05:58:40.197Z",
   "channels": [
     {
       "id": "bilibili:1157885046",
@@ -1296,7 +1296,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
-      "regionSource": "declared",
+      "regionSource": "name",
       "languages": [
         "ja"
       ],
@@ -1323,7 +1323,7 @@
       "addedAt": "2026-10-23T10:03:47.608Z",
       "updatedAt": "2026-10-24T05:11:12.819Z",
       "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T05:54:52.762Z",
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -1339,21 +1339,39 @@
           },
           "avatar": null,
           "lastCheckedAt": "2026-10-24T05:11:04.487Z"
+        },
+        {
+          "platform": "youtube",
+          "id": "UC4yns-Sux8OT4Yc-V8eCPEA",
+          "handle": "%E3%81%A4%E3%82%84%E5%A7%AB-h7z",
+          "name": "つや姫",
+          "url": "https://www.youtube.com/channel/UC4yns-Sux8OT4Yc-V8eCPEA",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "videoCount": null,
+          "viewCount": null,
+          "avatar": "https://yt3.googleusercontent.com/hk3YihYgCpjfPlGkCFBYLeZegLmMamUtjXShr-y5jbK9lghNwDPxFMHo2AphbuA-Q3K5EtXi=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T05:51:41.972Z"
         }
       ],
-      "externals": {},
+      "externals": {
+        "twitter": "maipri_official"
+      },
       "popularVideoId": null
     },
     {
       "id": "twitter:udon_lov",
       "name": "うどん",
       "nameSource": "roster",
-      "aliases": [],
+      "aliases": [
+        "udon"
+      ],
       "handle": null,
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
-      "regionSource": "name",
+      "regionSource": "country",
       "languages": [
         "ja"
       ],
@@ -1369,7 +1387,7 @@
       "videoCount": null,
       "viewCount": null,
       "uploadsPlaylistId": null,
-      "country": null,
+      "country": "JP",
       "tags": [],
       "isSinging": false,
       "gender": "unknown",
@@ -1380,7 +1398,7 @@
       "addedAt": "2026-10-23T10:03:47.608Z",
       "updatedAt": "2026-10-24T05:11:12.819Z",
       "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T05:54:52.762Z",
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -1396,9 +1414,26 @@
           },
           "avatar": null,
           "lastCheckedAt": "2026-10-24T05:11:04.483Z"
+        },
+        {
+          "platform": "youtube",
+          "id": "UCQQyoKJbS8dzBHIq1uWK0Jg",
+          "handle": "udonchannel",
+          "name": "udon",
+          "url": "https://www.youtube.com/channel/UCQQyoKJbS8dzBHIq1uWK0Jg",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "videoCount": null,
+          "viewCount": null,
+          "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_kv4hbwZ1QsEXsEmbqwAGHVm_ZesraEnmZSdUAZon5vTIk=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T05:51:43.764Z"
         }
       ],
-      "externals": {},
+      "externals": {
+        "youtube": "UCcPx3K85dtln1Yn2OgwOK_w",
+        "twitter": "____udon____"
+      },
       "popularVideoId": null
     },
     {

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-24T05:10:16.208Z",
+  "generatedAt": "2026-10-24T05:58:40.197Z",
   "channels": [
     {
       "id": "bilibili:18400646",
@@ -656,7 +656,7 @@
       "kind": "virtual",
       "role": "vtuber",
       "region": "jp",
-      "regionSource": "declared",
+      "regionSource": "country",
       "languages": [
         "ja"
       ],
@@ -672,7 +672,7 @@
       "videoCount": null,
       "viewCount": null,
       "uploadsPlaylistId": null,
-      "country": null,
+      "country": "JP",
       "tags": [],
       "isSinging": false,
       "gender": "unknown",
@@ -683,7 +683,7 @@
       "addedAt": "2026-10-23T10:03:47.608Z",
       "updatedAt": "2026-10-24T05:11:12.819Z",
       "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T05:54:52.762Z",
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -699,9 +699,25 @@
           },
           "avatar": null,
           "lastCheckedAt": "2026-10-24T05:11:05.530Z"
+        },
+        {
+          "platform": "youtube",
+          "id": "UCvZsrDzE6TzCl9M6rZSj_9w",
+          "handle": "moeminori",
+          "name": "萌えみのり",
+          "url": "https://www.youtube.com/channel/UCvZsrDzE6TzCl9M6rZSj_9w",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "videoCount": null,
+          "viewCount": null,
+          "avatar": "https://yt3.googleusercontent.com/MmTMBeiJasxxKJO78go66uOUGiHkLyXamsHomfM9-lznn1WseopSJtNXHn6E9zR8J4PHCkUXHQ=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T05:51:28.335Z"
         }
       ],
-      "externals": {},
+      "externals": {
+        "twitter": "moeminori_idol"
+      },
       "popularVideoId": null
     },
     {
@@ -3319,7 +3335,8 @@
       "externals": {},
       "popularVideoId": null,
       "nameSource": "roster",
-      "aliases": []
+      "aliases": [],
+      "isOfficialArtist": false
     },
     {
       "id": "UCq7n-GF0SZ7Pt1NCVfTvIaQ",
