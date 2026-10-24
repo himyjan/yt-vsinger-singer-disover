@@ -30,6 +30,8 @@ npm run data:sync -- --keyword "…"    # run one discovery query
 npm run data:sync -- --force          # reset the quota counter and refetch
 npm run data:index                    # rebuild the inverted search index
 npm run data:validate                 # structure + size budgets (CI gate)
+npm run data:links -- --limit 200     # find the missing cross-platform accounts
+npm run data:links -- --shard 2/4 --dry-run
 ```
 
 Always finish with `npm run data:index && npm run data:validate`.
@@ -92,6 +94,15 @@ without any request:
 
 The networked half is `npm run data:details -- --weak-region`, which fetches
 the published country and the profile in the record's own language.
+
+`npm run data:links` closes the other gap: a record whose only listed account
+is on Bilibili may have a YouTube channel the roster never saw. It reads the
+record's own text, the X bio (FxTwitter), Wikidata by name and — with `--web`
+— a search-grounded model, and writes only links whose profile confirms the
+identity. A discovered YouTube channel's published country corrects the
+region (`country` > `platform`), and nothing else about the record changes.
+It skips accounts another record already owns, and it is sharded like the
+sync, so a full backlog is covered across runs.
 
 ## Quota rules — do not bypass these
 

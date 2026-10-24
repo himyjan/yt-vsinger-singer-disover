@@ -56,6 +56,7 @@ import {
 } from "./lib/analytics";
 import { checkUpstreams, writeRevisions } from "./lib/upstream";
 import { TwitchGqlSource } from "./lib/twitch-gql";
+import { shardOf } from "./lib/shard";
 import {
   isPlaceholderName,
   orderPlatformLinks,
@@ -301,25 +302,16 @@ const overrides: OverrideMap = readJson<OverrideMap>(paths.overrides, {});
 const nowIso = () => new Date().toISOString();
 
 /**
- * The deterministic shard a channel id belongs to.
+ * True when the id belongs to this run's shard.
  *
- * FNV-1a over the immutable platform id, so the same channel lands in the same
- * shard on every run and every machine. That is what lets the scheduled
- * workflow rotate through the catalogue without a cursor file: run N owns
- * shard `N % count`, and the union of the runs covers every channel.
+ * The hash itself lives in `lib/shard.ts`, so the sync, the details fill and
+ * the link resolver all put a channel in the same place.
  */
-function shardOf(id: string, count: number): number {
-  let hash = 2166136261;
-  for (let i = 0; i < id.length; i++) {
-    hash ^= id.charCodeAt(i);
-    hash = Math.imul(hash, 16777619);
-  }
-  return (hash >>> 0) % count;
-}
-
-/** True when the id belongs to this run's shard. */
 function inShard(id: string, args: Args): boolean {
-  return args.shardCount <= 1 || shardOf(id, args.shardCount) === args.shardIndex;
+  return (
+    args.shardCount <= 1 ||
+    shardOf(id, args.shardCount) === args.shardIndex
+  );
 }
 
 function itemUrlForAnalytics(item: Item): string {

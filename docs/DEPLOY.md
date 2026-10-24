@@ -47,6 +47,31 @@ finds nothing new produces no commit and the git history stays clean.
 The sync and verification workflows share a repository-wide concurrency group
 and rebase generated changes onto the latest branch before committing.
 
+### `verify-data.yml` — verify, and fill the missing cross-platform links
+
+```yaml
+on:
+  schedule:
+    - cron: "43 4 * * *"
+  workflow_dispatch:
+    inputs:
+      limit: { default: "40" }
+      max-confidence: { default: "1" }
+      min-confidence: { default: "0.7" }
+      links: { default: "120" }
+```
+
+Steps: verify the least-certain records with search grounding → resolve the
+missing cross-platform links (`npm run data:links`) → re-sync known records
+(`--no-search`) → rebuild the index → validate → commit `data/`.
+
+`links` caps the link-resolution pass and `0` disables it. The pass is
+sharded **eight ways** by `GITHUB_RUN_NUMBER`, so the Bilibili-only backlog is
+covered a slice at a time instead of re-reading the same first hundred records.
+It runs with `--web`, the optional search-grounded fallback, which needs
+`GEMINI_API_KEY`; without the secret the deterministic sources (the
+performer's own text, their X bio through FxTwitter, Wikidata) still run.
+
 ### `deploy-pages.yml` — publish the site
 
 Runs on every push to `main`: checkout → install → validate → build → upload
@@ -73,6 +98,7 @@ Add these under **Settings → Secrets and variables → Actions**:
 | `VK_ACCESS_TOKEN`      | no       | VK service token; required for keyword discovery and API-backed upload collection                                                     |
 | `CI_ME_CLIENT_ID`      | no       | CI.ME Open API application client ID; enables profile refresh for known channel IDs                                                   |
 | `CI_ME_CLIENT_SECRET`  | no       | CI.ME Open API application client secret; enables profile refresh for known channel IDs                                                |
+| `GEMINI_API_KEY`       | no       | Search-grounded verification (`data:verify`) and the optional `--web` link discovery; the free tier is enough                       |
 | `ANALYTICS_REPO_TOKEN` | no       | Fine-grained token with Contents read/write access to `himyjan/yt-vsinger-singer-disover-analytics`; enables daily analytics archiving |
 
 `GITHUB_TOKEN` is provided automatically and needs no configuration.

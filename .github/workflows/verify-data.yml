@@ -31,6 +31,10 @@ on:
         description: "Only accept corrections at or above this confidence"
         required: false
         default: "0.7"
+      links:
+        description: "Channels to look up for a missing YouTube/Twitch link (0 disables)"
+        required: false
+        default: "120"
   schedule:
     # Daily, at an odd minute to avoid the shared cron pool's peak.
     - cron: "43 4 * * *"
@@ -72,6 +76,23 @@ jobs:
             --limit ${{ inputs.limit || 40 }} \
             --confidence ${{ inputs.max-confidence || 1 }} \
             --min-confidence ${{ inputs.min-confidence || 0.7 }}
+
+      # The Bilibili-only part of the catalogue has no YouTube or Twitch link.
+      # This pass finds the ones the performers publish — from their own text,
+      # their X bio, Wikidata, and a search-grounded model — and lets the
+      # discovered YouTube channel's published country correct the region.
+      # Sharded by run number so the backlog is covered a slice at a time.
+      - name: Resolve cross-platform links
+        if: inputs.links != '0'
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          SHARD_COUNT=8
+          SHARD_INDEX=$(( (GITHUB_RUN_NUMBER - 1) % SHARD_COUNT + 1 ))
+          npm run data:links -- \
+            --limit ${{ inputs.links || 120 }} \
+            --shard "${SHARD_INDEX}/${SHARD_COUNT}" \
+            --web
 
       - name: Re-apply corrections and rebuild the index
         run: |

@@ -37,21 +37,12 @@
  *   performers who have no YouTube channel at all.
  */
 
-import { detectLanguage } from "./regions";
+import { detectLanguage, hasKana } from "./regions";
 import { classifyChannel } from "./classify";
 import type { ArtistKind, PlatformId, RegionCode } from "./types";
 import type { PlatformLink } from "./types";
 
 const LIST_URL = "https://vdb.vtbs.moe/json/list.json";
-
-/**
- * Hiragana and katakana.
- *
- * They occur in Japanese and nowhere else — not in Chinese, not in Korean —
- * so their presence in a name is a decisive statement that the name is
- * Japanese.
- */
-const KANA = /[\u3040-\u309f\u30a0-\u30ff]/;
 
 interface VdbAccount {
   id: string;
@@ -380,22 +371,29 @@ export class VdbSource {
     /**
      * Where the performer belongs.
      *
-     * vdb offers three signals, and they are **not** equally good:
+     * The order is the same one `classifyChannel()` uses, and it matters:
+     * the strongest statement wins, and a weaker one never overrides it.
      *
-     * 1. **The platforms.** A performer who only exists on Bilibili is
-     *    mainland Chinese; one who only exists on Niconico is Japanese. A
-     *    name written entirely in characters shared with Japanese
-     *    (「樱咲奈央」, 「川烈」) would otherwise be read as Japanese.
-     * 2. **A Japanese name and a YouTube channel.** Kana are unique to
-     *    Japanese, so a `jp` variant that contains them belongs to a
-     *    Japanese performer — and a performer with a YouTube channel who is
-     *    also mirrored to Bilibili is still Japanese.
-     * 3. **`name.default`** — the language the catalogue *displays*. It is
-     *    the weakest of the three, and it is not a declaration of origin:
-     *    vdb is a Chinese wiki, so 「巫てんり / Kannagi Tenri」 — a Japanese
-     *    VTuber — is listed with `default: "cn"` because the Chinese
-     *    rendition of her name (「巫天翼」) is the one the wiki shows.
-     * 4. **The script of the name** — a guess, for everything left over.
+     * 1. **The agency branch.** A Hololive EN member is English and a
+     *    VirtuaReal member is Chinese, whatever their name looks like.
+     * 2. **Kana.** They occur in Japanese and nowhere else, so two of them
+     *    in a name the performer publishes is evidence of a Japanese
+     *    performer — `hasKana()` requires two, because a single の or め is
+     *    a Chinese stylisation. Only the **display** name is read, and only
+     *    it: vdb's `jp` field holds a kana reading of Chinese names too, so
+     *    reading it would file 「小卯」 under Japan.
+     * 3. **The platform prior.** A performer who exists *only* on Bilibili
+     *    is probably mainland Chinese and one who exists only on Niconico is
+     *    probably Japanese. It is deliberately **below** kana, because the
+     *    same Bilibili account is very often a mirror of a Japanese
+     *    performer's channel — which is exactly the case that used to file
+     *    「雫るる」 under China.
+     * 4. **`name.default`** — the language the catalogue *displays*. It is
+     *    weaker still, and it is not a declaration of origin: vdb is a
+     *    Chinese wiki, so 「巫てんり / Kannagi Tenri」 — a Japanese VTuber —
+     *    is listed with `default: "cn"` because the Chinese rendition of her
+     *    name (「巫天翼」) is the one the wiki shows.
+     * 5. **The script of the name** — a guess, for everything left over.
      */
     const defaultLanguage =
       typeof names.default === "string" ? names.default : "";
@@ -404,16 +402,7 @@ export class VdbSource {
       "declared";
 
     const platformSet = new Set(platforms.map((p) => p.platform));
-    const hasYouTube = platformSet.has("youtube");
 
-    /**
-     * The agency branch comes first.
-     *
-     * It is a statement about the group the performer belongs to, and it is
-     * the same priority the classifier gives it — stronger than the platform
-     * they stream on. A Hololive EN member with a Bilibili mirror is English,
-     * and a VirtuaReal member with a Japanese-style name is Chinese.
-     */
     const groupRegion = regionOfGroup(record.group_name ?? record.group);
     if (groupRegion) {
       region = groupRegion;
@@ -421,13 +410,30 @@ export class VdbSource {
     }
 
     /**
-     * A performer with a **Bilibili account and no YouTube account** presents
-     * to a mainland Chinese audience — that is where their audience is, and
-     * the region records where they stream. The same goes for Niconico and
-     * Japan. Their Chinese-subtitled Bilibili channel does not make a
-     * YouTube performer a Chinese speaker.
+     * Kana in the **display** name.
+     *
+     * `name` is the name vdb shows — `cn`, then `jp`, then `en` — and for a
+     * Japanese performer on Bilibili it is the Japanese name, because that is
+     * the name they stream under (「雫るる」, 「竹原イリス」, 「神代るるる」).
+     *
+     * The `jp` field is **not** read here. vdb fills it with a kana reading
+     * for Chinese names too — 「小卯」 is filed as 「コウサギ」 and 「结」 as
+     * 「むすぶ」 — so a kana there is a translation, not the performer's own
+     * name, and treating it as evidence would re-file thousands of Chinese
+     * performers as Japanese.
      */
-    if (!hasYouTube && region === "unknown") {
+    if (region === "unknown" && hasKana(name)) {
+      region = "jp";
+      regionSource = "name";
+    }
+
+    /**
+     * The platform prior, and only when the performer exists on **one**
+     * platform: a performer who also streams on YouTube or Twitch presents
+     * to a global audience, and their Bilibili mirror does not make them
+     * Chinese.
+     */
+    if (region === "unknown" && platformSet.size === 1) {
       if (platformSet.has("bilibili")) {
         region = "cn";
         regionSource = "platform";
@@ -435,20 +441,6 @@ export class VdbSource {
         region = "jp";
         regionSource = "platform";
       }
-    }
-
-    /**
-     * A Japanese name and a YouTube channel.
-     *
-     * Kana are unique to Japanese — no Chinese or Korean name contains them —
-     * so a `jp` variant with kana is a Japanese performer. That is a stronger
-     * statement than `name.default`, and it is what keeps a Japanese VTuber
-     * with a Bilibili mirror out of the Chinese region.
-     */
-    const jpName = typeof names.jp === "string" ? names.jp : "";
-    if (region === "unknown" && hasYouTube && KANA.test(jpName)) {
-      region = "jp";
-      regionSource = "name";
     }
 
     if (region === "unknown") {

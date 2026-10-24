@@ -621,7 +621,10 @@ export function classifyChannel(signals: ChannelSignals): ChannelClassification 
    * Kana in the channel's **own name**.
    *
    * Only the name: a description can quote Japanese without the performer
-   * being Japanese, and a Chinese channel frequently does.
+   * being Japanese, and a Chinese channel frequently does. The aliases are
+   * deliberately excluded too — vdb fills the `jp` field with a **kana
+   * reading** for Chinese names (「小卯」 → 「コウサギ」), which is a
+   * translation, not the performer's own name.
    */
   if (hasKana(signals.name) && regionScore < 0.82) {
     region = "jp";

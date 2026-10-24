@@ -30,9 +30,10 @@ The web app reads the committed dataset in `data/`. To refresh it:
 npm run data:sync           # InnerTube + optional Data API + platform adapters
 npm run data:index          # rebuild the search index
 npm run data:validate       # check structure and size budgets
+npm run data:links          # find the missing cross-platform accounts
 ```
 
-`npm run data:all` does all three.
+`npm run data:all` does the first three.
 
 ## Documentation
 
@@ -59,6 +60,9 @@ scripts/sync.ts
                          CHZZK, KICK, SOOP and CI.ME
           ↓
        classify → data/*.json → committed → GitHub Pages
+
+scripts/resolve-links.ts   the missing accounts: the performer's own text,
+                           their X bio, Wikidata, optional web search
 ```
 
 YouTube is the primary platform, and InnerTube (`youtubei.js`) is the primary
@@ -103,6 +107,16 @@ matching broadcasts on its first page. CI.ME can refresh known profiles only;
 configure its credentials under **Settings → Secrets and variables → Actions**
 to enable that refresh. See [docs/PLATFORMS.md](docs/PLATFORMS.md) for platform
 endpoints, discovery limitations and account-linking details.
+
+A large part of the catalogue comes from vdb under a **Bilibili account
+alone** — no YouTube channel, no Twitch login — and a record whose only
+account is on Bilibili is filed under `cn`. `npm run data:links` finds the
+accounts the performer publishes about themselves (their Bilibili signature,
+their YouTube about page, their X bio through FxTwitter) and, failing that,
+asks Wikidata by name or — with `--web` — a search-grounded model. A
+name-search result is only accepted when the profile it resolves to points
+back at the record. The discovered YouTube channel's published country then
+corrects the region, because a country is the fact a mirror cannot corrupt.
 
 A quota budget refuses any YouTube Data API v3 call that would exceed the
 daily allowance. InnerTube requests do not use Data API quota, and cached
@@ -171,7 +185,7 @@ language they sing in.
 | `isAi` | AI-generated performers (AI VTuber, AI singer) |
 | `variant` | the combined label — `female_vtuber`, `ai_vsinger`, … |
 | `affiliation` | independent · community · business group (the 勢 vocabulary) |
-| `regionSource` | which source decided the region — a roster, the platform, a script |
+| `regionSource` | which source decided the region — a roster, the platform's published country, kana, a script |
 
 Uploads are classified as `cover`, `mv`, `original`, `live`, `premiere` or
 `performance`, and carry an `isAcoustic` flag for 弾き語り / 彈唱 — singing

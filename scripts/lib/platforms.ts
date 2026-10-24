@@ -388,6 +388,22 @@ export function isPlaceholderName(name: string | null | undefined): boolean {
 }
 
 /**
+ * The avatars a platform serves when it has none.
+ *
+ * Bilibili answers a deleted or avatar-less account with
+ * `bfs/face/member/noface.jpg`, and storing that URL makes the card look
+ * broken rather than empty — the app renders the same silhouette either way,
+ * but the record claims to have an image it does not have.
+ */
+const PLACEHOLDER_AVATARS = /(?:^|[/_.-])(?:noface|no_face|no-avatar|no_avatar|default[_-]?avatar|avatar[_-]?default)(?:[/_.-]|$)/i;
+
+export function isPlaceholderAvatar(url: string | null | undefined): boolean {
+  const trimmed = (url ?? "").trim();
+  if (!trimmed) return true;
+  return PLACEHOLDER_AVATARS.test(trimmed);
+}
+
+/**
  * Cleans a channel id.
  *
  * A few records were built from a channel **URL**, so their id carries the
