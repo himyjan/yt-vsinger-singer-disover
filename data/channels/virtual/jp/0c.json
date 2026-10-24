@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-24T06:08:43.980Z",
+  "generatedAt": "2026-10-24T06:56:31.683Z",
   "channels": [
     {
       "id": "bilibili:102600",
@@ -1425,6 +1425,66 @@
       "aliases": []
     },
     {
+      "id": "UC22BVlBsZc6ta3Dqz75NU6Q",
+      "name": "飯田ぽち。【Iida Pochi.】",
+      "nameSource": "platform",
+      "aliases": [
+        "飯田ぽち。"
+      ],
+      "handle": "iida-pochi",
+      "kind": "virtual",
+      "role": "unknown",
+      "region": "jp",
+      "regionSource": "country",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "independent",
+      "avatar": "https://yt3.googleusercontent.com/iWFFbPPyYnEqGJ3CkMsYgTkO4Nyu3ZxOLWalrVf5uIw78i-nv3X8nesL-eBmR5L_QJ7VuteN=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "漫画家・イラストレーターの「飯田ぽち。」のチャンネルです。 個人勢、趣味の一環としてやってます。 代表作: 姉なるもの 電撃G’sコミックにて連載中 http://anenarumono.com/ 通常攻撃が全体攻撃で二回攻撃のお母さんは好きですか？ 挿絵 https://okaasan-online.com/ ...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": "JP",
+      "tags": [],
+      "isSinging": false,
+      "gender": "female",
+      "isAi": false,
+      "isOfficialArtist": false,
+      "variant": "unknown",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-24T06:56:31.683Z",
+      "updatedAt": "2026-10-24T06:56:31.683Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T06:56:31.683Z",
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UC22BVlBsZc6ta3Dqz75NU6Q",
+          "handle": "iida-pochi",
+          "name": "飯田ぽち。【Iida Pochi.】",
+          "url": "https://www.youtube.com/channel/UC22BVlBsZc6ta3Dqz75NU6Q",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/iWFFbPPyYnEqGJ3CkMsYgTkO4Nyu3ZxOLWalrVf5uIw78i-nv3X8nesL-eBmR5L_QJ7VuteN=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T06:56:31.683Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
+    },
+    {
       "id": "UC2AMzTy5lCUOQKyiEKo5hyw",
       "name": "Athy_Official",
       "handle": null,
@@ -1522,6 +1582,64 @@
         "Athy-White Kitty-",
         "あーてぃฅ•ω•ฅ"
       ]
+    },
+    {
+      "id": "UC2daHxnuJJBM5NWci1RRkeA",
+      "name": "深影",
+      "nameSource": "platform",
+      "aliases": [],
+      "handle": "Mikage_RKMusic",
+      "kind": "virtual",
+      "role": "singer",
+      "region": "jp",
+      "regionSource": "country",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": "Music",
+      "affiliation": "group",
+      "avatar": "https://yt3.googleusercontent.com/LvotNjL324E5IwSzX--M4g-2IBSxFWvMyIAO3XF8Ynp7bBrlnz3prGP32CsWk0RODYjxffdTiQ=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "「苦難に挫かれそうなあらゆる人々へ、夢を追いかける勇気を与える音楽を。」 RK Music所属バーチャルシンガー、深影（みかげ） 総合タグ：#深影 配信タグ：#ghostreaming FAタグ：#深影絵 ファンネーム：被写隊 ファンマーク：📷🌌 ◆公式プロフィール 透き通るような声と実直な感情表現を武器として、...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": "JP",
+      "tags": [],
+      "isSinging": true,
+      "gender": "unknown",
+      "isAi": false,
+      "isOfficialArtist": true,
+      "variant": "singer",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-24T06:55:49.836Z",
+      "updatedAt": "2026-10-24T06:55:49.836Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T06:55:49.836Z",
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UC2daHxnuJJBM5NWci1RRkeA",
+          "handle": "Mikage_RKMusic",
+          "name": "深影",
+          "url": "https://www.youtube.com/channel/UC2daHxnuJJBM5NWci1RRkeA",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/LvotNjL324E5IwSzX--M4g-2IBSxFWvMyIAO3XF8Ynp7bBrlnz3prGP32CsWk0RODYjxffdTiQ=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T06:55:49.836Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
     },
     {
       "id": "UC2OacIzd2UxGHRGhdHl1Rhw",
@@ -1764,6 +1882,64 @@
       ]
     },
     {
+      "id": "UC4KVR3pXEiOJPE7l_qEAGXg",
+      "name": "きゃむまる -cammaru-",
+      "nameSource": "platform",
+      "aliases": [],
+      "handle": "cammarudayo",
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "country",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://yt3.googleusercontent.com/ecdbq-OCbhb7cf8n3EtPf7raNmVOxNkiiF5CJIAc5vFrM7Kfe_wqGJbAzD8e8w1mnsaXjkMp=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "リアル生活を頑張る人間たちのお昼休みにお邪魔するよｯ.ᐟ.ᐟ 気まぐれ猫系VTuberのきゃむまるです🐈‍⬛🌒 お昼雑談をメインとして、 たまにゲームや歌も楽しんでおります𛰙᭜𖫴𖫰𖫱𖫳𖫲𖫲𖫳𖫴𖫰𖫱꛰ ᭜𖫴𖫰𖫱𖫳𖫲𖫲𖫳𖫴𖫰𖫱꛰ʕᨦ ✅配信スケジュールは週の初めに更新✅ →これできゃむまるの配信予定を把握出来る.ᐟ ...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": "JP",
+      "tags": [],
+      "isSinging": true,
+      "gender": "unknown",
+      "isAi": false,
+      "isOfficialArtist": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-24T06:55:49.836Z",
+      "updatedAt": "2026-10-24T06:55:49.836Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T06:55:49.836Z",
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UC4KVR3pXEiOJPE7l_qEAGXg",
+          "handle": "cammarudayo",
+          "name": "きゃむまる -cammaru-",
+          "url": "https://www.youtube.com/channel/UC4KVR3pXEiOJPE7l_qEAGXg",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/ecdbq-OCbhb7cf8n3EtPf7raNmVOxNkiiF5CJIAc5vFrM7Kfe_wqGJbAzD8e8w1mnsaXjkMp=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T06:55:49.836Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
+    },
+    {
       "id": "UC5q709VOMSrf5Y-rdkd5hLg",
       "name": "ゆきや アニソン歌い手Vtuber YUKIYA's Studio,Anime song lover",
       "nameSource": "platform",
@@ -1817,6 +1993,64 @@
           "viewCount": null,
           "avatar": "https://yt3.googleusercontent.com/dlD-QUAgBujoz8TfdYj9Dq8B7IwACpmCvIYgNgUkDNuFfYC-mujb4s7Jrd4KS6YAxzQWU3YA=s900-c-k-c0x00ffffff-no-rj",
           "lastCheckedAt": "2026-10-23T14:28:50.792Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
+    },
+    {
+      "id": "UC5Uk0gpE_kyIPQOXCNsC8Zg",
+      "name": "空猫くるみ -Soraneko Kurumi-",
+      "nameSource": "platform",
+      "aliases": [],
+      "handle": "soranekokurumi",
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "country",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://yt3.googleusercontent.com/IIWAEcKBR1k4o9GUPwXJus1IOOYVlmukDnubvyjTUv7g31krpCC_qF3QXGnLAzjleDbexbmCDw=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "୨୧┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈୨୧ バーチャル子猫の空猫くるみです ໒꒱· ﾟ みんなに癒しとhappyを届けます⋆꙳✧ 声が可愛いVtuberです、ぽんもしちゃうけど頑張ります！ 是非チャンネル登録・高評価お願いします♡ ୨୧┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈୨୧ 🤍素敵なママ様(イラストレーター様...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": "JP",
+      "tags": [],
+      "isSinging": false,
+      "gender": "unknown",
+      "isAi": false,
+      "isOfficialArtist": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-24T06:56:31.683Z",
+      "updatedAt": "2026-10-24T06:56:31.683Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T06:56:31.683Z",
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UC5Uk0gpE_kyIPQOXCNsC8Zg",
+          "handle": "soranekokurumi",
+          "name": "空猫くるみ -Soraneko Kurumi-",
+          "url": "https://www.youtube.com/channel/UC5Uk0gpE_kyIPQOXCNsC8Zg",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/IIWAEcKBR1k4o9GUPwXJus1IOOYVlmukDnubvyjTUv7g31krpCC_qF3QXGnLAzjleDbexbmCDw=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T06:56:31.683Z"
         }
       ],
       "externals": {},
@@ -2621,6 +2855,64 @@
       ]
     },
     {
+      "id": "UCgPGVORhti-KKcV4CqUyumQ",
+      "name": "XIDEN",
+      "nameSource": "platform",
+      "aliases": [],
+      "handle": "XIDEN_RKMusic",
+      "kind": "virtual",
+      "role": "vsinger",
+      "region": "jp",
+      "regionSource": "country",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": "Music",
+      "affiliation": "group",
+      "avatar": "https://yt3.googleusercontent.com/guPytPmIibPieC3bKnLOvH8bhGlVHxuYDlrmtdxV_cUCG7wfoLzq-6U9gUEljRt3dXLacGwn=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "【12/26 2nd ONE-MAN LIVE 開催決定！！！】 現在メンバーシップ先行受付中！(詳細はコミュニティへ) 一般チケット販売は10/28 18:00～ RK Music所属、歌って踊れるVSingerのXIDEN(シデン)です。 R&Bとラップを混ぜた夜に溶けるような世界をお届けします。 ♰ 定期配...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": "JP",
+      "tags": [],
+      "isSinging": true,
+      "gender": "male",
+      "isAi": false,
+      "isOfficialArtist": true,
+      "variant": "male_vsinger",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-24T06:55:49.836Z",
+      "updatedAt": "2026-10-24T06:55:49.836Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T06:55:49.836Z",
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCgPGVORhti-KKcV4CqUyumQ",
+          "handle": "XIDEN_RKMusic",
+          "name": "XIDEN",
+          "url": "https://www.youtube.com/channel/UCgPGVORhti-KKcV4CqUyumQ",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/guPytPmIibPieC3bKnLOvH8bhGlVHxuYDlrmtdxV_cUCG7wfoLzq-6U9gUEljRt3dXLacGwn=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T06:55:49.836Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
+    },
+    {
       "id": "UCJ4uyhRdZf84tsYVSoFuGvA",
       "name": "竜輝ねおる",
       "handle": null,
@@ -2787,6 +3079,64 @@
       "aliases": [
         "結心愛"
       ]
+    },
+    {
+      "id": "UCjfq01OcGZGRZBgJsZ-PBGg",
+      "name": "雛心ひな@VTuber",
+      "nameSource": "platform",
+      "aliases": [],
+      "handle": "hinamihinatyan",
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "country",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://yt3.googleusercontent.com/PcejapC_c0N4JVVBKuvJj_IhDSa2zkqBFV9n9gmN23H1LvcZRAaZ9RDx_MI1GvbVx7ZgSvzX=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "成人済みひよこイラストレーターVtuberの 雛心ひな(ひなみひな)だよ！ イラスト、Live2Dすべて自作のセルフ受肉🥚 立派なニワトリになるため日々成長中！🐣 みんなも一緒にぴよぴよ！ Xにイラストや日常があるので見にきてー⭐️ たまにIRIAMで配信もしてるよ📱 ✽+†+✽―🐣✽+†+✽―🐥✽+†+✽―🐤 ...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": "JP",
+      "tags": [],
+      "isSinging": true,
+      "gender": "unknown",
+      "isAi": false,
+      "isOfficialArtist": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-24T06:55:49.836Z",
+      "updatedAt": "2026-10-24T06:55:49.836Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T06:55:49.836Z",
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCjfq01OcGZGRZBgJsZ-PBGg",
+          "handle": "hinamihinatyan",
+          "name": "雛心ひな@VTuber",
+          "url": "https://www.youtube.com/channel/UCjfq01OcGZGRZBgJsZ-PBGg",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/PcejapC_c0N4JVVBKuvJj_IhDSa2zkqBFV9n9gmN23H1LvcZRAaZ9RDx_MI1GvbVx7ZgSvzX=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T06:55:49.836Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
     },
     {
       "id": "UCJFZiqLMntJufDCHc6bQixg",
@@ -3410,6 +3760,64 @@
       "aliases": [
         "琴月てと"
       ]
+    },
+    {
+      "id": "UCpxU2IKqNzXudnp17iHJT0Q",
+      "name": "冬萌ここな",
+      "nameSource": "platform",
+      "aliases": [],
+      "handle": "fuyumoekokona",
+      "kind": "virtual",
+      "role": "unknown",
+      "region": "jp",
+      "regionSource": "country",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": "ARAWAZA",
+      "affiliation": "group",
+      "avatar": "https://yt3.googleusercontent.com/BY4wNSPr2WW2U073SYa5RrUgF1D5mQl4qiOfQK8KMGbE_SoNpTQu7mSBu2wsR6AIxIfmQxMesA=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "ここはどこ~??ここなここ~!! ❅* 儚くきらめく音の雪 *❅ ARAWAZA所属 冬萌ここなです❄️🧷 (Fuyumoe Kokona) ꜰᴀᴠᴏʀɪᴛᴇ⟢˖アニメ作詞大食い 夢はアニメ主題歌を担当すること、 そして武道館でワンマンライブをすること。 まだ見ぬ景色にみんなと辿り着きたい🪽✨ お歌をメインに配信...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": "JP",
+      "tags": [],
+      "isSinging": true,
+      "gender": "unknown",
+      "isAi": false,
+      "isOfficialArtist": false,
+      "variant": "unknown",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-24T06:56:31.683Z",
+      "updatedAt": "2026-10-24T06:56:31.683Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T06:56:31.683Z",
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCpxU2IKqNzXudnp17iHJT0Q",
+          "handle": "fuyumoekokona",
+          "name": "冬萌ここな",
+          "url": "https://www.youtube.com/channel/UCpxU2IKqNzXudnp17iHJT0Q",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/BY4wNSPr2WW2U073SYa5RrUgF1D5mQl4qiOfQK8KMGbE_SoNpTQu7mSBu2wsR6AIxIfmQxMesA=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T06:56:31.683Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
     },
     {
       "id": "UCQ7KYc1-IMQ8_Uz7XTE5DWw",
@@ -4537,6 +4945,124 @@
         "白砂瓷奈",
         "白砂つな"
       ]
+    },
+    {
+      "id": "UCw-jx5JPq5JIc1i6DLWwKzg",
+      "name": "pecotiita.ch(ぺこちーた)",
+      "nameSource": "platform",
+      "aliases": [
+        "pecotiita.ch"
+      ],
+      "handle": "pecotiita",
+      "kind": "virtual",
+      "role": "vsinger",
+      "region": "jp",
+      "regionSource": "country",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://yt3.googleusercontent.com/lDCMnt4lJtokvuuwyxbYNXim8n4ms-4hMI1pcKUMaC5uB_vIe0fjqHo_IumHoSoek3eajrhQFg=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "ピアノ弾き語りVsingerの ぺこちーたです🥕 睡眠導入、癒される歌枠をやってるよ！ 活動は YouTube・Twitch の同時配信が多く Twitchではたま～～～にゲーム配信もしています。 マイペースで人見知りですがよろしくお願いします🐊",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": "JP",
+      "tags": [],
+      "isSinging": true,
+      "gender": "unknown",
+      "isAi": false,
+      "isOfficialArtist": false,
+      "variant": "vsinger",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-24T06:54:21.719Z",
+      "updatedAt": "2026-10-24T06:54:21.719Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T06:54:21.719Z",
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCw-jx5JPq5JIc1i6DLWwKzg",
+          "handle": "pecotiita",
+          "name": "pecotiita.ch(ぺこちーた)",
+          "url": "https://www.youtube.com/channel/UCw-jx5JPq5JIc1i6DLWwKzg",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/lDCMnt4lJtokvuuwyxbYNXim8n4ms-4hMI1pcKUMaC5uB_vIe0fjqHo_IumHoSoek3eajrhQFg=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T06:54:21.719Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
+    },
+    {
+      "id": "UCWP-S7eCMG7GZY3op32zy9A",
+      "name": "時音ありす Tokine Alice Music ch.",
+      "nameSource": "platform",
+      "aliases": [],
+      "handle": "tokinealice09",
+      "kind": "virtual",
+      "role": "vsinger",
+      "region": "jp",
+      "regionSource": "country",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://yt3.googleusercontent.com/Lv8S6OXHyuEwl1grcx69d0TFKfnGSftTtjVbEgwoliVT2HEks2fB9wtZHa95_AlSmxwV0y7X6A=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "貴方に癒しと元気を届けるVsinger時音ありすと申します。 こちらのチャンネルでは歌をメインに活動していきます。 総合チャンネルではゲームや朝活雑談などもしてるので歌以外ののほほーんとした 雰囲気もみたい方はそっちも要チェック！！ ーーークリエイター様ご紹介ーーー 偉大なるママ（お姿イラスト＋Ｌｉｖｅ２Ｄ） う...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": "JP",
+      "tags": [],
+      "isSinging": true,
+      "gender": "unknown",
+      "isAi": false,
+      "isOfficialArtist": false,
+      "variant": "vsinger",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-24T06:54:21.719Z",
+      "updatedAt": "2026-10-24T06:54:21.719Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T06:54:21.719Z",
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCWP-S7eCMG7GZY3op32zy9A",
+          "handle": "tokinealice09",
+          "name": "時音ありす Tokine Alice Music ch.",
+          "url": "https://www.youtube.com/channel/UCWP-S7eCMG7GZY3op32zy9A",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/Lv8S6OXHyuEwl1grcx69d0TFKfnGSftTtjVbEgwoliVT2HEks2fB9wtZHa95_AlSmxwV0y7X6A=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T06:54:21.719Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
     },
     {
       "id": "UCwRKt_raV3N5KZgxcFyC1vw",

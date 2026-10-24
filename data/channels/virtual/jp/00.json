@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-24T06:27:33.648Z",
+  "generatedAt": "2026-10-24T06:56:31.683Z",
   "channels": [
     {
       "id": "bilibili:112469835",
@@ -1412,6 +1412,69 @@
       ]
     },
     {
+      "id": "UC_IJFsehaJReHAxEAuJQiVA",
+      "name": "いなまつり / Ina Matsuri",
+      "nameSource": "platform",
+      "aliases": [
+        "いなまつり",
+        "Ina Matsuri"
+      ],
+      "handle": "matsuri17",
+      "kind": "virtual",
+      "role": "vsinger",
+      "region": "jp",
+      "regionSource": "country",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://yt3.googleusercontent.com/N24Np_8AA3YAsVnuNi3_YnxZ7O0NbUQxcjwGthgO1ZLBZZR9WfQw4hbjvC3ueDsAQrQGt4Dmpg=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "合言葉は「生きててえらい💮」 StudioAbyss inc.所属 パワースポットなVSinger いなまつりです⛩💮 みんなのお守りになれる歌声を‼ 🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾 ❖Youtube https://www.youtube.com/@matsuri17 ❖X（Twitter） https://twit...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": "JP",
+      "tags": [],
+      "isSinging": true,
+      "gender": "unknown",
+      "isAi": false,
+      "isOfficialArtist": false,
+      "variant": "vsinger",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-24T06:54:21.719Z",
+      "updatedAt": "2026-10-24T06:54:21.719Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T06:54:21.719Z",
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UC_IJFsehaJReHAxEAuJQiVA",
+          "handle": "matsuri17",
+          "name": "いなまつり / Ina Matsuri",
+          "url": "https://www.youtube.com/channel/UC_IJFsehaJReHAxEAuJQiVA",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/N24Np_8AA3YAsVnuNi3_YnxZ7O0NbUQxcjwGthgO1ZLBZZR9WfQw4hbjvC3ueDsAQrQGt4Dmpg=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T06:54:21.719Z"
+        }
+      ],
+      "externals": {
+        "youtube": "@matsuri17"
+      },
+      "popularVideoId": null
+    },
+    {
       "id": "UC_zztIHGbBz9L-ZM-Ta2O1Q",
       "name": "YUA/藤崎由愛",
       "handle": null,
@@ -1554,6 +1617,64 @@
       "popularVideoId": null,
       "nameSource": "platform",
       "aliases": []
+    },
+    {
+      "id": "UC1JuhRTsFgZvi2ie2dTUxbg",
+      "name": "みかんとボーカルノート",
+      "nameSource": "platform",
+      "aliases": [],
+      "handle": "mikannovocal",
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "country",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_nb4JgaysLk68Kv24XGylb1wnCtvKep5dfDsO0aCxIlZw=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "ボイトレVTuberのみかん先生です🍊 私の動画は・・ 🍊歌い方解説 🍊歌が上手くなるためのテクニック 🍊プロボーカリストの経験談 🍊毎週土曜日21:00〜歌生配信 一緒に歌うま練習していきましょおおおっ♪ コラボやお仕事のご依頼はXのDMで待ってます☺️ ----------------------------...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": "JP",
+      "tags": [],
+      "isSinging": true,
+      "gender": "unknown",
+      "isAi": false,
+      "isOfficialArtist": true,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-24T06:54:21.719Z",
+      "updatedAt": "2026-10-24T06:54:21.719Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T06:54:21.719Z",
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UC1JuhRTsFgZvi2ie2dTUxbg",
+          "handle": "mikannovocal",
+          "name": "みかんとボーカルノート",
+          "url": "https://www.youtube.com/channel/UC1JuhRTsFgZvi2ie2dTUxbg",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_nb4JgaysLk68Kv24XGylb1wnCtvKep5dfDsO0aCxIlZw=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T06:54:21.719Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
     },
     {
       "id": "UC2kyQhzGOB-JPgcQX9OMgEw",
@@ -3603,6 +3724,122 @@
       ]
     },
     {
+      "id": "UCKNR4Dh4Y262Gf0nGQ9RrDg",
+      "name": "棘蘭姫ちゃん-IBARA HIME CHAN-",
+      "nameSource": "platform",
+      "aliases": [],
+      "handle": "hime_chan0108",
+      "kind": "virtual",
+      "role": "unknown",
+      "region": "jp",
+      "regionSource": "country",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://yt3.googleusercontent.com/Q1nW1vUqr_D5esWn-fyTo4bnDMoxPFoyD9EUbBb9tyDAMt2DMjhIVEQOO_OHJALZuJ8kSHicjw=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "地球人の笑顔頂き！今日も宇宙を漂う元気な姫！ 棘蘭姫ちゃん(いばらひめちゃん)です！ わくわくと大好きを集めに 2021年10月8日に初めて地球に上陸🛸 YouTubeの初配信は2026年3月3日！ 活動５年目！ ちゃんのリンク https://lit.link/chanhime18 - - - - - - - ...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": "JP",
+      "tags": [],
+      "isSinging": false,
+      "gender": "female",
+      "isAi": false,
+      "isOfficialArtist": false,
+      "variant": "unknown",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-24T06:56:31.683Z",
+      "updatedAt": "2026-10-24T06:56:31.683Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T06:56:31.683Z",
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCKNR4Dh4Y262Gf0nGQ9RrDg",
+          "handle": "hime_chan0108",
+          "name": "棘蘭姫ちゃん-IBARA HIME CHAN-",
+          "url": "https://www.youtube.com/channel/UCKNR4Dh4Y262Gf0nGQ9RrDg",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/Q1nW1vUqr_D5esWn-fyTo4bnDMoxPFoyD9EUbBb9tyDAMt2DMjhIVEQOO_OHJALZuJ8kSHicjw=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T06:56:31.683Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
+    },
+    {
+      "id": "UCKQiz1BigKOJ8zXpXJdaUdQ",
+      "name": "星空セシル Ch",
+      "nameSource": "platform",
+      "aliases": [],
+      "handle": "%E6%98%9F%E7%A9%BA%E3%82%BB%E3%82%B7%E3%83%AB",
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "country",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://yt3.googleusercontent.com/TwT3jraswY7BlvMo385nGTU4jALLmeESVYmzWdbY_2r9ZuTnF6p5sG0HFx_nuwz3W5td8vv3=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "はじめまして♡ 新人しろくまVtuberの星空セシルです！ Twitch：ゲーム中心にほぼ毎日 Youtube：歌枠配信、定期的にshorts て感じで活動しています！ 気軽にコメントしてもらえると嬉しいです！ たくさんのコメント、フォローをお待ちしております♡ 2024.04.13 初配信♡",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": "JP",
+      "tags": [],
+      "isSinging": true,
+      "gender": "female",
+      "isAi": false,
+      "isOfficialArtist": false,
+      "variant": "female_vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-24T06:55:49.836Z",
+      "updatedAt": "2026-10-24T06:55:49.836Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T06:55:49.836Z",
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCKQiz1BigKOJ8zXpXJdaUdQ",
+          "handle": "%E6%98%9F%E7%A9%BA%E3%82%BB%E3%82%B7%E3%83%AB",
+          "name": "星空セシル Ch",
+          "url": "https://www.youtube.com/channel/UCKQiz1BigKOJ8zXpXJdaUdQ",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/TwT3jraswY7BlvMo385nGTU4jALLmeESVYmzWdbY_2r9ZuTnF6p5sG0HFx_nuwz3W5td8vv3=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T06:55:49.836Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
+    },
+    {
       "id": "UCL34fAoFim9oHLbVzMKFavQ",
       "name": "夜見れな/yorumi rena【にじさんじ所属】",
       "handle": null,
@@ -4041,6 +4278,69 @@
       ]
     },
     {
+      "id": "UCociy1BFTJsLL1z9amrEehQ",
+      "name": "柚羽まくら / Yuzuha Makura",
+      "nameSource": "platform",
+      "aliases": [
+        "柚羽まくら",
+        "Yuzuha Makura"
+      ],
+      "handle": "yuzuhamakura",
+      "kind": "virtual",
+      "role": "vsinger",
+      "region": "jp",
+      "regionSource": "country",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://yt3.googleusercontent.com/a26mUgblrMj76RRlAqHxnef7xICobOA1c2CvdWgIP6n1KHoVzXxNi3FrinnKXLlSOFUoWNYpNw=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "Vsinger柚羽まくらのチャンネルです🍊💫🧦 【X】 https://twitter.com/yuzuhamakura ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー Nice to meet you, I'm Yuzuhamakura, Singer! My favourite thin...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": "JP",
+      "tags": [],
+      "isSinging": true,
+      "gender": "unknown",
+      "isAi": false,
+      "isOfficialArtist": false,
+      "variant": "vsinger",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-24T06:54:21.719Z",
+      "updatedAt": "2026-10-24T06:54:21.719Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T06:54:21.719Z",
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCociy1BFTJsLL1z9amrEehQ",
+          "handle": "yuzuhamakura",
+          "name": "柚羽まくら / Yuzuha Makura",
+          "url": "https://www.youtube.com/channel/UCociy1BFTJsLL1z9amrEehQ",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/a26mUgblrMj76RRlAqHxnef7xICobOA1c2CvdWgIP6n1KHoVzXxNi3FrinnKXLlSOFUoWNYpNw=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T06:54:21.719Z"
+        }
+      ],
+      "externals": {
+        "twitter": "yuzuhamakura"
+      },
+      "popularVideoId": null
+    },
+    {
       "id": "UCoM_XmK45j504hfUWvN06Qg",
       "name": "成瀬 鳴 / Naruse Naru【にじさんじ】",
       "handle": null,
@@ -4354,6 +4654,67 @@
       "aliases": []
     },
     {
+      "id": "UCpabo5hwN-MICcM098rnhag",
+      "name": "紅音メアリ / Akane Mary",
+      "nameSource": "platform",
+      "aliases": [
+        "紅音メアリ",
+        "Akane Mary"
+      ],
+      "handle": "AkaneMary",
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "name",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://yt3.googleusercontent.com/glhqCxN2jVs2Bc013QtxvStLcygfhhGlwQiYrNDcwIiPdQZLd5C_k5v4qQMwfGpPXVt1zK3G=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "アイドルを目指す元お嬢様Vtuber⑅ ⸝꙳ 紅音メアリ(Akane Mary)ですっ(୨୧❛ᴗ❛)✧♥️ 2024/8/4デビュー🎙.*･ﾟ 歌、ピアノ、ダンス、色んなことに挑戦してるのでせひご注目を.ᐟ‪‪‪.ᐟ‪‪‪ チャンネル登録・高評価・コメント、 お待ちしてますっっ(⸝⸝ᵒ̴̶̷ωᵒ̴̶̷⸝⸝⸝)♡",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": true,
+      "gender": "female",
+      "isAi": false,
+      "isOfficialArtist": false,
+      "variant": "female_vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-24T06:55:07.229Z",
+      "updatedAt": "2026-10-24T06:55:07.229Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T06:55:07.229Z",
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCpabo5hwN-MICcM098rnhag",
+          "handle": "AkaneMary",
+          "name": "紅音メアリ / Akane Mary",
+          "url": "https://www.youtube.com/channel/UCpabo5hwN-MICcM098rnhag",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/glhqCxN2jVs2Bc013QtxvStLcygfhhGlwQiYrNDcwIiPdQZLd5C_k5v4qQMwfGpPXVt1zK3G=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T06:55:07.229Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
+    },
+    {
       "id": "UCPdKdMpXlmwcGdfiUTNusfg",
       "name": "hanakumo rinCh.花雲 りん / プロプロ",
       "handle": null,
@@ -4555,6 +4916,124 @@
       "popularVideoId": null,
       "nameSource": "roster",
       "aliases": []
+    },
+    {
+      "id": "UCpM2F6QP7kr69fnRUk_OO4A",
+      "name": "尾手またび Ote matabi",
+      "nameSource": "platform",
+      "aliases": [],
+      "handle": "otematabi",
+      "kind": "virtual",
+      "role": "unknown",
+      "region": "jp",
+      "regionSource": "country",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://yt3.googleusercontent.com/80smX-mLALTmUN_RY3VqtAyy8hR28jDEiMmdhD6BK9CoIDFzI2jF55xa18fvzpn2xZxDhe85=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "３’dPLAYce(サードプレイス）所属、尾手またび！ フラフラと彷徨っていたところ店へと辿り着き、いつの間にか居ついていた少女。 小銭稼ぎにと始めたゲリラライブは、店の評判にも貢献しているとか、いないとか。 歌が下手と煽られても、ストイックに技術を磨いて見返す負けず嫌い。いっさい猫をかぶらないが、猫耳はかぶりも...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": "JP",
+      "tags": [],
+      "isSinging": true,
+      "gender": "female",
+      "isAi": false,
+      "isOfficialArtist": false,
+      "variant": "unknown",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-24T06:55:07.229Z",
+      "updatedAt": "2026-10-24T06:55:07.229Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T06:55:07.229Z",
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCpM2F6QP7kr69fnRUk_OO4A",
+          "handle": "otematabi",
+          "name": "尾手またび Ote matabi",
+          "url": "https://www.youtube.com/channel/UCpM2F6QP7kr69fnRUk_OO4A",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/80smX-mLALTmUN_RY3VqtAyy8hR28jDEiMmdhD6BK9CoIDFzI2jF55xa18fvzpn2xZxDhe85=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T06:55:07.229Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
+    },
+    {
+      "id": "UCPSBaP00cF1osjNdftl9Cdg",
+      "name": "鈴芽ちゅん(suzume chun)-個人Vtuber-",
+      "nameSource": "platform",
+      "aliases": [
+        "鈴芽ちゅん-個人Vtuber-"
+      ],
+      "handle": "%E3%81%A1%E3%82%85%E3%82%93-44115",
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "country",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "independent",
+      "avatar": "https://yt3.googleusercontent.com/1qdcV458kuvFWlDXgR0FWu6OwlhXaEGWUl-NMPJgUKRFs1c0VHgur7Sw9RjnRlS1ECjFF6cTuSw=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "ちゅちゅんちゅん！ 🌱🪶🕊️ 見つけてくれてありがとう！💐 2025.4.4初配信✨個人Vtuberの鈴芽ちゅん- suzume chun -です🪶 毎日夜21時からライブ配信中💡ときどき朝活もあるよ☀️ ゲーム、歌枠、雑談、イラスト制作等をしています🕊️ 毎週日曜日の夜に次週の予定表を投稿・配信予定枠・Xにてお...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": "JP",
+      "tags": [],
+      "isSinging": true,
+      "gender": "unknown",
+      "isAi": false,
+      "isOfficialArtist": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-24T06:56:31.683Z",
+      "updatedAt": "2026-10-24T06:56:31.683Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T06:56:31.683Z",
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCPSBaP00cF1osjNdftl9Cdg",
+          "handle": "%E3%81%A1%E3%82%85%E3%82%93-44115",
+          "name": "鈴芽ちゅん(suzume chun)-個人Vtuber-",
+          "url": "https://www.youtube.com/channel/UCPSBaP00cF1osjNdftl9Cdg",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/1qdcV458kuvFWlDXgR0FWu6OwlhXaEGWUl-NMPJgUKRFs1c0VHgur7Sw9RjnRlS1ECjFF6cTuSw=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T06:56:31.683Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
     },
     {
       "id": "UCrRokkRvV6RSu-mZIHUUHvg",

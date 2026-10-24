@@ -299,6 +299,13 @@ Three points hold it together:
   have permission. Importing someone's subscriptions publishes third-party
   data.
 
+A **group** in a PocketTube backup is a curation, not an inference: the
+list's owner filed a channel under 「Vsinger」 or 「Vtuber」, which is a
+statement the description may not repeat. So the group is written to
+`data/overrides.json` first (`kind`, `isSinging`), and the import applies the
+same overrides the sync applies — otherwise the next sync would re-classify
+the channel from its description and drop the reason it was imported.
+
 **Refresh reads the signed-in feed, not the Data API.** The YouTube link asks
 for the full `youtube` scope because InnerTube refuses `youtube.readonly` with
 `insufficientPermissions`. `youtube.com` sends no CORS headers, so the browser

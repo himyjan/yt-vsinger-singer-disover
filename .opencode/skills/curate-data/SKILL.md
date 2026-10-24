@@ -56,6 +56,13 @@ Without a YouTube API key, the sync may still rebuild its roster; automatic
 roster additions are limited to vdb, existing dataset identities, and curated
 seeds. See the `sync-dataset` skill for the discovery admission rules.
 
+A **subscription group** is a curation too. A PocketTube backup is JSON of
+group name → `UC…` ids, so a group called 「Vsinger」 (sung) or 「Vtuber」
+(virtual) is the list owner's own statement about those channels. Write it to
+`data/overrides.json` (`kind`, `isSinging`) before importing: the import path
+and the sync both apply the file, so the next sync cannot infer the curation
+away. One entry per id, with a `note` naming the group.
+
 ## The classifier
 
 `scripts/lib/classify.ts`. It is **deterministic** — no randomness, no network

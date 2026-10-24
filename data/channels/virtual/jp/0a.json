@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-24T06:08:43.980Z",
+  "generatedAt": "2026-10-24T06:55:49.836Z",
   "channels": [
     {
       "id": "bilibili:10369514",
@@ -1972,6 +1972,67 @@
       "aliases": []
     },
     {
+      "id": "UC-QItxWl0mVoqznc9VdYZVw",
+      "name": "泡白ミルノ / Milno Ch.",
+      "nameSource": "platform",
+      "aliases": [
+        "泡白ミルノ",
+        "Milno Ch."
+      ],
+      "handle": "AwashiroMilno",
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "country",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://yt3.googleusercontent.com/OjnVDrAqUYVb_Zh7jVJ2Vd-YlEx__FQMDaAYW-LyER9FNvnf9g0ncsO-hL3_kqdiIpSRcN4Q=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "癒し系みるくボイスの牛系Vtuber🐮┊︎毎週水曜 お歌Shorts・毎週金曜 定期配信 .ᐟ ⊹ ⁺ ﹒ ⁺ ﹒ ⁺ ﹒ ⊹ ﹒ ⁺ ﹒ ⊹ ‪モ~𓈒 𓂂𓏸 癒し系みるくボイスの牛系Vtuber🤍 泡白ミルノとモ~します🥛🫧 ごはんがおいしい人間界に住み着いてしまい、 魔界に帰れなくなった半獣人のぽんこつ魔族....",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": "JP",
+      "tags": [],
+      "isSinging": true,
+      "gender": "unknown",
+      "isAi": false,
+      "isOfficialArtist": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-24T06:54:21.719Z",
+      "updatedAt": "2026-10-24T06:54:21.719Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T06:54:21.719Z",
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UC-QItxWl0mVoqznc9VdYZVw",
+          "handle": "AwashiroMilno",
+          "name": "泡白ミルノ / Milno Ch.",
+          "url": "https://www.youtube.com/channel/UC-QItxWl0mVoqznc9VdYZVw",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/OjnVDrAqUYVb_Zh7jVJ2Vd-YlEx__FQMDaAYW-LyER9FNvnf9g0ncsO-hL3_kqdiIpSRcN4Q=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T06:54:21.719Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
+    },
+    {
       "id": "UC-UmUsocuVAxsKog3QonhpA",
       "name": "珠根うたChannel",
       "handle": null,
@@ -2065,6 +2126,67 @@
       "aliases": [
         "珠根うた"
       ]
+    },
+    {
+      "id": "UC1ucgoC_sGww_Euu5iMqpQw",
+      "name": "凛々咲 / Ririsya",
+      "nameSource": "platform",
+      "aliases": [
+        "凛々咲",
+        "Ririsya"
+      ],
+      "handle": "RirisyaMusic",
+      "kind": "virtual",
+      "role": "singer",
+      "region": "jp",
+      "regionSource": "country",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://yt3.googleusercontent.com/jAL75JsI-5t3t7eRWLnACa_qhZAIr7FVEFxg3nXcz7VvqFisMf-mgtkvkEjSzofG3LO2zuit3Q=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "‐‐✦✧ 𝖯𝖱𝖮𝖥𝖨𝖤𝖫 ✧✦ ‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐ I’m Ririsya, a singer-songwriter VTuber from Japan. I usually sing, write songs, and play games. I’m learning English, so p...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": "JP",
+      "tags": [],
+      "isSinging": true,
+      "gender": "unknown",
+      "isAi": false,
+      "isOfficialArtist": true,
+      "variant": "singer",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-24T06:55:07.229Z",
+      "updatedAt": "2026-10-24T06:55:07.229Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T06:55:07.229Z",
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UC1ucgoC_sGww_Euu5iMqpQw",
+          "handle": "RirisyaMusic",
+          "name": "凛々咲 / Ririsya",
+          "url": "https://www.youtube.com/channel/UC1ucgoC_sGww_Euu5iMqpQw",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/jAL75JsI-5t3t7eRWLnACa_qhZAIr7FVEFxg3nXcz7VvqFisMf-mgtkvkEjSzofG3LO2zuit3Q=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T06:55:07.229Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
     },
     {
       "id": "UC1uv2Oq6kNxgATlCiez59hw",
@@ -3125,6 +3247,64 @@
       ]
     },
     {
+      "id": "UCh6MPxu3_Dhe5B-9DdIU5Sg",
+      "name": "suimin.",
+      "nameSource": "platform",
+      "aliases": [],
+      "handle": "Vtuber_suimin.",
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "country",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://yt3.googleusercontent.com/6zUZySITmDKVb8X_Qhq9Rp5fCeYNA66hbN9B1Xx3p0GzrxUB9WITx7E6nGr837vikF3KeiGelg=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "あなたの睡眠、護らせてください♡ へっぽこ天使Vtuber suimin. 〈すいみん〉です👼🏻 ꒰ঌ┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈໒꒱ [ しあわせ ]を届けるために 人間界に住み着いた天使。 人々の睡眠を護るため いざとなれば銃を手にする…のかも？ ꒰ঌ┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈໒꒱ ❤︎‬꒷꒦┈┈┈┈┈...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": "JP",
+      "tags": [],
+      "isSinging": false,
+      "gender": "unknown",
+      "isAi": false,
+      "isOfficialArtist": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-24T06:55:49.836Z",
+      "updatedAt": "2026-10-24T06:55:49.836Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T06:55:49.836Z",
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCh6MPxu3_Dhe5B-9DdIU5Sg",
+          "handle": "Vtuber_suimin.",
+          "name": "suimin.",
+          "url": "https://www.youtube.com/channel/UCh6MPxu3_Dhe5B-9DdIU5Sg",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/6zUZySITmDKVb8X_Qhq9Rp5fCeYNA66hbN9B1Xx3p0GzrxUB9WITx7E6nGr837vikF3KeiGelg=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T06:55:49.836Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
+    },
+    {
       "id": "UCHBhnG2G-qN0JrrWmMO2FTA",
       "name": "シェリン・バーガンディ -Shellin Burgundy- 【にじさんじ】",
       "handle": null,
@@ -3380,6 +3560,68 @@
       ]
     },
     {
+      "id": "UCK1jxSDhWmI8Aqc_iSV4v6A",
+      "name": "Watakan Ch. 綿菓子かんろ",
+      "nameSource": "platform",
+      "aliases": [
+        "綿菓子かんろ"
+      ],
+      "handle": "Watagashi_Kanro",
+      "kind": "virtual",
+      "role": "unknown",
+      "region": "jp",
+      "regionSource": "name",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://yt3.googleusercontent.com/Sm4O-iufmDtYSRWDqFLsqBWeOhyqMToKaGmSIzqFTOf56Hctd5LSWX9L3ugMXTL8XiC94UEi=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "Multi Artist / Creator V/R Convertersというユニットで活動しています。 ▶︎ https://youtube.com/@projectvrconverters?si=nDjcESTnfUH-DNsM CDs というレーベルのメンバーでもあります。 ▶︎ https://yout...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": true,
+      "gender": "unknown",
+      "isAi": false,
+      "isOfficialArtist": true,
+      "variant": "unknown",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-24T06:54:21.719Z",
+      "updatedAt": "2026-10-24T06:54:21.719Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T06:54:21.719Z",
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCK1jxSDhWmI8Aqc_iSV4v6A",
+          "handle": "Watagashi_Kanro",
+          "name": "Watakan Ch. 綿菓子かんろ",
+          "url": "https://www.youtube.com/channel/UCK1jxSDhWmI8Aqc_iSV4v6A",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/Sm4O-iufmDtYSRWDqFLsqBWeOhyqMToKaGmSIzqFTOf56Hctd5LSWX9L3ugMXTL8XiC94UEi=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T06:54:21.719Z"
+        }
+      ],
+      "externals": {
+        "youtube": "@projectvrconverters"
+      },
+      "popularVideoId": null
+    },
+    {
       "id": "UCK6iAvM8b__ft-ABdDCvQng",
       "name": "Emma Hazy Minami",
       "handle": null,
@@ -3525,6 +3767,66 @@
       ]
     },
     {
+      "id": "UCkZif4byA067Xl_c199w3BQ",
+      "name": "春歌みこと Mikoto Haruka【シアーミュージックV】",
+      "nameSource": "platform",
+      "aliases": [
+        "春歌みこと Mikoto Haruka"
+      ],
+      "handle": "mikoto_songs",
+      "kind": "virtual",
+      "role": "vsinger",
+      "region": "jp",
+      "regionSource": "country",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": "シアーミュージックV",
+      "affiliation": "group",
+      "avatar": "https://yt3.googleusercontent.com/j-hPZxW4p82xyI0N4-fN-cYD00sVgufSHwCP3H53W_81rWhgeh6du1oxrgCecJfwo76bvW8dKw=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "【チャンネル登録者10万人・同接1000人目指してます！！】 シアーミュージックV所属VTuber(Vsinger)の「春歌（はるか）みこと」です！ 毎週月～木 朝7時から 日曜祝日 朝9時から 朝活歌枠！☀ その他の配信スケジュールはXやコミュニティをチェックしてね！ 歌レパートリー（1000曲突破！） htt...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": "JP",
+      "tags": [],
+      "isSinging": true,
+      "gender": "unknown",
+      "isAi": false,
+      "isOfficialArtist": false,
+      "variant": "vsinger",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-24T06:54:21.719Z",
+      "updatedAt": "2026-10-24T06:54:21.719Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T06:54:21.719Z",
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCkZif4byA067Xl_c199w3BQ",
+          "handle": "mikoto_songs",
+          "name": "春歌みこと Mikoto Haruka【シアーミュージックV】",
+          "url": "https://www.youtube.com/channel/UCkZif4byA067Xl_c199w3BQ",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/j-hPZxW4p82xyI0N4-fN-cYD00sVgufSHwCP3H53W_81rWhgeh6du1oxrgCecJfwo76bvW8dKw=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T06:54:21.719Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
+    },
+    {
       "id": "UCL2Zp9wmnV9PMfaUKBEcESg",
       "name": "43channel",
       "handle": null,
@@ -3609,6 +3911,64 @@
         "仄架夜未Official",
         "仄架よみ🌙VTuber"
       ]
+    },
+    {
+      "id": "UClDvuwcb4flxEuh3nMn1HPw",
+      "name": "Mirumame Ch.みるまめ",
+      "nameSource": "platform",
+      "aliases": [],
+      "handle": "mirumame5485",
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "country",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://yt3.googleusercontent.com/0DcuFe6P5FhlCmecF5oxnFxnJC-mskj9OLFxnd9rX9tg30JGJQhwF-qiAFmq5oFiXRLN7hK0xg=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "※月火配信定休日 \\✨🐱どーも！みるまめです🐱✨/ ┊ 猫耳アイドルvtuber 1人じゃ何にもできないけど みんなと一緒だから大丈夫だよね！ TAG🐱 全体ﾀｸﾞ #見るまめ屋さん ﾌｧﾝﾈｰﾑ #まめっこ 切り抜き #切り抜きまめ屋さん 配信 ＃まめらいぶ",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": "JP",
+      "tags": [],
+      "isSinging": false,
+      "gender": "female",
+      "isAi": false,
+      "isOfficialArtist": false,
+      "variant": "female_vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-24T06:55:49.836Z",
+      "updatedAt": "2026-10-24T06:55:49.836Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T06:55:49.836Z",
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UClDvuwcb4flxEuh3nMn1HPw",
+          "handle": "mirumame5485",
+          "name": "Mirumame Ch.みるまめ",
+          "url": "https://www.youtube.com/channel/UClDvuwcb4flxEuh3nMn1HPw",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/0DcuFe6P5FhlCmecF5oxnFxnJC-mskj9OLFxnd9rX9tg30JGJQhwF-qiAFmq5oFiXRLN7hK0xg=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T06:55:49.836Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
     },
     {
       "id": "UCLl6SoIaxp3cZQZ6g7jeMaA",
@@ -4505,6 +4865,64 @@
       ]
     },
     {
+      "id": "UCq3uD7UZ0FU7gHBtgchMDQQ",
+      "name": "澄月ねお official channel",
+      "nameSource": "platform",
+      "aliases": [],
+      "handle": "sumitsuki_neo",
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "country",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://yt3.googleusercontent.com/SQjO_qhNus0jI7okNeFxz9aLHGV71mp4Q8qGpiWLv1R5RXPojPpa8U7HdQYY2SyjsDftGw97Ng=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "⟡.·月の如く輝きを放つバーチャルロックシンガー ☾ 【 澄月ねお －Sumitsuki neo－ 】 2025.4.1 debut 𖤐 ໋VTuberレーベル「astraVox 」1期生 ＼目指せ！Zeppワンマン／ ⬜︎⬜︎⬜︎⬜︎⬜︎⬜︎⬜︎⬜︎⬜︎⬜︎⬜︎⬜︎⬜︎⬜︎ ☽⋰歌うことがだいすき ⋆͛✩ゆるふ...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": "JP",
+      "tags": [],
+      "isSinging": true,
+      "gender": "unknown",
+      "isAi": false,
+      "isOfficialArtist": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-24T06:54:21.719Z",
+      "updatedAt": "2026-10-24T06:54:21.719Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T06:54:21.719Z",
+      "activity": "preparing",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCq3uD7UZ0FU7gHBtgchMDQQ",
+          "handle": "sumitsuki_neo",
+          "name": "澄月ねお official channel",
+          "url": "https://www.youtube.com/channel/UCq3uD7UZ0FU7gHBtgchMDQQ",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/SQjO_qhNus0jI7okNeFxz9aLHGV71mp4Q8qGpiWLv1R5RXPojPpa8U7HdQYY2SyjsDftGw97Ng=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T06:54:21.719Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
+    },
+    {
       "id": "UCqa7upii7rGQu8keQLwhrLQ",
       "name": "💙心羽ろに♠️ -Kokoha Roni-",
       "handle": null,
@@ -4708,6 +5126,67 @@
       "aliases": [
         "リズ"
       ]
+    },
+    {
+      "id": "UCrtj7mTumU4Pg9sdzfGZm6Q",
+      "name": "アエギス / Aegis Channel【音大首席オペラVsinger】",
+      "nameSource": "platform",
+      "aliases": [
+        "アエギス",
+        "Aegis Channel"
+      ],
+      "handle": "ShichitembattoinAegis",
+      "kind": "virtual",
+      "role": "vsinger",
+      "region": "jp",
+      "regionSource": "country",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://yt3.googleusercontent.com/9dSKdvi35e8yp7IC_dON49BavX7wEObavb8k1N-DV_OZm4HsG-OwqFvWoM3Tf4tyS6sDdc3r=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "🎼音大首席オペラVsinger🪽 - 𝐌𝐢𝐬𝐭𝐫𝐞𝐬𝐬 𝐨𝐟 𝐎𝐩𝐞𝐫𝐚 - ➽─────────❥ 【✨チャンネルの軌跡✨】 2025/11/15 初投稿 同日 チャンネル登録者数1万人達成 2025/12/23 チャンネル登録者数5万人達成 ➽─────────❥ ▹SpecialThanks！ まま：sag...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": "JP",
+      "tags": [],
+      "isSinging": true,
+      "gender": "unknown",
+      "isAi": false,
+      "isOfficialArtist": false,
+      "variant": "vsinger",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-24T06:55:07.229Z",
+      "updatedAt": "2026-10-24T06:55:07.229Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T06:55:07.229Z",
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCrtj7mTumU4Pg9sdzfGZm6Q",
+          "handle": "ShichitembattoinAegis",
+          "name": "アエギス / Aegis Channel【音大首席オペラVsinger】",
+          "url": "https://www.youtube.com/channel/UCrtj7mTumU4Pg9sdzfGZm6Q",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/9dSKdvi35e8yp7IC_dON49BavX7wEObavb8k1N-DV_OZm4HsG-OwqFvWoM3Tf4tyS6sDdc3r=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T06:55:07.229Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
     },
     {
       "id": "UCsA8nM8e5--IdeRaxZwTWHg",

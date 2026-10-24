@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-24T06:27:33.648Z",
+  "generatedAt": "2026-10-24T06:55:49.836Z",
   "channels": [
     {
       "id": "bilibili:1162364311",
@@ -1344,6 +1344,64 @@
       ]
     },
     {
+      "id": "UC1GQB6OqVMoFlHhQ9AagtqA",
+      "name": "メラ・アカル MelaakaruVtuber",
+      "nameSource": "platform",
+      "aliases": [],
+      "handle": "mela_akaru",
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "country",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://yt3.googleusercontent.com/q6JobgyMYvZDtLz3Dgi2qxZxduSNzr3vsHRbU9dvnxOHX1ZV3fo8XJMaNgglq2JzfNcJfqRzuQ=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "低音女Vtuberメラ・アカルです。月水金の21:45～、土21:00～、日8：30～と21:00 ほぼ固定で配信！ ギャップだらけの最強Vtuber🔥 特殊な低音と歌った時の高音が特徴🔥 見た目はイケメンだし声も低いけどゲームをしだすと途端にポンコツ🔥🔥 歌枠中心に雑談やゲーム配信をしてるよ！！ 一人ひとりのボ...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": "JP",
+      "tags": [],
+      "isSinging": true,
+      "gender": "unknown",
+      "isAi": false,
+      "isOfficialArtist": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-24T06:55:49.836Z",
+      "updatedAt": "2026-10-24T06:55:49.836Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T06:55:49.836Z",
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UC1GQB6OqVMoFlHhQ9AagtqA",
+          "handle": "mela_akaru",
+          "name": "メラ・アカル MelaakaruVtuber",
+          "url": "https://www.youtube.com/channel/UC1GQB6OqVMoFlHhQ9AagtqA",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/q6JobgyMYvZDtLz3Dgi2qxZxduSNzr3vsHRbU9dvnxOHX1ZV3fo8XJMaNgglq2JzfNcJfqRzuQ=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T06:55:49.836Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
+    },
+    {
       "id": "UC2hA-6M66dE2Tt_4xM8K9wQ",
       "name": "バーチャルゴリラ",
       "handle": null,
@@ -1423,6 +1481,66 @@
       "popularVideoId": null,
       "nameSource": "roster",
       "aliases": []
+    },
+    {
+      "id": "UC2MUe20ykmDLNCB9kWy2FpQ",
+      "name": "月草かなで",
+      "nameSource": "platform",
+      "aliases": [],
+      "handle": "tsukikusakanade",
+      "kind": "virtual",
+      "role": "unknown",
+      "region": "jp",
+      "regionSource": "country",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": "ARAWAZA",
+      "affiliation": "group",
+      "avatar": "https://yt3.googleusercontent.com/EhhgcZEXaFKwTl8RFEjxBdOvaqrBIwUK78uYpLgWr46VJ04F1UtFwNbqPwtGmg_VogxMLkX-6g=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "ARAWAZA所属！月草かなでです あなたの毎日に当たり前の存在になりたい！ 🫧Xアカウント https://twitter.com/kanade_arawaza ✧･━･✧･━･✧･━･✧･━･✧･━･✧･━･✧ FM 🐈‍⬛🪴 FN かにゃでっ子 配信タグ #月草なう FAタグ #画家なで ✧･━･✧･━･✧...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": "JP",
+      "tags": [],
+      "isSinging": true,
+      "gender": "unknown",
+      "isAi": false,
+      "isOfficialArtist": false,
+      "variant": "unknown",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-24T06:55:07.229Z",
+      "updatedAt": "2026-10-24T06:55:07.229Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T06:55:07.229Z",
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UC2MUe20ykmDLNCB9kWy2FpQ",
+          "handle": "tsukikusakanade",
+          "name": "月草かなで",
+          "url": "https://www.youtube.com/channel/UC2MUe20ykmDLNCB9kWy2FpQ",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/EhhgcZEXaFKwTl8RFEjxBdOvaqrBIwUK78uYpLgWr46VJ04F1UtFwNbqPwtGmg_VogxMLkX-6g=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T06:55:07.229Z"
+        }
+      ],
+      "externals": {
+        "twitter": "kanade_arawaza"
+      },
+      "popularVideoId": null
     },
     {
       "id": "UC2pgR5ymUSD9Phepm0ej8CQ",
@@ -1788,6 +1906,122 @@
       "aliases": []
     },
     {
+      "id": "UC7EJ9bOU9uPfbsfywy26siw",
+      "name": "紫月るぴ〔Shinotsuki Lupi〕",
+      "nameSource": "platform",
+      "aliases": [],
+      "handle": "Shinotsuki_Lupi",
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "country",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://yt3.googleusercontent.com/fxZn6XB_gLvyqd9tzwMIK-mpgzxk3qBtRygIE2EW-d36l3jyhXa19u_LlwiSGJwBw4UFcDD8XQ=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "✧ 𝐩𝐫𝐨𝐟𝐢𝐥𝐞 ︎✧ ✦ 名前￤紫月るぴ(Shinotsuki Lupi) アイドルに憧れたオタク吸血鬼が遂にVtuber活動開始…？！ オタク吸血鬼アイドルVtuber🦇💎 歌と可愛いものと推し活が大好き！ 夢を叶える為に“眷属候補生”を増やすべく奮闘中！ ✦ 初配信/Debut┊2024.08.02予定!...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": "JP",
+      "tags": [],
+      "isSinging": true,
+      "gender": "unknown",
+      "isAi": false,
+      "isOfficialArtist": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-24T06:55:07.229Z",
+      "updatedAt": "2026-10-24T06:55:07.229Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T06:55:07.229Z",
+      "activity": "preparing",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UC7EJ9bOU9uPfbsfywy26siw",
+          "handle": "Shinotsuki_Lupi",
+          "name": "紫月るぴ〔Shinotsuki Lupi〕",
+          "url": "https://www.youtube.com/channel/UC7EJ9bOU9uPfbsfywy26siw",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/fxZn6XB_gLvyqd9tzwMIK-mpgzxk3qBtRygIE2EW-d36l3jyhXa19u_LlwiSGJwBw4UFcDD8XQ=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T06:55:07.229Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
+    },
+    {
+      "id": "UC9JX9VPwEh8ziRSiPGPNa6w",
+      "name": "Hitohira Hana",
+      "nameSource": "platform",
+      "aliases": [],
+      "handle": "HitohiraHana",
+      "kind": "virtual",
+      "role": "unknown",
+      "region": "jp",
+      "regionSource": "country",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://yt3.googleusercontent.com/wTUz8oHyIWVGfZ8vVJVF25Dt3KeRxxAmMYmswVOCT9aQ78qN2gtDQXx1Fy-aHhtbC1NL90J_=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": null,
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": "JP",
+      "tags": [],
+      "isSinging": true,
+      "gender": "unknown",
+      "isAi": false,
+      "isOfficialArtist": false,
+      "variant": "unknown",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-24T06:55:07.229Z",
+      "updatedAt": "2026-10-24T06:55:07.229Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T06:55:07.229Z",
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UC9JX9VPwEh8ziRSiPGPNa6w",
+          "handle": "HitohiraHana",
+          "name": "Hitohira Hana",
+          "url": "https://www.youtube.com/channel/UC9JX9VPwEh8ziRSiPGPNa6w",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/wTUz8oHyIWVGfZ8vVJVF25Dt3KeRxxAmMYmswVOCT9aQ78qN2gtDQXx1Fy-aHhtbC1NL90J_=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T06:55:07.229Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
+    },
+    {
       "id": "UCajhBT4nMrg3DLS-bLL2RCg",
       "name": "天野ピカミィ. Pikamee",
       "handle": null,
@@ -1860,6 +2094,127 @@
         "Amano Pikamee",
         "天野ピカミィ"
       ]
+    },
+    {
+      "id": "UCAnmxpXgW0ixFc788tLsiNw",
+      "name": "にゃぷぷ・まりーな / Nyapupu Marina【活動終了】",
+      "nameSource": "platform",
+      "aliases": [
+        "にゃぷぷ・まりーな",
+        "Nyapupu Marina"
+      ],
+      "handle": "Nyapupu_fsp",
+      "kind": "virtual",
+      "role": "unknown",
+      "region": "jp",
+      "regionSource": "country",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": "PRODUCTION",
+      "affiliation": "group",
+      "avatar": "https://yt3.googleusercontent.com/od6tAzsuHeWhqBsYfBKgA4zThcK1qfFhWntDmsvzsu8VRPa2DE-deOBNxtgBJonYuRSUqEeW=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "こんにゃぷ～🐈🪼 FIRST STAGE PRODUCTION所属4期生の歌う猫メイドのネオヒューマン にゃぷぷ・まりーなです！隣にいるのは謎の生命体、店長の10-CHOです！ ✧X(Twitter)/https://x.com/nyapupu__fsp ✧総合タグ/#にゃぷぷまりーな ✧ファンネーム/#にゃぷめ...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": "JP",
+      "tags": [],
+      "isSinging": true,
+      "gender": "unknown",
+      "isAi": false,
+      "isOfficialArtist": false,
+      "variant": "unknown",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-24T06:54:21.719Z",
+      "updatedAt": "2026-10-24T06:54:21.719Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T06:54:21.719Z",
+      "activity": "graduated",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCAnmxpXgW0ixFc788tLsiNw",
+          "handle": "Nyapupu_fsp",
+          "name": "にゃぷぷ・まりーな / Nyapupu Marina【活動終了】",
+          "url": "https://www.youtube.com/channel/UCAnmxpXgW0ixFc788tLsiNw",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/od6tAzsuHeWhqBsYfBKgA4zThcK1qfFhWntDmsvzsu8VRPa2DE-deOBNxtgBJonYuRSUqEeW=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T06:54:21.719Z"
+        }
+      ],
+      "externals": {
+        "twitter": "nyapupu__fsp"
+      },
+      "popularVideoId": null
+    },
+    {
+      "id": "UCanYH0Mt-s04RQ-dadsDUkQ",
+      "name": "白樺ななし",
+      "nameSource": "platform",
+      "aliases": [],
+      "handle": "nanasichan-v",
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "name",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://yt3.googleusercontent.com/2DO7tzaHlULw9G2xpiedT4Htw-i21MGnTI3tFGOJVqOOR7HC7voUPLZaRc4o_hkllS3NGrq_5g=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "🎧 白樺ななし / Shirakaba Nanashi 🎧 ロボットアニメ大好きVTuber シンガーソングライターとしても活動中です チャンネル登録＆応援よろしくお願いします😊💖 一緒に音楽の旅を楽しもう！",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": true,
+      "gender": "unknown",
+      "isAi": false,
+      "isOfficialArtist": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-24T06:55:49.836Z",
+      "updatedAt": "2026-10-24T06:55:49.836Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T06:55:49.836Z",
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCanYH0Mt-s04RQ-dadsDUkQ",
+          "handle": "nanasichan-v",
+          "name": "白樺ななし",
+          "url": "https://www.youtube.com/channel/UCanYH0Mt-s04RQ-dadsDUkQ",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/2DO7tzaHlULw9G2xpiedT4Htw-i21MGnTI3tFGOJVqOOR7HC7voUPLZaRc4o_hkllS3NGrq_5g=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T06:55:49.836Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
     },
     {
       "id": "UCcEXdLbhQtqzxT6wc0ye2ag",
@@ -2820,6 +3175,127 @@
       ]
     },
     {
+      "id": "UCMCooZqVMD2ZmUxjRxGuUjg",
+      "name": "花鹿 める / Kajica Mel",
+      "nameSource": "platform",
+      "aliases": [
+        "花鹿 める",
+        "Kajica Mel"
+      ],
+      "handle": "mel_samui",
+      "kind": "virtual",
+      "role": "unknown",
+      "region": "jp",
+      "regionSource": "country",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://yt3.googleusercontent.com/VTA_bcy8LEydzhQZoL3fmte0FCKid0su7a6e4WkSH-UeiNPMvqlrpZVuU5YcgiscZgqmWgTT=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "眠りの森に住んでいるちいさい天使 ┈┈┈┈┈┈┈┈┈┈ ౨ৎ 夢のようにたのしい時間を、 眠りの森で過ごしましょう #ななはぴ 5期生 ✿ 2024年9月15日デビュー ┈┈┈┈┈┈┈┈┈┈ ౨ৎ チャンネル登録・高評価・通知設定 よろしくお願いいたします👒 ✧ X https://x.com/mel_samui...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": "JP",
+      "tags": [],
+      "isSinging": false,
+      "gender": "unknown",
+      "isAi": false,
+      "isOfficialArtist": false,
+      "variant": "unknown",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-24T06:55:49.836Z",
+      "updatedAt": "2026-10-24T06:55:49.836Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T06:55:49.836Z",
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCMCooZqVMD2ZmUxjRxGuUjg",
+          "handle": "mel_samui",
+          "name": "花鹿 める / Kajica Mel",
+          "url": "https://www.youtube.com/channel/UCMCooZqVMD2ZmUxjRxGuUjg",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/VTA_bcy8LEydzhQZoL3fmte0FCKid0su7a6e4WkSH-UeiNPMvqlrpZVuU5YcgiscZgqmWgTT=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T06:55:49.836Z"
+        }
+      ],
+      "externals": {
+        "twitter": "mel_samui"
+      },
+      "popularVideoId": null
+    },
+    {
+      "id": "UCNN0n29dfU-F3DQ4YvEenuQ",
+      "name": "CHIYURU ch.三日月ちゆる",
+      "nameSource": "platform",
+      "aliases": [],
+      "handle": "Chiyuru_Mikazuki",
+      "kind": "virtual",
+      "role": "vsinger",
+      "region": "jp",
+      "regionSource": "country",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": "UniVIRTUAL",
+      "affiliation": "group",
+      "avatar": "https://yt3.googleusercontent.com/Lin1GbZmguSyzMZEEsEkg95GtevXXkKHDraSJcXYA06as87BGiiHVOf-p4xbKxhoDziOrgec=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "世界中のみんなを笑顔にしたい！「ゆるち」こと 三日月ちゆる(Chiyuru Mikazuki)です🐈‍⬛❤️ 歌とラップで日本一のVsingerになるのが夢🎤🎶 みんなが笑顔で楽しめるテーマパークみたいな空間を作りたい！🎡 ほぼ毎日歌枠してます🎤🎶 音楽を軸に、夢を一緒に叶える事務所 UniVIRTUAL所属 전...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": "JP",
+      "tags": [],
+      "isSinging": true,
+      "gender": "unknown",
+      "isAi": false,
+      "isOfficialArtist": false,
+      "variant": "vsinger",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-24T06:55:49.836Z",
+      "updatedAt": "2026-10-24T06:55:49.836Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T06:55:49.836Z",
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCNN0n29dfU-F3DQ4YvEenuQ",
+          "handle": "Chiyuru_Mikazuki",
+          "name": "CHIYURU ch.三日月ちゆる",
+          "url": "https://www.youtube.com/channel/UCNN0n29dfU-F3DQ4YvEenuQ",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/Lin1GbZmguSyzMZEEsEkg95GtevXXkKHDraSJcXYA06as87BGiiHVOf-p4xbKxhoDziOrgec=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T06:55:49.836Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
+    },
+    {
       "id": "UCnUiy3Yeo1cuj1noIJjVe3g",
       "name": "まゆる / mayuru",
       "handle": null,
@@ -2978,6 +3454,64 @@
         "Mayuru",
         "まゆる"
       ]
+    },
+    {
+      "id": "UCNYi608aHl-r6VGJDYh1z6w",
+      "name": "小日向さくら",
+      "nameSource": "platform",
+      "aliases": [],
+      "handle": "kohinatasanchi",
+      "kind": "virtual",
+      "role": "unknown",
+      "region": "jp",
+      "regionSource": "country",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_kFSCjIKcb7t-CI7Xl6KRqTtBE48tiE53f3GrHkO6V5jxQ=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "初めまして！猫のお世話係・こひなたさんちの家主こと小日向さくらと申します。 普通の配信者からVになった汎用型Vです。声でお芝居もします。 いつか唯一無二になりたい。 配信は昼すぎから夕方くらいまで。 ４月から水曜・土曜日で配信です。 雑談中心！ リアルタイムでのやりとりを大切にしております。 ゲームもやるのは好き...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": "JP",
+      "tags": [],
+      "isSinging": false,
+      "gender": "female",
+      "isAi": false,
+      "isOfficialArtist": false,
+      "variant": "unknown",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-24T06:55:07.229Z",
+      "updatedAt": "2026-10-24T06:55:07.229Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T06:55:07.229Z",
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCNYi608aHl-r6VGJDYh1z6w",
+          "handle": "kohinatasanchi",
+          "name": "小日向さくら",
+          "url": "https://www.youtube.com/channel/UCNYi608aHl-r6VGJDYh1z6w",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_kFSCjIKcb7t-CI7Xl6KRqTtBE48tiE53f3GrHkO6V5jxQ=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T06:55:07.229Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
     },
     {
       "id": "UCo5uTjnUikW0giyrKOIrOQA",
@@ -3462,6 +3996,125 @@
       ]
     },
     {
+      "id": "UCTHLfkyjv9ZA_W3Q9B5mMAQ",
+      "name": "狼朗ハツキ - Rourou Hatsuki -",
+      "nameSource": "platform",
+      "aliases": [],
+      "handle": "rou_hatsuki",
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "name",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": "ゆグドラシるproject",
+      "affiliation": "group",
+      "avatar": "https://yt3.googleusercontent.com/z532CFG5jLQRGcX2w5J-2qNjOlVswlPMgL8ErLcB3KxnYQB-i5iMEtKvGH1-qi6jHU28WapXHQ=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "おーっすおまいら！狼朗ハツキだ！🐺⛅️ 声優事務所ゆーりんプロ公式企画 ゆグドラシるproject所属🌳 何でも挑戦！ 元気いっぱい歌う半人半狼Vtuber。 ダチがい～～～～っぱいほしい！ 仲良くしてくれたらうれしい🙌 お歌がメインだけど、 ゲーム配信/雑談/お料理 なんでもやるよ☺️ 良ければ、チャンネル登録...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": true,
+      "gender": "unknown",
+      "isAi": false,
+      "isOfficialArtist": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-24T06:54:21.719Z",
+      "updatedAt": "2026-10-24T06:54:21.719Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T06:54:21.719Z",
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCTHLfkyjv9ZA_W3Q9B5mMAQ",
+          "handle": "rou_hatsuki",
+          "name": "狼朗ハツキ - Rourou Hatsuki -",
+          "url": "https://www.youtube.com/channel/UCTHLfkyjv9ZA_W3Q9B5mMAQ",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/z532CFG5jLQRGcX2w5J-2qNjOlVswlPMgL8ErLcB3KxnYQB-i5iMEtKvGH1-qi6jHU28WapXHQ=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T06:54:21.719Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
+    },
+    {
+      "id": "UCTiu8O_zSMwudxol_rg2dpQ",
+      "name": "木下ちぷる / Chipuru Ch",
+      "nameSource": "platform",
+      "aliases": [
+        "木下ちぷる",
+        "Chipuru Ch"
+      ],
+      "handle": "Chipuru-Kinoshita",
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "country",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "independent",
+      "avatar": "https://yt3.googleusercontent.com/u7AEvQd0qfDu62B6rFkgpmqTYjAYvPi7sFpPbNxNbHXYNYmp4cnDGsLy5BZsoLJeU8w6a_npvQ=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "きみのこころにのこる\"おんがく\"を…！ \"森羅万象制作部\"部長の個人VTuber🪐🐹 この世にあるものぜんぶつくりたい！ いつかぜったいにちぷる星を作る、ぜったいになのだ‎ ‎- ̗̀ 𖤐 ▼木下ちぷるのファンクラブ🪐 https://raidori.com/@chipuru_ 2024.11.30 Debut!...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": "JP",
+      "tags": [],
+      "isSinging": true,
+      "gender": "unknown",
+      "isAi": false,
+      "isOfficialArtist": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-24T06:55:07.229Z",
+      "updatedAt": "2026-10-24T06:55:07.229Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T06:55:07.229Z",
+      "activity": "preparing",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCTiu8O_zSMwudxol_rg2dpQ",
+          "handle": "Chipuru-Kinoshita",
+          "name": "木下ちぷる / Chipuru Ch",
+          "url": "https://www.youtube.com/channel/UCTiu8O_zSMwudxol_rg2dpQ",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/u7AEvQd0qfDu62B6rFkgpmqTYjAYvPi7sFpPbNxNbHXYNYmp4cnDGsLy5BZsoLJeU8w6a_npvQ=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T06:55:07.229Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
+    },
+    {
       "id": "UCuPrcSmgo6twlAQzwYPlSkQ",
       "name": "竹花ノート",
       "handle": null,
@@ -3752,6 +4405,183 @@
       "aliases": [
         "空真密丽"
       ]
+    },
+    {
+      "id": "UCuv4bkdoqEdnxnYDJio3eIA",
+      "name": "三軒しらべ mitsunoki shirabe",
+      "nameSource": "platform",
+      "aliases": [],
+      "handle": "mitsunokishirabe",
+      "kind": "virtual",
+      "role": "unknown",
+      "region": "jp",
+      "regionSource": "country",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://yt3.googleusercontent.com/6ll-hJQjCTsr0W_4n1nTSycjSvE_owiFha5qLw66zdoirxGJc-gJgvgOewplEH2WqDEx2uXMpw=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "３’dPLAYce(サードプレイス）所属、歌うマイペースぽんニート、三軒しらべです。 歌を通して「自分の答え」を探しています🎤よかったらいいね👍とチャンネル登録お願いいたします！ ファンマーク：🏘🎼 ファンネーム：#しら部 ファンアートタグ：#みつのきゃんばす 配信タグ：#のきしらいぶ ◆profile 歌をこよ...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": "JP",
+      "tags": [],
+      "isSinging": true,
+      "gender": "unknown",
+      "isAi": false,
+      "isOfficialArtist": false,
+      "variant": "unknown",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-24T06:55:49.836Z",
+      "updatedAt": "2026-10-24T06:55:49.836Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T06:55:49.836Z",
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCuv4bkdoqEdnxnYDJio3eIA",
+          "handle": "mitsunokishirabe",
+          "name": "三軒しらべ mitsunoki shirabe",
+          "url": "https://www.youtube.com/channel/UCuv4bkdoqEdnxnYDJio3eIA",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/6ll-hJQjCTsr0W_4n1nTSycjSvE_owiFha5qLw66zdoirxGJc-gJgvgOewplEH2WqDEx2uXMpw=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T06:55:49.836Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
+    },
+    {
+      "id": "UCvmpT7L9S3iE2bG49AIhJNA",
+      "name": "KOTATSU Ch.はる こたつぶとん倶楽部♧",
+      "nameSource": "platform",
+      "aliases": [],
+      "handle": "KOTATSUChHaruKotatsubutonclub",
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "country",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://yt3.googleusercontent.com/9CmojX-ubAb7RRowchKxXthMuRf9DP8CwJiGkWYDg6sbKp2D-Th9qr9d9nh8lfYCBDesOuTsNFg=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "音楽をする人。 心の隙間に一粒、 刺さって抜けない音楽がしたいです。 あなたの傷や心の隙間を 治療はしません。 でも、そばに居ます。 ♧♣︎（倶楽部） 心に刺さったまま残る「粒」のしるし 「こたつちゃん」というVTuberの姿も持っています。 生配信では、弾き語りを中心に ときどき雑談もしています。 エゴサタグ👀...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": "JP",
+      "tags": [],
+      "isSinging": true,
+      "gender": "female",
+      "isAi": false,
+      "isOfficialArtist": false,
+      "variant": "female_vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-24T06:55:07.229Z",
+      "updatedAt": "2026-10-24T06:55:07.229Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T06:55:07.229Z",
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCvmpT7L9S3iE2bG49AIhJNA",
+          "handle": "KOTATSUChHaruKotatsubutonclub",
+          "name": "KOTATSU Ch.はる こたつぶとん倶楽部♧",
+          "url": "https://www.youtube.com/channel/UCvmpT7L9S3iE2bG49AIhJNA",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/9CmojX-ubAb7RRowchKxXthMuRf9DP8CwJiGkWYDg6sbKp2D-Th9qr9d9nh8lfYCBDesOuTsNFg=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T06:55:07.229Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
+    },
+    {
+      "id": "UCXozdmTMKyfAwdlGZne4Kuw",
+      "name": "水魚みぃむ / Mio Miim",
+      "nameSource": "platform",
+      "aliases": [
+        "水魚みぃむ",
+        "Mio Miim"
+      ],
+      "handle": "miomiim316",
+      "kind": "virtual",
+      "role": "unknown",
+      "region": "jp",
+      "regionSource": "country",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://yt3.googleusercontent.com/4sfQ35OXoTiHL2sMMnbeKZUpu-B0JnmdylNho6iSHs2xLr2-5znjQLfvg52W7aztzntuKCwtwQ=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "水音の世界からやってきた歌姫研修生、水魚みぃむ(みお みぃむ)です！ これから歌ったり、おしゃべりしたり、一緒に好きなものを見つけていくよ！ 見守ってくれると嬉しいです！ 見つけてくれて、ありがとう🐟🫧",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": "JP",
+      "tags": [],
+      "isSinging": true,
+      "gender": "unknown",
+      "isAi": false,
+      "isOfficialArtist": true,
+      "variant": "unknown",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-24T06:55:07.229Z",
+      "updatedAt": "2026-10-24T06:55:07.229Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T06:55:07.229Z",
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCXozdmTMKyfAwdlGZne4Kuw",
+          "handle": "miomiim316",
+          "name": "水魚みぃむ / Mio Miim",
+          "url": "https://www.youtube.com/channel/UCXozdmTMKyfAwdlGZne4Kuw",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/4sfQ35OXoTiHL2sMMnbeKZUpu-B0JnmdylNho6iSHs2xLr2-5znjQLfvg52W7aztzntuKCwtwQ=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T06:55:07.229Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
     },
     {
       "id": "UCy5lOmEQoivK5XK7QCaRKug",

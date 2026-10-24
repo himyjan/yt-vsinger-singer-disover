@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-24T06:27:33.648Z",
+  "generatedAt": "2026-10-24T06:55:49.836Z",
   "channels": [
     {
       "id": "bilibili:12299398",
@@ -1718,6 +1718,64 @@
       ]
     },
     {
+      "id": "UC1vYRlSVMSmnV6iMO8lXHow",
+      "name": "ukuna ch.うくな",
+      "nameSource": "platform",
+      "aliases": [],
+      "handle": "ukuna7",
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "name",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://yt3.googleusercontent.com/6I-9j60LCe_D9tZWwk1DuUd3lc7nDMJFa63z2ekn-fH-Qu9twH9gTNe_9Hfp09L0DqgtJs2W0Ek=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "見つけてくれてありがとう！🐰🥕 みんなに元気を届けたい！元気いっぱい！おしゃべり系Vtuberのうくな(ukuna)です 歌ってみたの投稿、配信では歌枠や雀魂などのゲーム配信、参加型ゲームと幅広くしてます🎤🎮 ◎16時〜18時の間に配信を始めることが多く、夜はゲーム配信になりやすいです！アーカイブも楽しんでくれた...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": true,
+      "gender": "unknown",
+      "isAi": false,
+      "isOfficialArtist": false,
+      "variant": "vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-24T06:54:21.719Z",
+      "updatedAt": "2026-10-24T06:54:21.719Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T06:54:21.719Z",
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UC1vYRlSVMSmnV6iMO8lXHow",
+          "handle": "ukuna7",
+          "name": "ukuna ch.うくな",
+          "url": "https://www.youtube.com/channel/UC1vYRlSVMSmnV6iMO8lXHow",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/6I-9j60LCe_D9tZWwk1DuUd3lc7nDMJFa63z2ekn-fH-Qu9twH9gTNe_9Hfp09L0DqgtJs2W0Ek=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T06:54:21.719Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
+    },
+    {
       "id": "UC3lNFeJiTq6L3UWoz4g1e-A",
       "name": "卯月コウ",
       "handle": null,
@@ -1809,6 +1867,67 @@
       "popularVideoId": null,
       "nameSource": "roster",
       "aliases": []
+    },
+    {
+      "id": "UC7A7bGRVdIwo93nqnA3x-OQ",
+      "name": "苺咲べりぃ / Maisaki Berry",
+      "nameSource": "platform",
+      "aliases": [
+        "苺咲べりぃ",
+        "Maisaki Berry"
+      ],
+      "handle": "MaisakiBerry",
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "country",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://yt3.googleusercontent.com/lveeON-5CgZfW0uo7kYuaE4A6SjPEi6wqlwvbCdWFK5dyZBMBby94AGScXafDQ3Y6n5D_jXnQbs=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "いちごの国からやってきたアイドルVtuber、苺咲べりぃ(まいさきべりぃ)です 歌うことが大好き！お話したり歌ったりゲームしたりいろんな活動したいな！ たーくっさんの方に歌と笑顔を届けたい♪ ♡┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈♡ 苺咲べりぃ - Maisaki Berry - 🍓 Twitter_ https://...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": "JP",
+      "tags": [],
+      "isSinging": true,
+      "gender": "female",
+      "isAi": false,
+      "isOfficialArtist": true,
+      "variant": "female_vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-24T06:54:21.719Z",
+      "updatedAt": "2026-10-24T06:54:21.719Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T06:54:21.719Z",
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UC7A7bGRVdIwo93nqnA3x-OQ",
+          "handle": "MaisakiBerry",
+          "name": "苺咲べりぃ / Maisaki Berry",
+          "url": "https://www.youtube.com/channel/UC7A7bGRVdIwo93nqnA3x-OQ",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/lveeON-5CgZfW0uo7kYuaE4A6SjPEi6wqlwvbCdWFK5dyZBMBby94AGScXafDQ3Y6n5D_jXnQbs=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T06:54:21.719Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
     },
     {
       "id": "UC9I-_cZVGJy2oz4uCrTt46A",
@@ -2258,6 +2377,66 @@
       ]
     },
     {
+      "id": "UCDQkIK-Md2XDbDWN4nKyzIQ",
+      "name": "夢川かなう - Kanau Yumekawa",
+      "nameSource": "platform",
+      "aliases": [],
+      "handle": "YumekawaKanau",
+      "kind": "virtual",
+      "role": "vsinger",
+      "region": "jp",
+      "regionSource": "country",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": "re:act",
+      "affiliation": "group",
+      "avatar": "https://yt3.googleusercontent.com/n3rxKDtxPPTKJvicX3gH7Zcsb0POnFranvtpOJVNEHiIoO5byTcKBSJkdixlfvFs1KqMzxLfG78=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "Re:AcT所属の海のお姫さまになりたい、泡沫たゆたうVsinger🐟 夢川かなうじゃよ、ちょっと休憩していこ～ イメージ星座－魚座 星言葉は「魅力あふれる芸術的才能」 これまでの夢川かなう https://www.youtube.com/channel/UC8jskpQfW9fn2NLK3PdaGdg 🐟X h...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": "JP",
+      "tags": [],
+      "isSinging": true,
+      "gender": "unknown",
+      "isAi": false,
+      "isOfficialArtist": true,
+      "variant": "vsinger",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-24T06:54:21.719Z",
+      "updatedAt": "2026-10-24T06:54:21.719Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T06:54:21.719Z",
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCDQkIK-Md2XDbDWN4nKyzIQ",
+          "handle": "YumekawaKanau",
+          "name": "夢川かなう - Kanau Yumekawa",
+          "url": "https://www.youtube.com/channel/UCDQkIK-Md2XDbDWN4nKyzIQ",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/n3rxKDtxPPTKJvicX3gH7Zcsb0POnFranvtpOJVNEHiIoO5byTcKBSJkdixlfvFs1KqMzxLfG78=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T06:54:21.719Z"
+        }
+      ],
+      "externals": {
+        "youtube": "UC8jskpQfW9fn2NLK3PdaGdg"
+      },
+      "popularVideoId": null
+    },
+    {
       "id": "UCebSkObV1DmhBqr4YM8uHLA",
       "name": "海渡-KAITO",
       "handle": null,
@@ -2594,6 +2773,67 @@
       "aliases": [
         "织田信姬"
       ]
+    },
+    {
+      "id": "UCHtpsJRyv8og3GQxrF-coLQ",
+      "name": "羽瑠流ウル / Ururu Uru",
+      "nameSource": "platform",
+      "aliases": [
+        "羽瑠流ウル",
+        "Ururu Uru"
+      ],
+      "handle": "Uru919",
+      "kind": "virtual",
+      "role": "vtuber",
+      "region": "jp",
+      "regionSource": "country",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://yt3.googleusercontent.com/W6qFjcTCBS4wZDUQ3fAWquJjrle0fae5hFvShSziphphzW0OOez3L9Tr-vu3hNFw3VYuuZ-LQuc=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "見つけてくれて、ありがとうる☀ ┈┈┈┈┈┈┈┈┈┈┈┈┈ ○主な活動内容 雑談｜ゲーム｜歌枠｜企画｜shorts動画 ┈┈┈┈┈┈┈┈┈┈┈┈┈ こんちゃろみー🐺🥀 満月の夜、ちっちゃくなる系VTuber 羽瑠流ウル（Ururu Uru） 公式モデレーター:モデちゃん ※概要欄・ガイドラインを必ず一読お願い致し...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": "JP",
+      "tags": [],
+      "isSinging": true,
+      "gender": "female",
+      "isAi": false,
+      "isOfficialArtist": false,
+      "variant": "female_vtuber",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-24T06:55:49.836Z",
+      "updatedAt": "2026-10-24T06:55:49.836Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T06:55:49.836Z",
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCHtpsJRyv8og3GQxrF-coLQ",
+          "handle": "Uru919",
+          "name": "羽瑠流ウル / Ururu Uru",
+          "url": "https://www.youtube.com/channel/UCHtpsJRyv8og3GQxrF-coLQ",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/W6qFjcTCBS4wZDUQ3fAWquJjrle0fae5hFvShSziphphzW0OOez3L9Tr-vu3hNFw3VYuuZ-LQuc=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T06:55:49.836Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
     },
     {
       "id": "UCiZyc9uhPft4ax1CTTMM2Bg",
@@ -2972,6 +3212,64 @@
       ]
     },
     {
+      "id": "UCo-GtOcO_6VXek3cZml5pag",
+      "name": "珠白もち*MochiTamashiro",
+      "nameSource": "platform",
+      "aliases": [],
+      "handle": "tamashiromochi",
+      "kind": "virtual",
+      "role": "unknown",
+      "region": "jp",
+      "regionSource": "country",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://yt3.googleusercontent.com/2pV0qs_WI_3GCqLrJI2u2ojbdmOYMJ7AbT0qJT8hGib7pI57pOmlMFanq2hr5I9gTcKmNhbqXg=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "アイドルに憧れて、森からやってきた 歌うま白文鳥！！ ままに魔法をかけてもらって最強ゆめかわな 人間さんの姿になりました✨ 歌が大好きで、推しと一緒に歌うのを目標に 自分も大きな舞台で歌うことを夢見て 毎日練習をがんばってます！！ 立派なアイドル目指して頑張ります！🕊🥚 キャラクターデザイン:なつめみく様 推しマ...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": "JP",
+      "tags": [],
+      "isSinging": true,
+      "gender": "female",
+      "isAi": false,
+      "isOfficialArtist": false,
+      "variant": "unknown",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-24T06:55:49.836Z",
+      "updatedAt": "2026-10-24T06:55:49.836Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T06:55:49.836Z",
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCo-GtOcO_6VXek3cZml5pag",
+          "handle": "tamashiromochi",
+          "name": "珠白もち*MochiTamashiro",
+          "url": "https://www.youtube.com/channel/UCo-GtOcO_6VXek3cZml5pag",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/2pV0qs_WI_3GCqLrJI2u2ojbdmOYMJ7AbT0qJT8hGib7pI57pOmlMFanq2hr5I9gTcKmNhbqXg=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T06:55:49.836Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
+    },
+    {
       "id": "UCo7TRj3cS-f_1D9ZDmuTsjw",
       "name": "町田ちま【にじさんじ】",
       "handle": null,
@@ -3329,6 +3627,66 @@
       "aliases": []
     },
     {
+      "id": "UCqDN60QQx3GGmfagx1eyIEg",
+      "name": "彷徨 鈴【Samayoi Suzu】",
+      "nameSource": "platform",
+      "aliases": [
+        "彷徨 鈴"
+      ],
+      "handle": "SamayoiSuzu",
+      "kind": "virtual",
+      "role": "vsinger",
+      "region": "jp",
+      "regionSource": "script",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "independent",
+      "avatar": "https://yt3.googleusercontent.com/F0z_uBUMpyCh3Md2PpiR8-oTln8hPoPZP44fA-UqAtAn3u_FgxP3V8lyPxQTo012g8WaPrTc8w=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "━━━━━━━━━━━━━━━━━━ みんな楽しく！ 自分も楽しく！ おうたとげーむと寝ることがだいすき👻☯ 魔界の歌姫を目指す 低音ハスキーぱわーぼいす個人Vtuber・Vsinger きょんしーと鬼女のはーふ 彷徨 鈴 \" Samayoi Suzu\" -- 鈴にキミの生気と血をちょーだい？ ━━━━━━━━━...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": null,
+      "tags": [],
+      "isSinging": true,
+      "gender": "unknown",
+      "isAi": false,
+      "isOfficialArtist": false,
+      "variant": "vsinger",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-24T06:55:49.836Z",
+      "updatedAt": "2026-10-24T06:55:49.836Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T06:55:49.836Z",
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCqDN60QQx3GGmfagx1eyIEg",
+          "handle": "SamayoiSuzu",
+          "name": "彷徨 鈴【Samayoi Suzu】",
+          "url": "https://www.youtube.com/channel/UCqDN60QQx3GGmfagx1eyIEg",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/F0z_uBUMpyCh3Md2PpiR8-oTln8hPoPZP44fA-UqAtAn3u_FgxP3V8lyPxQTo012g8WaPrTc8w=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T06:55:49.836Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
+    },
+    {
       "id": "UCQjGy9ZkIuqqzrqyLvml4Bg",
       "name": "真城煌璃",
       "handle": null,
@@ -3408,6 +3766,66 @@
       "popularVideoId": null,
       "nameSource": "roster",
       "aliases": []
+    },
+    {
+      "id": "UCqJQfY9916fdpDrKFqdYy2g",
+      "name": "Anime ch. 佐藤あにめ",
+      "nameSource": "platform",
+      "aliases": [
+        "佐藤あにめ"
+      ],
+      "handle": "Satou_Anime_ASRB",
+      "kind": "virtual",
+      "role": "unknown",
+      "region": "jp",
+      "regionSource": "country",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": "あすらび",
+      "affiliation": "group",
+      "avatar": "https://yt3.googleusercontent.com/qFJxTmZ7X5NQsIBWis-ftv3ilVRmJ1XsHGnoT4JQmfGWx5ltNfJQXvKyE8csHcPRjLkXfqqxUA=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "あすらび所属 佐藤あにめ*です！ ------------------------------------------- 人間界に頭から落ちて、これまでの記憶を失ってしまった天使猫。 運よくあすらびに拾われてお世話になっている。 よく眠れる落ち着いた声が野生のアザラシ達に大好評だが、 いつか水族館に入ってもらおう...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": "JP",
+      "tags": [],
+      "isSinging": false,
+      "gender": "unknown",
+      "isAi": false,
+      "isOfficialArtist": false,
+      "variant": "unknown",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-24T06:55:49.836Z",
+      "updatedAt": "2026-10-24T06:55:49.836Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T06:55:49.836Z",
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCqJQfY9916fdpDrKFqdYy2g",
+          "handle": "Satou_Anime_ASRB",
+          "name": "Anime ch. 佐藤あにめ",
+          "url": "https://www.youtube.com/channel/UCqJQfY9916fdpDrKFqdYy2g",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/qFJxTmZ7X5NQsIBWis-ftv3ilVRmJ1XsHGnoT4JQmfGWx5ltNfJQXvKyE8csHcPRjLkXfqqxUA=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T06:55:49.836Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
     },
     {
       "id": "UCqm3BQLlJfvkTsX_hvm0UmA",
@@ -3578,14 +3996,14 @@
       "tags": [
         "akechi mitsuki"
       ],
-      "isSinging": false,
+      "isSinging": true,
       "gender": "female",
       "isAi": false,
       "variant": "vtuber",
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-24T05:11:12.819Z",
+      "updatedAt": "2026-10-24T06:54:21.338Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -4341,6 +4759,64 @@
       ]
     },
     {
+      "id": "UCwPyvHGH9fidXrHMD3bWXRA",
+      "name": "五木つかさ -Itsuki Tsukasa -",
+      "nameSource": "platform",
+      "aliases": [],
+      "handle": "itk_tks",
+      "kind": "virtual",
+      "role": "unknown",
+      "region": "jp",
+      "regionSource": "country",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://yt3.googleusercontent.com/PPBt4HuEKHTyBs3K2Tq0JqS-UhVNZoX7lLEn1AyIcvQb7gPhM__1k3HPqE0-6vk8aYGV22ni=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "― 君に寄り添う 月夜の遠吠え を ― 君が抱くネガティブな気持ちは否定しないでいい それさえも好きになれるように僕が共に歩んでいくよ。 今日も僕は君に向けて歌います。 どうか、君に届きますように。 ✰⋆｡:ﾟ･*☽:ﾟ･⋆｡✰⋆｡:ﾟ･*☽:ﾟ･⋆｡✰⋆｡:ﾟ･*☽ *☽ FANBOX限定配信について YouT...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": "JP",
+      "tags": [],
+      "isSinging": true,
+      "gender": "male",
+      "isAi": false,
+      "isOfficialArtist": false,
+      "variant": "unknown",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-24T06:54:21.719Z",
+      "updatedAt": "2026-10-24T06:54:21.719Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T06:54:21.719Z",
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCwPyvHGH9fidXrHMD3bWXRA",
+          "handle": "itk_tks",
+          "name": "五木つかさ -Itsuki Tsukasa -",
+          "url": "https://www.youtube.com/channel/UCwPyvHGH9fidXrHMD3bWXRA",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/PPBt4HuEKHTyBs3K2Tq0JqS-UhVNZoX7lLEn1AyIcvQb7gPhM__1k3HPqE0-6vk8aYGV22ni=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T06:54:21.719Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
+    },
+    {
       "id": "UCwrjITPwG4q71HzihV2C7Nw",
       "name": "フミ/にじさんじ",
       "handle": null,
@@ -4410,6 +4886,64 @@
       "aliases": [
         "フミ"
       ]
+    },
+    {
+      "id": "UCXAF21j7vZRu5N6cBc0hhKg",
+      "name": "【Rinne-輪音】",
+      "nameSource": "platform",
+      "aliases": [],
+      "handle": "rinnnevocal",
+      "kind": "virtual",
+      "role": "unknown",
+      "region": "jp",
+      "regionSource": "country",
+      "languages": [
+        "ja"
+      ],
+      "statedLanguages": [],
+      "agency": null,
+      "affiliation": "unknown",
+      "avatar": "https://yt3.googleusercontent.com/6OZF7H8bZV4Xyrhd3JQMvYbRazysxIXczqb6LVQ5QshJF5nAHFXWx5steIutlFPjNmbKiOulXQ=s900-c-k-c0x00ffffff-no-rj",
+      "banner": null,
+      "description": "可愛い曲/ちょっと切ない曲が大好きなボーカル【輪音】(Rinne)です！ゲーム・映像作品を中心に活動しています。 ▼Profile https://lit.link/rinnevocal 【好きなジャンル】 ・アニソン ・美少女ゲーム ・リズムゲーム 【主な実績】 ・映画『リライト』劇中歌歌唱 （バンダイナムコF...",
+      "subscribers": {
+        "tag": "hidden"
+      },
+      "videoCount": null,
+      "viewCount": null,
+      "uploadsPlaylistId": null,
+      "country": "JP",
+      "tags": [],
+      "isSinging": true,
+      "gender": "female",
+      "isAi": false,
+      "isOfficialArtist": false,
+      "variant": "unknown",
+      "verification": null,
+      "source": "api",
+      "addedAt": "2026-10-24T06:54:21.719Z",
+      "updatedAt": "2026-10-24T06:54:21.719Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T06:54:21.719Z",
+      "activity": "unknown",
+      "debutDate": null,
+      "graduateDate": null,
+      "platforms": [
+        {
+          "platform": "youtube",
+          "id": "UCXAF21j7vZRu5N6cBc0hhKg",
+          "handle": "rinnnevocal",
+          "name": "【Rinne-輪音】",
+          "url": "https://www.youtube.com/channel/UCXAF21j7vZRu5N6cBc0hhKg",
+          "subscribers": {
+            "tag": "hidden"
+          },
+          "avatar": "https://yt3.googleusercontent.com/6OZF7H8bZV4Xyrhd3JQMvYbRazysxIXczqb6LVQ5QshJF5nAHFXWx5steIutlFPjNmbKiOulXQ=s900-c-k-c0x00ffffff-no-rj",
+          "lastCheckedAt": "2026-10-24T06:54:21.719Z"
+        }
+      ],
+      "externals": {},
+      "popularVideoId": null
     },
     {
       "id": "UCXRlIK3Cw_TJIQC5kSJJQMg",
