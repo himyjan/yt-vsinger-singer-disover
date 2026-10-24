@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-24T15:54:59.721Z",
+  "generatedAt": "2026-10-24T20:46:02.237Z",
   "items": [
     {
       "id": "_SMiJkfCUbE",
@@ -275,6 +275,98 @@
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
       "updatedAt": "2026-10-24T09:06:25.613Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "sDl4xni_0I4",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCBY1b_TPZx3rA0F1KJnXkNQ",
+      "channelName": "むずちゃんねる",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "female",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "【初コラボ】話題の「これって浮気？判定シート」を2人でやってみるんだよ。【＃MUZU/＃はじめすみ/＃かじゅぽけ】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/sDl4xni_0I4/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": true,
+      "collaborators": [
+        {
+          "channelId": "UCBY1b_TPZx3rA0F1KJnXkNQ",
+          "name": "むずちゃんねる",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-24T20:46:02.237Z",
+      "updatedAt": "2026-10-24T20:46:02.237Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "Sxa1ZPn6C5I",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCp6993wxpyDPHUpavwDFqgg",
+      "channelName": "SoraCh. ときのそらチャンネル",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "11/7ぴあアリーナMMライブ",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/Sxa1ZPn6C5I/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCp6993wxpyDPHUpavwDFqgg",
+          "name": "SoraCh. ときのそらチャンネル",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-24T20:46:02.237Z",
+      "updatedAt": "2026-10-24T20:46:02.237Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },

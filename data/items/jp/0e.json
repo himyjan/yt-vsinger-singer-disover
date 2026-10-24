@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-24T15:54:59.721Z",
+  "generatedAt": "2026-10-24T20:46:02.237Z",
   "items": [
     {
       "id": "_uBvHtGsn8w",
@@ -44,7 +44,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-24T09:06:25.613Z",
+      "updatedAt": "2026-10-24T20:46:02.237Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -136,7 +136,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-24T09:06:25.613Z",
+      "updatedAt": "2026-10-24T20:46:02.237Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -182,7 +182,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-24T09:06:25.613Z",
+      "updatedAt": "2026-10-24T20:46:02.237Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -274,7 +274,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-24T09:06:25.613Z",
+      "updatedAt": "2026-10-24T20:46:02.237Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -371,6 +371,52 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "oE-uStBf36s",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCWP-S7eCMG7GZY3op32zy9A",
+      "channelName": "時音ありす Tokine Alice Music ch.",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vsinger",
+      "title": "Free chat&スケジュール",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/oE-uStBf36s/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCWP-S7eCMG7GZY3op32zy9A",
+          "name": "時音ありす Tokine Alice Music ch.",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-24T20:46:02.237Z",
+      "updatedAt": "2026-10-24T20:46:02.237Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "oXxS8AwgTUw",
       "platform": "youtube",
       "type": "live",
@@ -458,7 +504,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-24T09:06:25.613Z",
+      "updatedAt": "2026-10-24T20:46:02.237Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -504,7 +550,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-24T09:06:25.613Z",
+      "updatedAt": "2026-10-24T20:46:02.237Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -597,6 +643,52 @@
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
       "updatedAt": "2026-10-24T15:54:59.721Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "ssh7hopvOl4",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCq7n-GF0SZ7Pt1NCVfTvIaQ",
+      "channelName": "巫てんり / Kannagi Tenri",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "【△▼weekly schedule△▼】【巫てんり/Vtuber】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/ssh7hopvOl4/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCq7n-GF0SZ7Pt1NCVfTvIaQ",
+          "name": "巫てんり / Kannagi Tenri",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-24T20:46:02.237Z",
+      "updatedAt": "2026-10-24T20:46:02.237Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -780,7 +872,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-24T09:06:25.613Z",
+      "updatedAt": "2026-10-24T20:46:02.237Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
