@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-24T09:06:25.613Z",
+  "generatedAt": "2026-10-24T10:11:53.059Z",
   "channels": [
     {
       "id": "acfun:13945614",
@@ -243,65 +243,6 @@
       ],
       "externals": {},
       "popularVideoId": null
-    },
-    {
-      "id": "bilibili:1003026345",
-      "name": "蒂奇Titchi",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "cn",
-      "regionSource": "platform",
-      "languages": [
-        "zh-Hans"
-      ],
-      "statedLanguages": [],
-      "agency": null,
-      "affiliation": "unknown",
-      "avatar": "https://i0.hdslb.com/bfs/face/d4be94e35ac6479313f62ece7efc531c2c75db9b.jpg",
-      "banner": null,
-      "description": "录播号！直播指路@蒂奇_Titchi",
-      "subscribers": {
-        "tag": "has",
-        "count": 3714
-      },
-      "videoCount": null,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "verification": null,
-      "source": "api",
-      "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T21:23:29.284Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": "2026-10-24T06:08:43.980Z",
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "1003026345",
-          "handle": "1003026345",
-          "name": "蒂奇Titchi",
-          "url": "https://space.bilibili.com/1003026345",
-          "subscribers": {
-            "tag": "has",
-            "count": 3714
-          },
-          "avatar": "https://i0.hdslb.com/bfs/face/d4be94e35ac6479313f62ece7efc531c2c75db9b.jpg",
-          "lastCheckedAt": "2026-10-24T06:12:05.025Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
     },
     {
       "id": "bilibili:100381199",
@@ -1683,69 +1624,6 @@
       ]
     },
     {
-      "id": "bilibili:1217959473",
-      "name": "茶镜镜",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "cn",
-      "regionSource": "platform",
-      "languages": [
-        "zh-Hans"
-      ],
-      "statedLanguages": [],
-      "agency": null,
-      "affiliation": "unknown",
-      "avatar": "https://i0.hdslb.com/bfs/face/415fa3139f67c46080999d7e5dfc66724f3c439a.jpg",
-      "banner": null,
-      "description": "喜欢唱歌的自由狼狼~ 最近录播在@一般路过Amo",
-      "subscribers": {
-        "tag": "has",
-        "count": 20082
-      },
-      "videoCount": 281,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [
-        "ChAmo"
-      ],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "verification": null,
-      "source": "api",
-      "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T21:23:29.284Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": "2026-10-24T06:27:33.648Z",
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "1217959473",
-          "handle": "1217959473",
-          "name": "茶镜镜",
-          "url": "https://space.bilibili.com/1217959473",
-          "subscribers": {
-            "tag": "has",
-            "count": 20082
-          },
-          "avatar": "https://i0.hdslb.com/bfs/face/415fa3139f67c46080999d7e5dfc66724f3c439a.jpg",
-          "lastCheckedAt": "2026-10-24T06:34:43.501Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": [
-        "ChAmo"
-      ]
-    },
-    {
       "id": "bilibili:12190364",
       "name": "云祁呀",
       "handle": null,
@@ -3116,65 +2994,6 @@
           },
           "avatar": null,
           "lastCheckedAt": "2026-10-23T21:23:21.156Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
-    },
-    {
-      "id": "bilibili:1362120256",
-      "name": "织一Zey",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "cn",
-      "regionSource": "platform",
-      "languages": [
-        "zh-Hans"
-      ],
-      "statedLanguages": [],
-      "agency": null,
-      "affiliation": "unknown",
-      "avatar": "https://i1.hdslb.com/bfs/face/88695658259667d4d0afa43fea5def6048822624.jpg",
-      "banner": null,
-      "description": "超有趣主包@织一Zy，此号仅做直播录播，欢迎切片~",
-      "subscribers": {
-        "tag": "has",
-        "count": 1447
-      },
-      "videoCount": 215,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "verification": null,
-      "source": "api",
-      "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T21:23:29.284Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "1362120256",
-          "handle": "1362120256",
-          "name": "织一Zey",
-          "url": "https://space.bilibili.com/1362120256",
-          "subscribers": {
-            "tag": "has",
-            "count": 1447
-          },
-          "avatar": null,
-          "lastCheckedAt": "2026-10-23T21:23:21.288Z"
         }
       ],
       "externals": {},
@@ -4622,67 +4441,6 @@
       "aliases": []
     },
     {
-      "id": "bilibili:1579895002",
-      "name": "蜜汁小C今天摸了",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "cn",
-      "regionSource": "platform",
-      "languages": [
-        "zh-Hans"
-      ],
-      "statedLanguages": [],
-      "agency": null,
-      "affiliation": "independent",
-      "avatar": "https://i1.hdslb.com/bfs/face/cd192a9fac25d7a18b78183ddea14b4be18feecd.jpg",
-      "banner": null,
-      "description": "个人势 是搬运小狗 也是涩恐猫猫头 作品查看爱发癫：蜜汁工坊\n给小B加鸡腿吃\n",
-      "subscribers": {
-        "tag": "has",
-        "count": 75238
-      },
-      "videoCount": 46,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "verification": null,
-      "source": "api",
-      "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T21:23:29.284Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "1579895002",
-          "handle": "1579895002",
-          "name": "蜜汁C今天摸了",
-          "url": "https://space.bilibili.com/1579895002",
-          "subscribers": {
-            "tag": "has",
-            "count": 75238
-          },
-          "avatar": null,
-          "lastCheckedAt": "2026-10-23T21:23:21.406Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null,
-      "nameSource": "platform",
-      "aliases": [
-        "蜜汁C今天摸了"
-      ]
-    },
-    {
       "id": "bilibili:15811099",
       "name": "Quintincy_初号机",
       "handle": null,
@@ -5041,65 +4799,6 @@
       "aliases": []
     },
     {
-      "id": "bilibili:1609157724",
-      "name": "山茶Kamelia",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "cn",
-      "regionSource": "platform",
-      "languages": [
-        "zh-Hans"
-      ],
-      "statedLanguages": [],
-      "agency": null,
-      "affiliation": "unknown",
-      "avatar": "https://i0.hdslb.com/bfs/face/70da3c947dab7cd7590fe0daac0089e21407ca49.jpg",
-      "banner": null,
-      "description": "嘀嘀嘀山茶卡！喜欢工作！也喜欢玩游戏！‖【作词/设计/剪辑】合作/约稿请私信૮⑉･-･⑉ა",
-      "subscribers": {
-        "tag": "has",
-        "count": 2539
-      },
-      "videoCount": 63,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "verification": null,
-      "source": "api",
-      "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T21:23:29.284Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "1609157724",
-          "handle": "1609157724",
-          "name": "山茶Kamelia",
-          "url": "https://space.bilibili.com/1609157724",
-          "subscribers": {
-            "tag": "has",
-            "count": 2539
-          },
-          "avatar": null,
-          "lastCheckedAt": "2026-10-23T21:23:20.815Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
-    },
-    {
       "id": "bilibili:1620747197",
       "name": "大铁柱柱子",
       "handle": null,
@@ -5338,65 +5037,6 @@
       "aliases": []
     },
     {
-      "id": "bilibili:1639389144",
-      "name": "ElevenOfficial_",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "cn",
-      "regionSource": "platform",
-      "languages": [
-        "zh-Hans"
-      ],
-      "statedLanguages": [],
-      "agency": null,
-      "affiliation": "unknown",
-      "avatar": "https://i0.hdslb.com/bfs/face/b76644fd04eb78b12fbb0925af7d251e32ec5868.jpg",
-      "banner": null,
-      "description": "本人没有过任何运营or工作人员，任何其他渠道联系都没有效力，不要相信，有事私信我～华硕硕市生官方VUP~录播搜索账号：是老狗啊TVT",
-      "subscribers": {
-        "tag": "has",
-        "count": 222632
-      },
-      "videoCount": 306,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "verification": null,
-      "source": "api",
-      "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T21:23:29.284Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "1639389144",
-          "handle": "1639389144",
-          "name": "ElevenOfficial_",
-          "url": "https://space.bilibili.com/1639389144",
-          "subscribers": {
-            "tag": "has",
-            "count": 222632
-          },
-          "avatar": null,
-          "lastCheckedAt": "2026-10-23T21:23:20.370Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
-    },
-    {
       "id": "bilibili:1640010859",
       "name": "贝尔会发光",
       "handle": null,
@@ -5448,65 +5088,6 @@
           },
           "avatar": null,
           "lastCheckedAt": "2026-10-23T21:23:21.430Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
-    },
-    {
-      "id": "bilibili:1641170415",
-      "name": "奥罗拉Aurora_",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "cn",
-      "regionSource": "platform",
-      "languages": [
-        "zh-Hans"
-      ],
-      "statedLanguages": [],
-      "agency": null,
-      "affiliation": "unknown",
-      "avatar": "https://i0.hdslb.com/bfs/face/286e32991e13bd4d2609cf638d174ceb95433d03.jpg",
-      "banner": null,
-      "description": "一般路过金钱豹不良辣妹，录播@奥罗拉的小后院，群：708022985。",
-      "subscribers": {
-        "tag": "has",
-        "count": 21993
-      },
-      "videoCount": 107,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "female",
-      "isAi": false,
-      "variant": "vtuber",
-      "verification": null,
-      "source": "api",
-      "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T21:23:29.284Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "1641170415",
-          "handle": "1641170415",
-          "name": "奥罗拉Aurora_",
-          "url": "https://space.bilibili.com/1641170415",
-          "subscribers": {
-            "tag": "has",
-            "count": 21993
-          },
-          "avatar": null,
-          "lastCheckedAt": "2026-10-23T21:23:20.736Z"
         }
       ],
       "externals": {},
@@ -8228,65 +7809,6 @@
       "aliases": []
     },
     {
-      "id": "bilibili:1916798337",
-      "name": "猫卜肉",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "cn",
-      "regionSource": "platform",
-      "languages": [
-        "zh-Hans"
-      ],
-      "statedLanguages": [],
-      "agency": null,
-      "affiliation": "independent",
-      "avatar": "https://i0.hdslb.com/bfs/face/cd9f0577a65ec46fc3f8784ee383911c1490359e.jpg",
-      "banner": null,
-      "description": "私皮个人势，会占卜的魔法猫咪\n掉落时间：上午八8点到12点，下午2点到6点\n录播号：猫卜肉录播姬（UID：1157216055）",
-      "subscribers": {
-        "tag": "has",
-        "count": 11790
-      },
-      "videoCount": 152,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "verification": null,
-      "source": "api",
-      "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T21:23:29.284Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "1916798337",
-          "handle": "1916798337",
-          "name": "猫卜肉",
-          "url": "https://space.bilibili.com/1916798337",
-          "subscribers": {
-            "tag": "has",
-            "count": 11790
-          },
-          "avatar": null,
-          "lastCheckedAt": "2026-10-23T21:23:21.148Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
-    },
-    {
       "id": "bilibili:192938202",
       "name": "汐音_Shine",
       "handle": null,
@@ -9469,65 +8991,6 @@
           },
           "avatar": null,
           "lastCheckedAt": "2026-10-23T21:23:21.238Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
-    },
-    {
-      "id": "bilibili:2075226",
-      "name": "加贺美隼人工业搬运部",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "cn",
-      "regionSource": "platform",
-      "languages": [
-        "zh-Hans"
-      ],
-      "statedLanguages": [],
-      "agency": null,
-      "affiliation": "unknown",
-      "avatar": "https://i0.hdslb.com/bfs/face/ea2b711647a030613521bc02d18b21acc087bbdc.jpg",
-      "banner": null,
-      "description": "加贺美工业搬运部门努力运转中！粉丝群：1125787445 什么都吃的审核群：444121995  ",
-      "subscribers": {
-        "tag": "has",
-        "count": 56768
-      },
-      "videoCount": 402,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "verification": null,
-      "source": "api",
-      "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T21:23:29.284Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "2075226",
-          "handle": "2075226",
-          "name": "加贺美隼人工业搬运部",
-          "url": "https://space.bilibili.com/2075226",
-          "subscribers": {
-            "tag": "has",
-            "count": 56768
-          },
-          "avatar": null,
-          "lastCheckedAt": "2026-10-23T21:23:20.599Z"
         }
       ],
       "externals": {},
@@ -18374,77 +17837,6 @@
       "aliases": []
     },
     {
-      "id": "bilibili:3494378511272288",
-      "name": "月森夢愛",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "cn",
-      "regionSource": "platform",
-      "languages": [
-        "zh-Hans"
-      ],
-      "statedLanguages": [],
-      "agency": null,
-      "affiliation": "unknown",
-      "avatar": "https://i2.hdslb.com/bfs/face/5b0d442add04f7c13ecffd813eef1d089cac1178.jpg",
-      "banner": null,
-      "description": "月森梦爱～～！単推し推奨！粉丝群：823295217 字幕审核群：862916858",
-      "subscribers": {
-        "tag": "has",
-        "count": 4816
-      },
-      "videoCount": null,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "verification": null,
-      "source": "api",
-      "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T21:23:29.284Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": "2026-10-24T06:08:43.980Z",
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "3494378511272288",
-          "handle": null,
-          "name": "月森夢愛",
-          "url": "https://space.bilibili.com/3494378511272288",
-          "subscribers": {
-            "tag": "has",
-            "count": 4816
-          },
-          "avatar": "https://i2.hdslb.com/bfs/face/5b0d442add04f7c13ecffd813eef1d089cac1178.jpg",
-          "lastCheckedAt": "2026-10-24T06:09:28.734Z"
-        },
-        {
-          "platform": "twitter",
-          "id": "TsukimoriMua",
-          "handle": null,
-          "name": "月森夢愛",
-          "url": "https://twitter.com/TsukimoriMua",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "lastCheckedAt": "2026-10-23T21:23:20.954Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
-    },
-    {
       "id": "bilibili:3494380547606559",
       "name": "柚弥弥Yomi",
       "handle": null,
@@ -19007,63 +18399,6 @@
           },
           "avatar": null,
           "lastCheckedAt": "2026-10-23T21:23:21.332Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
-    },
-    {
-      "id": "bilibili:354142359",
-      "name": "狸猫花生搬运组",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "cn",
-      "regionSource": "platform",
-      "languages": [
-        "zh-Hans"
-      ],
-      "statedLanguages": [],
-      "agency": "MochiPro",
-      "affiliation": "group",
-      "avatar": null,
-      "banner": null,
-      "description": null,
-      "subscribers": {
-        "tag": "hidden"
-      },
-      "videoCount": null,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "verification": null,
-      "source": "api",
-      "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T21:23:29.284Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "354142359",
-          "handle": null,
-          "name": "狸猫花生搬运组",
-          "url": "https://space.bilibili.com/354142359",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "lastCheckedAt": "2026-10-23T21:23:21.145Z"
         }
       ],
       "externals": {},

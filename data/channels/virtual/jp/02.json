@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-24T09:06:25.613Z",
+  "generatedAt": "2026-10-24T10:11:53.059Z",
   "channels": [
     {
       "id": "bilibili:1095372350",
@@ -181,67 +181,6 @@
       "popularVideoId": null,
       "nameSource": "roster",
       "aliases": []
-    },
-    {
-      "id": "bilibili:1660351669",
-      "name": "劳伦伊罗斯的通缉名单",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "jp",
-      "regionSource": "agency",
-      "languages": [
-        "ja"
-      ],
-      "statedLanguages": [],
-      "agency": "NIJISANJI",
-      "affiliation": "group",
-      "avatar": "https://i1.hdslb.com/bfs/face/62c6433ff7b2be7e6c001fc4ab60fe893e05476f.jpg",
-      "banner": null,
-      "description": "にじさんじ所属劳伦·伊罗斯非公式搬运组，长期招收轴翻剪校美后转，审核群970085480",
-      "subscribers": {
-        "tag": "has",
-        "count": 58095
-      },
-      "videoCount": 297,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "female",
-      "isAi": false,
-      "variant": "vtuber",
-      "verification": null,
-      "source": "api",
-      "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T21:23:29.284Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "1660351669",
-          "handle": "1660351669",
-          "name": "劳伦·伊罗斯",
-          "url": "https://space.bilibili.com/1660351669",
-          "subscribers": {
-            "tag": "has",
-            "count": 58095
-          },
-          "avatar": null,
-          "lastCheckedAt": "2026-10-23T21:23:20.599Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null,
-      "nameSource": "platform",
-      "aliases": [
-        "劳伦·伊罗斯"
-      ]
     },
     {
       "id": "bilibili:1724136548",
@@ -1395,80 +1334,6 @@
       "popularVideoId": null,
       "nameSource": "platform",
       "aliases": []
-    },
-    {
-      "id": "UC6hdjP0rVgCp27DMeY_tQBA",
-      "name": "あきなさんち",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "jp",
-      "regionSource": "name",
-      "languages": [
-        "ja"
-      ],
-      "statedLanguages": [],
-      "agency": null,
-      "affiliation": "unknown",
-      "avatar": "https://yt3.googleusercontent.com/w74JmCk66EU2I-nZtlr2qsbeC-_F6gC2mm8LVGwjFiE-SsfsuuKkcCTxfT32czstMB05MBP4=s900-c-k-c0x00ffffff-no-rj",
-      "banner": null,
-      "description": "声優の法元明菜です。 ほーみんって呼んでください。 特技は中国語、実家は大阪。 お手紙やプレゼント（邮递礼物地址） 事務所ジャストプロに法元明菜宛でお送りください。 （×：飲食物や生もの、危険物、金券、ぬいぐるみ、開封済みの物等 ｵｽｽﾒ：店からの直送、有名なメーカーの物、未開封の物等） 週替わりコーナー お便り...",
-      "subscribers": {
-        "tag": "hidden"
-      },
-      "videoCount": null,
-      "viewCount": null,
-      "uploadsPlaylistId": "UU6hdjP0rVgCp27DMeY_tQBA",
-      "country": null,
-      "tags": [
-        "あきなさんち",
-        "法元明菜"
-      ],
-      "isSinging": false,
-      "gender": "female",
-      "isAi": false,
-      "variant": "female_vtuber",
-      "verification": null,
-      "source": "api",
-      "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-24T09:07:12.601Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "youtube",
-          "id": "UC6hdjP0rVgCp27DMeY_tQBA",
-          "handle": null,
-          "name": "法元明菜",
-          "url": "https://www.youtube.com/channel/UC6hdjP0rVgCp27DMeY_tQBA",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": "https://yt3.googleusercontent.com/w74JmCk66EU2I-nZtlr2qsbeC-_F6gC2mm8LVGwjFiE-SsfsuuKkcCTxfT32czstMB05MBP4=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-24T09:07:12.260Z"
-        },
-        {
-          "platform": "twitter",
-          "id": "homoto_akina",
-          "handle": null,
-          "name": "法元明菜",
-          "url": "https://twitter.com/homoto_akina",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "lastCheckedAt": "2026-10-24T09:07:12.260Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null,
-      "nameSource": "platform",
-      "aliases": [
-        "法元明菜"
-      ]
     },
     {
       "id": "UC7fk0CB07ly8oSl0aqKkqFg",

@@ -47,6 +47,7 @@ import {
   SINGING_CAMP,
   SKIN_SUIT,
   SOLO_CAMP,
+  STREAM_ARCHIVE,
 } from "./vtuber-glossary";
 
 /* -------------------------------------------------------------------------- */
@@ -405,6 +406,15 @@ export interface ChannelSignals {
     region?: RegionCode;
     agency?: string | null;
     isSinging?: boolean;
+    /**
+     * A curated `kind` outranks the aggregator test.
+     *
+     * A subscription list that files 「小恐龍烤肉屋【Vtuber中文精華】」 under
+     * 「Vtuber」 is a statement by its owner, and a name pattern is a guess.
+     * Without this, the sync re-derived `kind` from the description on the
+     * next run and the import's whole point was lost.
+     */
+    curated?: boolean;
   };
 }
 
@@ -506,11 +516,20 @@ export function classifyChannel(signals: ChannelSignals): ChannelClassification 
   }
 
   /* --- aggregator detection --------------------------------------------- */
+  /**
+   * A curated record is not re-guessed.
+   *
+   * `data/overrides.json` can say a channel is virtual — a subscription group
+   * did — and a name pattern such as 「小恐龍烤肉屋」 must not overrule a
+   * person's own statement. The override still wins below; this only stops
+   * the aggregator test from deciding for it.
+   */
   const isAggregator =
-    countHits(name, AGGREGATOR_MARKERS) > 0 ||
-    countHits(intro, AGGREGATOR_MARKERS) > 0 ||
-    AGGREGATOR_NAME_PATTERNS.some((re) => re.test(signals.name ?? "")) ||
-    detectClipAccount(signals.name, signals.description);
+    !signals.override?.curated &&
+    (countHits(name, AGGREGATOR_MARKERS) > 0 ||
+      countHits(intro, AGGREGATOR_MARKERS) > 0 ||
+      AGGREGATOR_NAME_PATTERNS.some((re) => re.test(signals.name ?? "")) ||
+      detectClipAccount(signals.name, signals.description));
 
   /* --- virtual vs real --------------------------------------------------- */
   const virtualScore =
@@ -729,8 +748,14 @@ export function classifyChannel(signals: ChannelSignals): ChannelClassification 
     countHits(intro, SINGING_MARKERS) +
     countHits(tags, SINGING_MARKERS) +
     countHits(description, SINGING_DESCRIPTION_MARKERS);
+  /**
+   * A curated `kind` also means a curated flag: whoever filed a channel as a
+   * virtual performer decided it is one, so an aggregator's `isSinging: false`
+   * must not be applied behind their back.
+   */
   const isSinging =
-    !isAggregator && (singingHits > 0 || role === "vsinger" || role === "singer");
+    (!isAggregator || !!signals.override?.curated) &&
+    (singingHits > 0 || role === "vsinger" || role === "singer");
 
   /* --- overrides --------------------------------------------------------- */
   const ov = signals.override ?? {};
@@ -1174,28 +1199,209 @@ export function isShortItem(
  * duplicates of the real artist under a second channel.
  */
 const CLIP_ACCOUNT_MARKERS = [
+  // translation and subtitles
   "翻译组",
   "翻譯組",
   "翻译",
   "翻譯",
   "字幕组",
   "字幕組",
+  "轴翻剪校",
+  "軸翻剪校",
+  // clipping and re-uploading
   "切片",
+  "切片man",
   "搬运",
   "搬運",
+  "搬运组",
+  "搬運組",
   "直播切片",
   "录播",
   "錄播",
   "直送",
-  "非官方",
+  "剪辑",
+  "剪輯",
+  "精華",
+  "精华",
+  "烤肉",
+  // English
   "unofficial",
   "unofficial fan",
+  "non-official",
   "fan translation",
+  "fan channel",
   "subtitles by",
   "translated by",
   "on subtitles",
-  "搬运工",
+  "clip channel",
+  "clip account",
+  // a place a performer keeps their own props
+  // a place that only exists for someone else
+  "工坊",
+  "万事屋",
+  "万事屋",
+  "食堂",
+  "专区",
+  "專區",
+  "神殿",
+  "总部",
+  "總部",
+  "支部",
+  "根据地",
+  "根據地",
+  "后援会",
+  "後援會",
+  "粉丝团",
+  "粉絲團",
+  "应援会",
+  "應援會",
 ];
+
+/**
+ * The `Hime的万事屋` pattern: a fan account is named after its subject.
+ *
+ * A 搬运组 is not a performer, but many do not say so in the description —
+ * 「Petra的极地考察队」 announces itself only by its name, which is
+ * 「<artist>的<place>」. The account takes the artist's name, not its own, so
+ * the part before 的 is a **person** and the whole thing is a fan account.
+ *
+ * It is a name pattern on purpose: the description is where the *performer*
+ * writes 「xx的粉丝」 or shares a friend's channel, and those must not count.
+ */
+const FAN_ACCOUNT_NAME = /^[^的]{1,14}的[^的]{1,14}$/;
+
+/**
+ * An account that exists to **archive somebody else's streams**.
+ *
+ * 「石虎菲爾 ShihHu_Phile.實況存檔」 and 「希爾菲シルフィ ch.」（YT只用來備份存檔）
+ * never perform — they keep the recordings. A performer's own channel says
+ * 「實況結束之後會上傳到YouTube存檔」, which is the same words about *their own*
+ * work, so the test is whether the channel says it is **only** an archive.
+ */
+const STREAM_ARCHIVE_NAME = /(?:實況|实况|直播|配信)?(?:存檔|存档)(?:號|号|頻道|频道)?$/;
+
+/** ...and the descriptions that say it outright. */
+const STREAM_ARCHIVE_MARKERS = [
+  "備份存檔",
+  "备份存档",
+  "只用作存檔",
+  "只用作存档",
+  "只用於存檔",
+  "只用于存档",
+  "烤肉中",
+  "烤肉频道",
+  "烤肉頻道",
+  "上傳烤肉",
+  "上传烤肉",
+  "上傳精華",
+  "上传精华",
+  "剪輯推廣",
+  "剪辑推广",
+  "興趣剪輯",
+  "兴趣剪辑",
+];
+
+/**
+ * Whether the channel is a **strict** aggregator: it exists to republish
+ * someone else's work.
+ *
+ * This is the stricter layer on top of `detectClipAccount()` — it looks only
+ * at the name and the first characters of the description, and it is used to
+ * decide whether an auto-discovered channel may enter the dataset at all.
+ * `hypertension` is not in the vocabulary.
+ */
+export function isStrictAggregator(
+  name: string | null | undefined,
+  description: string | null | undefined,
+): boolean {
+  const trimmed = (name ?? "").trim();
+  /**
+   * A channel whose name **ends** in a work of other people's — 「烤肉實驗室」
+   * and 「精華剪輯」 are studios, 「Vtuber中文精華」 is a subtitle channel.
+   */
+  if (/(?:烤肉|剪輯|剪辑|精華|精华|字幕|搬運|搬运) ?(?:實驗室|实验室|屋|頻道|频道|台|組|组|man|Man)/u.test(trimmed)) {
+    return true;
+  }
+  if (STREAM_ARCHIVE_NAME.test(trimmed)) return true;
+
+  const text = normalize(description ?? "").slice(0, 200);
+  if (STREAM_ARCHIVE_MARKERS.some((marker) => text.includes(marker))) return true;
+  return false;
+}
+
+/**
+ * ...but a performer of their own can be named that way too.
+ *
+ * 「初晴的小葵」 and 「雨蛙的蛙」 are the performers' own stage names — the
+ * part after 的 is a name, not a **place, shop or gag** (万事屋, 考察队,
+ * 饲养所, 糖罐, 地狱). The vocabularies below decide which it is.
+ */
+/**
+ * The kind of thing a fan account is named after.
+ *
+ * These are **checked at the end** of the second half. A performer called
+ * 「不破湊的甜甜圈工坊」 has 坊 in the middle; a fan account called
+ * 「Petra的极地考察队」 ends in 队. The tail is what makes the name a place.
+ */
+const FAN_ACCOUNT_PLACE_WORDS = [
+  "组", "組", "屋", "馆", "館", "铺", "鋪", "店", "坊", "房", "仓", "倉", "库", "庫",
+  "社", "部", "所", "室", "监", "監", "园", "園", "场", "場", "会", "會", "队", "隊",
+  "军", "軍", "团", "團", "号", "號", "站", "区", "區", "岛", "島", "海", "山", "谷",
+  "箱", "罐", "柜", "櫃", "桌", "台", "局", "处", "處", "国", "國", "城", "堡", "宫",
+  "宮", "殿", "塔", "井", "庭", "院", "寺", "窝", "窩", "巢", "洞", "狱", "獄", "厂",
+  "廠", "间", "間", "角", "摊", "攤", "室", "园", "屋",
+];
+
+/**
+ * The second half of a **performer's** own `X的Y` name: a pet name, a
+ * diminutive, or a name with a small word in it.
+ */
+const FAN_ACCOUNT_NAME_WORDS = [
+  "酱",
+  "醬",
+  "喵",
+  "猫",
+  "貓",
+  "兔",
+  "狐",
+  "子",
+  "君",
+  "ちゃん",
+  "くん",
+  "様",
+];
+
+/**
+ * Whether a `X的Y` channel name is a fan account for X.
+ *
+ * Every hit is reviewed by eye before it is written: the names in the
+ * dataset are overwhelmingly people's own stage names, and only a small
+ * minority are 搬运组 without a description that says so.
+ */
+/**
+ * The tails that never belong to **either** side cleanly: a 仓库 or a 小号 is
+ * where a performer keeps their own second account.
+ *
+ * 「伊露夏的仓库」 is the same person's side account — redirecting to
+ * `@伊露夏Eluthya` — and 「巴老师的小号」 says so outright. They are the
+ * performer, not a fan.
+ */
+const SIDE_ACCOUNT_WORDS = ["仓库", "倉庫", "小号", "小號", "分号", "分號", "备用", "備用", "副号", "副號"];
+
+export function isFanAccountName(name: string | null | undefined): boolean {
+  const trimmed = (name ?? "").trim();
+  if (!FAN_ACCOUNT_NAME.test(trimmed)) return false;
+  const second = trimmed.split("的")[1] ?? "";
+  if (!second) return false;
+  // 「伊露夏的仓库」 — the performer's own side account.
+  if (SIDE_ACCOUNT_WORDS.some((word) => second.includes(word))) return false;
+  // 「初晴的小葵」 — the tail is a name, so this is the performer.
+  if (FAN_ACCOUNT_NAME_WORDS.some((word) => second.includes(word))) {
+    return false;
+  }
+  // 「Petra的极地考察队」 — the tail is a place or a shop.
+  return FAN_ACCOUNT_PLACE_WORDS.some((word) => second.endsWith(word));
+}
 
 /**
  * The `Artist/Original name` naming pattern.
@@ -1214,7 +1420,17 @@ export function detectClipAccount(
   description: string | null | undefined,
 ): boolean {
   const text = normalize(description ?? "");
+  /**
+   * The markers are matched against the **name** and the description.
+   *
+   * 「Aruka搬运组」 says it in the name and leaves the description empty;
+   * 「风太_Fuuta的录播存放处」 says it in both. Only a performer would use
+   * 搬运 to describe *themselves* as doing it — and they would then be a
+   * re-uploader, which is what this test is for.
+   */
+  if (has(normalize(name ?? ""), CLIP_ACCOUNT_MARKERS)) return true;
   if (has(text, CLIP_ACCOUNT_MARKERS)) return true;
+  if (isFanAccountName(name)) return true;
 
   const trimmed = (name ?? "").trim();
   if (!trimmed.includes("/")) return false;

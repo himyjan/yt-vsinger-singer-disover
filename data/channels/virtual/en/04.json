@@ -1,66 +1,7 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-24T09:06:25.613Z",
+  "generatedAt": "2026-10-24T10:11:53.059Z",
   "channels": [
-    {
-      "id": "bilibili:13743308",
-      "name": "Maria的玩具后宫",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "en",
-      "regionSource": "agency",
-      "languages": [
-        "en"
-      ],
-      "statedLanguages": [],
-      "agency": "nijisanji en",
-      "affiliation": "group",
-      "avatar": "https://i2.hdslb.com/bfs/face/d200ca1b4f32e164db53184ddb1174737ea78340.jpg",
-      "banner": null,
-      "description": "NIJISANJI EN所属liver Maria Marionette的非公式搬运组 审核群：542473485",
-      "subscribers": {
-        "tag": "has",
-        "count": 110019
-      },
-      "videoCount": 182,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "verification": null,
-      "source": "api",
-      "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T21:23:29.284Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "13743308",
-          "handle": "13743308",
-          "name": "Maria的玩具后宫",
-          "url": "https://space.bilibili.com/13743308",
-          "subscribers": {
-            "tag": "has",
-            "count": 110019
-          },
-          "avatar": null,
-          "lastCheckedAt": "2026-10-23T21:23:20.390Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
-    },
     {
       "id": "twitter:livecartoonjp",
       "name": "LiveCartoon",

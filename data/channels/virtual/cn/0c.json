@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-24T09:06:25.613Z",
+  "generatedAt": "2026-10-24T10:11:53.059Z",
   "channels": [
     {
       "id": "bilibili:1002731313",
@@ -711,65 +711,6 @@
       "aliases": []
     },
     {
-      "id": "bilibili:1128766424",
-      "name": "Aia的天国忏悔室",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "cn",
-      "regionSource": "platform",
-      "languages": [
-        "zh-Hans"
-      ],
-      "statedLanguages": [],
-      "agency": "EN",
-      "affiliation": "group",
-      "avatar": "https://i2.hdslb.com/bfs/face/310420081a17bb6222352f6d316d12614c511495.jpg",
-      "banner": null,
-      "description": "NIJISANJJ EN所属Aia Amare非公式搬运组｜长期招募英/越翻灯剪轴校压美｜审核群号559716573",
-      "subscribers": {
-        "tag": "has",
-        "count": 23231
-      },
-      "videoCount": null,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "verification": null,
-      "source": "api",
-      "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T21:23:29.284Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": "2026-10-24T06:27:33.648Z",
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "1128766424",
-          "handle": "1128766424",
-          "name": "Aia的天国忏悔室",
-          "url": "https://space.bilibili.com/1128766424",
-          "subscribers": {
-            "tag": "has",
-            "count": 23231
-          },
-          "avatar": "https://i2.hdslb.com/bfs/face/310420081a17bb6222352f6d316d12614c511495.jpg",
-          "lastCheckedAt": "2026-10-24T06:28:22.595Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
-    },
-    {
       "id": "bilibili:1135349021",
       "name": "芸筌Moira",
       "handle": null,
@@ -939,124 +880,6 @@
           },
           "avatar": "https://i1.hdslb.com/bfs/face/344f7aa7682b96994c7ff6861fa6b3a18c05028c.jpg",
           "lastCheckedAt": "2026-10-24T06:29:07.876Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
-    },
-    {
-      "id": "bilibili:11399495",
-      "name": "鸽一品",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "cn",
-      "regionSource": "platform",
-      "languages": [
-        "zh-Hans"
-      ],
-      "statedLanguages": [],
-      "agency": null,
-      "affiliation": "unknown",
-      "avatar": "https://i2.hdslb.com/bfs/face/606736d259de6feb6a90c6205b7edc63e671302d.jpg",
-      "banner": null,
-      "description": "宇宙人，地球旅居中，用画笔和剪辑来写在地球ONline的开心日记 |  商务Vx：Gloria_Gyp",
-      "subscribers": {
-        "tag": "has",
-        "count": 800639
-      },
-      "videoCount": null,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "verification": null,
-      "source": "api",
-      "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T21:23:29.284Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": "2026-10-24T06:27:33.648Z",
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "11399495",
-          "handle": "11399495",
-          "name": "鸽一品",
-          "url": "https://space.bilibili.com/11399495",
-          "subscribers": {
-            "tag": "has",
-            "count": 800639
-          },
-          "avatar": "https://i2.hdslb.com/bfs/face/606736d259de6feb6a90c6205b7edc63e671302d.jpg",
-          "lastCheckedAt": "2026-10-24T06:29:10.600Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
-    },
-    {
-      "id": "bilibili:1155161027",
-      "name": "世果-Seika",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "cn",
-      "regionSource": "platform",
-      "languages": [
-        "zh-Hans"
-      ],
-      "statedLanguages": [],
-      "agency": null,
-      "affiliation": "unknown",
-      "avatar": "https://i2.hdslb.com/bfs/face/38d0543a1e09abc5a6cb22f86e2d06ba15d5b097.jpg",
-      "banner": null,
-      "description": "我是来自<魔女工坊>的魔女世果，我会告诉你关于终末海岛的一切。一起来享受不同的游戏世界吧！",
-      "subscribers": {
-        "tag": "has",
-        "count": 2984
-      },
-      "videoCount": null,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "verification": null,
-      "source": "api",
-      "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T21:23:29.284Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": "2026-10-24T06:27:33.648Z",
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "1155161027",
-          "handle": "1155161027",
-          "name": "世果-Seika",
-          "url": "https://space.bilibili.com/1155161027",
-          "subscribers": {
-            "tag": "has",
-            "count": 2984
-          },
-          "avatar": "https://i2.hdslb.com/bfs/face/38d0543a1e09abc5a6cb22f86e2d06ba15d5b097.jpg",
-          "lastCheckedAt": "2026-10-24T06:30:16.017Z"
         }
       ],
       "externals": {},
@@ -2831,65 +2654,6 @@
       "aliases": []
     },
     {
-      "id": "bilibili:1382719257",
-      "name": "咸蛋黄饭团-official",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "cn",
-      "regionSource": "platform",
-      "languages": [
-        "zh-Hans"
-      ],
-      "statedLanguages": [],
-      "agency": null,
-      "affiliation": "independent",
-      "avatar": "https://i0.hdslb.com/bfs/face/0b188d8fa73aacd611f9a8d87c214976cf02b185.jpg",
-      "banner": null,
-      "description": "个人势，歌杂/打游戏的白狼占卜师，谢谢喜欢。录播@饭团的银狼之丘 歌切@夜漓丶 其他平台没账号",
-      "subscribers": {
-        "tag": "has",
-        "count": 9743
-      },
-      "videoCount": 82,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "verification": null,
-      "source": "api",
-      "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T21:23:29.284Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "1382719257",
-          "handle": "1382719257",
-          "name": "咸蛋黄饭团-official",
-          "url": "https://space.bilibili.com/1382719257",
-          "subscribers": {
-            "tag": "has",
-            "count": 9743
-          },
-          "avatar": null,
-          "lastCheckedAt": "2026-10-23T21:23:20.661Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
-    },
-    {
       "id": "bilibili:1385262",
       "name": "莲子_Renko",
       "handle": null,
@@ -3000,65 +2764,6 @@
           },
           "avatar": null,
           "lastCheckedAt": "2026-10-23T21:23:21.047Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
-    },
-    {
-      "id": "bilibili:13966765",
-      "name": "铃喵RinMeow",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "cn",
-      "regionSource": "platform",
-      "languages": [
-        "zh-Hans"
-      ],
-      "statedLanguages": [],
-      "agency": null,
-      "affiliation": "independent",
-      "avatar": "https://i1.hdslb.com/bfs/face/69290747ab32c10cba2454b4d173ad9a27edb88e.jpg",
-      "banner": null,
-      "description": "一只个人势巫女喵，喜欢唱歌、唠嗑、打游戏！随缘播播~录播@苍响Channel~不加公会～",
-      "subscribers": {
-        "tag": "has",
-        "count": 18175
-      },
-      "videoCount": 51,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "verification": null,
-      "source": "api",
-      "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T21:23:29.284Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "13966765",
-          "handle": "13966765",
-          "name": "铃喵RinMeow",
-          "url": "https://space.bilibili.com/13966765",
-          "subscribers": {
-            "tag": "has",
-            "count": 18175
-          },
-          "avatar": null,
-          "lastCheckedAt": "2026-10-23T21:23:21.469Z"
         }
       ],
       "externals": {},
@@ -3295,65 +3000,6 @@
           },
           "avatar": null,
           "lastCheckedAt": "2026-10-23T21:23:20.494Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
-    },
-    {
-      "id": "bilibili:1442355434",
-      "name": "尤弥尔帕_Channel",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "cn",
-      "regionSource": "platform",
-      "languages": [
-        "zh-Hans"
-      ],
-      "statedLanguages": [],
-      "agency": null,
-      "affiliation": "independent",
-      "avatar": "https://i2.hdslb.com/bfs/face/b28b5f0d3d589ab6548704a2cc3f6135119c5cc6.jpg",
-      "banner": null,
-      "description": "遇见你花光了我所有的运气｜个人势vup（不加工会）｜帕帕の工坊：756030807 ｜歌单：https://papa.suki.live/",
-      "subscribers": {
-        "tag": "has",
-        "count": 12284
-      },
-      "videoCount": 88,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": true,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "verification": null,
-      "source": "api",
-      "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T21:23:29.284Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "1442355434",
-          "handle": "1442355434",
-          "name": "尤弥尔帕_Channel",
-          "url": "https://space.bilibili.com/1442355434",
-          "subscribers": {
-            "tag": "has",
-            "count": 12284
-          },
-          "avatar": null,
-          "lastCheckedAt": "2026-10-23T21:23:20.807Z"
         }
       ],
       "externals": {},
@@ -4433,65 +4079,6 @@
           },
           "avatar": null,
           "lastCheckedAt": "2026-10-23T21:23:21.459Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
-    },
-    {
-      "id": "bilibili:1574811763",
-      "name": "酒見十七夜",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "cn",
-      "regionSource": "platform",
-      "languages": [
-        "zh-Hans"
-      ],
-      "statedLanguages": [],
-      "agency": null,
-      "affiliation": "unknown",
-      "avatar": "https://i1.hdslb.com/bfs/face/1083d753d0c11e0376f0e408f6ba998fa78f6f46.jpg",
-      "banner": null,
-      "description": "VUP身份已毕业/无盈利OC势/不被定义的酒/录播号：Whistle日记",
-      "subscribers": {
-        "tag": "has",
-        "count": 5093
-      },
-      "videoCount": 30,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "male",
-      "isAi": false,
-      "variant": "vtuber",
-      "verification": null,
-      "source": "api",
-      "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T21:23:29.284Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
-      "activity": "graduated",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "1574811763",
-          "handle": "1574811763",
-          "name": "酒見十七夜",
-          "url": "https://space.bilibili.com/1574811763",
-          "subscribers": {
-            "tag": "has",
-            "count": 5093
-          },
-          "avatar": null,
-          "lastCheckedAt": "2026-10-23T21:23:21.455Z"
         }
       ],
       "externals": {},
@@ -6424,65 +6011,6 @@
       ]
     },
     {
-      "id": "bilibili:17887284",
-      "name": "霜翎雪carin",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "cn",
-      "regionSource": "platform",
-      "languages": [
-        "zh-Hans"
-      ],
-      "statedLanguages": [],
-      "agency": null,
-      "affiliation": "independent",
-      "avatar": "https://i0.hdslb.com/bfs/face/269d6c874f37a7e6b6a686634af84e81907f9374.jpg",
-      "banner": null,
-      "description": "半只杂谈/半只歌势/半只游戏势，主打就是一个陪伴！\n个人势，不加工会，不用戳辽\n粉丝群号：548271838\n录播随缘～",
-      "subscribers": {
-        "tag": "has",
-        "count": 3525
-      },
-      "videoCount": 31,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "verification": null,
-      "source": "api",
-      "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T21:23:29.284Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "17887284",
-          "handle": "17887284",
-          "name": "霜翎雪carin",
-          "url": "https://space.bilibili.com/17887284",
-          "subscribers": {
-            "tag": "has",
-            "count": 3525
-          },
-          "avatar": null,
-          "lastCheckedAt": "2026-10-23T21:23:21.520Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
-    },
-    {
       "id": "bilibili:1792034157",
       "name": "普普_NOT_FOUND",
       "handle": null,
@@ -6661,74 +6189,6 @@
       "nameSource": "platform",
       "aliases": [
         "莉薇娅Livia"
-      ]
-    },
-    {
-      "id": "bilibili:1870142497",
-      "name": "羊姫桃香奈_Official",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "cn",
-      "regionSource": "platform",
-      "languages": [
-        "zh-Hans"
-      ],
-      "statedLanguages": [],
-      "agency": null,
-      "affiliation": "unknown",
-      "avatar": "https://i1.hdslb.com/bfs/face/1a7aa8365353a170801a25a33e35e3d16c8d3182.jpg",
-      "banner": null,
-      "description": "新人VUP！羊的女仆！//粉丝群：450628484//字幕組审核群：742310897",
-      "subscribers": {
-        "tag": "has",
-        "count": 11148
-      },
-      "videoCount": 241,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [
-        "もかな",
-        "ひつじもかな",
-        "桃香奈"
-      ],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "verification": null,
-      "source": "api",
-      "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T21:23:29.284Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "1870142497",
-          "handle": "1870142497",
-          "name": "羊姬桃香奈",
-          "url": "https://space.bilibili.com/1870142497",
-          "subscribers": {
-            "tag": "has",
-            "count": 11148
-          },
-          "avatar": null,
-          "lastCheckedAt": "2026-10-23T21:23:21.305Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null,
-      "nameSource": "platform",
-      "aliases": [
-        "もかな",
-        "ひつじもかな",
-        "桃香奈",
-        "羊姬桃香奈"
       ]
     },
     {
@@ -7750,67 +7210,6 @@
       "aliases": []
     },
     {
-      "id": "bilibili:1999738104",
-      "name": "濮濮的录播号",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "cn",
-      "regionSource": "platform",
-      "languages": [
-        "zh-Hans"
-      ],
-      "statedLanguages": [],
-      "agency": null,
-      "affiliation": "unknown",
-      "avatar": "https://i0.hdslb.com/bfs/face/cbc5dbdd49b19b9ab3f3e3c29a1af1c10e8ba701.jpg",
-      "banner": null,
-      "description": "Ciao a tutti.这里是刚刚刚刚倒闭的马戏团团长濮濮，目前在意大利生活并打工还债，每天19-23点直播",
-      "subscribers": {
-        "tag": "has",
-        "count": 14365
-      },
-      "videoCount": 425,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "verification": null,
-      "source": "api",
-      "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T21:23:29.284Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "1999738104",
-          "handle": "1999738104",
-          "name": "濮濮pupu",
-          "url": "https://space.bilibili.com/1999738104",
-          "subscribers": {
-            "tag": "has",
-            "count": 14365
-          },
-          "avatar": null,
-          "lastCheckedAt": "2026-10-23T21:23:21.119Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null,
-      "nameSource": "platform",
-      "aliases": [
-        "濮濮pupu"
-      ]
-    },
-    {
       "id": "bilibili:2004784439",
       "name": "梦野Ayanna",
       "handle": null,
@@ -8346,67 +7745,6 @@
       "popularVideoId": null,
       "nameSource": "roster",
       "aliases": []
-    },
-    {
-      "id": "bilibili:2064055063",
-      "name": "白茶酱酱w-抖常驻",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "cn",
-      "regionSource": "platform",
-      "languages": [
-        "zh-Hans"
-      ],
-      "statedLanguages": [],
-      "agency": null,
-      "affiliation": "independent",
-      "avatar": "https://i1.hdslb.com/bfs/face/1d0c109026fedb525727ab0279346abb1b3f562e.jpg",
-      "banner": null,
-      "description": "个人势主播 唯一b站号\n常招切片man",
-      "subscribers": {
-        "tag": "has",
-        "count": 280522
-      },
-      "videoCount": 210,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "male",
-      "isAi": false,
-      "variant": "vtuber",
-      "verification": null,
-      "source": "api",
-      "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T21:23:29.284Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "2064055063",
-          "handle": "2064055063",
-          "name": "白茶酱酱w",
-          "url": "https://space.bilibili.com/2064055063",
-          "subscribers": {
-            "tag": "has",
-            "count": 280522
-          },
-          "avatar": null,
-          "lastCheckedAt": "2026-10-23T21:23:21.205Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null,
-      "nameSource": "platform",
-      "aliases": [
-        "白茶酱酱w"
-      ]
     },
     {
       "id": "bilibili:20649174",
@@ -9744,67 +9082,6 @@
       ]
     },
     {
-      "id": "bilibili:22207703",
-      "name": "棠汐霖",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "cn",
-      "regionSource": "platform",
-      "languages": [
-        "zh-Hans"
-      ],
-      "statedLanguages": [],
-      "agency": null,
-      "affiliation": "unknown",
-      "avatar": "https://i2.hdslb.com/bfs/face/af6dacf650eb83dae45dc5f4875e1747e7966306.jpg",
-      "banner": null,
-      "description": "感谢关注，不是V，是套皮摆烂画师一枚，很少播。喜欢二次元美少女www",
-      "subscribers": {
-        "tag": "has",
-        "count": 3586
-      },
-      "videoCount": 83,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "female",
-      "isAi": false,
-      "variant": "vtuber",
-      "verification": null,
-      "source": "api",
-      "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T21:23:29.284Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "22207703",
-          "handle": "22207703",
-          "name": "汐理Mitty",
-          "url": "https://space.bilibili.com/22207703",
-          "subscribers": {
-            "tag": "has",
-            "count": 3586
-          },
-          "avatar": null,
-          "lastCheckedAt": "2026-10-23T21:23:21.061Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null,
-      "nameSource": "platform",
-      "aliases": [
-        "汐理Mitty"
-      ]
-    },
-    {
       "id": "bilibili:22253179",
       "name": "兔兔牙萝北",
       "handle": null,
@@ -10700,65 +9977,6 @@
       "aliases": [
         "若月"
       ]
-    },
-    {
-      "id": "bilibili:24957521",
-      "name": "吃肉包的怂鼠",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "cn",
-      "regionSource": "platform",
-      "languages": [
-        "zh-Hans"
-      ],
-      "statedLanguages": [],
-      "agency": null,
-      "affiliation": "unknown",
-      "avatar": "https://i2.hdslb.com/bfs/face/06f6d3fc5ff104734dc3830caee155ccd0c9b984.jpg",
-      "banner": null,
-      "description": "每天晚上7点30左右开播！\n直播通知群:651719605\n粉丝团群：341898539（需输入uid）\n进群可查看置顶动态！\n配音合作私聊",
-      "subscribers": {
-        "tag": "has",
-        "count": 230857
-      },
-      "videoCount": 527,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "verification": null,
-      "source": "api",
-      "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T21:23:29.284Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "24957521",
-          "handle": "24957521",
-          "name": "吃肉包的怂鼠",
-          "url": "https://space.bilibili.com/24957521",
-          "subscribers": {
-            "tag": "has",
-            "count": 230857
-          },
-          "avatar": null,
-          "lastCheckedAt": "2026-10-23T21:23:20.646Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
     },
     {
       "id": "bilibili:255091296",
@@ -11680,65 +10898,6 @@
           },
           "avatar": null,
           "lastCheckedAt": "2026-10-23T21:23:20.942Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
-    },
-    {
-      "id": "bilibili:3068376",
-      "name": "爱遁地的萝卜卜",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "cn",
-      "regionSource": "platform",
-      "languages": [
-        "zh-Hans"
-      ],
-      "statedLanguages": [],
-      "agency": null,
-      "affiliation": "unknown",
-      "avatar": "https://i0.hdslb.com/bfs/face/95af9a55539ccf2b527fe95a236036392aba5594.jpg",
-      "banner": null,
-      "description": "套皮女主播，建议不喜欢的走远点",
-      "subscribers": {
-        "tag": "has",
-        "count": 2566
-      },
-      "videoCount": 566,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "verification": null,
-      "source": "api",
-      "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T21:23:29.284Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "3068376",
-          "handle": "3068376",
-          "name": "爱遁地的萝卜卜",
-          "url": "https://space.bilibili.com/3068376",
-          "subscribers": {
-            "tag": "has",
-            "count": 2566
-          },
-          "avatar": null,
-          "lastCheckedAt": "2026-10-23T21:23:21.135Z"
         }
       ],
       "externals": {},
@@ -21620,63 +20779,6 @@
           },
           "avatar": null,
           "lastCheckedAt": "2026-10-23T21:23:21.021Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": []
-    },
-    {
-      "id": "bilibili:3612946",
-      "name": "加賀美隼人非公式搬运",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "cn",
-      "regionSource": "platform",
-      "languages": [
-        "zh-Hans"
-      ],
-      "statedLanguages": [],
-      "agency": null,
-      "affiliation": "unknown",
-      "avatar": null,
-      "banner": null,
-      "description": null,
-      "subscribers": {
-        "tag": "hidden"
-      },
-      "videoCount": null,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "verification": null,
-      "source": "api",
-      "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T21:23:29.284Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "3612946",
-          "handle": null,
-          "name": "加賀美隼人非公式搬运",
-          "url": "https://space.bilibili.com/3612946",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "lastCheckedAt": "2026-10-23T21:23:20.598Z"
         }
       ],
       "externals": {},

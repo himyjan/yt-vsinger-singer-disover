@@ -178,6 +178,14 @@ records it has already downloaded for the drawer (`toSummary()` in
 `scripts/lib/summary.ts`). Do not reintroduce `regions/` or `summaries/` —
 `validate.ts` fails when either appears.
 
+**A fan account is not a performer.** 搬运组, 字幕组, 切片/烤肉 channels and
+accounts named after their subject (「Petra的极地考察队」) are duplicates of
+the artist they publish for. `detectClipAccount()` and `isFanAccountName()`
+in `scripts/lib/classify.ts` find them; the ones already in the dataset are
+hidden with `"hidden": true` in `data/overrides.json`, never deleted by hand.
+A curated `kind` outranks the test — a person filing a channel is not a
+name pattern.
+
 ### 6. One writer at a time
 
 `acquireRunLock()` refuses to start when another run holds the dataset. Both

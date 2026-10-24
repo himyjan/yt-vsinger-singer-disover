@@ -63,6 +63,35 @@ group name → `UC…` ids, so a group called 「Vsinger」 (sung) or 「Vtuber�
 and the sync both apply the file, so the next sync cannot infer the curation
 away. One entry per id, with a `note` naming the group.
 
+### A fan account is not a performer
+
+A large share of the Chinese scene is **not** the artist: 搬运组, 字幕组,
+切片/烤肉 channels, and accounts named after their subject —
+「Petra的极地考察队」, 「Shu的香蕉种植园」. They are duplicates of the real
+performer, filed under a second name.
+
+`detectClipAccount()` in `classify.ts` finds them from the **name** and the
+description, and `isFanAccountName()` handles the `X的Y` pattern (a tail that
+is a place, a shop or a gag — 队, 室, 屋, 组). A performer's own
+「初晴的小葵」 or their side account 「伊露夏的仓库」 is not a fan account;
+the vocabularies in `classify.ts` record that difference.
+
+Once such a channel is in the dataset, hide it:
+
+```jsonc
+"bilibili:190514": {
+  "hidden": true,
+  "note": "Fan account, not a performer: …"
+}
+```
+
+`hidden: true` keeps it out of the dataset. Do not delete the record by hand —
+the note is what makes the removal reviewable in the diff.
+
+A curated `kind` **outranks** the fan-account test (`override.curated`): a
+subscription group that files a clip channel under 「Vtuber」 is a person's
+statement, and a name pattern is a guess.
+
 ## The classifier
 
 `scripts/lib/classify.ts`. It is **deterministic** — no randomness, no network

@@ -145,6 +145,8 @@ function recordFromProfile(
           region: override.region,
           agency: override.agency,
           isSinging: override.isSinging,
+          // A curated kind is a statement, and the aggregator test is a guess.
+          curated: !!(override.kind || override.role || override.isSinging !== undefined),
         }
       : undefined,
   });
