@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-24T06:27:33.648Z",
+  "generatedAt": "2026-10-24T09:06:25.613Z",
   "channels": [
     {
       "id": "acfun:13945614",
@@ -37,9 +37,9 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-23T10:03:47.608Z",
-      "updatedAt": "2026-10-24T05:11:12.819Z",
+      "updatedAt": "2026-10-24T09:07:12.601Z",
       "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": "2026-10-24T05:10:16.208Z",
+      "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -54,7 +54,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-24T05:11:04.806Z"
+          "lastCheckedAt": "2026-10-24T09:07:12.065Z"
         },
         {
           "platform": "bilibili",
@@ -67,8 +67,7 @@
             "count": 2
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-24T05:10:16.208Z",
-          "videoCount": 0
+          "lastCheckedAt": "2026-10-24T09:07:12.065Z"
         }
       ],
       "externals": {},
@@ -108,7 +107,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-23T10:03:47.608Z",
-      "updatedAt": "2026-10-24T05:11:12.819Z",
+      "updatedAt": "2026-10-24T09:07:12.601Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -125,7 +124,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-24T05:11:05.535Z"
+          "lastCheckedAt": "2026-10-24T09:07:12.449Z"
         }
       ],
       "externals": {},
@@ -165,7 +164,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-23T10:03:47.608Z",
-      "updatedAt": "2026-10-24T05:11:12.819Z",
+      "updatedAt": "2026-10-24T09:07:12.601Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -182,7 +181,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-24T05:11:05.502Z"
+          "lastCheckedAt": "2026-10-24T09:07:12.430Z"
         }
       ],
       "externals": {},
@@ -222,7 +221,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-23T10:03:47.608Z",
-      "updatedAt": "2026-10-24T05:11:12.819Z",
+      "updatedAt": "2026-10-24T09:07:12.601Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -239,7 +238,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-24T05:11:05.597Z"
+          "lastCheckedAt": "2026-10-24T09:07:12.481Z"
         }
       ],
       "externals": {},
@@ -2447,7 +2446,7 @@
       "addedAt": "2026-10-22T03:40:51.250Z",
       "updatedAt": "2026-10-23T21:23:29.284Z",
       "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T09:06:25.613Z",
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -2463,7 +2462,8 @@
             "count": 2733
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T21:23:21.323Z"
+          "lastCheckedAt": "2026-10-24T09:06:25.613Z",
+          "videoCount": 122
         }
       ],
       "externals": {},
@@ -2624,7 +2624,7 @@
       "addedAt": "2026-10-22T03:40:51.250Z",
       "updatedAt": "2026-10-23T21:23:29.284Z",
       "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T09:06:25.613Z",
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -2633,14 +2633,15 @@
           "platform": "bilibili",
           "id": "13145248",
           "handle": "13145248",
-          "name": "白岛と巧克力",
+          "name": "AX泫尘",
           "url": "https://space.bilibili.com/13145248",
           "subscribers": {
             "tag": "has",
             "count": 349
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T21:23:21.194Z"
+          "lastCheckedAt": "2026-10-24T09:06:25.613Z",
+          "videoCount": 8
         }
       ],
       "externals": {},
@@ -18386,11 +18387,12 @@
       "statedLanguages": [],
       "agency": null,
       "affiliation": "unknown",
-      "avatar": null,
+      "avatar": "https://i2.hdslb.com/bfs/face/5b0d442add04f7c13ecffd813eef1d089cac1178.jpg",
       "banner": null,
       "description": "月森梦爱～～！単推し推奨！粉丝群：823295217 字幕审核群：862916858",
       "subscribers": {
-        "tag": "hidden"
+        "tag": "has",
+        "count": 4816
       },
       "videoCount": null,
       "viewCount": null,
@@ -26221,7 +26223,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T13:46:49.602Z",
+      "updatedAt": "2026-10-24T09:07:12.601Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -33093,9 +33095,9 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-24T05:11:12.819Z",
+      "updatedAt": "2026-10-24T09:07:12.601Z",
       "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": "2026-10-24T06:08:43.980Z",
+      "lastDetailsFetchedAt": null,
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -33110,7 +33112,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-24T05:11:04.424Z"
+          "lastCheckedAt": "2026-10-24T09:07:11.864Z"
         },
         {
           "platform": "bilibili",
@@ -33122,7 +33124,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-24T05:11:04.424Z"
+          "lastCheckedAt": "2026-10-24T09:07:11.864Z"
         }
       ],
       "externals": {},
@@ -33162,7 +33164,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-24T05:11:12.819Z",
+      "updatedAt": "2026-10-24T09:07:12.601Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -33179,7 +33181,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-24T05:11:05.722Z"
+          "lastCheckedAt": "2026-10-24T09:07:12.546Z"
         },
         {
           "platform": "bilibili",
@@ -33191,7 +33193,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-24T05:11:05.722Z"
+          "lastCheckedAt": "2026-10-24T09:07:12.546Z"
         },
         {
           "platform": "twitter",
@@ -33203,7 +33205,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-24T05:11:05.722Z"
+          "lastCheckedAt": "2026-10-24T09:07:12.546Z"
         },
         {
           "platform": "marshmallow",
@@ -33215,7 +33217,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-24T05:11:05.722Z"
+          "lastCheckedAt": "2026-10-24T09:07:12.546Z"
         }
       ],
       "externals": {},
@@ -33255,7 +33257,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-24T05:11:12.819Z",
+      "updatedAt": "2026-10-24T09:07:12.601Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-24T06:27:33.648Z",
+  "generatedAt": "2026-10-24T09:06:25.613Z",
   "channels": [
     {
       "id": "bilibili:1001572999",
@@ -2469,7 +2469,7 @@
       "description": null,
       "subscribers": {
         "tag": "has",
-        "count": 12314
+        "count": 12306
       },
       "videoCount": 212,
       "viewCount": null,
@@ -2485,7 +2485,7 @@
       "addedAt": "2026-10-22T03:40:51.250Z",
       "updatedAt": "2026-10-23T21:23:29.284Z",
       "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T09:06:25.613Z",
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -2498,10 +2498,11 @@
           "url": "https://space.bilibili.com/1220265605",
           "subscribers": {
             "tag": "has",
-            "count": 12314
+            "count": 12306
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T21:23:21.197Z"
+          "lastCheckedAt": "2026-10-24T09:06:25.613Z",
+          "videoCount": 212
         }
       ],
       "externals": {},
@@ -2829,7 +2830,7 @@
         "tag": "has",
         "count": 22
       },
-      "videoCount": null,
+      "videoCount": 0,
       "viewCount": null,
       "uploadsPlaylistId": null,
       "country": null,
@@ -2843,7 +2844,7 @@
       "addedAt": "2026-10-22T03:40:51.250Z",
       "updatedAt": "2026-10-23T21:23:29.284Z",
       "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T09:06:25.613Z",
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -2852,14 +2853,15 @@
           "platform": "bilibili",
           "id": "1267463286",
           "handle": "1267463286",
-          "name": "小野寺杏砂",
+          "name": "bili_1267463286",
           "url": "https://space.bilibili.com/1267463286",
           "subscribers": {
             "tag": "has",
             "count": 22
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T21:23:20.799Z"
+          "lastCheckedAt": "2026-10-24T09:06:25.613Z",
+          "videoCount": 0
         }
       ],
       "externals": {},
@@ -3745,7 +3747,7 @@
       "description": null,
       "subscribers": {
         "tag": "has",
-        "count": 2613
+        "count": 2612
       },
       "videoCount": 1,
       "viewCount": null,
@@ -3761,7 +3763,7 @@
       "addedAt": "2026-10-22T03:40:51.250Z",
       "updatedAt": "2026-10-23T21:23:29.284Z",
       "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T09:06:25.613Z",
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -3774,10 +3776,11 @@
           "url": "https://space.bilibili.com/1372533496",
           "subscribers": {
             "tag": "has",
-            "count": 2613
+            "count": 2612
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T21:23:20.678Z"
+          "lastCheckedAt": "2026-10-24T09:06:25.613Z",
+          "videoCount": 1
         }
       ],
       "externals": {},
@@ -30823,7 +30826,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-24T05:11:12.819Z",
+      "updatedAt": "2026-10-24T09:07:12.601Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -30840,7 +30843,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-24T05:11:05.335Z"
+          "lastCheckedAt": "2026-10-24T09:07:12.342Z"
         },
         {
           "platform": "peing",
@@ -30852,7 +30855,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-24T05:11:05.335Z"
+          "lastCheckedAt": "2026-10-24T09:07:12.342Z"
         },
         {
           "platform": "twitter",
@@ -30864,7 +30867,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-24T05:11:05.335Z"
+          "lastCheckedAt": "2026-10-24T09:07:12.342Z"
         },
         {
           "platform": "bilibili",
@@ -30876,7 +30879,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-24T05:11:05.335Z"
+          "lastCheckedAt": "2026-10-24T09:07:12.342Z"
         }
       ],
       "externals": {},
@@ -30918,7 +30921,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-24T05:11:12.819Z",
+      "updatedAt": "2026-10-24T09:07:12.601Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -30935,7 +30938,7 @@
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/8qHAq3NUfGqbncdowRb-qy60v9M2wm5KNjGK1VxvZv4CLoKlYlM5HQEf9uP3F53ZXPvn2KF5dw=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-24T05:11:04.770Z"
+          "lastCheckedAt": "2026-10-24T09:07:12.047Z"
         },
         {
           "platform": "bilibili",
@@ -30947,7 +30950,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-24T05:11:04.770Z"
+          "lastCheckedAt": "2026-10-24T09:07:12.047Z"
         },
         {
           "platform": "afdian",
@@ -30959,7 +30962,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-24T05:11:04.770Z"
+          "lastCheckedAt": "2026-10-24T09:07:12.047Z"
         }
       ],
       "externals": {},
@@ -31002,7 +31005,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T13:46:49.602Z",
+      "updatedAt": "2026-10-24T09:07:12.601Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": "2026-10-24T06:08:43.980Z",
       "activity": "unknown",
@@ -31061,7 +31064,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-24T05:11:12.819Z",
+      "updatedAt": "2026-10-24T09:07:12.601Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -31105,7 +31108,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-24T05:11:12.819Z",
+      "updatedAt": "2026-10-24T09:07:12.601Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -31149,7 +31152,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T13:46:49.602Z",
+      "updatedAt": "2026-10-24T09:07:12.601Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -31206,7 +31209,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-24T05:11:12.819Z",
+      "updatedAt": "2026-10-24T09:07:12.601Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -31250,7 +31253,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-24T05:11:12.819Z",
+      "updatedAt": "2026-10-24T09:07:12.601Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -31294,7 +31297,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-24T05:11:12.819Z",
+      "updatedAt": "2026-10-24T09:07:12.601Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",

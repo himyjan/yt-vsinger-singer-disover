@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-24T06:27:33.648Z",
+  "generatedAt": "2026-10-24T09:06:25.613Z",
   "channels": [
     {
       "id": "acfun:26055450",
@@ -36,7 +36,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-23T10:03:47.608Z",
-      "updatedAt": "2026-10-24T05:11:12.819Z",
+      "updatedAt": "2026-10-24T09:07:12.601Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -53,7 +53,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-24T05:11:05.663Z"
+          "lastCheckedAt": "2026-10-24T09:07:12.516Z"
         }
       ],
       "externals": {},
@@ -93,7 +93,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-23T10:03:47.608Z",
-      "updatedAt": "2026-10-24T05:11:12.819Z",
+      "updatedAt": "2026-10-24T09:07:12.601Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -110,7 +110,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-24T05:11:04.746Z"
+          "lastCheckedAt": "2026-10-24T09:07:12.034Z"
         }
       ],
       "externals": {},
@@ -2289,7 +2289,7 @@
       "addedAt": "2026-10-22T03:40:51.250Z",
       "updatedAt": "2026-10-23T21:23:29.284Z",
       "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T09:06:25.613Z",
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -2298,14 +2298,15 @@
           "platform": "bilibili",
           "id": "12203747",
           "handle": "12203747",
-          "name": "雪玲由纪youki",
+          "name": "不是艾路猫",
           "url": "https://space.bilibili.com/12203747",
           "subscribers": {
             "tag": "has",
             "count": 1927
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T21:23:21.507Z"
+          "lastCheckedAt": "2026-10-24T09:06:25.613Z",
+          "videoCount": 1
         }
       ],
       "externals": {},
@@ -2655,7 +2656,7 @@
       "description": null,
       "subscribers": {
         "tag": "has",
-        "count": 10480
+        "count": 10479
       },
       "videoCount": 81,
       "viewCount": null,
@@ -2671,7 +2672,7 @@
       "addedAt": "2026-10-22T03:40:51.250Z",
       "updatedAt": "2026-10-23T21:23:29.284Z",
       "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T09:06:25.613Z",
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -2684,10 +2685,11 @@
           "url": "https://space.bilibili.com/1245595065",
           "subscribers": {
             "tag": "has",
-            "count": 10480
+            "count": 10479
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T21:23:21.194Z"
+          "lastCheckedAt": "2026-10-24T09:06:25.613Z",
+          "videoCount": 81
         }
       ],
       "externals": {},
@@ -3505,7 +3507,7 @@
       "addedAt": "2026-10-22T03:40:51.250Z",
       "updatedAt": "2026-10-23T21:23:29.284Z",
       "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T09:06:25.613Z",
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -3521,7 +3523,8 @@
             "count": 2031
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T21:23:20.870Z"
+          "lastCheckedAt": "2026-10-24T09:06:25.613Z",
+          "videoCount": 58
         }
       ],
       "externals": {},
@@ -3607,7 +3610,7 @@
       "description": null,
       "subscribers": {
         "tag": "has",
-        "count": 17722
+        "count": 17721
       },
       "videoCount": 47,
       "viewCount": null,
@@ -3623,7 +3626,7 @@
       "addedAt": "2026-10-22T03:40:51.250Z",
       "updatedAt": "2026-10-23T21:23:29.284Z",
       "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null,
+      "lastDetailsFetchedAt": "2026-10-24T09:06:25.613Z",
       "activity": "unknown",
       "debutDate": null,
       "graduateDate": null,
@@ -3632,14 +3635,15 @@
           "platform": "bilibili",
           "id": "136322951",
           "handle": "136322951",
-          "name": "夜月心音",
+          "name": "夜月心音Official",
           "url": "https://space.bilibili.com/136322951",
           "subscribers": {
             "tag": "has",
-            "count": 17722
+            "count": 17721
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-23T21:23:20.706Z"
+          "lastCheckedAt": "2026-10-24T09:06:25.613Z",
+          "videoCount": 47
         }
       ],
       "externals": {},
@@ -30439,82 +30443,6 @@
       "aliases": []
     },
     {
-      "id": "bilibili:511613157",
-      "name": "罗莎琳",
-      "handle": null,
-      "kind": "virtual",
-      "role": "vtuber",
-      "region": "cn",
-      "regionSource": "platform",
-      "languages": [
-        "zh-Hans"
-      ],
-      "statedLanguages": [],
-      "agency": null,
-      "affiliation": "unknown",
-      "avatar": null,
-      "banner": null,
-      "description": "Hololive CN二期生 来自异世界的图书管理员，来一起探索这个世界吧！\n",
-      "subscribers": {
-        "tag": "hidden"
-      },
-      "videoCount": null,
-      "viewCount": null,
-      "uploadsPlaylistId": null,
-      "country": null,
-      "tags": [
-        "ロサリン",
-        "Rosalyn"
-      ],
-      "isSinging": false,
-      "gender": "unknown",
-      "isAi": false,
-      "variant": "vtuber",
-      "verification": null,
-      "source": "api",
-      "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-23T21:23:29.284Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": "2026-10-24T06:08:43.980Z",
-      "activity": "unknown",
-      "debutDate": null,
-      "graduateDate": null,
-      "platforms": [
-        {
-          "platform": "bilibili",
-          "id": "511613157",
-          "handle": null,
-          "name": "罗莎琳",
-          "url": "https://space.bilibili.com/511613157",
-          "subscribers": {
-            "tag": "has",
-            "count": 61510
-          },
-          "avatar": "https://i0.hdslb.com/bfs/face/38ed261b885c7ebdc5e17d530024530bd1c3eddb.jpg",
-          "lastCheckedAt": "2026-10-24T06:10:05.675Z"
-        },
-        {
-          "platform": "twitter",
-          "id": "Rosalyn_holoCN",
-          "handle": null,
-          "name": "罗莎琳",
-          "url": "https://twitter.com/Rosalyn_holoCN",
-          "subscribers": {
-            "tag": "hidden"
-          },
-          "avatar": null,
-          "lastCheckedAt": "2026-10-23T21:23:21.304Z"
-        }
-      ],
-      "externals": {},
-      "popularVideoId": null,
-      "nameSource": "roster",
-      "aliases": [
-        "ロサリン",
-        "Rosalyn"
-      ]
-    },
-    {
       "id": "bilibili:51234175",
       "name": "炫银蛇",
       "handle": null,
@@ -30756,11 +30684,12 @@
       "statedLanguages": [],
       "agency": null,
       "affiliation": "unknown",
-      "avatar": null,
+      "avatar": "https://i2.hdslb.com/bfs/face/df668b0d84c50af707de4ba1772930bb4afe0c66.jpg",
       "banner": null,
       "description": "亜朱香(asyuka)辣妹天使VTuberです(*'▽')twitter:@asyuka_v",
       "subscribers": {
-        "tag": "hidden"
+        "tag": "has",
+        "count": 4188
       },
       "videoCount": null,
       "viewCount": null,
@@ -30771,7 +30700,7 @@
         "Asyuka"
       ],
       "isSinging": false,
-      "gender": "unknown",
+      "gender": "female",
       "isAi": false,
       "variant": "vtuber",
       "verification": null,
@@ -35844,7 +35773,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-24T05:11:12.819Z",
+      "updatedAt": "2026-10-24T09:07:12.601Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -35853,15 +35782,15 @@
       "platforms": [
         {
           "platform": "youtube",
-          "id": "UCPk6IqZQ0JChV3BKvBr1Bgg",
-          "handle": "CerberusKerby",
+          "id": "cerberuskerby",
+          "handle": "cerberuskerby",
           "name": "大大的可比Kerby",
-          "url": "https://www.youtube.com/channel/UCPk6IqZQ0JChV3BKvBr1Bgg",
+          "url": "https://www.youtube.com/@cerberuskerby",
           "subscribers": {
             "tag": "hidden"
           },
           "avatar": "https://yt3.googleusercontent.com/34Ce3KyoBq_wo1EI_m8kDk6OzBBHq1cAFGndJlIVVDgtI7sfgaqNlQjc7SfzNSnMOZbR09YDZA=s900-c-k-c0x00ffffff-no-rj",
-          "lastCheckedAt": "2026-10-24T05:11:04.771Z"
+          "lastCheckedAt": "2026-10-24T09:07:12.048Z"
         },
         {
           "platform": "bilibili",
@@ -35873,7 +35802,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-24T05:11:04.771Z"
+          "lastCheckedAt": "2026-10-24T09:07:12.048Z"
         },
         {
           "platform": "twitch",
@@ -35885,7 +35814,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-24T05:11:04.771Z"
+          "lastCheckedAt": "2026-10-24T09:07:12.048Z"
         },
         {
           "platform": "tiktok",
@@ -35897,7 +35826,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-24T05:11:04.771Z"
+          "lastCheckedAt": "2026-10-24T09:07:12.048Z"
         },
         {
           "platform": "twitter",
@@ -35909,7 +35838,7 @@
             "tag": "hidden"
           },
           "avatar": null,
-          "lastCheckedAt": "2026-10-24T05:11:04.771Z"
+          "lastCheckedAt": "2026-10-24T09:07:12.048Z"
         }
       ],
       "externals": {},
@@ -35953,7 +35882,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-24T05:11:12.819Z",
+      "updatedAt": "2026-10-24T09:07:12.601Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -36041,7 +35970,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-24T05:11:12.819Z",
+      "updatedAt": "2026-10-24T09:07:12.601Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -36085,7 +36014,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-24T05:11:12.819Z",
+      "updatedAt": "2026-10-24T09:07:12.601Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -36129,7 +36058,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-24T05:11:12.819Z",
+      "updatedAt": "2026-10-24T09:07:12.601Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -36173,7 +36102,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-24T05:11:12.819Z",
+      "updatedAt": "2026-10-24T09:07:12.601Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
@@ -36217,7 +36146,7 @@
       "verification": null,
       "source": "api",
       "addedAt": "2026-10-22T03:40:51.250Z",
-      "updatedAt": "2026-10-24T05:11:12.819Z",
+      "updatedAt": "2026-10-24T09:07:12.601Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null,
       "activity": "unknown",
