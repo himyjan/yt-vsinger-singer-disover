@@ -240,6 +240,16 @@ export function extractExternalLinks(
       (m) => m[2] ?? m[3] ?? `${m[1]!.startsWith("user/") ? "user" : "c"}/${m[4]}`,
     ],
     [
+      "youtube_video",
+      /(?:youtu\.be\/([A-Za-z0-9_-]{11})|youtube(?:music)?\.com\/(?:watch\?(?:[^#]*&)?v=|shorts\/|embed\/)([A-Za-z0-9_-]{11}))/i,
+      (m) => m[1] ?? m[2]!,
+    ],
+    [
+      "youtube_playlist",
+      /youtube(?:music)?\.com\/playlist\?(?:[^#]*&)?list=([A-Za-z0-9_-]+)/i,
+      (m) => m[1]!,
+    ],
+    [
       "twitch",
       /(?:twitch\.tv\/([A-Za-z0-9_]{3,25}))/i,
       (m) =>

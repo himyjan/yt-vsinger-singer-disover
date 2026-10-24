@@ -54,7 +54,7 @@ npm run data:validate       # check structure and size budgets
 ```
 scripts/sync.ts
   ├── roster and music sources
-  ├── YouTube: InnerTube (primary) + Data API v3 (optional metadata/discovery)
+  ├── YouTube: InnerTube (primary) + Data API v3 (optional extras)
   └── platform adapters: YouTube, Twitch, Bilibili, Niconico, VK,
                          CHZZK, KICK, SOOP and CI.ME
           ↓
@@ -62,11 +62,13 @@ scripts/sync.ts
 ```
 
 YouTube is the primary platform, and InnerTube (`youtubei.js`) is the primary
-source for its channel profiles and uploads. The optional YouTube Data API v3
-adds search and specialized live/video metadata. A newly discovered YouTube
-channel is added to virtual data only after two distinct videos each show
-both virtual-creator identity and singing evidence; non-YouTube discovery
-only accepts identities already in vdb, the dataset, or the seed catalog.
+source for its channel search, video search, channel profiles, uploads and
+live tab. It needs no API key and spends no Data API quota. The optional
+YouTube Data API v3 adds richer video statistics and exact live scheduling
+when configured. A newly discovered YouTube channel is added to virtual data
+only after two distinct videos each show both virtual-creator identity and
+singing evidence; non-YouTube discovery only accepts identities already in
+vdb, the dataset, or the seed catalog.
 The sync pipeline also
 reads the global vdb roster (including links across many platforms), Taiwan
 VTuber Tracking Data, VocaDB and curated music datasets. The Data API free tier
@@ -78,7 +80,7 @@ even when a platform does not have a dedicated profile adapter.
 
 | Platform | Dataset support | Secrets needed |
 | --- | --- | --- |
-| YouTube | Channel discovery, profiles, uploads, and live/video metadata | Optional `YOUTUBE_API_KEY`; InnerTube is the discovery fallback |
+| YouTube | Channel and video discovery, profiles, uploads, and live/upcoming streams | None required; optional `YOUTUBE_API_KEY` adds video statistics and exact broadcast times |
 | Twitch | Keyword channel discovery and live streams; linked profiles and follower counts | `TWITCH_CLIENT_ID` and `TWITCH_CLIENT_SECRET` are required for sync discovery |
 | Bilibili | Ranking/live results filtered to vdb, existing or seeded identities; uploads and profiles | None |
 | Niconico | Keyword-video authors filtered to vdb, existing or seeded identities; uploads; no live listing | None |
@@ -87,6 +89,12 @@ even when a platform does not have a dedicated profile adapter.
 | KICK | Refresh known profiles and current live streams; no usable public keyword search | None |
 | SOOP | Match current broadcasts from the first page of its public live list; no offline profile lookup | None |
 | CI.ME | Refresh profiles for known channel IDs; no public search, uploads or live lookup | `CI_ME_CLIENT_ID` and `CI_ME_CLIENT_SECRET` |
+
+To import YouTube playlist links from a DOCX, run
+`npm run data:import-playlist -- "path/to/playlist.docx"`. The importer only
+associates uploads with existing channels by immutable YouTube id or exact
+handle, checks published YouTube country where available, and leaves
+unmatched or ambiguously classified links in `.cache/playlist-import-unmatched.json`.
 
 Discovery coverage varies: KICK identities are sourced from the global roster
 and existing records because its current web search endpoint is not a usable
@@ -98,7 +106,10 @@ endpoints, discovery limitations and account-linking details.
 
 A quota budget refuses any YouTube Data API v3 call that would exceed the
 daily allowance. InnerTube requests do not use Data API quota, and cached
-responses avoid spending quota on unchanged Data API results.
+responses avoid spending quota on unchanged Data API results. Because the
+catalogue is far larger than one run can refresh, each run owns a
+deterministic shard of the refresh and live rotation, and the scheduled
+workflow rotates that shard every run.
 
 GitHub Actions refreshes the dataset every six hours, validates it, and
 commits the result.
@@ -124,8 +135,8 @@ data/
 The scheduled GitHub Actions workflow refreshes the roster and supported
 platform data every six hours, rebuilds search, validates the dataset and
 commits changes. The manual workflow also supports quota budgets, discovery
-skip, dry-run and a custom keyword used by the enabled platform searches.
-Scheduled searches use the per-platform terms in
+skip, dry-run, shard count, a channel cap and a custom keyword used by the
+enabled platform searches. Scheduled searches use the per-platform terms in
 [`config/platform-keywords.json`](config/platform-keywords.json). Twitch and VK
 discovery need their respective Actions secrets. `--no-search` (or the manual
 workflow's **Skip discovery searches** option) skips keyword discovery across
@@ -134,6 +145,9 @@ Automatic discovery on non-YouTube platforms only admits identities already
 present in vdb, the dataset, or the curated seed catalog. YouTube can also add
 new virtual channels when at least two distinct videos mention both virtual
 singer/VTuber identity and singing in their titles, descriptions, or tags.
+The refresh and live rotation is split into deterministic shards, so a
+catalogue of thousands of channels is covered across successive runs rather
+than starved by the per-run cap.
 Sync and verification workflows serialize dataset writes and rebase generated
 changes onto the latest branch before committing.
 See [docs/DEPLOY.md](docs/DEPLOY.md) and [docs/PLATFORMS.md](docs/PLATFORMS.md).

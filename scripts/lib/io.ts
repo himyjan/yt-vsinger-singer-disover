@@ -111,6 +111,27 @@ export function writeJson(file: string, value: unknown): void {
   fs.writeFileSync(file, json);
 }
 
+/** Avoids rewriting an unchanged dataset shard just to refresh its timestamp. */
+export function writeJsonIfChanged(file: string, value: unknown): boolean {
+  const existing = readJson<Record<string, unknown> | null>(file, null);
+  if (existing) {
+    const withoutGeneratedAt = (record: unknown): unknown =>
+      record && typeof record === "object" && !Array.isArray(record)
+        ? Object.fromEntries(
+            Object.entries(record).filter(([key]) => key !== "generatedAt"),
+          )
+        : record;
+    if (
+      stableStringify(withoutGeneratedAt(existing)) ===
+      stableStringify(withoutGeneratedAt(value))
+    ) {
+      return false;
+    }
+  }
+  writeJson(file, value);
+  return true;
+}
+
 /** Stable stringify: sorts object keys recursively so diffs stay minimal. */
 export function stableStringify(value: unknown): string {
   return `${JSON.stringify(sortKeys(value), null, 2)}\n`;

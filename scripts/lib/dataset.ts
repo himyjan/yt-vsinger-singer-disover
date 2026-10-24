@@ -39,6 +39,7 @@ import {
   formatBytes,
   readJson,
   writeJson,
+  writeJsonIfChanged,
 } from "./io";
 import { ALL_REGIONS, SCHEMA_VERSION } from "./types";
 import { buildRegionMeta } from "./regions";
@@ -236,7 +237,7 @@ export function writeDataset(
         buckets.push(bucket);
         count += bucketList.length;
         bucketList.sort((a, b) => a.id.localeCompare(b.id));
-        writeJson(fileFor(region, bucket), {
+        writeJsonIfChanged(fileFor(region, bucket), {
           schemaVersion: SCHEMA_VERSION,
           generatedAt: now,
           channels: bucketList,
@@ -359,7 +360,7 @@ export function writeDataset(
         a.id.localeCompare(b.id),
       );
       keepFiles.add(`${bucket}.json`);
-      writeJson(layout.itemsRegion(region, bucket), {
+      writeJsonIfChanged(layout.itemsRegion(region, bucket), {
         schemaVersion: SCHEMA_VERSION,
         generatedAt: now,
         items: list,
@@ -388,12 +389,12 @@ export function writeDataset(
 
   const live = items.filter((i) => i.status === "live");
   const upcoming = items.filter((i) => i.status === "upcoming");
-  writeJson(layout.itemsLive, {
+  writeJsonIfChanged(layout.itemsLive, {
     schemaVersion: SCHEMA_VERSION,
     generatedAt: now,
     items: live,
   } satisfies ItemFile);
-  writeJson(layout.itemsUpcoming, {
+  writeJsonIfChanged(layout.itemsUpcoming, {
     schemaVersion: SCHEMA_VERSION,
     generatedAt: now,
     items: upcoming,
@@ -441,9 +442,10 @@ export function writeDataset(
     thumbnail: i.thumbnail,
     viewCount: i.viewCount,
     url:
-      i.type === "playlist"
+      i.url ??
+      (i.type === "playlist"
         ? `https://www.youtube.com/playlist?list=${i.id}`
-        : `https://www.youtube.com/watch?v=${i.id}`,
+        : `https://www.youtube.com/watch?v=${i.id}`),
   }));
 
   const songsByRegion = new Map<RegionCode, SongRecord[]>();
@@ -460,7 +462,7 @@ export function writeDataset(
     const list = songsByRegion.get(region);
     if (!list?.length) continue;
     keepSongFiles.add(`${region}.json`);
-    writeJson(layout.songsRegion(region), {
+    writeJsonIfChanged(layout.songsRegion(region), {
       schemaVersion: SCHEMA_VERSION,
       generatedAt: now,
       songs: list,
@@ -478,7 +480,7 @@ export function writeDataset(
     categoryCounts[category] = list.length;
     if (!list.length) continue;
     keepCategoryFiles.add(`${category}.json`);
-    writeJson(layout.songsCategory(category), {
+    writeJsonIfChanged(layout.songsCategory(category), {
       schemaVersion: SCHEMA_VERSION,
       generatedAt: now,
       songs: list,
@@ -486,7 +488,7 @@ export function writeDataset(
   }
   removed.push(...pruneStale(songsCategoryDir, keepCategoryFiles));
 
-  writeJson(layout.songsIndex, {
+  writeJsonIfChanged(layout.songsIndex, {
     schemaVersion: SCHEMA_VERSION,
     generatedAt: now,
     songs,
@@ -544,6 +546,26 @@ export function readAllChannelRecords(): Channel[] {
         );
         out.push(...(parsed.channels ?? []));
       }
+    }
+  }
+  return out;
+}
+
+/** Reads the region shards; root live/upcoming files are projections. */
+export function readAllItems(): Item[] {
+  const out: Item[] = [];
+  const root = path.join(DATA_DIR, "items");
+  if (!fs.existsSync(root)) return out;
+  for (const region of fs.readdirSync(root)) {
+    const dir = path.join(root, region);
+    if (!fs.statSync(dir).isDirectory()) continue;
+    for (const file of fs.readdirSync(dir)) {
+      if (!file.endsWith(".json")) continue;
+      const parsed = readJson<{ items?: Item[] }>(
+        path.join(dir, file),
+        {},
+      );
+      out.push(...(parsed.items ?? []));
     }
   }
   return out;

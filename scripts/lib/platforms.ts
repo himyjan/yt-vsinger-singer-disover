@@ -321,7 +321,10 @@ export function extractPlatformId(input: string): {
   const value = input.trim();
 
   const patterns: [PlatformId, RegExp][] = [
-    ["youtube", /(?:youtube\.com\/channel\/|youtu\.be\/|youtube\.com\/@)([A-Za-z0-9_-]{6,})/],
+    [
+      "youtube",
+      /(?:youtube\.com\/(?:channel\/(UC[\w-]{20,})|@([A-Za-z0-9._-]+)|(?:user|c)\/([A-Za-z0-9._-]+)))/i,
+    ],
     ["twitch", /twitch\.tv\/([A-Za-z0-9_]{3,30})/],
     ["bilibili", /(?:space\.bilibili\.com\/|bilibili\.com\/)(?:(\d+)|([A-Za-z0-9_-]+))/],
     ["niconico", /nicovideo\.jp\/user\/(\d+)/],
@@ -335,7 +338,10 @@ export function extractPlatformId(input: string): {
   for (const [platform, re] of patterns) {
     const m = re.exec(value);
     if (!m) continue;
-    const id = m[1] ?? m[2];
+    const id =
+      platform === "youtube"
+        ? m[1] ?? m[2] ?? (m[3] ? `${m[0]!.includes("/user/") ? "user" : "c"}/${m[3]}` : null)
+        : (m[1] ?? m[2]);
     if (id) return { platform, id };
   }
   return null;

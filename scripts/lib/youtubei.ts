@@ -117,6 +117,38 @@ export interface InnerTubeRelease {
   thumbnail: string | null;
 }
 
+/** One video returned by InnerTube's public search. */
+export interface InnerTubeSearchVideo {
+  /** The video id. */
+  id: string;
+  /** The title shown in the search result. */
+  title: string;
+  /** The description snippet YouTube includes with the result. */
+  description: string | null;
+  /** The channel that owns the video, when YouTube exposes it. */
+  channelId: string | null;
+  /** The channel's display name. */
+  channelTitle: string | null;
+  /** The thumbnail URL. */
+  thumbnail: string | null;
+  /** The view count, when the result shows one. */
+  views: number | null;
+}
+
+/** A live or upcoming stream from a channel's Live tab. */
+export interface InnerTubeLive {
+  /** The video id of the broadcast. */
+  id: string;
+  /** The broadcast title. */
+  title: string;
+  /** The thumbnail URL. */
+  thumbnail: string | null;
+  /** Whether the broadcast is live now or scheduled. */
+  status: "live" | "upcoming";
+  /** The scheduled start, for an upcoming broadcast. */
+  scheduledStart: string | null;
+}
+
 export interface InnerTubeChannelCatalog {
   uploads: InnerTubeUpload[];
   releases: InnerTubeRelease[];
@@ -172,6 +204,160 @@ function isNotRateLimited(message: string): boolean {
   return /does not exist|not found|404|removed|terminated|status code 400|存在しません|削除されました|停止しました|利用できません|不存在|已被删除|已删除|不存在该用户|존재하지 않습니다|삭제되었습니다/i.test(
     message,
   );
+}
+
+/**
+ * Reads the plain text out of an InnerTube node.
+ *
+ * The parser wraps strings in `Text` objects, and some renderers expose the
+ * same value as a plain string depending on the endpoint. Both shapes are
+ * normalised here so the callers can treat the result as text.
+ */
+function textOf(value: unknown): string | null {
+  if (value === null || value === undefined) return null;
+  if (typeof value === "string") return value;
+  if (typeof value === "number" || typeof value === "boolean") {
+    return String(value);
+  }
+  if (typeof value === "object") {
+    const record = value as { text?: unknown; toString?: () => string };
+    if (typeof record.text === "string") return record.text;
+    if (typeof record.toString === "function") {
+      const text = record.toString();
+      if (text && text !== "[object Object]") return text;
+    }
+  }
+  return null;
+}
+
+/** Picks the largest thumbnail an InnerTube node exposes. */
+function thumbnailOf(item: any): string | null {
+  const url =
+    item?.content_image?.image?.at(-1)?.url ??
+    item?.thumbnails?.at(-1)?.url ??
+    item?.thumbnail?.contents?.at(-1)?.url ??
+    item?.rich_thumbnail?.image?.at(-1)?.url ??
+    null;
+  return typeof url === "string" && url ? url.split("?")[0]! : null;
+}
+
+/** Parses a view-count label such as `12万回` or `1.2M views`. */
+function viewsOf(value: unknown): number | null {
+  const text = textOf(value);
+  if (!text) return null;
+  const match = text.replace(/,/g, "").match(/([\d.]+)\s*([万萬億亿KMB])?/i);
+  if (!match) return null;
+  const amount = Number(match[1]);
+  if (!Number.isFinite(amount)) return null;
+  const suffix = (match[2] ?? "").toUpperCase();
+  const multiplier =
+    suffix === "万" || suffix === "萬"
+      ? 10_000
+      : suffix === "億" || suffix === "亿"
+        ? 100_000_000
+        : suffix === "K"
+          ? 1_000
+          : suffix === "M"
+            ? 1_000_000
+            : suffix === "B"
+              ? 1_000_000_000
+              : 1;
+  const total = Math.round(amount * multiplier);
+  return total > 0 ? total : null;
+}
+
+/** The badges on a Live-tab card, across both card renderers. */
+function lockupBadges(item: any): any[] {
+  const badgeLists = [
+    item?.content_image?.overlays,
+    item?.content_image?.primary_thumbnail?.overlays,
+    item?.thumbnail_overlays,
+  ];
+  const badges: any[] = [];
+  for (const overlays of badgeLists) {
+    if (!Array.isArray(overlays)) continue;
+    for (const overlay of overlays) {
+      if (Array.isArray(overlay?.badges)) badges.push(...overlay.badges);
+      if (overlay?.text) badges.push(overlay);
+    }
+  }
+  return badges;
+}
+
+/** The title of a grid-video or lockup-view card. */
+function titleOf(item: any): string {
+  return (
+    textOf(item?.metadata?.title) ??
+    textOf(item?.title) ??
+    ""
+  );
+}
+
+/**
+ * The state of a Live-tab entry.
+ *
+ * The Live tab mixes **currently live**, **upcoming** and **finished**
+ * broadcasts. Two renderers are involved (`GridVideo` and the newer
+ * `LockupView`), so the state is read from both:
+ *
+ *   • live — the thumbnail badge says `LIVE` / `ライブ` / `생방송` or the
+ *     metadata row is a viewer count;
+ *   • upcoming — the badge says `配信予定` / `Scheduled` or the row names a
+ *     scheduled time;
+ *   • finished — the badge is a duration and the row says `配信済み`.
+ *
+ * Finished broadcasts are ignored here: they are already in the uploads tab.
+ */
+function liveStatusOf(item: any): "live" | "upcoming" | null {
+  if (item?.is_upcoming === true) return "upcoming";
+  if (
+    item?.upcoming instanceof Date &&
+    item.upcoming.getTime() > Date.now()
+  ) {
+    return "upcoming";
+  }
+  if (item?.is_live === true) return "live";
+
+  const badges = lockupBadges(item);
+  if (
+    badges.some(
+      (badge) =>
+        badge?.icon_name === "LIVE" ||
+        /LIVE$/i.test(String(badge?.badge_style ?? "")) ||
+        /^(?:live|ライブ|生放送|생방송|直播|實況|实况)$/iu.test(
+          String(badge?.text ?? "").trim(),
+        ),
+    )
+  ) {
+    return "live";
+  }
+  if (
+    badges.some((badge) =>
+      /^(?:配信予定|公開予定|予定|scheduled|upcoming|premiere|예정|即将|即將)$/iu.test(
+        String(badge?.text ?? "").trim(),
+      ),
+    )
+  ) {
+    return "upcoming";
+  }
+
+  const rows: any[] = item?.metadata?.metadata?.metadata_rows ?? [];
+  const rowText = rows
+    .flatMap((row) =>
+      Array.isArray(row?.metadata_parts)
+        ? row.metadata_parts.map(
+            (part: any) => textOf(part?.text) ?? "",
+          )
+        : [],
+    )
+    .join(" ");
+  if (/(?:視聴中|watching|viewers?|人が視聴|正在观看|正在觀看|시청자|시청 중)/iu.test(rowText)) {
+    return "live";
+  }
+  if (/(?:公開予定|配信予定|待機中|scheduled|upcoming|premieres|예정|即将|即將)/iu.test(rowText)) {
+    return "upcoming";
+  }
+  return null;
 }
 
 /**
@@ -354,6 +540,67 @@ export class InnerTubeSource {
       const message = (err as Error).message;
       if (!isNotRateLimited(message)) this.limiter.penalise();
       this.onLog(`innertube: channel search failed for "${query}" — ${message}`);
+      return [];
+    }
+  }
+
+  /**
+   * Discovers videos from YouTube's public search results.
+   *
+   * This is the quota-free counterpart of `search.list?type=video`. The search
+   * result carries the owning channel id, the title and a description snippet,
+   * which is exactly the evidence the discovery gate needs — and unlike the
+   * Data API it costs no quota.
+   */
+  async searchVideos(
+    query: string,
+    limit = 25,
+    options: { liveOnly?: boolean } = {},
+  ): Promise<InnerTubeSearchVideo[]> {
+    if (!this.client || !query.trim() || limit <= 0) return [];
+    try {
+      await this.throttle();
+      const result: any = await withTimeout(
+        this.client.search(query, {
+          type: "video",
+          ...(options.liveOnly ? { features: ["live"] } : {}),
+        }),
+        REQUEST_TIMEOUT_MS,
+      );
+      if (!result) return [];
+      const out: InnerTubeSearchVideo[] = [];
+      const seen = new Set<string>();
+      for (const entry of (result.results ?? []).slice(0, limit)) {
+        const id = entry?.video_id ?? entry?.content_id ?? entry?.id;
+        if (typeof id !== "string" || !id || seen.has(id)) continue;
+        const title = textOf(entry?.title);
+        if (!title) continue;
+        seen.add(id);
+        const author = entry?.author ?? {};
+        const authorId =
+          typeof author.id === "string" && YOUTUBE_CHANNEL_ID.test(author.id)
+            ? author.id
+            : null;
+        out.push({
+          id,
+          title,
+          description:
+            textOf(entry?.description_snippet) ??
+            textOf(entry?.snippets?.[0]?.text) ??
+            null,
+          channelId: authorId,
+          channelTitle:
+            typeof author.name === "string" && author.name ? author.name : null,
+          thumbnail: thumbnailOf(entry),
+          views: viewsOf(entry?.view_count) ?? viewsOf(entry?.short_view_count),
+        });
+      }
+      this.limiter.reward();
+      return out;
+    } catch (err) {
+      const message = (err as Error).message;
+      if (!isNotRateLimited(message)) this.limiter.penalise();
+      this.onLog(`innertube: video search failed for "${query}" — ${message}`);
       return [];
     }
   }
@@ -652,39 +899,56 @@ export class InnerTubeSource {
 
   /**
    * The channel's live and upcoming streams.
+   *
+   * Returns `null` when the channel could not be checked at all (network or
+   * rate-limit failure) and `[]` when the check succeeded but nothing is live.
+   * The distinction lets the caller retire stale live items only when it knows
+   * the Live tab was actually read.
    */
-  async liveStreams(channelId: string): Promise<InnerTubeUpload[]> {
-    if (!this.client) return [];
+  async liveStreams(channelId: string): Promise<InnerTubeLive[] | null> {
+    if (!this.client) return null;
     try {
       await this.throttle();
       const channel: any = await withTimeout(
         this.client.getChannel(channelId),
         REQUEST_TIMEOUT_MS,
       );
-      if (!channel) return [];
+      if (!channel) return null;
       const grid: any = await withTimeout(
         channel.getLiveStreams(),
         REQUEST_TIMEOUT_MS,
       );
-      if (!grid) return [];
+      if (!grid) return null;
       const list: any[] = grid?.videos ?? grid?.items ?? [];
 
-      const out: InnerTubeUpload[] = [];
+      const out: InnerTubeLive[] = [];
       for (const item of list.slice(0, 30)) {
-        const id = item?.content_id ?? item?.id;
-        if (!id) continue;
+        const id = item?.video_id ?? item?.content_id ?? item?.id;
+        if (typeof id !== "string" || !id) continue;
+        const status = liveStatusOf(item);
+        if (!status) continue;
+        const scheduledStart =
+          item?.upcoming instanceof Date
+            ? item.upcoming.toISOString()
+            : null;
         out.push({
           id,
-          title: item?.metadata?.title?.text ?? item?.title?.text ?? "",
-          thumbnail:
-            item?.content_image?.image?.[0]?.url?.split("?")[0] ?? null,
-          published: null,
-          views: null,
+          title: titleOf(item),
+          thumbnail: thumbnailOf(item),
+          status,
+          scheduledStart: status === "upcoming" ? scheduledStart : null,
         });
       }
+      this.limiter.reward();
       return out;
-    } catch {
-      return [];
+    } catch (err) {
+      const message = (err as Error).message;
+      // A channel that has never streamed has no Live tab. That is a fact
+      // about the channel, not a reason to slow the limiter down.
+      if (/Tab .* not found/i.test(message)) return [];
+      if (!isNotRateLimited(message)) this.limiter.penalise();
+      this.onLog(`innertube: live lookup failed for ${channelId} — ${message}`);
+      return null;
     }
   }
 }

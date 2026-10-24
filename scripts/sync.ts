@@ -2,13 +2,14 @@
 /**
  * YouTube channel and media sync pipeline.
  *
- * Reads the current dataset from `data/`, refreshes it from the YouTube Data
- * InnerTube is the primary YouTube source. The Data API is optional and is
- * used for discovery and additional live/video metadata when configured.
+ * Reads the current dataset from `data/` and refreshes it from the public
+ * sources. InnerTube is the primary YouTube source; the Data API is optional
+ * and adds video statistics, exact broadcast times and a fallback.
  *
  *   npm run sync              # InnerTube sync; optionally uses YOUTUBE_API_KEY
  *   npm run sync -- --dry-run # fetch + classify, print summary, write nothing
- *   npm run sync -- --no-search # only refresh known channels (1 unit each)
+ *   npm run sync -- --no-search # only refresh known channels
+ *   npm run sync -- --shard 2/4 # refresh one deterministic slice
  *   npm run sync -- --budget 500 # cap this run at 500 quota units
  *
  * The script is designed to run unchanged in GitHub Actions and writes
@@ -42,7 +43,11 @@ import {
   TwitchClient,
 } from "./lib/twitch";
 import { createAdapters } from "./lib/platform-registry";
-import { InnerTubeSource, type InnerTubeRelease } from "./lib/youtubei";
+import {
+  InnerTubeSource,
+  type InnerTubeRelease,
+  type InnerTubeSearchVideo,
+} from "./lib/youtubei";
 import {
   clearPendingAnalytics,
   writePendingAnalytics,
@@ -131,8 +136,18 @@ interface Args {
   budget: number;
   quotaLimit: number;
   limitChannels: number | null;
+  limitLive: number | null;
   keywords: string[];
   force: boolean;
+  /**
+   * The slice of the refresh rotation this run owns.
+   *
+   * `shardIndex` is zero-based; `shardCount` is 1 when sharding is off. The
+   * scheduled workflow rotates the index between runs, so a catalogue larger
+   * than one run can afford is still covered deterministically.
+   */
+  shardIndex: number;
+  shardCount: number;
 }
 
 function parseArgs(argv: string[]): Args {
@@ -144,8 +159,11 @@ function parseArgs(argv: string[]): Args {
     budget: 10_000,
     quotaLimit: 10_000,
     limitChannels: null,
+    limitLive: null,
     keywords: [],
     force: false,
+    shardIndex: 0,
+    shardCount: 1,
   };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
@@ -157,7 +175,27 @@ function parseArgs(argv: string[]): Args {
     else if (a === "--budget") args.budget = Number(argv[++i]);
     else if (a === "--quota") args.quotaLimit = Number(argv[++i]);
     else if (a === "--limit-channels") args.limitChannels = Number(argv[++i]);
+    else if (a === "--limit-live") args.limitLive = Number(argv[++i]);
     else if (a === "--keyword") args.keywords.push(argv[++i]);
+    else if (a === "--shard") {
+      const [indexRaw, countRaw] = String(argv[++i] ?? "").split("/");
+      const index = Number(indexRaw);
+      const count = Number(countRaw);
+      if (
+        Number.isInteger(index) &&
+        Number.isInteger(count) &&
+        count > 0 &&
+        index >= 1 &&
+        index <= count
+      ) {
+        args.shardIndex = index - 1;
+        args.shardCount = count;
+      } else {
+        console.warn(
+          `[sync] ignoring invalid --shard value; expected N/M with 1 <= N <= M`,
+        );
+      }
+    }
   }
   return args;
 }
@@ -193,11 +231,11 @@ const config: SyncConfig = readJson(
   path.join(ROOT, "config", "sync.config.json"),
   {
     maxSearchesPerRun: 40,
-    maxChannelsPerRun: 60,
+    maxChannelsPerRun: 150,
     maxItemsPerChannel: 25,
     maxItemsPerChannelRetained: 30,
-    maxItemAgeDays: 365,
-    maxLiveChannelsPerRun: 60,
+    maxItemAgeDays: 1095,
+    maxLiveChannelsPerRun: 300,
     maxChannelDetailsPerRun: 500,
     maxTwitchResolutionsPerRun: 150,
     detailsDelayMs: 700,
@@ -261,6 +299,28 @@ const overrides: OverrideMap = readJson<OverrideMap>(paths.overrides, {});
 /* -------------------------------------------------------------------------- */
 
 const nowIso = () => new Date().toISOString();
+
+/**
+ * The deterministic shard a channel id belongs to.
+ *
+ * FNV-1a over the immutable platform id, so the same channel lands in the same
+ * shard on every run and every machine. That is what lets the scheduled
+ * workflow rotate through the catalogue without a cursor file: run N owns
+ * shard `N % count`, and the union of the runs covers every channel.
+ */
+function shardOf(id: string, count: number): number {
+  let hash = 2166136261;
+  for (let i = 0; i < id.length; i++) {
+    hash ^= id.charCodeAt(i);
+    hash = Math.imul(hash, 16777619);
+  }
+  return (hash >>> 0) % count;
+}
+
+/** True when the id belongs to this run's shard. */
+function inShard(id: string, args: Args): boolean {
+  return args.shardCount <= 1 || shardOf(id, args.shardCount) === args.shardIndex;
+}
 
 function itemUrlForAnalytics(item: Item): string {
   switch (item.platform) {
@@ -473,6 +533,32 @@ function channelFromInnerTubeProfile(
 /* Normalisation: API → Item                                                  */
 /* -------------------------------------------------------------------------- */
 
+function collaboratorsFor(title: string, owner?: Channel): Collaborator[] {
+  const collaborators: Collaborator[] = owner
+    ? [{
+        channelId: owner.id,
+        name: owner.name,
+        kind: owner.kind,
+        region: owner.region,
+      }]
+    : [];
+  const knownNames = new Set(
+    collaborators.map((collaborator) => collaborator.name.trim().toLowerCase()),
+  );
+  for (const name of extractCollaboratorNames(title)) {
+    const key = name.trim().toLowerCase();
+    if (!key || knownNames.has(key)) continue;
+    knownNames.add(key);
+    collaborators.push({
+      channelId: null,
+      name,
+      kind: "unknown",
+      region: "unknown",
+    });
+  }
+  return collaborators;
+}
+
 function itemFromApi(
   raw: any,
   channel: Channel | undefined,
@@ -511,23 +597,7 @@ function itemFromApi(
     channelRegion: channel?.region ?? "unknown",
   });
 
-  /**
-   * Everyone who performed on this upload.
-   *
-   * The uploader comes first; the other performers are read from the title
-   * and, when the curated music dataset knows them, from its `collabVTuber`
-   * and `memo` columns.
-   */
-  const collaborators: Collaborator[] = channel
-    ? [
-        {
-          channelId: channel.id,
-          name: channel.name,
-          kind: channel.kind,
-          region: channel.region,
-        },
-      ]
-    : [];
+  const collaborators = collaboratorsFor(snippet.title ?? "", channel);
 
   const type: Item["type"] =
     status === "live" || status === "upcoming"
@@ -636,6 +706,12 @@ async function fetchVideoDetails(
 
 async function main(): Promise<void> {
   const args = parseArgs(process.argv.slice(2));
+  if (args.shardCount > 1) {
+    log(
+      `shard: ${args.shardIndex + 1}/${args.shardCount} of discovered, ` +
+        `refresh and live candidates`,
+    );
+  }
 
   /**
    * One writer at a time.
@@ -927,6 +1003,8 @@ async function main(): Promise<void> {
   /* --- discovery searches --------------------------------------------- */
   const discoveredChannelIds = new Set<string>();
   const discoveredVideoIds = new Set<string>();
+  /** Search-result metadata for InnerTube-discovered videos. */
+  const discoveredVideoMeta = new Map<string, InnerTubeSearchVideo>();
   const youtubeVideoEvidence = new Map<string, Map<string, string[]>>();
   const rememberYouTubeVideoEvidence = (
     channelId: string,
@@ -959,16 +1037,82 @@ async function main(): Promise<void> {
 
   if (!args.noSearch) {
     for (const spec of searchSpecs) {
-      if (!client || !budget.canAfford(API_COST.search)) {
-        if (spec.type !== "channel" || !innertube.isAvailable) {
-          log(
-            `skip "${spec.query}" (${spec.type}) — ` +
-              (client
-                ? "Data API search budget exhausted"
-                : "InnerTube fallback supports channel discovery only"),
+      /**
+       * The Data API is used when it is configured and the search budget can
+       * afford it. Otherwise InnerTube takes over — for **both** channel and
+       * video queries, so a run without an API key still discovers channels
+       * from singing videos.
+       */
+      if (client && budget.canAfford(API_COST.search)) {
+        try {
+          const results = await client.search(
+            {
+              q: spec.query,
+              type: spec.type,
+              ...(spec.eventType ? { eventType: spec.eventType } : {}),
+              order: "viewCount",
+            },
+            budget,
           );
-          continue;
+          let allowedHits = 0;
+          for (const r of results) {
+            const sn = r?.snippet ?? {};
+            const channelId =
+              sn?.channelId ?? (spec.type === "channel" ? r?.id?.channelId : null);
+            const singingEvidence = hasSingingDiscoveryEvidence([
+              sn.title,
+              sn.description,
+            ]);
+            const virtualAndSingingEvidence =
+              hasVirtualIdentityEvidence([sn.title, sn.description]) &&
+              singingEvidence;
+            const knownChannel =
+              channelId && isKnownPlatformIdentity("youtube", channelId);
+            if (
+              channelId &&
+              (spec.type === "channel" || knownChannel || virtualAndSingingEvidence)
+            ) {
+              discoveredChannelIds.add(channelId);
+              allowedHits++;
+            }
+            if (
+              channelId &&
+              spec.type === "video" &&
+              (knownChannel || virtualAndSingingEvidence) &&
+              r?.id?.videoId
+            ) {
+              discoveredVideoIds.add(r.id.videoId);
+              if (!knownChannel) {
+                rememberYouTubeVideoEvidence(
+                  channelId,
+                  r.id.videoId,
+                  sn.title,
+                  sn.description,
+                );
+              }
+            }
+          }
+          log(
+            `search "${spec.query}" (${spec.type}${spec.eventType ? `/${spec.eventType}` : ""}) → ${allowedHits}/${results.length} known or singing-relevant hits`,
+          );
+        } catch (err) {
+          if (err instanceof QuotaExceededError) {
+            log("quota exhausted during search — stopping");
+            break;
+          }
+          log(`warn: search "${spec.query}" failed: ${(err as Error).message}`);
         }
+        continue;
+      }
+
+      if (!innertube.isAvailable) {
+        log(
+          `skip "${spec.query}" (${spec.type}) — no discovery source available`,
+        );
+        continue;
+      }
+
+      if (spec.type === "channel") {
         const channelIds = await innertube.searchChannels(
           spec.query,
           config.searchResultsPerKeyword,
@@ -982,64 +1126,38 @@ async function main(): Promise<void> {
         );
         continue;
       }
-      try {
-        const results = await client.search(
-          {
-            q: spec.query,
-            type: spec.type,
-            ...(spec.eventType ? { eventType: spec.eventType } : {}),
-            order: "viewCount",
-          },
-          budget,
-        );
-        let allowedHits = 0;
-        for (const r of results) {
-          const sn = r?.snippet ?? {};
-          const channelId =
-            sn?.channelId ?? (spec.type === "channel" ? r?.id?.channelId : null);
-          const singingEvidence = hasSingingDiscoveryEvidence([
-            sn.title,
-            sn.description,
-          ]);
-          const virtualAndSingingEvidence =
-            hasVirtualIdentityEvidence([sn.title, sn.description]) &&
-            singingEvidence;
-          const knownChannel =
-            channelId && isKnownPlatformIdentity("youtube", channelId);
-          if (
-            channelId &&
-            (spec.type === "channel" || knownChannel || virtualAndSingingEvidence)
-          ) {
-            discoveredChannelIds.add(channelId);
-            allowedHits++;
-          }
-          if (
-            channelId &&
-            spec.type === "video" &&
-            (knownChannel || virtualAndSingingEvidence) &&
-            r?.id?.videoId
-          ) {
-            discoveredVideoIds.add(r.id.videoId);
-            if (!knownChannel) {
-              rememberYouTubeVideoEvidence(
-                channelId,
-                r.id.videoId,
-                sn.title,
-                sn.description,
-              );
-            }
-          }
+
+      const videos = await innertube.searchVideos(
+        spec.query,
+        config.searchResultsPerKeyword,
+        { liveOnly: spec.eventType === "live" },
+      );
+      let allowedHits = 0;
+      for (const video of videos) {
+        if (!video.channelId) continue;
+        const evidence = [video.title, video.description];
+        const knownChannel = isKnownPlatformIdentity("youtube", video.channelId);
+        const virtualAndSingingEvidence =
+          hasVirtualIdentityEvidence(evidence) &&
+          hasSingingDiscoveryEvidence(evidence);
+        if (!knownChannel && !virtualAndSingingEvidence) continue;
+        discoveredChannelIds.add(video.channelId);
+        discoveredVideoIds.add(video.id);
+        discoveredVideoMeta.set(video.id, video);
+        if (!knownChannel) {
+          rememberYouTubeVideoEvidence(
+            video.channelId,
+            video.id,
+            video.title,
+            video.description,
+          );
         }
-        log(
-          `search "${spec.query}" (${spec.type}${spec.eventType ? `/${spec.eventType}` : ""}) → ${allowedHits}/${results.length} known or singing-relevant hits`,
-        );
-      } catch (err) {
-        if (err instanceof QuotaExceededError) {
-          log("quota exhausted during search — stopping");
-          break;
-        }
-        log(`warn: search "${spec.query}" failed: ${(err as Error).message}`);
+        allowedHits++;
       }
+      log(
+        `InnerTube search "${spec.query}" (video) → ` +
+          `${allowedHits}/${videos.length} known or singing-relevant hits, no Data API quota`,
+      );
     }
   }
 
@@ -1055,13 +1173,32 @@ async function main(): Promise<void> {
    * activity status, nationality and Twitch ids for ~4,400 performers, and
    * the curated seeds cover the virtual and real artists outside that scene.
    */
+  const curatedBilibiliIds = new Set<string>();
+  for (const seed of ALL_SEEDS) {
+    const identity = seed.platformUrls?.bilibili;
+    const parsed = identity ? extractPlatformId(identity.url) : null;
+    if (parsed?.platform === "bilibili") {
+      curatedBilibiliIds.add(parsed.id);
+    }
+  }
   if (args.roster || !client) {
     const rosterCandidates = await buildRoster({
       onLog: (m) => log(m),
       vdbSource,
       includeOtherPlatforms: false,
     });
+    let skippedBilibiliOnly = 0;
     const roster = rosterCandidates.filter((channel) => {
+      const bilibiliOnly =
+        channel.id.startsWith("bilibili:") &&
+        !channel.platforms.some((link) => link.platform === "youtube");
+      if (
+        bilibiliOnly &&
+        !curatedBilibiliIds.has(channel.id.slice("bilibili:".length))
+      ) {
+        skippedBilibiliOnly++;
+        return false;
+      }
       const separator = channel.id.indexOf(":");
       const knownById =
         separator > 0
@@ -1077,6 +1214,11 @@ async function main(): Promise<void> {
         )
       );
     });
+    if (skippedBilibiliOnly) {
+      log(
+        `roster: skipped ${skippedBilibiliOnly} Bilibili-only identities; add them as curated seeds instead`,
+      );
+    }
     if (roster.length !== rosterCandidates.length) {
       log(
         `roster: retained ${roster.length}/${rosterCandidates.length} identities from vdb, existing data, and seeds`,
@@ -1200,10 +1342,12 @@ async function main(): Promise<void> {
     }
   }
 
-  // 2. Discovered channels (refresh details for up to maxChannelsPerRun).
+  // 2. Discovered channels (refresh details for up to the per-run cap).
+  const discoveredLimit = args.limitChannels ?? config.maxChannelsPerRun;
   const toRefresh = [...discoveredChannelIds]
+    .filter((id) => inShard(id, args))
     .filter((id) => !channelById.has(id) || args.force)
-    .slice(0, config.maxChannelsPerRun);
+    .slice(0, discoveredLimit);
 
   const hasTwoVirtualSingingVideos = async (channelId: string): Promise<boolean> => {
     const videos =
@@ -1761,7 +1905,16 @@ async function main(): Promise<void> {
             if (profile.displayName) twitchLink.name = profile.displayName;
             if (profile.live) {
               // The channel is live right now.
-              const item = innertubeLiveToItem(profile.live, channel, now);
+              const item = liveStreamToItem(
+                {
+                  id: profile.live.id,
+                  title: profile.live.title,
+                  viewers: profile.live.viewers,
+                  platform: "twitch",
+                },
+                channel,
+                now,
+              );
               if (item) {
                 const prev = itemById.get(item.id);
                 itemById.set(item.id, {
@@ -2236,7 +2389,10 @@ async function main(): Promise<void> {
    */
   {
     const bili = adapters.find((a) => a.id === "bilibili") as
-      | (typeof adapters)[number] & { knownMids?: Set<string> }
+      | (typeof adapters)[number] & {
+          knownMids?: Set<string>;
+          discoverableMids?: Set<string>;
+        }
       | undefined;
     if (bili) {
       const biliIdentities = knownPlatformIdentities.get("bilibili");
@@ -2245,7 +2401,23 @@ async function main(): Promise<void> {
         ...(biliIdentities?.handles ?? []),
       ]);
       bili.knownMids = mids;
-      log(`bilibili: ${mids.size} allowlisted account(s) for discovery`);
+      const linkedIdentities = new Set<string>();
+      for (const performer of vdbRoster) {
+        if (!performer.platforms.some((link) => link.platform === "youtube")) {
+          continue;
+        }
+        for (const link of performer.platforms) {
+          if (link.platform === "bilibili") {
+            linkedIdentities.add(link.id);
+            if (link.handle) linkedIdentities.add(link.handle);
+          }
+        }
+      }
+      for (const id of curatedBilibiliIds) linkedIdentities.add(id);
+      bili.discoverableMids = linkedIdentities;
+      log(
+        `bilibili: ${mids.size} known account(s); ranking discovery limited to ${linkedIdentities.size} curated or YouTube-linked account(s)`,
+      );
     }
   }
   if (extraPlatforms.length && !args.noSearch) {
@@ -2433,10 +2605,17 @@ async function main(): Promise<void> {
       );
     });
 
+  const shardRefreshable = refreshable.filter((c) => inShard(c.id, args));
   const channelList =
     args.limitChannels !== null
-      ? refreshable.slice(0, args.limitChannels)
-      : refreshable.slice(0, config.maxChannelsPerRun);
+      ? shardRefreshable.slice(0, args.limitChannels)
+      : shardRefreshable.slice(0, config.maxChannelsPerRun);
+  if (args.shardCount > 1) {
+    log(
+      `refresh: ${shardRefreshable.length} channel(s) in shard ` +
+        `${args.shardIndex + 1}/${args.shardCount}, fetching ${channelList.length}`,
+    );
+  }
 
   let fetchedVideos = 0;
   let fetchedReleases = 0;
@@ -2523,96 +2702,174 @@ async function main(): Promise<void> {
   );
 
   /* --- live + upcoming broadcasts -------------------------------------- */
-  if (client && config.refreshLiveEveryRun && budget.canAfford(API_COST.liveBroadcasts)) {
+  /**
+   * InnerTube's channel Live tab is the live source.
+   *
+   * `liveBroadcasts.list` needs OAuth, and the scheduled pipeline only has an
+   * API key, so it cannot read another channel's broadcasts. The public Live
+   * tab needs no quota and returns the currently live and upcoming entries.
+   *
+   * A check that succeeds but returns nothing is meaningful: the broadcast
+   * that was live on the previous run has ended, so its item is retired to
+   * `past` instead of staying on the Live page forever. A failed check
+   * (`null`) changes nothing.
+   */
+  if (config.refreshLiveEveryRun) {
+    const itemsByChannel = new Map<string, Item[]>();
+    for (const item of itemById.values()) {
+      const list = itemsByChannel.get(item.channelId) ?? [];
+      list.push(item);
+      itemsByChannel.set(item.channelId, list);
+    }
+
+    const liveLimit = args.limitLive ?? config.maxLiveChannelsPerRun;
     const liveTargets = singingChannels
-      .slice(0, config.maxLiveChannelsPerRun)
-      .map((c) => c.id);
-    try {
-      const broadcasts = await client.liveBroadcasts(liveTargets);
-      let added = 0;
-      for (const b of broadcasts) {
-        const channel = channelById.get(b.snippet?.channelId ?? "");
-        if (!channel) continue;
-        const snippet = b.snippet ?? {};
-        const status = b.status?.lifeCycleStatus ?? "unknown";
-        const state: Item["status"] =
-          status === "live"
-            ? "live"
-            : status === "upcoming"
-              ? "upcoming"
-              : "past";
-        const item: Item = {
-          id: b.id,
-          platform: "youtube",
-          type: "live",
-          channelId: channel.id,
-          channelName: channel.name,
-          channelKind: channel.kind,
-          region: channel.region,
-          gender: channel.gender,
-          languages: channel.languages,
+      .filter((c) => c.id.startsWith("UC") && inShard(c.id, args))
+      .sort((a, b) =>
+        (a.lastItemsFetchedAt ?? "").localeCompare(
+          b.lastItemsFetchedAt ?? "",
+        ),
+      )
+      .slice(0, liveLimit);
 
+    const liveItemIds = new Set<string>();
+    if (liveTargets.length && innertube.isAvailable) {
+      let checked = 0;
+      let found = 0;
+      let retired = 0;
+      for (const channel of liveTargets) {
+        const streams = await innertube.liveStreams(channel.id);
+        if (streams === null) continue;
+        checked++;
+        const current = new Set(streams.map((stream) => stream.id));
+        found += streams.length;
 
-          isAi: channel.isAi,
-          variant: channel.variant,
-          title: snippet.title ?? "Untitled",
-          description: truncate(snippet.description, 600),
-          thumbnail: pickThumbnail(snippet.thumbnails, "high"),
-          publishedAt: snippet.publishedAt ?? null,
-          scheduledStart: b.contentDetails?.scheduledStartTime ?? null,
-          actualStart: b.contentDetails?.actualStartTime ?? null,
-          actualEnd: b.contentDetails?.actualEndTime ?? null,
-          duration: null,
-          status: state,
-          category: state === "upcoming" ? "premiere" : "live",
-          songTitle: null,
-          originalArtist: null,
-          isCollab: false,
-          collaborators: [
+        for (const stream of streams) {
+          const item = liveStreamToItem(
             {
-              channelId: channel.id,
-              name: channel.name,
-              kind: channel.kind,
-              region: channel.region,
+              id: stream.id,
+              title: stream.title,
+              platform: "youtube",
+              thumbnail: stream.thumbnail,
+              status: stream.status,
+              scheduledStart: stream.scheduledStart,
             },
-          ],
-          isAcoustic: false,
-          tags: [],
-          viewCount: null,
-          likeCount: null,
-          concurrentViewers: null,
-          source: "api",
-          addedAt: now,
-          updatedAt: now,
-          lastItemsFetchedAt: null,
-          lastDetailsFetchedAt: null,
-        };
-        const prev = itemById.get(item.id);
-        itemById.set(item.id, { ...item, addedAt: prev?.addedAt ?? item.addedAt });
-        added++;
+            channel,
+            now,
+          );
+          if (!item) continue;
+          const prev = itemById.get(item.id);
+          itemById.set(item.id, {
+            ...item,
+            addedAt: prev?.addedAt ?? item.addedAt,
+          });
+          liveItemIds.add(item.id);
+        }
+
+        for (const existing of itemsByChannel.get(channel.id) ?? []) {
+          if (existing.type !== "live") continue;
+          if (existing.status !== "live" && existing.status !== "upcoming") {
+            continue;
+          }
+          if (current.has(existing.id)) continue;
+          const ended = itemById.get(existing.id);
+          if (!ended) continue;
+          ended.status = "past";
+          ended.actualEnd = ended.actualEnd ?? now;
+          ended.publishedAt =
+            ended.publishedAt ?? ended.actualStart ?? ended.scheduledStart ?? now;
+          ended.updatedAt = now;
+          retired++;
+        }
       }
-      log(`live broadcasts: ${broadcasts.length} fetched, ${added} stored`);
-    } catch (err) {
-      log(`warn: live broadcast fetch failed: ${(err as Error).message}`);
+      log(
+        `innertube live: checked ${checked}/${liveTargets.length} channel(s), ` +
+          `found ${found}, stored ${liveItemIds.size}, retired ${retired}`,
+      );
+    } else if (liveTargets.length) {
+      log("live: InnerTube unavailable — skipping live refresh");
+    }
+
+    /**
+     * The Data API adds the fields the Live tab does not carry: the exact
+     * scheduled/actual start, the concurrent viewer count and the statistics.
+     * It is optional and bounded to the broadcasts this run discovered.
+     */
+    if (
+      client &&
+      liveItemIds.size &&
+      budget.canAfford(API_COST.videos)
+    ) {
+      const ids = [...liveItemIds].slice(0, 50);
+      try {
+        const details = await fetchVideoDetails(client, ids);
+        let enriched = 0;
+        for (const raw of details) {
+          const channel = channelById.get(raw.snippet?.channelId ?? "");
+          if (!channel) continue;
+          const item = itemFromApi(raw, channel, "api", now);
+          if (!item) continue;
+          const prev = itemById.get(item.id);
+          itemById.set(item.id, {
+            ...item,
+            addedAt: prev?.addedAt ?? item.addedAt,
+          });
+          enriched++;
+        }
+        log(`live details: enriched ${enriched}/${ids.length} broadcast(s)`);
+      } catch (err) {
+        log(`warn: live detail fetch failed: ${(err as Error).message}`);
+      }
     }
   }
 
   /* --- discovered videos ------------------------------------------------ */
-  if (client && discoveredVideoIds.size && budget.canAfford(API_COST.videos)) {
+  if (discoveredVideoIds.size) {
     const ids = [...discoveredVideoIds].slice(0, 200);
-    try {
-      const details = await fetchVideoDetails(client, ids);
-      for (const raw of details) {
-        const channel = channelById.get(raw.snippet?.channelId ?? "");
-        if (!channel) continue;
-        const item = itemFromApi(raw, channel, "api", now);
+    if (client && budget.canAfford(API_COST.videos)) {
+      try {
+        const details = await fetchVideoDetails(client, ids);
+        for (const raw of details) {
+          const channel = channelById.get(raw.snippet?.channelId ?? "");
+          if (!channel) continue;
+          const item = itemFromApi(raw, channel, "api", now);
+          if (!item) continue;
+          const prev = itemById.get(item.id);
+          itemById.set(item.id, {
+            ...item,
+            addedAt: prev?.addedAt ?? item.addedAt,
+          });
+        }
+        log(`search-discovered videos: ${details.length} stored`);
+      } catch (err) {
+        log(`warn: discovered video fetch failed: ${(err as Error).message}`);
+      }
+    } else if (innertube.isAvailable && discoveredVideoMeta.size) {
+      /**
+       * With no Data API the search result is all the metadata there is: the
+       * title, the description snippet and the thumbnail. That is enough to
+       * classify and store the video without spending quota.
+       */
+      let stored = 0;
+      for (const id of ids) {
+        const meta = discoveredVideoMeta.get(id);
+        const channel = meta?.channelId
+          ? channelById.get(meta.channelId)
+          : undefined;
+        if (!meta || !channel) continue;
+        const item = innertubeUploadToItem(meta, channel, now);
         if (!item) continue;
         const prev = itemById.get(item.id);
-        itemById.set(item.id, { ...item, addedAt: prev?.addedAt ?? item.addedAt });
+        itemById.set(item.id, {
+          ...item,
+          addedAt: prev?.addedAt ?? item.addedAt,
+        });
+        stored++;
       }
-      log(`search-discovered videos: ${details.length} stored`);
-    } catch (err) {
-      log(`warn: discovered video fetch failed: ${(err as Error).message}`);
+      log(
+        `search-discovered videos: ${stored} stored from InnerTube ` +
+          `(no Data API quota)`,
+      );
     }
   }
 
@@ -2668,6 +2925,22 @@ async function main(): Promise<void> {
       if (entry.song) item.songTitle = entry.song;
       if (entry.original) item.originalArtist = entry.original;
       if (entry.collab) item.isCollab = true;
+      if (entry.collabVtuber) {
+        const collaborator = findChannelByName(channels, entry.collabVtuber);
+        const key = entry.collabVtuber.trim().toLowerCase();
+        if (
+          !item.collaborators.some(
+            (existing) => existing.name.trim().toLowerCase() === key,
+          )
+        ) {
+          item.collaborators.push({
+            channelId: collaborator?.id ?? null,
+            name: entry.collabVtuber,
+            kind: collaborator?.kind ?? "virtual",
+            region: collaborator?.region ?? "unknown",
+          });
+        }
+      }
       if (!item.publishedAt && entry.publishedAt) {
         item.publishedAt = entry.publishedAt;
       }
@@ -2983,17 +3256,43 @@ async function main(): Promise<void> {
 /* -------------------------------------------------------------------------- */
 
 /**
- * Converts a live Twitch stream into a dataset item.
+ * Converts a live or upcoming stream into a dataset item.
+ *
+ * It is used for both YouTube's Live tab and a Twitch profile's current
+ * stream. The platform decides the item URL, so a Twitch stream must not be
+ * stored as a YouTube item.
  */
-export function innertubeLiveToItem(
-  live: { id: string; title: string; viewers: number | null },
+export function liveStreamToItem(
+  live: {
+    id: string;
+    title: string;
+    platform?: PlatformId;
+    viewers?: number | null;
+    thumbnail?: string | null;
+    status?: "live" | "upcoming";
+    scheduledStart?: string | null;
+    actualStart?: string | null;
+  },
   channel: Channel,
   now: string,
 ): Item | null {
   if (!live?.id) return null;
+  const status = live.status ?? "live";
+  const actualStart =
+    status === "upcoming" ? null : (live.actualStart ?? now);
+  const classification = classifyItem({
+    title: live.title,
+    description: null,
+    tags: [],
+    channelKind: channel.kind,
+    status,
+    isShort: false,
+    durationSeconds: null,
+    channelRegion: channel.region,
+  });
   return {
     id: live.id,
-    platform: "youtube",
+    platform: live.platform ?? "youtube",
     type: "live",
     channelId: channel.id,
     channelName: channel.name,
@@ -3005,17 +3304,22 @@ export function innertubeLiveToItem(
     variant: channel.variant,
     title: live.title || "Untitled",
     description: null,
-    thumbnail: null,
-    publishedAt: now,
-    scheduledStart: null,
-    actualStart: now,
+    thumbnail: live.thumbnail ?? null,
+    publishedAt: status === "upcoming" ? null : actualStart,
+    scheduledStart: live.scheduledStart ?? null,
+    actualStart,
     actualEnd: null,
     duration: null,
-    status: "live",
-    category: "live",
-    songTitle: null,
-    originalArtist: null,
-    isCollab: false,
+    status,
+    category:
+      status === "upcoming"
+        ? "premiere"
+        : classification.category === "other"
+          ? "live"
+          : classification.category,
+    songTitle: classification.songTitle,
+    originalArtist: classification.originalArtist,
+    isCollab: classification.isCollab,
     collaborators: [
       {
         channelId: channel.id,
@@ -3024,7 +3328,7 @@ export function innertubeLiveToItem(
         region: channel.region,
       },
     ],
-    isAcoustic: false,
+    isAcoustic: classification.isAcoustic,
     tags: [],
     viewCount: null,
     likeCount: null,
@@ -3065,14 +3369,20 @@ function externalKeyFor(url: string): string | null {
  * date and the statistics come from the Data API when there is one.
  */
 export function innertubeUploadToItem(
-  upload: { id: string; title: string; thumbnail: string | null },
+  upload: {
+    id: string;
+    title: string;
+    thumbnail: string | null;
+    description?: string | null;
+  },
   channel: Channel,
   now: string,
 ): Item | null {
   if (!upload?.id) return null;
+  const description = truncate(upload.description ?? null, 600);
   const classification = classifyItem({
     title: upload.title,
-    description: null,
+    description,
     tags: [],
     channelKind: channel.kind,
     status: "past",
@@ -3096,7 +3406,7 @@ export function innertubeUploadToItem(
     isAi: channel.isAi,
     variant: channel.variant,
     title: upload.title || "Untitled",
-    description: null,
+    description,
     thumbnail: upload.thumbnail,
     publishedAt: null,
     scheduledStart: null,
@@ -3193,18 +3503,31 @@ export function platformUploadToItem(
   owner?: Channel,
 ): Item | null {
   if (!upload?.id) return null;
+  const channelKind = owner?.kind ?? "virtual";
+  const region = upload.region ?? owner?.region ?? "unknown";
+  const classification = classifyItem({
+    title: upload.title ?? "",
+    description: upload.description,
+    tags: [],
+    channelKind,
+    status: upload.status,
+    isShort: false,
+    durationSeconds: upload.duration,
+    channelRegion: region,
+  });
   return {
     id: upload.id,
     platform: upload.platform,
     url: upload.url,
     type: upload.status === "live" ? "live" : "video",
     channelId:
-      upload.platform === "youtube"
+      owner?.id ??
+      (upload.platform === "youtube"
         ? upload.channelId
-        : `${upload.platform}:${upload.channelId}`,
+        : `${upload.platform}:${upload.channelId}`),
     channelName: owner?.name ?? upload.channelId,
-    channelKind: owner?.kind ?? "virtual",
-    region: upload.region ?? owner?.region ?? "unknown",
+    channelKind,
+    region,
     gender: owner?.gender ?? "unknown",
     languages: owner?.languages ?? [],
 
@@ -3222,16 +3545,9 @@ export function platformUploadToItem(
     category: upload.category,
     songTitle: upload.songTitle ?? null,
     originalArtist: upload.originalArtist ?? null,
-    isCollab: false,
-    collaborators: owner
-      ? [{
-          channelId: owner.id,
-          name: owner.name,
-          kind: owner.kind,
-          region: owner.region,
-        }]
-      : [],
-    isAcoustic: false,
+    isCollab: classification.isCollab,
+    collaborators: collaboratorsFor(upload.title, owner),
+    isAcoustic: classification.isAcoustic,
     tags: [],
     viewCount: upload.viewCount ?? null,
     likeCount: null,

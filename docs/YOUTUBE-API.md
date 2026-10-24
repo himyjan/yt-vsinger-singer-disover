@@ -1,35 +1,57 @@
-# YouTube Data API v3
+# YouTube: InnerTube and the Data API
 
 > How the pipeline talks to YouTube, what it costs, and how to stay inside the
 > free tier.
 
-YouTube is the project's primary platform. InnerTube (`youtubei.js`) is the
-default source for handle resolution, channel profiles and uploads. The
-YouTube Data API v3 is optional and supplements InnerTube with discovery,
-live-broadcast data and detailed video metadata; it is also a fallback when
-InnerTube cannot retrieve a channel profile or uploads. When the API key is
-missing or the search quota runs out, channel discovery falls back to
-InnerTube's public channel search (no Data API quota). InnerTube fallback
-currently discovers channels only; video search and its richer metadata
-require the Data API. These are access methods for YouTube data, not separate
-platforms. See `docs/SOURCES.md` for the source overview.
+YouTube is the project's primary platform. **InnerTube** (`youtubei.js`) is the
+default and primary source: handle resolution, channel search, video search,
+channel profiles, uploads, releases and the channel Live tab all go through it,
+with **no API key and no Data API quota**. The YouTube Data API v3 is optional;
+it adds richer video statistics, exact broadcast start/end times and a fallback
+when InnerTube cannot answer. These are access methods for YouTube data, not
+separate platforms. See `docs/SOURCES.md` for the source overview.
 
 Search hits are candidates, not automatic channel admissions. For a new
 YouTube identity to enter the virtual dataset, sync checks two or more distinct
 uploads and requires each video to show both virtual-creator identity (such as
 VTuber, VSinger, or localized equivalents) and singing evidence (such as
 歌枠, 歌ってみた, 弾き語り, KARAOKE, or a singing-relay hashtag) in its
-title, description, or tags. With InnerTube-only discovery, verification uses
-the upload titles it can retrieve; with the Data API, video descriptions and
-tags are available too. An existing dataset, vdb, or curated seed identity
-does not need to pass this new-channel gate. This rejects ordinary singers and
-karaoke streamers based on singing terms alone while allowing varying event
-hashtag names.
+title, description, or tags. InnerTube search results carry a title and a
+description snippet, which is enough for the gate; with the Data API, tags are
+available too. An existing dataset, vdb, or curated seed identity does not need
+to pass this new-channel gate. This rejects ordinary singers and karaoke
+streamers based on singing terms alone while allowing varying event hashtag
+names.
+
+## What InnerTube provides
+
+| Capability | Method | Cost |
+| --- | --- | --- |
+| Resolve a handle or channel URL | `InnerTubeSource.profile()` | none |
+| Channel keyword discovery | `InnerTubeSource.searchChannels()` | none |
+| Video keyword discovery | `InnerTubeSource.searchVideos()` | none |
+| Video discovery restricted to live | `searchVideos(q, n, { liveOnly: true })` | none |
+| Channel uploads | `InnerTubeSource.uploads()` | none |
+| YouTube Music releases | `InnerTubeSource.releases()` | none |
+| Live and upcoming broadcasts | `InnerTubeSource.liveStreams()` | none |
+
+`searchVideos()` reads the public search result's title, description snippet,
+owning channel id, thumbnail and view count. `liveStreams()` reads the channel's
+**Live** tab, which mixes live, upcoming and finished broadcasts; only the first
+two are collected, and a finished broadcast is already represented by the
+uploads tab. The tab has two renderers (`LockupView` and `GridVideo`), so the
+state is read from the thumbnail badge and the metadata rows rather than from a
+single field.
+
+`liveStreams()` returns `null` when the check failed and `[]` when the channel
+was checked and nothing is live. The distinction matters: on an empty successful
+check the previously stored live item is retired to `past`, while a failed check
+changes nothing.
 
 ## Optional API key
 
 You can run the sync pipeline without a key. Add one only if you want the
-Data API features listed above:
+Data API extras listed above:
 1. Open the [Google Cloud console](https://console.cloud.google.com/apis/credentials).
 2. Create a project.
 3. Enable **YouTube Data API v3**.
@@ -47,38 +69,40 @@ A default project gets **10,000 units per day**. The costs that matter:
 
 | Request | Units | Used for |
 | --- | ---: | --- |
-| `search.list` | **100** | Discovery — finding new channels and videos |
+| `search.list` | **100** | Optional discovery; InnerTube search is the default |
 | `channels.list` | 1 | Channel details, up to 50 ids per call |
 | `videos.list` | 1 | Video details, up to 50 ids per call |
 | `playlistItems.list` | 1 | A channel's uploads, 50 per page |
 | `playlists.list` | 1 | Playlist details |
-| `liveBroadcasts.list` | 1 | Live and upcoming streams, 50 channels per call |
 | `subscriptions.list` | 1 | The user's subscriptions (browser-side, OAuth) |
 | `activities.list` | 1 | Channel activity |
 
 The asymmetry is the whole game: **one search costs as much as fifty channel
 lookups**. The pipeline is built around that:
 
-- known channels are refreshed with `channels.list` (1 unit per 50);
-- their uploads come from `playlistItems.list` (1 unit per 50);
-- video details come from `videos.list` (1 unit per 50);
-- `search.list` is spent only on discovery, and only for as many keywords as
-  the budget allows.
+- discovery, uploads, profiles, releases and the Live tab go through
+  InnerTube and cost nothing;
+- the Data API is spent only when it is configured and adds something
+  InnerTube does not carry — detailed video statistics, exact broadcast
+  times and a fallback for a failed InnerTube lookup.
 
 ### What a run costs
 
-A typical run with 40 discovery searches, 60 refreshed channels and their
-uploads:
+A typical run with up to 40 discovery searches, 150 refreshed channels and
+their uploads, when the Data API **is** configured:
 
 | Step | Calls | Units |
 | --- | ---: | ---: |
 | Discovery searches | 40 | 4,000 |
-| Seeded channels | 3 | 3 |
-| Known channels | 20 | 20 |
-| Uploads (60 channels) | 60 | 60 |
-| Video details | 60 | 60 |
-| Live broadcasts | 2 | 2 |
-| **Total** | | **~4,145** |
+| Known channels | 150 | 150 |
+| Uploads (150 channels) | 150 | 150 |
+| Video details | 150 | 150 |
+| Live detail enrichment | up to 50 | 1 |
+| **Total** | | **~4,451** |
+
+Without an API key the same run spends **zero** units: InnerTube supplies
+discovery, profiles, uploads, live status and the search-result metadata used
+for discovered videos.
 
 Which is why the workflow runs every six hours with a **2,500-unit** budget
 by default: four runs a day stay comfortably inside 10,000, and the quota
@@ -86,6 +110,14 @@ state is cached between runs so the budget is cumulative, not per-run.
 For each new YouTube candidate that reaches the qualification check, the Data
 API may additionally spend one unit on its first ten uploads and one unit on
 their video details. The quota-free InnerTube upload check is used first.
+
+### Why the scheduled pipeline does not use `liveBroadcasts.list`
+
+`liveBroadcasts.list` requires OAuth. An API key alone is rejected with a
+permission error, and the scheduled workflow only has `YOUTUBE_API_KEY`. The
+channel Live tab through InnerTube is the live source instead; the Data API's
+`videos.list` optionally enriches a discovered broadcast with its exact
+scheduled/actual times, concurrent viewers and statistics.
 
 ## The quota guard
 
@@ -103,9 +135,9 @@ budget really is cumulative across the day.
 
 ## Caching
 
-Every response is written to `.cache/youtube/<hash>.json`, keyed by the request
-URL. A re-run of the sync re-uses the cached responses and only spends quota
-on genuinely new data.
+Every Data API response is written to `.cache/youtube/<hash>.json`, keyed by
+the request URL. A re-run of the sync re-uses the cached responses and only
+spends quota on genuinely new data.
 
 To force a clean run:
 
@@ -164,12 +196,13 @@ One unit per 50. This is where the useful extras come from:
 ### `liveBroadcasts.list`
 
 ```http
-GET /youtube/v3/liveBroadcasts?part=snippet,contentDetails,status&broadcastStatus=all&id=UC...,UC...
+GET /youtube/v3/liveBroadcasts?part=snippet,contentDetails,status&broadcastStatus=all&id=...
 ```
 
-One unit per 50 channels. `broadcastStatus=all` returns **upcoming**,
-**live** and finished broadcasts — this is the cheapest way to collect the
-"live now" and "scheduled" data.
+**Not used by the scheduled pipeline.** This endpoint requires an OAuth token
+with a YouTube scope; an API key alone is rejected, and the scheduled workflow
+has only a key. Live and upcoming broadcasts are read from the channel's Live
+tab through InnerTube instead, and `videos.list` optionally enriches them.
 
 ### `search.list`
 
@@ -177,14 +210,16 @@ One unit per 50 channels. `broadcastStatus=all` returns **upcoming**,
 GET /youtube/v3/search?part=snippet&type=channel|video&q=...&order=date|viewCount&maxResults=50
 ```
 
-**100 units.** `order=date` can surface newer results; the sync uses its
-configured channel/video queries and treats hits as candidates. New YouTube
-channels must still pass the two-distinct-video virtual-identity and singing
-evidence check above. `eventType=live` restricts results to live streams.
+**100 units**, so it is optional. `order=date` can surface newer results; the
+sync uses its configured channel/video queries and treats hits as candidates.
+New YouTube channels must still pass the two-distinct-video virtual-identity
+and singing evidence check above. `eventType=live` restricts results to live
+streams, which InnerTube mirrors with `features: ["live"]`.
 
 Channel searches find candidate identities. Video searches can surface
 singing-related uploads; their channel still has to pass the same two-distinct
-video qualification check before a new record is admitted.
+video qualification check before a new record is admitted. When the Data API is
+not configured, InnerTube performs both kinds of search instead.
 
 ## The `UU` trick and `forHandle`
 
@@ -200,18 +235,35 @@ committed.
 
 ## InnerTube and authentication
 
-The pipeline uses **`youtubei.js`** (InnerTube) by default for quota-free
-profile, upload and channel-discovery data. It is an unofficial interface and
-can change without notice; when configured, the Data API is used for
-discovery, live-broadcast data, detailed video metadata and as a fallback for
-failed InnerTube lookups. The `Sync dataset` GitHub Action runs the configured
-searches; a manual run can provide a custom `keyword` instead. Without an API
-key, channel keyword searches still run through InnerTube. The optional local
-dev server also uses InnerTube for interactive YouTube features.
+The pipeline uses **`youtubei.js`** (InnerTube) as the primary quota-free
+source for handle resolution, channel and video search, profiles, uploads,
+releases and the Live tab. It is an unofficial interface and can change
+without notice; when configured, the Data API supplements it with detailed
+video metadata and acts as a fallback for a failed InnerTube lookup. The
+`Sync dataset` GitHub Action runs the configured searches; a manual run can
+provide a custom `keyword` instead. Without an API key every search still runs
+through InnerTube. The optional local dev server also uses InnerTube for
+interactive YouTube features.
 
 The pipeline reads public data only, so no OAuth token is required
 server-side. The browser app uses OAuth for account-scoped features such as
 the user's own subscriptions.
+
+## Scaling to the whole catalogue
+
+The catalogue is much larger than one run can refresh, so the refresh, live
+and discovery candidate sets are split into **deterministic shards**:
+
+- the shard is `FNV-1a(channel id) % shardCount`, so a channel always lands in
+  the same shard on every machine and every run;
+- `--shard N/M` selects one shard (1-based; `M=1` disables sharding);
+- the scheduled workflow rotates `N` by `GITHUB_RUN_NUMBER`, so successive runs
+  cover the whole catalogue without a persisted cursor;
+- within a shard, channels that have gone longest without a refresh are picked
+  first, and `maxChannelsPerRun` / `maxLiveChannelsPerRun` cap the work.
+
+`--limit-channels N` and `--limit-live N` override the per-run caps for a
+bounded local run.
 
 ## Troubleshooting
 

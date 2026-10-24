@@ -273,6 +273,8 @@ export class BilibiliAdapter implements PlatformAdapter {
    * separates a VTuber stream from the general live feed.
    */
   knownMids: Set<string> | null = null;
+  /** Only independently sourced identities may be newly discovered. */
+  discoverableMids: Set<string> | null = null;
 
   constructor(options: BilibiliOptions = {}) {
     this.partition = options.partition ?? VTUBER_PARTITION;
@@ -624,7 +626,8 @@ export class BilibiliAdapter implements PlatformAdapter {
     for (const video of ranking?.data?.list ?? []) {
       const owner = video.owner;
       if (!owner?.mid) continue;
-      if (this.knownMids && !this.knownMids.has(String(owner.mid))) continue;
+      const discoverable = this.discoverableMids ?? this.knownMids;
+      if (!discoverable?.has(String(owner.mid))) continue;
       if (!byId.has(String(owner.mid))) {
         byId.set(String(owner.mid), {
           platform: "bilibili",

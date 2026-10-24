@@ -79,16 +79,21 @@ streams on Twitch be recognised.
 **Credentials:** `YOUTUBE_API_KEY` (optional)
 
 YouTube is the primary platform. The pipeline uses InnerTube (`youtubei.js`)
-for handle resolution, channel profiles and uploads without an API key. When
-configured, the Data API supplements that path with discovery search,
-live-broadcast data, and detailed video statistics; it falls back to the Data
-API for a channel only when InnerTube cannot retrieve its profile or uploads.
-See `docs/YOUTUBE-API.md` for quota details.
+for handle resolution, channel and video search, channel profiles, uploads,
+releases and the Live tab without an API key. When configured, the Data API
+supplements that path with detailed video statistics and exact broadcast
+start/end times; it is also a fallback for a profile or uploads lookup that
+InnerTube cannot complete. See `docs/YOUTUBE-API.md` for quota details.
 
+- `search()` — InnerTube channel or video search; the Data API is used only
+  when configured and within quota.
 - `resolve()` — InnerTube handle resolution; Data API fallback (1 unit).
 - `uploads()` — InnerTube channel uploads; Data API fallback using the `UU`
   trick plus `playlistItems.list` and `videos.list` (2 units per 50 videos).
-- `live()` — `liveBroadcasts.list` (1 unit per 50 channels).
+- `live()` — InnerTube channel Live tab (live and upcoming only); a successful
+  empty check retires a stale live item, a failed check changes nothing.
+  `liveBroadcasts.list` is not used: it requires OAuth, and the scheduled
+  pipeline only has an API key.
 
 ## Twitch
 
@@ -259,6 +264,8 @@ read during profile detail/import fetches:
 | Key | Pattern |
 | --- | --- |
 | `youtube` | `youtube.com/channel/<id>`, `youtube.com/@<handle>`, `/user/<handle>` or `/c/<handle>` |
+| `youtube_video` | `youtu.be/<video-id>`, `youtube.com/watch?v=<video-id>`, `/shorts/<id>` or `music.youtube.com/watch?v=<id>` |
+| `youtube_playlist` | `youtube.com/playlist?list=<id>` or `music.youtube.com/playlist?list=<id>` |
 | `twitch` | `twitch.tv/<login>` |
 | `x` | `twitter.com/<handle>` or `x.com/<handle>` |
 | `instagram` | `instagram.com/<handle>` |
@@ -274,9 +281,25 @@ read during profile detail/import fetches:
 | `ci.me` | `ci.me/<channel-handle>` |
 
 The YouTube channel, Twitch, Bilibili, Niconico, VK, CHZZK, KICK, SOOP and
-CI.ME patterns cover the supported streaming platforms; social and music
-links are collected as well. These are rendered in the "all links" block next
-to the platform identities.
+CI.ME patterns cover the supported platforms; social, music, YouTube video and
+playlist links are collected as well. These are rendered in the "all links"
+block next to the platform identities.
+
+The YouTube profile's About-page Links section is read through InnerTube
+during the details/import pass, including links to Bilibili, videos and
+playlists.
+
+YouTube playlist links collected in a DOCX can be imported with
+`npm run data:import-playlist -- "path/to/playlist.docx"`. The importer uses
+oEmbed metadata to match uploaders to existing channel ids or exact handles,
+verifies a published country through InnerTube when available, and writes
+unmatched or unclear entries to `.cache/playlist-import-unmatched.json` for
+manual review instead of assigning a new channel kind.
+
+Bilibili's broad live feed is filtered to known identities. Ranking results
+can add a channel only when the Bilibili identity is explicitly curated or
+linked to a known YouTube channel; Bilibili-only roster entries must be
+curated rather than bulk-imported.
 
 ## CHZZK, KICK and SOOP
 
@@ -332,9 +355,9 @@ by the configured adapters:
 
 | Platform | Discovery / collection |
 | --- | --- |
-| YouTube | InnerTube channel search; Data API search when configured and within quota |
+| YouTube | InnerTube channel and video search, uploads and Live tab; Data API search and video details when configured and within quota |
 | Twitch | Keyword channel search and live streams; requires `TWITCH_CLIENT_ID` and `TWITCH_CLIENT_SECRET` |
-| Bilibili | VTuber partition discovery, live streams from the partition, and uploads for discovered/known channels |
+| Bilibili | Ranking results add only curated or YouTube-linked accounts; live streams and uploads are identity-filtered |
 | Niconico | Keyword video search; stores matched videos and derives their author channels |
 | VK | User search and recent videos; discovery requires `VK_ACCESS_TOKEN` |
 | CHZZK | Public keyword channel search and live streams |
@@ -372,11 +395,13 @@ channels directly, while Niconico finds videos and infers their authors, and
 SOOP only checks its first page of live broadcasts. All results still pass
 through the identity allowlist above.
 
-The YouTube API key is optional. YouTube discovery falls back to InnerTube
-channel search when the Data API key is absent or the search budget is
-exhausted. Twitch and VK discovery do need their Actions secrets. A platform
-without search support is not searched just because a manual keyword was
-provided; the run logs the limitation and continues with supported platforms.
+The YouTube API key is optional. YouTube discovery runs entirely through
+InnerTube when the Data API key is absent or the search budget is exhausted:
+channel queries find candidate channels, and video queries find singing uploads
+whose channel is then verified. Twitch and VK discovery do need their Actions
+secrets. A platform without search support is not searched just because a
+manual keyword was provided; the run logs the limitation and continues with
+supported platforms.
 
 `--no-search` (or the workflow's **Skip discovery searches** input) skips
 keyword discovery on YouTube and other platforms, but still refreshes known

@@ -767,7 +767,7 @@ export interface ItemSummary {
  * around that question rather than around YouTube's API.
  */
 export interface SongRecord {
-  /** YouTube video id. */
+  /** Platform-native media id. */
   id: string;
   /** Owning channel id. */
   channelId: string;
@@ -813,7 +813,7 @@ export interface SongRecord {
   thumbnail: string | null;
   /** View count. */
   viewCount: number | null;
-  /** Canonical watch URL. */
+  /** Canonical media URL from the publishing platform. */
   url: string;
 }
 
