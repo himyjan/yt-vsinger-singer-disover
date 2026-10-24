@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-24T09:06:25.613Z",
+  "generatedAt": "2026-10-24T15:54:59.721Z",
   "items": [
     {
       "id": "1srFxdATX_8",
@@ -141,6 +141,52 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "bDPBrnfto2c",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCDZINBxJShY5mks_W1tqcOg",
+      "channelName": "小鳥遊ゆとは -Yutoha Takanashi-",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "female",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "【歌枠】リクエストOK：該当の人物を探してビンゴを目指せ！【#小鳥遊ゆとは/Vsinger/Vtuber】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/bDPBrnfto2c/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": "リクエストOK：該当の人物を探してビンゴを目指せ！【#小鳥遊ゆとは/Vsinger/Vtuber】",
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCDZINBxJShY5mks_W1tqcOg",
+          "name": "小鳥遊ゆとは -Yutoha Takanashi-",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-24T15:54:59.721Z",
+      "updatedAt": "2026-10-24T15:54:59.721Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "FLVm0EwIdUk",
       "platform": "youtube",
       "type": "live",
@@ -171,6 +217,52 @@
         {
           "channelId": "UC0S-Kc5tpRbG7XGv3IbCQUw",
           "name": "藤音カナデ-Fujioto Kanade-",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-24T09:06:25.613Z",
+      "updatedAt": "2026-10-24T15:54:59.721Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "LSS11WEsPtI",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCGzTVXqMQHa4AgJVJIVvtDQ",
+      "channelName": "Vivi Ch. 綺々羅々ヴィヴィ - FLOW GLOW",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "【#ホロARK】ドラゴンテイムしたい！！初めてのホロ鯖ARK！！＃16【#綺々羅々ヴィヴィ #hololive  #FLOWGLOW】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/LSS11WEsPtI/hq720.jpg",
+      "publishedAt": "2026-10-24T09:06:25.613Z",
+      "scheduledStart": null,
+      "actualStart": "2026-10-24T09:06:25.613Z",
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCGzTVXqMQHa4AgJVJIVvtDQ",
+          "name": "Vivi Ch. 綺々羅々ヴィヴィ - FLOW GLOW",
           "kind": "virtual",
           "region": "jp"
         }
@@ -217,52 +309,6 @@
         {
           "channelId": "UC82JqwZtW_AaoHE9vubF4Og",
           "name": "空詩ぷるむ / Sorashi Purumu",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-24T09:06:25.613Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "LSS11WEsPtI",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCGzTVXqMQHa4AgJVJIVvtDQ",
-      "channelName": "Vivi Ch. 綺々羅々ヴィヴィ - FLOW GLOW",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "【#ホロARK】ドラゴンテイムしたい！！初めてのホロ鯖ARK！！＃16【#綺々羅々ヴィヴィ #hololive  #FLOWGLOW】",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/LSS11WEsPtI/hq720.jpg",
-      "publishedAt": "2026-10-24T09:06:25.613Z",
-      "scheduledStart": null,
-      "actualStart": "2026-10-24T09:06:25.613Z",
-      "actualEnd": null,
-      "duration": null,
-      "status": "live",
-      "category": "live",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCGzTVXqMQHa4AgJVJIVvtDQ",
-          "name": "Vivi Ch. 綺々羅々ヴィヴィ - FLOW GLOW",
           "kind": "virtual",
           "region": "jp"
         }
@@ -366,7 +412,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-24T09:06:25.613Z",
+      "updatedAt": "2026-10-24T15:54:59.721Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -417,6 +463,52 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "xpaLbU17ZAA",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UC3xQCiEPSkco54WhuiDcngw",
+      "channelName": "YOSHIKA⁂Ch.",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vsinger",
+      "title": "【#歌枠 】初見さん大歓迎！1曲聞いてって～！  #shorts  #vtuber  #vsinger",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/xpaLbU17ZAA/hq720.jpg",
+      "publishedAt": "2026-10-24T15:54:59.721Z",
+      "scheduledStart": null,
+      "actualStart": "2026-10-24T15:54:59.721Z",
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC3xQCiEPSkco54WhuiDcngw",
+          "name": "YOSHIKA⁂Ch.",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-24T15:54:59.721Z",
+      "updatedAt": "2026-10-24T15:54:59.721Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "tNW53KLThSA",
       "platform": "youtube",
       "type": "live",
@@ -436,9 +528,9 @@
       "publishedAt": "2026-10-24T09:06:25.613Z",
       "scheduledStart": null,
       "actualStart": "2026-10-24T09:06:25.613Z",
-      "actualEnd": null,
+      "actualEnd": "2026-10-24T15:54:59.721Z",
       "duration": null,
-      "status": "live",
+      "status": "past",
       "category": "mv",
       "songTitle": null,
       "originalArtist": null,
@@ -458,7 +550,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-24T09:06:25.613Z",
+      "updatedAt": "2026-10-24T15:54:59.721Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },

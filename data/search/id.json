@@ -1,20 +1,32 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-24T09:19:37.315Z",
+  "generatedAt": "2026-10-24T16:07:40.574Z",
   "region": "id",
-  "count": 6,
+  "count": 8,
   "tokens": [
     "ayunda",
     "ch",
+    "chat",
+    "fishing",
+    "free",
     "hololive",
     "hoshinova",
     "id",
+    "is",
     "kureiji",
+    "memancing",
     "mike",
     "moona",
     "nakajima",
     "ollie",
     "risu",
+    "room",
+    "s.a.r",
+    "sammybollivienn",
+    "sayaayaaulya",
+    "this",
+    "tim",
+    "with",
     "印度",
     "尼西",
     "度尼",
@@ -22,16 +34,31 @@
   ],
   "postings": [
     [
-      5
+      5,
+      6,
+      7
     ],
     [
       3,
-      5
+      5,
+      6,
+      7
+    ],
+    [
+      7
+    ],
+    [
+      6
+    ],
+    [
+      7
     ],
     [
       1,
       3,
-      5
+      5,
+      6,
+      7
     ],
     [
       1
@@ -41,7 +68,13 @@
       4
     ],
     [
+      7
+    ],
+    [
       3
+    ],
+    [
+      6
     ],
     [
       2
@@ -56,7 +89,30 @@
       3
     ],
     [
-      5
+      5,
+      6,
+      7
+    ],
+    [
+      7
+    ],
+    [
+      6
+    ],
+    [
+      6
+    ],
+    [
+      6
+    ],
+    [
+      7
+    ],
+    [
+      6
+    ],
+    [
+      6
     ],
     [
       0,
@@ -76,21 +132,33 @@
     ]
   ],
   "idf": [
-    1.9459101490553132,
-    1.3862943611198906,
+    1.2992829841302609,
     1.0986122886681096,
-    1.9459101490553132,
-    1.3862943611198906,
-    1.9459101490553132,
-    1.9459101490553132,
-    1.9459101490553132,
-    1.9459101490553132,
-    1.9459101490553132,
-    1.9459101490553132,
-    1.3862943611198906,
-    1.3862943611198906,
-    1.3862943611198906,
-    1.3862943611198906
+    2.1972245773362196,
+    2.1972245773362196,
+    2.1972245773362196,
+    0.9555114450274365,
+    2.1972245773362196,
+    1.6094379124341003,
+    2.1972245773362196,
+    2.1972245773362196,
+    2.1972245773362196,
+    2.1972245773362196,
+    2.1972245773362196,
+    2.1972245773362196,
+    2.1972245773362196,
+    1.2992829841302609,
+    2.1972245773362196,
+    2.1972245773362196,
+    2.1972245773362196,
+    2.1972245773362196,
+    2.1972245773362196,
+    2.1972245773362196,
+    2.1972245773362196,
+    1.6094379124341003,
+    1.6094379124341003,
+    1.6094379124341003,
+    1.6094379124341003
   ],
   "entries": [
     {
@@ -110,7 +178,7 @@
       "n": "Moona Hoshinova hololive",
       "g": "virtual",
       "r": "id",
-      "ts": 1792832785613,
+      "ts": 1792857299721,
       "cn": "Moona Hoshinova hololive",
       "th": "https://yt3.googleusercontent.com/ArbwGFqxm01MKe6qhEnAqIQCro0MUSyI8BVIu-7Ijr3OBw5z86Y1348DTTDFDstWD-uwpIO3=s900-c-k-c0x00ffffff-no-rj",
       "sb": null
@@ -121,7 +189,7 @@
       "n": "mike nakajima",
       "g": "virtual",
       "r": "id",
-      "ts": 1792832785613,
+      "ts": 1792857299721,
       "cn": "mike nakajima",
       "th": "https://yt3.googleusercontent.com/ytc/AIdro_mp5BHtWA80vQXe5GQGGJC5HSAgwawTY449G435D_WqweF5fNSBjGscoCuzbxwx91FdyA=s900-c-k-c0x00ffffff-no-rj",
       "sb": null
@@ -132,7 +200,7 @@
       "n": "Kureiji Ollie Ch. hololive",
       "g": "virtual",
       "r": "id",
-      "ts": 1792832785613,
+      "ts": 1792857299721,
       "cn": "Kureiji Ollie Ch. hololive",
       "th": "https://yt3.googleusercontent.com/fCQ1LUhWHfIGkCLeZl2BG_uQhQ6IqxJ3AJJxFbG6uEpLJ1hlJ2JOoBG7FJiAREeDeEVtwJoZKA=s900-c-k-c0x00ffffff-no-rj",
       "sb": null
@@ -154,10 +222,50 @@
       "n": "Ayunda Risu Ch. hololive",
       "g": "virtual",
       "r": "id",
-      "ts": 1792832785613,
+      "ts": 1792857299721,
       "cn": "Ayunda Risu Ch. hololive",
       "th": "https://yt3.googleusercontent.com/8dYniYG0Fm49TBxwOW39wDzM25P3aAU7r-wecNaOz5a3I1t8dsYbS5OPZXFeHYQpmVRrY9KrSg=s900-c-k-c0x00ffffff-no-rj",
       "sb": null
+    },
+    {
+      "k": "i",
+      "id": "D0GdYYHcoCc",
+      "n": "Memancing. Fishing. with Tim S.A.R. @sammybollivienn @sayaayaaulya",
+      "g": "virtual",
+      "r": "id",
+      "c": "live",
+      "ts": 1792857299721,
+      "ch": "UCOyYb1c43VlX9rc_lT6NKQw",
+      "cn": "Ayunda Risu Ch. hololive",
+      "th": "https://i.ytimg.com/vi/D0GdYYHcoCc/hq720.jpg",
+      "s": null,
+      "o": null,
+      "st": "live",
+      "d": null,
+      "ac": 0,
+      "gd": "male",
+      "ai": 0,
+      "vr": "male_vtuber"
+    },
+    {
+      "k": "i",
+      "id": "vyqhMbDPyOc",
+      "n": "THIS IS FREE CHAT ROOM",
+      "g": "virtual",
+      "r": "id",
+      "c": "premiere",
+      "ts": 0,
+      "ch": "UCOyYb1c43VlX9rc_lT6NKQw",
+      "cn": "Ayunda Risu Ch. hololive",
+      "th": "https://i.ytimg.com/vi/vyqhMbDPyOc/hq720.jpg",
+      "s": null,
+      "o": null,
+      "st": "upcoming",
+      "d": null,
+      "ac": 0,
+      "gd": "male",
+      "ai": 0,
+      "vr": "male_vtuber"
     }
   ]
 }

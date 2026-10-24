@@ -1,7 +1,53 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-24T09:06:25.613Z",
+  "generatedAt": "2026-10-24T15:54:59.721Z",
   "items": [
+    {
+      "id": "b6mcVgI0JjY",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCL_qhgtOy0dy1Agp8vkySQg",
+      "channelName": "Mori Calliope Ch. hololive",
+      "channelKind": "virtual",
+      "region": "en",
+      "gender": "female",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "【JUMP KING HOLORACE】Newbie Jumpers RACE TO THE TOP! Fabulous Prizes Await! #calliolive #holorace2026",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/b6mcVgI0JjY/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCL_qhgtOy0dy1Agp8vkySQg",
+          "name": "Mori Calliope Ch. hololive",
+          "kind": "virtual",
+          "region": "en"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-24T15:54:59.721Z",
+      "updatedAt": "2026-10-24T15:54:59.721Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
     {
       "id": "DPU7gxetPXM",
       "platform": "youtube",
@@ -45,6 +91,56 @@
       "source": "api",
       "addedAt": "2026-10-24T05:10:16.208Z",
       "updatedAt": "2026-10-24T09:06:25.613Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_nGQguMF9iM1ofBhYqBBLuy3gZWuPhQyAY",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_nGQguMF9iM1ofBhYqBBLuy3gZWuPhQyAY",
+      "type": "playlist",
+      "channelId": "UCL_qhgtOy0dy1Agp8vkySQg",
+      "channelName": "Mori Calliope Ch. hololive",
+      "channelKind": "virtual",
+      "region": "en",
+      "gender": "female",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "SHINIGAMI NOTE",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/krlr_ucg2YU/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCL_qhgtOy0dy1Agp8vkySQg",
+          "name": "Mori Calliope Ch. hololive",
+          "kind": "virtual",
+          "region": "en"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-24T15:54:59.721Z",
+      "updatedAt": "2026-10-24T15:54:59.721Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

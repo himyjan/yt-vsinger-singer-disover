@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-24T05:10:16.208Z",
+  "generatedAt": "2026-10-24T15:54:59.721Z",
   "items": [
     {
       "id": "M5f-d9Ic1O4",
@@ -45,6 +45,98 @@
       "source": "api",
       "addedAt": "2026-10-24T05:10:16.208Z",
       "updatedAt": "2026-10-24T05:10:16.208Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "UZtqN3G1lPc",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCkcenwQpQwgNkG2sl28Az-A",
+      "channelName": "Devilith Violustre",
+      "channelKind": "virtual",
+      "region": "unknown",
+      "gender": "male",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "male_vtuber",
+      "title": "【 重大告知】2027.03.04｜3D Showcase & 2027.05.15｜Taiwan One Man Live",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/UZtqN3G1lPc/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCkcenwQpQwgNkG2sl28Az-A",
+          "name": "Devilith Violustre",
+          "kind": "virtual",
+          "region": "unknown"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-24T15:54:59.721Z",
+      "updatedAt": "2026-10-24T15:54:59.721Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "vYmNihOhHcM",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCqMcBaq09JgxMj29J7EQJkQ",
+      "channelName": "Feuera AI VTuber",
+      "channelKind": "virtual",
+      "region": "unknown",
+      "gender": "unknown",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "芙耶拉Feuera 本週直播時間表",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/vYmNihOhHcM/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCqMcBaq09JgxMj29J7EQJkQ",
+          "name": "Feuera AI VTuber",
+          "kind": "virtual",
+          "region": "unknown"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-24T15:54:59.721Z",
+      "updatedAt": "2026-10-24T15:54:59.721Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

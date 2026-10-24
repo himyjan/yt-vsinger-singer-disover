@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-24T09:06:25.613Z",
+  "generatedAt": "2026-10-24T15:54:59.721Z",
   "regions": [
     {
       "code": "jp",
@@ -24,7 +24,7 @@
         "0e",
         "0f"
       ],
-      "items": 156
+      "items": 187
     },
     {
       "code": "tw",
@@ -33,24 +33,17 @@
       "buckets": [
         "01",
         "02",
+        "03",
         "05",
         "06",
         "07",
         "09",
         "0a",
+        "0b",
         "0e",
         "0f"
       ],
-      "items": 12
-    },
-    {
-      "code": "hk",
-      "label": "Hong Kong",
-      "badge": "🇭🇰",
-      "buckets": [
-        "07"
-      ],
-      "items": 1
+      "items": 15
     },
     {
       "code": "kr",
@@ -66,14 +59,30 @@
       "label": "English",
       "badge": "🌐",
       "buckets": [
+        "03",
+        "04",
         "05",
+        "06",
+        "07",
         "08",
         "09",
+        "0a",
+        "0b",
         "0c",
         "0e",
         "0f"
       ],
-      "items": 8
+      "items": 21
+    },
+    {
+      "code": "id",
+      "label": "Indonesia",
+      "badge": "🇮🇩",
+      "buckets": [
+        "08",
+        "0f"
+      ],
+      "items": 2
     },
     {
       "code": "my",
@@ -92,14 +101,19 @@
         "00",
         "03",
         "05",
+        "06",
+        "07",
+        "08",
+        "0a",
+        "0b",
         "0f"
       ],
-      "items": 4
+      "items": 13
     }
   ],
   "counts": {
-    "total": 183,
-    "live": 6,
-    "upcoming": 176
+    "total": 240,
+    "live": 12,
+    "upcoming": 212
   }
 }
