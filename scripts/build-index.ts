@@ -13,7 +13,14 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { DATA_DIR, ensureDir, formatBytes, readJson, writeJson } from "./lib/io";
+import {
+  DATA_DIR,
+  ensureDir,
+  formatBytes,
+  readJson,
+  writeJson,
+  writeJsonIfChanged,
+} from "./lib/io";
 import { layout, readAllChannelRecords } from "./lib/dataset";
 import { ALL_REGIONS, SCHEMA_VERSION } from "./lib/types";
 import type {
@@ -225,7 +232,7 @@ export function buildSearchIndex(): void {
     const pack = buildPack(region, records, now, aliasText);
     const file = `${region}.json`;
     keep.add(file);
-    writeJson(layout.searchRegion(region), pack);
+    writeJsonIfChanged(layout.searchRegion(region), pack);
     const bytes = fs.statSync(layout.searchRegion(region)).size;
     meta.push({ code: region, entries: pack.count, bytes });
     total += pack.count;

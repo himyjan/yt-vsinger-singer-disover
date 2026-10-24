@@ -32,6 +32,8 @@ const PLATFORM_META: Record<
 
 const EXTERNAL_META: Record<string, { label: string; icon: string }> = {
   youtube: { label: "YouTube", icon: "▶" },
+  youtube_video: { label: "YouTube video", icon: "▶" },
+  youtube_playlist: { label: "YouTube playlist", icon: "▶" },
   twitch: { label: "Twitch", icon: "◢" },
   x: { label: "X", icon: "𝕏" },
   twitter: { label: "X", icon: "𝕏" },
@@ -149,6 +151,10 @@ export function externalUrl(platform: string, handle: string): string {
       return handle.startsWith("UC")
         ? `https://www.youtube.com/channel/${handle}`
         : `https://www.youtube.com/@${handle.replace(/^@/, "")}`;
+    case "youtube_video":
+      return `https://www.youtube.com/watch?v=${encodeURIComponent(handle)}`;
+    case "youtube_playlist":
+      return `https://music.youtube.com/playlist?list=${encodeURIComponent(handle)}`;
     case "twitch":
       return `https://www.twitch.tv/${handle}`;
     case "x":

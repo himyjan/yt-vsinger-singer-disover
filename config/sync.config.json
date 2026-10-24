@@ -1,11 +1,11 @@
 {
   "$comment": "Tuning knobs for scripts/sync.ts. See docs/YOUTUBE-API.md for the quota maths.",
   "maxSearchesPerRun": 40,
-  "maxChannelsPerRun": 60,
+  "maxChannelsPerRun": 150,
   "maxItemsPerChannel": 25,
   "maxItemsPerChannelRetained": 30,
   "maxItemAgeDays": 1095,
-  "maxLiveChannelsPerRun": 60,
+  "maxLiveChannelsPerRun": 300,
   "maxChannelDetailsPerRun": 500,
   "maxTwitchResolutionsPerRun": 150,
   "detailsDelayMs": 700,

@@ -11,8 +11,9 @@
 A discovery and tracking platform for **virtual singers (VTuber / VSinger)** and
 **real human singers / music producers**, focused on **YouTube** and **Twitch**,
 with additional support for **Bilibili**, **Niconico**, **VK**, **CHZZK**,
-**KICK** and **SOOP**. Available **CI.ME** profile links and other discovered
-external links are shown where present.
+**KICK** and **SOOP**. Available **CI.ME** profile links, YouTube
+channel/video/playlist links and other discovered external links are shown
+where present.
 
 The three things the product must do well:
 
@@ -95,9 +96,10 @@ Every record carries `source`:
 
 ## 5. Multi-platform support
 
-- `[x]` YouTube — primary. InnerTube is the default pipeline source; the
-      optional YouTube Data API v3 adds search and metadata, with InnerTube
-      channel-search fallback when the key is missing or quota is exhausted.
+- `[x]` YouTube — primary. InnerTube is the default pipeline source for
+      channel search, video search, profiles, uploads, releases and the Live
+      tab; the optional YouTube Data API v3 adds richer video statistics,
+      exact broadcast times and a fallback for failed InnerTube lookups.
 - `[x]` Twitch — Helix API adapter with keyword discovery and live data when
       `TWITCH_CLIENT_ID` and `TWITCH_CLIENT_SECRET` are configured.
 - `[x]` Bilibili — public web API, no credentials needed.
@@ -437,8 +439,8 @@ is published.
 - `[x]` A channel detail view showing every live + recent upload, with the
       same all-links block.
 - `[x]` A separate **Upcoming** view for scheduled streams and premieres.
-- `[x]` Live data is cheap to refresh: `liveBroadcasts.list` costs 1 unit per
-      50 channels, versus 100 units for a `search.list` call.
+- `[x]` Live data is cheap to refresh: the channel Live tab through InnerTube
+      costs no Data API quota, versus 100 units for a `search.list` call.
 
 ---
 
@@ -726,15 +728,21 @@ maximum for a single Git LFS file.
 ## 9. YouTube API & quota
 
 - `[x]` Free tier: 10,000 units/day.
-- `[x]` Cost awareness is built into the client:
+- `[x]` InnerTube is the primary source and spends no quota: channel and video
+      search, profiles, uploads, releases and the Live tab.
+- `[x]` Cost awareness is built into the optional Data API client:
       `search.list` = 100 · `channels.list` = 1 · `videos.list` = 1 ·
-      `playlistItems.list` = 1 · `liveBroadcasts.list` = 1.
+      `playlistItems.list` = 1. `liveBroadcasts.list` is not used because it
+      requires OAuth and the scheduled pipeline only has an API key.
 - `[x]` A `QuotaBudget` refuses any call that would exceed the budget.
-- `[x]` Every response is cached on disk, so re-running the sync only spends
-      quota on genuinely new data.
+- `[x]` Every Data API response is cached on disk, so re-running the sync only
+      spends quota on genuinely new data.
 - `[x]` Retry with exponential backoff on 429/5xx; quota and permission
       errors are never retried.
 - `[x]` Usage is reported in `data/manifest.json`.
+- `[x]` The refresh, live and discovery candidate sets are deterministically
+      sharded by immutable channel id; the scheduled workflow rotates the
+      shard each run so the whole catalogue is covered across runs.
 
 ---
 

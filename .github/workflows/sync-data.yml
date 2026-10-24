@@ -39,6 +39,14 @@ on:
         description: "Fetch and classify but do not write anything"
         required: false
         default: "false"
+      shard-count:
+        description: "Split the refresh rotation into N shards (1 disables sharding)"
+        required: false
+        default: "4"
+      channels:
+        description: "Maximum channels to refresh this run (blank = config value)"
+        required: false
+        default: ""
 
 concurrency:
   group: dataset-writer-${{ github.repository }}
@@ -51,7 +59,7 @@ jobs:
   sync:
     name: Sync and commit dataset
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
 
     steps:
       - name: Checkout
@@ -94,11 +102,27 @@ jobs:
           CI_ME_CLIENT_ID: ${{ secrets.CI_ME_CLIENT_ID }}
           CI_ME_CLIENT_SECRET: ${{ secrets.CI_ME_CLIENT_SECRET }}
           SYNC_KEYWORD: ${{ inputs.keyword }}
+          SYNC_SHARD_COUNT: ${{ github.event.inputs.shard-count || '4' }}
+          SYNC_CHANNELS: ${{ github.event.inputs.channels }}
         run: |
           ARGS=(--budget "${{ inputs.budget || 2500 }}" --roster)
           if [ "${{ inputs.no-search }}" = "true" ]; then ARGS+=(--no-search); fi
           if [ "${{ inputs.dry-run }}" = "true" ]; then ARGS+=(--dry-run); fi
           if [ -n "$SYNC_KEYWORD" ]; then ARGS+=(--keyword "$SYNC_KEYWORD"); fi
+          if [ -n "$SYNC_CHANNELS" ]; then ARGS+=(--limit-channels "$SYNC_CHANNELS"); fi
+
+          # Rotate through the catalogue: run N owns shard N of SYNC_SHARD_COUNT.
+          # The shard is a deterministic hash of the channel id, so successive
+          # runs cover every channel without a persisted cursor.
+          SHARD_COUNT="$SYNC_SHARD_COUNT"
+          if ! [[ "$SHARD_COUNT" =~ ^[0-9]+$ ]] || [ "$SHARD_COUNT" -lt 1 ]; then
+            SHARD_COUNT=1
+          fi
+          if [ "$SHARD_COUNT" -gt 1 ]; then
+            SHARD_INDEX=$(( (GITHUB_RUN_NUMBER - 1) % SHARD_COUNT + 1 ))
+            ARGS+=(--shard "${SHARD_INDEX}/${SHARD_COUNT}")
+          fi
+
           npm run data:sync -- "${ARGS[@]}"
 
       - name: Check analytics archive credentials
@@ -172,7 +196,8 @@ jobs:
             echo "| Metric | Value |"
             echo "| --- | --- |"
             echo "| Roster and music catalogs | vdb, Taiwan VTuber Tracking Data, VocaDB, VTuber Music Dataset |"
-            echo "| Platform discovery | YouTube, Bilibili, Niconico, CHZZK, SOOP live feed; Twitch/VK require credentials; KICK/CI.ME known IDs only |"
+            echo "| Platform discovery | YouTube InnerTube channel/video search, uploads and Live tab; Data API when configured; Bilibili, Niconico, CHZZK, SOOP live feed; Twitch/VK require credentials; KICK/CI.ME known IDs only |"
+            echo "| Refresh rotation | deterministic shard of the catalogue, rotated each run |"
             echo "| Quota used | ${{ steps.quota.outputs.used || 'n/a' }} |"
             echo "| Committed | \`data/\` |"
           } >> "$GITHUB_STEP_SUMMARY"

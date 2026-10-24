@@ -241,8 +241,27 @@ VSinger, or localized equivalents) and singing evidence (for example 歌枠,
 歌ってみた, 弾き語り, KARAOKE, or relay hashtags) in available titles,
 descriptions, or tags. Singing evidence alone must not classify an ordinary
 singer or karaoke streamer as virtual. `--no-search` skips keyword searches,
-but a run without a Data API key may still rebuild the roster; that roster is
+but a run without a Data API key may still rebuild the roster, discover
+channels and videos through InnerTube, and refresh live status; that roster is
 filtered against vdb, existing records, and curated seeds.
+
+### 16. One run owns one shard of the catalogue
+
+The catalogue is far larger than a single run can refresh. Do not refresh the
+same `slice(0, N)` every run: filter the refresh, live and discovered-candidate
+sets through `inShard()` in `scripts/sync.ts`. The shard is
+`FNV-1a(channel id) % shardCount`, so it is stable across machines and the
+scheduled workflow rotates `--shard N/M` with `GITHUB_RUN_NUMBER`. Within a
+shard, channels that have gone longest without a refresh are ordered first.
+Keep the assignment deterministic — a cursor file or `Math.random()` would make
+`data/` history unreviewable.
+
+InnerTube is the primary YouTube source (channel and video search, profiles,
+uploads, releases, Live tab) and spends no Data API quota. The Data API is
+optional and supplies richer video statistics, exact broadcast times and a
+fallback for failed InnerTube lookups. `liveBroadcasts.list` must not replace
+the Live tab: it requires OAuth, and the scheduled pipeline only has an API
+key.
 
 The sync and verification GitHub workflows both write `data/`. Keep them in
 the same repository-wide concurrency group and rebase generated changes onto
@@ -255,6 +274,7 @@ create non-fast-forward push failures.
 | --- | --- |
 | Fix a misclassified channel | `data/overrides.json`, then `npm run data:sync -- --no-search` |
 | Import a subscription list | Subs view → **Import CSV / JSON** (Takeout CSV, PocketTube backup, or **Export from YouTube**) |
+| Import a song playlist DOCX | `npm run data:import-playlist -- "path/to/playlist.docx"`; only matched existing channels and clearly classified songs are imported; unmatched links are written to `.cache/playlist-import-unmatched.json` |
 | Refresh all YouTube subscriptions | **Refresh** (InnerTube through `server.ts`); **Reconnect** when the token expired; a static build falls back to **Export from YouTube** |
 | Fix the 🎵 badge on a subscription card | `scripts/lib/youtube-channel.ts` (header read), `server.ts` (`POST /api/youtube/channel`), `src/App.vue` (sync/cache), `src/components/OfficialArtistBadge.vue` (official icon, right of the name); cache is `vst.youtubeBadges` |
 | Change an untracked subscription's detail modal | `src/components/SubscriptionDetail.vue`, `src/lib/youtube-detail.ts`, `src/lib/store.ts` (`vst.youtubeDetails`) |
@@ -277,7 +297,10 @@ create non-fast-forward push failures.
 npm run data:sync -- --dry-run       # fetch and classify, write nothing
 npm run data:sync -- --budget 500    # cap the spend
 npm run data:sync -- --no-search     # refresh known channels only
+npm run data:sync -- --shard 2/4     # one deterministic slice of the rotation
+npm run data:sync -- --limit-channels 50 --limit-live 100
 npm run data:sync -- --keyword "…"   # run one discovery query
+npm run data:import-playlist -- "playlist.docx" --dry-run # preview a DOCX import
 npm run data:verify                   # verify classifications with search grounding
 npm run data:index                   # rebuild the search index
 npm run data:details -- --limit 2000 # fill the missing avatars
@@ -311,7 +334,7 @@ Load one with the `skill` tool, e.g. `skill({ id: "sync-dataset" })`.
 | `docs/ARCHITECTURE.md` | How the pieces fit together |
 | `docs/DATA-SCHEMA.md` | Every field, every file, every enum |
 | `docs/YOUTUBE-API.md` | Quota maths and endpoint costs |
-| `docs/PLATFORMS.md` | The five platform adapters |
+| `docs/PLATFORMS.md` | The platform adapters and their discovery coverage |
 | `docs/SOURCES.md` | Every data source, and which are read |
 | `docs/DEPLOY.md` | GitHub Actions, Pages, secrets, LFS |
 | `docs/CONTRIBUTING.md` | How to add a channel, a region, a platform |
@@ -320,7 +343,8 @@ Load one with the `skill` tool, e.g. `skill({ id: "sync-dataset" })`.
 
 | Source | URL | Used for |
 | --- | --- | --- |
-| YouTube Data API v3 | `developers.google.com/youtube/v3` | Optional discovery, live-broadcast and detailed video metadata; InnerTube (`youtubei.js`) is the default for profiles and uploads |
+| YouTube Data API v3 | `developers.google.com/youtube/v3` | Optional video statistics, exact broadcast times and a fallback; InnerTube (`youtubei.js`) is the primary source for channel/video search, profiles, uploads, releases and live status |
+| YouTube InnerTube | `youtubei.js` | Quota-free YouTube channel and video search, profiles, uploads, releases and the Live tab |
 | AiSList | `github.com/Override92/AiSList` | Which channels are AI-generated |
 | VTuber Music Dataset | `github.com/meihei3/VTuber-music-dataset` | Curated song and original-artist metadata |
 | Virtual YouTuber Wiki | `virtualyoutuber.fandom.com/api.php` | Debut dates, graduation dates, wiki identities |

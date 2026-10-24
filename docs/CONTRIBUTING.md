@@ -18,6 +18,7 @@ npm run build             # prepare the dataset and build for production
 npm run lint              # vue-tsc type check
 
 npm run data:sync         # refresh with InnerTube; API features are optional
+npm run data:sync -- --shard 2/4   # one deterministic slice of the rotation
 npm run data:index        # rebuild the inverted search index
 npm run data:validate     # check the dataset (runs in CI)
 npm run data:all          # all three in order

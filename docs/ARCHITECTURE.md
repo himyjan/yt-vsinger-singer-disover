@@ -12,8 +12,8 @@
 │  │ sync-data.yml│──────────────▶│ scripts/sync  │──────────────▶ │ data/*.json
 │  └──────────────┘               └───────────────┘                │
 │         │                              │                          │
-│         │                              │ YouTube Data API v3       │
-│         │                              │ YouTube InnerTube          │
+│         │                              │ YouTube InnerTube (primary)│
+│         │                              │ YouTube Data API v3 (opt.)│
 │         │                              │ Twitch Helix              │
 │         │                              │ Bilibili / Niconico / VK  │
 │         │                              │ CHZZK / KICK / SOOP       │
@@ -107,7 +107,8 @@ scripts/
 └── lib/
     ├── types.ts             the canonical data model (shared with the app)
     ├── youtube.ts           YouTube Data API v3 client + quota budget
-    ├── youtubei.ts          InnerTube: profile, uploads, OAC badge, Music releases
+    ├── youtubei.ts          InnerTube: channel/video search, profile, uploads,
+    │                        Live tab, OAC badge, Music releases
     ├── innertube-subs.ts    signed-in FEchannels subscription feed
     ├── youtube-channel.ts   one-channel snapshot for the subscription cards
     ├── twitch.ts            Twitch Helix client
@@ -133,6 +134,32 @@ scripts/
     ├── dataset.ts           the on-disk layout and the writers
     └── io.ts                file helpers and size budgets
 ```
+
+### The sync run
+
+`scripts/sync.ts` is one pass of:
+
+```
+load data/ → refresh upstream rosters → discovery searches
+   → qualify new channels → refresh profiles/uploads/live
+   → classify → merge by id → retention → write shards → manifest
+```
+
+InnerTube is the default YouTube source for every network step in that list:
+channel search, video search, profiles, uploads, releases and the Live tab. The
+Data API is optional and only adds richer video statistics, exact broadcast
+times and a fallback for a failed InnerTube lookup, so a run with no API key is
+still complete.
+
+**A run is a shard.** Fourteen thousand channels cannot be refreshed in one
+run, and a fixed `slice(0, N)` would refresh the same head of the list forever.
+Instead the refresh, live and discovered-candidate sets are filtered by
+`FNV-1a(channel id) % shardCount === shardIndex - 1`. The hash is over the
+immutable platform id, so the assignment is stable across machines and runs;
+the scheduled workflow rotates the index with `GITHUB_RUN_NUMBER`, and within a
+shard the channels that have gone longest without a refresh are taken first.
+The union of successive runs therefore covers the catalogue without a cursor
+file, and every run still commits its own slice.
 
 ### The web app (`src/`)
 
@@ -305,7 +332,7 @@ same `parseSubscriptionsFile()`, but neither is required for a large account.
 
 | Workflow | Trigger | Does |
 | --- | --- | --- |
-| `sync-data.yml` | every 6 hours + manual | fetch → qualify discovery candidates → classify → index → validate → rebase → commit `data/` |
+| `sync-data.yml` | every 6 hours + manual | fetch → qualify discovery candidates → classify → index → validate → rebase → commit `data/`; rotates through the catalogue by shard |
 | `verify-data.yml` | daily + manual | verify uncertain records → re-apply corrections → index → validate → rebase → commit `data/` |
 | `deploy-pages.yml` | push to `main` | validate → build → publish to Pages |
 | `ci.yml` | push + pull request | validate → type-check → build |

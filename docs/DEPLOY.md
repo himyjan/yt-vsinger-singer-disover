@@ -17,12 +17,22 @@ on:
       no-search: { default: "false" }
       keyword: { default: "" }
       dry-run: { default: "false" }
+      shard-count: { default: "4" }
+      channels: { default: "" }
 ```
 
 Steps: checkout → install LFS → install dependencies → restore the quota
 cache → sync → append daily analytics to the separate archive (when configured)
 → build the search index → validate → rebase generated data onto the latest
 branch → commit `data/`.
+
+The catalogue is larger than one run can refresh, so the refresh and live
+rotation is sharded deterministically by channel id. The scheduled workflow
+computes `SHARD_INDEX = (GITHUB_RUN_NUMBER - 1) % SHARD_COUNT + 1` with a
+default of four shards and passes `--shard N/4`, so successive runs cover the
+whole catalogue without a persisted cursor. The manual `shard-count` input
+changes the number of shards (`1` disables sharding) and `channels` caps the
+number of channels refreshed in the run.
 
 The manual `keyword` input replaces the configured discovery terms for
 platforms that support keyword search. The `no-search` input skips discovery
@@ -57,7 +67,7 @@ Add these under **Settings → Secrets and variables → Actions**:
 
 | Secret                 | Required | Purpose                                                                                                                                |
 | ---------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| `YOUTUBE_API_KEY`      | no       | YouTube Data API v3 discovery and additional live/video metadata; InnerTube provides channel-search fallback                          |
+| `YOUTUBE_API_KEY`      | no       | YouTube Data API v3 extras: richer video statistics, exact broadcast times and a fallback for failed InnerTube lookups; discovery, uploads and live status work without it |
 | `TWITCH_CLIENT_ID`     | no       | Twitch application client ID; used with the secret for sync channel discovery and live data                                            |
 | `TWITCH_CLIENT_SECRET` | no       | Twitch application client secret; used with the client ID for sync channel discovery and live data                                     |
 | `VK_ACCESS_TOKEN`      | no       | VK service token; required for keyword discovery and API-backed upload collection                                                     |
@@ -185,8 +195,8 @@ The workflows install the LFS client explicitly:
 - `node_modules/` is ignored.
 - The dataset has hard size budgets — 8 MB per file, 180 MB for `data/` —
   enforced on write and checked in CI.
-- Retention rules keep the dataset bounded: 30 items per channel, 365-day age
-  limit, live and upcoming items always kept.
+- Retention rules keep the dataset bounded: 30 items per channel, 1095-day
+  (three-year) age limit, live and upcoming items always kept.
 
 ## Local development
 
@@ -206,10 +216,18 @@ The web app reads the dataset from `public/data/`, so run
 npm run data:sync -- --dry-run          # fetch and classify, write nothing
 npm run data:sync -- --budget 500       # cap the spend at 500 units
 npm run data:sync -- --no-search        # refresh known channels only
+npm run data:sync -- --shard 2/4        # refresh the second of four shards
+npm run data:sync -- --limit-channels 50 --limit-live 100
 npm run data:sync -- --keyword "vtuber 歌い手"
 npm run data:index                      # rebuild the search index
 npm run data:validate                   # check structure and budgets
 ```
+
+`--shard N/M` is 1-based and selects the channels whose deterministic hash
+falls in shard `N`; `M=1` disables sharding. `--limit-channels` and
+`--limit-live` override the per-run caps in `config/sync.config.json` for a
+bounded local run. Neither affects the dataset content beyond how much is
+refreshed this time.
 
 `--keyword` uses the same query on each enabled platform adapter that
 implements search; it does not enable search on platforms without a usable

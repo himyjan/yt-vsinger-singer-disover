@@ -29,16 +29,14 @@ decided the region; `Channel.verification` says what was actually looked up.
 
 `https://developers.google.com/youtube/v3`
 
-YouTube is the primary platform. InnerTube (`youtubei.js`) is the default
-source for handle resolution, channel profiles and uploads, and needs no API
-key. The optional YouTube Data API v3 is used for discovery search,
-live-broadcast data and detailed video metadata. InnerTube channel search is
-the discovery fallback when the API key is absent or the search budget runs
-out; profile and upload requests can also fall back to the Data API when
-InnerTube cannot retrieve them. Its free tier allows
-10,000 units a day; the quota guard in `scripts/lib/youtube.ts` refuses
-any call that would exceed it. See `docs/YOUTUBE-API.md` for the Data API and
-quota details.
+YouTube is the primary platform. InnerTube (`youtubei.js`) is the primary
+source for channel search, video search, handle resolution, channel profiles,
+uploads, releases and the Live tab, and needs no API key or quota. The
+optional YouTube Data API v3 adds richer video statistics and exact broadcast
+timing, and is a fallback when InnerTube cannot retrieve a channel profile or
+uploads. Its free tier allows 10,000 units a day; the quota guard in
+`scripts/lib/youtube.ts` refuses any call that would exceed it. See
+`docs/YOUTUBE-API.md` for the InnerTube/Data API split and quota details.
 
 YouTube search discovers candidates; it does not by itself establish that a
 channel belongs in the virtual catalogue. New YouTube records must have at
@@ -46,6 +44,11 @@ least two distinct videos that each contain both virtual-creator identity and
 singing evidence in the available title, description, or tag metadata. A
 channel already identified by vdb, the committed dataset, or a curated seed
 does not need this admission check.
+
+InnerTube also reads the channel's About-page country and dedicated Links
+section. A published YouTube country outranks a platform-region prior; links
+in the section are normalized into channel external links, including Bilibili,
+YouTube videos and playlists.
 
 ### 2. vdb — the Virtual YouTuber Name List Database
 
@@ -184,7 +187,7 @@ stable or complete search API:
 
 | Platform | Official | Quota-free equivalent | Gives |
 | --- | --- | --- | --- |
-| YouTube | Data API v3 | **InnerTube** (`youtubei.js`) | description, avatar, subscribers, uploads, live |
+| YouTube | Data API v3 | **InnerTube** (`youtubei.js`) | channel and video search, description, avatar, subscribers, uploads, releases, live/upcoming |
 | Twitch | Helix (client id **and** secret) | **GQL** (`gql.twitch.tv`) for browser account features | description, avatar, followers, live; sync keyword discovery uses Helix |
 | Bilibili | — | **WBI-signed public API** | description, avatar, followers, uploads, live |
 | CHZZK | — | **the public API** | channel search, profile, followers, live |
@@ -195,7 +198,11 @@ stable or complete search API:
 **InnerTube** (`scripts/lib/youtubei.ts`) — the channel's *description* is the
 richest field in the project: it is where a performer states their own
 language, their agency and their links. It also gives the avatar, the
-subscriber count and the upload list.
+subscriber count, the upload list, the YouTube Music releases, and the Live
+tab. Public search is the quota-free counterpart of `search.list`: both channel
+and video queries return candidates, and a video result carries the owning
+channel id, a title, a description snippet, a thumbnail and a view count.
+`searchVideos(q, n, { liveOnly: true })` mirrors `eventType=live`.
 
 **The app's subscription Refresh is the other InnerTube use.** It does not go
 through the pipeline: `scripts/lib/innertube-subs.ts` reads the signed-in
@@ -306,8 +313,8 @@ and relaxes it again once the source has been quiet. Bilibili also needs the
 visitor id, without which every request is treated as an attack.
 
 **With no YouTube API key at all the pipeline still produces a complete
-dataset** — the uploads come from InnerTube and the profiles from InnerTube
-and Twitch GQL.
+dataset** — discovery, uploads, releases and live status come from InnerTube,
+and the profiles from InnerTube and Twitch GQL.
 
 ## What the pipeline cannot read
 
