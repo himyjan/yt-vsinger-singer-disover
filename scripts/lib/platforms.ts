@@ -238,6 +238,30 @@ export function orderPlatformLinks<
  *
  * The per-platform counts always stay on the `PlatformLink`s.
  */
+/**
+ * Records the 🎵 Official Artist Channel badge.
+ *
+ * The badge is a fact about the **YouTube** channel, so a non-YouTube answer
+ * says nothing and is ignored; and every write is stamped with when it was
+ * read, because `isOfficialArtist: false` then means "YouTube was asked and
+ * said no" rather than "nobody asked yet".
+ *
+ * Callers pass `null`/`undefined` for a profile that did not report the
+ * badge, and the record keeps what it had.
+ */
+export function applyOfficialArtist(
+  channel: {
+    isOfficialArtist?: boolean;
+    officialArtistCheckedAt?: string | null;
+  },
+  checked: boolean | null | undefined,
+  now: string,
+): void {
+  if (typeof checked !== "boolean") return;
+  channel.isOfficialArtist = checked;
+  channel.officialArtistCheckedAt = now;
+}
+
 export function pickSubscribers(channel: {
   id: string;
   subscribers?: CountRef;

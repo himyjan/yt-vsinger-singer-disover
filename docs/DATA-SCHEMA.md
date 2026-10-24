@@ -86,6 +86,28 @@ The bucket for a record is a hash of its id (`bucketFor()`), so the same
 channel always lands in the same file and a run only rewrites the shards it
 changed.
 
+**A shard is one channel per line.** A channel has forty fields and a
+Bilibili-only record uses twenty; written as pretty-printed JSON, removing
+one record rewrote the whole file and git showed thousands of unchanged
+lines. The format is still plain JSON — the same object, just compact:
+
+```jsonc
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-24T10:40:42.793Z",
+  "channels": [
+    {"id":"acfun:2869300","name":"唐茶","nameSource":"roster",…},
+    {"id":"bilibili:1750888505",…}
+  ]
+}
+```
+
+Fields equal to their default (`null`, `false`, `[]`, `{}`) are left out, and
+both readers put them back: `expandChannel()` in `scripts/lib/dataset.ts` for
+the pipeline and in `src/lib/dataset.ts` for the browser. The two
+`CHANNEL_DEFAULTS` tables must stay in step — a field added to one without
+the other reads as `undefined` in that half.
+
 Every file has the same envelope:
 
 ```jsonc

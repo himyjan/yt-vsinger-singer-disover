@@ -60,6 +60,7 @@ import { shardOf } from "./lib/shard";
 import {
   isPlaceholderName,
   orderPlatformLinks,
+  applyOfficialArtist,
   pickAvatar,
   pickSubscribers,
   primaryPlatformOf,
@@ -1822,7 +1823,7 @@ async function main(): Promise<void> {
           if (profile.avatar && !channel.avatar) {
             channel.avatar = profile.avatar;
           }
-          channel.isOfficialArtist = profile.officialArtist;
+          applyOfficialArtist(channel, profile.officialArtist, now);
           if (profile.subscribers) {
             const link = channel.platforms.find((p) => p.platform === "youtube");
             if (link) {
@@ -2626,7 +2627,7 @@ async function main(): Promise<void> {
           channel.id,
           config.maxItemsPerChannel,
         );
-        channel.isOfficialArtist = catalog.officialArtist;
+        applyOfficialArtist(channel, catalog.officialArtist, now);
         for (const upload of catalog.uploads) {
           const item = innertubeUploadToItem(upload, channel, now);
           if (!item) continue;

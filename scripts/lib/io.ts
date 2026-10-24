@@ -132,6 +132,44 @@ export function writeJsonIfChanged(file: string, value: unknown): boolean {
   return true;
 }
 
+/**
+ * Writes a dataset file whose text is already formatted.
+ *
+ * The channel shards put one record per line — `writeJson()` would explode a
+ * three-hundred-channel file into one diff block. The per-file budget still
+ * applies: a shard that grows past it has to fail here, not in CI.
+ */
+export function writeTextShard(file: string, text: string): void {
+  ensureDir(path.dirname(file));
+  const bytes = Buffer.byteLength(text, "utf8");
+  if (bytes > SIZE_BUDGET.maxFileBytes) {
+    throw new Error(
+      `Refusing to write ${path.relative(ROOT, file)}: ${formatBytes(bytes)} exceeds the ${formatBytes(SIZE_BUDGET.maxFileBytes)} per-file budget. ` +
+        "Split the dataset (see docs/DATA-SCHEMA.md) or reduce the retained fields.",
+    );
+  }
+  fs.writeFileSync(file, text);
+}
+
+/**
+ * True when a file's **semantic** content changed, ignoring `generatedAt`.
+ *
+ * The unit is the shard's `channels` array: two files whose records are equal
+ * but whose layout differs differ semantically not at all, so a rewrite that
+ * only changed formatting is skipped.
+ */
+export function shardContentChanged(
+  file: string,
+  channels: unknown,
+): boolean {
+  if (!fs.existsSync(file)) return true;
+  const existing = readJson<{ channels?: unknown } | null>(file, null);
+  if (!existing) return true;
+  return (
+    stableStringify(existing.channels ?? null) !== stableStringify(channels)
+  );
+}
+
 /** Stable stringify: sorts object keys recursively so diffs stay minimal. */
 export function stableStringify(value: unknown): string {
   return `${JSON.stringify(sortKeys(value), null, 2)}\n`;

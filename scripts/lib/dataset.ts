@@ -38,8 +38,10 @@ import {
   ensureDir,
   formatBytes,
   readJson,
+  shardContentChanged,
   writeJson,
   writeJsonIfChanged,
+  writeTextShard,
 } from "./io";
 import { ALL_REGIONS, SCHEMA_VERSION } from "./types";
 import { buildRegionMeta } from "./regions";
@@ -237,11 +239,7 @@ export function writeDataset(
         buckets.push(bucket);
         count += bucketList.length;
         bucketList.sort((a, b) => a.id.localeCompare(b.id));
-        writeJsonIfChanged(fileFor(region, bucket), {
-          schemaVersion: SCHEMA_VERSION,
-          generatedAt: now,
-          channels: bucketList,
-        } satisfies ChannelFile);
+        writeShardFile(fileFor(region, bucket), bucketList, now);
       }
       removed.push(...pruneStale(dir, keep));
       meta.set(region, { channels: count, buckets: buckets.sort() });
@@ -524,8 +522,106 @@ function countFiles(dir: string): number {
 }
 
 /* -------------------------------------------------------------------------- */
-/* Readers                                                                    */
+/* Shard writers                                                              */
 /* -------------------------------------------------------------------------- */
+
+/** A shard file, one channel per line. */
+interface ShardFile {
+  schemaVersion: number;
+  generatedAt: string;
+  channels: Channel[];
+}
+
+/**
+ * The fields a record must have to be worth writing.
+ *
+ * `null`, `false`, `0`, `""` and `[]` are the defaults the reader supplies,
+ * so writing them only makes the file longer and the diff noisier.
+ */
+const CHANNEL_DEFAULTS: Partial<Record<keyof Channel, unknown>> = {
+  banner: null,
+  description: null,
+  country: null,
+  agency: null,
+  handle: null,
+  debutDate: null,
+  graduateDate: null,
+  uploadsPlaylistId: null,
+  popularVideoId: null,
+  verification: null,
+  officialArtistCheckedAt: null,
+  isAi: false,
+  isSinging: false,
+  videoCount: null,
+  viewCount: null,
+};
+
+/**
+ * Drops the fields that equal their default.
+ *
+ * A channel has forty fields; a Bilibili-only record uses twenty. Writing the
+ * twenty nulls is what made a one-record removal show up as a diff across
+ * every shard in the region — thousands of lines of `"banner": null` for one
+ * record that changed.
+ */
+function compactChannel(channel: Channel): Record<string, unknown> {
+  const out: Record<string, unknown> = {};
+  for (const [key, value] of Object.entries(channel)) {
+    if (key in CHANNEL_DEFAULTS && CHANNEL_DEFAULTS[key as keyof Channel] === value) {
+      continue;
+    }
+    if (Array.isArray(value) && value.length === 0) continue;
+    out[key] = value;
+  }
+  return out;
+}
+
+/**
+ * Writes a shard: JSON for tools and the browser, one channel per line.
+ *
+ * `writeJson()` serialises the whole value, which is right for a manifest and
+ * wrong for a shard: a three-hundred-channel file becomes one diff block.
+ * The budget check is kept — a shard that grows past the per-file limit has
+ * to fail here, not in CI.
+ */
+function writeShardFile(file: string, channels: Channel[], now: string): void {
+  if (!shardContentChanged(file, channels)) return;
+  writeTextShard(file, compactChannelFile(channels, now));
+}
+
+/** Puts the defaults back, so a compacted record is a complete one. */
+function expandChannel(raw: Partial<Channel> & { id: string }): Channel {
+  const channel = { ...raw } as Channel;
+  for (const [key, value] of Object.entries(CHANNEL_DEFAULTS)) {
+    if (channel[key as keyof Channel] === undefined) {
+      (channel as unknown as Record<string, unknown>)[key] = value;
+    }
+  }
+  channel.aliases ??= [];
+  channel.tags ??= [];
+  channel.statedLanguages ??= [];
+  channel.platforms ??= [];
+  channel.externals ??= {};
+  return channel;
+}
+
+/**
+ * One channel **per line**.
+ *
+ * A shard of three hundred channels written as one `JSON.stringify` is a
+ * multi-thousand-line file where every object is diffed as a block: touching
+ * one record rewrites the file and git shows the whole thing. With a record
+ * per line, adding or removing a channel is a handful of `+`/`-` lines and
+ * every other record stays untouched — which is the difference between a
+ * reviewable dataset and an unreadable one.
+ */
+function compactChannelFile(channels: Channel[], now: string): string {
+  const head = `  "schemaVersion": ${SCHEMA_VERSION},\n  "generatedAt": ${JSON.stringify(now)},\n  "channels": [`;
+  const body = channels
+    .map((channel) => `    ${JSON.stringify(compactChannel(channel))}`)
+    .join(",\n");
+  return `{\n${head}\n${body}\n  ]\n}\n`;
+}
 
 /**
  * Reads every full channel record, from both kind datasets.
@@ -540,11 +636,15 @@ export function readAllChannelRecords(): Channel[] {
       if (!fs.statSync(dir).isDirectory()) continue;
       for (const file of fs.readdirSync(dir)) {
         if (!file.endsWith(".json")) continue;
-        const parsed = readJson<{ channels?: Channel[] }>(
+        const parsed = readJson<{ channels?: Partial<Channel>[] }>(
           path.join(dir, file),
           {},
         );
-        out.push(...(parsed.channels ?? []));
+        // A shard written before the compact format carries every field;
+        // `expandChannel()` fills the ones a compact shard leaves out.
+        for (const raw of parsed.channels ?? []) {
+          if (raw?.id) out.push(expandChannel(raw as Partial<Channel> & { id: string }));
+        }
       }
     }
   }
@@ -616,18 +716,8 @@ export function writeChannelShards(
          * every file and bury the real change in the diff.
          */
         const file = fileFor(region, bucket);
-        const existing = readJson<{ channels: Channel[] } | null>(file, null);
-        if (
-          existing &&
-          JSON.stringify(existing.channels) === JSON.stringify(bucketList)
-        ) {
-          continue;
-        }
-        writeJson(file, {
-          schemaVersion: SCHEMA_VERSION,
-          generatedAt: now,
-          channels: bucketList,
-        } satisfies { schemaVersion: number; generatedAt: string; channels: Channel[] });
+        if (!shardContentChanged(file, bucketList)) continue;
+        writeShardFile(file, bucketList, now);
         files++;
       }
       // A re-keyed or deleted record must not survive in the shard it left.

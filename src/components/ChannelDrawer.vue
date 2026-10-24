@@ -250,6 +250,9 @@ const saved = computed(() =>
                   <span v-else-if="channel.affiliation === 'independent'" class="rounded bg-indigo-500/15 px-1.5 py-0.5 text-[10px] font-semibold text-indigo-700 dark:text-indigo-400" title="Independent performer — no agency">
                     🎪 Independent
                   </span>
+                  <span v-if="officialArtist" class="rounded bg-violet-500/15 px-1.5 py-0.5 text-[10px] font-semibold text-violet-700 dark:text-violet-400" title="YouTube Official Artist Channel — releases are managed through YouTube Music">
+                    🎵 Official Artist
+                  </span>
                   <span class="rounded px-1.5 py-0.5 text-[10px] font-semibold" :class="activityLabel.cls">
                     {{ activityLabel.text }}
                   </span>

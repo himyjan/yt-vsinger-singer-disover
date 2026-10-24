@@ -45,11 +45,25 @@ state.acousticOnly // boolean
 state.gender       // Gender | "all"
 state.ai           // "ai" | "human" | "all"
 state.oac          // "all" | "oac" — the 🎵 Official Artist Channel badge
+state.role         // "all" | "vsinger" | "vtuber" | "singer" | "producer"
+state.vtuberOnly   // "all" | "vtuber" | "vsinger" (vsinger = role OR isSinging)
 state.subsTracked  // "all" | "tracked" | "untracked"
 state.channelSubs   // "all" | "subscribed" | "not-subscribed" (Channels view)
 state.accounts     // Record<provider, LinkedAccount[]>
 state.activeAccount// Record<provider, accountId | null>
 ```
+
+## The 🎵 badge
+
+The badge is **in the record** (`isOfficialArtist`) and `officialArtistCheckedAt`
+says when YouTube was asked. `officialArtistOf(channel)` in `App.vue` picks
+the newer of the record and `state.youtubeBadges`, and everything — cards,
+search hits, the drawer, the `oac` filter — goes through it, so a badge seen
+in **My subscriptions** is the badge in **Channels**.
+
+A summary also carries `officialArtistChecked`, so "YouTube said no" and
+"nobody asked" are different things and the background sync only queues the
+second.
 
 ## Adding a filter
 

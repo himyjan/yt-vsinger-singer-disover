@@ -39,6 +39,9 @@ export function toSummary(c: Channel): ChannelSummary {
     gender: c.gender,
     isAi: c.isAi,
     isOfficialArtist: c.isOfficialArtist === true,
+    // `isOfficialArtist: false` is only written by a pass that asked YouTube,
+    // so it doubles as "checked"; `undefined` means nobody asked.
+    officialArtistChecked: typeof c.isOfficialArtist === "boolean",
     variant: c.variant,
     verification: c.verification,
     links: c.platforms.map((p) => ({

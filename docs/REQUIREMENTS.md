@@ -672,6 +672,19 @@ for discovery/profile refresh do not by themselves provide account linking.
       background badge sync and the untracked-card modal stay off; the
       dataset's existing `isOfficialArtist` badges and its live/upcoming/song
       data still render. The local dev server exposes the bridge.
+- `[x]` (2026-10-24) The badge lives **in the record** and is shown from it.
+      `officialArtistCheckedAt` records when YouTube was asked, so
+      `isOfficialArtist: false` means "asked and no" rather than "not asked";
+      the channel list, the search results and the drawer all render the
+      badge from the summary, and the subscription cache is used only when it
+      is newer than the record's own check. A card checked in **My
+      subscriptions** therefore shows the same badge in the **Channels** view,
+      and the **🎵 Official artist** filter agrees with the cards.
+- `[x]` (2026-10-24) Two filters describe what the performer is:
+      **🎼 VSinger / 🎭 VTuber / 🎤 Singer / 🎹 Producer** (the `role`), and
+      **Only VSinger / Only VTuber**, where VSinger means `role = vsinger`
+      **or** published singing — the PocketTube groups set the flag, not the
+      role — and VTuber is the remaining virtual performers.
 
 ---
 
