@@ -335,8 +335,15 @@ publishes about themselves, strongest first:
 The last two answer a **name** match, so what they return is a *candidate*,
 not a link. A candidate is accepted only when the resolved profile points back
 at the record — the Bilibili space id in the YouTube description, the same X
-handle — or when its title is one of the record's distinctive names. A
+handle — or when its title is the record's distinctive **display name**. A
 one- or two-character name never confirms anything on its own.
+
+Only the display name counts, never an alias. An alias is a romanisation or a
+translation the pipeline added — vdb lists 「维多利亚」 as `Victoria` — and a
+common romanisation belongs to something else as often as to the performer: the
+Canadian city of Victoria has a YouTube channel, and a name match on the alias
+adopted it. A link found in the performer's **own text** is taken at face
+value, because there the performer said it themselves.
 
 The new link lands in `platforms[]`, and the handles its profile publishes are
 harvested into `externals`. It never renames the record: the performer's own

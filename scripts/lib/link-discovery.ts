@@ -302,11 +302,31 @@ export function identityNeedles(channel: Channel): string[] {
   return [...needles];
 }
 
-/** The names a record is known by, normalized for comparison. */
-export function identityNames(channel: Channel): string[] {
-  return [channel.name, ...(channel.aliases ?? [])]
-    .map((name) => normalizeName(name ?? ""))
-    .filter((name) => name.length >= 2);
+/**
+ * The names that may confirm a **name-search** candidate: the display name,
+ * and only the display name.
+ *
+ * Aliases are deliberately excluded. They are romanisations and translations
+ * the pipeline added — vdb lists 「维多利亚」 as `Victoria` — and a common
+ * romanisation matches something else entirely: the Canadian city of Victoria
+ * has a YouTube channel, and it is not a VTuber. A link found in the
+ * performer's **own text** is taken at face value and does not need this
+ * check; a link found by searching a name does.
+ *
+ * The name also has to be distinctive: three CJK characters are a name, while
+ * two are shared by too many performers (「小卯」, 「星野」), and three Latin
+ * letters are an acronym dozens of channels share. `docs/SOURCES.md` states
+ * the same rule.
+ */
+export function confirmingNames(channel: Channel): string[] {
+  const name = normalizeName(channel.name ?? "");
+  if (!name) return [];
+  const cjk = (
+    name.match(/[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]/gu) ??
+    []
+  ).length;
+  const distinctive = cjk >= 2 ? name.length >= 3 : name.length >= 6;
+  return distinctive ? [name] : [];
 }
 
 /**
@@ -340,7 +360,7 @@ export function confirmsIdentity(
     return true;
   }
 
-  const channelNames = identityNames(channel).filter((name) => name.length >= 5);
+  const channelNames = confirmingNames(channel);
   if (!channelNames.length) return false;
   const candidateName = normalizeName(resolved.link.name ?? "");
   if (!candidateName) return false;

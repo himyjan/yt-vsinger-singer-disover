@@ -144,6 +144,13 @@ source (agency, roster, override) is never overwritten. Discovery adds
 links and a region fact; it never renames a record, because the performer's
 own platform is still the authority for the name.
 
+A link found by **searching a name** is only a candidate, and it is confirmed
+against the record's **display name** — never an alias. Aliases are
+romanisations the pipeline added (vdb lists 「维多利亚」 as `Victoria`), and a
+common romanisation belongs to something else: the Canadian city of Victoria
+has a YouTube channel. A link found in the performer's **own text** is taken
+at face value, because there the performer said it themselves.
+
 Note that vdb's `jp` **name field is not kana evidence**: it stores kana
 readings of Chinese names (「小卯」 → 「コウサギ」), which would re-file
 thousands of Chinese performers as Japanese. Only the display name counts,
