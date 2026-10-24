@@ -78,7 +78,11 @@ import {
 } from "./lib/classify";
 import { REGION_LANGUAGE, profileLanguage } from "./lib/regions";
 import { splitName } from "./lib/names";
-import { pickAvatar, pickSubscribers } from "./lib/platforms";
+import {
+  applyOfficialArtist,
+  pickAvatar,
+  pickSubscribers,
+} from "./lib/platforms";
 import { extractExternalLinks } from "./lib/twitch";
 import type { Channel, PlatformId, RegionSource } from "./lib/types";
 
@@ -672,9 +676,7 @@ function applyProfile(
    * It is a fact about the YouTube channel, so a non-YouTube profile leaves
    * whatever the last YouTube pass found untouched.
    */
-  if (profile.officialArtist !== undefined) {
-    channel.isOfficialArtist = profile.officialArtist;
-  }
+  applyOfficialArtist(channel, profile.officialArtist, new Date().toISOString());
 }
 
 /* -------------------------------------------------------------------------- */
@@ -955,6 +957,7 @@ async function main(): Promise<void> {
     record.languages = updated.languages;
     record.isSinging = updated.isSinging;
     record.isOfficialArtist = updated.isOfficialArtist;
+    record.officialArtistCheckedAt = updated.officialArtistCheckedAt;
     record.subscribers = updated.subscribers;
     record.videoCount = updated.videoCount;
     written.add(record.id);

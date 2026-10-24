@@ -190,7 +190,9 @@ function recordFromProfile(
     isSinging: override?.isSinging ?? classification.isSinging,
     gender: override?.gender ?? classification.gender,
     isAi: override?.isAi ?? classification.isAi,
+    // The import fetches the channel page, which is where the 🎵 badge lives.
     isOfficialArtist: profile.officialArtist,
+    officialArtistCheckedAt: now,
     variant: deriveVariant(
       classification.role,
       override?.gender ?? classification.gender,

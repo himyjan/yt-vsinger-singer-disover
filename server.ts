@@ -21,8 +21,10 @@ import { acquireRunLock } from "./scripts/lib/io";
 import {
   readAllChannelRecords,
   rebuildChannelsManifest,
+  refreshManifestChannelCounts,
   writeChannelShards,
 } from "./scripts/lib/dataset";
+import { applyOfficialArtist } from "./scripts/lib/platforms";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -304,15 +306,22 @@ async function startServer() {
       const channels = readAllChannelRecords();
       const channel = channels.find((record) => record.id === channelId);
       if (!channel) return res.json({ ok: true, saved: false });
-      if (channel.isOfficialArtist === officialArtist) {
-        return res.json({ ok: true, saved: true, changed: false });
-      }
-
-      channel.isOfficialArtist = officialArtist;
       const now = new Date().toISOString();
+      /**
+       * The **check** is saved even when the answer did not change.
+       *
+       * `officialArtistCheckedAt` is what stops the badge sync from asking
+       * YouTube the same question every time the Subscriptions tab opens;
+       * `false` is an answer, and one worth keeping.
+       */
+      const changed = channel.isOfficialArtist !== officialArtist;
+      applyOfficialArtist(channel, officialArtist, now);
       writeChannelShards(channels, now);
-      rebuildChannelsManifest(channels, now);
-      return res.json({ ok: true, saved: true, changed: true });
+      if (changed) {
+        rebuildChannelsManifest(channels, now);
+        refreshManifestChannelCounts(channels, now);
+      }
+      return res.json({ ok: true, saved: true, changed });
     } catch (error) {
       const message = (error as Error).message || "Could not save Official Artist status.";
       const conflict = message.includes("another run is writing the dataset");

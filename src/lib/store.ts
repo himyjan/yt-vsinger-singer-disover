@@ -170,6 +170,16 @@ export const state = reactive({
   language: "all" as string | "all",
   /** Only the channels that publish singing content. */
   singing: "all" as "all" | "singing" | "not-singing",
+  /** What the performer does: `vsinger`, `vtuber`, `singer`, `producer`. */
+  role: "all" as "all" | "vsinger" | "vtuber" | "singer" | "producer",
+  /**
+   * The two halves the dataset exists for.
+   *
+   * `vsinger` means role `vsinger` **or** `isSinging` — the PocketTube groups
+   * set the flag rather than the role — and `vtuber` is the remaining
+   * virtual performers. `all` shows everything.
+   */
+  vtuberOnly: "all" as "all" | "vtuber" | "vsinger",
   /**
    * The sort order of each view.
    *

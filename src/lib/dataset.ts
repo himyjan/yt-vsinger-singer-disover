@@ -249,6 +249,48 @@ export async function loadChannels(
  * and both need these shards. Without the in-flight map the page would
  * download every shard twice and use whichever copy finished last.
  */
+/** The defaults a compact shard leaves out, so a record is complete. */
+const CHANNEL_DEFAULTS: Record<string, unknown> = {
+  aliases: [],
+  tags: [],
+  statedLanguages: [],
+  platforms: [],
+  externals: {},
+  banner: null,
+  description: null,
+  country: null,
+  agency: null,
+  handle: null,
+  debutDate: null,
+  graduateDate: null,
+  uploadsPlaylistId: null,
+  popularVideoId: null,
+  verification: null,
+  officialArtistCheckedAt: null,
+  isOfficialArtist: false,
+  isAi: false,
+  isSinging: false,
+  videoCount: null,
+  viewCount: null,
+};
+
+/**
+ * A shard record as a complete one.
+ *
+ * Shards are written one channel per line with the fields equal to their
+ * default left out (`scripts/lib/dataset.ts` → `compactChannel()`), because a
+ * pretty-printed shard made every one-record change a whole-file diff. The
+ * browser has to put those fields back — the filters read `isSinging`,
+ * `aliases` and `externals` directly.
+ */
+function expandChannel(raw: Channel): Channel {
+  const channel = { ...raw } as Channel & Record<string, unknown>;
+  for (const [key, value] of Object.entries(CHANNEL_DEFAULTS)) {
+    if (channel[key] === undefined) channel[key] = value;
+  }
+  return channel as Channel;
+}
+
 async function loadKind(
   kind: "virtual" | "real",
   region: RegionCode,
@@ -267,7 +309,9 @@ async function loadKind(
       const parsed = await fetchJson<{ channels?: Channel[] }>(
         `data/channels/${kind}/${region}/${bucket}.json`,
       );
-      list.push(...(parsed?.channels ?? []));
+      for (const raw of parsed?.channels ?? []) {
+        if (raw?.id) list.push(expandChannel(raw));
+      }
     }
     return list;
   })();
@@ -400,6 +444,13 @@ export interface ItemQuery {
   affiliation?: Affiliation | "all";
   /** Only the channels that publish singing content. */
   singing?: "all" | "singing" | "not-singing";
+  /** What the performer does — `vsinger`, `vtuber`, `singer`, `producer`. */
+  role?: string | "all";
+  /**
+   * The two halves the dataset exists for. `vsinger` is role `vsinger` **or**
+   * a published singing flag; `vtuber` is the remaining virtual performers.
+   */
+  vtuberOnly?: "all" | "vtuber" | "vsinger";
   /** A language the performer streams in. */
   language?: string | "all";
   /** `ai` shows only AI performers, `human` hides them, `all` shows both. */
@@ -483,6 +534,8 @@ export function filterChannels(
   const affiliation = query.affiliation ?? "all";
   const language = query.language ?? "all";
   const singing = query.singing ?? "all";
+  const role = query.role ?? "all";
+  const vtuberOnly = query.vtuberOnly ?? "all";
   const oac = query.oac ?? "all";
   const text = query.text?.trim().toLowerCase() ?? "";
 
@@ -510,6 +563,33 @@ export function filterChannels(
     }
     if (singing === "singing" && !channel.isSinging) return false;
     if (singing === "not-singing" && channel.isSinging) return false;
+    if (role === "producer") {
+      if (channel.role !== "producer" && channel.role !== "composer") {
+        return false;
+      }
+    } else if (role !== "all" && channel.role !== role) {
+      return false;
+    }
+    /**
+     * The two halves the dataset is about.
+     *
+     * A VSinger is `role = vsinger` **or** published singing: the subscription
+     * groups set the flag, and the classifier can read a singer's role as
+     * `vtuber` when the description never says 歌勢. Filtering on the role
+     * alone would drop exactly the performers the group was telling us
+     * about.
+     */
+    if (vtuberOnly === "vsinger" && !(channel.role === "vsinger" || channel.isSinging)) {
+      return false;
+    }
+    if (
+      vtuberOnly === "vtuber" &&
+      (channel.kind !== "virtual" ||
+        channel.role === "vsinger" ||
+        channel.isSinging)
+    ) {
+      return false;
+    }
     if (oac === "oac" && !channel.isOfficialArtist) return false;
     if (text) {
       const haystack = `${channel.name} ${channel.handle ?? ""} ${

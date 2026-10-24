@@ -471,6 +471,15 @@ export interface Channel {
    * artist".
    */
   isOfficialArtist?: boolean;
+  /**
+   * When YouTube was last asked about the 🎵 badge.
+   *
+   * The **resolver** uses this to choose what to check next: a record with
+   * no `isOfficialArtist` and no `officialArtistCheckedAt` has never been
+   * asked, and one asked long ago is worth asking again. The badge itself is
+   * what the app displays; this field is not the badge.
+   */
+  officialArtistCheckedAt?: string | null;
   /** Combined label, e.g. `female_vtuber` or `ai_vsinger`. */
   variant: Variant;
   /**
@@ -612,6 +621,16 @@ export interface ChannelSummary {
   isAi: boolean;
   /** True when YouTube shows the 🎵 Official Artist Channel badge. */
   isOfficialArtist: boolean;
+  /**
+   * The badge was actually **looked up** — `false` means YouTube was asked
+   * and said no, not "nobody asked".
+   *
+   * A summary carries the flag so the list can show the badge without the
+   * full record, and so a copy that has not been checked never claims a
+   * badge. `toSummary()` maps `isOfficialArtist` to `true` only when it is
+   * true, so this is the only place the distinction survives.
+   */
+  officialArtistChecked?: boolean;
   variant: Variant;
   /** Every platform identity, for the "all links" info block. */
   links: ChannelLink[];

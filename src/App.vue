@@ -341,6 +341,35 @@ const GENDERS = [
   { id: "male", label: "♂ Male" },
 ] as const;
 
+/**
+ * Role — what the performer actually does.
+ *
+ * 「VSinger」 in a subscription group means a virtual **singer**; a plain
+ * VTuber streams. Filtering on `isSinging` alone cannot tell a VTuber who
+ * sang once from a VSinger, and the two are different channels.
+ */
+const ROLE_FILTERS = [
+  { id: "all", label: "Any role", title: "Every role" },
+  { id: "vsinger", label: "🎼 VSinger", title: "Virtual singers — 歌勢 / 虚拟歌手" },
+  { id: "vtuber", label: "🎭 VTuber", title: "Virtual performers who stream rather than sing" },
+  { id: "singer", label: "🎤 Singer", title: "Real human singers" },
+  { id: "producer", label: "🎹 Producer", title: "Music producers and composers" },
+] as const;
+
+/**
+ * The two halves the dataset exists for: a VTuber and a VSinger.
+ *
+ * `VSinger` is `role = vsinger` **or** `isSinging` — the group that files a
+ * channel under 「Vsinger」 sets the flag, and a performer whose role the
+ * classifier read as `vtuber` still belongs there. `VTuber` is the other
+ * side: virtual, and not a singer.
+ */
+const VTUBER_FILTERS = [
+  { id: "all", label: "VTuber + VSinger", title: "Every virtual and real performer" },
+  { id: "vtuber", label: "🎭 Only VTuber", title: "Virtual performers who are not VSingers" },
+  { id: "vsinger", label: "🎼 Only VSinger", title: "Virtual singers — role vsinger or published singing" },
+] as const;
+
 const visibleLive = computed(() =>
   sortItems(filterItems(live.value, {
     kind: state.scope,
@@ -392,19 +421,28 @@ const visibleSongs = computed(() =>
 );
 
 const visibleChannels = computed(() => {
+  /**
+   * The summaries carry the 🎵 badge the dataset recorded; the subscription
+   * cache can overrule it when it is newer, so a channel checked in the Subs
+   * tab shows the same badge here — and the 🎵 filter agrees with the cards.
+   */
   const badgeAwareSummaries = summaries.value.map((summary) => {
-    const youtubeId =
-      summary.id.startsWith("UC")
-        ? summary.id
-        : summary.links
-          .find((link) => link.p === "youtube")
-          ?.u.match(/youtube\.com\/channel\/(UC[\w-]+)/)?.[1];
-    const checkedBadge = youtubeId
-      ? state.youtubeBadges[youtubeId]
-      : undefined;
-    return checkedBadge
-      ? { ...summary, isOfficialArtist: checkedBadge.officialArtist }
-      : summary;
+    const badge = officialArtistOf(summary);
+    const trusted =
+      summary.role === "vsinger" ? summary.isSinging : true;
+    return badge === (summary.isOfficialArtist === true) && trusted
+      ? summary
+      : {
+          ...summary,
+          /**
+           * A VSinger sings. The role and the flag disagree only when the
+           * classifier read the description but not the 歌勢 vocabulary, or
+           * when a subscription group set the flag without the role — and the
+           * 「Only VSinger」 filter has to agree with the 🎼 chip.
+           */
+          isSinging: summary.role === "vsinger" || summary.isSinging,
+          isOfficialArtist: badge,
+        };
   });
   const channels = filterChannels(badgeAwareSummaries, {
     kind: state.scope,
@@ -415,6 +453,8 @@ const visibleChannels = computed(() => {
     affiliation: state.affiliation,
     language: state.language,
     singing: state.singing,
+    role: state.role,
+    vtuberOnly: state.vtuberOnly,
     oac: state.oac,
     text: state.query.trim() || undefined,
     limit: 400,
@@ -743,7 +783,25 @@ function openChannel(
 ): void {
   if (!channel) return;
   const full = channelById.value.get(channel.id);
-  drawerChannel.value = full ?? (channel as Channel);
+  const target = full ?? (channel as Channel);
+  /**
+   * The drawer shows the badge the list showed.
+   *
+   * The record on disk may have been checked before the subscription sync
+   * asked again, and opening a card must not change the answer under the
+   * pointer. `badgeOverride` is for a *subscription* result, which arrives
+   * with its own fresh check.
+   */
+  if (full && !badgeOverride) {
+    const badge = officialArtistOf(full);
+    if (badge !== (full.isOfficialArtist === true)) {
+      drawerChannel.value = { ...full, isOfficialArtist: badge };
+      drawerBadgeOverride.value = true;
+      drawerItem.value = null;
+      return;
+    }
+  }
+  drawerChannel.value = target;
   drawerBadgeOverride.value = badgeOverride;
   drawerItem.value = null;
 }
@@ -879,11 +937,69 @@ function youtubeSubscriptionIds(): string[] {
   return [...ids];
 }
 
+/**
+ * The 🎵 badge of one channel, from whichever source actually asked.
+ *
+ * Two places know it: the dataset (the details pass and the import fetch the
+ * channel page) and `state.youtubeBadges` (the background subscription sync).
+ * The cache wins only when it is **newer** than the record's own check —
+ * otherwise a `false` cached months ago would hide a badge the dataset has
+ * since recorded, or the reverse.
+ *
+ * The dataset record carries the badge itself, so the list needs this one
+ * answer rather than a second lookup.
+ */
+function officialArtistOf(
+  channel: Channel | ChannelSummary | null | undefined,
+): boolean {
+  if (!channel) return false;
+  const youtubeId = youtubeIdOf(channel);
+  const cached = youtubeId ? state.youtubeBadges[youtubeId] : undefined;
+  if (!cached) return channel.isOfficialArtist === true;
+  const datasetAt =
+    "officialArtistCheckedAt" in channel && channel.officialArtistCheckedAt
+      ? Date.parse(channel.officialArtistCheckedAt)
+      : 0;
+  const cachedAt = Number.isFinite(cached.checkedAt) ? cached.checkedAt : 0;
+  if (cachedAt > datasetAt) return cached.officialArtist === true;
+  return channel.isOfficialArtist === true;
+}
+
+/** The channel's YouTube id, whichever platform it is keyed by. */
+function youtubeIdOf(
+  channel: Channel | ChannelSummary,
+): string | null {
+  if (channel.id.startsWith("UC")) return channel.id;
+  const links = "links" in channel ? channel.links : [];
+  for (const link of links) {
+    if (link.p !== "youtube") continue;
+    const match = link.u.match(/youtube\.com\/channel\/(UC[\w-]+)/);
+    if (match) return match[1] ?? null;
+  }
+  return null;
+}
+
 /** The channels whose cached badge is missing or older than the TTL. */
 function missingYouTubeBadgeIds(): string[] {
   const now = Date.now();
+  const known = new Map(
+    summaries.value.map((summary) => [summary.id, summary]),
+  );
   return youtubeSubscriptionIds().filter((id) => {
     const cached = state.youtubeBadges[id];
+    /**
+     * A record the dataset has already checked does not need the cache: the
+     * details pass asked YouTube itself. Only a record nobody asked about —
+     * or one asked longer ago than the badge TTL — is queued again.
+     */
+    const dataset = known.get(id);
+    if (
+      !cached &&
+      dataset?.officialArtistChecked === true &&
+      dataset.links.some((link) => link.p === "youtube")
+    ) {
+      return false;
+    }
     return (
       !cached ||
       cached.datasetSaveFailed === true ||
@@ -1991,6 +2107,22 @@ onMounted(async () => {
           {{ option.label }}
         </button>
 
+        <!-- Role — a virtual singer and a VTuber are not the same job -->
+        <button v-for="option in ROLE_FILTERS" :key="option.id" type="button" class="shrink-0 rounded-full border px-3 py-1.5 text-xs font-semibold whitespace-nowrap transition" :class="state.role === option.id
+            ? 'border-pink-500 bg-pink-500/15 text-pink-700 dark:text-pink-400'
+            : 'border-black/10 bg-white text-neutral-500 hover:text-neutral-800 dark:border-white/12 dark:bg-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100'
+          " :aria-pressed="state.role === option.id" :title="option.title" @click="state.role = option.id">
+          {{ option.label }}
+        </button>
+
+        <!-- VTuber / VSinger: the two halves the dataset is about -->
+        <button v-for="option in VTUBER_FILTERS" :key="option.id" type="button" class="shrink-0 rounded-full border px-3 py-1.5 text-xs font-semibold whitespace-nowrap transition" :class="state.vtuberOnly === option.id
+            ? 'border-emerald-500 bg-emerald-500/15 text-emerald-700 dark:text-emerald-400'
+            : 'border-black/10 bg-white text-neutral-500 hover:text-neutral-800 dark:border-white/12 dark:bg-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100'
+          " :aria-pressed="state.vtuberOnly === option.id" :title="option.title" @click="state.vtuberOnly = option.id">
+          {{ option.label }}
+        </button>
+
         <!-- AI -->
         <button type="button" class="shrink-0 rounded-full border px-3 py-1.5 text-xs font-semibold whitespace-nowrap transition" :class="state.ai === 'ai'
             ? 'border-fuchsia-500 bg-fuchsia-500/15 text-fuchsia-700 dark:text-fuchsia-400'
@@ -2033,13 +2165,19 @@ onMounted(async () => {
       </div>
 
       <!-- Search results -->
+      <section v-else-if="state.query.trim() && searching && !searchHits.length" aria-label="Searching">
+        <h2 class="mb-3 text-sm font-semibold text-neutral-500">
+          Searching…
+        </h2>
+        <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
+          <div v-for="n in 12" :key="n" class="aspect-[4/3] animate-pulse rounded-xl bg-black/5 dark:bg-white/5" />
+        </div>
+      </section>
+
       <section v-else-if="state.query.trim()" aria-label="Search results">
         <h2 class="mb-3 text-sm font-semibold text-neutral-500">
-          <template v-if="searching">Searching…</template>
-          <template v-else>
-            {{ searchHits.length }} result{{ searchHits.length === 1 ? "" : "s" }} for
-            “{{ state.query }}”
-          </template>
+          {{ searchHits.length }} result{{ searchHits.length === 1 ? "" : "s" }} for
+          “{{ state.query }}”
         </h2>
         <div v-if="searchHits.length" class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
           <article v-for="hit in searchHits" :key="`${hit.k}:${hit.id}`" class="group flex flex-col overflow-hidden rounded-xl border border-black/8 bg-white shadow-sm transition hover:shadow-md dark:border-white/10 dark:bg-neutral-900">
@@ -2057,6 +2195,11 @@ onMounted(async () => {
                 <button type="button" class="text-left hover:underline" @click="openSearchHit(hit)">
                   {{ hit.n }}
                 </button>
+                <OfficialArtistBadge
+                  v-if="hit.k === 'c' && summaryById.get(hit.id)?.isOfficialArtist"
+                  size="xs"
+                  class="ml-1"
+                />
               </h3>
               <p v-if="hit.cn && hit.k === 'i'" class="truncate text-[11px] text-neutral-500">
                 {{ hit.cn }}
@@ -2084,7 +2227,7 @@ onMounted(async () => {
             </div>
           </article>
         </div>
-        <p v-else-if="!searching" class="py-16 text-center text-sm text-neutral-500">
+        <p v-else class="py-16 text-center text-sm text-neutral-500">
           No matches. Try a different spelling, or switch the scope to
           <strong>Both</strong>.
         </p>
