@@ -39,7 +39,7 @@ you fix it.
 | `kind` | `virtual` \| `real` |
 | `role` | `vtuber` \| `vsinger` \| `singer` \| `musician` \| `producer` \| `composer` \| `unknown` |
 | `region` | `jp` \| `cn` \| `tw` \| `hk` \| `kr` \| `en` \| `id` \| `my` \| `sea` \| `unknown` |
-| `agency` | any string, or `null` |
+| `agency` | any string, or `null` — `canonicalAgency()` folds every Hololive branch into `hololive` |
 | `isSinging` | boolean |
 | `hidden` | `true` removes it from the published dataset |
 

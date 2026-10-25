@@ -29,6 +29,7 @@ import {
   AGENCY_SUBREGION,
   COUNTRY_REGION,
   REGION_LANGUAGE,
+  canonicalAgency,
   detectLanguage,
   detectLanguageStatements,
   hasKana,
@@ -768,6 +769,14 @@ export function classifyChannel(signals: ChannelSignals): ChannelClassification 
   }
   if (ov.agency !== undefined) agency = ov.agency;
 
+  /**
+   * One “hololive”, whichever branch the source named.
+   *
+   * The branch still decided the region above; the stored agency is the one
+   * brand. `canonicalAgency()` is applied here as well as on read and write,
+   * so a record is canonical before it reaches anything else.
+   */
+  agency = canonicalAgency(agency);
 
   const gender = detectGender(
     signals.name,
