@@ -777,6 +777,9 @@ export class InnerTubeSource {
        * code; an unreadable about page is not a reason to fail the profile.
        */
       let country: string | null = null;
+      /** The totals the about page publishes; the microformat omits them. */
+      let aboutVideos: number | null = null;
+      let aboutViews: number | null = null;
       if (options.about) {
         try {
           await this.throttle();
@@ -789,6 +792,8 @@ export class InnerTubeSource {
           country = normalizeCountry(
             typeof label === "string" ? label : (label?.text ?? null),
           );
+          aboutVideos = viewsOf(about?.metadata?.video_count);
+          aboutViews = viewsOf(about?.metadata?.view_count);
           const aboutLinks = [
             ...(about?.primary_links ?? []),
             ...(about?.metadata?.links ?? []),
@@ -837,8 +842,10 @@ export class InnerTubeSource {
         description: meta.description ?? null,
         avatar: avatar ?? null,
         subscribers,
-        views: countValue(meta.viewCount ?? meta.view_count),
-        videos: countValue(meta.videoCount ?? meta.video_count),
+        views:
+          aboutViews ?? countValue(meta.viewCount ?? meta.view_count),
+        videos:
+          aboutVideos ?? countValue(meta.videoCount ?? meta.video_count),
         handle,
         links,
         country,
