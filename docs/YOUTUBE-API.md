@@ -31,8 +31,8 @@ names.
 | Channel keyword discovery | `InnerTubeSource.searchChannels()` | none |
 | Video keyword discovery | `InnerTubeSource.searchVideos()` | none |
 | Video discovery restricted to live | `searchVideos(q, n, { liveOnly: true })` | none |
-| Channel uploads | `InnerTubeSource.uploads()` | none |
-| YouTube Music releases | `InnerTubeSource.releases()` | none |
+| Channel uploads | `InnerTubeSource.channelCatalog()` | none |
+| YouTube Music releases | `channelCatalog()` / `channelReleases()` | none |
 | Live and upcoming broadcasts | `InnerTubeSource.liveStreams()` | none |
 
 `searchVideos()` reads the public search result's title, description snippet,
