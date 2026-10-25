@@ -12,6 +12,7 @@
  *
  *   npm run data:details -- --limit 2000
  *   npm run data:details -- --platform bilibili --limit 500
+ *   npm run data:details -- --counts-only --limit 500
  *   npm run data:details -- --name-only
  *   npm run data:ids                   # re-key handle ids to UC… ids
  *   npm run data:details -- --dry-run
@@ -130,6 +131,15 @@ interface Options {
    * Bilibili account is stored as `jp` under its Japanese name.
    */
   weakRegion: boolean;
+  /**
+   * Only the records whose follower count is still hidden.
+   *
+   * The default pass sorts a missing avatar first, so the ~2,000 records a
+   * roster already gave a picture but no follower count are never reached by
+   * a bounded run — and the card keeps saying `subs hidden` even though the
+   * platform publishes the number.
+   */
+  countsOnly: boolean;
 }
 
 /**
@@ -156,6 +166,7 @@ function parseArgs(argv: string[]): Options {
     force: false,
     normalizeIds: false,
     weakRegion: false,
+    countsOnly: false,
   };
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i];
@@ -178,8 +189,13 @@ function parseArgs(argv: string[]): Options {
       arg === "--regions"
     ) {
       options.weakRegion = true;
-    }
-    else if (NAME_ONLY_FLAGS.has(arg.toLowerCase())) {
+    } else if (
+      arg === "--counts-only" ||
+      arg === "--counts" ||
+      arg === "--subscribers"
+    ) {
+      options.countsOnly = true;
+    } else if (NAME_ONLY_FLAGS.has(arg.toLowerCase())) {
       const value = argv[i + 1];
       if (value && !value.startsWith("--")) {
         i++;
@@ -735,7 +751,7 @@ async function main(): Promise<void> {
   }
 
   /**
-   * The channels that need an avatar, worst first.
+   * The channels that need details, worst first.
    *
    * A channel with no avatar at all is worth more than one that merely
    * lacks a description, and a channel that has never been fetched is worth
@@ -765,7 +781,39 @@ async function main(): Promise<void> {
       }
       // In name-only mode every channel is a candidate: the point is to
       // correct the name, whether or not the avatar is already there.
-      if (!options.nameOnly && c.avatar) return false;
+      if (!options.nameOnly) {
+        if (options.countsOnly) {
+          if (c.subscribers.tag !== "hidden") return false;
+        } else {
+          /**
+           * An avatar is not the only missing detail.
+           *
+           * The default run used to stop at "has an avatar", so the ~7,500
+           * records whose rosters supplied a picture but never a follower
+           * count were never asked for one — the Channels card said
+           * `subs hidden` forever, even though the platform publishes the
+           * number. A record whose count is known and whose avatar is there
+           * has nothing left to ask for.
+           */
+          const needsCount = c.subscribers.tag === "hidden";
+          if (c.avatar && !needsCount) return false;
+        }
+        /**
+         * Do not ask the same channel every run.
+         *
+         * Some performers genuinely hide their follower count; without a
+         * freshness window they would be re-fetched on every pass and never
+         * let the ones that can be fixed through.
+         */
+        if (
+          !options.force &&
+          c.lastDetailsFetchedAt &&
+          Date.now() - Date.parse(c.lastDetailsFetchedAt) <
+            7 * 24 * 60 * 60 * 1000
+        ) {
+          return false;
+        }
+      }
       /**
        * A channel the platform has already named is done — unless the run
        * was asked to do everything anyway.
@@ -783,6 +831,7 @@ async function main(): Promise<void> {
     .sort((a, b) => {
       const score = (c: Channel) =>
         (c.avatar ? 0 : 4) +
+        (c.subscribers.tag === "has" ? 0 : 2) +
         (c.description ? 0 : 1) +
         (c.lastDetailsFetchedAt ? 0 : 2);
       return score(b) - score(a);
@@ -794,9 +843,11 @@ async function main(): Promise<void> {
       ? `${pending.length} channel(s) are keyed by a handle`
       : options.weakRegion
         ? `${pending.length} channel(s) have a guessed region`
-        : options.nameOnly
-          ? `${pending.length} channel(s) to rename`
-          : `${pending.length} channel(s) need an avatar`,
+        : options.countsOnly
+          ? `${pending.length} channel(s) need a follower count`
+          : options.nameOnly
+            ? `${pending.length} channel(s) to rename`
+            : `${pending.length} channel(s) need details`,
   );
 
   const innertube = new InnerTubeSource({
@@ -866,6 +917,14 @@ async function main(): Promise<void> {
         );
       }
     }
+    /**
+     * The record has been asked; remember when.
+     *
+     * Without this the freshness window above has nothing to compare
+     * against, and a performer who genuinely hides their follower count is
+     * fetched again on the next run instead of the ones that can be fixed.
+     */
+    channel.lastDetailsFetchedAt = new Date().toISOString();
     if (channel.avatar && channel.avatar !== before) filled++;
     /**
      * Keyed by the id the record **had** when it was read: a profile can
@@ -960,6 +1019,7 @@ async function main(): Promise<void> {
     record.officialArtistCheckedAt = updated.officialArtistCheckedAt;
     record.subscribers = updated.subscribers;
     record.videoCount = updated.videoCount;
+    record.lastDetailsFetchedAt = updated.lastDetailsFetchedAt;
     written.add(record.id);
   }
   /**
