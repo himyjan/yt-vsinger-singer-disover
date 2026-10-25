@@ -772,6 +772,12 @@ maximum for a single Git LFS file.
         titles, descriptions, or tags. This allows singing-stream and relay
         hashtag variants without admitting ordinary karaoke channels based
         on singing terms alone.
+      - **vTubie** — a directory of roughly 20,000 performers, ten to a page.
+        No API, and the pages sit behind a Cloudflare managed challenge, so it
+        is read with a real browser (`puppeteer-core`, optional).
+        `npm run data:discover -- --promote` resolves the names it finds to
+        YouTube channels and applies the same two-video gate the YouTube
+        discovery applies; the source itself only ever produces candidates.
       - **X (Twitter)** — token-gated (`X_BEARER_TOKEN`); also harvests X
         handles from wiki infoboxes for free.
       - **Facebook** — token-gated (`FACEBOOK_ACCESS_TOKEN`,
@@ -784,6 +790,10 @@ maximum for a single Git LFS file.
       Records sharing a key are **merged**, never duplicated.
 - `[x]` The registry also enriches existing channels with debut / graduation
       dates that the YouTube API does not expose.
+- `[x]` Names that resolve to a YouTube channel are promoted to full records
+      (`--promote`) once two of their videos show virtual-creator identity and
+      singing evidence; the terms live in `scripts/lib/discovery-evidence.ts`
+      and are shared with the sync, so there is one definition of the rule.
 
 ---
 

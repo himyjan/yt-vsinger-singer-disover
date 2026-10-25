@@ -44,13 +44,15 @@ scripts/
 ├── build-index.ts     build the inverted search index
 ├── fill-details.ts    fill the missing avatars, names and details
 ├── resolve-links.ts   find the missing cross-platform accounts
+├── discover.ts        discover new performers into data/identities.json
 ├── validate.ts        CI gate
 ├── verify.ts          verify classifications with web-search grounding
 ├── import-legacy-db.ts  one-off SQLite migration
 ├── prepare-public.ts  copy data/ into public/ for the build
 └── lib/               types, youtube, twitch, platforms, classify, regions,
-                       identity, search, link-discovery, shard, aislist,
-                       music-dataset, seeds, dataset, io
+                       identity, discovery-evidence, debut-sources,
+                       promote-candidates, search, link-discovery, shard,
+                       aislist, music-dataset, seeds, dataset, io
 ```
 
 ### The web app (`src/`)
@@ -326,6 +328,7 @@ create non-fast-forward push failures.
 | A record filed under `cn` that is really Japanese | `npm run data:details -- --weak-region` re-derives it; `data:links` corrects it from the discovered YouTube country |
 | Fix the classifier itself | `scripts/lib/classify.ts` |
 | Add a curated channel | `data/seed-catalog.json` |
+| Discover new performers | `npm run data:discover` — vTubie's directory, read with a browser (`puppeteer-core`, optional); candidates land in `data/identities.json`, and `--promote` adds the ones that pass the two-video gate to `data/channels/` |
 | Add a region | `scripts/lib/types.ts`, `scripts/lib/regions.ts` |
 | Add a platform | `scripts/lib/platforms/<name>.ts` + `platform-registry.ts` |
 | Add a discovery source | `scripts/lib/debut-sources/<name>.ts` |
@@ -350,6 +353,8 @@ npm run data:details -- --name-only  # correct the names and the aliases
 npm run data:details -- --platform bilibili --dry-run
 npm run data:links -- --limit 200    # find the missing cross-platform accounts
 npm run data:links -- --shard 2/4 --web --dry-run  # + search-grounded fallback
+npm run data:discover                # new performers from the directory sources (vTubie)
+npm run data:discover -- --promote   # + add the ones that pass the virtual-and-singing gate
 npm run data:ids                     # re-key handle ids to UC… ids
 npm run data:validate                # structure + budgets
 npm run data:import-legacy           # migrate the old SQLite database

@@ -154,6 +154,23 @@ export interface DebutSource {
 A source must degrade gracefully — return an empty array rather than throwing
 when its API is unreachable.
 
+Two sources exist: `fandom.ts` (the Virtual YouTuber Wiki's MediaWiki API) and
+`vtubie.ts` (the vTubie directory, read through `puppeteer-core` because the
+pages sit behind a Cloudflare challenge and there is no API). Run them with:
+
+```bash
+npm run data:discover                      # vTubie, 20 directory pages
+npm run data:discover -- --source all      # every source
+npm run data:discover -- --pages 200 --promote
+npm run data:discover -- --dry-run         # report, write nothing
+```
+
+Candidates are merged into `data/identities.json`. `--promote` also resolves
+those names to YouTube channels and adds the ones that pass the two-video
+virtual-and-singing gate to `data/channels/`. The gate itself lives in
+`scripts/lib/discovery-evidence.ts` and is shared with the sync — extend the
+terms there, once, rather than in a second copy.
+
 ## Changing the search index
 
 `scripts/lib/search.ts` holds the tokenizer and the query engine, and is

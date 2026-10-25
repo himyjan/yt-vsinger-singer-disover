@@ -31,6 +31,7 @@ npm run data:sync           # InnerTube + optional Data API + platform adapters
 npm run data:index          # rebuild the search index
 npm run data:validate       # check structure and size budgets
 npm run data:links          # find the missing cross-platform accounts
+npm run data:discover       # new performers from vTubie (--source all: + the wiki)
 ```
 
 `npm run data:all` does the first three.
@@ -63,6 +64,11 @@ scripts/sync.ts
 
 scripts/resolve-links.ts   the missing accounts: the performer's own text,
                            their X bio, Wikidata, optional web search
+
+scripts/discover.ts        new performers: the Virtual YouTuber Wiki, and the
+                           vTubie directory through a real browser
+                           → data/identities.json; --promote adds the ones
+                             that pass the two-video gate
 ```
 
 YouTube is the primary platform, and InnerTube (`youtubei.js`) is the primary

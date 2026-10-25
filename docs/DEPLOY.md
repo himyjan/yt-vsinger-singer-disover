@@ -47,6 +47,18 @@ finds nothing new produces no commit and the git history stays clean.
 The sync and verification workflows share a repository-wide concurrency group
 and rebase generated changes onto the latest branch before committing.
 
+### Discovery is not scheduled
+
+`npm run data:discover` is a deliberate run, not a cron job: it reads the
+Virtual YouTuber Wiki and the vTubie directory, and `--promote` writes channel
+records. Its output is `data/identities.json`, which is committed like any
+other dataset file, so a run that finds nothing new produces no diff at all.
+
+vTubie needs a Chrome binary. The Ubuntu runners have `google-chrome`
+installed; anywhere else, point `VTUBIE_CHROME_PATH` at one. `puppeteer-core`
+is an optional dependency, and a checkout without it discovers nothing from
+that source and says so in the log rather than failing.
+
 ### `verify-data.yml` — verify, and fill the missing cross-platform links
 
 ```yaml

@@ -265,6 +265,13 @@ and discovery candidate sets are split into **deterministic shards**:
 `--limit-channels N` and `--limit-live N` override the per-run caps for a
 bounded local run.
 
+The live pass reads each channel's Live tab through InnerTube, so
+`maxLiveChannelsPerRun` is a bound on **run time**, not on spend: it costs no
+quota. It is set above the singing-channel pool — the channels flagged
+`isSinging` with a `UC…` id, 614 of the 14,329 records at the time of writing —
+so one run checks all of them. A channel that is not flagged `isSinging` is
+never polled, which is what really bounds the upcoming/premiere list.
+
 ## Troubleshooting
 
 **`403 quotaExceeded`** — the daily allowance is spent. The quota state file

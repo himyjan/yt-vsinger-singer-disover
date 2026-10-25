@@ -58,6 +58,10 @@ import { checkUpstreams, writeRevisions } from "./lib/upstream";
 import { TwitchGqlSource } from "./lib/twitch-gql";
 import { shardOf } from "./lib/shard";
 import {
+  hasSingingDiscoveryEvidence,
+  hasVirtualIdentityEvidence,
+} from "./lib/discovery-evidence";
+import {
   isPlaceholderName,
   orderPlatformLinks,
   applyOfficialArtist,
@@ -248,18 +252,11 @@ const config: SyncConfig = readJson(
   },
 );
 
-const SINGING_DISCOVERY_TERMS =
-  /(?:vsinger|virtual\s+singer|singer|singing|karaoke|cover\s+song|music\s+video|vocaloid|歌枠|歌い手|歌ってみた|歌唱|歌姫|歌手|唱歌|翻唱|歌曲|歌回|歌回接力|接龍歌枠|歌.{0,8}(?:リレー|relay)|(?:リレー|relay).{0,8}歌|弾き語り|カラオケ|노래|가수|커버|노래방|nyanyi|menyanyi)/iu;
-const VIRTUAL_SINGER_DISCOVERY_TERMS =
-  /(?:vtuber|v[- ]?tuber|virtual\s+(?:you?tuber|singer)|vsinger|バーチャル(?:youtuber|ユーチューバー|シンガー|歌姫|歌手)|ぶいちゅーばー|虚拟(?:主播|歌姬|歌手)|虛擬(?:主播|歌姬|歌手)|버튜버|버추얼\s*유튜버)/iu;
-
-function hasSingingDiscoveryEvidence(values: (string | null | undefined)[]): boolean {
-  return values.some((value) => value && SINGING_DISCOVERY_TERMS.test(value));
-}
-
-function hasVirtualIdentityEvidence(values: (string | null | undefined)[]): boolean {
-  return values.some((value) => value && VIRTUAL_SINGER_DISCOVERY_TERMS.test(value));
-}
+/**
+ * The virtual-and-singing gate lives in `scripts/lib/discovery-evidence.ts`:
+ * `npm run data:discover -- --promote` applies the same terms to the
+ * performers a directory suggests, so there is one definition of the rule.
+ */
 
 /* -------------------------------------------------------------------------- */
 /* Overrides                                                                  */
