@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-25T08:11:06.564Z",
+  "generatedAt": "2026-10-25T09:23:34.774Z",
   "regions": [
     {
       "code": "jp",
@@ -24,7 +24,7 @@
         "0e",
         "0f"
       ],
-      "items": 998
+      "items": 1025
     },
     {
       "code": "tw",
@@ -47,7 +47,7 @@
         "0e",
         "0f"
       ],
-      "items": 27
+      "items": 28
     },
     {
       "code": "kr",
@@ -104,9 +104,10 @@
       "label": "Malaysia",
       "badge": "🇲🇾",
       "buckets": [
+        "00",
         "0d"
       ],
-      "items": 1
+      "items": 2
     },
     {
       "code": "unknown",
@@ -127,8 +128,8 @@
     }
   ],
   "counts": {
-    "total": 1161,
-    "live": 9,
-    "upcoming": 270
+    "total": 1190,
+    "live": 17,
+    "upcoming": 279
   }
 }
