@@ -1190,6 +1190,80 @@ export function isShortItem(
 }
 
 /**
+ * Schedule streams — 日程 / 週表 / スケジュール.
+ *
+ * A performer announces the coming week with a stream whose **title is the
+ * schedule**: 「【週表】07/29~08/04」, 「Weekly Schedule」,
+ * 「今週のスケジュール」, 「타임테이블」. Nothing is performed and the item
+ * is not an event, so the Upcoming tab fills with announcements rather than
+ * streams the user can plan around.
+ *
+ * The terms are matched against `normalize()`d text, which is why the
+ * English ones are word-boundary regexes: `schedule` must not match
+ * `scheduled`, and `time table` has to survive the styled spellings
+ * (`𝗐𝖾𝖾𝗄𝗅𝗒 𝗌𝖼𝗁𝖾𝖽𝗎𝗅𝖾`) that are already folded to ASCII by NFKC.
+ */
+const SCHEDULE_TITLE_TERMS = [
+  // Chinese — 日程 / 週表 / 排程
+  "日程",
+  "週表",
+  "周表",
+  "時間表",
+  "直播安排",
+  "排程",
+  "預定表",
+  "预定表",
+  "活動表",
+  "活动表",
+  "節目表",
+  "节目表",
+  // Japanese — スケジュール / 予定表 / 時間割
+  "スケジュール",
+  "予定表",
+  "時間割",
+  "スケ表",
+  "週間予定",
+  "今週の予定",
+  "来週の予定",
+  "配信予定",
+  "活動予定",
+  // Korean — 스케줄 / 타임테이블
+  "스케줄",
+  "타임테이블",
+  "시간표",
+  "일정표",
+  "주간 일정",
+  // Other languages the dataset's performers publish in.
+  "расписание",
+  "розклад",
+  "jadwal",
+  "horario",
+  "horário",
+  "zeitplan",
+  "wochenplan",
+  "emploi du temps",
+  "ตาราง",
+  "lịch trình",
+];
+
+const SCHEDULE_TITLE_PATTERNS = [
+  /\b(?:weekly\s+|stream\s+|live\s+)?schedule\b/,
+  /\btimetable\b/,
+  /\btime\s+table\b/,
+  /\bweekly\s+plan\b/,
+];
+
+/** True when an item's title *is* a schedule rather than an event. */
+export function isScheduleTitle(title: string | null | undefined): boolean {
+  const text = normalize(title);
+  if (!text) return false;
+  return (
+    SCHEDULE_TITLE_TERMS.some((term) => text.includes(term)) ||
+    SCHEDULE_TITLE_PATTERNS.some((pattern) => pattern.test(text))
+  );
+}
+
+/**
  * Markers that identify a **clip or translation channel**.
  *
  * The Chinese scene is full of them: an account that re-uploads a Japanese

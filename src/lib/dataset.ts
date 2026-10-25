@@ -30,6 +30,7 @@ import type { SearchPack, SearchHit } from "@shared/lib/search";
 import { searchPacks } from "@shared/lib/search";
 import { toLanguageList } from "@shared/lib/regions";
 import { toSummary } from "@shared/lib/summary";
+import { isScheduleTitle } from "@shared/lib/classify";
 
 /** Base path of the deployment (handles GitHub Pages sub-paths). */
 const BASE = import.meta.env.BASE_URL || "/";
@@ -457,6 +458,11 @@ export interface ItemQuery {
   ai?: "ai" | "human" | "all";
   /** `oac` shows only channels with the 🎵 Official Artist badge. */
   oac?: "all" | "oac";
+  /**
+   * Upcoming content: an actual scheduled stream (`stream`) or a schedule
+   * announcement (`schedule`) — 日程 / 週表 / スケジュール / timetable.
+   */
+  schedule?: "all" | "stream" | "schedule";
   /** Free-text filter over title / song / channel. */
   text?: string;
   limit?: number;
@@ -488,6 +494,7 @@ export function filterItems(items: Item[], query: ItemQuery): Item[] {
   const ai = query.ai ?? "all";
   const affiliation = query.affiliation ?? "all";
   const language = query.language ?? "all";
+  const schedule = query.schedule ?? "all";
   const text = query.text?.trim().toLowerCase() ?? "";
 
   const filtered = items.filter((item) => {
@@ -502,6 +509,11 @@ export function filterItems(items: Item[], query: ItemQuery): Item[] {
     if (gender !== "all" && item.gender !== gender) return false;
     if (ai === "ai" && !item.isAi) return false;
     if (ai === "human" && item.isAi) return false;
+    if (schedule !== "all") {
+      const isSchedule = isScheduleTitle(item.title);
+      if (schedule === "schedule" && !isSchedule) return false;
+      if (schedule === "stream" && isSchedule) return false;
+    }
     if (text) {
       const haystack = `${item.title} ${item.songTitle ?? ""} ${
         item.originalArtist ?? ""

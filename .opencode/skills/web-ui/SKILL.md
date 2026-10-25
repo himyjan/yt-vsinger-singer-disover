@@ -49,6 +49,7 @@ state.role         // "all" | "vsinger" | "vtuber" | "singer" | "producer"
 state.vtuberOnly   // "all" | "vtuber" | "vsinger" (vsinger = role OR isSinging)
 state.subsTracked  // "all" | "tracked" | "untracked"
 state.channelSubs   // "all" | "subscribed" | "not-subscribed" (Channels view)
+state.upcomingType  // "all" | "stream" | "schedule" (Upcoming view)
 state.accounts     // Record<provider, LinkedAccount[]>
 state.activeAccount// Record<provider, accountId | null>
 ```
@@ -56,7 +57,10 @@ state.activeAccount// Record<provider, accountId | null>
 ## Links
 
 `channelLinks()` in `src/lib/links.ts` merges `platforms[]` (or a summary's
-`links[]`) with `externals`. An external value is either a **handle** for a
+`links[]`) with `externals`. A `platforms[].url` from a roster is not always
+an href — vdb stores percent-encoded addresses and bare hosts — so it goes
+through `toHref()` (`scripts/lib/address.ts`), and an `other` / `web` /
+`email` link is labelled by its host. An external value is either a **handle** for a
 known platform or, under `web:<n>`, an **address** — `externalUrl()` returns
 `null` for a key it cannot build a URL for, and the link is omitted. Never
 fall back to `https://<key>/<handle>`: a 404 is worse than no link.
@@ -88,6 +92,20 @@ API; `InnerTubeSource.profile()` reads it from the channel header
 (`AUDIO_BADGE` / `BADGE_STYLE_TYPE_VERIFIED_ARTIST`) into
 `isOfficialArtist`. The field is **optional** on `Channel` — absent means the
 details pass has not asked yet — so the filter matches `=== true` only.
+
+**A view-specific filter lives in that view's header**, not the global bar —
+see the segmented controls in Channels (`CHANNEL_SUB_FILTERS`), My
+subscriptions (`SUB_FILTERS`) and Upcoming (`UPCOMING_FILTERS`).
+
+**Schedule streams are not events.** A performer announces the week with a
+stream whose title *is* the schedule — 「週表」「日程」, 「Weekly Schedule」,
+「スケジュール」, 「타임테이블」 — so the Upcoming tab offers `All` /
+`🎤 Streams` / `📅 Schedule`. The test is `isScheduleTitle()` in
+`scripts/lib/classify.ts`: it runs on `normalize()`d text, which folds the
+styled spellings (`𝗐𝖾𝖾𝗄𝗅𝗒 𝗌𝖼𝗁𝖾𝖽𝗎𝗅𝖾`) and full-width letters to ASCII.
+When adding a language, add its term to `SCHEDULE_TITLE_TERMS`; the English
+ones are word-boundary regexes so `schedule` does not match `scheduled`.
+`LiveCard` shows a 📅 Schedule pill on a matching upcoming card.
 
 **The badge itself is `src/components/OfficialArtistBadge.vue`** — YouTube's
 monochrome inline SVG, not an emoji. Put it **after** the channel name

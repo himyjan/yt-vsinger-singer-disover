@@ -13,6 +13,7 @@ import { formatCount, formatDuration, formatRelative } from "@/lib/dataset";
 import { imageUrl } from "@/lib/image";
 import { channelLinks, itemUrl, platformMeta } from "@/lib/links";
 import type { ChannelSummary } from "@shared/lib/types";
+import { isScheduleTitle } from "@shared/lib/classify";
 
 const props = defineProps<{
   item: Item;
@@ -57,6 +58,9 @@ const elapsed = computed(() => {
 
 const isUpcoming = computed(() => props.item.status === "upcoming");
 
+/** The item announces the week's schedule rather than being a stream. */
+const isSchedule = computed(() => isScheduleTitle(props.item.title));
+
 const kindLabel = computed(() =>
   props.item.channelKind === "virtual" ? "VTuber" : "Real",
 );
@@ -88,6 +92,11 @@ const kindLabel = computed(() =>
       <!-- Elapsed time -->
       <span v-if="elapsed" class="absolute right-2 bottom-2 rounded bg-black/75 px-1.5 py-0.5 text-[11px] font-medium text-white">
         {{ elapsed }}
+      </span>
+
+      <!-- Schedule, not a stream -->
+      <span v-if="isUpcoming && isSchedule" class="absolute bottom-2 left-2 rounded bg-amber-600/90 px-1.5 py-0.5 text-[10px] font-semibold text-white shadow" title="A schedule announcement, not a scheduled stream">
+        📅 Schedule
       </span>
     </button>
 

@@ -252,6 +252,30 @@ const CHANNEL_SUB_FILTERS = [
   { id: "not-subscribed", label: "Not subscribed" },
 ] as const;
 
+/**
+ * What an Upcoming card is.
+ *
+ * Most of the tab is scheduled streams and premieres, but a performer also
+ * announces the week with a stream whose title *is* the schedule —
+ * 「週表」「日程」, 「Weekly Schedule」, 「スケジュール」, 「타임테이블」.
+ * Those are not events and they bury the ones that are, so they can be
+ * filtered as a separate kind.
+ */
+const UPCOMING_FILTERS = [
+  { id: "all", label: "All", title: "Every scheduled item" },
+  {
+    id: "stream",
+    label: "🎤 Streams",
+    title: "Scheduled streams and premieres — no schedule tables",
+  },
+  {
+    id: "schedule",
+    label: "📅 Schedule",
+    title:
+      "Weekly schedule announcements — 日程 / 週表 / スケジュール / schedule, in any language",
+  },
+] as const;
+
 const LANGUAGES = [
   { id: "all", label: "Any language", title: "Every performer" },
   { id: "ja", label: "🇯🇵 日本語", title: "Performers who stream in Japanese" },
@@ -393,6 +417,7 @@ const visibleUpcoming = computed(() =>
     ai: state.ai,
     affiliation: state.affiliation,
     language: state.language,
+    schedule: state.upcomingType,
     limit: 300,
   }), state.sort.upcoming),
 );
@@ -2255,17 +2280,32 @@ onMounted(async () => {
 
       <!-- Upcoming -->
       <section v-else-if="state.view === 'upcoming'" aria-label="Upcoming">
-        <h2 class="mb-3 text-lg font-bold">
-          Upcoming
-          <span class="ml-1 text-sm font-normal text-neutral-500">
-            {{ visibleUpcoming.length }}
-          </span>
-        </h2>
+        <div class="mb-3 flex flex-wrap items-center justify-between gap-3">
+          <h2 class="text-lg font-bold">
+            Upcoming
+            <span class="ml-1 text-sm font-normal text-neutral-500">
+              {{ visibleUpcoming.length }}
+            </span>
+          </h2>
+          <!-- Streams vs. the schedule tables that announce them -->
+          <div class="flex shrink-0 items-center rounded-full border border-black/10 bg-white p-0.5 dark:border-white/12 dark:bg-neutral-900" role="group" aria-label="Upcoming content filter">
+            <button v-for="option in UPCOMING_FILTERS" :key="option.id" type="button" class="rounded-full px-2.5 py-1 text-[11px] font-semibold whitespace-nowrap transition" :class="state.upcomingType === option.id
+                ? 'bg-amber-500 text-white'
+                : 'text-neutral-500 hover:text-neutral-800 dark:hover:text-neutral-100'
+              " :title="option.title" :aria-pressed="state.upcomingType === option.id" @click="state.upcomingType = option.id">
+              {{ option.label }}
+            </button>
+          </div>
+        </div>
         <div v-if="visibleUpcoming.length" class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
           <LiveCard v-for="item in visibleUpcoming" :key="item.id" :item="item" :channel="summaryById.get(item.channelId) ?? null" @open="openItem" />
         </div>
         <p v-else class="py-16 text-center text-sm text-neutral-500">
-          Nothing scheduled.
+          {{ state.upcomingType === "schedule"
+            ? "No schedule tables for this filter."
+            : state.upcomingType === "stream"
+              ? "No streams scheduled for this filter."
+              : "Nothing scheduled." }}
         </p>
       </section>
 

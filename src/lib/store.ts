@@ -214,6 +214,11 @@ export const state = reactive({
    * discovery direction.
    */
   channelSubs: "all" as "all" | "subscribed" | "not-subscribed",
+  /**
+   * Upcoming filter: everything, the actual scheduled streams, or the
+   * schedule tables that only announce them (日程 / 週表 / timetable).
+   */
+  upcomingType: "all" as "all" | "stream" | "schedule",
   /** Active view. */
   view: initialView(),
   /** Current search query. */
