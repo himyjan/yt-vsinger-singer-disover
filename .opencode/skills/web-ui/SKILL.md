@@ -72,8 +72,14 @@ Followers list from `channel.platforms[].subscribers`. `channel` is a full
 projection) — reading it is how the section silently disappeared. Address-only
 links (`other` / `web` / `email`) are excluded from the list, and a channel
 whose own count is hidden falls back to the largest published platform count
-(headline stat, card, sort). The **Videos** stat reads `entry.v`, never the
-follower count.
+(headline stat, card, sort). The order is fixed — YouTube, Twitch, Bilibili,
+Niconico, then the rest by size — so YouTube leads even on a Bilibili-first
+record. The **Videos** stat reads `entry.v`, never the follower count.
+
+A platform identity and an `externals` handle can name the same account;
+`channelLinks()` keeps the platform entry and drops the external, and both
+`twitter.com` / `x.com` spellings share one key, so an X account is not
+rendered twice.
 
 ## The 🎵 badge
 
