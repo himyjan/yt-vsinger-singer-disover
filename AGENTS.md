@@ -321,6 +321,7 @@ create non-fast-forward push failures.
 | Fix a Bilibili avatar (mixed content / 403) | `scripts/lib/platforms/bilibili.ts` (`absoluteUrl`), `src/lib/image.ts`, and `referrerpolicy="no-referrer"` on `<img>` |
 | A record keyed by a handle | `npm run data:ids` — resolves it to the `UC…` id |
 | Fill the missing avatars | `npm run data:details -- --limit 2000` |
+| Fill the missing follower counts | `npm run data:details -- --counts-only --limit 500` |
 | A Bilibili-only record with no YouTube/Twitch link | `npm run data:links -- --limit 200` (add `--platform bilibili --shard 2/4` to slice it) |
 | A record filed under `cn` that is really Japanese | `npm run data:details -- --weak-region` re-derives it; `data:links` corrects it from the discovered YouTube country |
 | Fix the classifier itself | `scripts/lib/classify.ts` |
@@ -344,6 +345,7 @@ npm run data:import-playlist -- "playlist.docx" --dry-run # preview a DOCX impor
 npm run data:verify                   # verify classifications with search grounding
 npm run data:index                   # rebuild the search index
 npm run data:details -- --limit 2000 # fill the missing avatars
+npm run data:details -- --counts-only --limit 500 # fill the hidden follower counts
 npm run data:details -- --name-only  # correct the names and the aliases
 npm run data:details -- --platform bilibili --dry-run
 npm run data:links -- --limit 200    # find the missing cross-platform accounts
