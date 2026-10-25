@@ -198,7 +198,7 @@ src/
 └── components/
     ├── LiveCard.vue         thumbnail + info block + all links
     ├── ChannelCard.vue      channel badge, name, followers
-    ├── ChannelDrawer.vue    channel detail, links and recent uploads
+    ├── ChannelDrawer.vue    channel detail, links, uploads and releases
     ├── OfficialArtistBadge.vue  YouTube's inline SVG, right of the name
     └── SubscriptionDetail.vue  untracked subscription fetched on open
 ```

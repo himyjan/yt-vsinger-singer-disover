@@ -18,7 +18,7 @@ src/
 ├── lib/env.ts           build-time environment
 └── components/
     ├── LiveCard.vue     thumbnail + info block + all links
-    └── ChannelDrawer.vue  channel detail, links, recent uploads
+    └── ChannelDrawer.vue  channel detail, links, uploads and releases
 ```
 
 ## The scope switch is enforced in the data layer
