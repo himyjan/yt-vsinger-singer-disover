@@ -65,6 +65,16 @@ known platform or, under `web:<n>`, an **address** — `externalUrl()` returns
 `null` for a key it cannot build a URL for, and the link is omitted. Never
 fall back to `https://<key>/<handle>`: a 404 is worse than no link.
 
+**Follower counts belong to the platform, not the record.** A performer on
+Twitch and Bilibili has two counts, so `ChannelDrawer` always renders a
+Followers list from `channel.platforms[].subscribers`. `channel` is a full
+`Channel`; its `followers` field does not exist (that is a `ChannelSummary`
+projection) — reading it is how the section silently disappeared. Address-only
+links (`other` / `web` / `email`) are excluded from the list, and a channel
+whose own count is hidden falls back to the largest published platform count
+(headline stat, card, sort). The **Videos** stat reads `entry.v`, never the
+follower count.
+
 ## The 🎵 badge
 
 The badge is **in the record** (`isOfficialArtist`) and `officialArtistCheckedAt`

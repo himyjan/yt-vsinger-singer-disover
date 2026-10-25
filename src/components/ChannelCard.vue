@@ -26,7 +26,9 @@ const emit = defineEmits<{ (e: "open", channel: ChannelSummary): void }>();
       <OfficialArtistBadge v-if="channel.isOfficialArtist" size="xs" class="ml-1" />
     </span>
     <span class="text-[11px] text-neutral-500">
-      {{ formatCount(channel.subscribers) }} subs
+      {{ channel.subscribersHidden
+        ? "subs hidden"
+        : `${formatCount(channel.subscribers)} subs` }}
     </span>
     <span class="flex flex-wrap justify-center gap-1">
       <span class="rounded px-1.5 py-0.5 text-[10px] font-semibold text-white" :class="channel.kind === 'virtual' ? 'bg-purple-600' : 'bg-emerald-600'">

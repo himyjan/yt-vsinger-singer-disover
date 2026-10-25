@@ -53,18 +53,60 @@ const EXTERNAL_META: Record<string, { label: string; icon: string }> = {
   "ci.me": { label: "CI.ME", icon: "🔗" },
 };
 
+/**
+ * Platforms the dataset stores but has no adapter for.
+ *
+ * The rosters list a performer's Weibo, Pixiv, BOOTH, marshmallow, peing and
+ * so on, and the drawer shows every one of them in the Followers list. A raw
+ * key (`weiboByName`, `ci-en`) is not a label.
+ */
+const EXTRA_META: Record<string, { label: string; icon: string }> = {
+  weibo: { label: "Weibo", icon: "🔴" },
+  weiboByName: { label: "Weibo", icon: "🔴" },
+  userlocal: { label: "UserLocal", icon: "📊" },
+  peing: { label: "Peing", icon: "❓" },
+  marshmallow: { label: "Marshmallow", icon: "🍡" },
+  acfun: { label: "AcFun", icon: "🎬" },
+  pixiv: { label: "pixiv", icon: "🎨" },
+  booth: { label: "BOOTH", icon: "🛍" },
+  afdian: { label: "爱发电", icon: "⚡" },
+  popiask: { label: "Popiask", icon: "💬" },
+  "amazon.co.jp": { label: "Amazon", icon: "📦" },
+  showroom: { label: "SHOWROOM", icon: "📺" },
+  pomeet: { label: "Pomeet", icon: "🍮" },
+  github: { label: "GitHub", icon: "🐙" },
+  fantia: { label: "Fantia", icon: "🎨" },
+  facebook: { label: "Facebook", icon: "📘" },
+  telegram: { label: "Telegram", icon: "✈️" },
+  "ci-en": { label: "Ci-en", icon: "📝" },
+  patreon: { label: "Patreon", icon: "🧡" },
+  line: { label: "LINE", icon: "💬" },
+  teespring: { label: "Teespring", icon: "👕" },
+};
+
 export function platformMeta(platform: string): {
   label: string;
   color: string;
   icon: string;
 } {
-  return (
-    PLATFORM_META[platform as PlatformId] ?? {
-      label: platform,
-      color: "#6b7280",
-      icon: "🔗",
-    }
-  );
+  const known = PLATFORM_META[platform as PlatformId];
+  if (known) return known;
+
+  /**
+   * Platforms a performer links to but the dataset has no adapter for —
+   * `twitter`, `instagram`, `userlocal`, the address-only `other` / `web` /
+   * `email`. They are still shown (the follower list lists every account),
+   * so they need a readable label rather than the raw key.
+   */
+  const external = EXTERNAL_META[platform] ?? EXTRA_META[platform];
+  if (external) return { label: external.label, color: "#6b7280", icon: external.icon };
+  if (platform === "other" || platform === "web") {
+    return { label: "Website", color: "#6b7280", icon: "🌐" };
+  }
+  if (platform === "email") {
+    return { label: "Email", color: "#6b7280", icon: "✉️" };
+  }
+  return { label: platform, color: "#6b7280", icon: "🔗" };
 }
 
 /** Collects every known link for a channel, in a stable order. */

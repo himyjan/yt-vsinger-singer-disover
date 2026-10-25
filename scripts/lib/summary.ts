@@ -17,6 +17,20 @@ import type { Channel, ChannelSummary } from "./types";
 import { countHidden, countValue } from "./types";
 
 export function toSummary(c: Channel): ChannelSummary {
+  const ownSubscribers = countValue(c.subscribers);
+  /**
+   * A channel can hide its count while one of its platforms publishes one —
+   * the Channels card then read "— subs" even though the performer's Bilibili
+   * audience was known. The projection falls back to the largest published
+   * platform count, so the card, the sort and the drawer agree.
+   */
+  const platformSubscribers = c.platforms
+    .map((p) => countValue(p.subscribers))
+    .filter((count): count is number => count !== null);
+  const subscribers =
+    ownSubscribers ??
+    (platformSubscribers.length ? Math.max(...platformSubscribers) : null);
+
   return {
     id: c.id,
     name: c.name,
@@ -30,10 +44,10 @@ export function toSummary(c: Channel): ChannelSummary {
     agency: c.agency,
     affiliation: c.affiliation,
     avatar: c.avatar,
-    subscribers: countValue(c.subscribers),
+    subscribers,
     isSinging: c.isSinging,
     activity: c.activity,
-    subscribersHidden: countHidden(c.subscribers),
+    subscribersHidden: subscribers === null && countHidden(c.subscribers),
     twitchLogin:
       c.platforms.find((p) => p.platform === "twitch")?.handle ?? null,
     gender: c.gender,
