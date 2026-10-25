@@ -803,15 +803,19 @@ async function main(): Promise<void> {
          *
          * Some performers genuinely hide their follower count; without a
          * freshness window they would be re-fetched on every pass and never
-         * let the ones that can be fixed through.
+         * let the ones that can be fixed through. A **hidden** count is the
+         * thing this run is chasing, so it is retried after six hours rather
+         * than a week — a record fetched by an older parser kept `hidden`
+         * for seven days even though the platform published the number.
          */
-        if (
-          !options.force &&
-          c.lastDetailsFetchedAt &&
-          Date.now() - Date.parse(c.lastDetailsFetchedAt) <
-            7 * 24 * 60 * 60 * 1000
-        ) {
-          return false;
+        if (!options.force && c.lastDetailsFetchedAt) {
+          const window =
+            c.subscribers.tag === "hidden"
+              ? 6 * 60 * 60 * 1000
+              : 7 * 24 * 60 * 60 * 1000;
+          if (Date.now() - Date.parse(c.lastDetailsFetchedAt) < window) {
+            return false;
+          }
         }
       }
       /**
