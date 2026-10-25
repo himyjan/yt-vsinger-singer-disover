@@ -78,6 +78,16 @@ def main() -> int:
     ctx = fgs.FacebookContext(
         cookies_file=args.cookies, state_file=args.state, quiet=True
     )
+    # A logged-in page carries DTSGInitialData; only the logged-out login form
+    # carries the `{"name":"fb_dtsg","value":…}` the library looks for, so it
+    # reports a missing token for a session that is perfectly valid.
+    if not ctx.fb_dtsg:
+        token = re.search(
+            r'"DTSGInitialData",\[\],\{"token":"([^"]+)"',
+            ctx.get("https://www.facebook.com").text,
+        )
+        if token:
+            ctx.fb_dtsg = token.group(1)
 
     out: dict = {"groups": [], "errors": []}
     for group_id in args.group:
