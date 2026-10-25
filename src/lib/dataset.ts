@@ -443,6 +443,10 @@ export interface ItemQuery {
   gender?: Gender | "all";
   /** Independent or signed to a business group. */
   affiliation?: Affiliation | "all";
+  /** An exact agency, e.g. `Hololive EN` — the members of that group. */
+  agency?: string;
+  /** An exact declared tag — the channels that carry it. */
+  tag?: string;
   /** Only the channels that publish singing content. */
   singing?: "all" | "singing" | "not-singing";
   /** What the performer does — `vsinger`, `vtuber`, `singer`, `producer`. */
@@ -544,6 +548,8 @@ export function filterChannels(
   const gender = query.gender ?? "all";
   const ai = query.ai ?? "all";
   const affiliation = query.affiliation ?? "all";
+  const agency = query.agency?.trim().toLowerCase() ?? "";
+  const tag = query.tag?.trim().toLowerCase() ?? "";
   const language = query.language ?? "all";
   const singing = query.singing ?? "all";
   const role = query.role ?? "all";
@@ -565,6 +571,20 @@ export function filterChannels(
     if (ai === "ai" && !channel.isAi) return false;
     if (ai === "human" && channel.isAi) return false;
     if (affiliation !== "all" && channel.affiliation !== affiliation) {
+      return false;
+    }
+    if (
+      agency &&
+      (channel.agency ?? "").trim().toLowerCase() !== agency
+    ) {
+      return false;
+    }
+    if (
+      tag &&
+      !(channel.tags ?? []).some(
+        (value) => value.trim().toLowerCase() === tag,
+      )
+    ) {
       return false;
     }
     if (

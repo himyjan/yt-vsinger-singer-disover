@@ -80,6 +80,19 @@ export interface SavedEntry {
   savedAt: number;
 }
 
+/**
+ * A request to list the members of an agency, affiliation or tag.
+ *
+ * The drawer emits this when a chip is clicked; `showMembers()` applies it as
+ * the only channel filter, so the result is the group itself rather than the
+ * group plus whatever filters happened to be active.
+ */
+export interface MemberFilter {
+  agency?: string | null;
+  tag?: string | null;
+  affiliation?: Affiliation | "all";
+}
+
 export interface LinkedAccount {
   /** Stable id for this linked account, unique across providers. */
   id: string;
@@ -199,6 +212,10 @@ export const state = reactive({
    * `unknown` means the sources do not say.
    */
   affiliation: "all" as Affiliation | "all",
+  /** Exact agency filter, set by clicking an agency chip in the drawer. */
+  agency: null as string | null,
+  /** Exact tag filter, set by clicking a tag chip in the drawer. */
+  tag: null as string | null,
   /** AI filter: show AI performers, hide them, or show both. */
   ai: "all" as "ai" | "human" | "all",
   /** Official Artist Channel filter: the 🎵 badge only. */
@@ -333,6 +350,41 @@ export function setPlatform(platform: string | "all"): void {
 export function setView(view: ViewId): void {
   state.view = view;
   writeStorage(VIEW_KEY, view);
+}
+
+/**
+ * Lists the members of an agency, affiliation or tag.
+ *
+ * A click on a drawer chip is a navigation, not another filter layered on
+ * the current one: keeping a region or gender filter would show a sample of
+ * the group, and a conflicting filter would show an empty page. The exact
+ * member filter is the only survivor.
+ */
+export function showMembers(filter: MemberFilter): void {
+  state.agency = filter.agency?.trim() || null;
+  state.tag = filter.tag?.trim() || null;
+  state.affiliation = filter.affiliation ?? "all";
+
+  state.query = "";
+  state.categories.splice(0);
+  state.acousticOnly = false;
+  state.gender = "all";
+  state.language = "all";
+  state.singing = "all";
+  state.role = "all";
+  state.vtuberOnly = "all";
+  state.oac = "all";
+  state.ai = "all";
+  state.channelSubs = "all";
+  setRegion("all");
+  setPlatform("all");
+  setView("channels");
+}
+
+/** Removes the exact agency/tag filter, leaving the affiliation filter. */
+export function clearMemberFilter(): void {
+  state.agency = null;
+  state.tag = null;
 }
 
 export function toggleTheme(): void {
