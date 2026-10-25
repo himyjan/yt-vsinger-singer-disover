@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-25T11:22:49.894Z",
+  "generatedAt": "2026-10-25T16:14:08.234Z",
   "items": [
     {
       "id": "jTQC0Ob61q4",
@@ -2600,7 +2600,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-25T09:23:34.774Z",
+      "updatedAt": "2026-10-25T16:14:08.234Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -2697,52 +2697,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "zOrkKUJJUuo",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCeLzT-7b2PBcunJplmWtoDg",
-      "channelName": "Patra Channel / 周防パトラ",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "【ドラゴンクエストVI  】SFC！ドラゴンクエストVI 幻の大地 をやってみる！【周防パトラ】",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/zOrkKUJJUuo/hq720.jpg",
-      "publishedAt": "2026-10-24T09:06:25.613Z",
-      "scheduledStart": null,
-      "actualStart": "2026-10-24T09:06:25.613Z",
-      "actualEnd": "2026-10-24T20:46:02.237Z",
-      "duration": null,
-      "status": "past",
-      "category": "live",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCeLzT-7b2PBcunJplmWtoDg",
-          "name": "Patra Channel / 周防パトラ",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-24T20:46:02.237Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "UeZzcaFE2p0",
       "platform": "youtube",
       "type": "live",
@@ -2784,7 +2738,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-25T09:23:34.774Z",
+      "updatedAt": "2026-10-25T16:14:08.234Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -2830,7 +2784,99 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-25T09:23:34.774Z",
+      "updatedAt": "2026-10-25T16:14:08.234Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "zL3XLlvveHQ",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCODNLyn3L83wEmC0DLL0cxA",
+      "channelName": "朝ノ姉妹ぷろじぇくと",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "female",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "《お知らせ》FANBOX再開しました！",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/zL3XLlvveHQ/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCODNLyn3L83wEmC0DLL0cxA",
+          "name": "朝ノ姉妹ぷろじぇくと",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T16:14:08.234Z",
+      "updatedAt": "2026-10-25T16:14:08.234Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "zOrkKUJJUuo",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCeLzT-7b2PBcunJplmWtoDg",
+      "channelName": "Patra Channel / 周防パトラ",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "【ドラゴンクエストVI  】SFC！ドラゴンクエストVI 幻の大地 をやってみる！【周防パトラ】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/zOrkKUJJUuo/hq720.jpg",
+      "publishedAt": "2026-10-24T09:06:25.613Z",
+      "scheduledStart": null,
+      "actualStart": "2026-10-24T09:06:25.613Z",
+      "actualEnd": "2026-10-24T20:46:02.237Z",
+      "duration": null,
+      "status": "past",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCeLzT-7b2PBcunJplmWtoDg",
+          "name": "Patra Channel / 周防パトラ",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-24T09:06:25.613Z",
+      "updatedAt": "2026-10-24T20:46:02.237Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

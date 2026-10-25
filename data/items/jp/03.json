@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-25T11:22:49.894Z",
+  "generatedAt": "2026-10-25T16:14:08.234Z",
   "items": [
     {
       "id": "-8O_a4EnKqE",
@@ -90,7 +90,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-25T09:23:34.774Z",
+      "updatedAt": "2026-10-25T16:14:08.234Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -366,7 +366,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T15:54:59.721Z",
-      "updatedAt": "2026-10-24T15:54:59.721Z",
+      "updatedAt": "2026-10-25T16:14:08.234Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -2631,6 +2631,52 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "wGp2qiGjYR0",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCdQYcUyffHZoz0KOwuiG0lQ",
+      "channelName": "宙月ティラ",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "【Karaoke】What Is This Addictive Sound!? Songs You Just Can't Stop Listening To!!!!!【#Vsinger #宙月ティラ】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi_lc/wGp2qiGjYR0/hq720_en.jpg",
+      "publishedAt": "2026-10-25T09:23:34.774Z",
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": "2026-10-25T09:23:34.774Z",
+      "duration": null,
+      "status": "past",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCdQYcUyffHZoz0KOwuiG0lQ",
+          "name": "宙月ティラ",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-24T09:06:25.613Z",
+      "updatedAt": "2026-10-25T09:23:34.774Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "OLAK5uy_muDvnwRQWeWhL_uZLToOAt_5qsRVJOAfM",
       "platform": "youtube",
       "url": "https://www.youtube.com/playlist?list=OLAK5uy_muDvnwRQWeWhL_uZLToOAt_5qsRVJOAfM",
@@ -3131,52 +3177,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "wGp2qiGjYR0",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCdQYcUyffHZoz0KOwuiG0lQ",
-      "channelName": "宙月ティラ",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "unknown",
-      "title": "【Karaoke】What Is This Addictive Sound!? Songs You Just Can't Stop Listening To!!!!!【#Vsinger #宙月ティラ】",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi_lc/wGp2qiGjYR0/hq720_en.jpg",
-      "publishedAt": "2026-10-25T09:23:34.774Z",
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": "2026-10-25T09:23:34.774Z",
-      "duration": null,
-      "status": "past",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCdQYcUyffHZoz0KOwuiG0lQ",
-          "name": "宙月ティラ",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-25T09:23:34.774Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "OLAK5uy_nQ5VugqLbsvlQt8XPMy5w2_63RkG6QCcw",
       "platform": "youtube",
       "url": "https://www.youtube.com/playlist?list=OLAK5uy_nQ5VugqLbsvlQt8XPMy5w2_63RkG6QCcw",
@@ -3630,9 +3630,9 @@
       "publishedAt": "2026-10-24T15:54:59.721Z",
       "scheduledStart": null,
       "actualStart": "2026-10-24T15:54:59.721Z",
-      "actualEnd": null,
+      "actualEnd": "2026-10-25T16:14:08.234Z",
       "duration": null,
-      "status": "live",
+      "status": "past",
       "category": "live",
       "songTitle": null,
       "originalArtist": null,
@@ -3652,7 +3652,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T15:54:59.721Z",
-      "updatedAt": "2026-10-24T15:54:59.721Z",
+      "updatedAt": "2026-10-25T16:14:08.234Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

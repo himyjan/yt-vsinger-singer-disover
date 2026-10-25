@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-25T11:22:49.894Z",
+  "generatedAt": "2026-10-25T16:14:08.234Z",
   "items": [
     {
       "id": "DOCkO9Tx6-M",
@@ -182,7 +182,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-25T09:23:34.774Z",
+      "updatedAt": "2026-10-25T16:14:08.234Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -274,7 +274,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T15:54:59.721Z",
-      "updatedAt": "2026-10-24T15:54:59.721Z",
+      "updatedAt": "2026-10-25T16:14:08.234Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -320,7 +320,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T15:54:59.721Z",
-      "updatedAt": "2026-10-24T15:54:59.721Z",
+      "updatedAt": "2026-10-25T16:14:08.234Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -458,7 +458,53 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-25T09:23:34.774Z",
+      "updatedAt": "2026-10-25T16:14:08.234Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "Gz-LaWjQBMc",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UC3WeU8XLo0gRd0oF8I5fKAA",
+      "channelName": "ルルエル・ラウラ / Luluel Lawla",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vsinger",
+      "title": "Schedule & Free Chat / ルルエル・ラウラ",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/Gz-LaWjQBMc/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC3WeU8XLo0gRd0oF8I5fKAA",
+          "name": "ルルエル・ラウラ / Luluel Lawla",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T16:14:08.234Z",
+      "updatedAt": "2026-10-25T16:14:08.234Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -1797,56 +1843,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "OLAK5uy_lxEqxiSB3XCD4N1G-Zov8Lx5t8xrdqpd8",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_lxEqxiSB3XCD4N1G-Zov8Lx5t8xrdqpd8",
-      "type": "playlist",
-      "channelId": "UCfBkUgaJ6eqYA9_TX2cmq9A",
-      "channelName": "理芽 -RIM-",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "female",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "NEW ROMANCER",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/8rHkc3pzzLs/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCfBkUgaJ6eqYA9_TX2cmq9A",
-          "name": "理芽 -RIM-",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "OLAK5uy_mASgKLYtwIW58F1_If1-SDPKLqetMoK-c",
       "platform": "youtube",
       "url": "https://www.youtube.com/playlist?list=OLAK5uy_mASgKLYtwIW58F1_If1-SDPKLqetMoK-c",
@@ -1892,6 +1888,102 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-25T07:36:28.069Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "rC1MGM6QLbI",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCONtwJdE7A68l1eCjf8k4jQ",
+      "channelName": "儚牙紺 - Kurage Kon -",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "〖 #わちゃサバ 〗深夜のまったりマイクラ〖 #儚牙紺 ┊ #vtuber ┊マインクラフト 〗",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/rC1MGM6QLbI/hq720.jpg",
+      "publishedAt": "2026-10-25T16:14:08.234Z",
+      "scheduledStart": null,
+      "actualStart": "2026-10-25T16:14:08.234Z",
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCONtwJdE7A68l1eCjf8k4jQ",
+          "name": "儚牙紺 - Kurage Kon -",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T16:14:08.234Z",
+      "updatedAt": "2026-10-25T16:14:08.234Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_lxEqxiSB3XCD4N1G-Zov8Lx5t8xrdqpd8",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_lxEqxiSB3XCD4N1G-Zov8Lx5t8xrdqpd8",
+      "type": "playlist",
+      "channelId": "UCfBkUgaJ6eqYA9_TX2cmq9A",
+      "channelName": "理芽 -RIM-",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "female",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "NEW ROMANCER",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/8rHkc3pzzLs/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCfBkUgaJ6eqYA9_TX2cmq9A",
+          "name": "理芽 -RIM-",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
       "updatedAt": "2026-10-25T07:43:14.768Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
@@ -2534,7 +2626,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T15:54:59.721Z",
-      "updatedAt": "2026-10-24T15:54:59.721Z",
+      "updatedAt": "2026-10-25T16:14:08.234Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -2722,7 +2814,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-25T09:23:34.774Z",
+      "updatedAt": "2026-10-25T16:14:08.234Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
