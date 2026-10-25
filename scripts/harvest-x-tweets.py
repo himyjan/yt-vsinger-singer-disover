@@ -36,6 +36,11 @@ So `UserUnavailable` is the logged-out answer, not a missing account.
 
 A community timeline (`x.com/i/communities/<id>`) is **not** this endpoint —
 it has its own operation, and without a session it is not readable at all.
+
+The operation itself has moved on: X now wants `userId`, not `screenName`, and
+answers `422 GRAPHQL_VALIDATION_FAILED` for the old variable. Use
+`scripts/harvest-x-twscrape.py`, which resolves the login first and keeps the
+operation ids current.
 """
 
 from __future__ import annotations
