@@ -48,11 +48,23 @@ state.oac          // "all" | "oac" — the 🎵 Official Artist Channel badge
 state.role         // "all" | "vsinger" | "vtuber" | "singer" | "producer"
 state.vtuberOnly   // "all" | "vtuber" | "vsinger" (vsinger = role OR isSinging)
 state.subsTracked  // "all" | "tracked" | "untracked"
+state.affiliation   // "all" | "group" | "independent" | "community"
+state.agency        // string | null — exact agency set by a drawer chip
+state.tag           // string | null — exact tag set by a drawer chip
 state.channelSubs   // "all" | "subscribed" | "not-subscribed" (Channels view)
 state.upcomingType  // "all" | "stream" | "schedule" (Upcoming view)
 state.accounts     // Record<provider, LinkedAccount[]>
 state.activeAccount// Record<provider, accountId | null>
 ```
+
+**A drawer chip is a navigation, not a filter.** Clicking the agency chip,
+the affiliation value or a `#tag` calls `showMembers()`: it sets
+`state.agency` / `state.tag` / `state.affiliation`, clears the other filters,
+loads all regions and switches to **Channels**. Keeping a region or gender
+filter would make the result a sample of the group, and a conflicting filter
+would show an empty page. The Channels header shows a clearable chip
+(`🏢 Agency` or `#tag`) for the exact filter; the ordinary affiliation chip
+in the global bar clears through **Any affiliation**.
 
 ## Links
 

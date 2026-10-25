@@ -602,6 +602,8 @@ export interface ChannelSummary {
   agency: string | null;
   /** Independent or signed to a business group. */
   affiliation: Affiliation;
+  /** Declared keywords, for the clickable tag chips in the drawer. */
+  tags: string[];
   /** The verification record — what was looked up, and where. */
   verification: Verification | null;
   /** When the record was first seen, for the "recent" sort. */

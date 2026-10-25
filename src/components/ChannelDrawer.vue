@@ -12,7 +12,7 @@ import { formatCount, formatDuration, formatRelative } from "@/lib/dataset";
 import { imageUrl } from "@/lib/image";
 import { channelLinks, itemUrl, platformMeta } from "@/lib/links";
 import { toLanguageList } from "@shared/lib/regions";
-import { state, toggleSaved } from "@/lib/store";
+import { state, toggleSaved, type MemberFilter } from "@/lib/store";
 import OfficialArtistBadge from "@/components/OfficialArtistBadge.vue";
 
 /**
@@ -38,6 +38,8 @@ const emit = defineEmits<{
   (e: "close"): void;
   (e: "open-item", item: Item): void;
   (e: "open-channel", channel: Channel | ChannelSummary): void;
+  /** List the members of an agency, affiliation or tag. */
+  (e: "show-members", filter: MemberFilter): void;
 }>();
 
 const links = computed(() => channelLinks(props.channel));
@@ -274,6 +276,61 @@ const aliasList = computed(() => {
   return (source?.aliases ?? []).filter(Boolean).slice(0, 4);
 });
 
+/**
+ * The declared keywords, deduplicated and capped.
+ *
+ * The drawer renders them as chips: clicking one lists the channels that
+ * share it. The cap is deliberate — a YouTube channel can declare dozens of
+ * broad keywords, and the drawer is not an SEO dump.
+ */
+const channelTags = computed(() => {
+  const tags = props.channel?.tags ?? [];
+  const seen = new Set<string>();
+  const out: string[] = [];
+  for (const raw of tags) {
+    const tag = raw.trim();
+    if (!tag) continue;
+    const key = tag.toLowerCase();
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push(tag);
+    if (out.length >= 16) break;
+  }
+  return out;
+});
+
+/** Opens the members of the current agency. */
+function showAgency(): void {
+  if (!props.channel?.agency) return;
+  emit("show-members", { agency: props.channel.agency });
+}
+
+/**
+ * Opens the members of the current affiliation.
+ *
+ * A named agency is more useful than the `group` bucket, so it wins when the
+ * record has one; a group with no agency still lists the whole 企業勢 set.
+ */
+function showAffiliation(): void {
+  const channel = props.channel;
+  if (!channel) return;
+  if (channel.affiliation === "group" && channel.agency) {
+    emit("show-members", { agency: channel.agency });
+    return;
+  }
+  if (
+    channel.affiliation === "group" ||
+    channel.affiliation === "independent" ||
+    channel.affiliation === "community"
+  ) {
+    emit("show-members", { affiliation: channel.affiliation });
+  }
+}
+
+function showTag(tag: string): void {
+  emit("show-members", { tag });
+}
+
 const saved = computed(() =>
   props.channel ? state.saved.some((s) => s.id === props.channel!.id) : false,
 );
@@ -315,12 +372,12 @@ const saved = computed(() =>
                   <span class="rounded bg-black/5 px-1.5 py-0.5 text-[10px] font-semibold text-neutral-600 dark:bg-white/10 dark:text-neutral-300">
                     {{ channel.region.toUpperCase() }}
                   </span>
-                  <span v-if="channel.agency" class="rounded bg-black/5 px-1.5 py-0.5 text-[10px] font-semibold text-neutral-600 dark:bg-white/10 dark:text-neutral-300" :title="`Business group: ${channel.agency}`">
+                  <button v-if="channel.agency" type="button" class="rounded bg-black/5 px-1.5 py-0.5 text-[10px] font-semibold text-neutral-600 transition hover:bg-black/10 dark:bg-white/10 dark:text-neutral-300 dark:hover:bg-white/20" :title="`Show the members of ${channel.agency}`" @click="showAgency">
                     🏢 {{ channel.agency }}
-                  </span>
-                  <span v-else-if="channel.affiliation === 'independent'" class="rounded bg-indigo-500/15 px-1.5 py-0.5 text-[10px] font-semibold text-indigo-700 dark:text-indigo-400" title="Independent performer — no agency">
+                  </button>
+                  <button v-else-if="channel.affiliation === 'independent'" type="button" class="rounded bg-indigo-500/15 px-1.5 py-0.5 text-[10px] font-semibold text-indigo-700 transition hover:bg-indigo-500/25 dark:text-indigo-400" title="Show the independent performers" @click="showAffiliation">
                     🎪 Independent
-                  </span>
+                  </button>
                   <span v-if="officialArtist" class="rounded bg-violet-500/15 px-1.5 py-0.5 text-[10px] font-semibold text-violet-700 dark:text-violet-400" title="YouTube Official Artist Channel — releases are managed through YouTube Music">
                     🎵 Official Artist
                   </span>
@@ -418,15 +475,17 @@ const saved = computed(() =>
                   <div v-if="channel.affiliation !== 'unknown'" class="flex justify-between gap-3">
                     <dt class="text-neutral-500">Affiliation</dt>
                     <dd class="text-right font-semibold text-neutral-800 dark:text-neutral-200">
-                      {{
-                        channel.affiliation === "independent"
-                          ? "Independent (個人勢)"
-                          : channel.affiliation === "group"
-                            ? channel.agency || "Business group (企業勢)"
-                            : channel.affiliation === "community"
-                              ? "Community (社團勢)"
-                              : "Unknown"
-                      }}
+                      <button type="button" class="text-right transition hover:text-indigo-600 hover:underline dark:hover:text-indigo-400" :title="`Show the members of ${channel.agency || 'this affiliation'}`" @click="showAffiliation">
+                        {{
+                          channel.affiliation === "independent"
+                            ? "Independent (個人勢)"
+                            : channel.affiliation === "group"
+                              ? channel.agency || "Business group (企業勢)"
+                              : channel.affiliation === "community"
+                                ? "Community (社團勢)"
+                                : "Unknown"
+                        }}
+                      </button>
                     </dd>
                   </div>
                   <div v-if="channel.debutDate" class="flex justify-between gap-3">
@@ -442,6 +501,18 @@ const saved = computed(() =>
                     </dd>
                   </div>
                 </dl>
+              </section>
+
+              <!-- Declared tags — each one lists the channels that carry it -->
+              <section v-if="channelTags.length">
+                <h3 class="mb-2 text-xs font-bold tracking-wide text-neutral-500 uppercase">
+                  Tags
+                </h3>
+                <div class="flex flex-wrap gap-1.5">
+                  <button v-for="tag in channelTags" :key="tag" type="button" class="rounded-full border border-black/10 bg-white px-2 py-0.5 text-[11px] font-semibold text-neutral-600 transition hover:border-purple-400 hover:text-purple-700 dark:border-white/12 dark:bg-neutral-900 dark:text-neutral-300 dark:hover:border-purple-500 dark:hover:text-purple-300" :title="`Show the channels tagged ${tag}`" @click="showTag(tag)">
+                    #{{ tag }}
+                  </button>
+                </div>
               </section>
 
               <!-- Followers, per platform -->

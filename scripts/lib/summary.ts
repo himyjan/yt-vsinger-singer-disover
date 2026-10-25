@@ -43,6 +43,7 @@ export function toSummary(c: Channel): ChannelSummary {
     languages: c.languages,
     agency: c.agency,
     affiliation: c.affiliation,
+    tags: c.tags ?? [],
     avatar: c.avatar,
     subscribers,
     isSinging: c.isSinging,

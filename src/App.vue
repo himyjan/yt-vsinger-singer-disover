@@ -50,6 +50,7 @@ import {
   type LinkedAccount,
   allAccounts,
   allSubscriptions,
+  clearMemberFilter,
   clearSuggested,
   initTheme,
   isSuggested,
@@ -63,13 +64,15 @@ import {
   setView,
   setYouTubeBadge,
   setYouTubeDetail,
+  showMembers,
+  showToast,
   state,
   subscriptionKey,
   suggestedKey,
   toggleSaved,
   toggleTheme,
-  showToast,
   YOUTUBE_BADGE_TTL_MS,
+  type MemberFilter,
   type Scope,
   type Subscription,
   type ViewId,
@@ -445,6 +448,12 @@ const visibleSongs = computed(() =>
   ),
 );
 
+const memberFilterLabel = computed(() => {
+  if (state.agency) return `🏢 ${state.agency}`;
+  if (state.tag) return `#${state.tag}`;
+  return "";
+});
+
 const visibleChannels = computed(() => {
   /**
    * The summaries carry the 🎵 badge the dataset recorded; the subscription
@@ -476,6 +485,8 @@ const visibleChannels = computed(() => {
     gender: state.gender,
     ai: state.ai,
     affiliation: state.affiliation,
+    agency: state.agency ?? undefined,
+    tag: state.tag ?? undefined,
     language: state.language,
     singing: state.singing,
     role: state.role,
@@ -829,6 +840,19 @@ function openChannel(
   drawerChannel.value = target;
   drawerBadgeOverride.value = badgeOverride;
   drawerItem.value = null;
+}
+
+/**
+ * Lists the members of an agency, affiliation or tag.
+ *
+ * The drawer is closed first: the click is a navigation to a channel list,
+ * and leaving the drawer open over it would hide the result.
+ */
+function openMembers(filter: MemberFilter): void {
+  showMembers(filter);
+  drawerChannel.value = null;
+  drawerItem.value = null;
+  drawerBadgeOverride.value = false;
 }
 
 function openItem(item: Item): void {
@@ -2339,6 +2363,12 @@ onMounted(async () => {
               {{ visibleChannels.length }}
             </span>
           </h2>
+          <!-- The exact agency/tag filter set from a drawer chip -->
+          <button v-if="memberFilterLabel" type="button" class="flex shrink-0 items-center gap-1.5 rounded-full border border-purple-500 bg-purple-500/12 px-3 py-1 text-[11px] font-semibold text-purple-700 transition hover:bg-purple-500/20 dark:text-purple-300" title="Clear this member filter" @click="clearMemberFilter">
+            {{ memberFilterLabel }}
+            <span aria-hidden="true">✕</span>
+            <span class="sr-only">clear member filter</span>
+          </button>
           <!-- Subscribed / not subscribed, once an account is linked -->
           <div v-if="hasAnyAccount" class="flex shrink-0 items-center rounded-full border border-black/10 bg-white p-0.5 dark:border-white/12 dark:bg-neutral-900" role="group" aria-label="Subscription filter">
             <button v-for="option in CHANNEL_SUB_FILTERS" :key="option.id" type="button" class="rounded-full px-2.5 py-1 text-[11px] font-semibold whitespace-nowrap transition" :class="state.channelSubs === option.id
@@ -2644,7 +2674,7 @@ onMounted(async () => {
     <ChannelDrawer :channel="drawerChannel" :item="drawerItem" :items="allItems" :summaries="summaries" :badge-override="drawerBadgeOverride" @close="
       drawerChannel = null;
     drawerItem = null;
-    " @open-item="openItem" @open-channel="openChannel" />
+    " @open-item="openItem" @open-channel="openChannel" @show-members="openMembers" />
 
     <!-- Untracked subscription: YouTube details fetched on open -->
     <SubscriptionDetail v-if="activeSub" :sub="activeSub" :detail="activeSubDetail" :loading="subDetailLoading" :error="subDetailError" @close="closeSubDetail" @retry="retrySubDetail" />
