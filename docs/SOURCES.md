@@ -398,7 +398,7 @@ are not in the pipeline.
 | [JustOneAPI](https://github.com/justoneapi/justoneapi-python) | A token-based proxy for the protected platforms — a paid service, so the free sources are preferred. Its generated resources are a useful catalogue of which endpoints exist |
 | [facebook-gql-scraper](https://github.com/XD-MHLOO/facebook-gql-scraper) | Facebook's internal GraphQL, driven by `scripts/harvest-facebook-groups.py`. It needs a **logged-in cookie session**: without one, a group URL answers `302 → /login/?next=…`, the `fb_dtsg` token never appears, and search and group reads both fail. Worth using with a session, because group posts are where Taiwanese VTubers are announced |
 | r/VirtualYoutubers | `.json` and `/api/` both answer a block page (403); `new/.rss` works and is read by `.cache/harvest-reddit.ts`, and YouTube `oembed` turns a post's video into its channel |
-| X communities | A logged-out page renders the community header and a few posts with no `tweetText` nodes and no links; there is no community timeline endpoint. Needs a session cookie, injected through Playwright (`X_AUTH_TOKEN` + `X_CSRF_TOKEN`) |
+| X communities | A logged-out page renders the community header and a few posts with no `tweetText` nodes and no links, and there is no community timeline endpoint. A **user** timeline is readable through `UserTweets` with an `auth_token` / `ct0` session (`scripts/harvest-x-tweets.py`); without one X answers `UserUnavailable`, which is not the same as a deleted account |
 
 If any of them publishes a JSON or CSV file, adding it is one adapter and
 one line in the registry.
