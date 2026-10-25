@@ -40,6 +40,8 @@ you fix it.
 | `role` | `vtuber` \| `vsinger` \| `singer` \| `musician` \| `producer` \| `composer` \| `unknown` |
 | `region` | `jp` \| `cn` \| `tw` \| `hk` \| `kr` \| `en` \| `id` \| `my` \| `sea` \| `unknown` |
 | `agency` | any string, or `null` — `canonicalAgency()` folds every Hololive branch into `hololive` |
+| `affiliation` | `independent` \| `community` \| `group` \| `unknown` |
+| `tags` | string[] — merged into the record's tags (`["Fan Clip"]`) |
 | `isSinging` | boolean |
 | `hidden` | `true` removes it from the published dataset |
 

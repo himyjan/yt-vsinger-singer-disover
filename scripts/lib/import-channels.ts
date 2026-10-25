@@ -92,6 +92,8 @@ interface ChannelOverride {
   role?: Channel["role"];
   region?: Channel["region"];
   agency?: string | null;
+  affiliation?: Channel["affiliation"];
+  tags?: string[];
   gender?: Channel["gender"];
   isAi?: boolean;
   isSinging?: boolean;
@@ -177,7 +179,9 @@ function recordFromProfile(
     statedLanguages: classification.statedLanguages,
 
     agency: classification.agency,
-    affiliation: detectAffiliation(name, description, classification.agency),
+    affiliation:
+      override?.affiliation ??
+      detectAffiliation(name, description, classification.agency),
     avatar,
     banner: null,
     description,
@@ -186,7 +190,7 @@ function recordFromProfile(
     viewCount: null,
     uploadsPlaylistId: null,
     country,
-    tags: [],
+    tags: override?.tags ?? [],
     isSinging: override?.isSinging ?? classification.isSinging,
     gender: override?.gender ?? classification.gender,
     isAi: override?.isAi ?? classification.isAi,

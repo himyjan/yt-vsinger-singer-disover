@@ -274,6 +274,10 @@ interface Override {
   role?: Channel["role"];
   region?: Channel["region"];
   agency?: string | null;
+  /** The affiliation the human decided — a fan channel is not a group member. */
+  affiliation?: Channel["affiliation"];
+  /** Curated tags, merged into the record's own — e.g. `Fan Clip`. */
+  tags?: string[];
   gender?: Channel["gender"];
   isAi?: boolean;
   isSinging?: boolean;
@@ -1572,6 +1576,12 @@ async function main(): Promise<void> {
         channel.regionSource = "override";
       }
       if (override.agency !== undefined) channel.agency = override.agency;
+      if (override.affiliation) channel.affiliation = override.affiliation;
+      if (override.tags?.length) {
+        const tags = new Set(channel.tags);
+        for (const tag of override.tags) tags.add(tag);
+        channel.tags = [...tags];
+      }
       if (override.gender) channel.gender = override.gender;
       if (override.isAi !== undefined) channel.isAi = override.isAi;
       if (override.isSinging !== undefined) channel.isSinging = override.isSinging;

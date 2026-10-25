@@ -586,7 +586,14 @@ function compactChannel(channel: Channel): Record<string, unknown> {
  * to fail here, not in CI.
  */
 function writeShardFile(file: string, channels: Channel[], now: string): void {
-  if (!shardContentChanged(file, channels)) return;
+  /**
+   * Compare the **compact** rows, because that is what the file holds.
+   *
+   * The shard is read back with the defaults restored, so comparing the
+   * expanded records with the file always differed and every writer rewrote
+   * every shard — the `generatedAt` churn this file is supposed to avoid.
+   */
+  if (!shardContentChanged(file, channels.map(compactChannel))) return;
   writeTextShard(file, compactChannelFile(channels, now));
 }
 
@@ -731,7 +738,7 @@ export function writeChannelShards(
          * every file and bury the real change in the diff.
          */
         const file = fileFor(region, bucket);
-        if (!shardContentChanged(file, bucketList)) continue;
+        if (!shardContentChanged(file, bucketList.map(compactChannel))) continue;
         writeShardFile(file, bucketList, now);
         files++;
       }
