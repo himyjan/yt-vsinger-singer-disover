@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-25T11:22:49.894Z",
+  "generatedAt": "2026-10-25T20:48:43.621Z",
   "items": [
     {
       "id": "c7K6RInG3Dw",
@@ -44,7 +44,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T20:46:02.237Z",
-      "updatedAt": "2026-10-24T20:46:02.237Z",
+      "updatedAt": "2026-10-25T20:48:43.621Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -241,6 +241,52 @@
       "source": "api",
       "addedAt": "2026-10-25T07:43:14.768Z",
       "updatedAt": "2026-10-25T11:22:49.894Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "UkqwIcO3YN8",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCgnfPPb9JI3e9A4cXHnWbyg",
+      "channelName": "Shiori Novella Ch. hololive",
+      "channelKind": "virtual",
+      "region": "en",
+      "gender": "unknown",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "Weekly Tentative Schedule",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/UkqwIcO3YN8/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCgnfPPb9JI3e9A4cXHnWbyg",
+          "name": "Shiori Novella Ch. hololive",
+          "kind": "virtual",
+          "region": "en"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T20:48:43.621Z",
+      "updatedAt": "2026-10-25T20:48:43.621Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

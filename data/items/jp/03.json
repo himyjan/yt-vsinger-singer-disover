@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-25T16:14:08.234Z",
+  "generatedAt": "2026-10-25T20:48:43.621Z",
   "items": [
     {
       "id": "-8O_a4EnKqE",
@@ -44,7 +44,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-25T09:23:34.774Z",
+      "updatedAt": "2026-10-25T20:48:43.621Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -320,7 +320,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-25T09:23:34.774Z",
+      "updatedAt": "2026-10-25T20:48:43.621Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -417,6 +417,52 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "gmNj1AK_dyc",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UC-sLsaBnj75o7-YHlu8VLKQ",
+      "channelName": "人間科おくら / Ningenka Okra",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "ふりちゃーむず(𝑭𝒓𝒆𝒆 𝒄𝒉𝒂𝒕)＆メンバーさんお迎えいらっしゃいませ𝒲ℯ𝓁𝒸ℴ𝓂ℯ",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/gmNj1AK_dyc/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC-sLsaBnj75o7-YHlu8VLKQ",
+          "name": "人間科おくら / Ningenka Okra",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-24T20:46:02.237Z",
+      "updatedAt": "2026-10-25T20:48:43.621Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "K4JngIqZ4cU",
       "platform": "youtube",
       "type": "live",
@@ -436,9 +482,9 @@
       "publishedAt": "2026-10-25T09:23:34.774Z",
       "scheduledStart": null,
       "actualStart": "2026-10-25T09:23:34.774Z",
-      "actualEnd": null,
+      "actualEnd": "2026-10-25T20:48:43.621Z",
       "duration": null,
-      "status": "live",
+      "status": "past",
       "category": "live",
       "songTitle": null,
       "originalArtist": null,
@@ -458,7 +504,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-25T09:23:34.774Z",
-      "updatedAt": "2026-10-25T09:23:34.774Z",
+      "updatedAt": "2026-10-25T20:48:43.621Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -504,53 +550,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-25T09:23:34.774Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "gmNj1AK_dyc",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UC-sLsaBnj75o7-YHlu8VLKQ",
-      "channelName": "人間科おくら / Ningenka Okra",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "ふりちゃーむず(𝑭𝒓𝒆𝒆 𝒄𝒉𝒂𝒕)＆メンバーさんお迎えいらっしゃいませ𝒲ℯ𝓁𝒸ℴ𝓂ℯ",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/gmNj1AK_dyc/hq720.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "upcoming",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UC-sLsaBnj75o7-YHlu8VLKQ",
-          "name": "人間科おくら / Ningenka Okra",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-24T20:46:02.237Z",
-      "updatedAt": "2026-10-25T09:23:34.774Z",
+      "updatedAt": "2026-10-25T20:48:43.621Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -620,9 +620,9 @@
       "publishedAt": "2026-10-25T09:23:34.774Z",
       "scheduledStart": null,
       "actualStart": "2026-10-25T09:23:34.774Z",
-      "actualEnd": null,
+      "actualEnd": "2026-10-25T20:48:43.621Z",
       "duration": null,
-      "status": "live",
+      "status": "past",
       "category": "live",
       "songTitle": null,
       "originalArtist": null,
@@ -642,7 +642,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-25T09:23:34.774Z",
-      "updatedAt": "2026-10-25T09:23:34.774Z",
+      "updatedAt": "2026-10-25T20:48:43.621Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -780,7 +780,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-25T09:23:34.774Z",
+      "updatedAt": "2026-10-25T20:48:43.621Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -2281,56 +2281,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "OLAK5uy_mAdBsvsp1A_NMVZnCn8gax-FeIVboFwjw",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_mAdBsvsp1A_NMVZnCn8gax-FeIVboFwjw",
-      "type": "playlist",
-      "channelId": "UCWCc8tO-uUl_7SJXIKJACMw",
-      "channelName": "神楽めあ / KaguraMea",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "Best Wishes Type-B",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/P_76IRX6V5Y/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCWCc8tO-uUl_7SJXIKJACMw",
-          "name": "神楽めあ / KaguraMea",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "OLAK5uy_mHXDfQd84RQDANNK9YpnTG2YxxFkhDhdQ",
       "platform": "youtube",
       "url": "https://www.youtube.com/playlist?list=OLAK5uy_mHXDfQd84RQDANNK9YpnTG2YxxFkhDhdQ",
@@ -2673,6 +2623,56 @@
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
       "updatedAt": "2026-10-25T09:23:34.774Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_mAdBsvsp1A_NMVZnCn8gax-FeIVboFwjw",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_mAdBsvsp1A_NMVZnCn8gax-FeIVboFwjw",
+      "type": "playlist",
+      "channelId": "UCWCc8tO-uUl_7SJXIKJACMw",
+      "channelName": "神楽めあ / KaguraMea",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "Best Wishes Type-B",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/P_76IRX6V5Y/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCWCc8tO-uUl_7SJXIKJACMw",
+          "name": "神楽めあ / KaguraMea",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3514,7 +3514,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-25T09:23:34.774Z",
+      "updatedAt": "2026-10-25T20:48:43.621Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3606,7 +3606,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-25T09:23:34.774Z",
+      "updatedAt": "2026-10-25T20:48:43.621Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },

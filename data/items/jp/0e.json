@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-25T16:14:08.234Z",
+  "generatedAt": "2026-10-25T20:48:43.621Z",
   "items": [
     {
       "id": "_uBvHtGsn8w",
@@ -44,7 +44,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-25T09:23:34.774Z",
+      "updatedAt": "2026-10-25T20:48:43.621Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -182,7 +182,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-25T09:23:34.774Z",
+      "updatedAt": "2026-10-25T20:48:43.621Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -228,7 +228,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-25T09:23:34.774Z",
+      "updatedAt": "2026-10-25T20:48:43.621Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -320,7 +320,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-25T09:23:34.774Z",
-      "updatedAt": "2026-10-25T09:23:34.774Z",
+      "updatedAt": "2026-10-25T20:48:43.621Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -412,7 +412,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-25T09:23:34.774Z",
+      "updatedAt": "2026-10-25T20:48:43.621Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -655,56 +655,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "OLAK5uy_m2nI61ZqQFYp4DAnaeDrRwbmvcvoif7Dc",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_m2nI61ZqQFYp4DAnaeDrRwbmvcvoif7Dc",
-      "type": "playlist",
-      "channelId": "UCTIE7LM5X15NVugV7Krp9Hw",
-      "channelName": "夢追翔のJUKE BOX",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "male",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "Where my color is",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/bbsrmNlp_lY/hqdefault.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCTIE7LM5X15NVugV7Krp9Hw",
-          "name": "夢追翔のJUKE BOX",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "OLAK5uy_m7O56-JBWjFgT4Fl1GDjc5JXwkGI3vsy0",
       "platform": "youtube",
       "url": "https://www.youtube.com/playlist?list=OLAK5uy_m7O56-JBWjFgT4Fl1GDjc5JXwkGI3vsy0",
@@ -751,6 +701,56 @@
       "source": "api",
       "addedAt": "2026-10-25T07:43:14.768Z",
       "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_m8YAzgKFCfnXD6GjKDvNx-0NpAvG_GAJ0",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_m8YAzgKFCfnXD6GjKDvNx-0NpAvG_GAJ0",
+      "type": "playlist",
+      "channelId": "UCQm--lgPz5Sq_b5hW9UXXQQ",
+      "channelName": "猫 The Sappiness / VSinger",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "male",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "male_vsinger",
+      "title": "Breezy Magic",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/--cA2KE1xe8/hqdefault.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCQm--lgPz5Sq_b5hW9UXXQQ",
+          "name": "猫 The Sappiness / VSinger",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:36:28.069Z",
+      "updatedAt": "2026-10-25T11:22:49.894Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -855,56 +855,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "OLAK5uy_n5WgaIEgEQ82bhfJMRwbZT5V5pq0DF2ko",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_n5WgaIEgEQ82bhfJMRwbZT5V5pq0DF2ko",
-      "type": "playlist",
-      "channelId": "UCTIE7LM5X15NVugV7Krp9Hw",
-      "channelName": "夢追翔のJUKE BOX",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "male",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "Beating in Ash",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/eOQpqmra3fI/hqdefault.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCTIE7LM5X15NVugV7Krp9Hw",
-          "name": "夢追翔のJUKE BOX",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "OLAK5uy_n8rRVUEAvGJPAUwrRjS6TC92eeUVn3NZ4",
       "platform": "youtube",
       "url": "https://www.youtube.com/playlist?list=OLAK5uy_n8rRVUEAvGJPAUwrRjS6TC92eeUVn3NZ4",
@@ -950,56 +900,6 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_neXJ7MW4HB14XhItxz4JhMfJoKXyYmfyY",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_neXJ7MW4HB14XhItxz4JhMfJoKXyYmfyY",
-      "type": "playlist",
-      "channelId": "UC--zuEfONeFXPvLqX0Kvbuw",
-      "channelName": "松永依織 / IORI MATSUNAGA",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "unknown",
-      "title": "Timeless Beats",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/f6rqhovPHGE/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UC--zuEfONeFXPvLqX0Kvbuw",
-          "name": "松永依織 / IORI MATSUNAGA",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:36:28.069Z",
       "updatedAt": "2026-10-25T07:43:14.768Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
@@ -1124,9 +1024,9 @@
       "publishedAt": "2026-10-25T09:23:34.774Z",
       "scheduledStart": null,
       "actualStart": "2026-10-25T09:23:34.774Z",
-      "actualEnd": null,
+      "actualEnd": "2026-10-25T20:48:43.621Z",
       "duration": null,
-      "status": "live",
+      "status": "past",
       "category": "live",
       "songTitle": null,
       "originalArtist": null,
@@ -1146,7 +1046,107 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-25T09:23:34.774Z",
+      "updatedAt": "2026-10-25T20:48:43.621Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_m2nI61ZqQFYp4DAnaeDrRwbmvcvoif7Dc",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_m2nI61ZqQFYp4DAnaeDrRwbmvcvoif7Dc",
+      "type": "playlist",
+      "channelId": "UCTIE7LM5X15NVugV7Krp9Hw",
+      "channelName": "夢追翔のJUKE BOX",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "male",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "Where my color is",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/bbsrmNlp_lY/hqdefault.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCTIE7LM5X15NVugV7Krp9Hw",
+          "name": "夢追翔のJUKE BOX",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_n5WgaIEgEQ82bhfJMRwbZT5V5pq0DF2ko",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_n5WgaIEgEQ82bhfJMRwbZT5V5pq0DF2ko",
+      "type": "playlist",
+      "channelId": "UCTIE7LM5X15NVugV7Krp9Hw",
+      "channelName": "夢追翔のJUKE BOX",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "male",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "Beating in Ash",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/eOQpqmra3fI/hqdefault.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCTIE7LM5X15NVugV7Krp9Hw",
+          "name": "夢追翔のJUKE BOX",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -1434,7 +1434,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T20:46:02.237Z",
-      "updatedAt": "2026-10-24T20:46:02.237Z",
+      "updatedAt": "2026-10-25T20:48:43.621Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -1572,7 +1572,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-25T09:23:34.774Z",
+      "updatedAt": "2026-10-25T20:48:43.621Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -1664,7 +1664,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T20:46:02.237Z",
-      "updatedAt": "2026-10-24T20:46:02.237Z",
+      "updatedAt": "2026-10-25T20:48:43.621Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -2619,56 +2619,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "OLAK5uy_m8YAzgKFCfnXD6GjKDvNx-0NpAvG_GAJ0",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_m8YAzgKFCfnXD6GjKDvNx-0NpAvG_GAJ0",
-      "type": "playlist",
-      "channelId": "UCQm--lgPz5Sq_b5hW9UXXQQ",
-      "channelName": "猫 The Sappiness / VSinger",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "male",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "male_vsinger",
-      "title": "Breezy Magic",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/--cA2KE1xe8/hqdefault.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCQm--lgPz5Sq_b5hW9UXXQQ",
-          "name": "猫 The Sappiness / VSinger",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:36:28.069Z",
-      "updatedAt": "2026-10-25T11:22:49.894Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "OLAK5uy_mj7s1PqzjdXNEJXbogtemb_s-mKChlZog",
       "platform": "youtube",
       "url": "https://www.youtube.com/playlist?list=OLAK5uy_mj7s1PqzjdXNEJXbogtemb_s-mKChlZog",
@@ -2814,6 +2764,56 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_neXJ7MW4HB14XhItxz4JhMfJoKXyYmfyY",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_neXJ7MW4HB14XhItxz4JhMfJoKXyYmfyY",
+      "type": "playlist",
+      "channelId": "UC--zuEfONeFXPvLqX0Kvbuw",
+      "channelName": "松永依織 / IORI MATSUNAGA",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "Timeless Beats",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/f6rqhovPHGE/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC--zuEfONeFXPvLqX0Kvbuw",
+          "name": "松永依織 / IORI MATSUNAGA",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:36:28.069Z",
       "updatedAt": "2026-10-25T07:43:14.768Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
@@ -3206,7 +3206,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-25T09:23:34.774Z",
+      "updatedAt": "2026-10-25T20:48:43.621Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },

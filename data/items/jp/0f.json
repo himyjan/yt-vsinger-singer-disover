@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-25T16:14:08.234Z",
+  "generatedAt": "2026-10-25T20:48:43.621Z",
   "items": [
     {
       "id": "L9TxlrOXnh4",
@@ -136,7 +136,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-25T09:23:34.774Z",
+      "updatedAt": "2026-10-25T20:48:43.621Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -228,7 +228,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-25T09:23:34.774Z",
+      "updatedAt": "2026-10-25T20:48:43.621Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -320,7 +320,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T20:46:02.237Z",
-      "updatedAt": "2026-10-24T20:46:02.237Z",
+      "updatedAt": "2026-10-25T20:48:43.621Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -1563,6 +1563,56 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "OLAK5uy_mep5767h-LT8_KnNK-Jvh8bmN3dPSRTgg",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_mep5767h-LT8_KnNK-Jvh8bmN3dPSRTgg",
+      "type": "playlist",
+      "channelId": "UC1opHUrw8rvnsadT-iGp7Cg",
+      "channelName": "Aqua Ch. 湊あくあ",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "female",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "kimiiro princess",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/U8KsOCeexbA/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC1opHUrw8rvnsadT-iGp7Cg",
+          "name": "Aqua Ch. 湊あくあ",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "OLAK5uy_mFQ3J03SgDF6PxBu9j_8WhnR9bPHlV38Y",
       "platform": "youtube",
       "url": "https://www.youtube.com/playlist?list=OLAK5uy_mFQ3J03SgDF6PxBu9j_8WhnR9bPHlV38Y",
@@ -1794,56 +1844,6 @@
         {
           "channelId": "UC6eWCld0KwmyHFbAqK3V-Rw",
           "name": "Koyori ch. 博衣こより - holoX -",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_msckoVLIpBdftiSg_bM_F9Sc4Fz3t_UY8",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_msckoVLIpBdftiSg_bM_F9Sc4Fz3t_UY8",
-      "type": "playlist",
-      "channelId": "UCu2n3qHuOuQIygREMnWeQWg",
-      "channelName": "hololive FLOW GLOW",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "LOAD",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/YHWcgM5atjs/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCu2n3qHuOuQIygREMnWeQWg",
-          "name": "hololive FLOW GLOW",
           "kind": "virtual",
           "region": "jp"
         }
@@ -2109,23 +2109,23 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "OLAK5uy_mep5767h-LT8_KnNK-Jvh8bmN3dPSRTgg",
+      "id": "OLAK5uy_msckoVLIpBdftiSg_bM_F9Sc4Fz3t_UY8",
       "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_mep5767h-LT8_KnNK-Jvh8bmN3dPSRTgg",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_msckoVLIpBdftiSg_bM_F9Sc4Fz3t_UY8",
       "type": "playlist",
-      "channelId": "UC1opHUrw8rvnsadT-iGp7Cg",
-      "channelName": "Aqua Ch. 湊あくあ",
+      "channelId": "UCu2n3qHuOuQIygREMnWeQWg",
+      "channelName": "hololive FLOW GLOW",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "female",
+      "gender": "unknown",
       "languages": [
         "ja"
       ],
       "isAi": false,
-      "variant": "female_vtuber",
-      "title": "kimiiro princess",
+      "variant": "vtuber",
+      "title": "LOAD",
       "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/U8KsOCeexbA/default.jpg",
+      "thumbnail": "https://i.ytimg.com/vi/YHWcgM5atjs/default.jpg",
       "publishedAt": null,
       "scheduledStart": null,
       "actualStart": null,
@@ -2138,8 +2138,8 @@
       "isCollab": false,
       "collaborators": [
         {
-          "channelId": "UC1opHUrw8rvnsadT-iGp7Cg",
-          "name": "Aqua Ch. 湊あくあ",
+          "channelId": "UCu2n3qHuOuQIygREMnWeQWg",
+          "name": "hololive FLOW GLOW",
           "kind": "virtual",
           "region": "jp"
         }
@@ -2984,7 +2984,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T20:46:02.237Z",
-      "updatedAt": "2026-10-24T20:46:02.237Z",
+      "updatedAt": "2026-10-25T20:48:43.621Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
