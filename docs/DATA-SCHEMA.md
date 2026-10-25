@@ -133,7 +133,7 @@ The record for one performer.
 | `role` | see below | What they do |
 | `region` | see below | Where they belong |
 | `language` | string \| null | BCP-47 tag detected from the description |
-| `agency` | string \| null | `hololive`, `nijisanji`, `kmvs`, … |
+| `agency` | string \| null | The group the performer belongs to: `hololive`, `nijisanji`, `kmvs`, … Regional and group branches are folded into one name — see below |
 | `avatar` | string \| null | Channel avatar |
 | `banner` | string \| null | Channel banner |
 | `description` | string \| null | Truncated to 1000 characters |
@@ -462,7 +462,7 @@ provenance is stored with it.
 | --- | --- | --- |
 | `override` | Curated by hand in `data/overrides.json` | certain |
 | `roster` | The **Taiwan VTuber Tracking Data** nationality column | authoritative |
-| `agency` | Their agency's branch | strong — the scene they perform in |
+| `agency` | The scene their group belongs to | strong — a Hololive EN member performs in English |
 | `country` | The channel's published country | a stated fact |
 | `name` | Kana in a Japanese name — they occur in Japanese and nowhere else | decisive for Japanese, still evidence |
 | `platform` | The platform they are on — Bilibili → China, Niconico → Japan | a prior — a mirror breaks it |
@@ -479,11 +479,17 @@ does not decide where they are from.
 is Japanese, and the region records where the performer comes from, not
 where each account is hosted. The order of authority:
 
-1. **The agency branch.** vdb records the agency in `group_name`, and the
-   branch is the strongest signal there is: a Hololive EN member is `en` and
-   a VirtuaReal member is `cn`, whatever language their name is written in.
+1. **The group's scene.** vdb records the agency in `group_name`, and the
+   group it places a performer in is the strongest signal there is: a
+   Hololive EN member performs in English (`en`), a VirtuaReal member in
+   Chinese (`cn`), whatever language their name is written in.
    「安堂いなり」 is Chinese — she is VirtuaReal Link — and
-   「小鳥遊キアラ」 is English — she is Hololive EN.
+   「小鳥遊キアラ」 is English — she debuted in Hololive EN.
+
+   Since 2026-09-07 Hololive is **one brand** — `agency: "hololive"` for
+   every talent, with no regional or group label. The *region* still comes
+   from the scene the source placed them in: a member who performs in
+   English stays `en` after their agency label is folded into `hololive`.
 2. **The channel's published country.** YouTube's about page states it —
    `"country":"日本"` — and it is the only region fact a mirror cannot
    corrupt. 「向葵 / あおい」 lists a Bilibili account and a Japanese
@@ -512,18 +518,18 @@ and a tie goes to the fresher record:
 | --- | --- | --- |
 | 1 | `override` | a human decided |
 | 2 | `roster` | the Taiwan track list's nationality column |
-| 3 | `agency` | the group's branch — Hololive EN, VirtuaReal |
+| 3 | `agency` | the group's scene — Hololive EN is English, VirtuaReal is Chinese |
 | 4 | `country` | the channel's own published country |
 | 5 | `name` | kana: Japanese, and nothing else |
 | 6 | `platform` | where the account is hosted — a mirror breaks this |
 | 7 | `declared` | the language vdb *displays* |
 | 8 | `script` | a guess from shared characters |
 
-An agency outranks a country because a branch is about the **scene**, not the
-passport: a member of Hololive EN performs in English even if the channel's
-about page says Japan. The country outranks kana because it is stated and
-kana are evidence — which is why a Taiwanese performer with a Japanese stage
-name stays `tw`.
+An agency outranks a country because the group is about the **scene**, not
+the passport: a member of Hololive EN performs in English even if the
+channel's about page says Japan. The country outranks kana because it is
+stated and kana are evidence — which is why a Taiwanese performer with a
+Japanese stage name stays `tw`.
 
 `declared` sits that low because it is not a statement of origin: vdb is a
 Chinese wiki, so 「巫てんり」 — a Japanese VTuber — is listed under the
@@ -580,6 +586,31 @@ Two boundaries:
   branch — a Hololive EN member writes the same line — so an agency read out
   of a description never decides a region.
 
+#### One “hololive”
+
+On 2026-09-07 COVER announced that Hololive stops operating as regional and
+group brands — hololive English, hololive Indonesia, hololive DEV_IS and the
+rest — and becomes one **“hololive”**. The sources this dataset reads still
+spell the old branches, so `canonicalAgency()` folds them into one value:
+
+| The source says | Stored |
+| --- | --- |
+| `Hololive`, `hololive`, `HOLOLIVE` | `hololive` |
+| `Hololive EN`, `Hololive English`, `Hololive ID (印尼分部)` | `hololive` |
+| `hololive Indonesia`, `hololive DEV_IS`, `hololivecn …` | `hololive` |
+| 「ホロライブ」 and any 「ホロライブ …」 branch | `hololive` |
+| `hololive production` | unchanged — the parent company |
+| `holostars`, `HOLOSTARS_EN` | unchanged — a separate brand |
+
+The rule is a **prefix** match, so a branch a source invents tomorrow is still
+`hololive`. `canonicalAgency()` runs in `classifyChannel()`, in
+`expandChannel()` on read, and in both dataset writers, which means a stale
+branch label is corrected the next time a record passes through the pipeline.
+
+Folding the label does **not** flatten the region. A member who performs in
+English is still `en`, because region records the scene they belong to, not
+the name of the company they work for.
+
 ### Enums
 
 **`role`** — what the performer does:
@@ -599,7 +630,7 @@ and shown in the channel drawer.
 | --- | --- | --- |
 | `override` | Curated by hand in `data/overrides.json` | certain |
 | `roster` | The **Taiwan VTuber Tracking Data** nationality column | authoritative |
-| `agency` | Their agency's branch | strong |
+| `agency` | The scene their group belongs to | strong |
 | `country` | The channel's published country | a stated fact |
 | `name` | Kana in a Japanese name | evidence — decisive for Japanese, still evidence |
 | `platform` | The platform they are on — Bilibili → China, Niconico → Japan | a prior — a mirror breaks it |

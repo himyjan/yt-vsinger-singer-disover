@@ -44,7 +44,7 @@ import {
   writeTextShard,
 } from "./io";
 import { ALL_REGIONS, SCHEMA_VERSION } from "./types";
-import { buildRegionMeta } from "./regions";
+import { buildRegionMeta, canonicalAgency } from "./regions";
 import type {
   Channel,
   ChannelFile,
@@ -191,6 +191,7 @@ export function writeDataset(
   now: string,
 ): WriteResult {
   const removed: string[] = [];
+  channels = channels.map(withCanonicalAgency);
 
   /* --- channels ------------------------------------------------------- */
   /**
@@ -602,7 +603,20 @@ function expandChannel(raw: Partial<Channel> & { id: string }): Channel {
   channel.statedLanguages ??= [];
   channel.platforms ??= [];
   channel.externals ??= {};
+  channel.agency = canonicalAgency(channel.agency);
   return channel;
+}
+
+/**
+ * A record with its agency in the dataset's canonical spelling.
+ *
+ * `canonicalAgency()` is applied on read and on write: a producer that has
+ * not been taught the new name yet still writes it, and a record written
+ * before the rule is corrected the next time it passes through here.
+ */
+function withCanonicalAgency(channel: Channel): Channel {
+  const agency = canonicalAgency(channel.agency);
+  return agency === channel.agency ? channel : { ...channel, agency };
 }
 
 /**
@@ -686,6 +700,7 @@ export function writeChannelShards(
   channels: Channel[],
   now: string,
 ): { records: number; files: number } {
+  channels = channels.map(withCanonicalAgency);
   let files = 0;
   const write = (
     list: Channel[],

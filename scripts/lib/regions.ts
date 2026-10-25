@@ -121,6 +121,42 @@ export const AGENCY_SUBREGION: Record<string, RegionCode> = {
   vshojo: "en",
 };
 
+/**
+ * The agencies that now operate under one name.
+ *
+ * On 2026-09-07 COVER announced that hololive would stop operating as
+ * regional and group brands — hololive English, hololive Indonesia,
+ * hololive DEV_IS and the rest — and become one “hololive”. The sources this
+ * dataset reads still spell the old branches, so every agency goes through
+ * this before it is read or written.
+ *
+ * The match is a prefix, because the announcement is about the whole brand:
+ * a branch a source invents tomorrow is still hololive. “hololive
+ * production” is the parent company, not the talent brand, so it is left
+ * alone; holostars is a separate brand and is not touched either.
+ */
+export function canonicalAgency(
+  agency: string | null | undefined,
+): string | null {
+  if (!agency || !agency.trim()) return null;
+  const key = agency
+    .normalize("NFKC")
+    .trim()
+    .toLowerCase()
+    .replace(/[-_\s]+/g, " ");
+  if (
+    key === "hololive production" ||
+    key === "hololiveproduction" ||
+    key === "ホロライブプロダクション"
+  ) {
+    return agency;
+  }
+  if (key.startsWith("hololive") || key.startsWith("ホロライブ")) {
+    return "hololive";
+  }
+  return agency;
+}
+
 /** Region → YouTube search keyword hints used by the discovery sweep. */
 export const REGION_KEYWORDS: Record<RegionCode, string[]> = {
   jp: [

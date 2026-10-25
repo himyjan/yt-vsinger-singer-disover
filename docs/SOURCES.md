@@ -78,9 +78,10 @@ Japanese ones under China, and the Hololive EN members under China too.
 
 The region is now settled in this order:
 
-1. **`group_name`** — the agency branch. Hololive EN → `en`, VirtuaReal →
+1. **`group_name`** — the group's scene. Hololive EN → `en`, VirtuaReal →
    `cn`, NIJISANJI → `jp`. 「安堂いなり」 is Chinese despite the Japanese
-   name; she is VirtuaReal Link.
+   name; she is VirtuaReal Link. The stored `agency` is one `hololive` since
+   2026-09-07, but the group that placed a performer still decides the region.
 2. **The platform**, for a performer with a Bilibili account and no YouTube
    account.
 3. **A Japanese name and a YouTube channel** — kana are decisive.
