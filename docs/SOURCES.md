@@ -368,6 +368,22 @@ public, but its WBI-signed upload listing returns 412 to an unauthenticated
 client, so upload descriptions are not harvested locally. X has no free read
 API at all, which is why the bio is read through FxTwitter.
 
+**vTubie** publishes a directory of roughly 20,000 performers at
+`vtubie.com/allvtubers/?pg=N`, ten to a page, and has no API — their FAQ
+answers "in development", and every path (including `/wp-json/`) sits behind
+a Cloudflare managed challenge. A plain `fetch` gets `403 Just a moment...`,
+so the adapter drives a real browser through `puppeteer-core` (optional, and
+it ships no Chrome) and reads the cards. A challenge that does not clear is a
+normal outcome on a datacenter IP: the source says so and returns nothing
+rather than failing the run.
+
+The listing gives a name and a profile slug, never a channel id, so
+`npm run data:discover` records the performers it finds in `data/identities.json`
+and `--promote` then resolves each name through InnerTube channel search. A hit
+is confirmed against the channel's own title, and the channel enters
+`data/channels/` only when two of its videos show virtual-creator identity and
+singing evidence — the same rule the sync applies to a discovered channel.
+
 ### Rate limiting
 
 The free sources have no published quota, but they do push back. All three go
@@ -390,7 +406,6 @@ are not in the pipeline.
 | [Virtual YouTuber Wiki](https://virtualyoutuber.fandom.com/) | The MediaWiki API works, and it is used by the debut discovery — but the roster is not wired in yet |
 | [Hololist](https://hololist.net) | Agency-limited: Hololive only, so it adds little over vdb and the Taiwan tracker |
 | [bacharu](https://bacharu.io) | A client-side Astro application with no public data endpoint |
-| [Vtubie](https://vtubie.com) | Blocks automated requests |
 | [AI VTuber DB](https://aivtuberdb.com) | Worth reading for the AI flag, but it publishes no machine-readable file |
 | [PVC.moe](https://pvc.moe) | The data is only in the client bundle |
 | [VTuber.hk](https://vtuber.hk) | Server-rendered, but with no documented data format |

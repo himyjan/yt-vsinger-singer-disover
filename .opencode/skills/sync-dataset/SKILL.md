@@ -32,6 +32,8 @@ npm run data:index                    # rebuild the inverted search index
 npm run data:validate                 # structure + size budgets (CI gate)
 npm run data:links -- --limit 200     # find the missing cross-platform accounts
 npm run data:links -- --shard 2/4 --dry-run
+npm run data:discover                 # new performers → data/identities.json
+npm run data:discover -- --promote    # + the ones that pass the two-video gate
 ```
 
 Always finish with `npm run data:index && npm run data:validate`.
@@ -154,6 +156,8 @@ Stale shards are pruned automatically. **Never write a file larger than 8 MB**
 | Change how much is fetched | `config/sync.config.json` → the `max*` knobs |
 | Add a platform | See the `add-platform` skill |
 | Add a debut source | `scripts/lib/debut-sources/<name>.ts` |
+| Run discovery, or promote its candidates | `npm run data:discover [-- --source all --promote]` |
+| Change the virtual-and-singing evidence | `scripts/lib/discovery-evidence.ts` (shared with the sync) |
 | Add a data source that enriches records | A module with a `fetch*()` that returns `null` on failure |
 
 Every network call must be wrapped so that a failure yields an empty result

@@ -103,6 +103,7 @@ scripts/
 ├── sync.ts                  orchestrator: fetch → classify → merge → write
 ├── fill-details.ts          fills the missing avatars, names and regions
 ├── resolve-links.ts         finds the missing cross-platform accounts
+├── discover.ts              finds performers nobody has recorded yet
 ├── verify.ts                verifies classifications with search grounding
 ├── build-index.ts           builds the inverted search index
 ├── validate.ts              CI gate: structure, consistency, size budgets
@@ -125,6 +126,9 @@ scripts/
     ├── web-links.ts         optional search-grounded link finder (`--web`)
     ├── shard.ts             the deterministic shard, shared by every pass
     ├── identity.ts          de-duplication registry
+    ├── discovery-evidence.ts  virtual-creator and singing evidence rules
+    ├── debut-sources/       the wiki and the vTubie directory, as adapters
+    ├── promote-candidates.ts  candidate → confirmed channel → record
     ├── search.ts            tokenizer + inverted index + query engine
     ├── aislist.ts           AI-channel list
     ├── vdb.ts               the Virtual YouTuber Name List Database
@@ -169,6 +173,35 @@ file, and every run still commits its own slice.
 
 `scripts/lib/shard.ts` holds that hash, so the sync, the details fill and the
 link resolver put a channel in the same shard.
+
+### The discovery run
+
+`scripts/discover.ts` answers the other question: who exists that the
+catalogue has never seen. A **debut source** (`scripts/lib/debut-sources/`)
+publishes candidates in its own shape — the Virtual YouTuber Wiki's
+`{{Character}}` infobox, the vTubie directory's cards — and the runner merges
+every one through `IdentityRegistry.upsert()` into `data/identities.json`.
+
+The registry is the de-duplication database: a performer is keyed by every
+strong identity a source knows (YouTube channel id, handle, X handle, wiki
+page), records that share one are merged rather than duplicated, and the
+alternative names are kept so one performer stays reachable under every name
+they are known by. A run that finds nothing new leaves the file untouched.
+
+A directory entry is a **name**, never a channel id, so discovery alone cannot
+write `data/channels/`. `--promote` closes that gap: the name is resolved
+through InnerTube channel search, the hit is confirmed against the channel's
+own title, and the channel enters the catalogue only when two of its videos
+show virtual-creator identity **and** singing evidence
+(`scripts/lib/discovery-evidence.ts`, the same terms the sync applies to a
+discovered channel). The survivors go through `importYouTubeChannels()`, which
+builds the record, applies `data/overrides.json`, merges it into the shards
+and rebuilds the search index.
+
+The vTubie source drives a real browser (`puppeteer-core`, optional) because
+their pages sit behind a Cloudflare challenge and there is no API. A challenge
+that does not clear is reported and yields no candidates; it never fails the
+run.
 
 ### The link resolver
 

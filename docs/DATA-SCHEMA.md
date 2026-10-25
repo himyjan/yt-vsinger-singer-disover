@@ -801,7 +801,14 @@ browser:
 
 ## `IdentityRecord`
 
-The de-duplication registry, in `data/identities.json`.
+The de-duplication registry, in `data/identities.json`. `npm run data:discover`
+writes it; it is committed, and a run that finds nothing new leaves it
+untouched.
+
+The `id` follows the same rule as a channel: the YouTube channel id when a
+source knows one, otherwise `<platform>:<id>` — a directory entry keyed by its
+profile slug is `vtubie:<slug>`. The slug is stable, so the id stays the same
+across runs and `data/identities.json` keeps a readable diff.
 
 | Field | Type | Notes |
 | --- | --- | --- |
@@ -813,7 +820,7 @@ The de-duplication registry, in `data/identities.json`.
 | `region` | `RegionCode` \| null | |
 | `affiliation` | string \| null | |
 | `debutDate` / `graduateDate` | string \| null | |
-| `sources` | string[] | Which sources contributed |
+| `sources` | string[] | Which sources contributed — the `DebutSource` ids, e.g. `vtubie`, `fandom` |
 | `firstSeen` / `updatedAt` | string | |
 | `verification` | `Verification \| null` | What was looked up, and where — see above |
 

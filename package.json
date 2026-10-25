@@ -16,6 +16,7 @@
     "data:import-playlist": "tsx scripts/import-playlist.ts",
     "data:details": "tsx scripts/fill-details.ts",
     "data:links": "tsx scripts/resolve-links.ts",
+    "data:discover": "tsx scripts/discover.ts",
     "data:analytics:append": "tsx scripts/append-analytics.ts",
     "data:ids": "tsx scripts/fill-details.ts --normalize-ids",
     "data:avatars": "tsx scripts/fill-details.ts",
@@ -37,7 +38,8 @@
     "youtubei.js": "^18.3.0"
   },
   "optionalDependencies": {
-    "better-sqlite3": "^13.0.3"
+    "better-sqlite3": "^13.0.3",
+    "puppeteer-core": "^25.16.0"
   },
   "devDependencies": {
     "@types/better-sqlite3": "^9.6.0",

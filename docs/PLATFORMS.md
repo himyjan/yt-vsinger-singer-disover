@@ -467,7 +467,7 @@ honest about the well-known databases it *cannot* read.
 | [Virtual YouTuber Wiki](https://virtualyoutuber.fandom.com/) | — | Wiki identities and debut dates |
 | [Hololist](https://hololist.net) | — | Hololive talents — agency-limited, so it adds little |
 | [bacharu](https://bacharu.io) | — | A Japanese directory — a client-side app with no public data |
-| [Vtubie](https://vtubie.com) | — | A directory with follower counts — blocks automated requests |
+| [vTubie](https://vtubie.com/allvtubers/) | ✅ | A directory with follower counts — read with a browser, because the pages sit behind a Cloudflare challenge (`npm run data:discover`) |
 | [AI VTuber DB](https://aivtuberdb.com) | — | A list of AI VTubers — no machine-readable file |
 | [PVC.moe](https://pvc.moe) | — | Profile data — only in the client bundle |
 | [VTuber.hk](https://vtuber.hk) | — | Hong Kong VTubers — no documented format |

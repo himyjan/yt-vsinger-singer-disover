@@ -210,12 +210,14 @@ export const SOURCES: SourceInfo[] = [
   },
   {
     id: "vtubie",
-    label: "Vtubie",
-    url: "https://vtubie.com",
-    provides: "A VTuber directory with follower counts",
-    access: "none",
-    used: false,
-    usedFor: "Blocks automated requests",
+    label: "vTubie",
+    url: "https://vtubie.com/allvtubers/",
+    provides:
+      "A directory of roughly 20,000 VTubers and VStreamers, ten per page",
+    access: "html",
+    used: true,
+    usedFor:
+      "New performers through `npm run data:discover` (and `--promote` for the ones that pass the virtual-and-singing gate) — the pages sit behind a Cloudflare challenge, so they are read with a browser (puppeteer-core, optional)",
   },
   {
     id: "aivtuberdb",

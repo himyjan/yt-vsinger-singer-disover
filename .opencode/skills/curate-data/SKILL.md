@@ -58,6 +58,12 @@ Without a YouTube API key, the sync may still rebuild its roster; automatic
 roster additions are limited to vdb, existing dataset identities, and curated
 seeds. See the `sync-dataset` skill for the discovery admission rules.
 
+A performer the Virtual YouTuber Wiki or the vTubie directory lists is a
+*candidate*, not a record. `npm run data:discover` records the name in
+`data/identities.json`; `--promote` adds the channel once two of its videos
+show virtual-creator identity and singing evidence. That gate is the same one
+the sync uses, so there is no second, looser path into `data/channels/`.
+
 A **subscription group** is a curation too. A PocketTube backup is JSON of
 group name → `UC…` ids, so a group called 「Vsinger」 (sung) or 「Vtuber」
 (virtual) is the list owner's own statement about those channels. Write it to
