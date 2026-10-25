@@ -47,12 +47,18 @@ const officialArtist = computed(
 
 const subscribers = computed(() => {
   const full = props.channel as Channel | null;
-  if (!full) return summary.value?.subscribers ?? null;
-  if (full.subscribers?.tag === "has") return full.subscribers.count;
-  return summary.value?.subscribers ?? null;
+  if (full?.subscribers?.tag === "has") return full.subscribers.count;
+  /**
+   * A performer can hide their count on one platform while publishing it on
+   * another. The drawer shows the largest published count rather than
+   * "Hidden" when one exists; the per-platform list below has the detail.
+   */
+  const known = followers.value.find((entry) => entry.n !== null);
+  return known?.n ?? summary.value?.subscribers ?? null;
 });
 
 const subscribersHidden = computed(() => {
+  if (subscribers.value !== null) return false;
   const full = props.channel as Channel | null;
   if (full?.subscribers) return full.subscribers.tag === "hidden";
   return summary.value?.subscribersHidden ?? false;
@@ -171,7 +177,7 @@ const videoCount = computed(() => {
   const own = (props.channel as Channel | null)?.videoCount;
   if (own) return own;
   for (const entry of followers.value) {
-    if (entry.n !== null) return entry.n;
+    if (entry.v !== null) return entry.v;
   }
   return null;
 });
@@ -179,19 +185,37 @@ const videoCount = computed(() => {
 /**
  * The follower count of each platform.
  *
- * A performer on several platforms has several counts, and they are not the
- * same number — so they are shown side by side rather than collapsed into
- * one.
+ * A full record keeps the counts on `platforms[]`; a summary — the shape the
+ * list views hold — carries the same information as `followers`. This read
+ * `followers` off whichever shape it was given, so a full record (which is
+ * what opening a channel card loads) produced an empty list and the section
+ * disappeared.
  */
 const followers = computed(() => {
-  const source = props.channel as unknown as {
-    followers?: { p: string; n: number | null; hidden: boolean; v?: number | null }[];
-  };
-  const list = source.followers ?? [];
+  const full = props.channel as Channel | null;
+  const list = full?.platforms?.length
+    ? full.platforms
+        /**
+         * `other` / `web` / `email` are addresses, not accounts: they have no
+         * followers and would only add "Website: Hidden" to the list.
+         */
+        .filter((p) => !["other", "web", "email"].includes(p.platform))
+        .map((p) => ({
+          p: p.platform as string,
+          n:
+            p.subscribers.tag === "has"
+              ? p.subscribers.count
+              : p.subscribers.tag === "no"
+                ? 0
+                : null,
+          hidden: p.subscribers.tag === "hidden",
+          v: p.videoCount ?? null,
+        }))
+    : (summary.value?.followers ?? []);
   // Every platform is listed, even one that hides its count — "Bilibili:
   // hidden" is information too, and a performer on four platforms should
   // show all four.
-  return list.sort((a, b) => (b.n ?? -1) - (a.n ?? -1));
+  return [...list].sort((a, b) => (b.n ?? -1) - (a.n ?? -1));
 });
 
 /** The languages, whether the field holds one code or a list. */
