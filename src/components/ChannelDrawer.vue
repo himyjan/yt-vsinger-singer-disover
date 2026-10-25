@@ -15,6 +15,15 @@ import { toLanguageList } from "@shared/lib/regions";
 import { state, toggleSaved } from "@/lib/store";
 import OfficialArtistBadge from "@/components/OfficialArtistBadge.vue";
 
+/**
+ * The order the follower list is shown in.
+ *
+ * YouTube is the catalogue's main platform, so it leads even on a record
+ * whose primary account is Bilibili; the other streaming platforms follow,
+ * and anything else comes after them.
+ */
+const FOLLOWER_ORDER = ["youtube", "twitch", "bilibili", "niconico"];
+
 const props = defineProps<{
   channel: Channel | null;
   item: Item | null;
@@ -214,8 +223,14 @@ const followers = computed(() => {
     : (summary.value?.followers ?? []);
   // Every platform is listed, even one that hides its count — "Bilibili:
   // hidden" is information too, and a performer on four platforms should
-  // show all four.
-  return [...list].sort((a, b) => (b.n ?? -1) - (a.n ?? -1));
+  // show all four. The order is fixed: YouTube is the main catalogue
+  // platform, then the other streaming platforms, then the rest by audience.
+  return [...list].sort((a, b) => {
+    const ai = FOLLOWER_ORDER.indexOf(a.p);
+    const bi = FOLLOWER_ORDER.indexOf(b.p);
+    if (ai !== bi) return (ai < 0 ? FOLLOWER_ORDER.length : ai) - (bi < 0 ? FOLLOWER_ORDER.length : bi);
+    return (b.n ?? -1) - (a.n ?? -1);
+  });
 });
 
 /** The languages, whether the field holds one code or a list. */

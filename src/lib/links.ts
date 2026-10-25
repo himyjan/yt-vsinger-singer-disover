@@ -118,8 +118,13 @@ export function channelLinks(
   const seen = new Set<string>();
 
   const push = (link: DisplayLink) => {
-    if (seen.has(link.url)) return;
-    seen.add(link.url);
+    /**
+     * The same account can be written two ways — `twitter.com/handle` and
+     * `x.com/handle` — so the key is the canonical address, not the string.
+     */
+    const key = linkKey(link.url);
+    if (seen.has(key)) return;
+    seen.add(key);
     out.push(link);
   };
 
@@ -164,10 +169,16 @@ export function channelLinks(
 
   for (const link of platformLinks) push(link);
 
-  // Extra external handles found in the channel description.
+  /**
+   * The platform entry is the account; an external is a handle the
+   * description mentioned. When both name the same platform they are the
+   * same link, and rendering it twice made an X account look like two.
+   */
+  const platformIds = new Set(platformLinks.map((link) => link.platform));
   const externals = full.externals ?? summary.externals;
   if (externals) {
     for (const [platform, handle] of Object.entries(externals)) {
+      if (platformIds.has(platform as PlatformId)) continue;
       const meta = EXTERNAL_META[platform] ?? {
         label: platform.startsWith("web:") ? "Website" : platform,
         icon: "🔗",
@@ -210,6 +221,29 @@ export function channelLinks(
 /** Whether a string is already an absolute address. */
 function isAbsoluteUrl(value: string): boolean {
   return /^https?:\/\//i.test(value);
+}
+
+/**
+ * A canonical key for "the same link written differently".
+ *
+ * Hosts are case-insensitive and `www.` is noise; X still answers on both
+ * `twitter.com` and `x.com`, and the dataset has both spellings for the
+ * same handle. The query string is kept, because it can identify a video.
+ */
+function linkKey(url: string): string {
+  if (/^mailto:/i.test(url)) return url.trim().toLowerCase();
+  try {
+    const parsed = new URL(url);
+    const host = parsed.hostname.toLowerCase().replace(/^www\./, "");
+    const canonicalHost =
+      host === "twitter.com" || host === "x.com" || host === "mobile.twitter.com"
+        ? "x.com"
+        : host;
+    const path = parsed.pathname.replace(/\/+$/, "").toLowerCase();
+    return `${canonicalHost}${path}${parsed.search}`;
+  } catch {
+    return url.trim();
+  }
 }
 
 /**
