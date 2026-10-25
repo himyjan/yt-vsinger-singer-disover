@@ -245,23 +245,27 @@ function thumbnailOf(item: any): string | null {
 function viewsOf(value: unknown): number | null {
   const text = textOf(value);
   if (!text) return null;
-  const match = text.replace(/,/g, "").match(/([\d.]+)\s*([万萬億亿KMB])?/i);
+  const match = text
+    .replace(/,/g, "")
+    .match(/([\d.]+)\s*([万萬億亿KMB천만억])?/i);
   if (!match) return null;
   const amount = Number(match[1]);
   if (!Number.isFinite(amount)) return null;
   const suffix = (match[2] ?? "").toUpperCase();
   const multiplier =
-    suffix === "万" || suffix === "萬"
+    suffix === "万" || suffix === "萬" || suffix === "만"
       ? 10_000
-      : suffix === "億" || suffix === "亿"
+      : suffix === "億" || suffix === "亿" || suffix === "억"
         ? 100_000_000
-        : suffix === "K"
+        : suffix === "천"
           ? 1_000
-          : suffix === "M"
-            ? 1_000_000
-            : suffix === "B"
-              ? 1_000_000_000
-              : 1;
+          : suffix === "K"
+            ? 1_000
+            : suffix === "M"
+              ? 1_000_000
+              : suffix === "B"
+                ? 1_000_000_000
+                : 1;
   const total = Math.round(amount * multiplier);
   return total > 0 ? total : null;
 }
@@ -660,14 +664,38 @@ export class InnerTubeSource {
       // `{text, content}` pair on others.
       const rawSubscribers =
         meta.subscriberCount ?? meta.subscriber_count ?? null;
+      /**
+       * The count the channel page actually shows.
+       *
+       * The microformat has no `subscriberCount` on the current layout, and
+       * youtubei.js does not lift it out of the header, so it stayed `null`
+       * and the record kept `subscribers: hidden` even after a successful
+       * profile fetch. The header is a list of text rows — `8 subscribers`,
+       * `登録者1.2万人` — read here and parsed with the same compact-count
+       * parser the view labels use.
+       */
+      const headerSubscriberText = (() => {
+        const rows = channel?.header?.content?.metadata?.metadata_rows ?? [];
+        for (const row of rows) {
+          for (const part of row?.metadata_parts ?? []) {
+            const text = textOf(part?.text);
+            if (text && /subscriber|訂閱|订阅|登録者|구독/i.test(text)) {
+              return text;
+            }
+          }
+        }
+        return null;
+      })();
       const subscribers = (() => {
         if (typeof rawSubscribers === "number") return rawSubscribers;
         if (rawSubscribers && typeof rawSubscribers === "object") {
-          const text = String(rawSubscribers.text ?? "").replace(/[^\d]/g, "");
-          const n = Number(text);
-          return Number.isFinite(n) && n > 0 ? n : null;
+          return viewsOf(
+            String(
+              (rawSubscribers as { text?: unknown }).text ?? "",
+            ),
+          );
         }
-        return null;
+        return viewsOf(headerSubscriberText);
       })();
       const countValue = (value: unknown): number | null => {
         const raw =
