@@ -65,11 +65,22 @@ export function toSummary(c: Channel): ChannelSummary {
     })),
     externals: c.externals,
     addedAt: c.addedAt,
-    followers: c.platforms.map((p) => ({
-      p: p.platform,
-      n: p.subscribers.tag === "has" ? p.subscribers.count : null,
-      hidden: p.subscribers.tag === "hidden",
-      v: p.videoCount ?? null,
-    })),
+    followers: c.platforms
+      /**
+       * `other` / `web` / `email` are addresses, not accounts: they have no
+       * followers, so they stay out of the per-platform list.
+       */
+      .filter((p) => !["other", "web", "email"].includes(p.platform))
+      .map((p) => ({
+        p: p.platform,
+        n:
+          p.subscribers.tag === "has"
+            ? p.subscribers.count
+            : p.subscribers.tag === "no"
+              ? 0
+              : null,
+        hidden: p.subscribers.tag === "hidden",
+        v: p.videoCount ?? null,
+      })),
   };
 }
