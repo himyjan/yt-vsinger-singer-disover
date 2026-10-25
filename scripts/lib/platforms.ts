@@ -344,10 +344,20 @@ export function extractPlatformId(input: string): {
 } | null {
   const value = input.trim();
 
+  /**
+   * A profile link with a trailing section is still the profile:
+   * `@handle/videos`, `@handle?si=…`, `channel/UC…/about`. The id ends at the
+   * first `/` or `?`, which is also what keeps `youtube.com/@a/b` from
+   * returning `@a/b` as a handle.
+   */
+  const tail = "(?=$|[/?#&\\s)」』])";
   const patterns: [PlatformId, RegExp][] = [
     [
       "youtube",
-      /(?:youtube\.com\/(?:channel\/(UC[\w-]{20,})|@([A-Za-z0-9._-]+)|(?:user|c)\/([A-Za-z0-9._-]+)))/i,
+      new RegExp(
+        `(?:youtube\\.com/(?:channel/(UC[\\w-]{20,})|@([A-Za-z0-9._-]+?)|(?:user|c)/([A-Za-z0-9._-]+?)))${tail}`,
+        "i",
+      ),
     ],
     ["twitch", /twitch\.tv\/([A-Za-z0-9_]{3,30})/],
     ["bilibili", /(?:space\.bilibili\.com\/|bilibili\.com\/)(?:(\d+)|([A-Za-z0-9_-]+))/],
@@ -364,7 +374,8 @@ export function extractPlatformId(input: string): {
     if (!m) continue;
     const id =
       platform === "youtube"
-        ? m[1] ?? m[2] ?? (m[3] ? `${m[0]!.includes("/user/") ? "user" : "c"}/${m[3]}` : null)
+        ? // A trailing sentence period is punctuation, not part of a handle.
+          (m[1] ?? m[2]?.replace(/\.+$/, "") ?? (m[3] ? `${m[0]!.includes("/user/") ? "user" : "c"}/${m[3].replace(/\.+$/, "")}` : null))
         : (m[1] ?? m[2]);
     if (id) return { platform, id };
   }
