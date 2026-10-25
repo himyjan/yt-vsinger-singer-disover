@@ -7,25 +7,32 @@ group URL answers `302 → /login/?next=…`, the fb_dtsg token never appears, a
 both search and group reads fail with "Cookies are expired". So this script
 needs a real session:
 
-    pip install facebook-gql-scraper
-    # export cookies with Cookie-Editor → facebook_cookies.json (Netscape or
-    # JSON, the same shape the README shows: a list of {name, value, …})
-    python scripts/harvest-facebook-groups.py \
-        --group 2569285399989405 \
-        --cookies facebook_cookies.json
+    # with uv, no venv to manage (3.13 is required; the system 3.9 is too old)
+    uv run --no-project --python 3.13 --with facebook-gql-scraper \
+        python scripts/harvest-facebook-groups.py \
+        --group 2569285399989405 --cookies facebook_cookies.json
+
+    # or with a venv you keep
+    uv venv --python 3.13 && uv pip install facebook-gql-scraper
+    .venv/bin/python scripts/harvest-facebook-groups.py \
+        --group 2569285399989405 --cookies facebook_cookies.json
+
+Export the cookies with Cookie-Editor → `facebook_cookies.json`: a list of
+`{name, value, …}` objects, as in the library's README.
 
 It prints the group's posts and every YouTube / Twitch / lit.link / Bilibili
 link found in them, as JSON on stdout, so it can be piped into the dataset
 tools. It never writes `data/` itself.
 
 Exit codes: 0 on success, 2 when the session is not logged in, 3 when the
-library is not installed.
+library is not installed, 4 when the cookie file is missing.
 """
 
 from __future__ import annotations
 
 import argparse
 import json
+import pathlib
 import re
 import sys
 
@@ -34,7 +41,8 @@ try:
     from facebook_gql_scraper.exceptions import SessionExpiredError
 except ImportError:  # pragma: no cover - the CI path does not need it
     print(
-        "facebook-gql-scraper is not installed: pip install facebook-gql-scraper",
+        "facebook-gql-scraper is not installed: "
+        "uv run --no-project --python 3.13 --with facebook-gql-scraper python <script>",
         file=sys.stderr,
     )
     raise SystemExit(3)
@@ -58,6 +66,14 @@ def main() -> int:
     parser.add_argument("--state", default="fb_state.json")
     parser.add_argument("--limit", type=int, default=50, help="posts per group")
     args = parser.parse_args()
+
+    if not pathlib.Path(args.cookies).is_file():
+        print(
+            f"{args.cookies} is missing. Export the cookies with Cookie-Editor "
+            "while logged in to Facebook and save them as that file.",
+            file=sys.stderr,
+        )
+        return 4
 
     ctx = fgs.FacebookContext(
         cookies_file=args.cookies, state_file=args.state, quiet=True
