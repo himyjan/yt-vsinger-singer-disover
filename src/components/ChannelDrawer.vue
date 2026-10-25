@@ -73,13 +73,31 @@ const subscribersHidden = computed(() => {
   return summary.value?.subscribersHidden ?? false;
 });
 
-/** The performer's uploads, live first. */
+/**
+ * A release is an album or single that YouTube Music manages.
+ *
+ * It has no upload date — it is not an upload — so it belongs in its own
+ * section rather than sorted into the recent uploads, where a missing date
+ * would push it to the bottom forever.
+ */
+function isMusicRelease(item: Item): boolean {
+  return (
+    item.type === "playlist" && (item.tags?.includes("youtube-music") ?? false)
+  );
+}
+
+/** The performer's uploads, live first, without the music releases. */
 const uploads = computed(() => {
   if (!props.channel) return [];
   const channelId = props.channel.id;
   const kind = props.channel.kind;
   return props.items
-    .filter((i) => i.channelId === channelId && i.channelKind === kind)
+    .filter(
+      (i) =>
+        i.channelId === channelId &&
+        i.channelKind === kind &&
+        !isMusicRelease(i),
+    )
     .sort((a, b) => {
       const rank = (i: Item) =>
         i.status === "live" ? 0 : i.status === "upcoming" ? 1 : 2;
@@ -87,6 +105,20 @@ const uploads = computed(() => {
       return (b.publishedAt ?? "").localeCompare(a.publishedAt ?? "");
     })
     .slice(0, 24);
+});
+
+/** The channel's albums and singles, alphabetically (they carry no date). */
+const releases = computed(() => {
+  if (!props.channel) return [];
+  const channelId = props.channel.id;
+  const kind = props.channel.kind;
+  return props.items
+    .filter(
+      (i) =>
+        i.channelId === channelId && i.channelKind === kind && isMusicRelease(i),
+    )
+    .sort((a, b) => a.title.localeCompare(b.title))
+    .slice(0, 12);
 });
 
 function uploadThumbnail(upload: Item): string {
@@ -468,6 +500,21 @@ const saved = computed(() =>
                 <p class="text-xs leading-relaxed whitespace-pre-line text-neutral-600 dark:text-neutral-300">
                   {{ channel.description }}
                 </p>
+              </section>
+
+              <!-- Releases -->
+              <section v-if="releases.length">
+                <h3 class="mb-2 text-xs font-bold tracking-wide text-neutral-500 uppercase">
+                  Songs &amp; releases
+                </h3>
+                <div class="grid grid-cols-2 gap-2">
+                  <a v-for="release in releases" :key="release.id" :href="itemUrl(release)" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 rounded-lg border border-black/6 bg-white p-1.5 transition hover:bg-black/[0.03] dark:border-white/8 dark:bg-neutral-900 dark:hover:bg-white/5">
+                    <img v-if="uploadThumbnail(release)" :src="uploadThumbnail(release)" :alt="release.title" referrerpolicy="no-referrer" loading="lazy" class="h-9 w-9 shrink-0 rounded object-cover" />
+                    <span class="line-clamp-2 text-[11px] leading-tight font-medium">
+                      {{ release.title }}
+                    </span>
+                  </a>
+                </div>
               </section>
 
               <!-- Uploads -->

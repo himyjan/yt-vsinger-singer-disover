@@ -927,46 +927,9 @@ export class InnerTubeSource {
         );
       }
 
-      const releases: InnerTubeRelease[] = [];
-      if (officialArtist) {
-        try {
-          await this.throttle();
-          const releaseTab: any = await withTimeout(
-            channel.getReleases(),
-            REQUEST_TIMEOUT_MS,
-          );
-          const releaseList: any[] =
-            releaseTab?.playlists ?? releaseTab?.videos ?? releaseTab?.items ?? [];
-          for (const item of releaseList.slice(0, releaseLimit)) {
-            const id =
-              item?.content_id ??
-              item?.playlist_id ??
-              item?.playlistId ??
-              item?.id;
-            if (typeof id !== "string" || !id) continue;
-            const title =
-              item?.metadata?.title?.text ??
-              item?.title?.text ??
-              item?.title ??
-              "";
-            const thumbnail =
-              item?.content_image?.image?.at(-1)?.url ??
-              item?.thumbnails?.at(-1)?.url ??
-              item?.thumbnail?.contents?.at(-1)?.url ??
-              null;
-            if (!title) continue;
-            releases.push({
-              id,
-              title: typeof title === "string" ? title : title.toString(),
-              thumbnail: thumbnail ? thumbnail.split("?")[0]! : null,
-            });
-          }
-        } catch (err) {
-          this.onLog(
-            `innertube: releases failed for ${channelId} — ${(err as Error).message}`,
-          );
-        }
-      }
+      const releases: InnerTubeRelease[] = officialArtist
+        ? await this.readReleases(channel, releaseLimit)
+        : [];
 
       this.limiter.reward();
       return { uploads, releases, officialArtist };
@@ -980,6 +943,95 @@ export class InnerTubeSource {
         );
       }
       return empty;
+    }
+  }
+
+  /**
+   * Reads the Releases tab of a channel that has one.
+   *
+   * The tab is only there for an Official Artist Channel, so the caller has
+   * already checked the header badge. A failure is logged and reported as an
+   * empty list — a channel without releases is normal, and it must not break
+   * the caller's loop.
+   */
+  private async readReleases(
+    channel: any,
+    releaseLimit: number,
+  ): Promise<InnerTubeRelease[]> {
+    const releases: InnerTubeRelease[] = [];
+    try {
+      await this.throttle();
+      const releaseTab: any = await withTimeout(
+        channel.getReleases(),
+        REQUEST_TIMEOUT_MS,
+      );
+      const releaseList: any[] =
+        releaseTab?.playlists ?? releaseTab?.videos ?? releaseTab?.items ?? [];
+      for (const item of releaseList.slice(0, releaseLimit)) {
+        const id =
+          item?.content_id ??
+          item?.playlist_id ??
+          item?.playlistId ??
+          item?.id;
+        if (typeof id !== "string" || !id) continue;
+        const title =
+          item?.metadata?.title?.text ??
+          item?.title?.text ??
+          item?.title ??
+          "";
+        const thumbnail =
+          item?.content_image?.image?.at(-1)?.url ??
+          item?.thumbnails?.at(-1)?.url ??
+          item?.thumbnail?.contents?.at(-1)?.url ??
+          null;
+        if (!title) continue;
+        releases.push({
+          id,
+          title: typeof title === "string" ? title : title.toString(),
+          thumbnail: thumbnail ? thumbnail.split("?")[0]! : null,
+        });
+      }
+    } catch (err) {
+      this.onLog(
+        `innertube: releases failed — ${(err as Error).message}`,
+      );
+    }
+    return releases;
+  }
+
+  /**
+   * Whether a channel is an Official Artist Channel, and its releases.
+   *
+   * Checking the badge costs one request, so a caller that only wants the
+   * Releases tab does not have to fetch the uploads it will not store. The
+   * return value distinguishes "checked and not an artist" (`[]`) from
+   * "could not check" (`null`).
+   */
+  async channelReleases(
+    channelId: string,
+    releaseLimit = 12,
+  ): Promise<{ officialArtist: boolean; releases: InnerTubeRelease[] } | null> {
+    if (!this.client) return null;
+    try {
+      await this.throttle();
+      const channel: any = await withTimeout(
+        this.client.getChannel(channelId),
+        REQUEST_TIMEOUT_MS,
+      );
+      if (!channel) return null;
+      const officialArtist = hasAudioBadge(channel.header);
+      const releases = officialArtist
+        ? await this.readReleases(channel, releaseLimit)
+        : [];
+      this.limiter.reward();
+      return { officialArtist, releases };
+    } catch (err) {
+      const message = (err as Error).message;
+      if (!isNotRateLimited(message)) this.limiter.penalise();
+      this.onLog(
+        `innertube: releases failed for ${channelId} — ${message}`,
+      );
+      return null;
     }
   }
 
