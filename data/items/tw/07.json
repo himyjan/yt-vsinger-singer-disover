@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-24T20:46:02.237Z",
+  "generatedAt": "2026-10-25T07:43:14.768Z",
   "items": [
     {
       "id": "GQXY3pEIiBM",
@@ -91,6 +91,56 @@
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
       "updatedAt": "2026-10-24T20:46:02.237Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_nL2x8GZYQYkMsqOSeexuZR0bQWbfyUUHE",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_nL2x8GZYQYkMsqOSeexuZR0bQWbfyUUHE",
+      "type": "playlist",
+      "channelId": "UCxCXWzeG80_VbhneNXIcKIg",
+      "channelName": "Fuyuki Sakura",
+      "channelKind": "virtual",
+      "region": "tw",
+      "gender": "male",
+      "languages": [
+        "zh-Hant"
+      ],
+      "isAi": false,
+      "variant": "male_vtuber",
+      "title": "夢のステージ",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/vmUoDPuvVrk/hqdefault.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCxCXWzeG80_VbhneNXIcKIg",
+          "name": "Fuyuki Sakura",
+          "kind": "virtual",
+          "region": "tw"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

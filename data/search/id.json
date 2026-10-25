@@ -1,118 +1,244 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-25T04:51:08.716Z",
+  "generatedAt": "2026-10-25T07:52:32.510Z",
   "region": "id",
-  "count": 8,
+  "count": 19,
   "tokens": [
+    "100",
     "ayunda",
     "ch",
     "chat",
+    "dejavu",
     "fishing",
     "free",
+    "high",
     "hololive",
     "hoshinova",
     "id",
     "is",
+    "it",
+    "jitu",
     "kureiji",
     "memancing",
     "mike",
     "moona",
+    "multiverse",
     "nakajima",
+    "night",
+    "nightmare",
+    "nowhere",
     "ollie",
+    "orbiture",
+    "pandora",
+    "perisai",
     "risu",
     "room",
     "s.a.r",
     "sammybollivienn",
     "sayaayaaulya",
     "this",
+    "tide",
     "tim",
+    "to",
+    "toxic",
+    "train",
+    "who",
     "with",
+    "you",
+    "さな",
+    "な歌",
+    "の小",
     "印度",
+    "小さ",
     "尼西",
     "度尼",
+    "愛の",
     "西亚"
   ],
   "postings": [
     [
+      14
+    ],
+    [
       5,
-      6,
-      7
+      13,
+      18
     ],
     [
       3,
       5,
-      6,
-      7
+      13,
+      18
+    ],
+    [
+      18
     ],
     [
       7
     ],
     [
-      6
+      13
     ],
     [
-      7
+      18
+    ],
+    [
+      12
     ],
     [
       1,
       3,
       5,
       6,
-      7
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18
     ],
     [
-      1
+      1,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      14,
+      15,
+      16,
+      17
     ],
     [
       0,
       4
     ],
     [
-      7
+      18
+    ],
+    [
+      15
+    ],
+    [
+      16
     ],
     [
       3
+    ],
+    [
+      13
+    ],
+    [
+      2
+    ],
+    [
+      1,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      14,
+      15,
+      16,
+      17
+    ],
+    [
+      8
+    ],
+    [
+      2
+    ],
+    [
+      9
+    ],
+    [
+      17
+    ],
+    [
+      9
+    ],
+    [
+      3
+    ],
+    [
+      10
     ],
     [
       6
     ],
     [
-      2
-    ],
-    [
-      1
-    ],
-    [
-      2
-    ],
-    [
-      3
+      16
     ],
     [
       5,
-      6,
-      7
+      13,
+      18
     ],
     [
-      7
+      18
     ],
     [
-      6
+      13
     ],
     [
-      6
+      13
     ],
     [
-      6
+      13
     ],
     [
-      7
+      18
     ],
     [
-      6
+      12
     ],
     [
-      6
+      13
+    ],
+    [
+      9
+    ],
+    [
+      15
+    ],
+    [
+      9
+    ],
+    [
+      15
+    ],
+    [
+      13
+    ],
+    [
+      15
+    ],
+    [
+      11
+    ],
+    [
+      11
+    ],
+    [
+      11
+    ],
+    [
+      0,
+      4
+    ],
+    [
+      11
     ],
     [
       0,
@@ -123,8 +249,7 @@
       4
     ],
     [
-      0,
-      4
+      11
     ],
     [
       0,
@@ -132,33 +257,56 @@
     ]
   ],
   "idf": [
-    1.2992829841302609,
-    1.0986122886681096,
-    2.1972245773362196,
-    2.1972245773362196,
-    2.1972245773362196,
-    0.9555114450274365,
-    2.1972245773362196,
-    1.6094379124341003,
-    2.1972245773362196,
-    2.1972245773362196,
-    2.1972245773362196,
-    2.1972245773362196,
-    2.1972245773362196,
-    2.1972245773362196,
-    2.1972245773362196,
-    1.2992829841302609,
-    2.1972245773362196,
-    2.1972245773362196,
-    2.1972245773362196,
-    2.1972245773362196,
-    2.1972245773362196,
-    2.1972245773362196,
-    2.1972245773362196,
-    1.6094379124341003,
-    1.6094379124341003,
-    1.6094379124341003,
-    1.6094379124341003
+    2.995732273553991,
+    1.992430164690206,
+    1.749199854809259,
+    2.995732273553991,
+    2.995732273553991,
+    2.995732273553991,
+    2.995732273553991,
+    2.995732273553991,
+    0.7827593392496325,
+    0.9490805546971458,
+    2.3513752571634776,
+    2.995732273553991,
+    2.995732273553991,
+    2.995732273553991,
+    2.995732273553991,
+    2.995732273553991,
+    2.995732273553991,
+    0.9490805546971458,
+    2.995732273553991,
+    2.995732273553991,
+    2.995732273553991,
+    2.995732273553991,
+    2.995732273553991,
+    2.995732273553991,
+    2.995732273553991,
+    2.995732273553991,
+    2.995732273553991,
+    1.992430164690206,
+    2.995732273553991,
+    2.995732273553991,
+    2.995732273553991,
+    2.995732273553991,
+    2.995732273553991,
+    2.995732273553991,
+    2.995732273553991,
+    2.995732273553991,
+    2.995732273553991,
+    2.995732273553991,
+    2.995732273553991,
+    2.995732273553991,
+    2.995732273553991,
+    2.995732273553991,
+    2.995732273553991,
+    2.995732273553991,
+    2.3513752571634776,
+    2.995732273553991,
+    2.3513752571634776,
+    2.3513752571634776,
+    2.995732273553991,
+    2.3513752571634776
   ],
   "entries": [
     {
@@ -229,6 +377,146 @@
     },
     {
       "k": "i",
+      "id": "OLAK5uy_lEhS_xBA8QPGVgQUVejZ3og0iBsQTsrHs",
+      "n": "PANDORA",
+      "g": "virtual",
+      "r": "id",
+      "c": "other",
+      "ts": 0,
+      "ch": "UCP0BspO_AMEe3aQqqpo89Dg",
+      "cn": "Moona Hoshinova hololive",
+      "th": "https://i.ytimg.com/vi/PFoGNZ05CJw/default.jpg",
+      "s": null,
+      "o": null,
+      "st": "past",
+      "d": null,
+      "ac": 0,
+      "gd": "unknown",
+      "ai": 0,
+      "vr": "vtuber"
+    },
+    {
+      "k": "i",
+      "id": "OLAK5uy_kVi0LHx1oO6rGqcacwcSsVIojZiuPzPfQ",
+      "n": "DEJAVU",
+      "g": "virtual",
+      "r": "id",
+      "c": "other",
+      "ts": 0,
+      "ch": "UCP0BspO_AMEe3aQqqpo89Dg",
+      "cn": "Moona Hoshinova hololive",
+      "th": "https://i.ytimg.com/vi/cU5_JIEFTOw/hqdefault.jpg",
+      "s": null,
+      "o": null,
+      "st": "past",
+      "d": null,
+      "ac": 0,
+      "gd": "unknown",
+      "ai": 0,
+      "vr": "vtuber"
+    },
+    {
+      "k": "i",
+      "id": "OLAK5uy_mbJlhkFU-r3uXZS3cEswj-6iWS10FbWsg",
+      "n": "Multiverse",
+      "g": "virtual",
+      "r": "id",
+      "c": "other",
+      "ts": 0,
+      "ch": "UCP0BspO_AMEe3aQqqpo89Dg",
+      "cn": "Moona Hoshinova hololive",
+      "th": "https://i.ytimg.com/vi/8fSdl2kWrHg/hqdefault.jpg",
+      "s": null,
+      "o": null,
+      "st": "past",
+      "d": null,
+      "ac": 0,
+      "gd": "unknown",
+      "ai": 0,
+      "vr": "vtuber"
+    },
+    {
+      "k": "i",
+      "id": "OLAK5uy_n_9EH6jWTEkePZtrUE2gFnCFOUNuV7U1I",
+      "n": "Night Train to Nowhere",
+      "g": "virtual",
+      "r": "id",
+      "c": "other",
+      "ts": 0,
+      "ch": "UCP0BspO_AMEe3aQqqpo89Dg",
+      "cn": "Moona Hoshinova hololive",
+      "th": "https://i.ytimg.com/vi/xf_hXocUfEE/default.jpg",
+      "s": null,
+      "o": null,
+      "st": "past",
+      "d": null,
+      "ac": 0,
+      "gd": "unknown",
+      "ai": 0,
+      "vr": "vtuber"
+    },
+    {
+      "k": "i",
+      "id": "OLAK5uy_kQxCEknZ1DNNz68NDC8WjXdfJyFG4vrgE",
+      "n": "ORBITURE",
+      "g": "virtual",
+      "r": "id",
+      "c": "other",
+      "ts": 0,
+      "ch": "UCP0BspO_AMEe3aQqqpo89Dg",
+      "cn": "Moona Hoshinova hololive",
+      "th": "https://i.ytimg.com/vi/qTr2x78_u4k/default.jpg",
+      "s": null,
+      "o": null,
+      "st": "past",
+      "d": null,
+      "ac": 0,
+      "gd": "unknown",
+      "ai": 0,
+      "vr": "vtuber"
+    },
+    {
+      "k": "i",
+      "id": "OLAK5uy_kvOMrRh3aw1EvFEnDLYkIn2BzGm9bYO70",
+      "n": "愛の小さな歌",
+      "g": "virtual",
+      "r": "id",
+      "c": "other",
+      "ts": 0,
+      "ch": "UCP0BspO_AMEe3aQqqpo89Dg",
+      "cn": "Moona Hoshinova hololive",
+      "th": "https://i.ytimg.com/vi/frcPP_RH6yI/default.jpg",
+      "s": null,
+      "o": null,
+      "st": "past",
+      "d": null,
+      "ac": 0,
+      "gd": "unknown",
+      "ai": 0,
+      "vr": "vtuber"
+    },
+    {
+      "k": "i",
+      "id": "OLAK5uy_nAicIURASKkIOvtEfRA9dolWKs4lZhaWE",
+      "n": "High Tide",
+      "g": "virtual",
+      "r": "id",
+      "c": "other",
+      "ts": 0,
+      "ch": "UCP0BspO_AMEe3aQqqpo89Dg",
+      "cn": "Moona Hoshinova hololive",
+      "th": "https://i.ytimg.com/vi/9etXL7UWkkU/default.jpg",
+      "s": null,
+      "o": null,
+      "st": "past",
+      "d": null,
+      "ac": 0,
+      "gd": "unknown",
+      "ai": 0,
+      "vr": "vtuber"
+    },
+    {
+      "k": "i",
       "id": "D0GdYYHcoCc",
       "n": "Memancing. Fishing. with Tim S.A.R. @sammybollivienn @sayaayaaulya",
       "g": "virtual",
@@ -246,6 +534,86 @@
       "gd": "male",
       "ai": 0,
       "vr": "male_vtuber"
+    },
+    {
+      "k": "i",
+      "id": "OLAK5uy_m_fX2dEG0LDD858wB0rt_3_hdeq6-AvLw",
+      "n": "100%",
+      "g": "virtual",
+      "r": "id",
+      "c": "other",
+      "ts": 0,
+      "ch": "UCP0BspO_AMEe3aQqqpo89Dg",
+      "cn": "Moona Hoshinova hololive",
+      "th": "https://i.ytimg.com/vi/XsxfVt2fsLg/default.jpg",
+      "s": null,
+      "o": null,
+      "st": "past",
+      "d": null,
+      "ac": 0,
+      "gd": "unknown",
+      "ai": 0,
+      "vr": "vtuber"
+    },
+    {
+      "k": "i",
+      "id": "OLAK5uy_kzhCMP6xGpfP3d1dTROyOV1Ac-KumdQSk",
+      "n": "Who’s Toxic ? It’s You!",
+      "g": "virtual",
+      "r": "id",
+      "c": "other",
+      "ts": 0,
+      "ch": "UCP0BspO_AMEe3aQqqpo89Dg",
+      "cn": "Moona Hoshinova hololive",
+      "th": "https://i.ytimg.com/vi/5odnoc-n-dA/default.jpg",
+      "s": null,
+      "o": null,
+      "st": "past",
+      "d": null,
+      "ac": 0,
+      "gd": "unknown",
+      "ai": 0,
+      "vr": "vtuber"
+    },
+    {
+      "k": "i",
+      "id": "OLAK5uy_mTpnFlM7RR82uu2t6mRaJbzQlcfGseeCk",
+      "n": "Perisai Jitu",
+      "g": "virtual",
+      "r": "id",
+      "c": "other",
+      "ts": 0,
+      "ch": "UCP0BspO_AMEe3aQqqpo89Dg",
+      "cn": "Moona Hoshinova hololive",
+      "th": "https://i.ytimg.com/vi/mkVX5IjdXRE/default.jpg",
+      "s": null,
+      "o": null,
+      "st": "past",
+      "d": null,
+      "ac": 0,
+      "gd": "unknown",
+      "ai": 0,
+      "vr": "vtuber"
+    },
+    {
+      "k": "i",
+      "id": "OLAK5uy_k_UKbrvzU8DHVlsAOEaIT7eyVtWQ3EwFU",
+      "n": "Nightmare",
+      "g": "virtual",
+      "r": "id",
+      "c": "other",
+      "ts": 0,
+      "ch": "UCP0BspO_AMEe3aQqqpo89Dg",
+      "cn": "Moona Hoshinova hololive",
+      "th": "https://i.ytimg.com/vi/-uTXfXW7Qww/default.jpg",
+      "s": null,
+      "o": null,
+      "st": "past",
+      "d": null,
+      "ac": 0,
+      "gd": "unknown",
+      "ai": 0,
+      "vr": "vtuber"
     },
     {
       "k": "i",

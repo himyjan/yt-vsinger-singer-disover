@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-24T15:54:59.721Z",
+  "generatedAt": "2026-10-25T07:43:14.768Z",
   "items": [
     {
       "id": "D0GdYYHcoCc",
@@ -45,6 +45,56 @@
       "source": "api",
       "addedAt": "2026-10-24T15:54:59.721Z",
       "updatedAt": "2026-10-24T15:54:59.721Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_m_fX2dEG0LDD858wB0rt_3_hdeq6-AvLw",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_m_fX2dEG0LDD858wB0rt_3_hdeq6-AvLw",
+      "type": "playlist",
+      "channelId": "UCP0BspO_AMEe3aQqqpo89Dg",
+      "channelName": "Moona Hoshinova hololive",
+      "channelKind": "virtual",
+      "region": "id",
+      "gender": "unknown",
+      "languages": [
+        "id"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "100%",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/XsxfVt2fsLg/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCP0BspO_AMEe3aQqqpo89Dg",
+          "name": "Moona Hoshinova hololive",
+          "kind": "virtual",
+          "region": "id"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }
