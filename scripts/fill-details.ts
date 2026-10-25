@@ -326,7 +326,7 @@ async function fetchProfile(
         avatar: profile.avatar,
         description: profile.description,
         subscribers: profile.subscribers,
-        videoCount: null,
+        videoCount: profile.videos ?? null,
         id: profile.id,
         handle: profile.handle,
         country: profile.country,
@@ -544,7 +544,15 @@ function applyProfile(
     if (profile.subscribers !== null) {
       link.subscribers = { tag: "has", count: profile.subscribers };
     }
-    if (profile.videoCount !== null) channel.videoCount = profile.videoCount;
+    if (profile.videoCount !== null) {
+      channel.videoCount = profile.videoCount;
+      /**
+       * The per-platform count is what the Followers row shows beside the
+       * audience (`1.3K videos`), so it belongs on the link, not only on
+       * the record.
+       */
+      link.videoCount = profile.videoCount;
+    }
   }
 
   /**
@@ -796,23 +804,32 @@ async function main(): Promise<void> {
            * has nothing left to ask for.
            */
           const needsCount = c.subscribers.tag === "hidden";
-          if (c.avatar && !needsCount) return false;
+          /**
+           * The upload total is a detail too.
+           *
+           * YouTube's microformat omits it on the current page layout; the
+           * about page publishes it. A record whose avatar and audience are
+           * known but whose video count is `null` is still worth a request.
+           */
+          const needsVideos = c.videoCount === null;
+          if (c.avatar && !needsCount && !needsVideos) return false;
         }
         /**
          * Do not ask the same channel every run.
          *
-         * Some performers genuinely hide their follower count; without a
-         * freshness window they would be re-fetched on every pass and never
-         * let the ones that can be fixed through. A **hidden** count is the
-         * thing this run is chasing, so it is retried after six hours rather
-         * than a week — a record fetched by an older parser kept `hidden`
-         * for seven days even though the platform published the number.
+         * Some performers genuinely hide their follower count or have no
+         * uploads tab; without a freshness window they would be re-fetched
+         * on every pass and never let the ones that can be fixed through.
+         * An incomplete record is retried after six hours rather than a
+         * week — a record fetched by an older parser kept `hidden` for seven
+         * days even though the platform published the number.
          */
         if (!options.force && c.lastDetailsFetchedAt) {
-          const window =
-            c.subscribers.tag === "hidden"
-              ? 6 * 60 * 60 * 1000
-              : 7 * 24 * 60 * 60 * 1000;
+          const incomplete =
+            c.subscribers.tag === "hidden" || c.videoCount === null;
+          const window = incomplete
+            ? 6 * 60 * 60 * 1000
+            : 7 * 24 * 60 * 60 * 1000;
           if (Date.now() - Date.parse(c.lastDetailsFetchedAt) < window) {
             return false;
           }
@@ -836,6 +853,7 @@ async function main(): Promise<void> {
       const score = (c: Channel) =>
         (c.avatar ? 0 : 4) +
         (c.subscribers.tag === "has" ? 0 : 2) +
+        (c.videoCount === null ? 1 : 0) +
         (c.description ? 0 : 1) +
         (c.lastDetailsFetchedAt ? 0 : 2);
       return score(b) - score(a);
