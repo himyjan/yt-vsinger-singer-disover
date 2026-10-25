@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-25T09:23:34.774Z",
+  "generatedAt": "2026-10-25T11:22:49.894Z",
   "items": [
     {
       "id": "OLAK5uy_lCHlJ3f-QZ5GAoz39L6xB2HTGy3ZCgPa0",
@@ -198,7 +198,57 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T11:22:49.894Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_luwPI_M1kMz7yJ81afjtQBKHGlHD3RQE8",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_luwPI_M1kMz7yJ81afjtQBKHGlHD3RQE8",
+      "type": "playlist",
+      "channelId": "UC8rcEBzJSleTkf_-agPM20g",
+      "channelName": "IRyS Ch. hololive",
+      "channelKind": "virtual",
+      "region": "en",
+      "gender": "unknown",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "vsinger",
+      "title": "Stay Blue",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/M7VCm9Q6m2c/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC8rcEBzJSleTkf_-agPM20g",
+          "name": "IRyS Ch. hololive",
+          "kind": "virtual",
+          "region": "en"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T11:22:49.894Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -294,7 +344,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-25T09:23:34.774Z",
+      "updatedAt": "2026-10-25T11:22:49.894Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

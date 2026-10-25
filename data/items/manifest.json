@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-25T09:23:34.774Z",
+  "generatedAt": "2026-10-25T11:22:49.894Z",
   "regions": [
     {
       "code": "jp",
@@ -24,7 +24,7 @@
         "0e",
         "0f"
       ],
-      "items": 1025
+      "items": 1055
     },
     {
       "code": "tw",
@@ -44,10 +44,11 @@
         "0a",
         "0b",
         "0c",
+        "0d",
         "0e",
         "0f"
       ],
-      "items": 28
+      "items": 31
     },
     {
       "code": "kr",
@@ -80,7 +81,7 @@
         "0e",
         "0f"
       ],
-      "items": 105
+      "items": 108
     },
     {
       "code": "id",
@@ -95,9 +96,11 @@
         "08",
         "09",
         "0a",
+        "0b",
+        "0e",
         "0f"
       ],
-      "items": 13
+      "items": 18
     },
     {
       "code": "my",
@@ -128,8 +131,8 @@
     }
   ],
   "counts": {
-    "total": 1190,
-    "live": 17,
-    "upcoming": 279
+    "total": 1231,
+    "live": 19,
+    "upcoming": 316
   }
 }

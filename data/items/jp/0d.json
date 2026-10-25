@@ -1,7 +1,53 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-25T09:23:34.774Z",
+  "generatedAt": "2026-10-25T11:22:49.894Z",
   "items": [
+    {
+      "id": "nlU8K-cuW7o",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UC5CwaMl1eIgY8h02uZw7u8A",
+      "channelName": "Suisei Channel",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vsinger",
+      "title": "【歌舞伎町路上ライブ】\"ZOMBIE! ZOMBIE!! ZOMBIE!!! \"【星街すいせい / ＃ほしまちすたじお】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/nlU8K-cuW7o/hq720.jpg",
+      "publishedAt": "2026-10-25T09:23:34.774Z",
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": "2026-10-25T09:23:34.774Z",
+      "duration": null,
+      "status": "past",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC5CwaMl1eIgY8h02uZw7u8A",
+          "name": "Suisei Channel",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-24T09:06:25.613Z",
+      "updatedAt": "2026-10-25T09:23:34.774Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
     {
       "id": "--0ia85vfnA",
       "platform": "youtube",
@@ -459,52 +505,6 @@
       "source": "api",
       "addedAt": "2026-10-25T04:37:45.822Z",
       "updatedAt": "2026-10-25T04:37:45.822Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "nlU8K-cuW7o",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UC5CwaMl1eIgY8h02uZw7u8A",
-      "channelName": "Suisei Channel",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vsinger",
-      "title": "【歌舞伎町路上ライブ】\"ZOMBIE! ZOMBIE!! ZOMBIE!!! \"【星街すいせい / ＃ほしまちすたじお】",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/nlU8K-cuW7o/hq720.jpg",
-      "publishedAt": "2026-10-25T09:23:34.774Z",
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": "2026-10-25T09:23:34.774Z",
-      "duration": null,
-      "status": "past",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UC5CwaMl1eIgY8h02uZw7u8A",
-          "name": "Suisei Channel",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-25T09:23:34.774Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -1100,7 +1100,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-25T07:36:28.069Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T11:22:49.894Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -1450,7 +1450,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T11:22:49.894Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -1755,6 +1755,56 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "OLAK5uy_lJtkWsgBPhZJKeqim-2br6z6ZB2saxUgA",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_lJtkWsgBPhZJKeqim-2br6z6ZB2saxUgA",
+      "type": "playlist",
+      "channelId": "UCQm--lgPz5Sq_b5hW9UXXQQ",
+      "channelName": "猫 The Sappiness / VSinger",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "male",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "male_vsinger",
+      "title": "Cat only knows",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/t4SwcyvKJqk/hqdefault.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCQm--lgPz5Sq_b5hW9UXXQQ",
+          "name": "猫 The Sappiness / VSinger",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:36:28.069Z",
+      "updatedAt": "2026-10-25T11:22:49.894Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "OLAK5uy_lN_-TvypP0nm3LTMhuMQ0aERiilSvTAAY",
       "platform": "youtube",
       "url": "https://www.youtube.com/playlist?list=OLAK5uy_lN_-TvypP0nm3LTMhuMQ0aERiilSvTAAY",
@@ -1837,6 +1887,106 @@
           "channelId": "UCv1jAWnr9rPKRQsEZYl5izQ",
           "name": "Omoinotake",
           "kind": "real",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_ltk8a1Wd9Iw7QTPEi1Gh5XDnq-DDr9OtY",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_ltk8a1Wd9Iw7QTPEi1Gh5XDnq-DDr9OtY",
+      "type": "playlist",
+      "channelId": "UCgPGVORhti-KKcV4CqUyumQ",
+      "channelName": "XIDEN",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "male",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "male_vsinger",
+      "title": "No Reset",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/hL2Wj2kFj2g/hqdefault.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCgPGVORhti-KKcV4CqUyumQ",
+          "name": "XIDEN",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:36:28.069Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_lvM9GR448SaOg4U5vRxFJl2cwmYe043cM",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_lvM9GR448SaOg4U5vRxFJl2cwmYe043cM",
+      "type": "playlist",
+      "channelId": "UCfiK42sBHraMBK6eNWtsy7A",
+      "channelName": "Mari Channelかしこまり",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "TurquoiseBlue",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/ek470wjG8XU/hqdefault.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCfiK42sBHraMBK6eNWtsy7A",
+          "name": "Mari Channelかしこまり",
+          "kind": "virtual",
           "region": "jp"
         }
       ],
@@ -1950,6 +2100,106 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-25T07:36:28.069Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_lyU-84v3gUG_r93zbydoZuX3IZTaNsDes",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_lyU-84v3gUG_r93zbydoZuX3IZTaNsDes",
+      "type": "playlist",
+      "channelId": "UCp-5t9SrOQwXMU7iIjQfARg",
+      "channelName": "Mio Channel 大神ミオ",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "Dandelion",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/irLx8oSidtk/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCp-5t9SrOQwXMU7iIjQfARg",
+          "name": "Mio Channel 大神ミオ",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T11:22:49.894Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_m0WTjpE0IMRPaeJG1jfpOEeEk0_AEmSGs",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_m0WTjpE0IMRPaeJG1jfpOEeEk0_AEmSGs",
+      "type": "playlist",
+      "channelId": "UC0TXe_LYZ4scaW2XMyi5_kw",
+      "channelName": "AZKi Channel",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "Re:Creating world",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/j2z06YUbulk/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC0TXe_LYZ4scaW2XMyi5_kw",
+          "name": "AZKi Channel",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
       "updatedAt": "2026-10-25T07:43:14.768Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
@@ -2805,302 +3055,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "pL7usQBYcYo",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCzyhBffWik7EShr6PEMsVSQ",
-      "channelName": "早乙女あずきAzuki Saotome",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "【作業雑談】M3当日！寝れない！準備しながらお喋りしましょ…！【 #M3秋2026 #早乙女あずき】",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/pL7usQBYcYo/hq720.jpg",
-      "publishedAt": "2026-10-24T15:54:59.721Z",
-      "scheduledStart": null,
-      "actualStart": "2026-10-24T15:54:59.721Z",
-      "actualEnd": null,
-      "duration": null,
-      "status": "live",
-      "category": "live",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCzyhBffWik7EShr6PEMsVSQ",
-          "name": "早乙女あずきAzuki Saotome",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-24T15:54:59.721Z",
-      "updatedAt": "2026-10-24T15:54:59.721Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_lJtkWsgBPhZJKeqim-2br6z6ZB2saxUgA",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_lJtkWsgBPhZJKeqim-2br6z6ZB2saxUgA",
-      "type": "playlist",
-      "channelId": "UCQm--lgPz5Sq_b5hW9UXXQQ",
-      "channelName": "猫 The Sappiness / VSinger",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "male",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "male_vsinger",
-      "title": "Cat only knows",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/t4SwcyvKJqk/hqdefault.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCQm--lgPz5Sq_b5hW9UXXQQ",
-          "name": "猫 The Sappiness / VSinger",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:36:28.069Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_ltk8a1Wd9Iw7QTPEi1Gh5XDnq-DDr9OtY",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_ltk8a1Wd9Iw7QTPEi1Gh5XDnq-DDr9OtY",
-      "type": "playlist",
-      "channelId": "UCgPGVORhti-KKcV4CqUyumQ",
-      "channelName": "XIDEN",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "male",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "male_vsinger",
-      "title": "No Reset",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/hL2Wj2kFj2g/hqdefault.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCgPGVORhti-KKcV4CqUyumQ",
-          "name": "XIDEN",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:36:28.069Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_lvM9GR448SaOg4U5vRxFJl2cwmYe043cM",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_lvM9GR448SaOg4U5vRxFJl2cwmYe043cM",
-      "type": "playlist",
-      "channelId": "UCfiK42sBHraMBK6eNWtsy7A",
-      "channelName": "Mari Channelかしこまり",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "TurquoiseBlue",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/ek470wjG8XU/hqdefault.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCfiK42sBHraMBK6eNWtsy7A",
-          "name": "Mari Channelかしこまり",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_lyU-84v3gUG_r93zbydoZuX3IZTaNsDes",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_lyU-84v3gUG_r93zbydoZuX3IZTaNsDes",
-      "type": "playlist",
-      "channelId": "UCp-5t9SrOQwXMU7iIjQfARg",
-      "channelName": "Mio Channel 大神ミオ",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "Dandelion",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/irLx8oSidtk/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCp-5t9SrOQwXMU7iIjQfARg",
-          "name": "Mio Channel 大神ミオ",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_m0WTjpE0IMRPaeJG1jfpOEeEk0_AEmSGs",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_m0WTjpE0IMRPaeJG1jfpOEeEk0_AEmSGs",
-      "type": "playlist",
-      "channelId": "UC0TXe_LYZ4scaW2XMyi5_kw",
-      "channelName": "AZKi Channel",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "Re:Creating world",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/j2z06YUbulk/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UC0TXe_LYZ4scaW2XMyi5_kw",
-          "name": "AZKi Channel",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "OLAK5uy_no9Z3O2eHlFc7pblFLl5xHjIkSHyk7nfA",
       "platform": "youtube",
       "url": "https://www.youtube.com/playlist?list=OLAK5uy_no9Z3O2eHlFc7pblFLl5xHjIkSHyk7nfA",
@@ -3401,6 +3355,52 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "pL7usQBYcYo",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCzyhBffWik7EShr6PEMsVSQ",
+      "channelName": "早乙女あずきAzuki Saotome",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "【作業雑談】M3当日！寝れない！準備しながらお喋りしましょ…！【 #M3秋2026 #早乙女あずき】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/pL7usQBYcYo/hq720.jpg",
+      "publishedAt": "2026-10-24T15:54:59.721Z",
+      "scheduledStart": null,
+      "actualStart": "2026-10-24T15:54:59.721Z",
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCzyhBffWik7EShr6PEMsVSQ",
+          "name": "早乙女あずきAzuki Saotome",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-24T15:54:59.721Z",
+      "updatedAt": "2026-10-24T15:54:59.721Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "OLAK5uy_nuyqYHNKb-dn6hzwLi17BX-jp7GioJ_tM",
       "platform": "youtube",
       "url": "https://www.youtube.com/playlist?list=OLAK5uy_nuyqYHNKb-dn6hzwLi17BX-jp7GioJ_tM",
@@ -3592,7 +3592,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-25T09:23:34.774Z",
+      "updatedAt": "2026-10-25T11:22:49.894Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
