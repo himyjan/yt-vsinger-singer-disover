@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-24T20:46:02.237Z",
+  "generatedAt": "2026-10-25T04:37:45.822Z",
   "items": [
     {
       "id": "_BSFDbrGHsg",
@@ -233,6 +233,52 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "iEWLB8tayWk",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UC1GQB6OqVMoFlHhQ9AagtqA",
+      "channelName": "メラ・アカル MelaakaruVtuber",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "【#歌枠 】デビュー50ヶ月記念🔥告知あり！歌みた同時視聴あり！お祝い歌枠【#メラメライブ 】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/iEWLB8tayWk/hq720.jpg",
+      "publishedAt": "2026-10-25T04:37:45.822Z",
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": "2026-10-25T04:37:45.822Z",
+      "duration": null,
+      "status": "past",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC1GQB6OqVMoFlHhQ9AagtqA",
+          "name": "メラ・アカル MelaakaruVtuber",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-24T09:06:25.613Z",
+      "updatedAt": "2026-10-25T04:37:45.822Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "HUlsz7Ym3Y8",
       "platform": "youtube",
       "type": "live",
@@ -321,52 +367,6 @@
       "source": "api",
       "addedAt": "2026-10-24T15:54:59.721Z",
       "updatedAt": "2026-10-24T15:54:59.721Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "iEWLB8tayWk",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UC1GQB6OqVMoFlHhQ9AagtqA",
-      "channelName": "メラ・アカル MelaakaruVtuber",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "【#歌枠 】デビュー50ヶ月記念🔥告知あり！歌みた同時視聴あり！お祝い歌枠【#メラメライブ 】",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/iEWLB8tayWk/hq720.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "upcoming",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UC1GQB6OqVMoFlHhQ9AagtqA",
-          "name": "メラ・アカル MelaakaruVtuber",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-24T09:06:25.613Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
