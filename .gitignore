@@ -36,3 +36,8 @@ data/.lock
 
 # Python bytecode from the harvest scripts
 __pycache__/
+
+# twscrape account pool (holds live session cookies)
+accounts.db
+accounts.db-journal
+accounts.db-wal
