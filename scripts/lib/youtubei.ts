@@ -245,27 +245,73 @@ function thumbnailOf(item: any): string | null {
 function viewsOf(value: unknown): number | null {
   const text = textOf(value);
   if (!text) return null;
-  const match = text
-    .replace(/,/g, "")
-    .match(/([\d.]+)\s*([万萬億亿KMB천만억])?/i);
+  /**
+   * The number and its magnitude are localized: `1.2M views`,
+   * `2,8 Mio. Abonnenten`, `1,2 mil seguidores`, `1.2万回`, `구독자 1.2만명`.
+   * The magnitude is either glued to the number (`12万`) or a word after it
+   * (`Mio.`), so both are read.
+   */
+  const match = text.match(
+    /([\d][\d.,\s\u00a0\u202f]*)\s*([KMB万萬億亿천만억](?![A-Za-zÀ-ÿ]))?/i,
+  );
   if (!match) return null;
-  const amount = Number(match[1]);
+  let number = (match[1] ?? "")
+    .replace(/[\s\u00a0\u202f]/g, "")
+    .replace(/[.,]+$/, "");
+  let unit = (match[2] ?? "").toLowerCase();
+  if (!unit) {
+    const rest = text.slice((match.index ?? 0) + match[0].length);
+    const word = rest.match(/^\s*([A-Za-zÀ-ÿ\u0400-\u04ff]{1,6})/);
+    unit = (word?.[1] ?? "").toLowerCase();
+  }
+  /**
+   * Separators differ by locale: `1,234.5` in English, `1.234,5` in German,
+   * `1 234` in French. A three-digit group is thousands; anything else is
+   * a decimal, so both spellings land on the same number.
+   */
+  if (number.includes(".") && number.includes(",")) {
+    const decimal = number.lastIndexOf(".") > number.lastIndexOf(",") ? "." : ",";
+    const thousands = decimal === "." ? "," : ".";
+    number = number.split(thousands).join("").replace(decimal, ".");
+  } else if (/^\d{1,3}(\.\d{3})+$/.test(number)) {
+    number = number.replace(/\./g, "");
+  } else if (/^\d{1,3}(,\d{3})+$/.test(number)) {
+    number = number.replace(/,/g, "");
+  } else {
+    number = number.replace(",", ".");
+  }
+  const amount = Number(number);
   if (!Number.isFinite(amount)) return null;
-  const suffix = (match[2] ?? "").toUpperCase();
   const multiplier =
-    suffix === "万" || suffix === "萬" || suffix === "만"
+    unit === "万" || unit === "萬" || unit === "만"
       ? 10_000
-      : suffix === "億" || suffix === "亿" || suffix === "억"
+      : unit === "億" || unit === "亿" || unit === "억"
         ? 100_000_000
-        : suffix === "천"
+        : unit === "천" ||
+            unit === "k" ||
+            unit === "mil" ||
+            unit.startsWith("тыс") ||
+            unit === "tys" ||
+            unit === "tis"
           ? 1_000
-          : suffix === "K"
-            ? 1_000
-            : suffix === "M"
+          : unit === "b" ||
+              unit === "bn" ||
+              unit.startsWith("milliard") ||
+              unit.startsWith("billion") ||
+              unit.startsWith("mrd") ||
+              unit.startsWith("mld") ||
+              unit.startsWith("млрд")
+            ? 1_000_000_000
+            : unit === "m" ||
+                unit === "mn" ||
+                unit === "mln" ||
+                unit.startsWith("mio") ||
+                unit.startsWith("mill") ||
+                unit.startsWith("milh") ||
+                unit.startsWith("млн") ||
+                unit.startsWith("million")
               ? 1_000_000
-              : suffix === "B"
-                ? 1_000_000_000
-                : 1;
+              : 1;
   const total = Math.round(amount * multiplier);
   return total > 0 ? total : null;
 }
@@ -679,7 +725,12 @@ export class InnerTubeSource {
         for (const row of rows) {
           for (const part of row?.metadata_parts ?? []) {
             const text = textOf(part?.text);
-            if (text && /subscriber|訂閱|订阅|登録者|구독/i.test(text)) {
+            if (
+              text &&
+              /subscriber|abonn|inscrit|suscript|abonnent|iscritti|subskry|abone|مشترك|подписчик|訂閱|订阅|登録者|구독|đăng ký|ติดตาม|pelanggan|langganan/i.test(
+                text,
+              )
+            ) {
               return text;
             }
           }
