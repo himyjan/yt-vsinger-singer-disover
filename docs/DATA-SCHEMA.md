@@ -174,6 +174,15 @@ description with ten links is a fan page listing.
 
 A key with no adapter and a bare value has no URL to build, and the app omits
 it rather than inventing `https://<key>/<value>`, which 404s.
+
+`platforms[].url` is always an href. A roster can list a platform this app has
+no adapter for — `other`, `web`, `email` — and the value it stores is whatever
+the performer published: sometimes the address **percent-encoded**
+(`https%3A%2F%2Fopen.spotify.com%2Fartist%2F…`), sometimes a bare host
+(`lit.link/…`), sometimes an e-mail address. `toHref()` in
+`scripts/lib/address.ts` is the one place that turns any of those into an
+absolute address (or `mailto:`); the app drops a link it cannot resolve
+instead of rendering it relative to its own origin.
 | `popularVideoId` | string \| null | A representative upload |
 
 ### `activity` — one per performer, not one per platform

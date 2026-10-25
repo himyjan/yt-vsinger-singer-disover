@@ -244,6 +244,23 @@ export class VdbSource {
     if (platform === "youtube" && !id.startsWith("UC")) {
       return `https://www.youtube.com/@${encodeURIComponent(id)}`;
     }
+    /**
+     * Some vdb accounts are an **address**, not a handle — a `spotify` artist
+     * page, a Douyin profile, a 163 Music artist. The id is the URL the
+     * performer published, and running it through a template produced
+     * `https%3A%2F%2Fopen.spotify.com%2Fartist%2F…` — a relative path on our
+     * own site, which 404s.
+     */
+    if (/^https?(%3A|:)/i.test(id)) {
+      const decoded = (() => {
+        try {
+          return decodeURIComponent(id);
+        } catch {
+          return id;
+        }
+      })();
+      return decoded;
+    }
     const template = this.linkSyntax[platform];
     if (!template) return `https://${platform}/${id}`;
     return template.replace("{id}", encodeURIComponent(id));

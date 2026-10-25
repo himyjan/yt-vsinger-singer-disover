@@ -7,6 +7,7 @@
  */
 
 import type { Channel, ChannelSummary, PlatformId } from "@shared/lib/types";
+import { addressHost, toHref } from "@shared/lib/address";
 
 export interface DisplayLink {
   platform: PlatformId | string;
@@ -90,18 +91,34 @@ export function channelLinks(
   const summary = channel as ChannelSummary;
 
   const platformLinks: DisplayLink[] = full.platforms?.length
-    ? full.platforms.map((p) => ({
-        platform: p.platform as PlatformId,
-        label: platformMeta(p.platform).label,
-        url: p.url,
-        handle: p.handle,
-      }))
-    : (summary.links ?? []).map((l) => ({
-        platform: l.p as PlatformId,
-        label: platformMeta(l.p).label,
-        url: l.u,
-        handle: l.h,
-      }));
+    ? full.platforms.flatMap((p) => {
+        /**
+         * `other` / `web` / `email` carry an address rather than a platform
+         * identity, and the rosters store it encoded. A value with no
+         * resolvable address is dropped — a relative path on our own site is
+         * a dead link.
+         */
+        const url = toHref(p.url) ?? toHref(p.id);
+        if (!url) return [];
+        const address = ["other", "web", "email"].includes(p.platform);
+        return [{
+          platform: p.platform as PlatformId,
+          label: address ? addressLabel(url) : platformMeta(p.platform).label,
+          url,
+          handle: address ? null : p.handle,
+        }];
+      })
+    : (summary.links ?? []).flatMap((l) => {
+        const url = toHref(l.u);
+        if (!url) return [];
+        const address = ["other", "web", "email"].includes(l.p);
+        return [{
+          platform: l.p as PlatformId,
+          label: address ? addressLabel(url) : platformMeta(l.p).label,
+          url,
+          handle: address ? null : l.h,
+        }];
+      });
 
   for (const link of platformLinks) push(link);
 
@@ -151,6 +168,18 @@ export function channelLinks(
 /** Whether a string is already an absolute address. */
 function isAbsoluteUrl(value: string): boolean {
   return /^https?:\/\//i.test(value);
+}
+
+/**
+ * The label for a link a roster filed under `other` / `web` / `email`.
+ *
+ * Such a link is not a platform: it is an address the performer published.
+ * Naming it after the host (`open.spotify.com`) says more than `other`, and
+ * an e-mail address is labelled as one.
+ */
+function addressLabel(url: string): string {
+  if (/^mailto:/i.test(url)) return "Email";
+  return addressHost(url);
 }
 
 /**
