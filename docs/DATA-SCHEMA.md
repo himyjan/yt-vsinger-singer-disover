@@ -831,11 +831,22 @@ Manual corrections, keyed by channel id. A file the humans edit.
     "isSinging": true,
     "note": "Filipino VTuber — filed under SEA, not Japan"
   },
-  "UCyyyyyyyyyyyyyyyyyyyyyy": { "hidden": true }
+  "UCyyyyyyyyyyyyyyyyyyyyyy": { "hidden": true },
+  "UCzzzzzzzzzzzzzzzzzzzzzz": {
+    "agency": null,
+    "affiliation": "community",
+    "tags": ["Fan Clip"],
+    "note": "A fan translation/clip channel, not the performer"
+  }
 }
 ```
 
 `hidden: true` removes the channel from the published dataset entirely.
+
+`affiliation` is the human's answer for the relationship — a fan channel is
+`community`, not a `group` member — and `tags` is **merged** into the
+record's own keywords, which is how a curated mark such as `Fan Clip` reaches
+the tag filter. `agency: null` removes an inferred affiliation.
 
 `region` also sets `regionSource: "override"`, so the drawer shows that a
 human decided it. `note` is not stored on the record — it is the reason,
