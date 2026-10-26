@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-26T10:32:00.415Z",
+  "generatedAt": "2026-10-26T12:56:51.125Z",
   "items": [
     {
       "id": "_-U7yUKVusw",
@@ -320,7 +320,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-25T11:22:49.894Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
+      "updatedAt": "2026-10-26T12:56:51.125Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -504,7 +504,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-26T10:32:00.415Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
+      "updatedAt": "2026-10-26T12:56:51.125Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -539,6 +539,52 @@
         {
           "channelId": "UCeSidHxJKSgWyLEcTh3dlkg",
           "name": "笹百合ねね / Vtuber",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-24T09:06:25.613Z",
+      "updatedAt": "2026-10-26T12:56:51.125Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "eEtpdRj7Fc0",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCjfq01OcGZGRZBgJsZ-PBGg",
+      "channelName": "雛心ひな@VTuber",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "✨🐤一週間のスケジュール🐤✨予定は未定のパターンもあるよ！詳しくはＸ！",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/eEtpdRj7Fc0/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCjfq01OcGZGRZBgJsZ-PBGg",
+          "name": "雛心ひな@VTuber",
           "kind": "virtual",
           "region": "jp"
         }
@@ -647,52 +693,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "eEtpdRj7Fc0",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCjfq01OcGZGRZBgJsZ-PBGg",
-      "channelName": "雛心ひな@VTuber",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "✨🐤一週間のスケジュール🐤✨予定は未定のパターンもあるよ！詳しくはＸ！",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/eEtpdRj7Fc0/hq720.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "upcoming",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCjfq01OcGZGRZBgJsZ-PBGg",
-          "name": "雛心ひな@VTuber",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "Fho8MNUfVq0",
       "platform": "youtube",
       "type": "live",
@@ -734,6 +734,52 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-26T10:32:00.415Z",
+      "updatedAt": "2026-10-26T12:56:51.125Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "kc9_5WbLqtU",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCe_8qM8Wk4cU5oD3WO07gZg",
+      "channelName": "Shairu.chしゃいる",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "free chat",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/kc9_5WbLqtU/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCe_8qM8Wk4cU5oD3WO07gZg",
+          "name": "Shairu.chしゃいる",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-24T05:10:16.208Z",
       "updatedAt": "2026-10-26T10:32:00.415Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
@@ -831,6 +877,52 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "jAJCo1w_ht0",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCuvk5PilcvDECU7dDZhQiEw",
+      "channelName": "白雪 巴/Shirayuki Tomoe",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "female",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "【晩酌】お姉さんの一杯飲み終わるまでほろ酔いトーク #いっ杯晩酌 15軒目【白雪巴/にじさんじ】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/jAJCo1w_ht0/hq720.jpg",
+      "publishedAt": "2026-10-26T12:56:51.125Z",
+      "scheduledStart": null,
+      "actualStart": "2026-10-26T12:56:51.125Z",
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCuvk5PilcvDECU7dDZhQiEw",
+          "name": "白雪 巴/Shirayuki Tomoe",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-26T12:56:51.125Z",
+      "updatedAt": "2026-10-26T12:56:51.125Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "Jw9OP_JYLFU",
       "platform": "youtube",
       "type": "live",
@@ -877,11 +969,11 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "kc9_5WbLqtU",
+      "id": "KI0-ycyjbqM",
       "platform": "youtube",
       "type": "live",
-      "channelId": "UCe_8qM8Wk4cU5oD3WO07gZg",
-      "channelName": "Shairu.chしゃいる",
+      "channelId": "UCTnu107Gk0Ux7lO4tqTU3ow",
+      "channelName": "ナツメ・アリー / NatsumeAlly",
       "channelKind": "virtual",
       "region": "jp",
       "gender": "unknown",
@@ -890,9 +982,9 @@
       ],
       "isAi": false,
       "variant": "vtuber",
-      "title": "free chat",
+      "title": "フリーチャット｜Free Chat Room",
       "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/kc9_5WbLqtU/hq720.jpg",
+      "thumbnail": "https://i.ytimg.com/vi/KI0-ycyjbqM/hq720.jpg",
       "publishedAt": null,
       "scheduledStart": null,
       "actualStart": null,
@@ -905,8 +997,8 @@
       "isCollab": false,
       "collaborators": [
         {
-          "channelId": "UCe_8qM8Wk4cU5oD3WO07gZg",
-          "name": "Shairu.chしゃいる",
+          "channelId": "UCTnu107Gk0Ux7lO4tqTU3ow",
+          "name": "ナツメ・アリー / NatsumeAlly",
           "kind": "virtual",
           "region": "jp"
         }
@@ -917,7 +1009,53 @@
       "likeCount": null,
       "concurrentViewers": null,
       "source": "api",
-      "addedAt": "2026-10-24T05:10:16.208Z",
+      "addedAt": "2026-10-25T11:22:49.894Z",
+      "updatedAt": "2026-10-26T12:56:51.125Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "MDwkJVqui_M",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCdn5BQ06XqgXoAxIhbqw5Rg",
+      "channelName": "フブキCh。白上フブキ",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "お知らせ/Information",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/MDwkJVqui_M/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCdn5BQ06XqgXoAxIhbqw5Rg",
+          "name": "フブキCh。白上フブキ",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-24T09:06:25.613Z",
       "updatedAt": "2026-10-26T10:32:00.415Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
@@ -964,644 +1102,6 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-25T04:37:45.822Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_klJIfh2hvjksqLChf5f4GiMSvsyZypUCU",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_klJIfh2hvjksqLChf5f4GiMSvsyZypUCU",
-      "type": "playlist",
-      "channelId": "UC0TXe_LYZ4scaW2XMyi5_kw",
-      "channelName": "AZKi Channel",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "kurenai kuronikuru",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/LiG4c-i7ZaU/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UC0TXe_LYZ4scaW2XMyi5_kw",
-          "name": "AZKi Channel",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_kZHcbCW2ZdCZ8kD6vmHpFJ94TT9nchPVE",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_kZHcbCW2ZdCZ8kD6vmHpFJ94TT9nchPVE",
-      "type": "playlist",
-      "channelId": "UCWCc8tO-uUl_7SJXIKJACMw",
-      "channelName": "神楽めあ / KaguraMea",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "Atashi in Wonderland",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/mqg8LBEdL8s/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCWCc8tO-uUl_7SJXIKJACMw",
-          "name": "神楽めあ / KaguraMea",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_lMd-rjCc_kbv9ojeIlLZrkox2kivANv3s",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_lMd-rjCc_kbv9ojeIlLZrkox2kivANv3s",
-      "type": "playlist",
-      "channelId": "UCGh6OU1whayPI5JKfF6Tm5g",
-      "channelName": "水縹アオ / Mihanada Ao",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vsinger",
-      "title": "oyasumi_internet",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/n2tLBsXOhnI/hqdefault.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCGh6OU1whayPI5JKfF6Tm5g",
-          "name": "水縹アオ / Mihanada Ao",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:36:28.069Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_lnALn5SwDN-VIP9PwxxixKTt4BP6B4rs4",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_lnALn5SwDN-VIP9PwxxixKTt4BP6B4rs4",
-      "type": "playlist",
-      "channelId": "UCRXWpdEe987CRaZt5HNf-WA",
-      "channelName": "ファム・ファタル - (f)EMME FATALE",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "TOP QUEEN",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/ckX389yQT1U/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCRXWpdEe987CRaZt5HNf-WA",
-          "name": "ファム・ファタル - (f)EMME FATALE",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:36:28.069Z",
-      "updatedAt": "2026-10-25T11:22:49.894Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_lvoEvuM8d8zok9e9wmJTCx-kYKqb3Pt6U",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_lvoEvuM8d8zok9e9wmJTCx-kYKqb3Pt6U",
-      "type": "playlist",
-      "channelId": "UC3zSmwgOOIjWUbus4cZIUPg",
-      "channelName": "MUS1CA",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "female",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "female_vsinger",
-      "title": "Ito Wokashi",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/n8GHohAndmI/hqdefault.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UC3zSmwgOOIjWUbus4cZIUPg",
-          "name": "MUS1CA",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:36:28.069Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_lWfTV7Z7sI-yUBpuKOr1k80rLn4ziUNmM",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_lWfTV7Z7sI-yUBpuKOr1k80rLn4ziUNmM",
-      "type": "playlist",
-      "channelId": "UCt5-0i4AVHXaWJrL8Wql3mw",
-      "channelName": "緑仙 / Ryushen",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "female",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "Paraglam",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/NAV_4SzUSTY/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCt5-0i4AVHXaWJrL8Wql3mw",
-          "name": "緑仙 / Ryushen",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_lZWJRlRz9NIdIeC9aWW3oca--mJheoOXE",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_lZWJRlRz9NIdIeC9aWW3oca--mJheoOXE",
-      "type": "playlist",
-      "channelId": "UCz1RAeb7dVaUcd-4rEgyxPw",
-      "channelName": "海月シェル Shell Ch.",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "Sweet×Bitter",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/n6DWHbmE5LQ/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCz1RAeb7dVaUcd-4rEgyxPw",
-          "name": "海月シェル Shell Ch.",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_mAdBsvsp1A_NMVZnCn8gax-FeIVboFwjw",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_mAdBsvsp1A_NMVZnCn8gax-FeIVboFwjw",
-      "type": "playlist",
-      "channelId": "UCWCc8tO-uUl_7SJXIKJACMw",
-      "channelName": "神楽めあ / KaguraMea",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "Best Wishes Type-B",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/P_76IRX6V5Y/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCWCc8tO-uUl_7SJXIKJACMw",
-          "name": "神楽めあ / KaguraMea",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_mmPBYsF0YzmgHxWTPqp_oeU_hoj5I8gzA",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_mmPBYsF0YzmgHxWTPqp_oeU_hoj5I8gzA",
-      "type": "playlist",
-      "channelId": "UC2hc-00y-MSR6eYA4eQ4tjQ",
-      "channelName": "龍ヶ崎リン / Rene Ryugasaki【ななしいんく】",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "Stairs",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/xAN7s08-EH4/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UC2hc-00y-MSR6eYA4eQ4tjQ",
-          "name": "龍ヶ崎リン / Rene Ryugasaki【ななしいんく】",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_mR46w9gg9UKnxf0CZ-T7y7IBOirZP0CWs",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_mR46w9gg9UKnxf0CZ-T7y7IBOirZP0CWs",
-      "type": "playlist",
-      "channelId": "UCt5-0i4AVHXaWJrL8Wql3mw",
-      "channelName": "緑仙 / Ryushen",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "female",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "It'sLie",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/E_nHMA_2vVY/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCt5-0i4AVHXaWJrL8Wql3mw",
-          "name": "緑仙 / Ryushen",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "wGp2qiGjYR0",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCdQYcUyffHZoz0KOwuiG0lQ",
-      "channelName": "宙月ティラ",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "unknown",
-      "title": "【Karaoke】What Is This Addictive Sound!? Songs You Just Can't Stop Listening To!!!!!【#Vsinger #宙月ティラ】",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi_lc/wGp2qiGjYR0/hq720_en.jpg",
-      "publishedAt": "2026-10-25T09:23:34.774Z",
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": "2026-10-25T09:23:34.774Z",
-      "duration": null,
-      "status": "past",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCdQYcUyffHZoz0KOwuiG0lQ",
-          "name": "宙月ティラ",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-25T09:23:34.774Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "KI0-ycyjbqM",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCTnu107Gk0Ux7lO4tqTU3ow",
-      "channelName": "ナツメ・アリー / NatsumeAlly",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "フリーチャット｜Free Chat Room",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/KI0-ycyjbqM/hq720.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "upcoming",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCTnu107Gk0Ux7lO4tqTU3ow",
-          "name": "ナツメ・アリー / NatsumeAlly",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T11:22:49.894Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "MDwkJVqui_M",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCdn5BQ06XqgXoAxIhbqw5Rg",
-      "channelName": "フブキCh。白上フブキ",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "お知らせ/Information",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/MDwkJVqui_M/hq720.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "upcoming",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCdn5BQ06XqgXoAxIhbqw5Rg",
-          "name": "フブキCh。白上フブキ",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-24T09:06:25.613Z",
       "updatedAt": "2026-10-26T10:32:00.415Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
@@ -1757,6 +1257,56 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "OLAK5uy_klJIfh2hvjksqLChf5f4GiMSvsyZypUCU",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_klJIfh2hvjksqLChf5f4GiMSvsyZypUCU",
+      "type": "playlist",
+      "channelId": "UC0TXe_LYZ4scaW2XMyi5_kw",
+      "channelName": "AZKi Channel",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "kurenai kuronikuru",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/LiG4c-i7ZaU/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC0TXe_LYZ4scaW2XMyi5_kw",
+          "name": "AZKi Channel",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "OLAK5uy_kNlzuSkX3kUjlD-yt0aTOCiHT_U_YxNeU",
       "platform": "youtube",
       "url": "https://www.youtube.com/playlist?list=OLAK5uy_kNlzuSkX3kUjlD-yt0aTOCiHT_U_YxNeU",
@@ -1838,6 +1388,56 @@
         {
           "channelId": "UC2kyQhzGOB-JPgcQX9OMgEw",
           "name": "宗谷いちか / Ichika Channel【ななしいんく】",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_kZHcbCW2ZdCZ8kD6vmHpFJ94TT9nchPVE",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_kZHcbCW2ZdCZ8kD6vmHpFJ94TT9nchPVE",
+      "type": "playlist",
+      "channelId": "UCWCc8tO-uUl_7SJXIKJACMw",
+      "channelName": "神楽めあ / KaguraMea",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "Atashi in Wonderland",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/mqg8LBEdL8s/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCWCc8tO-uUl_7SJXIKJACMw",
+          "name": "神楽めあ / KaguraMea",
           "kind": "virtual",
           "region": "jp"
         }
@@ -2157,6 +1757,56 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "OLAK5uy_lMd-rjCc_kbv9ojeIlLZrkox2kivANv3s",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_lMd-rjCc_kbv9ojeIlLZrkox2kivANv3s",
+      "type": "playlist",
+      "channelId": "UCGh6OU1whayPI5JKfF6Tm5g",
+      "channelName": "水縹アオ / Mihanada Ao",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vsinger",
+      "title": "oyasumi_internet",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/n2tLBsXOhnI/hqdefault.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCGh6OU1whayPI5JKfF6Tm5g",
+          "name": "水縹アオ / Mihanada Ao",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:36:28.069Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "OLAK5uy_lMNv3eWNO1_D6LoX8brXSuOUzQAUdjXoQ",
       "platform": "youtube",
       "url": "https://www.youtube.com/playlist?list=OLAK5uy_lMNv3eWNO1_D6LoX8brXSuOUzQAUdjXoQ",
@@ -2203,6 +1853,56 @@
       "source": "api",
       "addedAt": "2026-10-25T07:36:28.069Z",
       "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_lnALn5SwDN-VIP9PwxxixKTt4BP6B4rs4",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_lnALn5SwDN-VIP9PwxxixKTt4BP6B4rs4",
+      "type": "playlist",
+      "channelId": "UCRXWpdEe987CRaZt5HNf-WA",
+      "channelName": "ファム・ファタル - (f)EMME FATALE",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "TOP QUEEN",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/ckX389yQT1U/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCRXWpdEe987CRaZt5HNf-WA",
+          "name": "ファム・ファタル - (f)EMME FATALE",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:36:28.069Z",
+      "updatedAt": "2026-10-25T11:22:49.894Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -2557,6 +2257,106 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "OLAK5uy_lvoEvuM8d8zok9e9wmJTCx-kYKqb3Pt6U",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_lvoEvuM8d8zok9e9wmJTCx-kYKqb3Pt6U",
+      "type": "playlist",
+      "channelId": "UC3zSmwgOOIjWUbus4cZIUPg",
+      "channelName": "MUS1CA",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "female",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "female_vsinger",
+      "title": "Ito Wokashi",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/n8GHohAndmI/hqdefault.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC3zSmwgOOIjWUbus4cZIUPg",
+          "name": "MUS1CA",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:36:28.069Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_lWfTV7Z7sI-yUBpuKOr1k80rLn4ziUNmM",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_lWfTV7Z7sI-yUBpuKOr1k80rLn4ziUNmM",
+      "type": "playlist",
+      "channelId": "UCt5-0i4AVHXaWJrL8Wql3mw",
+      "channelName": "緑仙 / Ryushen",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "female",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "Paraglam",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/NAV_4SzUSTY/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCt5-0i4AVHXaWJrL8Wql3mw",
+          "name": "緑仙 / Ryushen",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "OLAK5uy_ly3Bh4cR2wEDt3qj8_9wGn7Z1-UfHRo14",
       "platform": "youtube",
       "url": "https://www.youtube.com/playlist?list=OLAK5uy_ly3Bh4cR2wEDt3qj8_9wGn7Z1-UfHRo14",
@@ -2588,6 +2388,56 @@
         {
           "channelId": "UCri7Aft0jr2Jd0wIdTft84A",
           "name": "Shion Lee",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_lZWJRlRz9NIdIeC9aWW3oca--mJheoOXE",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_lZWJRlRz9NIdIeC9aWW3oca--mJheoOXE",
+      "type": "playlist",
+      "channelId": "UCz1RAeb7dVaUcd-4rEgyxPw",
+      "channelName": "海月シェル Shell Ch.",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "Sweet×Bitter",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/n6DWHbmE5LQ/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCz1RAeb7dVaUcd-4rEgyxPw",
+          "name": "海月シェル Shell Ch.",
           "kind": "virtual",
           "region": "jp"
         }
@@ -2702,6 +2552,56 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-25T07:36:28.069Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_mAdBsvsp1A_NMVZnCn8gax-FeIVboFwjw",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_mAdBsvsp1A_NMVZnCn8gax-FeIVboFwjw",
+      "type": "playlist",
+      "channelId": "UCWCc8tO-uUl_7SJXIKJACMw",
+      "channelName": "神楽めあ / KaguraMea",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "Best Wishes Type-B",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/P_76IRX6V5Y/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCWCc8tO-uUl_7SJXIKJACMw",
+          "name": "神楽めあ / KaguraMea",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
       "updatedAt": "2026-10-25T07:43:14.768Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
@@ -2907,6 +2807,56 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "OLAK5uy_mR46w9gg9UKnxf0CZ-T7y7IBOirZP0CWs",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_mR46w9gg9UKnxf0CZ-T7y7IBOirZP0CWs",
+      "type": "playlist",
+      "channelId": "UCt5-0i4AVHXaWJrL8Wql3mw",
+      "channelName": "緑仙 / Ryushen",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "female",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "It'sLie",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/E_nHMA_2vVY/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCt5-0i4AVHXaWJrL8Wql3mw",
+          "name": "緑仙 / Ryushen",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "OLAK5uy_muDvnwRQWeWhL_uZLToOAt_5qsRVJOAfM",
       "platform": "youtube",
       "url": "https://www.youtube.com/playlist?list=OLAK5uy_muDvnwRQWeWhL_uZLToOAt_5qsRVJOAfM",
@@ -2957,56 +2907,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "OLAK5uy_mvmmdwTDZRqaJc6Eo0Wc1eJIaJzKyngu4",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_mvmmdwTDZRqaJc6Eo0Wc1eJIaJzKyngu4",
-      "type": "playlist",
-      "channelId": "UCXRlIK3Cw_TJIQC5kSJJQMg",
-      "channelName": "戌亥とこ -Inui Toko-",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "female",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "Virtual to LIVE (Classical Arrangement)",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/blYDKE9PJ2A/hqdefault.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCXRlIK3Cw_TJIQC5kSJJQMg",
-          "name": "戌亥とこ -Inui Toko-",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "OLAK5uy_mxOcDB5_6Fr194KTrNYGN6OtzWWE3hhwI",
       "platform": "youtube",
       "url": "https://www.youtube.com/playlist?list=OLAK5uy_mxOcDB5_6Fr194KTrNYGN6OtzWWE3hhwI",
@@ -3038,6 +2938,202 @@
         {
           "channelId": "UCah4_WVjmr8XA7i5aigwV-Q",
           "name": "ヰ世界情緒 -Isekaijoucho-",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_nES-hgAJG4ELCB1hPaPoKYU2QKWTnBHSg",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_nES-hgAJG4ELCB1hPaPoKYU2QKWTnBHSg",
+      "type": "playlist",
+      "channelId": "UC5CwaMl1eIgY8h02uZw7u8A",
+      "channelName": "Suisei Channel",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vsinger",
+      "title": "GUM&DROP",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/uSDtkV3PXSA/hqdefault.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC5CwaMl1eIgY8h02uZw7u8A",
+          "name": "Suisei Channel",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-26T12:56:51.125Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "wGp2qiGjYR0",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCdQYcUyffHZoz0KOwuiG0lQ",
+      "channelName": "宙月ティラ",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "【Karaoke】What Is This Addictive Sound!? Songs You Just Can't Stop Listening To!!!!!【#Vsinger #宙月ティラ】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi_lc/wGp2qiGjYR0/hq720_en.jpg",
+      "publishedAt": "2026-10-25T09:23:34.774Z",
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": "2026-10-25T09:23:34.774Z",
+      "duration": null,
+      "status": "past",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCdQYcUyffHZoz0KOwuiG0lQ",
+          "name": "宙月ティラ",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-24T09:06:25.613Z",
+      "updatedAt": "2026-10-25T09:23:34.774Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_mmPBYsF0YzmgHxWTPqp_oeU_hoj5I8gzA",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_mmPBYsF0YzmgHxWTPqp_oeU_hoj5I8gzA",
+      "type": "playlist",
+      "channelId": "UC2hc-00y-MSR6eYA4eQ4tjQ",
+      "channelName": "龍ヶ崎リン / Rene Ryugasaki【ななしいんく】",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "Stairs",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/xAN7s08-EH4/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC2hc-00y-MSR6eYA4eQ4tjQ",
+          "name": "龍ヶ崎リン / Rene Ryugasaki【ななしいんく】",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_mvmmdwTDZRqaJc6Eo0Wc1eJIaJzKyngu4",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_mvmmdwTDZRqaJc6Eo0Wc1eJIaJzKyngu4",
+      "type": "playlist",
+      "channelId": "UCXRlIK3Cw_TJIQC5kSJJQMg",
+      "channelName": "戌亥とこ -Inui Toko-",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "female",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "Virtual to LIVE (Classical Arrangement)",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/blYDKE9PJ2A/hqdefault.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCXRlIK3Cw_TJIQC5kSJJQMg",
+          "name": "戌亥とこ -Inui Toko-",
           "kind": "virtual",
           "region": "jp"
         }
@@ -3203,56 +3299,6 @@
       "source": "api",
       "addedAt": "2026-10-25T07:43:14.768Z",
       "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_nES-hgAJG4ELCB1hPaPoKYU2QKWTnBHSg",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_nES-hgAJG4ELCB1hPaPoKYU2QKWTnBHSg",
-      "type": "playlist",
-      "channelId": "UC5CwaMl1eIgY8h02uZw7u8A",
-      "channelName": "Suisei Channel",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vsinger",
-      "title": "GUM&DROP",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/uSDtkV3PXSA/hqdefault.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UC5CwaMl1eIgY8h02uZw7u8A",
-          "name": "Suisei Channel",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T11:22:49.894Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3557,52 +3603,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "Qp37V8rz7QQ",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UC1DCedRgGHBdm81E1llLhOQ",
-      "channelName": "Pekora Ch. 兎田ぺこら",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "【#ホロ鯖ARK】DAY16🦖きｔらああああああああああああああああああああ！！！【ホロライブ/兎田ぺこら】",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/Qp37V8rz7QQ/hq720.jpg",
-      "publishedAt": "2026-10-26T10:32:00.415Z",
-      "scheduledStart": null,
-      "actualStart": "2026-10-26T10:32:00.415Z",
-      "actualEnd": null,
-      "duration": null,
-      "status": "live",
-      "category": "live",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UC1DCedRgGHBdm81E1llLhOQ",
-          "name": "Pekora Ch. 兎田ぺこら",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-26T10:32:00.415Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "OLAK5uy_nyhf64T11PUg4ZfpZffqMO_7rXaMX255M",
       "platform": "youtube",
       "url": "https://www.youtube.com/playlist?list=OLAK5uy_nyhf64T11PUg4ZfpZffqMO_7rXaMX255M",
@@ -3699,6 +3699,52 @@
       "source": "api",
       "addedAt": "2026-10-25T07:43:14.768Z",
       "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "Qp37V8rz7QQ",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UC1DCedRgGHBdm81E1llLhOQ",
+      "channelName": "Pekora Ch. 兎田ぺこら",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "【#ホロ鯖ARK】DAY16🦖きｔらああああああああああああああああああああ！！！【ホロライブ/兎田ぺこら】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/Qp37V8rz7QQ/hq720.jpg",
+      "publishedAt": "2026-10-26T10:32:00.415Z",
+      "scheduledStart": null,
+      "actualStart": "2026-10-26T10:32:00.415Z",
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC1DCedRgGHBdm81E1llLhOQ",
+          "name": "Pekora Ch. 兎田ぺこら",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-26T10:32:00.415Z",
+      "updatedAt": "2026-10-26T10:32:00.415Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3882,7 +3928,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-25T09:23:34.774Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
+      "updatedAt": "2026-10-26T12:56:51.125Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },

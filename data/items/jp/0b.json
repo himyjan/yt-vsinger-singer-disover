@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-26T10:32:00.415Z",
+  "generatedAt": "2026-10-26T12:56:51.125Z",
   "items": [
     {
       "id": "-1xPHHPaRvQ",
@@ -182,7 +182,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-25T11:22:49.894Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
+      "updatedAt": "2026-10-26T12:56:51.125Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -504,7 +504,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-25T11:22:49.894Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
+      "updatedAt": "2026-10-26T12:56:51.125Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -872,7 +872,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-25T11:22:49.894Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
+      "updatedAt": "2026-10-26T12:56:51.125Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -958,6 +958,56 @@
         {
           "channelId": "UCFv2z4iM5vHrS8bZPq4fHQQ",
           "name": "HIMEHINA Channel",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_kEoZSnQrBGcjQjJcOqUldbr2GnfM-kj4A",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_kEoZSnQrBGcjQjJcOqUldbr2GnfM-kj4A",
+      "type": "playlist",
+      "channelId": "UCXRlIK3Cw_TJIQC5kSJJQMg",
+      "channelName": "戌亥とこ -Inui Toko-",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "female",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "Kabuki Joruri",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/z7NrcTD0lb8/hqdefault.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCXRlIK3Cw_TJIQC5kSJJQMg",
+          "name": "戌亥とこ -Inui Toko-",
           "kind": "virtual",
           "region": "jp"
         }
@@ -1072,57 +1122,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T11:22:49.894Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_kSV6BK7y4cnUQeTtn6RY1FBVv0xCjubSQ",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_kSV6BK7y4cnUQeTtn6RY1FBVv0xCjubSQ",
-      "type": "playlist",
-      "channelId": "UCAWSyEs_Io8MtpY3m-zqILA",
-      "channelName": "Nene Ch.桃鈴ねね",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "I'm difficult, but love me",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/k301_OrqIt4/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCAWSyEs_Io8MtpY3m-zqILA",
-          "name": "Nene Ch.桃鈴ねね",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-26T12:56:51.125Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -1527,252 +1527,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "OLAK5uy_md352ajfEy8OaMVH20JPb5Oda-Z1uXlv4",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_md352ajfEy8OaMVH20JPb5Oda-Z1uXlv4",
-      "type": "playlist",
-      "channelId": "UCAWSyEs_Io8MtpY3m-zqILA",
-      "channelName": "Nene Ch.桃鈴ねね",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "Ring-A-Linger",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/WDi13nZ5kmU/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCAWSyEs_Io8MtpY3m-zqILA",
-          "name": "Nene Ch.桃鈴ねね",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_mgpMrlJJj1BHjpfhzWfOq1AsznNCMzxjw",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_mgpMrlJJj1BHjpfhzWfOq1AsznNCMzxjw",
-      "type": "playlist",
-      "channelId": "UC6eWCld0KwmyHFbAqK3V-Rw",
-      "channelName": "Koyori ch. 博衣こより - holoX -",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "BAKU LOVE CHEMISTRY",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/0-Egm35F0-g/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UC6eWCld0KwmyHFbAqK3V-Rw",
-          "name": "Koyori ch. 博衣こより - holoX -",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_mo7A8r2onDZ3_De984PBmUDZ-kTRHKHjo",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_mo7A8r2onDZ3_De984PBmUDZ-kTRHKHjo",
-      "type": "playlist",
-      "channelId": "UC6eWCld0KwmyHFbAqK3V-Rw",
-      "channelName": "Koyori ch. 博衣こより - holoX -",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "New Journey",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/4382xsvkJvM/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UC6eWCld0KwmyHFbAqK3V-Rw",
-          "name": "Koyori ch. 博衣こより - holoX -",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OXexcpIgrxs",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCpEESTSpGHDgKTDJfS57Zkg",
-      "channelName": "猫音すず / Nekone Suzu",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "【 エンドラRTA Ranked 】成長期が一番楽しいんだから【Vtuber】",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/OXexcpIgrxs/hq720.jpg",
-      "publishedAt": "2026-10-25T16:14:08.234Z",
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": "2026-10-25T16:14:08.234Z",
-      "duration": null,
-      "status": "past",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCpEESTSpGHDgKTDJfS57Zkg",
-          "name": "猫音すず / Nekone Suzu",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-24T15:54:59.721Z",
-      "updatedAt": "2026-10-25T16:14:08.234Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_kEoZSnQrBGcjQjJcOqUldbr2GnfM-kj4A",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_kEoZSnQrBGcjQjJcOqUldbr2GnfM-kj4A",
-      "type": "playlist",
-      "channelId": "UCXRlIK3Cw_TJIQC5kSJJQMg",
-      "channelName": "戌亥とこ -Inui Toko-",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "female",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "Kabuki Joruri",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/z7NrcTD0lb8/hqdefault.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCXRlIK3Cw_TJIQC5kSJJQMg",
-          "name": "戌亥とこ -Inui Toko-",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "OLAK5uy_mCeh3YjVrWwtuxgcwJbgkXEuMiHx3SELQ",
       "platform": "youtube",
       "url": "https://www.youtube.com/playlist?list=OLAK5uy_mCeh3YjVrWwtuxgcwJbgkXEuMiHx3SELQ",
@@ -1855,6 +1609,56 @@
           "channelId": "UCv1jAWnr9rPKRQsEZYl5izQ",
           "name": "Omoinotake",
           "kind": "real",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_mgpMrlJJj1BHjpfhzWfOq1AsznNCMzxjw",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_mgpMrlJJj1BHjpfhzWfOq1AsznNCMzxjw",
+      "type": "playlist",
+      "channelId": "UC6eWCld0KwmyHFbAqK3V-Rw",
+      "channelName": "Koyori ch. 博衣こより - holoX -",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "BAKU LOVE CHEMISTRY",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/0-Egm35F0-g/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC6eWCld0KwmyHFbAqK3V-Rw",
+          "name": "Koyori ch. 博衣こより - holoX -",
+          "kind": "virtual",
           "region": "jp"
         }
       ],
@@ -1973,6 +1777,56 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "OLAK5uy_mo7A8r2onDZ3_De984PBmUDZ-kTRHKHjo",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_mo7A8r2onDZ3_De984PBmUDZ-kTRHKHjo",
+      "type": "playlist",
+      "channelId": "UC6eWCld0KwmyHFbAqK3V-Rw",
+      "channelName": "Koyori ch. 博衣こより - holoX -",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "New Journey",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/4382xsvkJvM/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC6eWCld0KwmyHFbAqK3V-Rw",
+          "name": "Koyori ch. 博衣こより - holoX -",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "OLAK5uy_msDpgG7MWzSlKNa5djEK9hti_83byCmk8",
       "platform": "youtube",
       "url": "https://www.youtube.com/playlist?list=OLAK5uy_msDpgG7MWzSlKNa5djEK9hti_83byCmk8",
@@ -2004,6 +1858,252 @@
         {
           "channelId": "UC9mf_ZVpouoILRY9NUIaK-w",
           "name": "Rikka ch.律可",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_mVFmZM4fziHHzdk_W2vYVCVsjssF6zaF8",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_mVFmZM4fziHHzdk_W2vYVCVsjssF6zaF8",
+      "type": "playlist",
+      "channelId": "UC0TXe_LYZ4scaW2XMyi5_kw",
+      "channelName": "AZKi Channel",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "Over Light",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/m07gS4wBY6Q/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC0TXe_LYZ4scaW2XMyi5_kw",
+          "name": "AZKi Channel",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_nMXP9rrEWIzQY71IB4qeXRpwz9HwB06-Y",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_nMXP9rrEWIzQY71IB4qeXRpwz9HwB06-Y",
+      "type": "playlist",
+      "channelId": "UCFv2z4iM5vHrS8bZPq4fHQQ",
+      "channelName": "HIMEHINA Channel",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "Frankenstein's monster",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/J66gqneY518/hqdefault.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCFv2z4iM5vHrS8bZPq4fHQQ",
+          "name": "HIMEHINA Channel",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OXexcpIgrxs",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCpEESTSpGHDgKTDJfS57Zkg",
+      "channelName": "猫音すず / Nekone Suzu",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "【 エンドラRTA Ranked 】成長期が一番楽しいんだから【Vtuber】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/OXexcpIgrxs/hq720.jpg",
+      "publishedAt": "2026-10-25T16:14:08.234Z",
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": "2026-10-25T16:14:08.234Z",
+      "duration": null,
+      "status": "past",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCpEESTSpGHDgKTDJfS57Zkg",
+          "name": "猫音すず / Nekone Suzu",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-24T15:54:59.721Z",
+      "updatedAt": "2026-10-25T16:14:08.234Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_kSV6BK7y4cnUQeTtn6RY1FBVv0xCjubSQ",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_kSV6BK7y4cnUQeTtn6RY1FBVv0xCjubSQ",
+      "type": "playlist",
+      "channelId": "UCAWSyEs_Io8MtpY3m-zqILA",
+      "channelName": "Nene Ch.桃鈴ねね",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "I'm difficult, but love me",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/k301_OrqIt4/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCAWSyEs_Io8MtpY3m-zqILA",
+          "name": "Nene Ch.桃鈴ねね",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_md352ajfEy8OaMVH20JPb5Oda-Z1uXlv4",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_md352ajfEy8OaMVH20JPb5Oda-Z1uXlv4",
+      "type": "playlist",
+      "channelId": "UCAWSyEs_Io8MtpY3m-zqILA",
+      "channelName": "Nene Ch.桃鈴ねね",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "Ring-A-Linger",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/WDi13nZ5kmU/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCAWSyEs_Io8MtpY3m-zqILA",
+          "name": "Nene Ch.桃鈴ねね",
           "kind": "virtual",
           "region": "jp"
         }
@@ -2055,56 +2155,6 @@
           "channelId": "UCDW-kx3ErDhFuQ50vCOXU_A",
           "name": "TeddyLoid",
           "kind": "real",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_mVFmZM4fziHHzdk_W2vYVCVsjssF6zaF8",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_mVFmZM4fziHHzdk_W2vYVCVsjssF6zaF8",
-      "type": "playlist",
-      "channelId": "UC0TXe_LYZ4scaW2XMyi5_kw",
-      "channelName": "AZKi Channel",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "Over Light",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/m07gS4wBY6Q/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UC0TXe_LYZ4scaW2XMyi5_kw",
-          "name": "AZKi Channel",
-          "kind": "virtual",
           "region": "jp"
         }
       ],
@@ -2268,56 +2318,6 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-25T07:36:28.069Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_nMXP9rrEWIzQY71IB4qeXRpwz9HwB06-Y",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_nMXP9rrEWIzQY71IB4qeXRpwz9HwB06-Y",
-      "type": "playlist",
-      "channelId": "UCFv2z4iM5vHrS8bZPq4fHQQ",
-      "channelName": "HIMEHINA Channel",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "Frankenstein's monster",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/J66gqneY518/hqdefault.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCFv2z4iM5vHrS8bZPq4fHQQ",
-          "name": "HIMEHINA Channel",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
       "updatedAt": "2026-10-25T07:43:14.768Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
@@ -2760,7 +2760,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-26T10:32:00.415Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
+      "updatedAt": "2026-10-26T12:56:51.125Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -2806,7 +2806,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-25T11:22:49.894Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
+      "updatedAt": "2026-10-26T12:56:51.125Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
