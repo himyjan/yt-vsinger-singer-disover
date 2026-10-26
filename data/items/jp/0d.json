@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-26T04:43:04.152Z",
+  "generatedAt": "2026-10-26T10:32:00.415Z",
   "items": [
     {
       "id": "--0ia85vfnA",
@@ -44,7 +44,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-25T20:48:43.621Z",
+      "updatedAt": "2026-10-26T10:32:00.415Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -90,7 +90,53 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T15:54:59.721Z",
-      "updatedAt": "2026-10-25T16:14:08.234Z",
+      "updatedAt": "2026-10-26T10:32:00.415Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "5wRDxly42Pg",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCGzTVXqMQHa4AgJVJIVvtDQ",
+      "channelName": "Vivi Ch. 綺々羅々ヴィヴィ - FLOW GLOW",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "【#ホロARK】デイノスクスをテイムしたい！！初めてのホロ鯖ARK！！＃18【#綺々羅々ヴィヴィ #hololive  #FLOWGLOW】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/5wRDxly42Pg/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCGzTVXqMQHa4AgJVJIVvtDQ",
+          "name": "Vivi Ch. 綺々羅々ヴィヴィ - FLOW GLOW",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-26T10:32:00.415Z",
+      "updatedAt": "2026-10-26T10:32:00.415Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -114,9 +160,9 @@
       "publishedAt": "2026-10-26T04:43:04.152Z",
       "scheduledStart": null,
       "actualStart": "2026-10-26T04:43:04.152Z",
-      "actualEnd": null,
+      "actualEnd": "2026-10-26T10:32:00.415Z",
       "duration": null,
-      "status": "live",
+      "status": "past",
       "category": "live",
       "songTitle": null,
       "originalArtist": null,
@@ -136,7 +182,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-26T04:43:04.152Z",
-      "updatedAt": "2026-10-26T04:43:04.152Z",
+      "updatedAt": "2026-10-26T10:32:00.415Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -182,53 +228,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-25T04:37:45.822Z",
-      "updatedAt": "2026-10-26T04:43:04.152Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "jRK5EzQP4Aw",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCtpB6Bvhs1Um93ziEDACQ8g",
-      "channelName": "Kazaki Ch. ‐ 森中花咲 ‐",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "female",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "【OW】遂に本番！全力のちる☆ぼたを見届けろ！ #ちるぼたWIN 【森中花咲/にじさんじ所属】",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/jRK5EzQP4Aw/hq720.jpg",
-      "publishedAt": "2026-10-26T04:43:04.152Z",
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": "2026-10-26T04:43:04.152Z",
-      "duration": null,
-      "status": "past",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCtpB6Bvhs1Um93ziEDACQ8g",
-          "name": "Kazaki Ch. ‐ 森中花咲 ‐",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T04:37:45.822Z",
-      "updatedAt": "2026-10-26T04:43:04.152Z",
+      "updatedAt": "2026-10-26T10:32:00.415Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -320,7 +320,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-25T20:48:43.621Z",
+      "updatedAt": "2026-10-26T10:32:00.415Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -366,7 +366,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-26T04:43:04.152Z",
-      "updatedAt": "2026-10-26T04:43:04.152Z",
+      "updatedAt": "2026-10-26T10:32:00.415Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -458,7 +458,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T20:46:02.237Z",
-      "updatedAt": "2026-10-25T20:48:43.621Z",
+      "updatedAt": "2026-10-26T10:32:00.415Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -539,6 +539,52 @@
         {
           "channelId": "UCocnY-kJ7VYVA7SQLP8AHIA",
           "name": "時羽あいの",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T04:37:45.822Z",
+      "updatedAt": "2026-10-26T10:32:00.415Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "jRK5EzQP4Aw",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCtpB6Bvhs1Um93ziEDACQ8g",
+      "channelName": "Kazaki Ch. ‐ 森中花咲 ‐",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "female",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "【OW】遂に本番！全力のちる☆ぼたを見届けろ！ #ちるぼたWIN 【森中花咲/にじさんじ所属】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/jRK5EzQP4Aw/hq720.jpg",
+      "publishedAt": "2026-10-26T04:43:04.152Z",
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": "2026-10-26T04:43:04.152Z",
+      "duration": null,
+      "status": "past",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCtpB6Bvhs1Um93ziEDACQ8g",
+          "name": "Kazaki Ch. ‐ 森中花咲 ‐",
           "kind": "virtual",
           "region": "jp"
         }
@@ -642,7 +688,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-25T16:14:08.234Z",
+      "updatedAt": "2026-10-26T10:32:00.415Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3297,6 +3343,56 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "OLAK5uy_nqvhHtjJLYlNGgfq4EN-ZA5i5OhDoZHOk",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_nqvhHtjJLYlNGgfq4EN-ZA5i5OhDoZHOk",
+      "type": "playlist",
+      "channelId": "UCBC7vYFNQoGPupe5NxPG4Bw",
+      "channelName": "QuonTama Ch. 久遠たま",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "Owari naki Ether-Anime Cover-",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/uAjorz7uQt8/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCBC7vYFNQoGPupe5NxPG4Bw",
+          "name": "QuonTama Ch. 久遠たま",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "OLAK5uy_ntkurMjvyN-ipkL6OGjTJf_D-zH6Dxdqk",
       "platform": "youtube",
       "url": "https://www.youtube.com/playlist?list=OLAK5uy_ntkurMjvyN-ipkL6OGjTJf_D-zH6Dxdqk",
@@ -3397,6 +3493,52 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "oT0XTcril8A",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCa9Y57gfeY0Zro_noHRVrnw",
+      "channelName": "Luna Ch. 姫森ルーナ",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "【 幻想水滸伝 】新作『幻想水滸伝 STAR LEAP』で遊んでみるのら！！！【姫森ルーナ/ホロライブ】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/oT0XTcril8A/hq720.jpg",
+      "publishedAt": "2026-10-26T10:32:00.415Z",
+      "scheduledStart": null,
+      "actualStart": "2026-10-26T10:32:00.415Z",
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCa9Y57gfeY0Zro_noHRVrnw",
+          "name": "Luna Ch. 姫森ルーナ",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T16:14:08.234Z",
+      "updatedAt": "2026-10-26T10:32:00.415Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "pL7usQBYcYo",
       "platform": "youtube",
       "type": "live",
@@ -3439,56 +3581,6 @@
       "source": "api",
       "addedAt": "2026-10-24T15:54:59.721Z",
       "updatedAt": "2026-10-25T16:14:08.234Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_nqvhHtjJLYlNGgfq4EN-ZA5i5OhDoZHOk",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_nqvhHtjJLYlNGgfq4EN-ZA5i5OhDoZHOk",
-      "type": "playlist",
-      "channelId": "UCBC7vYFNQoGPupe5NxPG4Bw",
-      "channelName": "QuonTama Ch. 久遠たま",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "Owari naki Ether-Anime Cover-",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/uAjorz7uQt8/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCBC7vYFNQoGPupe5NxPG4Bw",
-          "name": "QuonTama Ch. 久遠たま",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3643,52 +3735,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "oT0XTcril8A",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCa9Y57gfeY0Zro_noHRVrnw",
-      "channelName": "Luna Ch. 姫森ルーナ",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "【 幻想水滸伝 】新作『幻想水滸伝 STAR LEAP』で遊んでみるのら！！！【姫森ルーナ/ホロライブ】",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/oT0XTcril8A/hq720.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "upcoming",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCa9Y57gfeY0Zro_noHRVrnw",
-          "name": "Luna Ch. 姫森ルーナ",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T16:14:08.234Z",
-      "updatedAt": "2026-10-25T16:14:08.234Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "QEeqJhRNuhM",
       "platform": "youtube",
       "type": "live",
@@ -3730,7 +3776,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-25T11:22:49.894Z",
+      "updatedAt": "2026-10-26T10:32:00.415Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3776,7 +3822,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-25T20:48:43.621Z",
+      "updatedAt": "2026-10-26T10:32:00.415Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3822,7 +3868,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T20:46:02.237Z",
-      "updatedAt": "2026-10-25T20:48:43.621Z",
+      "updatedAt": "2026-10-26T10:32:00.415Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3868,7 +3914,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-25T20:48:43.621Z",
+      "updatedAt": "2026-10-26T10:32:00.415Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3914,7 +3960,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-25T16:14:08.234Z",
+      "updatedAt": "2026-10-26T10:32:00.415Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3960,7 +4006,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T20:46:02.237Z",
-      "updatedAt": "2026-10-25T20:48:43.621Z",
+      "updatedAt": "2026-10-26T10:32:00.415Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }
