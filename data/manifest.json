@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-26T12:56:51.125Z",
+  "generatedAt": "2026-10-26T22:38:30.097Z",
   "counts": {
-    "channels": 14338,
-    "channelsVirtual": 14316,
+    "channels": 14339,
+    "channelsVirtual": 14317,
     "channelsReal": 22,
-    "channelsSinging": 1239,
-    "items": 1356,
+    "channelsSinging": 1240,
+    "items": 1376,
     "itemsLive": 19,
-    "itemsUpcoming": 362,
+    "itemsUpcoming": 371,
     "itemsVideo": 0,
     "itemsPlaylist": 874,
     "itemsCover": 0,
@@ -20,8 +20,8 @@
       "code": "jp",
       "label": "Japan",
       "badge": "🇯🇵",
-      "channels": 1105,
-      "items": 1162
+      "channels": 1106,
+      "items": 1177
     },
     {
       "code": "cn",
@@ -77,14 +77,14 @@
       "label": "SEA",
       "badge": "🌏",
       "channels": 1,
-      "items": 0
+      "items": 1
     },
     {
       "code": "unknown",
       "label": "Unknown",
       "badge": "❔",
       "channels": 139,
-      "items": 19
+      "items": 23
     }
   ],
   "quota": {

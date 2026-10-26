@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-26T12:56:51.125Z",
+  "generatedAt": "2026-10-26T22:38:30.097Z",
   "regions": [
     {
       "code": "jp",
@@ -24,7 +24,7 @@
         "0e",
         "0f"
       ],
-      "items": 1162
+      "items": 1177
     },
     {
       "code": "tw",
@@ -113,6 +113,15 @@
       "items": 2
     },
     {
+      "code": "sea",
+      "label": "SEA",
+      "badge": "🌏",
+      "buckets": [
+        "01"
+      ],
+      "items": 1
+    },
+    {
       "code": "unknown",
       "label": "Unknown",
       "badge": "❔",
@@ -127,12 +136,12 @@
         "0b",
         "0f"
       ],
-      "items": 19
+      "items": 23
     }
   ],
   "counts": {
-    "total": 1356,
+    "total": 1376,
     "live": 19,
-    "upcoming": 362
+    "upcoming": 371
   }
 }

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-26T12:56:51.125Z",
+  "generatedAt": "2026-10-26T22:38:30.097Z",
   "items": [
     {
       "id": "CKs_vxqiS3E",
@@ -298,9 +298,9 @@
       "publishedAt": "2026-10-26T10:32:00.415Z",
       "scheduledStart": null,
       "actualStart": "2026-10-26T10:32:00.415Z",
-      "actualEnd": null,
+      "actualEnd": "2026-10-26T22:38:30.097Z",
       "duration": null,
-      "status": "live",
+      "status": "past",
       "category": "live",
       "songTitle": "🌕神曲しかない！スターチャイルドロボソン縛り【 #月城ティータイム 】",
       "originalArtist": null,
@@ -320,7 +320,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-26T10:32:00.415Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
+      "updatedAt": "2026-10-26T22:38:30.097Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -458,7 +458,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-26T10:32:00.415Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
+      "updatedAt": "2026-10-26T22:38:30.097Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -642,7 +642,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-26T10:32:00.415Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
+      "updatedAt": "2026-10-26T22:38:30.097Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -780,7 +780,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
+      "updatedAt": "2026-10-26T22:38:30.097Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -1585,6 +1585,56 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "OLAK5uy_laIhaz9OO2hYXxRYuyXGRikRqrLs9qQj8",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_laIhaz9OO2hYXxRYuyXGRikRqrLs9qQj8",
+      "type": "playlist",
+      "channelId": "UC1ucgoC_sGww_Euu5iMqpQw",
+      "channelName": "凛々咲 / Ririsya",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "singer",
+      "title": "Moonlit",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/dQDiXFd0q58/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC1ucgoC_sGww_Euu5iMqpQw",
+          "name": "凛々咲 / Ririsya",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:36:28.069Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "OLAK5uy_lBH4HDJ_wfm0f2lZBpHP2E9Z724Jv2Nik",
       "platform": "youtube",
       "url": "https://www.youtube.com/playlist?list=OLAK5uy_lBH4HDJ_wfm0f2lZBpHP2E9Z724Jv2Nik",
@@ -1885,106 +1935,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "OLAK5uy_lutrOc8uzjoyof80TLKpgPviN7pNrujsA",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_lutrOc8uzjoyof80TLKpgPviN7pNrujsA",
-      "type": "playlist",
-      "channelId": "UCnKt20HH_BiuID0FDHGMcvw",
-      "channelName": "IMI",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "unknown",
-      "title": "DRIVE",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/D8sKwsNQ6xo/hqdefault.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCnKt20HH_BiuID0FDHGMcvw",
-          "name": "IMI",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:36:28.069Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_lvy940CPSciKem_kKCDRjhr7rdNsVr_h8",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_lvy940CPSciKem_kKCDRjhr7rdNsVr_h8",
-      "type": "playlist",
-      "channelId": "UC6tIt6kTcMPI0t-Mml0jE1g",
-      "channelName": "箱乃なかみ / Hakono Nakami",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vsinger",
-      "title": "Baseless Confidence!!",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/yDGwguMI9ws/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UC6tIt6kTcMPI0t-Mml0jE1g",
-          "name": "箱乃なかみ / Hakono Nakami",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:36:28.069Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "OLAK5uy_lxovIL5iXfbNW2x3OumGMHAnZ1k3AOjjg",
       "platform": "youtube",
       "url": "https://www.youtube.com/playlist?list=OLAK5uy_lxovIL5iXfbNW2x3OumGMHAnZ1k3AOjjg",
@@ -2185,106 +2135,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "OLAK5uy_mN1BV0vj7ou45EfqMmANp4AtYXcdHgQMI",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_mN1BV0vj7ou45EfqMmANp4AtYXcdHgQMI",
-      "type": "playlist",
-      "channelId": "UCH1B9AR8sfWJVf9zcu9rbGg",
-      "channelName": "響かさね / Hibiki Kasane",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "male",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "Antidote",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/WIRukJLdWCc/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCH1B9AR8sfWJVf9zcu9rbGg",
-          "name": "響かさね / Hibiki Kasane",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_mr_375vKhIqiL8qPbTxgR4neRzzF2emD4",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_mr_375vKhIqiL8qPbTxgR4neRzzF2emD4",
-      "type": "playlist",
-      "channelId": "UCp-5t9SrOQwXMU7iIjQfARg",
-      "channelName": "Mio Channel 大神ミオ",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "Howling",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/iErXrkC5sWE/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCp-5t9SrOQwXMU7iIjQfARg",
-          "name": "Mio Channel 大神ミオ",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-26T12:56:51.125Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "OLAK5uy_muQMotpGZ0BgmR4ENVIlJQkHRKY3ENgjg",
       "platform": "youtube",
       "url": "https://www.youtube.com/playlist?list=OLAK5uy_muQMotpGZ0BgmR4ENVIlJQkHRKY3ENgjg",
@@ -2316,6 +2166,102 @@
         {
           "channelId": "UCt5-0i4AVHXaWJrL8Wql3mw",
           "name": "緑仙 / Ryushen",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "vrXPrDV4BtM",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCANDOlYTJT7N5jlRC3zfzVA",
+      "channelName": "Roberu Ch. 夕刻ロベル",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "【魔法少女ノ魔女裁判】初見で挑む『魔法少女ノ魔女裁判』4日目【夕刻ロベル/ホロスターズ】※ネタバレあり",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/vrXPrDV4BtM/hq720.jpg",
+      "publishedAt": "2026-10-26T10:32:00.415Z",
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": "2026-10-26T10:32:00.415Z",
+      "duration": null,
+      "status": "past",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCANDOlYTJT7N5jlRC3zfzVA",
+          "name": "Roberu Ch. 夕刻ロベル",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T16:14:08.234Z",
+      "updatedAt": "2026-10-26T10:32:00.415Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_mN1BV0vj7ou45EfqMmANp4AtYXcdHgQMI",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_mN1BV0vj7ou45EfqMmANp4AtYXcdHgQMI",
+      "type": "playlist",
+      "channelId": "UCH1B9AR8sfWJVf9zcu9rbGg",
+      "channelName": "響かさね / Hibiki Kasane",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "male",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "Antidote",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/WIRukJLdWCc/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCH1B9AR8sfWJVf9zcu9rbGg",
+          "name": "響かさね / Hibiki Kasane",
           "kind": "virtual",
           "region": "jp"
         }
@@ -2381,56 +2327,6 @@
       "source": "api",
       "addedAt": "2026-10-25T07:43:14.768Z",
       "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_nnFf9tWUyw4uWp2FvEj_xLBul6o33cPME",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_nnFf9tWUyw4uWp2FvEj_xLBul6o33cPME",
-      "type": "playlist",
-      "channelId": "UCGCNass-jSHshAHA4ufX3Ng",
-      "channelName": "桃瀬にな / Nina Momose",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vsinger",
-      "title": "PAPARACHA",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/S173-5nzkLM/hqdefault.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCGCNass-jSHshAHA4ufX3Ng",
-          "name": "桃瀬にな / Nina Momose",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-26T12:56:51.125Z",
-      "updatedAt": "2026-10-26T12:56:51.125Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -2764,7 +2660,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-25T16:14:08.234Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
+      "updatedAt": "2026-10-26T22:38:30.097Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -2861,12 +2757,12 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "OLAK5uy_laIhaz9OO2hYXxRYuyXGRikRqrLs9qQj8",
+      "id": "OLAK5uy_lutrOc8uzjoyof80TLKpgPviN7pNrujsA",
       "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_laIhaz9OO2hYXxRYuyXGRikRqrLs9qQj8",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_lutrOc8uzjoyof80TLKpgPviN7pNrujsA",
       "type": "playlist",
-      "channelId": "UC1ucgoC_sGww_Euu5iMqpQw",
-      "channelName": "凛々咲 / Ririsya",
+      "channelId": "UCnKt20HH_BiuID0FDHGMcvw",
+      "channelName": "IMI",
       "channelKind": "virtual",
       "region": "jp",
       "gender": "unknown",
@@ -2874,10 +2770,10 @@
         "ja"
       ],
       "isAi": false,
-      "variant": "singer",
-      "title": "Moonlit",
+      "variant": "unknown",
+      "title": "DRIVE",
       "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/dQDiXFd0q58/default.jpg",
+      "thumbnail": "https://i.ytimg.com/vi/D8sKwsNQ6xo/hqdefault.jpg",
       "publishedAt": null,
       "scheduledStart": null,
       "actualStart": null,
@@ -2890,8 +2786,58 @@
       "isCollab": false,
       "collaborators": [
         {
-          "channelId": "UC1ucgoC_sGww_Euu5iMqpQw",
-          "name": "凛々咲 / Ririsya",
+          "channelId": "UCnKt20HH_BiuID0FDHGMcvw",
+          "name": "IMI",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:36:28.069Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_lvy940CPSciKem_kKCDRjhr7rdNsVr_h8",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_lvy940CPSciKem_kKCDRjhr7rdNsVr_h8",
+      "type": "playlist",
+      "channelId": "UC6tIt6kTcMPI0t-Mml0jE1g",
+      "channelName": "箱乃なかみ / Hakono Nakami",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vsinger",
+      "title": "Baseless Confidence!!",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/yDGwguMI9ws/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC6tIt6kTcMPI0t-Mml0jE1g",
+          "name": "箱乃なかみ / Hakono Nakami",
           "kind": "virtual",
           "region": "jp"
         }
@@ -3107,6 +3053,56 @@
       "source": "api",
       "addedAt": "2026-10-25T07:43:14.768Z",
       "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_mr_375vKhIqiL8qPbTxgR4neRzzF2emD4",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_mr_375vKhIqiL8qPbTxgR4neRzzF2emD4",
+      "type": "playlist",
+      "channelId": "UCp-5t9SrOQwXMU7iIjQfARg",
+      "channelName": "Mio Channel 大神ミオ",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "Howling",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/iErXrkC5sWE/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCp-5t9SrOQwXMU7iIjQfARg",
+          "name": "Mio Channel 大神ミオ",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-26T12:56:51.125Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3411,11 +3407,12 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "vrXPrDV4BtM",
+      "id": "OLAK5uy_nnFf9tWUyw4uWp2FvEj_xLBul6o33cPME",
       "platform": "youtube",
-      "type": "live",
-      "channelId": "UCANDOlYTJT7N5jlRC3zfzVA",
-      "channelName": "Roberu Ch. 夕刻ロベル",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_nnFf9tWUyw4uWp2FvEj_xLBul6o33cPME",
+      "type": "playlist",
+      "channelId": "UCGCNass-jSHshAHA4ufX3Ng",
+      "channelName": "桃瀬にな / Nina Momose",
       "channelKind": "virtual",
       "region": "jp",
       "gender": "unknown",
@@ -3423,36 +3420,39 @@
         "ja"
       ],
       "isAi": false,
-      "variant": "vtuber",
-      "title": "【魔法少女ノ魔女裁判】初見で挑む『魔法少女ノ魔女裁判』4日目【夕刻ロベル/ホロスターズ】※ネタバレあり",
+      "variant": "vsinger",
+      "title": "PAPARACHA",
       "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/vrXPrDV4BtM/hq720.jpg",
-      "publishedAt": "2026-10-26T10:32:00.415Z",
+      "thumbnail": "https://i.ytimg.com/vi/S173-5nzkLM/hqdefault.jpg",
+      "publishedAt": null,
       "scheduledStart": null,
       "actualStart": null,
-      "actualEnd": "2026-10-26T10:32:00.415Z",
+      "actualEnd": null,
       "duration": null,
       "status": "past",
-      "category": "premiere",
+      "category": "other",
       "songTitle": null,
       "originalArtist": null,
       "isCollab": false,
       "collaborators": [
         {
-          "channelId": "UCANDOlYTJT7N5jlRC3zfzVA",
-          "name": "Roberu Ch. 夕刻ロベル",
+          "channelId": "UCGCNass-jSHshAHA4ufX3Ng",
+          "name": "桃瀬にな / Nina Momose",
           "kind": "virtual",
           "region": "jp"
         }
       ],
       "isAcoustic": false,
-      "tags": [],
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
       "viewCount": null,
       "likeCount": null,
       "concurrentViewers": null,
       "source": "api",
-      "addedAt": "2026-10-25T16:14:08.234Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
+      "addedAt": "2026-10-26T12:56:51.125Z",
+      "updatedAt": "2026-10-26T12:56:51.125Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
