@@ -438,8 +438,20 @@ Load one with the `skill` tool, e.g. `skill({ id: "sync-dataset" })`.
 | Niconico | `api.search.nicovideo.jp/api/v2` | Japanese original songs and covers |
 | VK | `api.vk.com/method` | Russian VTuber channels |
 
-Reference sites worth looking at:
-[holodex.net](https://holodex.net) ·
-[music.holodex.net](https://music.holodex.net) ·
-[taiwanvtuberdata.github.io](https://taiwanvtuberdata.github.io/) ·
-[vdb.vtbs.moe](https://vdb.vtbs.moe)
+The other trackers. Only the ones marked *read* are sources for this
+pipeline; the rest are the comparison set, so keep what a site **lists**
+separate from what it **tracks**.
+
+| Site | What it is | Access | Worth looking at for |
+| --- | --- | --- | --- |
+| [vdb.vtbs.moe](https://vdb.vtbs.moe) | The Virtual YouTuber Name List Database — **read** | Static `list.json`, no key | The roster this project builds on: 10,138 identity records, names in `cn`/`jp`/`en`, accounts on up to 35 platforms |
+| [taiwanvtuberdata.github.io](https://taiwanvtuberdata.github.io/) | A Taiwan-centred tracking project — **read** | Static JSON, no key, Unlicense | The `nationality` field, the strongest region signal this project has, and the currently-live / calendar / debut / graduate lists it does not publish itself |
+| [holodex.net](https://holodex.net) | A YouTube VTuber stream index with a clip index and **Multiview** | Public site; API v2 needs `X-APIKEY` and answers `403` without one | The depth this project does not attempt: clips, mentions, subber relations, several streams in one player |
+| [music.holodex.net](https://music.holodex.net) | Musicdex — songs and set lists tagged out of singing streams | Same API and key | Song-level tagging of a stream, which this project classifies but does not tag |
+
+Measured on 2026-10-27, so a later reader can tell what moved: the Holodex API
+refuses `/api/v2/stats`, `/channels`, `/videos` and `/live` with `403`
+unauthenticated — its inventory cannot be counted from outside; vdb's
+`list.json` is 2.36 MB and holds 10,138 records (9,903 of them `vtuber`); the
+Taiwan tracker's `api/v2/all/groups.json` is 374 KB and holds 288 groups. The
+full comparison is in `docs/SOURCES.md`.
