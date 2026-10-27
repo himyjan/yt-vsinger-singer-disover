@@ -1,4 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap');
+/*
+ * The webfonts are linked from `index.html`, not imported here.
+ *
+ * An `@import` inside the bundle is a serial round trip: the browser has to
+ * download and parse this file before it discovers the font CSS, and only
+ * then can it start the font files. As a `<link>` in the document head it is
+ * requested in parallel with this stylesheet, on a connection the preconnects
+ * there have already warmed up.
+ */
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));

@@ -1879,9 +1879,39 @@ function downloadSuggestions(): void {
 /* Boot                                                                       */
 /* -------------------------------------------------------------------------- */
 
+/**
+ * Resolves once the browser has painted the frame it is building.
+ *
+ * The dataset is 200+ requests and roughly 16 MB. Started in the same tick as
+ * the first render they saturate the connection while the bundle, the
+ * stylesheet and the webfonts are still in flight, and the shell does not
+ * need a single channel record to draw itself — so the download waits for the
+ * shell to be on screen instead of competing with it.
+ *
+ * The timer is the fallback for a document that never paints (a prerender, a
+ * background tab, a tool that reads the DOM before layout), where
+ * `requestAnimationFrame` callbacks do not run and the dataset would
+ * otherwise never load at all.
+ */
+function afterFirstPaint(timeoutMs = 1000): Promise<void> {
+  return new Promise((resolve) => {
+    let settled = false;
+    const settle = () => {
+      if (settled) return;
+      settled = true;
+      resolve();
+    };
+    if (typeof requestAnimationFrame === "function") {
+      requestAnimationFrame(() => requestAnimationFrame(settle));
+    }
+    setTimeout(settle, timeoutMs);
+  });
+}
+
 async function loadDataset(): Promise<void> {
   loading.value = true;
   try {
+    await afterFirstPaint();
     const [m, s, c, l, u] = await Promise.all([
       loadManifest(),
       loadSummaries(),
@@ -1918,7 +1948,9 @@ onMounted(async () => {
   void detectAnalyticsArchive().then((available) => {
     analyticsAvailable.value = available;
   });
-  await probeDatasetApi();
+  // The suggestions route only exists on the dev server, and nothing the
+  // first view draws depends on it — so it never holds up the dataset.
+  void probeDatasetApi();
   await loadDataset();
 });
 </script>
