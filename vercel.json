@@ -20,10 +20,10 @@
       ]
     }
   ],
-  "rewrites": [
-    {
-      "source": "/((?!assets/|data/).*)",
-      "destination": "/index.html"
-    }
+  "routes": [
+    { "handle": "filesystem" },
+    { "src": "/data/(.*)", "status": 404 },
+    { "src": "/assets/(.*)", "status": 404 },
+    { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
