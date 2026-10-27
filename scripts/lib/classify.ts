@@ -377,6 +377,36 @@ const AGENCY_KEYS: string[] = [
   "vgproject",
   "virtual music lab",
   "song4u",
+  /**
+   * Small agencies the affiliation extractor used to truncate.
+   *
+   * A marker pattern cannot capture a space — 「RK Music所属」 came out as
+   * 「Music」 — and a performer does not always phrase their affiliation with
+   * a marker at all. Listing the name here makes it a fact of the classifier,
+   * which covers every record and every future one, instead of pinning a
+   * value per record in `overrides.json`.
+   *
+   * The spelling keeps the case the records use, because the key is written
+   * into `agency` verbatim. The scan is a substring test, so a name belongs
+   * here only when a hit can mean nothing else — 「ViViD」 is deliberately
+   * absent, because 薇薇欧vivid is an independent performer whose name merely
+   * contains it.
+   */
+  "RK Music",
+  "Succubus Field",
+  "Fairy System",
+  "LiveCartoon Charact",
+  "MC LIVE",
+  "MUGEN LIVE",
+  "Asub Maker",
+  "PROJECT NEBULA",
+  "avex muchoo",
+  "FIRST STAGE PRODUCTION",
+  "八木百货",
+  "贴贴社",
+  "椛榊计划",
+  "MarbleCreators",
+  "P家",
 ];
 
 export interface ChannelSignals {
@@ -1616,6 +1646,24 @@ export const MARKERS = {
  * `agency` field as a fact.
  */
 const AFFILIATION_PATTERNS: RegExp[] = [
+  /**
+   * A Latin agency name can contain a space — 「RK Music所属」 — and every
+   * marker pattern below stops at whitespace, so they captured only the last
+   * word: LEWNE, 深影 and XIDEN were filed under `agency: "Music"`.
+   *
+   * These three run first, because the kana pattern still matches the tail of
+   * the same sentence. The capture is a Latin run bounded to four words,
+   * which keeps it from swallowing the Japanese around it: an agency name
+   * never sits on both sides of a space like that.
+   *
+   * `[ \t]`, never `\s`: the extractor joins the name and the description
+   * with a newline, so a whitespace class would let the capture reach back
+   * into the name and file 「芽心 melco ch.」 + 「studiosailing所属」 as
+   * `melco ch. studiosailing`.
+   */
+  /([A-Za-z0-9][A-Za-z0-9&'’.\-]*(?:[ \t]+[A-Za-z0-9][A-Za-z0-9&'’.\-]*){0,3})(?:に|へ)?[ \t]*所属/u,
+  /所属于?[ \t]*[：:][ \t]*([A-Za-z0-9][A-Za-z0-9&'’.\-]*(?:[ \t]+[A-Za-z0-9][A-Za-z0-9&'’.\-]*){0,3})/u,
+  /소속[ \t]*[：:][ \t]*([A-Za-z0-9][A-Za-z0-9&'’.\-]*(?:[ \t]+[A-Za-z0-9][A-Za-z0-9&'’.\-]*){0,3})/u,
   // Japanese: 「〇〇所属」「〇〇に所属」「〇〇事務所所属」.
   /([^\s、。,.|/／()（）\[\]【】「」『』:：;；~〜–—はがをも]{2,26})(?:に|へ)?\s*所属/u,
   // Chinese: 「所属：〇〇」「所属于〇〇」.

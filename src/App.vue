@@ -15,6 +15,7 @@
 import {
   computed,
   defineAsyncComponent,
+  onBeforeUnmount,
   onMounted,
   reactive,
   ref,
@@ -113,6 +114,67 @@ const loading = ref(true);
 const analyticsAvailable = ref(false);
 const searchHits = ref<SearchEntryRecord[]>([]);
 const searching = ref(false);
+
+/**
+ * Grows a capped list when its end comes into view.
+ *
+ * The lists are capped because mounting 14,340 cards is what made a click
+ * take seconds; a 「Show more」 button would then make the reader ask for a
+ * page they already asked for by scrolling. The sentinel sits at the end of
+ * the grid and pulls the next page in before it is reached, so paging is
+ * invisible until the catalogue's end — which is the point of a cap, not a
+ * feature of it.
+ *
+ * The callback is created once per list, so Vue keeps the same ref handler
+ * across renders and the observer is not rebuilt on every append.
+ */
+function infiniteScroll(onEnd: () => void) {
+  let observer: IntersectionObserver | null = null;
+  onBeforeUnmount(() => observer?.disconnect());
+  return (el: unknown) => {
+    observer?.disconnect();
+    observer = null;
+    if (!(el instanceof Element)) return;
+    observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) onEnd();
+      },
+      /* Start a screen early, so the next page is there by the time it is. */
+      { rootMargin: "600px 0px" },
+    );
+    observer.observe(el);
+  };
+}
+
+/**
+ * How many search hits are in the DOM.
+ *
+ * A platform-filtered search asks for 1,200 hits, because the filter has to
+ * run on the whole result set rather than on a YouTube-shaped sample. A hit
+ * card is an image, a title, three badges and a link, so mounting all of them
+ * costs more than the search itself. Only a page is mounted.
+ */
+const SEARCH_PAGE_SIZE = 120;
+const searchPageCount = ref(SEARCH_PAGE_SIZE);
+
+const visibleSearchHits = computed(() =>
+  searchHits.value.slice(0, searchPageCount.value),
+);
+
+const hasMoreSearchHits = computed(
+  () => searchHits.value.length > visibleSearchHits.value.length,
+);
+
+function loadMoreSearchHits(): void {
+  searchPageCount.value += SEARCH_PAGE_SIZE;
+}
+
+const searchSentinel = infiniteScroll(loadMoreSearchHits);
+
+/** A new result set starts at the first page. */
+watch(searchHits, () => {
+  searchPageCount.value = SEARCH_PAGE_SIZE;
+});
 
 const drawerChannel = ref<Channel | null>(null);
 const drawerItem = ref<Item | null>(null);
@@ -454,7 +516,7 @@ const memberFilterLabel = computed(() => {
   return "";
 });
 
-const visibleChannels = computed(() => {
+const filteredChannels = computed(() => {
   /**
    * The summaries carry the 🎵 badge the dataset recorded; the subscription
    * cache can overrule it when it is newer, so a channel checked in the Subs
@@ -514,6 +576,68 @@ const visibleChannels = computed(() => {
   return sortChannels(filtered, state.sort.channels);
 });
 
+/**
+ * How much of the channel list is in the DOM.
+ *
+ * `filterChannels()` returns every match, and the catalogue is 14,340
+ * records, so rendering the result mounted 14,340 `ChannelCard`s — 102k DOM
+ * nodes — on the first click into this tab. Filtering is cheap (measured at
+ * 0.5–3 ms); it was the DOM that took seconds, which is what a 2.4 s INP is.
+ *
+ * The cap is applied **after** sorting, so the page shows the first N of the
+ * user's sort order rather than an arbitrary N re-sorted. The sentinel at the
+ * end of the grid grows it in pages, so the whole roster stays reachable
+ * without ever mounting at once.
+ */
+const CHANNEL_PAGE_SIZE = 240;
+const channelPageCount = ref(CHANNEL_PAGE_SIZE);
+
+const visibleChannels = computed(() =>
+  filteredChannels.value.slice(0, channelPageCount.value),
+);
+
+const hasMoreChannels = computed(
+  () => filteredChannels.value.length > visibleChannels.value.length,
+);
+
+/**
+ * A new filter is a new list, so the pages start over.
+ *
+ * The key is a string because watching the state object would fire on every
+ * unrelated change; only the inputs to `filteredChannels` reset the page.
+ */
+const channelFilterKey = computed(() =>
+  JSON.stringify([
+    state.scope,
+    state.region,
+    state.platform,
+    state.gender,
+    state.ai,
+    state.affiliation,
+    state.agency,
+    state.tag,
+    state.language,
+    state.singing,
+    state.role,
+    state.vtuberOnly,
+    state.oac,
+    state.query,
+    state.channelSubs,
+    state.sort.channels,
+    state.view,
+  ]),
+);
+
+watch(channelFilterKey, () => {
+  channelPageCount.value = CHANNEL_PAGE_SIZE;
+});
+
+function loadMoreChannels(): void {
+  channelPageCount.value += CHANNEL_PAGE_SIZE;
+}
+
+const channelsSentinel = infiniteScroll(loadMoreChannels);
+
 const linkedProviders = computed(() =>
   AUTH_PROVIDERS.filter((provider) => (state.accounts[provider.id] ?? []).length > 0),
 );
@@ -549,7 +673,14 @@ function randomId(): string {
   return Math.random().toString(36).slice(2, 10);
 }
 
-const visibleSubscriptions = computed(() =>
+/**
+ * Every subscription that matches the filters.
+ *
+ * Like the channel list, this is a projection that can run to thousands of
+ * rows — a Takeout import is the whole YouTube subscription list — so the
+ * template renders `visibleSubscriptions` (a page of it) rather than this.
+ */
+const filteredSubscriptions = computed(() =>
   allSubscriptions().filter((sub) => {
     if (state.scope !== "both" && sub.kind !== state.scope) return false;
     if (state.region !== "all" && sub.region && sub.region !== state.region) {
@@ -564,6 +695,52 @@ const visibleSubscriptions = computed(() =>
     return true;
   }),
 );
+
+/**
+ * How much of the subscription list is in the DOM.
+ *
+ * An imported subscription list is thousands of cards, and a card is a button,
+ * an image, several badges and two more buttons — the same cost per row that
+ * made the Channels tab take seconds. Only a page is mounted; the sentinel at
+ * the end of the grid grows it.
+ */
+const SUBSCRIPTION_PAGE_SIZE = 240;
+const subscriptionPageCount = ref(SUBSCRIPTION_PAGE_SIZE);
+
+const visibleSubscriptions = computed(() =>
+  filteredSubscriptions.value.slice(0, subscriptionPageCount.value),
+);
+
+const hasMoreSubscriptions = computed(
+  () => filteredSubscriptions.value.length > visibleSubscriptions.value.length,
+);
+
+function loadMoreSubscriptions(): void {
+  subscriptionPageCount.value += SUBSCRIPTION_PAGE_SIZE;
+}
+
+const subscriptionsSentinel = infiniteScroll(loadMoreSubscriptions);
+
+/**
+ * A new filter is a new list, so the pages start over.
+ *
+ * Only the inputs to `filteredSubscriptions` are listed: a subscription that
+ * is added or removed keeps the current page, which is what a user who is
+ * part-way down the list expects.
+ */
+const subscriptionFilterKey = computed(() =>
+  JSON.stringify([
+    state.scope,
+    state.region,
+    state.platform,
+    state.subsTracked,
+    state.view,
+  ]),
+);
+
+watch(subscriptionFilterKey, () => {
+  subscriptionPageCount.value = SUBSCRIPTION_PAGE_SIZE;
+});
 
 const subscriptionCounts = computed(() => {
   const all = allSubscriptions();
@@ -755,6 +932,18 @@ async function runSearch(): Promise<void> {
     let matched = hits;
     if (state.platform !== "all") {
       const platform = state.platform;
+      /**
+       * One id → item map for the whole pass.
+       *
+       * This used to spread `allItems + live + upcoming` into a new array
+       * **per hit** and `.find()` it, which is 1,200 × ~15,000 item copies on
+       * a platform-filtered search — and the filter also fires on every
+       * filter click, not just on typing.
+       */
+      const itemById = new Map<string, Item>();
+      for (const item of [...allItems.value, ...live.value, ...upcoming.value]) {
+        if (!itemById.has(item.id)) itemById.set(item.id, item);
+      }
       matched = hits.filter(({ entry: hit }) => {
         if (hit.k === "c") {
           const channel = summaryById.value.get(hit.id);
@@ -764,9 +953,7 @@ async function runSearch(): Promise<void> {
               channel.externals?.[platform]),
           );
         }
-        const item = [...allItems.value, ...live.value, ...upcoming.value].find(
-          (candidate) => candidate.id === hit.id,
-        );
+        const item = itemById.get(hit.id);
         return item ? platformOfItem(item) === platform : false;
       });
     }
@@ -2261,7 +2448,7 @@ onMounted(async () => {
           “{{ state.query }}”
         </h2>
         <div v-if="searchHits.length" class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
-          <article v-for="hit in searchHits" :key="`${hit.k}:${hit.id}`" class="group flex flex-col overflow-hidden rounded-xl border border-black/8 bg-white shadow-sm transition hover:shadow-md dark:border-white/10 dark:bg-neutral-900">
+          <article v-for="hit in visibleSearchHits" :key="`${hit.k}:${hit.id}`" class="group flex flex-col overflow-hidden rounded-xl border border-black/8 bg-white shadow-sm transition hover:shadow-md dark:border-white/10 dark:bg-neutral-900">
             <!--
               A hit opens the same drawer every other card opens: the
               performer's identity, all their links and their uploads. The
@@ -2307,6 +2494,8 @@ onMounted(async () => {
               </div>
             </div>
           </article>
+          <!-- Pulls the next page in before the end of the grid is reached. -->
+          <div v-if="hasMoreSearchHits" :ref="searchSentinel" class="col-span-full h-px" aria-hidden="true"></div>
         </div>
         <p v-else class="py-16 text-center text-sm text-neutral-500">
           No matches. Try a different spelling, or switch the scope to
@@ -2392,7 +2581,7 @@ onMounted(async () => {
           <h2 class="text-lg font-bold">
             Channels
             <span class="ml-1 text-sm font-normal text-neutral-500">
-              {{ visibleChannels.length }}
+              {{ filteredChannels.length }}
             </span>
           </h2>
           <!-- The exact agency/tag filter set from a drawer chip -->
@@ -2413,6 +2602,12 @@ onMounted(async () => {
         </div>
         <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
           <ChannelCard v-for="channel in visibleChannels" :key="channel.id" :channel="channel" @open="openChannel" />
+          <!--
+            The list is paged: 14,340 cards in the DOM is what made this tab's
+            first paint take seconds. The sentinel pulls the next page in as
+            the grid's end comes into view, so paging needs no button.
+          -->
+          <div v-if="hasMoreChannels" :ref="channelsSentinel" class="col-span-full h-px" aria-hidden="true"></div>
         </div>
       </section>
 
@@ -2422,7 +2617,7 @@ onMounted(async () => {
           <h2 class="text-lg font-bold">
             My subscriptions
             <span class="ml-1 text-sm font-normal text-neutral-500">
-              {{ visibleSubscriptions.length }}
+              {{ filteredSubscriptions.length }}
             </span>
             <span v-if="state.subscriptionsProgress" class="ml-2 text-xs font-normal text-neutral-500">
               loading {{ state.subscriptionsProgress.loaded
@@ -2588,7 +2783,7 @@ onMounted(async () => {
           </p>
         </div>
 
-        <div v-else-if="visibleSubscriptions.length" class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
+        <div v-else-if="filteredSubscriptions.length" class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
           <div v-for="sub in visibleSubscriptions" :key="sub.channelId" class="group flex flex-col overflow-hidden rounded-xl border border-black/8 bg-white shadow-sm transition hover:shadow-md dark:border-white/10 dark:bg-neutral-900">
             <button type="button" class="flex flex-1 flex-col items-center gap-2 p-3 text-center" :title="knownSubscription(sub)
                 ? 'Open the channel'
@@ -2644,6 +2839,12 @@ onMounted(async () => {
               </div>
             </div>
           </div>
+          <!--
+            The list is paged for the same reason the channel list is: an
+            imported Takeout list is thousands of cards. The sentinel grows it
+            as the end of the grid comes into view.
+          -->
+          <div v-if="hasMoreSubscriptions" :ref="subscriptionsSentinel" class="col-span-full h-px" aria-hidden="true"></div>
         </div>
 
         <p v-else class="py-16 text-center text-sm text-neutral-500">

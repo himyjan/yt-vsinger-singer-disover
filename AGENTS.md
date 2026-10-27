@@ -285,6 +285,25 @@ but a run without a Data API key may still rebuild the roster, discover
 channels and videos through InnerTube, and refresh live status; that roster is
 filtered against vdb, existing records, and curated seeds.
 
+**A curated or community harvest is a different path and has a different
+gate.** The dataset tracks VTubers who stream variety, not only singers — of
+14,307 virtual records only 1,206 set `isSinging` — so singing is **not** an
+admission requirement for a performer. What a harvest must exclude is a
+**fan**, not a non-singer:
+
+- a virtual-creator claim must appear somewhere — the platform bio, the X
+  bio, or the display name;
+- `detectClipAccount()` and `isFanAccountName()` must both be false, because a
+  clip channel happily puts 「Vtuber」 in its name while being a duplicate of
+  the performer it clips;
+- an account that never claims a virtual identity is **reported for review**,
+  not admitted and not silently dropped.
+
+A community is not a roster: r/VirtualYoutubers and the X "VTubers!"
+community both admit "any VTubers & VTuber fans", so membership says nothing
+about whether an account is a performer. See
+`.cache/x-community-suggest.ts` for the implementation.
+
 ### 16. One run owns one shard of the catalogue
 
 The catalogue is far larger than a single run can refresh. Do not refresh the
