@@ -384,6 +384,61 @@ is confirmed against the channel's own title, and the channel enters
 `data/channels/` only when two of its videos show virtual-creator identity and
 singing evidence — the same rule the sync applies to a discovered channel.
 
+**vTubie's group pages are the exception that does publish an id.** The
+directory's `groups/` index (1,028 groups over 103 pages) links each circle and
+agency, `/g/<slug>/` lists its members, and a member's own page carries the
+YouTube RSS feed carrying `channel_id` — the key the dataset is built on. So
+`npm run data:vtubie-groups` walks the three levels and writes a snapshot to
+`.cache/vtubie-groups.json`, and `npm run data:vtubie-import` compares it with
+the dataset and, with `--apply`, imports the new channels. Nothing is guessed
+from a name: the id comes from the profile itself.
+
+The harvest runs through a real browser for the same Cloudflare reason, then
+reads every following page with a same-origin `fetch` **inside** that page so
+the clearance cookie (HttpOnly, so invisible to the page's scripts) rides
+along. A 404 is an answer — a deleted group or profile — and is recorded; a
+403 is the challenge coming back, and stops the pass instead of grinding
+through the rest of the directory.
+
+**bacharu** is the largest roster the pipeline reads: about 110,000 performers
+at `bacharu.io`, each filed under a country, a group, a debut and a status. It
+is an Astro front end over a Fastify JSON API, so unlike vTubie it needs no
+browser: `GET /api/vtubers?limit=100&page=N` answers a hundred **whole**
+records (about 2.6 MB and three seconds a page), `GET /api/vtubers/<_id>`
+answers one, and `?search=<name>` filters — which makes it the cheapest
+`name → YouTube channel` resolver the pipeline has, and the reason the
+`data:links` gap can be closed without a search-grounding key.
+
+`fields=card` is the only projection and it **drops `social`**, so a card page
+has no channel id; every other value of `fields` returns the whole record.
+`/api/groups` lists the groups without their members, and
+`/api/vtubers/filters` lists the values the filters accept. Of the 109,828
+rows, 27,099 carry a `/channel/UC…` URL, 35,099 a `@handle` only and 47,630 no
+YouTube link at all (Twitch-first performers, Bilibili, IRIAM).
+
+Two things make the harvest unlike the others:
+
+- **The roster is sorted by `last_active_at`, and the site keeps updating it.**
+  A paginated crawl therefore sees rows move between pages while it runs: one
+  pass of 1,099 requests returned 13,500 rows twice and skipped as many, where
+  a second pass of 1,181 requests at a different page size returned all
+  109,828 exactly once. The harvester writes one file per page, so a second
+  pass can be unioned in with `--merge-dir`, and the snapshot is de-duplicated
+  by `_id`. `sortBy` accepts `last_active_at` and nothing else, so there is no
+  stable order to ask for.
+- **`robots.txt` disallows `/api/` for every agent**, and lists GPTBot and
+  ClaudeBot by name. The roster is therefore read as a **one-off census**, not
+  polled: two pages at a time, about one request a second, and a 429 doubles
+  the gap and cools down for two minutes.
+
+`npm run data:bacharu` writes `.cache/bacharu-vtubers.json` — one flat extract
+per performer, about 900 bytes, with the YouTube id, the handle, the groups,
+the country, the debut and the avatar. `npm run data:bacharu-import` is the
+gate: it reports what is new, what is already tracked, what is a fan account,
+what has no key, and imports only the rows whose `UC…` id it can verify
+through the platform — the platform's name wins, and a roster name that shares
+no word with the channel's title is reported rather than imported.
+
 ### Rate limiting
 
 The free sources have no published quota, but they do push back. All three go
@@ -405,7 +460,6 @@ are not in the pipeline.
 | --- | --- |
 | [Virtual YouTuber Wiki](https://virtualyoutuber.fandom.com/) | The MediaWiki API works, and it is used by the debut discovery — but the roster is not wired in yet |
 | [Hololist](https://hololist.net) | Agency-limited: Hololive only, so it adds little over vdb and the Taiwan tracker |
-| [bacharu](https://bacharu.io) | A client-side Astro application with no public data endpoint |
 | [AI VTuber DB](https://aivtuberdb.com) | Worth reading for the AI flag, but it publishes no machine-readable file |
 | [PVC.moe](https://pvc.moe) | The data is only in the client bundle |
 | [VTuber.hk](https://vtuber.hk) | Server-rendered, but with no documented data format |

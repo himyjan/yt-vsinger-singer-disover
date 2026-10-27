@@ -272,7 +272,9 @@ Non-YouTube automatic discovery only accepts platform identities already
 listed in vdb, present in the dataset, or explicitly added through
 `data/seed-catalog.json`. If vdb is unavailable, do not admit new
 non-YouTube identities automatically. Existing records are never deleted by
-this discovery filter.
+this discovery filter. A curated directory — vTubie's groups, bacharu's
+roster — is a roster of the same kind: an entry there is the **claim**, and
+the performer gate above still decides whether it is admitted.
 
 YouTube has a deliberate discovery exception because singing-stream and relay
 hashtags vary. A new YouTube identity can enter virtual data only after at
@@ -348,6 +350,8 @@ create non-fast-forward push failures.
 | Fix the classifier itself | `scripts/lib/classify.ts` |
 | Add a curated channel | `data/seed-catalog.json` |
 | Discover new performers | `npm run data:discover` — vTubie's directory, read with a browser (`puppeteer-core`, optional); candidates land in `data/identities.json`, and `--promote` adds the ones that pass the two-video gate to `data/channels/` |
+| Add a VTuber group's members | `npm run data:vtubie-groups` (browser, resumable) then `npm run data:vtubie-import -- --apply`; the group page is the only vTubie path that publishes the `UC…` id, so no name search is involved |
+| Add new VTubers from the bacharu roster | `npm run data:bacharu` (JSON API, resumable) then `npm run data:bacharu-import -- --apply`; a row with only an `@handle` needs `--resolve-handles` first |
 | Add a region | `scripts/lib/types.ts`, `scripts/lib/regions.ts` |
 | Add a platform | `scripts/lib/platforms/<name>.ts` + `platform-registry.ts` |
 | Add a discovery source | `scripts/lib/debut-sources/<name>.ts` |
@@ -374,6 +378,11 @@ npm run data:links -- --limit 200    # find the missing cross-platform accounts
 npm run data:links -- --shard 2/4 --web --dry-run  # + search-grounded fallback
 npm run data:discover                # new performers from the directory sources (vTubie)
 npm run data:discover -- --promote   # + add the ones that pass the virtual-and-singing gate
+npm run data:vtubie-groups            # vTubie groups → .cache/vtubie-groups.json (browser, resumable)
+npm run data:vtubie-import -- --apply # add the harvested YouTube channels that pass the performer gate
+npm run data:bacharu                  # the bacharu roster → .cache/bacharu-vtubers.json (JSON, resumable)
+npm run data:bacharu -- --merge-only  # rebuild the snapshot from the page files
+npm run data:bacharu-import           # report what the roster adds; --apply to import the ids
 npm run data:ids                     # re-key handle ids to UC… ids
 npm run data:validate                # structure + budgets
 npm run data:import-legacy           # migrate the old SQLite database

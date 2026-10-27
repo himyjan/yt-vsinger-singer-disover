@@ -1310,6 +1310,11 @@ export function isScheduleTitle(title: string | null | undefined): boolean {
  * performer they translate — often as `Artist/Original name` — and they are
  * *not* performers. Counting them as VTubers pollutes the dataset with
  * duplicates of the real artist under a second channel.
+ *
+ * These are the words that are a claim when they are the **name**:
+ * 「XX切片」, 「XX搬运组」, 「XX翻译」. In a description the same words are
+ * weaker — a performer writes 「不定期直播，剪辑游戏影片」 about their own
+ * editing — so the description test uses `CLIP_DESCRIPTION_MARKERS`.
  */
 const CLIP_ACCOUNT_MARKERS = [
   // translation and subtitles
@@ -1338,9 +1343,7 @@ const CLIP_ACCOUNT_MARKERS = [
   "精华",
   "烤肉",
   // English
-  "unofficial",
   "unofficial fan",
-  "non-official",
   "fan translation",
   "fan channel",
   "subtitles by",
@@ -1348,26 +1351,41 @@ const CLIP_ACCOUNT_MARKERS = [
   "on subtitles",
   "clip channel",
   "clip account",
-  // a place a performer keeps their own props
-  // a place that only exists for someone else
-  "工坊",
-  "万事屋",
-  "万事屋",
-  "食堂",
-  "专区",
-  "專區",
-  "神殿",
-  "总部",
-  "總部",
-  "支部",
-  "根据地",
-  "根據地",
-  "后援会",
-  "後援會",
-  "粉丝团",
-  "粉絲團",
-  "应援会",
-  "應援會",
+];
+
+/**
+ * Markers strong enough to identify a fan account from the **description**.
+ *
+ * A noun phrase, not a verb: 「本频道是搬运组」 is a statement about the
+ * account, where 「剪辑游戏影片」 is something the performer does to their own
+ * work, and 「an unofficial group of VTubers」 is how people describe a friend
+ * group — the vTubie harvest flagged a variety streamer on that phrase alone.
+ *
+ * The place words (「食堂」, 「万事屋」, 「总部」…) are absent for the same
+ * reason: they caught 「ひま食堂channel」, a Japanese performer whose name is a
+ * cafeteria. The pattern that matters — 「Hime的万事屋」 — is
+ * `isFanAccountName()`.
+ */
+const CLIP_DESCRIPTION_MARKERS = [
+  "翻译组",
+  "翻譯組",
+  "字幕组",
+  "字幕組",
+  "轴翻剪校",
+  "軸翻剪校",
+  "搬运组",
+  "搬運組",
+  "切片man",
+  "录播频道",
+  "錄播頻道",
+  "unofficial fan",
+  "fan translation",
+  "fan channel",
+  "subtitles by",
+  "translated by",
+  "on subtitles",
+  "clip channel",
+  "clip account",
 ];
 
 /**
@@ -1542,7 +1560,7 @@ export function detectClipAccount(
    * re-uploader, which is what this test is for.
    */
   if (has(normalize(name ?? ""), CLIP_ACCOUNT_MARKERS)) return true;
-  if (has(text, CLIP_ACCOUNT_MARKERS)) return true;
+  if (has(text, CLIP_DESCRIPTION_MARKERS)) return true;
   if (isFanAccountName(name)) return true;
 
   const trimmed = (name ?? "").trim();
@@ -1557,7 +1575,35 @@ export function detectClipAccount(
   const firstIsLatin = /^[A-Za-z0-9 ._'-]+$/.test(first);
   const secondIsLatin = /^[A-Za-z0-9 ._'-]+$/.test(second);
   // Both romanised, or both CJK — that is a normal name, not a clip account.
-  return firstIsLatin !== secondIsLatin;
+  if (firstIsLatin === secondIsLatin) return false;
+
+  /**
+   * 「VTuber/VStreamer」 and 「Cat | ENVTuber | They/He」 are a **role** and a
+   * pronoun, not two names: the roster is full of slashes that separate
+   * labels, and the emoji or the pipe beside them is what makes one half
+   * "not Latin" in the test above. The signature this rule is for is
+   * 「YUA/藤崎由愛」 — a romanised name and a CJK name — so both halves have to
+   * look like one.
+   */
+  if (NAME_ROLE_WORD.test(first) || NAME_ROLE_WORD.test(second)) return false;
+  if (latinCount(first) < 3 || latinCount(second) < 3) return false;
+  const cjk = firstIsLatin ? second : first;
+  if (cjkCount(cjk) < 2) return false;
+  return true;
+}
+
+/** A slash half that names a job rather than a person. */
+const NAME_ROLE_WORD =
+  /\bvtuber\b|\bvstreamer\b|\bvstream\b|\bvartist\b|\bvsinger\b|\bchannel\b|\bch\b|they\/|\bshe\b|\bhe\b|\bofficial\b/i;
+
+/** Latin letters in a string. */
+function latinCount(text: string): number {
+  return (text.match(/[A-Za-z]/g) ?? []).length;
+}
+
+/** Kana and CJK ideographs in a string. */
+function cjkCount(text: string): number {
+  return (text.match(/[\u3040-\u30ff\u4e00-\u9fff]/g) ?? []).length;
 }
 
 /**
