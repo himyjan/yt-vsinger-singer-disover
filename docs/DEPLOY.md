@@ -133,9 +133,9 @@ those limitations rather than treating missing metrics as zero.
 
 ## Repository variables
 
-| Variable         | Default | Purpose                                   |
-| ---------------- | ------- | ----------------------------------------- |
-| `VITE_BASE_PATH` | `/`     | Set to `/<repo-name>/` for a project page |
+| Variable         | Default         | Purpose                                       |
+| ---------------- | --------------- | --------------------------------------------- |
+| `VITE_BASE_PATH` | `/<repo-name>/` | Overrides the base path the deploy workflow derives; set `/` for a custom domain |
 
 ## Build-time variables for the web app
 
@@ -184,15 +184,53 @@ remain repository secrets; never configure them as frontend build variables.
 1. **Settings → Pages → Build and deployment → Source**: _GitHub Actions_.
 2. Push to `main`, or run the `deploy-pages.yml` workflow manually.
 
-For a project page (`https://<user>.github.io/<repo>/`), set the repository
-variable `VITE_BASE_PATH` to `/<repo>/`. The Vite config reads it:
+**That source setting is not optional.** Left on _Deploy from a branch_,
+Pages publishes the repository root rather than `dist/`: the raw
+`index.html`, `/src/main.ts`, `server.ts` and the docs, none of which a
+browser can run as the app. The page loads and stays blank.
 
-```ts
-base: env.VITE_BASE_PATH || "/";
+A project site is served from `/<repo>/`, so the deploy workflow derives
+the base path from the repository name and the repository variable only
+overrides it:
+
+```yaml
+VITE_BASE_PATH: ${{ vars.VITE_BASE_PATH || format('/{0}/', github.event.repository.name) }}
 ```
 
-and the data loader prefixes every request with `import.meta.env.BASE_URL`,
-so both the app and the dataset resolve correctly.
+The Vite config reads it (`base: env.VITE_BASE_PATH || "/"`) and the data
+loader prefixes every request with `import.meta.env.BASE_URL`, so the app
+and the dataset resolve on either shape.
+
+### The custom domain
+
+`CNAME` named `ytvsingerdisover.music`. That domain resolves to nothing —
+its nameservers are `ns.trs-dns.com` / `trs-ops.tucows.com`, and it answers
+NXDOMAIN for A, AAAA and CNAME — and once a custom domain is configured,
+Pages redirects **every** path of the project site to it. The site was
+therefore unreachable from every URL it had, and the certificate Pages
+served for that hostname was `*.github.io`. The file is gone; the site is
+served from `https://himyjan.github.io/yt-vsinger-singer-disover/`.
+
+Bringing the domain back takes all three steps, in this order:
+
+1. At the registrar, point the apex at Pages and `www` at the user site:
+
+   | type  | name | value               |
+   | ----- | ---- | ------------------- |
+   | A     | @    | 185.199.108.153     |
+   | A     | @    | 185.199.109.153     |
+   | A     | @    | 185.199.110.153     |
+   | A     | @    | 185.199.111.153     |
+   | AAAA  | @    | 2606:50c0:8000::153 |
+   | AAAA  | @    | 2606:50c0:8001::153 |
+   | AAAA  | @    | 2606:50c0:8002::153 |
+   | AAAA  | @    | 2606:50c0:8003::153 |
+   | CNAME | www  | himyjan.github.io   |
+
+2. Add it back under **Settings → Pages → Custom domain**, wait for the
+   certificate, then enable **Enforce HTTPS**.
+3. Set the repository variable `VITE_BASE_PATH` to `/` — a custom domain is
+   served from the root, not from `/<repo>/`.
 
 ## Serving from Vercel
 
