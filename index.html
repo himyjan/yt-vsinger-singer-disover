@@ -20,6 +20,20 @@
     content="VTuber songs, music videos and covers — live now, upcoming, and searchable by region."
   />
 
+  <!--
+    The webfonts are loaded here rather than with an `@import` inside the
+    stylesheet. An import costs a serial round trip — the browser has to
+    download and parse the app's own CSS before it even discovers the font
+    CSS — and the preconnects warm DNS, TLS and HTTP/2 for the font origin
+    first, so the font files are not requested cold.
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap"
+  />
+
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎵</text></svg>" />
 
   <script>
