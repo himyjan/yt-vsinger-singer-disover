@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-26T22:38:30.097Z",
+  "generatedAt": "2026-10-27T05:00:25.991Z",
   "items": [
     {
       "id": "_iiTXK7Ztpw",
@@ -44,7 +44,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T20:46:02.237Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
+      "updatedAt": "2026-10-27T05:00:25.991Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -136,7 +136,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
+      "updatedAt": "2026-10-27T05:00:25.991Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -160,9 +160,9 @@
       "publishedAt": "2026-10-26T10:32:00.415Z",
       "scheduledStart": null,
       "actualStart": "2026-10-26T10:32:00.415Z",
-      "actualEnd": null,
+      "actualEnd": "2026-10-27T05:00:25.991Z",
       "duration": null,
-      "status": "live",
+      "status": "past",
       "category": "live",
       "songTitle": null,
       "originalArtist": null,
@@ -182,7 +182,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-26T10:32:00.415Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
+      "updatedAt": "2026-10-27T05:00:25.991Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -325,6 +325,52 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "CQShbsCcBr4",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UC1JuhRTsFgZvi2ie2dTUxbg",
+      "channelName": "みかんとボーカルノート",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "【 Karaoke #歌枠 】元プロが歌う24時間配信へようこそ🍊 #作業用BGM 【 #vtuber #vsinger 】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/CQShbsCcBr4/hq720.jpg",
+      "publishedAt": "2026-10-27T05:00:25.991Z",
+      "scheduledStart": null,
+      "actualStart": "2026-10-27T05:00:25.991Z",
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC1JuhRTsFgZvi2ie2dTUxbg",
+          "name": "みかんとボーカルノート",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-27T05:00:25.991Z",
+      "updatedAt": "2026-10-27T05:00:25.991Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "HnBCpQD4P1c",
       "platform": "youtube",
       "type": "live",
@@ -412,7 +458,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
+      "updatedAt": "2026-10-27T05:00:25.991Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -458,7 +504,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T20:46:02.237Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
+      "updatedAt": "2026-10-27T05:00:25.991Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -617,12 +663,12 @@
       "title": "【 ポケモン スカーレット 】もう一度、オーダイルを探す旅 #02 【 VTuber / ゆきや / games 配信 初見 】",
       "description": null,
       "thumbnail": "https://i.ytimg.com/vi/NVK10vBE2VM/hq720.jpg",
-      "publishedAt": null,
+      "publishedAt": "2026-10-27T05:00:25.991Z",
       "scheduledStart": null,
       "actualStart": null,
-      "actualEnd": null,
+      "actualEnd": "2026-10-27T05:00:25.991Z",
       "duration": null,
-      "status": "upcoming",
+      "status": "past",
       "category": "premiere",
       "songTitle": null,
       "originalArtist": null,
@@ -642,7 +688,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-26T10:32:00.415Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
+      "updatedAt": "2026-10-27T05:00:25.991Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3447,56 +3493,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "OLAK5uy_nXWJl2fgraPODHkvnJJakvukz2by-XwY4",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_nXWJl2fgraPODHkvnJJakvukz2by-XwY4",
-      "type": "playlist",
-      "channelId": "UC5CwaMl1eIgY8h02uZw7u8A",
-      "channelName": "Suisei Channel",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vsinger",
-      "title": "駆けろ / 天球、彗星は夜を跨いで",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/tHR9WFXBtjA/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UC5CwaMl1eIgY8h02uZw7u8A",
-          "name": "Suisei Channel",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-26T12:56:51.125Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "QSxucwX1b64",
       "platform": "youtube",
       "type": "live",
@@ -3538,7 +3534,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-25T20:48:43.621Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
+      "updatedAt": "2026-10-27T05:00:25.991Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3681,6 +3677,56 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "OLAK5uy_nXWJl2fgraPODHkvnJJakvukz2by-XwY4",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_nXWJl2fgraPODHkvnJJakvukz2by-XwY4",
+      "type": "playlist",
+      "channelId": "UC5CwaMl1eIgY8h02uZw7u8A",
+      "channelName": "Suisei Channel",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vsinger",
+      "title": "駆けろ / 天球、彗星は夜を跨いで",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/tHR9WFXBtjA/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC5CwaMl1eIgY8h02uZw7u8A",
+          "name": "Suisei Channel",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-26T12:56:51.125Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "rKMhl43RHo0",
       "platform": "youtube",
       "type": "live",
@@ -3722,7 +3768,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
+      "updatedAt": "2026-10-27T05:00:25.991Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3860,7 +3906,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
+      "updatedAt": "2026-10-27T05:00:25.991Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },

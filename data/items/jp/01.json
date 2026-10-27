@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-26T22:38:30.097Z",
+  "generatedAt": "2026-10-27T05:00:25.991Z",
   "items": [
     {
       "id": "dTbDAIbG84I",
@@ -206,9 +206,9 @@
       "publishedAt": "2026-10-26T10:32:00.415Z",
       "scheduledStart": null,
       "actualStart": "2026-10-26T10:32:00.415Z",
-      "actualEnd": null,
+      "actualEnd": "2026-10-27T05:00:25.991Z",
       "duration": null,
-      "status": "live",
+      "status": "past",
       "category": "live",
       "songTitle": null,
       "originalArtist": null,
@@ -228,7 +228,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-26T10:32:00.415Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
+      "updatedAt": "2026-10-27T05:00:25.991Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -596,7 +596,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-25T20:48:43.621Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
+      "updatedAt": "2026-10-27T05:00:25.991Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -2101,56 +2101,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "OLAK5uy_n_uMFpnb7L5MTE8c_rqG61Xoc0P0m03hk",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_n_uMFpnb7L5MTE8c_rqG61Xoc0P0m03hk",
-      "type": "playlist",
-      "channelId": "UCBJ6nejlzes6mm9UruaxQsA",
-      "channelName": "涼海ネモ / Nemo Channel【ななしいんく】",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vsinger",
-      "title": "blue scale",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/Dta27KjGpJs/hqdefault.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCBJ6nejlzes6mm9UruaxQsA",
-          "name": "涼海ネモ / Nemo Channel【ななしいんく】",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:36:28.069Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "OLAK5uy_n-OlqW5eOgv01qMrcalqX0dMlRmPkpoTA",
       "platform": "youtube",
       "url": "https://www.youtube.com/playlist?list=OLAK5uy_n-OlqW5eOgv01qMrcalqX0dMlRmPkpoTA",
@@ -2182,56 +2132,6 @@
         {
           "channelId": "UC--zuEfONeFXPvLqX0Kvbuw",
           "name": "松永依織 / IORI MATSUNAGA",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:36:28.069Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_ne7z7mRu_n0RxR112adCE9QaT07xp9emg",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_ne7z7mRu_n0RxR112adCE9QaT07xp9emg",
-      "type": "playlist",
-      "channelId": "UCaTLwEXK7A5hhMCSUU8CGow",
-      "channelName": "或夢 / um",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "unknown",
-      "title": "Imaginary Friends",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/8xx0t1S4efQ/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCaTLwEXK7A5hhMCSUU8CGow",
-          "name": "或夢 / um",
           "kind": "virtual",
           "region": "jp"
         }
@@ -2301,106 +2201,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "OLAK5uy_nGo_QJMZd5roLGZ1UPVBTLG_ZcGNp69L4",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_nGo_QJMZd5roLGZ1UPVBTLG_ZcGNp69L4",
-      "type": "playlist",
-      "channelId": "UC4OeUf_KfYRrwksschtRYow",
-      "channelName": "花鋏キョウ*Kyo Hanabasami【卒業】",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "female",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "Motto!",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/TN_HuNZgNaA/hqdefault.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UC4OeUf_KfYRrwksschtRYow",
-          "name": "花鋏キョウ*Kyo Hanabasami【卒業】",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:36:28.069Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_nrlb9gb6NqPSIl5OfsCZ6f2yBE3wBOdVI",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_nrlb9gb6NqPSIl5OfsCZ6f2yBE3wBOdVI",
-      "type": "playlist",
-      "channelId": "UCGmO0S4S-AunjRdmxA6TQYg",
-      "channelName": "DECO*27",
-      "channelKind": "real",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "producer",
-      "title": "BRAINWASHED",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/l1UOPIr76CA/hqdefault.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCGmO0S4S-AunjRdmxA6TQYg",
-          "name": "DECO*27",
-          "kind": "real",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "OLAK5uy_nt7l2ieIeJ7a-oFgMFlSh-60V4cOOvdY4",
       "platform": "youtube",
       "url": "https://www.youtube.com/playlist?list=OLAK5uy_nt7l2ieIeJ7a-oFgMFlSh-60V4cOOvdY4",
@@ -2432,56 +2232,6 @@
         {
           "channelId": "UC9mf_ZVpouoILRY9NUIaK-w",
           "name": "Rikka ch.律可",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_nWMPPBPsazE0DsW4kgcaP2il7f0nr9hlA",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_nWMPPBPsazE0DsW4kgcaP2il7f0nr9hlA",
-      "type": "playlist",
-      "channelId": "UCEjysNG2a2UgCBIpJxBqn3w",
-      "channelName": "Tacitly Channel",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "male",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "Timing(Chinese Ver.)",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/HTRXIokvU2w/hqdefault.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCEjysNG2a2UgCBIpJxBqn3w",
-          "name": "Tacitly Channel",
           "kind": "virtual",
           "region": "jp"
         }
@@ -2693,6 +2443,256 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "OLAK5uy_n_uMFpnb7L5MTE8c_rqG61Xoc0P0m03hk",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_n_uMFpnb7L5MTE8c_rqG61Xoc0P0m03hk",
+      "type": "playlist",
+      "channelId": "UCBJ6nejlzes6mm9UruaxQsA",
+      "channelName": "涼海ネモ / Nemo Channel【ななしいんく】",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vsinger",
+      "title": "blue scale",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/Dta27KjGpJs/hqdefault.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCBJ6nejlzes6mm9UruaxQsA",
+          "name": "涼海ネモ / Nemo Channel【ななしいんく】",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:36:28.069Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_ne7z7mRu_n0RxR112adCE9QaT07xp9emg",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_ne7z7mRu_n0RxR112adCE9QaT07xp9emg",
+      "type": "playlist",
+      "channelId": "UCaTLwEXK7A5hhMCSUU8CGow",
+      "channelName": "或夢 / um",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "Imaginary Friends",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/8xx0t1S4efQ/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCaTLwEXK7A5hhMCSUU8CGow",
+          "name": "或夢 / um",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:36:28.069Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_nGo_QJMZd5roLGZ1UPVBTLG_ZcGNp69L4",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_nGo_QJMZd5roLGZ1UPVBTLG_ZcGNp69L4",
+      "type": "playlist",
+      "channelId": "UC4OeUf_KfYRrwksschtRYow",
+      "channelName": "花鋏キョウ*Kyo Hanabasami【卒業】",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "female",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "Motto!",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/TN_HuNZgNaA/hqdefault.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC4OeUf_KfYRrwksschtRYow",
+          "name": "花鋏キョウ*Kyo Hanabasami【卒業】",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:36:28.069Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_nrlb9gb6NqPSIl5OfsCZ6f2yBE3wBOdVI",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_nrlb9gb6NqPSIl5OfsCZ6f2yBE3wBOdVI",
+      "type": "playlist",
+      "channelId": "UCGmO0S4S-AunjRdmxA6TQYg",
+      "channelName": "DECO*27",
+      "channelKind": "real",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "producer",
+      "title": "BRAINWASHED",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/l1UOPIr76CA/hqdefault.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCGmO0S4S-AunjRdmxA6TQYg",
+          "name": "DECO*27",
+          "kind": "real",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_nWMPPBPsazE0DsW4kgcaP2il7f0nr9hlA",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_nWMPPBPsazE0DsW4kgcaP2il7f0nr9hlA",
+      "type": "playlist",
+      "channelId": "UCEjysNG2a2UgCBIpJxBqn3w",
+      "channelName": "Tacitly Channel",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "male",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "Timing(Chinese Ver.)",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/HTRXIokvU2w/hqdefault.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCEjysNG2a2UgCBIpJxBqn3w",
+          "name": "Tacitly Channel",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "SUG9I6_gz6w",
       "platform": "youtube",
       "type": "live",
@@ -2780,7 +2780,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T20:46:02.237Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
+      "updatedAt": "2026-10-27T05:00:25.991Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },

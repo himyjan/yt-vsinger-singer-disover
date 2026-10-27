@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-26T22:38:30.097Z",
-  "total": 14339,
+  "generatedAt": "2026-10-27T05:00:25.991Z",
+  "total": 14340,
   "regions": [
     {
       "code": "jp",
-      "channels": 1106,
+      "channels": 1108,
       "virtual": {
-        "channels": 1091,
+        "channels": 1093,
         "buckets": [
           "00",
           "01",
@@ -48,9 +48,9 @@
     },
     {
       "code": "cn",
-      "channels": 8746,
+      "channels": 8745,
       "virtual": {
-        "channels": 8746,
+        "channels": 8745,
         "buckets": [
           "00",
           "01",

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-26T22:38:30.097Z",
+  "generatedAt": "2026-10-27T05:00:25.991Z",
   "items": [
     {
       "id": "2-ZScfnTy0U",
@@ -298,9 +298,9 @@
       "publishedAt": "2026-10-26T10:32:00.415Z",
       "scheduledStart": null,
       "actualStart": "2026-10-26T10:32:00.415Z",
-      "actualEnd": null,
+      "actualEnd": "2026-10-27T05:00:25.991Z",
       "duration": null,
-      "status": "live",
+      "status": "past",
       "category": "live",
       "songTitle": "【 #歌枠 / singing stream 】今日の歌の時間",
       "originalArtist": "#karaoke -【 ステラ・マクダウェル 】",
@@ -320,7 +320,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-26T10:32:00.415Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
+      "updatedAt": "2026-10-27T05:00:25.991Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -366,7 +366,53 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
+      "updatedAt": "2026-10-27T05:00:25.991Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "gr17X_s9c60",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCV5ZZlLjk5MKGg3L0n0vbzw",
+      "channelName": "鷹宮リオン / Rion Takamiya",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "female",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "【LTK4】CC nextレギュラーステージ day4 VS DD【にじさんじ/鷹宮リオン 叶 ゆふな 空澄セナ 獅子堂あかり Yuhi】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/gr17X_s9c60/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCV5ZZlLjk5MKGg3L0n0vbzw",
+          "name": "鷹宮リオン / Rion Takamiya",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-27T05:00:25.991Z",
+      "updatedAt": "2026-10-27T05:00:25.991Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3356,7 +3402,7 @@
       ],
       "isAi": false,
       "variant": "female_vtuber",
-      "title": "【出演情報】10月10日▶▶▶『DREAM SPROUTS』in JOYPOLIS",
+      "title": "【出演情報】11月8日▶▶▶【D.I.V.E. Vol.6】",
       "description": null,
       "thumbnail": "https://i.ytimg.com/vi/qq20qe0gjas/hq720.jpg",
       "publishedAt": null,
@@ -3384,7 +3430,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T20:46:02.237Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
+      "updatedAt": "2026-10-27T05:00:25.991Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3752,7 +3798,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T20:46:02.237Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
+      "updatedAt": "2026-10-27T05:00:25.991Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3798,7 +3844,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
+      "updatedAt": "2026-10-27T05:00:25.991Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

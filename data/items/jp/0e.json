@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-26T22:38:30.097Z",
+  "generatedAt": "2026-10-27T05:00:25.991Z",
   "items": [
     {
       "id": "_pdpTLI1BoM",
@@ -90,7 +90,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
+      "updatedAt": "2026-10-27T05:00:25.991Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -228,7 +228,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
+      "updatedAt": "2026-10-27T05:00:25.991Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -274,7 +274,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
+      "updatedAt": "2026-10-27T05:00:25.991Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -344,9 +344,9 @@
       "publishedAt": "2026-10-26T10:32:00.415Z",
       "scheduledStart": null,
       "actualStart": "2026-10-26T10:32:00.415Z",
-      "actualEnd": null,
+      "actualEnd": "2026-10-27T05:00:25.991Z",
       "duration": null,
-      "status": "live",
+      "status": "past",
       "category": "live",
       "songTitle": null,
       "originalArtist": null,
@@ -366,7 +366,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-25T09:23:34.774Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
+      "updatedAt": "2026-10-27T05:00:25.991Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -458,7 +458,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
+      "updatedAt": "2026-10-27T05:00:25.991Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -1051,56 +1051,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "OLAK5uy_n8rRVUEAvGJPAUwrRjS6TC92eeUVn3NZ4",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_n8rRVUEAvGJPAUwrRjS6TC92eeUVn3NZ4",
-      "type": "playlist",
-      "channelId": "UC2hc-00y-MSR6eYA4eQ4tjQ",
-      "channelName": "龍ヶ崎リン / Rene Ryugasaki【ななしいんく】",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "tsuijuku",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/kFdZziESmYA/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UC2hc-00y-MSR6eYA4eQ4tjQ",
-          "name": "龍ヶ崎リン / Rene Ryugasaki【ななしいんく】",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "OLAK5uy_nKseKOfWzUbDG-8GJWMIG0SAYhZ3fhKrU",
       "platform": "youtube",
       "url": "https://www.youtube.com/playlist?list=OLAK5uy_nKseKOfWzUbDG-8GJWMIG0SAYhZ3fhKrU",
@@ -1347,6 +1297,102 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "QSeRStFdzto",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCEIRze7ZsbBkbkIZOeiRtqA",
+      "channelName": "狐花てん -Ten Kitsunebana-",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vsinger",
+      "title": "【#ミカクテイ事件の観測者】#04 元ツイ廃による事件解決🦊  ※ネタバレ注意【#狐花てん/Vsinger】#てんしゃちょGames",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/QSeRStFdzto/hq720.jpg",
+      "publishedAt": "2026-10-27T05:00:25.991Z",
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": "2026-10-27T05:00:25.991Z",
+      "duration": null,
+      "status": "past",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCEIRze7ZsbBkbkIZOeiRtqA",
+          "name": "狐花てん -Ten Kitsunebana-",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-26T10:32:00.415Z",
+      "updatedAt": "2026-10-27T05:00:25.991Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_n8rRVUEAvGJPAUwrRjS6TC92eeUVn3NZ4",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_n8rRVUEAvGJPAUwrRjS6TC92eeUVn3NZ4",
+      "type": "playlist",
+      "channelId": "UC2hc-00y-MSR6eYA4eQ4tjQ",
+      "channelName": "龍ヶ崎リン / Rene Ryugasaki【ななしいんく】",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "tsuijuku",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/kFdZziESmYA/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC2hc-00y-MSR6eYA4eQ4tjQ",
+          "name": "龍ヶ崎リン / Rene Ryugasaki【ななしいんく】",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "OLAK5uy_nv3D0ZuL2EeEg_fPp-pPw0I3Y0wvcMBZI",
       "platform": "youtube",
       "url": "https://www.youtube.com/playlist?list=OLAK5uy_nv3D0ZuL2EeEg_fPp-pPw0I3Y0wvcMBZI",
@@ -1443,52 +1489,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "QSeRStFdzto",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCEIRze7ZsbBkbkIZOeiRtqA",
-      "channelName": "狐花てん -Ten Kitsunebana-",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vsinger",
-      "title": "【#ミカクテイ事件の観測者】#04 元ツイ廃による事件解決🦊  ※ネタバレ注意【#狐花てん/Vsinger】#てんしゃちょGames",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/QSeRStFdzto/hq720.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "upcoming",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCEIRze7ZsbBkbkIZOeiRtqA",
-          "name": "狐花てん -Ten Kitsunebana-",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-26T10:32:00.415Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "rnsjtQ19R2g",
       "platform": "youtube",
       "type": "live",
@@ -1576,7 +1576,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-26T10:32:00.415Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
+      "updatedAt": "2026-10-27T05:00:25.991Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -1597,6 +1597,52 @@
       "title": "【#ホロ鯖ARK】ラグナロクで生きるARKその４【ホロライブ/白上フブキ】",
       "description": null,
       "thumbnail": "https://i.ytimg.com/vi/sJCgSZd4QWA/hq720.jpg",
+      "publishedAt": "2026-10-27T05:00:25.991Z",
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": "2026-10-27T05:00:25.991Z",
+      "duration": null,
+      "status": "past",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCdn5BQ06XqgXoAxIhbqw5Rg",
+          "name": "フブキCh。白上フブキ",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-26T10:32:00.415Z",
+      "updatedAt": "2026-10-27T05:00:25.991Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "koFtuzOOVwQ",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCdn5BQ06XqgXoAxIhbqw5Rg",
+      "channelName": "フブキCh。白上フブキ",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "【その１１】チルラジオ配信 #狐族密会　「オススメアニメ語り!!」【ホロライブ/白上フブキ/尾丸ポルカ】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/koFtuzOOVwQ/hq720.jpg",
       "publishedAt": null,
       "scheduledStart": null,
       "actualStart": null,
@@ -1621,8 +1667,58 @@
       "likeCount": null,
       "concurrentViewers": null,
       "source": "api",
-      "addedAt": "2026-10-26T10:32:00.415Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
+      "addedAt": "2026-10-27T05:00:25.991Z",
+      "updatedAt": "2026-10-27T05:00:25.991Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_kFZ20Zqx4JbArdvgluOU7sd4oGhAZI2Bg",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_kFZ20Zqx4JbArdvgluOU7sd4oGhAZI2Bg",
+      "type": "playlist",
+      "channelId": "UCBY1b_TPZx3rA0F1KJnXkNQ",
+      "channelName": "むずちゃんねる",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "female",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "27",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/LyG5qBu3EhM/hqdefault.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCBY1b_TPZx3rA0F1KJnXkNQ",
+          "name": "むずちゃんねる",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -1668,7 +1764,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T20:46:02.237Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
+      "updatedAt": "2026-10-27T05:00:25.991Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -1852,7 +1948,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
+      "updatedAt": "2026-10-27T05:00:25.991Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -1944,57 +2040,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T20:46:02.237Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_kFZ20Zqx4JbArdvgluOU7sd4oGhAZI2Bg",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_kFZ20Zqx4JbArdvgluOU7sd4oGhAZI2Bg",
-      "type": "playlist",
-      "channelId": "UCBY1b_TPZx3rA0F1KJnXkNQ",
-      "channelName": "むずちゃんねる",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "female",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "female_vtuber",
-      "title": "27",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/LyG5qBu3EhM/hqdefault.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCBY1b_TPZx3rA0F1KJnXkNQ",
-          "name": "むずちゃんねる",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-27T05:00:25.991Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3349,6 +3395,52 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "X241Ap1_mKc",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCV6V6YJLO0Zykeq1VD16txg",
+      "channelName": "INARI",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "【歌枠 / Singing Stream】アコギ弾き語り！！夜はまったりしたい☁【INARI / 新人VTuber】#いなりお使い中",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/X241Ap1_mKc/hq720.jpg",
+      "publishedAt": "2026-10-27T05:00:25.991Z",
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": "2026-10-27T05:00:25.991Z",
+      "duration": null,
+      "status": "past",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCV6V6YJLO0Zykeq1VD16txg",
+          "name": "INARI",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": true,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-26T10:32:00.415Z",
+      "updatedAt": "2026-10-27T05:00:25.991Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "SBpEVYDTujs",
       "platform": "youtube",
       "type": "live",
@@ -3436,7 +3528,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
+      "updatedAt": "2026-10-27T05:00:25.991Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3528,52 +3620,6 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-25T04:37:45.822Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "X241Ap1_mKc",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCV6V6YJLO0Zykeq1VD16txg",
-      "channelName": "INARI",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "unknown",
-      "title": "【歌枠 / Singing Stream】アコギ弾き語り！！夜はまったりしたい☁【INARI / 新人VTuber】#いなりお使い中",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/X241Ap1_mKc/hq720.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "upcoming",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCV6V6YJLO0Zykeq1VD16txg",
-          "name": "INARI",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": true,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-26T10:32:00.415Z",
       "updatedAt": "2026-10-26T10:32:00.415Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
