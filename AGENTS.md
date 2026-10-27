@@ -14,7 +14,8 @@ Three things it does:
 1. **Collects** VTuber singing videos, music videos, covers, originals and live
    streams.
 2. **Stores** the result as JSON committed to this repository (`data/`), so it
-   is versioned, diffable and served straight from GitHub Pages.
+   is versioned, diffable and served straight from a static host (GitHub Pages,
+   and a separate Vercel deployment with real cache headers).
 3. **Searches** it instantly with an inverted index built at pipeline time.
 
 ## Before you change anything

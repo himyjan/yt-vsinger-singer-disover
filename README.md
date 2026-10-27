@@ -7,7 +7,8 @@ channel and media details from supported platform APIs.
 
 - Collects VTuber singing streams, music videos, covers and original songs.
 - Keeps the dataset **in the repository** as versioned JSON, so it is
-  diffable, auditable and served directly from GitHub Pages.
+  diffable, auditable and served directly from a static host — GitHub Pages,
+  and a separate deployment on Vercel with real cache headers.
 - Searches it instantly with an inverted index built at pipeline time.
 - Separates the **virtual** and **real** datasets, and splits everything by
   **region**. The app can filter channels and media by region and platform.
@@ -60,7 +61,7 @@ scripts/sync.ts
   └── platform adapters: YouTube, Twitch, Bilibili, Niconico, VK,
                          CHZZK, KICK, SOOP and CI.ME
           ↓
-       classify → data/*.json → committed → GitHub Pages
+       classify → data/*.json → committed → GitHub Pages / Vercel
 
 scripts/resolve-links.ts   the missing accounts: the performer's own text,
                            their X bio, Wikidata, optional web search
