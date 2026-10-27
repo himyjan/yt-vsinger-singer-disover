@@ -2437,5 +2437,20 @@
   "bilibili:550655637": {
     "hidden": true,
     "note": "Fan account, not a performer: 小琉璃录播组w is a VOD recording group, not a VTuber."
+  },
+  "UCw0ty0mpHBx6xZt-K_hfNcA": {
+    "agency": "RK Music",
+    "affiliation": "group",
+    "note": "LEWNE's own description says 「RK Music所属バーチャルシンガー」. The affiliation extractor captured only 「Music」 because its kana pattern stops at whitespace; the pattern now reads a Latin agency name whole, and this records the value it should have stored."
+  },
+  "UC2daHxnuJJBM5NWci1RRkeA": {
+    "agency": "RK Music",
+    "affiliation": "group",
+    "note": "深影's own description says 「RK Music所属バーチャルシンガー」. The affiliation extractor captured only 「Music」 because its kana pattern stops at whitespace; the pattern now reads a Latin agency name whole, and this records the value it should have stored."
+  },
+  "UCgPGVORhti-KKcV4CqUyumQ": {
+    "agency": "RK Music",
+    "affiliation": "group",
+    "note": "XIDEN's own description says 「RK Music所属、歌って踊れるVSingerのXIDEN」. The affiliation extractor captured only 「Music」 because its kana pattern stops at whitespace; the pattern now reads a Latin agency name whole, and this records the value it should have stored."
   }
 }
