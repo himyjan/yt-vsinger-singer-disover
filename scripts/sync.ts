@@ -134,6 +134,15 @@ interface Args {
   /** Skip YouTube Data API calls; InnerTube remains available. */
   offline: boolean;
   /**
+   * Refresh only the live and upcoming broadcasts, and nothing else.
+   *
+   * The frequent half of the schedule. Discovery, the roster rebuild, the
+   * platform profiles, the uploads and the song metadata all cost minutes and
+   * hundreds of requests, and the catalogue they produce changes over days —
+   * while live status changes over minutes.
+   */
+  liveOnly: boolean;
+  /**
    * Rebuild the channel roster from the authoritative public sources
    * (the Taiwan VTuber track list, the curated seeds and the other
    * platforms) before syncing.
@@ -161,6 +170,7 @@ function parseArgs(argv: string[]): Args {
     dryRun: false,
     noSearch: false,
     offline: false,
+    liveOnly: false,
     roster: false,
     budget: 10_000,
     quotaLimit: 10_000,
@@ -176,6 +186,7 @@ function parseArgs(argv: string[]): Args {
     if (a === "--dry-run") args.dryRun = true;
     else if (a === "--no-search") args.noSearch = true;
     else if (a === "--offline") args.offline = true;
+    else if (a === "--live-only") args.liveOnly = true;
     else if (a === "--roster") args.roster = true;
     else if (a === "--force") args.force = true;
     else if (a === "--budget") args.budget = Number(argv[++i]);
@@ -702,6 +713,18 @@ async function fetchVideoDetails(
 
 async function main(): Promise<void> {
   const args = parseArgs(process.argv.slice(2));
+
+  /**
+   * A live-only run refreshes the live and upcoming broadcasts and nothing
+   * else, so it can run every few minutes instead of every six hours.
+   */
+  const liveOnly = args.liveOnly;
+  if (liveOnly) {
+    args.noSearch = true;
+    args.roster = false;
+    args.keywords = [];
+  }
+
   if (args.shardCount > 1) {
     log(
       `shard: ${args.shardIndex + 1}/${args.shardCount} of discovered, ` +
@@ -774,7 +797,7 @@ async function main(): Promise<void> {
    * change in the data can be traced back to the upstream commit that caused
    * it.
    */
-  {
+  if (!liveOnly) {
     const upstreamPath = path.join(ROOT, "data", "upstream.json");
     const { file, changed } = await checkUpstreams(upstreamPath, (m) =>
       log(`upstream: ${m}`),
@@ -878,15 +901,22 @@ async function main(): Promise<void> {
     return true;
   };
 
-  for (const [id, seed] of seedByChannelId) {
-    await resolveSeedProfile(seed, id);
-  }
-
+  /**
+   * Resolving a seed costs a profile request and there are hundreds of them.
+   * A live-only run already has every channel on disk, so it skips this
+   * entirely — the seeds' fields are already in the records it loaded.
+   */
   const unresolvedSeedHandles: typeof seedHandles = [];
-  for (const entry of seedHandles) {
-    const id = await innertube.resolveHandle(entry.handle);
-    if (!id || !(await resolveSeedProfile(entry.seed, id))) {
-      unresolvedSeedHandles.push(entry);
+  if (!liveOnly) {
+    for (const [id, seed] of seedByChannelId) {
+      await resolveSeedProfile(seed, id);
+    }
+
+    for (const entry of seedHandles) {
+      const id = await innertube.resolveHandle(entry.handle);
+      if (!id || !(await resolveSeedProfile(entry.seed, id))) {
+        unresolvedSeedHandles.push(entry);
+      }
     }
   }
 
@@ -914,8 +944,8 @@ async function main(): Promise<void> {
   log(`resolved ${resolvedSeeds.length}/${ALL_SEEDS.length} seeds`);
 
   const vdbSource = new VdbSource();
-  const vdbRoster = await vdbSource.fetch();
-  if (!vdbSource.isAvailable) {
+  const vdbRoster = liveOnly ? [] : await vdbSource.fetch();
+  if (!liveOnly && !vdbSource.isAvailable) {
     log("vdb: unavailable — automatic discovery is limited to existing and seeded identities");
   }
 
@@ -1177,7 +1207,7 @@ async function main(): Promise<void> {
       curatedBilibiliIds.add(parsed.id);
     }
   }
-  if (args.roster || !client) {
+  if (!liveOnly && (args.roster || !client)) {
     const rosterCandidates = await buildRoster({
       onLog: (m) => log(m),
       vdbSource,
@@ -1644,7 +1674,7 @@ async function main(): Promise<void> {
    * the channels that have never been resolved come first, then the least
    * recently resolved.
    */
-  {
+  if (!liveOnly) {
     const budget = config.maxChannelDetailsPerRun;
     const adapterById = new Map(adapters.map((a) => [a.id as string, a]));
     const livePlatforms = new Set(["chzzk", "kick", "soop"]);
@@ -2213,7 +2243,7 @@ async function main(): Promise<void> {
   }
 
   /* --- Twitch enrichment (optional) ------------------------------------ */
-  if (twitch) {
+  if (twitch && !liveOnly) {
     /**
      * The Twitch identity lives in `platforms[]`, so the enrichment updates
      * the link in place rather than a separate field.
@@ -2268,7 +2298,9 @@ async function main(): Promise<void> {
   const twitchBudget = config.maxTwitchResolutionsPerRun;
   let twitchResolutions = 0;
 
-  const tracked = await fetchTrackedVtubers();
+  const tracked = liveOnly
+    ? (new Map() as Awaited<ReturnType<typeof fetchTrackedVtubers>>)
+    : await fetchTrackedVtubers();
   if (tracked.size) {
     let enriched = 0;
     for (const channel of channels) {
@@ -2353,7 +2385,7 @@ async function main(): Promise<void> {
   }
 
   /* --- AiSList: authoritative AI-channel detection --------------------- */
-  const aiList = await fetchAiList();
+  const aiList = liveOnly ? null : await fetchAiList();
   if (aiList) {
     let marked = 0;
     for (const channel of channels) {
@@ -2371,7 +2403,7 @@ async function main(): Promise<void> {
     log(
       `aislist: ${aiList.blocklistCount} blocklist + ${aiList.warnlistCount} warnlist entries, ${marked} channel(s) marked as AI`,
     );
-  } else {
+  } else if (!liveOnly) {
     log("aislist: unavailable — falling back to heuristic AI detection");
   }
 
@@ -2608,8 +2640,15 @@ async function main(): Promise<void> {
     });
 
   const shardRefreshable = refreshable.filter((c) => inShard(c.id, args));
-  const channelList =
-    args.limitChannels !== null
+  /**
+   * Uploads are the other half of the job the six-hourly sync does, and they
+   * are the half that costs the most: a full media catalog per channel. A
+   * live-only run writes the live status of the channels it checks and
+   * nothing else, so it fetches no uploads at all.
+   */
+  const channelList = liveOnly
+    ? []
+    : args.limitChannels !== null
       ? shardRefreshable.slice(0, args.limitChannels)
       : shardRefreshable.slice(0, config.maxChannelsPerRun);
   if (args.shardCount > 1) {
@@ -2725,13 +2764,55 @@ async function main(): Promise<void> {
     }
 
     const liveLimit = args.limitLive ?? config.maxLiveChannelsPerRun;
+
+    /**
+     * The channels that are live or scheduled right now come first.
+     *
+     * The rotation alone sorts by "checked longest ago", which is the right way
+     * to cover a catalogue of thousands over days, and the wrong order for the
+     * few hundred channels whose status is printed on the page. A frequent
+     * live-only run has to see those first, or the Live tab stays wrong between
+     * sweeps.
+     */
+    const onAir = new Set<string>();
+    for (const item of itemById.values()) {
+      if (item.type !== "live") continue;
+      if (item.status === "live" || item.status === "upcoming") {
+        onAir.add(item.channelId);
+      }
+    }
+
+    /**
+     * A channel on air is a target whatever the shard says: its status is what
+     * the Live tab shows, and a stream that ends outside the sweep would
+     * otherwise sit on the page for hours. Everything else still rotates.
+     */
+    const inLiveTargets = (channel: Channel) =>
+      liveOnly && onAir.has(channel.id)
+        ? true
+        : inShard(channel.id, args) &&
+          (channel.isSinging || onAir.has(channel.id));
+
+    const livePriority = (channel: Channel) => (onAir.has(channel.id) ? 0 : 1);
     const liveTargets = singingChannels
-      .filter((c) => c.id.startsWith("UC") && inShard(c.id, args))
-      .sort((a, b) =>
-        (a.lastItemsFetchedAt ?? "").localeCompare(
-          b.lastItemsFetchedAt ?? "",
+      .filter((c) => c.id.startsWith("UC") && inLiveTargets(c))
+      .concat(
+        channels.filter(
+          (c) =>
+            !c.isSinging &&
+            c.id.startsWith("UC") &&
+            onAir.has(c.id) &&
+            inLiveTargets(c),
         ),
       )
+      .sort((a, b) => {
+        const priority = livePriority(a) - livePriority(b);
+        if (priority !== 0) return priority;
+        const age = (a.lastItemsFetchedAt ?? "").localeCompare(
+          b.lastItemsFetchedAt ?? "",
+        );
+        return age !== 0 ? age : a.id.localeCompare(b.id);
+      })
       .slice(0, liveLimit);
 
     const liveItemIds = new Set<string>();
@@ -2761,10 +2842,21 @@ async function main(): Promise<void> {
           );
           if (!item) continue;
           const prev = itemById.get(item.id);
-          itemById.set(item.id, {
-            ...item,
-            addedAt: prev?.addedAt ?? item.addedAt,
-          });
+          const next = { ...item, addedAt: prev?.addedAt ?? item.addedAt };
+          /**
+           * Re-seeing the same broadcast is not a change. Writing it back with
+           * a fresh `updatedAt` rewrote every shard holding a live item, which
+           * is what made a ten-minute refresh impossible: no new information,
+           * a whole-dataset diff, and donc a commit every run.
+           */
+          /** Both records come from the same builder, so a key-order-preserving
+           * comparison is enough to see that only the stamp differs. */
+          const stamp = (record: Item) =>
+            JSON.stringify({ ...record, updatedAt: null });
+          itemById.set(
+            item.id,
+            prev && stamp(prev) === stamp(next) ? prev : next,
+          );
           liveItemIds.add(item.id);
         }
 
@@ -2826,7 +2918,7 @@ async function main(): Promise<void> {
   }
 
   /* --- discovered videos ------------------------------------------------ */
-  if (discoveredVideoIds.size) {
+  if (!liveOnly && discoveredVideoIds.size) {
     const ids = [...discoveredVideoIds].slice(0, 200);
     if (client && budget.canAfford(API_COST.videos)) {
       try {
@@ -2916,7 +3008,7 @@ async function main(): Promise<void> {
   items = [...itemById.values()];
 
   /* --- curated song metadata (VTuber Music Dataset) -------------------- */
-  const musicEntries = await fetchMusicDataset();
+  const musicEntries = liveOnly ? null : await fetchMusicDataset();
   if (musicEntries?.length) {
     const index = indexMusicDataset(musicEntries);
     let enriched = 0;
@@ -3161,7 +3253,9 @@ async function main(): Promise<void> {
     return;
   }
 
-  const result = writeDataset(channels, items, manifest, now);
+  const result = writeDataset(channels, items, manifest, now, {
+    scope: liveOnly ? "live" : "all",
+  });
   const liveViewers = new Map<string, number>();
   const content: AnalyticsContentObservation[] = [];
   const contentViews = new Map<string, number[]>();

@@ -2512,7 +2512,7 @@ onMounted(async () => {
               {{ visibleLive.length }}
             </span>
           </h2>
-          <span class="text-xs text-neutral-500">refreshes every 6 hours</span>
+          <span class="text-xs text-neutral-500">refreshes every 10 minutes</span>
         </div>
         <div v-if="visibleLive.length" class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
           <LiveCard v-for="item in visibleLive" :key="item.id" :item="item" :channel="summaryById.get(item.channelId) ?? null" live @open="openItem" />

@@ -161,7 +161,10 @@ and both deployments serve the tree cross-origin with a ten-minute cache. See
 
 The scheduled GitHub Actions workflow refreshes the roster and supported
 platform data every six hours, rebuilds search, validates the dataset and
-commits changes. The manual workflow also supports quota budgets, discovery
+commits changes. A second workflow (`live.yml`) runs the live-only pass every
+ten minutes: it refreshes `data/items/live.json` and `upcoming.json` from the
+InnerTube Live tab, spends no Data API quota, and commits only when a stream
+actually started or ended. The manual workflow also supports quota budgets, discovery
 skip, dry-run, shard count, a channel cap and a custom keyword used by the
 enabled platform searches. Scheduled searches use the per-platform terms in
 [`config/platform-keywords.json`](config/platform-keywords.json). Twitch and VK

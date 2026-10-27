@@ -1,0 +1,113 @@
+name: Live refresh
+
+# The live and upcoming lists change over minutes; the catalogue changes over
+# days. This job refreshes only the first, so the site is not hours behind the
+# streams it tracks.
+#
+# It is deliberately quota-free. InnerTube answers a channel's Live tab with no
+# Data API key, and `--offline` guarantees the Data API is never called from
+# here — which matters, because the video enrichment alone would otherwise
+# spend 50 units a run, and a run every ten minutes is 144 runs a day.
+#
+# `--live-only` skips every phase that is not the live refresh: discovery, the
+# roster rebuild, the platform profiles, the uploads, the song metadata. What
+# is left is one InnerTube Live-tab request per target channel, and a write
+# only when something actually changed.
+#
+# The shard rotates by run number, so successive runs cover different slices of
+# the catalogue, and a channel that is live *now* sorts to the front of
+# whichever slice owns it.
+#
+# Cost note: this is ~36× the runs of the six-hourly sync. For a public
+# repository Actions minutes are free; for a private one, 144 runs a day at a
+# few minutes each can exceed the 2,000-minute monthly allowance — widen the
+# cron or raise `shard-count` (fewer, larger runs) if that matters.
+
+on:
+  schedule:
+    # Every ten minutes. GitHub's shortest scheduled interval is five, and
+    # scheduled runs queue behind a shared pool, so expect a few minutes of
+    # jitter on a busy minute rather than an exact ten-minute beat.
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+    inputs:
+      limit-live:
+        description: "How many channels to check this run"
+        required: false
+        default: "250"
+      shard-count:
+        description: "Split the rotation into N shards (1 = every run, whole catalogue)"
+        required: false
+        default: "2"
+
+concurrency:
+  # The same repository-wide group as the sync and verify jobs. All three write
+  # `data/`, and two writers at once lose each other's work.
+  group: dataset-writer-${{ github.repository }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  live:
+    name: Refresh live and upcoming
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Refresh live and upcoming
+        env:
+          SYNC_SHARD_COUNT: ${{ inputs.shard-count || '2' }}
+        run: |
+          ARGS=(--live-only --offline --limit-live "${{ inputs.limit-live || 250 }}")
+
+          SHARD_COUNT="$SYNC_SHARD_COUNT"
+          if ! [[ "$SHARD_COUNT" =~ ^[0-9]+$ ]] || [ "$SHARD_COUNT" -lt 1 ]; then
+            SHARD_COUNT=1
+          fi
+          if [ "$SHARD_COUNT" -gt 1 ]; then
+            SHARD_INDEX=$(( (GITHUB_RUN_NUMBER - 1) % SHARD_COUNT + 1 ))
+            ARGS+=(--shard "${SHARD_INDEX}/${SHARD_COUNT}")
+          fi
+
+          npm run data:sync -- "${ARGS[@]}"
+
+      - name: Validate dataset
+        run: npm run data:validate
+
+      # The sync and verify jobs rebase too: a scheduled writer that lands
+      # while another is running would otherwise push a non-fast-forward.
+      - name: Rebase data changes onto the latest branch
+        env:
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          git fetch origin "$BRANCH"
+          git rebase --autostash "origin/$BRANCH"
+
+      - name: Commit live refresh
+        uses: stefanzweifel/git-auto-commit-action@v7
+        with:
+          commit_user_name: github-actions[bot]
+          commit_user_email: github-actions[bot]@users.noreply.github.com
+          commit_message: "data: refresh live and upcoming (${{ github.run_number }})"
+          file_pattern: "data/*"
+          branch: ${{ github.ref_name }}
+          # The explicit rebase above is the only branch update.
+          skip_fetch: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -116,11 +116,12 @@ pack is 2.3 MB for Japan, so cache it.
 | Cache-Control (dataset) | `public, max-age=600, stale-while-revalidate=86400` |
 | Cache-Control (hashed assets) | `public, max-age=31536000, immutable` (Vercel) |
 | `Access-Control-Allow-Origin` | `*` |
-| Refresh cadence | the dataset is rebuilt every six hours by a scheduled workflow |
+| Refresh cadence | `live.json`, `upcoming.json` and the item shards every ten minutes; the channel and song files, and the search index, every six hours |
 
-The dataset changes at most every six hours, so polling faster than the cache
-lifetime only spends other people's bandwidth. Send a conditional request
-(`If-None-Match`) — a repeat visit costs one `304` rather than the payload.
+The live and upcoming lists change on a ten-minute cadence and the rest of the
+tree once every six hours, so polling faster than the cache lifetime only
+spends other people's bandwidth. Send a conditional request (`If-None-Match`) —
+a repeat visit costs one `304` rather than the payload.
 
 **There is no rate limit, because there is no server to rate-limit you.** The
 whole surface is static files on a CDN. That is also the reason the API is
