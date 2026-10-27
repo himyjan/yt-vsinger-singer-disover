@@ -377,6 +377,36 @@ const AGENCY_KEYS: string[] = [
   "vgproject",
   "virtual music lab",
   "song4u",
+  /**
+   * Small agencies the affiliation extractor used to truncate.
+   *
+   * A marker pattern cannot capture a space — 「RK Music所属」 came out as
+   * 「Music」 — and a performer does not always phrase their affiliation with
+   * a marker at all. Listing the name here makes it a fact of the classifier,
+   * which covers every record and every future one, instead of pinning a
+   * value per record in `overrides.json`.
+   *
+   * The spelling keeps the case the records use, because the key is written
+   * into `agency` verbatim. The scan is a substring test, so a name belongs
+   * here only when a hit can mean nothing else — 「ViViD」 is deliberately
+   * absent, because 薇薇欧vivid is an independent performer whose name merely
+   * contains it.
+   */
+  "RK Music",
+  "Succubus Field",
+  "Fairy System",
+  "LiveCartoon Charact",
+  "MC LIVE",
+  "MUGEN LIVE",
+  "Asub Maker",
+  "PROJECT NEBULA",
+  "avex muchoo",
+  "FIRST STAGE PRODUCTION",
+  "八木百货",
+  "贴贴社",
+  "椛榊计划",
+  "MarbleCreators",
+  "P家",
 ];
 
 export interface ChannelSignals {
