@@ -32,6 +32,8 @@ export type SourceId =
   | "aivtuberdb"
   | "pvc-moe"
   | "vtuber-hk"
+  | "holodex"
+  | "musicdex"
   | "streamscharts"
   | "justoneapi"
   | "chzzk"
@@ -246,6 +248,28 @@ export const SOURCES: SourceInfo[] = [
     access: "none",
     used: false,
     usedFor: "The page is server-rendered but has no documented data format",
+  },
+  {
+    id: "holodex",
+    label: "Holodex",
+    url: "https://holodex.net",
+    provides:
+      "A YouTube VTuber stream index: live and upcoming streams, channels and organisations, a clip index, and the VOD data behind them",
+    access: "api",
+    used: false,
+    usedFor:
+      "A comparison reference, not a source: the clip index, mentions, subber relations and Multiview are the depth this project does not build. Ingestion would need an API v2 key (`HOLODEX_API_KEY`); every endpoint answers 403 without one and no fixed quota is published",
+  },
+  {
+    id: "musicdex",
+    label: "Musicdex (Music Holodex)",
+    url: "https://music.holodex.net",
+    provides:
+      "Songs and set lists tagged out of singing streams, with playlists by performer and organisation",
+    access: "api",
+    used: false,
+    usedFor:
+      "A comparison reference for song-level tagging, which this project classifies but does not tag; the song and original-artist metadata is read from the VTuber Music Dataset and VocaDB instead",
   },
   {
     id: "chzzk",
