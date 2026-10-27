@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-25T07:43:14.768Z",
+  "generatedAt": "2026-10-26T12:56:51.125Z",
   "items": [
     {
       "id": "OLAK5uy_kJygHNdIVDPx7g3oPhcdU9snNnAgaNStM",
@@ -99,6 +99,56 @@
       "source": "api",
       "addedAt": "2026-10-25T07:36:28.069Z",
       "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_lxoFe0D1nQcAW2judfUv0tO8i3YypNGqw",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_lxoFe0D1nQcAW2judfUv0tO8i3YypNGqw",
+      "type": "playlist",
+      "channelId": "UCKrGMrU-XtoL54-qFDxTSxg",
+      "channelName": "Mimika",
+      "channelKind": "virtual",
+      "region": "en",
+      "gender": "unknown",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "vsinger",
+      "title": "Love Me More",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/ywzjWnQQUOw/hqdefault.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCKrGMrU-XtoL54-qFDxTSxg",
+          "name": "Mimika",
+          "kind": "virtual",
+          "region": "en"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-26T12:56:51.125Z",
+      "updatedAt": "2026-10-26T12:56:51.125Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

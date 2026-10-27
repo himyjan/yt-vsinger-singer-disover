@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-25T07:43:14.768Z",
+  "generatedAt": "2026-10-27T12:07:34.435Z",
   "items": [
     {
       "id": "kM1ye6qHA5Y",
@@ -19,12 +19,12 @@
       "title": "【Silent Hill: Townfall】repent for your sins gigi murin #calliolive",
       "description": null,
       "thumbnail": "https://i.ytimg.com/vi/kM1ye6qHA5Y/hq720.jpg",
-      "publishedAt": null,
+      "publishedAt": "2026-10-26T10:32:00.415Z",
       "scheduledStart": null,
       "actualStart": null,
-      "actualEnd": null,
+      "actualEnd": "2026-10-26T10:32:00.415Z",
       "duration": null,
-      "status": "upcoming",
+      "status": "past",
       "category": "premiere",
       "songTitle": null,
       "originalArtist": null,
@@ -44,7 +44,53 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T15:54:59.721Z",
-      "updatedAt": "2026-10-24T15:54:59.721Z",
+      "updatedAt": "2026-10-26T10:32:00.415Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "O4Uppt4JiWk",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCIeSUTOTkF9Hs7q3SGcO-Ow",
+      "channelName": "Elira Pendora 【NIJISANJI EN】",
+      "channelKind": "virtual",
+      "region": "en",
+      "gender": "male",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "【THE PLANT SHOP】 working retail is a nightmare 【NIJISANJI EN | Elira Pendora】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/O4Uppt4JiWk/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCIeSUTOTkF9Hs7q3SGcO-Ow",
+          "name": "Elira Pendora 【NIJISANJI EN】",
+          "kind": "virtual",
+          "region": "en"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-27T10:02:58.969Z",
+      "updatedAt": "2026-10-27T12:07:34.435Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -195,6 +241,56 @@
       "source": "api",
       "addedAt": "2026-10-25T07:43:14.768Z",
       "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_mWMi_7aAhY7pryaRg-0VdAu_EvhuMGwUc",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_mWMi_7aAhY7pryaRg-0VdAu_EvhuMGwUc",
+      "type": "playlist",
+      "channelId": "UCKrGMrU-XtoL54-qFDxTSxg",
+      "channelName": "Mimika",
+      "channelKind": "virtual",
+      "region": "en",
+      "gender": "unknown",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "vsinger",
+      "title": "THE FIRE IN THE NIGHT",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/yzfPlwJahP4/hqdefault.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCKrGMrU-XtoL54-qFDxTSxg",
+          "name": "Mimika",
+          "kind": "virtual",
+          "region": "en"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-26T12:56:51.125Z",
+      "updatedAt": "2026-10-26T12:56:51.125Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

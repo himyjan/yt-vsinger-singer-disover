@@ -537,7 +537,15 @@ export function filterItems(items: Item[], query: ItemQuery): Item[] {
     .slice(0, limit);
 }
 
-/** Filters channel summaries. */
+/**
+ * Filters channel summaries.
+ *
+ * `query.limit` is deliberately **not** applied here. Sorting happens after
+ * filtering (`sortChannels()` in the view), so a limit taken at this point
+ * would keep the first 240 records in shard order rather than the first 240
+ * of the user's chosen order — the wrong page. The view sorts first and then
+ * mounts a page; see `visibleChannels` in `App.vue`.
+ */
 export function filterChannels(
   channels: ChannelSummary[],
   query: ItemQuery,

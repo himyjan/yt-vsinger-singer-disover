@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-25T11:22:49.894Z",
+  "generatedAt": "2026-10-27T12:07:34.435Z",
   "regions": [
     {
       "code": "jp",
@@ -24,7 +24,7 @@
         "0e",
         "0f"
       ],
-      "items": 1055
+      "items": 1241
     },
     {
       "code": "tw",
@@ -48,7 +48,7 @@
         "0e",
         "0f"
       ],
-      "items": 31
+      "items": 35
     },
     {
       "code": "kr",
@@ -81,7 +81,7 @@
         "0e",
         "0f"
       ],
-      "items": 108
+      "items": 126
     },
     {
       "code": "id",
@@ -100,7 +100,7 @@
         "0e",
         "0f"
       ],
-      "items": 18
+      "items": 19
     },
     {
       "code": "my",
@@ -111,6 +111,15 @@
         "0d"
       ],
       "items": 2
+    },
+    {
+      "code": "sea",
+      "label": "SEA",
+      "badge": "🌏",
+      "buckets": [
+        "01"
+      ],
+      "items": 1
     },
     {
       "code": "unknown",
@@ -125,14 +134,15 @@
         "08",
         "0a",
         "0b",
+        "0e",
         "0f"
       ],
-      "items": 16
+      "items": 24
     }
   ],
   "counts": {
-    "total": 1231,
-    "live": 19,
-    "upcoming": 316
+    "total": 1449,
+    "live": 23,
+    "upcoming": 389
   }
 }

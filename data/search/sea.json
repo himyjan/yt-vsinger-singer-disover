@@ -1,11 +1,17 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-25T11:33:30.450Z",
+  "generatedAt": "2026-10-27T12:19:28.617Z",
   "region": "sea",
-  "count": 1,
+  "count": 2,
   "tokens": [
     "ch",
+    "freetalk",
     "kiichan",
+    "let's",
+    "scary",
+    "together",
+    "videos",
+    "watch",
     "アキ",
     "キラ",
     "井ア",
@@ -13,27 +19,57 @@
   ],
   "postings": [
     [
-      0
+      0,
+      1
     ],
     [
-      0
+      1
     ],
     [
-      0
+      0,
+      1
     ],
     [
-      0
+      1
     ],
     [
-      0
+      1
     ],
     [
-      0
+      1
+    ],
+    [
+      1
+    ],
+    [
+      1
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      1
     ]
   ],
   "idf": [
     0.6931471805599453,
+    1.0986122886681096,
     0.6931471805599453,
+    1.0986122886681096,
+    1.0986122886681096,
+    1.0986122886681096,
+    1.0986122886681096,
+    1.0986122886681096,
     0.6931471805599453,
     0.6931471805599453,
     0.6931471805599453,
@@ -46,10 +82,30 @@
       "n": "Kiichan Ch. 狐井アキラ",
       "g": "virtual",
       "r": "sea",
-      "ts": 1792927425034,
+      "ts": 1793102912103,
       "cn": "Kiichan Ch. 狐井アキラ",
       "th": "https://yt3.googleusercontent.com/EoJLelX2dO78iVI9jvUwkiqd9LjKIqp82JluwpSKXCpFJkn0RQzkc44mFMs_rTm6JF6PXanP=s900-c-k-c0x00ffffff-no-rj",
       "sb": null
+    },
+    {
+      "k": "i",
+      "id": "Tas-YXqpJPo",
+      "n": "【FREETALK】Let's watch scary videos together~",
+      "g": "virtual",
+      "r": "sea",
+      "c": "premiere",
+      "ts": 0,
+      "ch": "UCcpgDsHDYHO1UyfpwjyNx1g",
+      "cn": "Kiichan Ch. 狐井アキラ",
+      "th": "https://i.ytimg.com/vi/Tas-YXqpJPo/hq720.jpg",
+      "s": null,
+      "o": null,
+      "st": "upcoming",
+      "d": null,
+      "ac": 0,
+      "gd": "female",
+      "ai": 0,
+      "vr": "vtuber"
     }
   ]
 }
