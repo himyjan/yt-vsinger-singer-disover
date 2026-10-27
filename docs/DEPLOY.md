@@ -194,6 +194,28 @@ base: env.VITE_BASE_PATH || "/";
 and the data loader prefixes every request with `import.meta.env.BASE_URL`,
 so both the app and the dataset resolve correctly.
 
+## Serving from Vercel
+
+The site is also deployed on Vercel (`yt-song-disover.vercel.app`), built from
+the default branch — so a change reaches it when it lands on `main`.
+`vercel.json` carries the two things a static host needs and Vercel does not
+apply on its own:
+
+- **Cache headers.** A bundle under `/assets/` is content-hashed and never
+  changes under its own name, so it is cached for a year as `immutable`. The
+  dataset under `/data/` is rewritten by the sync workflow every six hours, so
+  it stays open for ten minutes with a day-long `stale-while-revalidate`: the
+  next visit is served from cache immediately and refreshed in the background.
+- **The SPA fallback.** Every unmatched path renders the app, which a static
+  SPA needs — but `/assets/` and `/data/` are excluded from that rewrite.
+  Without the exclusion a shard that is not there answers `200` with the app's
+  HTML, hiding the miss from the browser, the network panel and any uptime
+  check; with it, a file that does not exist is a plain `404`.
+
+GitHub Pages does not let a repository set response headers, so the same
+deployment there is served with `Cache-Control: max-age=600` on everything —
+hashed bundles included.
+
 ## Git LFS
 
 GitHub Free allows roughly **1 GB** of repository content (hard limit 2 GB)
