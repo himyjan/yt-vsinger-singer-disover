@@ -22,17 +22,33 @@
 
   <!--
     The webfonts are loaded here rather than with an `@import` inside the
-    stylesheet. An import costs a serial round trip — the browser has to
-    download and parse the app's own CSS before it even discovers the font
-    CSS — and the preconnects warm DNS, TLS and HTTP/2 for the font origin
-    first, so the font files are not requested cold.
+    stylesheet, and they no longer block the first paint.
+
+    The sheet is 383 KB uncompressed — 344 `@font-face` rules, 118 subsets —
+    and a plain `<link rel="stylesheet">` holds the first pixel until every
+    byte of it has arrived and been parsed. As a print-media sheet it is
+    fetched at low priority and applied the moment it lands, and because the
+    URL already carries `display=swap` the text paints in the fallback face
+    either way: all the wait ever bought was a later first paint.
+
+    The preconnects stay, so DNS, TLS and HTTP/2 are warm when the request
+    goes out, and a browser without JavaScript still gets the sheet through
+    the `noscript` fallback.
   -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
     rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap"
+    media="print"
+    onload="this.media='all'"
   />
+  <noscript>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap"
+    />
+  </noscript>
 
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎵</text></svg>" />
 
