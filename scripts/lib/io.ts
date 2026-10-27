@@ -166,8 +166,35 @@ export function shardContentChanged(
   const existing = readJson<{ channels?: unknown } | null>(file, null);
   if (!existing) return true;
   return (
-    stableStringify(existing.channels ?? null) !== stableStringify(channels)
+    stableStringify(withoutStamps(existing.channels ?? null)) !==
+    stableStringify(withoutStamps(channels))
   );
+}
+
+/**
+ * Drops the fields that say **when** a record was written rather than what it
+ * says.
+ *
+ * `updatedAt` alone changing is not a change. Writing it back made every
+ * scheduled run rewrite every shard holding a touched record — a handful per
+ * shard, so all of them — which is why a ten-minute live refresh would have
+ * committed the whole dataset 144 times a day for no information at all.
+ *
+ * The rotation fields (`lastItemsFetchedAt`, `lastDetailsFetchedAt`, and a
+ * platform link's `lastCheckedAt`) are deliberately **kept**: they decide which
+ * records the next run picks up, so discarding them would pin every rotation
+ * to the same channels forever.
+ */
+function withoutStamps(value: unknown): unknown {
+  if (Array.isArray(value)) return value.map(withoutStamps);
+  if (value && typeof value === "object") {
+    return Object.fromEntries(
+      Object.entries(value as Record<string, unknown>)
+        .filter(([key]) => key !== "updatedAt")
+        .map(([key, entry]) => [key, withoutStamps(entry)]),
+    );
+  }
+  return value;
 }
 
 /** Stable stringify: sorts object keys recursively so diffs stay minimal. */

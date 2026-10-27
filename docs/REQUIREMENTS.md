@@ -692,7 +692,8 @@ for discovery/profile refresh do not by themselves provide account linking.
 
 - `[x]` The dataset is **committed to the repository** under `data/`.
 - `[x]` A GitHub Actions workflow refreshes it on a schedule (every 6 hours)
-      and commits the result.
+      and commits the result, with a second workflow refreshing only the live
+      and upcoming broadcasts every ten minutes.
 - `[x]` A second workflow builds the app and deploys it to GitHub Pages.
 - `[x]` A third workflow validates the dataset and builds the app on every
       push and pull request.

@@ -82,6 +82,16 @@ workflow rotates the shard index by `GITHUB_RUN_NUMBER`, so successive runs
 cover the catalogue without a cursor file. Never replace this with a fixed
 `slice()` — the head of the list would be refreshed forever.
 
+**The frequent half.** `--live-only` runs step 9 only: the InnerTube Live tab
+for the channels that are live or scheduled right now (sorted to the front,
+whatever the shard says), then a rotating slice of the rest. It implies
+`--no-search` and skips the seeds, vdb, the platform profiles, the uploads and
+the song metadata, so it costs no Data API quota and finishes in about a
+minute; `.github/workflows/live.yml` runs it every ten minutes. A run in which
+no stream started or ended writes nothing and commits nothing — which only
+holds while a record whose sole difference is `updatedAt` is treated as
+unchanged (`shardContentChanged()` in `lib/io.ts` ignores the stamp).
+
 Two passes near the end are worth knowing about because they change records
 without any request:
 

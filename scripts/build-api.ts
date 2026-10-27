@@ -248,7 +248,7 @@ function main(): void {
     cache: {
       dataset: "public, max-age=600, stale-while-revalidate=86400",
       guidance:
-        "The dataset is rewritten every six hours. Do not poll faster than the cache lifetime, and send a conditional request rather than re-downloading.",
+        "The live and upcoming lists are rewritten every ten minutes and the rest of the dataset every six hours. Do not poll faster than the cache lifetime, and send a conditional request rather than re-downloading.",
     },
     dataset: {
       schemaVersion: manifest.schemaVersion ?? null,

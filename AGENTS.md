@@ -325,10 +325,13 @@ fallback for failed InnerTube lookups. `liveBroadcasts.list` must not replace
 the Live tab: it requires OAuth, and the scheduled pipeline only has an API
 key.
 
-The sync and verification GitHub workflows both write `data/`. Keep them in
-the same repository-wide concurrency group and rebase generated changes onto
+The sync, live and verification GitHub workflows all write `data/`. Keep them
+in the same repository-wide concurrency group and rebase generated changes onto
 the latest branch before committing, so concurrent dataset writers do not
-create non-fast-forward push failures.
+create non-fast-forward push failures. A record whose only change is a stamp
+must not be rewritten: `shardContentChanged()` ignores `updatedAt` for exactly
+that reason, and dropping it again would make the ten-minute live job commit the
+whole dataset on every run.
 
 ## Common tasks
 
@@ -365,6 +368,7 @@ create non-fast-forward push failures.
 npm run data:sync -- --dry-run       # fetch and classify, write nothing
 npm run data:sync -- --budget 500    # cap the spend
 npm run data:sync -- --no-search     # refresh known channels only
+npm run data:sync -- --live-only     # live and upcoming only (the frequent half)
 npm run data:sync -- --shard 2/4     # one deterministic slice of the rotation
 npm run data:sync -- --limit-channels 50 --limit-live 100
 npm run data:sync -- --keyword "…"   # run one discovery query

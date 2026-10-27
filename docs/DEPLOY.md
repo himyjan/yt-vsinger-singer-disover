@@ -47,6 +47,36 @@ finds nothing new produces no commit and the git history stays clean.
 The sync and verification workflows share a repository-wide concurrency group
 and rebase generated changes onto the latest branch before committing.
 
+### `live.yml` — the ten-minute half
+
+```yaml
+on:
+  schedule:
+    - cron: "*/10 * * * *" # every ten minutes
+  workflow_dispatch:
+    inputs:
+      limit-live: { default: "250" }
+      shard-count: { default: "2" }
+```
+
+`npm run data:sync -- --live-only --offline --limit-live 250 --shard N/2`
+refreshes the live and upcoming broadcasts and nothing else: no discovery, no
+roster rebuild, no platform profiles, no uploads, no song metadata. What is
+left is one InnerTube Live-tab request per target channel, and `--offline` is
+what keeps it quota-free — the video enrichment alone would otherwise spend
+~50 units a run, and a run every ten minutes is 144 runs a day.
+
+A live-only run writes the media side only: `data/items/live.json`,
+`data/items/upcoming.json`, the item shards and the counts. The channel and
+song files belong to the six-hourly job; writing them here would churn every
+one of their files on a ten-minute schedule for no new information. A run in
+which no stream started or ended writes nothing, and therefore commits nothing.
+
+The cost note that matters: this is ~36× the runs of the six-hourly sync. For
+a public repository Actions minutes are free; for a private one, 144 runs a day
+can exceed the 2,000-minute monthly allowance — widen the cron or raise
+`shard-count` (fewer, larger runs) if that matters.
+
 ### Discovery is not scheduled
 
 `npm run data:discover` is a deliberate run, not a cron job: it reads the
@@ -241,8 +271,9 @@ apply on its own:
 
 - **Cache headers.** A bundle under `/assets/` is content-hashed and never
   changes under its own name, so it is cached for a year as `immutable`. The
-  dataset under `/data/` is rewritten by the sync workflow every six hours, so
-  it stays open for ten minutes with a day-long `stale-while-revalidate`: the
+  dataset under `/data/` is rewritten by the sync workflow every six hours, and
+  the live and upcoming part of it by `live.yml` every ten minutes, so it stays
+  open for ten minutes with a day-long `stale-while-revalidate`: the
   next visit is served from cache immediately and refreshed in the background.
 - **The routing chain.** Filesystem first, then a `404` for anything under
   `/assets/` or `/data/` that no file matches, and the app for everything
@@ -315,6 +346,7 @@ The web app reads the dataset from `public/data/`, so run
 npm run data:sync -- --dry-run          # fetch and classify, write nothing
 npm run data:sync -- --budget 500       # cap the spend at 500 units
 npm run data:sync -- --no-search        # refresh known channels only
+npm run data:sync -- --live-only        # live and upcoming only (the frequent half)
 npm run data:sync -- --shard 2/4        # refresh the second of four shards
 npm run data:sync -- --limit-channels 50 --limit-live 100
 npm run data:sync -- --keyword "vtuber 歌い手"

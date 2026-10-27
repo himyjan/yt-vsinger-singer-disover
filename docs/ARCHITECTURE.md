@@ -176,6 +176,15 @@ file, and every run still commits its own slice.
 `scripts/lib/shard.ts` holds that hash, so the sync, the details fill and the
 link resolver put a channel in the same shard.
 
+**The schedule runs the sync in two halves.** The six-hourly run refreshes
+everything above. `npm run data:sync -- --live-only` refreshes only the live and
+upcoming broadcasts — one InnerTube Live-tab request per target channel, with
+the channels that are live or scheduled right now sorted to the front, no Data
+API quota, no discovery, no profiles, no uploads. `live.yml` runs that half
+every ten minutes, so the Live tab is minutes rather than hours old while the
+expensive half stays cheap. A run in which no stream started or ended writes
+nothing, and therefore commits nothing.
+
 ### The discovery run
 
 `scripts/discover.ts` answers the other question: who exists that the
@@ -426,12 +435,13 @@ same `parseSubscriptionsFile()`, but neither is required for a large account.
 | Workflow | Trigger | Does |
 | --- | --- | --- |
 | `sync-data.yml` | every 6 hours + manual | fetch → qualify discovery candidates → classify → index → validate → rebase → commit `data/`; rotates through the catalogue by shard |
+| `live.yml` | every 10 minutes + manual | `--live-only --offline` → refresh the live and upcoming broadcasts only → validate → rebase → commit `data/` when a stream actually started or ended |
 | `verify-data.yml` | daily + manual | verify uncertain records → re-apply corrections → index → validate → rebase → commit `data/` |
 | `deploy-pages.yml` | push to `main` | validate → build → publish to Pages |
 | `ci.yml` | push + pull request | validate → type-check → build |
 
-The sync and verification workflows share one repository-wide dataset-writer
-concurrency group. Before committing, each fetches and rebases its generated
+The sync, live and verification workflows share one repository-wide
+dataset-writer concurrency group. Before committing, each fetches and rebases its generated
 data changes onto the latest branch head so intervening commits do not cause a
 non-fast-forward push failure.
 

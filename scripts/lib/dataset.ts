@@ -189,7 +189,17 @@ export function writeDataset(
   items: Item[],
   manifest: Manifest,
   now: string,
+  options: { scope?: "all" | "live" } = {},
 ): WriteResult {
+  /**
+   * `live` writes the media side only.
+   *
+   * The ten-minute live refresh owns the live and upcoming broadcasts and
+   * nothing else, so it must not rewrite channel and song files: their
+   * records pick up re-derived fields on the way through the pipeline, and
+   * writing them back made every frequent run churn the whole dataset.
+   */
+  const scope = options.scope ?? "all";
   const removed: string[] = [];
   channels = channels.map(withCanonicalAgency);
 
@@ -259,16 +269,20 @@ export function writeDataset(
     return meta;
   };
 
-  const virtualMeta = shardChannels(
-    channels.filter((c) => c.kind === "virtual"),
-    path.join(DATA_DIR, "channels", "virtual"),
-    layout.channelsVirtual,
-  );
-  const realMeta = shardChannels(
-    channels.filter((c) => c.kind === "real"),
-    path.join(DATA_DIR, "channels", "real"),
-    layout.channelsReal,
-  );
+  const virtualMeta = scope === "all"
+    ? shardChannels(
+        channels.filter((c) => c.kind === "virtual"),
+        path.join(DATA_DIR, "channels", "virtual"),
+        layout.channelsVirtual,
+      )
+    : new Map<string, ChannelKindMeta>();
+  const realMeta = scope === "all"
+    ? shardChannels(
+        channels.filter((c) => c.kind === "real"),
+        path.join(DATA_DIR, "channels", "real"),
+        layout.channelsReal,
+      )
+    : new Map<string, ChannelKindMeta>();
 
   const channelRegionMeta: ChannelRegionMeta[] = [];
   for (const code of ALL_REGIONS) {
@@ -318,7 +332,7 @@ export function writeDataset(
     removed.push(`${path.basename(legacyDir)}/`);
   }
 
-  writeJson(layout.channelsManifest, {
+  if (scope === "all") writeJsonIfChanged(layout.channelsManifest, {
     schemaVersion: SCHEMA_VERSION,
     generatedAt: now,
     total: channels.length,
@@ -399,7 +413,7 @@ export function writeDataset(
     items: upcoming,
   } satisfies ItemFile);
 
-  writeJson(layout.itemsManifest, {
+  writeJsonIfChanged(layout.itemsManifest, {
     schemaVersion: SCHEMA_VERSION,
     generatedAt: now,
     regions: regionMeta,
@@ -461,13 +475,17 @@ export function writeDataset(
     const list = songsByRegion.get(region);
     if (!list?.length) continue;
     keepSongFiles.add(`${region}.json`);
-    writeJsonIfChanged(layout.songsRegion(region), {
+    if (scope === "all") writeJsonIfChanged(layout.songsRegion(region), {
       schemaVersion: SCHEMA_VERSION,
       generatedAt: now,
       songs: list,
     } satisfies SongFile);
   }
-  removed.push(...pruneStale(songsDir, keepSongFiles));
+  // The prune only edits the directory it is given, and it treats every file it
+  // was not told to keep as stale — including the index and the manifest that
+  // sit in this same directory. A full run rewrites them straight away; a
+  // live-only run does not, so pruning is the full run's to do.
+  if (scope === "all") removed.push(...pruneStale(songsDir, keepSongFiles));
 
   // Per-category slices make "every cover" a single cheap fetch.
   const songsCategoryDir = path.join(songsDir, "categories");
@@ -479,20 +497,22 @@ export function writeDataset(
     categoryCounts[category] = list.length;
     if (!list.length) continue;
     keepCategoryFiles.add(`${category}.json`);
-    writeJsonIfChanged(layout.songsCategory(category), {
+    if (scope === "all") writeJsonIfChanged(layout.songsCategory(category), {
       schemaVersion: SCHEMA_VERSION,
       generatedAt: now,
       songs: list,
     } satisfies SongFile);
   }
-  removed.push(...pruneStale(songsCategoryDir, keepCategoryFiles));
+  if (scope === "all") {
+    removed.push(...pruneStale(songsCategoryDir, keepCategoryFiles));
+  }
 
-  writeJsonIfChanged(layout.songsIndex, {
+  if (scope === "all") writeJsonIfChanged(layout.songsIndex, {
     schemaVersion: SCHEMA_VERSION,
     generatedAt: now,
     songs,
   } satisfies SongFile);
-  writeJson(layout.songsManifest, {
+  if (scope === "all") writeJsonIfChanged(layout.songsManifest, {
     schemaVersion: SCHEMA_VERSION,
     generatedAt: now,
     total: songs.length,
@@ -503,7 +523,7 @@ export function writeDataset(
   });
 
   /* --- manifest ------------------------------------------------------- */
-  writeJson(layout.manifest, manifest);
+  writeJsonIfChanged(layout.manifest, manifest);
 
   const bytes = directorySize(DATA_DIR);
   return { files: countFiles(DATA_DIR), bytes, removed };
@@ -864,7 +884,7 @@ export function refreshManifestChannelCounts(
   manifest.counts.channelsReal = channels.filter((c) => c.kind === "real").length;
   manifest.counts.channelsSinging = channels.filter((c) => c.isSinging).length;
   manifest.regions = buildRegionMeta(counts);
-  writeJson(layout.manifest, manifest);
+  writeJsonIfChanged(layout.manifest, manifest);
 }
 
 export function readItemsManifest(): ItemsManifest {
