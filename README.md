@@ -48,6 +48,7 @@ npm run data:discover       # new performers from vTubie (--source all: + the wi
 | [docs/PLATFORMS.md](docs/PLATFORMS.md) | Platform identities, adapters and account-linking coverage |
 | [docs/SOURCES.md](docs/SOURCES.md) | Every data source, and which are read |
 | [docs/DEPLOY.md](docs/DEPLOY.md) | GitHub Actions, Pages, secrets, LFS |
+| [docs/API.md](docs/API.md) | The read-only JSON API: endpoints, shapes, caching |
 | [docs/ANALYTICS.md](docs/ANALYTICS.md) | Historical platform metrics and dashboard |
 | [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) | How to add a channel, a region, a platform |
 | [AGENTS.md](AGENTS.md) | Guide for AI agents |
@@ -152,6 +153,11 @@ data/
 ├── songs/               the music-centric projection
 └── search/              the inverted index, per region
 ```
+
+The same files are the **read-only API**: `data/api/v1/index.json` is a
+generated, versioned index of every endpoint and the shape of its response,
+and both deployments serve the tree cross-origin with a ten-minute cache. See
+[docs/API.md](docs/API.md).
 
 The scheduled GitHub Actions workflow refreshes the roster and supported
 platform data every six hours, rebuilds search, validates the dataset and
