@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-27T05:00:25.991Z",
+  "generatedAt": "2026-10-27T10:02:58.969Z",
   "items": [
     {
       "id": "_iiTXK7Ztpw",
@@ -44,7 +44,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T20:46:02.237Z",
-      "updatedAt": "2026-10-27T05:00:25.991Z",
+      "updatedAt": "2026-10-27T10:02:58.969Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -65,12 +65,12 @@
       "title": "【歌枠/Karaoke 】初見さん大歓迎🎧🤍高評価600チャレンジ🔥【 作業BGM / #音鍵めろ / 新人vtuber  】",
       "description": null,
       "thumbnail": "https://i.ytimg.com/vi/-5fbpMwFufA/hq720.jpg",
-      "publishedAt": null,
+      "publishedAt": "2026-10-27T10:02:58.969Z",
       "scheduledStart": null,
       "actualStart": null,
-      "actualEnd": null,
+      "actualEnd": "2026-10-27T10:02:58.969Z",
       "duration": null,
-      "status": "upcoming",
+      "status": "past",
       "category": "premiere",
       "songTitle": null,
       "originalArtist": null,
@@ -90,7 +90,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-25T16:14:08.234Z",
-      "updatedAt": "2026-10-26T22:38:30.097Z",
+      "updatedAt": "2026-10-27T10:02:58.969Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -136,7 +136,145 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-27T05:00:25.991Z",
+      "updatedAt": "2026-10-27T10:02:58.969Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "4vcpb7iZZpY",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UC1ucgoC_sGww_Euu5iMqpQw",
+      "channelName": "凛々咲 / Ririsya",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "singer",
+      "title": "【 #ぶいせかマイクラ  】Day5 ✧ ミニイベントと家作り！ ✧ First PvP Event!【 VTuber / #凛々咲 #Ririsya 】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/4vcpb7iZZpY/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC1ucgoC_sGww_Euu5iMqpQw",
+          "name": "凛々咲 / Ririsya",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-27T10:02:58.969Z",
+      "updatedAt": "2026-10-27T10:02:58.969Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "741ODO-pBZI",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCS8w-7krErjLdDXY93yAeLA",
+      "channelName": "【くらまちゃんねる 】御先蔵馬",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "female",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "【 #歌枠 #弾き語り】リクエスト受け付けながら、のんびり弾き語り🦊🐾【 Vtuber/御先蔵馬】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/741ODO-pBZI/hq720.jpg",
+      "publishedAt": "2026-10-27T10:02:58.969Z",
+      "scheduledStart": null,
+      "actualStart": "2026-10-27T10:02:58.969Z",
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCS8w-7krErjLdDXY93yAeLA",
+          "name": "【くらまちゃんねる 】御先蔵馬",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": true,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-27T10:02:58.969Z",
+      "updatedAt": "2026-10-27T10:02:58.969Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "CQShbsCcBr4",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UC1JuhRTsFgZvi2ie2dTUxbg",
+      "channelName": "みかんとボーカルノート",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "【 Karaoke #歌枠 】元プロが歌う24時間配信へようこそ🍊 #作業用BGM 【 #vtuber #vsinger 】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/CQShbsCcBr4/hq720.jpg",
+      "publishedAt": "2026-10-27T10:02:58.969Z",
+      "scheduledStart": null,
+      "actualStart": "2026-10-27T10:02:58.969Z",
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC1JuhRTsFgZvi2ie2dTUxbg",
+          "name": "みかんとボーカルノート",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-27T05:00:25.991Z",
+      "updatedAt": "2026-10-27T10:02:58.969Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -228,7 +366,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-25T09:23:34.774Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
+      "updatedAt": "2026-10-27T10:02:58.969Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -320,53 +458,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-25T11:22:49.894Z",
-      "updatedAt": "2026-10-26T12:56:51.125Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "CQShbsCcBr4",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UC1JuhRTsFgZvi2ie2dTUxbg",
-      "channelName": "みかんとボーカルノート",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "【 Karaoke #歌枠 】元プロが歌う24時間配信へようこそ🍊 #作業用BGM 【 #vtuber #vsinger 】",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/CQShbsCcBr4/hq720.jpg",
-      "publishedAt": "2026-10-27T05:00:25.991Z",
-      "scheduledStart": null,
-      "actualStart": "2026-10-27T05:00:25.991Z",
-      "actualEnd": null,
-      "duration": null,
-      "status": "live",
-      "category": "live",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UC1JuhRTsFgZvi2ie2dTUxbg",
-          "name": "みかんとボーカルノート",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-27T05:00:25.991Z",
-      "updatedAt": "2026-10-27T05:00:25.991Z",
+      "updatedAt": "2026-10-27T10:02:58.969Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -412,7 +504,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T05:10:16.208Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
+      "updatedAt": "2026-10-27T10:02:58.969Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -458,7 +550,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-27T05:00:25.991Z",
+      "updatedAt": "2026-10-27T10:02:58.969Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -504,7 +596,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T20:46:02.237Z",
-      "updatedAt": "2026-10-27T05:00:25.991Z",
+      "updatedAt": "2026-10-27T10:02:58.969Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -550,7 +642,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-26T22:38:30.097Z",
+      "updatedAt": "2026-10-27T10:02:58.969Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -642,103 +734,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-25T11:22:49.894Z",
-      "updatedAt": "2026-10-26T12:56:51.125Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "NVK10vBE2VM",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UC5q709VOMSrf5Y-rdkd5hLg",
-      "channelName": "ゆきや アニソン歌い手Vtuber YUKIYA's Studio,Anime song lover",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "male",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "male_vtuber",
-      "title": "【 ポケモン スカーレット 】もう一度、オーダイルを探す旅 #02 【 VTuber / ゆきや / games 配信 初見 】",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/NVK10vBE2VM/hq720.jpg",
-      "publishedAt": "2026-10-27T05:00:25.991Z",
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": "2026-10-27T05:00:25.991Z",
-      "duration": null,
-      "status": "past",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UC5q709VOMSrf5Y-rdkd5hLg",
-          "name": "ゆきや アニソン歌い手Vtuber YUKIYA's Studio,Anime song lover",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-26T10:32:00.415Z",
-      "updatedAt": "2026-10-27T05:00:25.991Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_k0jzQfs5RMl40n6ih10baIBTv0I4LsXcw",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_k0jzQfs5RMl40n6ih10baIBTv0I4LsXcw",
-      "type": "playlist",
-      "channelId": "UC7XCjKxBEct0uAukpQXNFPw",
-      "channelName": "HACHI",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "Revealia",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/EssWV9mlnE8/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UC7XCjKxBEct0uAukpQXNFPw",
-          "name": "HACHI",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-27T10:02:58.969Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -843,256 +839,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "OLAK5uy_kbfDVY474h1xy_oPPbCIn7k8HWaEIjPd8",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_kbfDVY474h1xy_oPPbCIn7k8HWaEIjPd8",
-      "type": "playlist",
-      "channelId": "UCE7gtjLeZKNXLp5YURzYYeg",
-      "channelName": "春猿火 -Harusaruhi-",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "CREAM PUFF LIVE 2",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/vV7VZ1VRgeE/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCE7gtjLeZKNXLp5YURzYYeg",
-          "name": "春猿火 -Harusaruhi-",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_kC4D8BSax18noj_-iII2M5E8dLLzI-Md0",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_kC4D8BSax18noj_-iII2M5E8dLLzI-Md0",
-      "type": "playlist",
-      "channelId": "UCBJ6nejlzes6mm9UruaxQsA",
-      "channelName": "涼海ネモ / Nemo Channel【ななしいんく】",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vsinger",
-      "title": "wedge",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/GPKaY-py33A/hqdefault.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCBJ6nejlzes6mm9UruaxQsA",
-          "name": "涼海ネモ / Nemo Channel【ななしいんく】",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:36:28.069Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_kfr2Wm5uAJIO4AzQE0yiH-xjFPfEVLsPM",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_kfr2Wm5uAJIO4AzQE0yiH-xjFPfEVLsPM",
-      "type": "playlist",
-      "channelId": "UCp6993wxpyDPHUpavwDFqgg",
-      "channelName": "SoraCh. ときのそらチャンネル",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "Dreaming!",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/P0GRz9bjPoE/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCp6993wxpyDPHUpavwDFqgg",
-          "name": "SoraCh. ときのそらチャンネル",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_kFy8DKBXU6lfTGAG4wC5ruLgAuJ6XCVcQ",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_kFy8DKBXU6lfTGAG4wC5ruLgAuJ6XCVcQ",
-      "type": "playlist",
-      "channelId": "UCv1jAWnr9rPKRQsEZYl5izQ",
-      "channelName": "Omoinotake",
-      "channelKind": "real",
-      "region": "jp",
-      "gender": "male",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "male_musician",
-      "title": "Hitorigoto",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/FUxR6yBxN1Q/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCv1jAWnr9rPKRQsEZYl5izQ",
-          "name": "Omoinotake",
-          "kind": "real",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_kj8fJVPqmmmkC5zV9jKx89zha-OMlEQmc",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_kj8fJVPqmmmkC5zV9jKx89zha-OMlEQmc",
-      "type": "playlist",
-      "channelId": "UCFv2z4iM5vHrS8bZPq4fHQQ",
-      "channelName": "HIMEHINA Channel",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "Divine Flowers",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/O5uyMKs0n3Q/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCFv2z4iM5vHrS8bZPq4fHQQ",
-          "name": "HIMEHINA Channel",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "OLAK5uy_kjvii1JjPcGruy1vtI6pUqI0lOSZDR25E",
       "platform": "youtube",
       "url": "https://www.youtube.com/playlist?list=OLAK5uy_kjvii1JjPcGruy1vtI6pUqI0lOSZDR25E",
@@ -1143,106 +889,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "OLAK5uy_kKk1zsXLBpue8YlbpiHOm3ettusMRjtfU",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_kKk1zsXLBpue8YlbpiHOm3ettusMRjtfU",
-      "type": "playlist",
-      "channelId": "UCDW-kx3ErDhFuQ50vCOXU_A",
-      "channelName": "TeddyLoid",
-      "channelKind": "real",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "producer",
-      "title": "BLACK MOON RISING",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/Jr5krquBHzA/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCDW-kx3ErDhFuQ50vCOXU_A",
-          "name": "TeddyLoid",
-          "kind": "real",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_kl0dnMcU_u9z_9bICdmuR6qEjTGd0modY",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_kl0dnMcU_u9z_9bICdmuR6qEjTGd0modY",
-      "type": "playlist",
-      "channelId": "UCR1zT1s524Hbc85bdvno_8w",
-      "channelName": "Aimer Official YouTube Channel",
-      "channelKind": "real",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "singer",
-      "title": "Penny Rain",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/rlT30uQUmwg/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCR1zT1s524Hbc85bdvno_8w",
-          "name": "Aimer Official YouTube Channel",
-          "kind": "real",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "OLAK5uy_kR8I4rCC5o0zOHu9nlFDcGC8sq59D9ncY",
       "platform": "youtube",
       "url": "https://www.youtube.com/playlist?list=OLAK5uy_kR8I4rCC5o0zOHu9nlFDcGC8sq59D9ncY",
@@ -1274,56 +920,6 @@
         {
           "channelId": "UCt5-0i4AVHXaWJrL8Wql3mw",
           "name": "緑仙 / Ryushen",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_kU47bZWkkKvYNcsNIBMBigtHZ3J7EF064",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_kU47bZWkkKvYNcsNIBMBigtHZ3J7EF064",
-      "type": "playlist",
-      "channelId": "UCE7gtjLeZKNXLp5YURzYYeg",
-      "channelName": "春猿火 -Harusaruhi-",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "Accomplice",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/M5WeWkUR0Gw/hqdefault.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCE7gtjLeZKNXLp5YURzYYeg",
-          "name": "春猿火 -Harusaruhi-",
           "kind": "virtual",
           "region": "jp"
         }
@@ -1393,106 +989,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "OLAK5uy_kU7PSbjTmmxyLURjaIIo6rgYXWZtGHa5I",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_kU7PSbjTmmxyLURjaIIo6rgYXWZtGHa5I",
-      "type": "playlist",
-      "channelId": "UCpwEuBTZQ8VFHuZa4ZcSsyg",
-      "channelName": "Ridel.🐰🎤Vsinger",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vsinger",
-      "title": "Rabi Rabi!Lovin' You Ridel.Team",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/nBVpD-TW7YI/hqdefault.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCpwEuBTZQ8VFHuZa4ZcSsyg",
-          "name": "Ridel.🐰🎤Vsinger",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:36:28.069Z",
-      "updatedAt": "2026-10-25T11:22:49.894Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_kW_i4Hm79RrLIeg5ea8zktcQrU477dN-k",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_kW_i4Hm79RrLIeg5ea8zktcQrU477dN-k",
-      "type": "playlist",
-      "channelId": "UC7XCjKxBEct0uAukpQXNFPw",
-      "channelName": "HACHI",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "Constellation",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/0jNRwkn-VyA/hqdefault.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UC7XCjKxBEct0uAukpQXNFPw",
-          "name": "HACHI",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "OLAK5uy_kWOZe7u989RsFF8QfC2XYZjKB23gIAyXU",
       "platform": "youtube",
       "url": "https://www.youtube.com/playlist?list=OLAK5uy_kWOZe7u989RsFF8QfC2XYZjKB23gIAyXU",
@@ -1524,156 +1020,6 @@
         {
           "channelId": "UCAWSyEs_Io8MtpY3m-zqILA",
           "name": "Nene Ch.桃鈴ねね",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_kXq2x_Xhe2FCz84-FqCjvTiqIxsyu6NDw",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_kXq2x_Xhe2FCz84-FqCjvTiqIxsyu6NDw",
-      "type": "playlist",
-      "channelId": "UC2kyQhzGOB-JPgcQX9OMgEw",
-      "channelName": "宗谷いちか / Ichika Channel【ななしいんく】",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "Amaimadoi",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/IdowmdmHWLI/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UC2kyQhzGOB-JPgcQX9OMgEw",
-          "name": "宗谷いちか / Ichika Channel【ななしいんく】",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_l1A98SfLWQ9TrELQA8YccX4TmUVMv_PD4",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_l1A98SfLWQ9TrELQA8YccX4TmUVMv_PD4",
-      "type": "playlist",
-      "channelId": "UC1uv2Oq6kNxgATlCiez59hw",
-      "channelName": "Towa Ch.Tokoyami Towa",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "male",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "SM4SH IT UP",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/JV9uwZ4mlug/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UC1uv2Oq6kNxgATlCiez59hw",
-          "name": "Towa Ch.Tokoyami Towa",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_l6qerQXUwBfwIxLeQC7AqSLQZdispL1rc",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_l6qerQXUwBfwIxLeQC7AqSLQZdispL1rc",
-      "type": "playlist",
-      "channelId": "UCnUiy3Yeo1cuj1noIJjVe3g",
-      "channelName": "まゆる / mayuru",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "Seeker in the dark",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/elHRb8GbKQI/hqdefault.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCnUiy3Yeo1cuj1noIJjVe3g",
-          "name": "まゆる / mayuru",
           "kind": "virtual",
           "region": "jp"
         }
@@ -1739,56 +1085,6 @@
       "source": "api",
       "addedAt": "2026-10-25T07:36:28.069Z",
       "updatedAt": "2026-10-25T11:22:49.894Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_lbnLJ-VasCX3Vhd-g-ya5BEzo9usvRQWo",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_lbnLJ-VasCX3Vhd-g-ya5BEzo9usvRQWo",
-      "type": "playlist",
-      "channelId": "UC7Gow-kNHq21oejSIDg9PAg",
-      "channelName": "幸祜 - KOKO -",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "Phantom",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/G-z9Rfln_UQ/hqdefault.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UC7Gow-kNHq21oejSIDg9PAg",
-          "name": "幸祜 - KOKO -",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -2124,6 +1420,898 @@
         {
           "channelId": "UCAWSyEs_Io8MtpY3m-zqILA",
           "name": "Nene Ch.桃鈴ねね",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_n5fS9IBtObFOKOLYX-kF6vxTowoSU3Wls",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_n5fS9IBtObFOKOLYX-kF6vxTowoSU3Wls",
+      "type": "playlist",
+      "channelId": "UCB1s_IdO-r0nUkY2mXeti-A",
+      "channelName": "獅子神レオナ/レオナちゃんねる",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "male",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "History:L",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/zmNPYbO7uY0/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCB1s_IdO-r0nUkY2mXeti-A",
+          "name": "獅子神レオナ/レオナちゃんねる",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "XJKzqnv00uw",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCxAVi_6J0oxobmkQYgr5H0Q",
+      "channelName": "サクラリナ / SakuraRina 🥩🧈",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "female",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "female_vsinger",
+      "title": "【 メン限｜親衛〜 】さぎょ！【 #サクラリナ / #vsinger / #vtuber / #ラジオ】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/XJKzqnv00uw/hq720.jpg",
+      "publishedAt": "2026-10-27T10:02:58.969Z",
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": "2026-10-27T10:02:58.969Z",
+      "duration": null,
+      "status": "past",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCxAVi_6J0oxobmkQYgr5H0Q",
+          "name": "サクラリナ / SakuraRina 🥩🧈",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-26T10:32:00.415Z",
+      "updatedAt": "2026-10-27T10:02:58.969Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "NVK10vBE2VM",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UC5q709VOMSrf5Y-rdkd5hLg",
+      "channelName": "ゆきや アニソン歌い手Vtuber YUKIYA's Studio,Anime song lover",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "male",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "male_vtuber",
+      "title": "【 ポケモン スカーレット 】もう一度、オーダイルを探す旅 #02 【 VTuber / ゆきや / games 配信 初見 】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/NVK10vBE2VM/hq720.jpg",
+      "publishedAt": "2026-10-27T05:00:25.991Z",
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": "2026-10-27T05:00:25.991Z",
+      "duration": null,
+      "status": "past",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC5q709VOMSrf5Y-rdkd5hLg",
+          "name": "ゆきや アニソン歌い手Vtuber YUKIYA's Studio,Anime song lover",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-26T10:32:00.415Z",
+      "updatedAt": "2026-10-27T05:00:25.991Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_k0jzQfs5RMl40n6ih10baIBTv0I4LsXcw",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_k0jzQfs5RMl40n6ih10baIBTv0I4LsXcw",
+      "type": "playlist",
+      "channelId": "UC7XCjKxBEct0uAukpQXNFPw",
+      "channelName": "HACHI",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "Revealia",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/EssWV9mlnE8/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC7XCjKxBEct0uAukpQXNFPw",
+          "name": "HACHI",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_kbfDVY474h1xy_oPPbCIn7k8HWaEIjPd8",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_kbfDVY474h1xy_oPPbCIn7k8HWaEIjPd8",
+      "type": "playlist",
+      "channelId": "UCE7gtjLeZKNXLp5YURzYYeg",
+      "channelName": "春猿火 -Harusaruhi-",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "CREAM PUFF LIVE 2",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/vV7VZ1VRgeE/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCE7gtjLeZKNXLp5YURzYYeg",
+          "name": "春猿火 -Harusaruhi-",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_kC4D8BSax18noj_-iII2M5E8dLLzI-Md0",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_kC4D8BSax18noj_-iII2M5E8dLLzI-Md0",
+      "type": "playlist",
+      "channelId": "UCBJ6nejlzes6mm9UruaxQsA",
+      "channelName": "涼海ネモ / Nemo Channel【ななしいんく】",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vsinger",
+      "title": "wedge",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/GPKaY-py33A/hqdefault.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCBJ6nejlzes6mm9UruaxQsA",
+          "name": "涼海ネモ / Nemo Channel【ななしいんく】",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:36:28.069Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_kfr2Wm5uAJIO4AzQE0yiH-xjFPfEVLsPM",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_kfr2Wm5uAJIO4AzQE0yiH-xjFPfEVLsPM",
+      "type": "playlist",
+      "channelId": "UCp6993wxpyDPHUpavwDFqgg",
+      "channelName": "SoraCh. ときのそらチャンネル",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "Dreaming!",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/P0GRz9bjPoE/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCp6993wxpyDPHUpavwDFqgg",
+          "name": "SoraCh. ときのそらチャンネル",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_kFy8DKBXU6lfTGAG4wC5ruLgAuJ6XCVcQ",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_kFy8DKBXU6lfTGAG4wC5ruLgAuJ6XCVcQ",
+      "type": "playlist",
+      "channelId": "UCv1jAWnr9rPKRQsEZYl5izQ",
+      "channelName": "Omoinotake",
+      "channelKind": "real",
+      "region": "jp",
+      "gender": "male",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "male_musician",
+      "title": "Hitorigoto",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/FUxR6yBxN1Q/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCv1jAWnr9rPKRQsEZYl5izQ",
+          "name": "Omoinotake",
+          "kind": "real",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_kj8fJVPqmmmkC5zV9jKx89zha-OMlEQmc",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_kj8fJVPqmmmkC5zV9jKx89zha-OMlEQmc",
+      "type": "playlist",
+      "channelId": "UCFv2z4iM5vHrS8bZPq4fHQQ",
+      "channelName": "HIMEHINA Channel",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "Divine Flowers",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/O5uyMKs0n3Q/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCFv2z4iM5vHrS8bZPq4fHQQ",
+          "name": "HIMEHINA Channel",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_kKk1zsXLBpue8YlbpiHOm3ettusMRjtfU",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_kKk1zsXLBpue8YlbpiHOm3ettusMRjtfU",
+      "type": "playlist",
+      "channelId": "UCDW-kx3ErDhFuQ50vCOXU_A",
+      "channelName": "TeddyLoid",
+      "channelKind": "real",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "producer",
+      "title": "BLACK MOON RISING",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/Jr5krquBHzA/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCDW-kx3ErDhFuQ50vCOXU_A",
+          "name": "TeddyLoid",
+          "kind": "real",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_kl0dnMcU_u9z_9bICdmuR6qEjTGd0modY",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_kl0dnMcU_u9z_9bICdmuR6qEjTGd0modY",
+      "type": "playlist",
+      "channelId": "UCR1zT1s524Hbc85bdvno_8w",
+      "channelName": "Aimer Official YouTube Channel",
+      "channelKind": "real",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "singer",
+      "title": "Penny Rain",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/rlT30uQUmwg/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCR1zT1s524Hbc85bdvno_8w",
+          "name": "Aimer Official YouTube Channel",
+          "kind": "real",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_kU47bZWkkKvYNcsNIBMBigtHZ3J7EF064",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_kU47bZWkkKvYNcsNIBMBigtHZ3J7EF064",
+      "type": "playlist",
+      "channelId": "UCE7gtjLeZKNXLp5YURzYYeg",
+      "channelName": "春猿火 -Harusaruhi-",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "Accomplice",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/M5WeWkUR0Gw/hqdefault.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCE7gtjLeZKNXLp5YURzYYeg",
+          "name": "春猿火 -Harusaruhi-",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_kU7PSbjTmmxyLURjaIIo6rgYXWZtGHa5I",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_kU7PSbjTmmxyLURjaIIo6rgYXWZtGHa5I",
+      "type": "playlist",
+      "channelId": "UCpwEuBTZQ8VFHuZa4ZcSsyg",
+      "channelName": "Ridel.🐰🎤Vsinger",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vsinger",
+      "title": "Rabi Rabi!Lovin' You Ridel.Team",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/nBVpD-TW7YI/hqdefault.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCpwEuBTZQ8VFHuZa4ZcSsyg",
+          "name": "Ridel.🐰🎤Vsinger",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:36:28.069Z",
+      "updatedAt": "2026-10-25T11:22:49.894Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_kW_i4Hm79RrLIeg5ea8zktcQrU477dN-k",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_kW_i4Hm79RrLIeg5ea8zktcQrU477dN-k",
+      "type": "playlist",
+      "channelId": "UC7XCjKxBEct0uAukpQXNFPw",
+      "channelName": "HACHI",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "Constellation",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/0jNRwkn-VyA/hqdefault.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC7XCjKxBEct0uAukpQXNFPw",
+          "name": "HACHI",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_kXq2x_Xhe2FCz84-FqCjvTiqIxsyu6NDw",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_kXq2x_Xhe2FCz84-FqCjvTiqIxsyu6NDw",
+      "type": "playlist",
+      "channelId": "UC2kyQhzGOB-JPgcQX9OMgEw",
+      "channelName": "宗谷いちか / Ichika Channel【ななしいんく】",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "Amaimadoi",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/IdowmdmHWLI/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC2kyQhzGOB-JPgcQX9OMgEw",
+          "name": "宗谷いちか / Ichika Channel【ななしいんく】",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_l1A98SfLWQ9TrELQA8YccX4TmUVMv_PD4",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_l1A98SfLWQ9TrELQA8YccX4TmUVMv_PD4",
+      "type": "playlist",
+      "channelId": "UC1uv2Oq6kNxgATlCiez59hw",
+      "channelName": "Towa Ch.Tokoyami Towa",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "male",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "SM4SH IT UP",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/JV9uwZ4mlug/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC1uv2Oq6kNxgATlCiez59hw",
+          "name": "Towa Ch.Tokoyami Towa",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_l6qerQXUwBfwIxLeQC7AqSLQZdispL1rc",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_l6qerQXUwBfwIxLeQC7AqSLQZdispL1rc",
+      "type": "playlist",
+      "channelId": "UCnUiy3Yeo1cuj1noIJjVe3g",
+      "channelName": "まゆる / mayuru",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "Seeker in the dark",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/elHRb8GbKQI/hqdefault.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCnUiy3Yeo1cuj1noIJjVe3g",
+          "name": "まゆる / mayuru",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_lbnLJ-VasCX3Vhd-g-ya5BEzo9usvRQWo",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_lbnLJ-VasCX3Vhd-g-ya5BEzo9usvRQWo",
+      "type": "playlist",
+      "channelId": "UC7Gow-kNHq21oejSIDg9PAg",
+      "channelName": "幸祜 - KOKO -",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "Phantom",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/G-z9Rfln_UQ/hqdefault.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC7Gow-kNHq21oejSIDg9PAg",
+          "name": "幸祜 - KOKO -",
           "kind": "virtual",
           "region": "jp"
         }
@@ -2993,56 +3181,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "OLAK5uy_n5fS9IBtObFOKOLYX-kF6vxTowoSU3Wls",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_n5fS9IBtObFOKOLYX-kF6vxTowoSU3Wls",
-      "type": "playlist",
-      "channelId": "UCB1s_IdO-r0nUkY2mXeti-A",
-      "channelName": "獅子神レオナ/レオナちゃんねる",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "male",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "History:L",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/zmNPYbO7uY0/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCB1s_IdO-r0nUkY2mXeti-A",
-          "name": "獅子神レオナ/レオナちゃんねる",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "OLAK5uy_n7HHoPf1hojHpuQowny20bIjenOBzJcAk",
       "platform": "youtube",
       "url": "https://www.youtube.com/playlist?list=OLAK5uy_n7HHoPf1hojHpuQowny20bIjenOBzJcAk",
@@ -3493,6 +3631,56 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "OLAK5uy_nXWJl2fgraPODHkvnJJakvukz2by-XwY4",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_nXWJl2fgraPODHkvnJJakvukz2by-XwY4",
+      "type": "playlist",
+      "channelId": "UC5CwaMl1eIgY8h02uZw7u8A",
+      "channelName": "Suisei Channel",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vsinger",
+      "title": "駆けろ / 天球、彗星は夜を跨いで",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/tHR9WFXBtjA/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC5CwaMl1eIgY8h02uZw7u8A",
+          "name": "Suisei Channel",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-26T12:56:51.125Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "QSxucwX1b64",
       "platform": "youtube",
       "type": "live",
@@ -3534,7 +3722,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-25T20:48:43.621Z",
-      "updatedAt": "2026-10-27T05:00:25.991Z",
+      "updatedAt": "2026-10-27T10:02:58.969Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3580,7 +3768,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-26T10:32:00.415Z",
-      "updatedAt": "2026-10-26T22:38:30.097Z",
+      "updatedAt": "2026-10-27T10:02:58.969Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3677,56 +3865,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "OLAK5uy_nXWJl2fgraPODHkvnJJakvukz2by-XwY4",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_nXWJl2fgraPODHkvnJJakvukz2by-XwY4",
-      "type": "playlist",
-      "channelId": "UC5CwaMl1eIgY8h02uZw7u8A",
-      "channelName": "Suisei Channel",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vsinger",
-      "title": "駆けろ / 天球、彗星は夜を跨いで",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/tHR9WFXBtjA/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UC5CwaMl1eIgY8h02uZw7u8A",
-          "name": "Suisei Channel",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-26T12:56:51.125Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "rKMhl43RHo0",
       "platform": "youtube",
       "type": "live",
@@ -3768,7 +3906,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-27T05:00:25.991Z",
+      "updatedAt": "2026-10-27T10:02:58.969Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3814,7 +3952,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T15:54:59.721Z",
-      "updatedAt": "2026-10-26T22:38:30.097Z",
+      "updatedAt": "2026-10-27T10:02:58.969Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3860,7 +3998,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-25T04:37:45.822Z",
-      "updatedAt": "2026-10-26T10:32:00.415Z",
+      "updatedAt": "2026-10-27T10:02:58.969Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3906,7 +4044,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-27T05:00:25.991Z",
+      "updatedAt": "2026-10-27T10:02:58.969Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3952,53 +4090,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-26T10:32:00.415Z",
-      "updatedAt": "2026-10-26T12:56:51.125Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "XJKzqnv00uw",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCxAVi_6J0oxobmkQYgr5H0Q",
-      "channelName": "サクラリナ / SakuraRina 🥩🧈",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "female",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "female_vsinger",
-      "title": "【 メン限｜親衛〜 】さぎょ！【 #サクラリナ / #vsinger / #vtuber / #ラジオ】",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/XJKzqnv00uw/hq720.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "upcoming",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCxAVi_6J0oxobmkQYgr5H0Q",
-          "name": "サクラリナ / SakuraRina 🥩🧈",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-26T10:32:00.415Z",
-      "updatedAt": "2026-10-26T22:38:30.097Z",
+      "updatedAt": "2026-10-27T10:02:58.969Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4044,7 +4136,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-26T22:38:30.097Z",
-      "updatedAt": "2026-10-26T22:38:30.097Z",
+      "updatedAt": "2026-10-27T10:02:58.969Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

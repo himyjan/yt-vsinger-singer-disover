@@ -1,18 +1,18 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-27T05:00:25.991Z",
+  "generatedAt": "2026-10-27T10:02:58.969Z",
   "counts": {
     "channels": 14340,
     "channelsVirtual": 14318,
     "channelsReal": 22,
     "channelsSinging": 1241,
-    "items": 1386,
-    "itemsLive": 15,
-    "itemsUpcoming": 366,
+    "items": 1443,
+    "itemsLive": 20,
+    "itemsUpcoming": 388,
     "itemsVideo": 0,
     "itemsPlaylist": 874,
     "itemsCover": 0,
-    "itemsMv": 3,
+    "itemsMv": 4,
     "itemsOriginal": 0
   },
   "regions": [
@@ -21,7 +21,7 @@
       "label": "Japan",
       "badge": "🇯🇵",
       "channels": 1108,
-      "items": 1186
+      "items": 1236
     },
     {
       "code": "cn",
@@ -35,7 +35,7 @@
       "label": "Taiwan",
       "badge": "🇹🇼",
       "channels": 3644,
-      "items": 32
+      "items": 35
     },
     {
       "code": "hk",
@@ -56,14 +56,14 @@
       "label": "English",
       "badge": "🌐",
       "channels": 94,
-      "items": 123
+      "items": 125
     },
     {
       "code": "id",
       "label": "Indonesia",
       "badge": "🇮🇩",
       "channels": 6,
-      "items": 18
+      "items": 19
     },
     {
       "code": "my",
@@ -84,7 +84,7 @@
       "label": "Unknown",
       "badge": "❔",
       "channels": 139,
-      "items": 23
+      "items": 24
     }
   ],
   "quota": {
