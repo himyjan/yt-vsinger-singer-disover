@@ -415,6 +415,7 @@ Load one with the `skill` tool, e.g. `skill({ id: "sync-dataset" })`.
 | `docs/PLATFORMS.md` | The platform adapters and their discovery coverage |
 | `docs/SOURCES.md` | Every data source, and which are read |
 | `docs/DEPLOY.md` | GitHub Actions, Pages, secrets, LFS |
+| `docs/API.md` | The read-only JSON API, and its generated index |
 | `docs/CONTRIBUTING.md` | How to add a channel, a region, a platform |
 
 ## External data sources

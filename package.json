@@ -6,11 +6,12 @@
   "scripts": {
     "dev": "tsx server.ts",
     "dev:web": "vite",
-    "build": "npm run prepare:public && vite build",
+    "build": "npm run prepare:public && npm run api:build && vite build",
     "start": "node server.ts",
     "clean": "rm -rf dist",
     "lint": "vue-tsc --noEmit",
     "prepare:public": "tsx scripts/prepare-public.ts",
+    "api:build": "tsx scripts/build-api.ts",
     "data:sync": "tsx scripts/sync.ts",
     "data:index": "tsx scripts/build-index.ts",
     "data:import-playlist": "tsx scripts/import-playlist.ts",
