@@ -168,6 +168,24 @@ flashes the wrong colours.
 The toggle lives in `state.theme`; `toggleTheme()` writes it to
 `localStorage` and toggles the class.
 
+That inline script is the one thing in the head that **must** stay blocking:
+it decides the colour scheme before the first paint.
+
+## Typography
+
+The webfonts are a `<link>` in `index.html`, **not** an `@import` inside
+`src/index.css` — an import is a serial round trip that hides the font CSS
+until the bundle has been parsed.
+
+The Google sheet is large — **383 KB uncompressed, 344 `@font-face` rules
+across 118 subsets**, more than the whole JS bundle — so it is a print-media
+sheet that swaps itself in when it arrives (`media="print"
+onload="this.media='all'"`) and never gates the first paint. The URL already
+carries `display=swap`, so text painted in the fallback face either way. Keep
+the two preconnects (they warm DNS, TLS and HTTP/2), and keep the `<noscript>`
+fallback that plain-links the sheet. Adding a second blocking stylesheet in the
+head would put ~104 KB gzip of third-party CSS back on the critical path.
+
 ## Responsive layout
 
 - **Mobile** — a single column, a fixed bottom tab bar, and the scope switch
@@ -319,13 +337,27 @@ variables — deliberately *not* `reactive()`, because deep-proxying the search
 packs made lookups take seconds.
 
 ```ts
-loadManifest()          // always
-loadSummaries()         // always
-loadChannels("virtual") // on demand
+loadManifest()          // phase 1
+loadSummaries()
+loadAllChannels()       // phase 1 — the whole roster, both kinds
 loadLive() / loadUpcoming()
-loadItems(regions)      // sharded by region
-loadSearchPack(region)
+loadItems("all")         // phase 2 — only the Songs view needs it
+// later, on demand:
+loadChannels("virtual") / loadItems(regions) / loadSearchPack(region)
 ```
+
+**Nothing blocks the first paint.** `loadDataset()` in `App.vue` starts with
+`afterFirstPaint()` — two `requestAnimationFrame` callbacks, with a timeout
+fallback — and only then sends the phase-1 requests in parallel, followed by
+the item set. A linked account reloads its subscriptions after that. Two
+readers that need the same shard (`loadSummaries()` and `loadAllChannels()`)
+share one download through the in-flight promise maps, so no shard is fetched
+twice.
+
+The channel shards are the biggest thing the app downloads — 14k records of
+JSON — and the Live tab draws from `manifest.json`, `live.json` and
+`upcoming.json` alone, so a view-scoped phase 1 is the remaining byte cut.
+Until that exists, the roster is fetched whole.
 
 **A search hit is not a channel.** `search()` returns index entries — `k`
 (`c` channel / `i` item), `id`, `n`, `g`, `r`, `th` — while the drawer needs
@@ -341,8 +373,8 @@ is what a search result with "no detail page" looks like.
   the app works from a GitHub Pages sub-path.
 - **Shared code** — import types and the search engine from `@shared/lib/…`,
   not from a copy.
-- **No new dependencies** — the bundle is ~46 KB gzipped and that is a
-  feature.
+- **No new dependencies** — the JS bundle is ~113 KB gzip (333 KB raw, plus
+  the ~3 KB analytics chunk and ~9 KB of CSS) and that is a feature.
 - **`@/` is `src/`**, `@shared/` is `scripts/`. Both are configured in
   `vite.config.ts` and `tsconfig.json` — keep them in sync.
 
