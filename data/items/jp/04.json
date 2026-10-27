@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-27T10:02:58.969Z",
+  "generatedAt": "2026-10-27T12:07:34.435Z",
   "items": [
     {
       "id": "-osdanmmOsE",
@@ -44,7 +44,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-25T04:37:45.822Z",
-      "updatedAt": "2026-10-27T10:02:58.969Z",
+      "updatedAt": "2026-10-27T12:07:34.435Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -688,7 +688,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-25T04:37:45.822Z",
-      "updatedAt": "2026-10-27T10:02:58.969Z",
+      "updatedAt": "2026-10-27T12:07:34.435Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -734,7 +734,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T05:10:16.208Z",
-      "updatedAt": "2026-10-27T10:02:58.969Z",
+      "updatedAt": "2026-10-27T12:07:34.435Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -1239,6 +1239,56 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "OLAK5uy_mT59rI-VW4UGawD5xbXckM64GvapHZNGI",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_mT59rI-VW4UGawD5xbXckM64GvapHZNGI",
+      "type": "playlist",
+      "channelId": "UCCzUftO8KOVkV4wQG1vkUvg",
+      "channelName": "Marine Ch. 宝鐘マリン hololive3期生",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "ROMAN HIKOU",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/-pCWlZzQPwY/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCCzUftO8KOVkV4wQG1vkUvg",
+          "name": "Marine Ch. 宝鐘マリン hololive3期生",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "OLAK5uy_mU2_NOIwkmjJD7f_8Qc3Sj3ZMCibW7440",
       "platform": "youtube",
       "url": "https://www.youtube.com/playlist?list=OLAK5uy_mU2_NOIwkmjJD7f_8Qc3Sj3ZMCibW7440",
@@ -1270,56 +1320,6 @@
         {
           "channelId": "UCOZvymJrEDhlINeeTJ1SGjQ",
           "name": "炭酸水🥤｡oO Vsinger",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:36:28.069Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_n31HCelOe2oXuZpqznVe1fEJjDD5EDi4o",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_n31HCelOe2oXuZpqznVe1fEJjDD5EDi4o",
-      "type": "playlist",
-      "channelId": "UC3zSmwgOOIjWUbus4cZIUPg",
-      "channelName": "MUS1CA",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "female",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "female_vsinger",
-      "title": "arika",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/3W_LgPdoZVY/hqdefault.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UC3zSmwgOOIjWUbus4cZIUPg",
-          "name": "MUS1CA",
           "kind": "virtual",
           "region": "jp"
         }
@@ -1750,9 +1750,9 @@
       "publishedAt": "2026-10-27T10:02:58.969Z",
       "scheduledStart": null,
       "actualStart": "2026-10-27T10:02:58.969Z",
-      "actualEnd": null,
+      "actualEnd": "2026-10-27T12:07:34.435Z",
       "duration": null,
-      "status": "live",
+      "status": "past",
       "category": "mv",
       "songTitle": null,
       "originalArtist": null,
@@ -1772,7 +1772,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-27T10:02:58.969Z",
-      "updatedAt": "2026-10-27T10:02:58.969Z",
+      "updatedAt": "2026-10-27T12:07:34.435Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3011,56 +3011,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "OLAK5uy_mT59rI-VW4UGawD5xbXckM64GvapHZNGI",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_mT59rI-VW4UGawD5xbXckM64GvapHZNGI",
-      "type": "playlist",
-      "channelId": "UCCzUftO8KOVkV4wQG1vkUvg",
-      "channelName": "Marine Ch. 宝鐘マリン hololive3期生",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "ROMAN HIKOU",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/-pCWlZzQPwY/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCCzUftO8KOVkV4wQG1vkUvg",
-          "name": "Marine Ch. 宝鐘マリン hololive3期生",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "OLAK5uy_mWlC61XpOxi0C9l7Ef43dUlayPOZ5ZdCw",
       "platform": "youtube",
       "url": "https://www.youtube.com/playlist?list=OLAK5uy_mWlC61XpOxi0C9l7Ef43dUlayPOZ5ZdCw",
@@ -3207,6 +3157,56 @@
       "source": "api",
       "addedAt": "2026-10-25T07:43:14.768Z",
       "updatedAt": "2026-10-26T12:56:51.125Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_n31HCelOe2oXuZpqznVe1fEJjDD5EDi4o",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_n31HCelOe2oXuZpqznVe1fEJjDD5EDi4o",
+      "type": "playlist",
+      "channelId": "UC3zSmwgOOIjWUbus4cZIUPg",
+      "channelName": "MUS1CA",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "female",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "female_vsinger",
+      "title": "arika",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/3W_LgPdoZVY/hqdefault.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC3zSmwgOOIjWUbus4cZIUPg",
+          "name": "MUS1CA",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:36:28.069Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },

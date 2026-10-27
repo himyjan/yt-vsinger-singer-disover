@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-27T10:02:58.969Z",
+  "generatedAt": "2026-10-27T12:07:34.435Z",
   "items": [
     {
       "id": "GUXeSrXm_2Q",
@@ -228,7 +228,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-27T10:02:58.969Z",
-      "updatedAt": "2026-10-27T10:02:58.969Z",
+      "updatedAt": "2026-10-27T12:07:34.435Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -252,9 +252,9 @@
       "publishedAt": "2026-10-27T10:02:58.969Z",
       "scheduledStart": null,
       "actualStart": "2026-10-27T10:02:58.969Z",
-      "actualEnd": null,
+      "actualEnd": "2026-10-27T12:07:34.435Z",
       "duration": null,
-      "status": "live",
+      "status": "past",
       "category": "live",
       "songTitle": null,
       "originalArtist": null,
@@ -274,7 +274,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-25T04:37:45.822Z",
-      "updatedAt": "2026-10-27T10:02:58.969Z",
+      "updatedAt": "2026-10-27T12:07:34.435Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -366,7 +366,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-25T04:37:45.822Z",
-      "updatedAt": "2026-10-27T10:02:58.969Z",
+      "updatedAt": "2026-10-27T12:07:34.435Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -789,6 +789,56 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "OLAK5uy_k6PdZ12JYiwdp1pPrTz03Hl473vWS4jpA",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_k6PdZ12JYiwdp1pPrTz03Hl473vWS4jpA",
+      "type": "playlist",
+      "channelId": "UCFv2z4iM5vHrS8bZPq4fHQQ",
+      "channelName": "HIMEHINA Channel",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "HIMEHINA LIVE 2022『Kiryca and the Singing Hope』",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/3cp0XrX1DEw/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCFv2z4iM5vHrS8bZPq4fHQQ",
+          "name": "HIMEHINA Channel",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "OLAK5uy_kSWZYpO2Wrho5_QaluNwmm3511bsjUa20",
       "platform": "youtube",
       "url": "https://www.youtube.com/playlist?list=OLAK5uy_kSWZYpO2Wrho5_QaluNwmm3511bsjUa20",
@@ -1139,56 +1189,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "OLAK5uy_nxE6WESH88o2rV1A47TLN86gPOfsacAJ8",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_nxE6WESH88o2rV1A47TLN86gPOfsacAJ8",
-      "type": "playlist",
-      "channelId": "UC0TXe_LYZ4scaW2XMyi5_kw",
-      "channelName": "AZKi Channel",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "Re:Start",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/rWodZoF-Ktk/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UC0TXe_LYZ4scaW2XMyi5_kw",
-          "name": "AZKi Channel",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "OLAK5uy_nZPpkHa28hoh0-N4ecdQmDGHkqVgH90Dk",
       "platform": "youtube",
       "url": "https://www.youtube.com/playlist?list=OLAK5uy_nZPpkHa28hoh0-N4ecdQmDGHkqVgH90Dk",
@@ -1280,7 +1280,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-25T04:37:45.822Z",
-      "updatedAt": "2026-10-27T10:02:58.969Z",
+      "updatedAt": "2026-10-27T12:07:34.435Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -1372,7 +1372,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-25T09:23:34.774Z",
-      "updatedAt": "2026-10-27T10:02:58.969Z",
+      "updatedAt": "2026-10-27T12:07:34.435Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -1464,52 +1464,6 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T20:46:02.237Z",
-      "updatedAt": "2026-10-27T10:02:58.969Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "tcsxv7X4nf8",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCNskpCCH661BeRJkN8n8d-A",
-      "channelName": "UTANO ch. 白玖ウタノ",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vsinger",
-      "title": "【歌枠】ちょっとしたお披露目あり？近すぎ歌枠👁️👁️ ‬‪ #ウタノライブ 【KARAOKE/VTuber】",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/tcsxv7X4nf8/hq720.jpg",
-      "publishedAt": "2026-10-27T10:02:58.969Z",
-      "scheduledStart": null,
-      "actualStart": "2026-10-27T10:02:58.969Z",
-      "actualEnd": null,
-      "duration": null,
-      "status": "live",
-      "category": "live",
-      "songTitle": "ちょっとしたお披露目あり？近すぎ歌枠👁️👁️ ‬‪ #ウタノライブ 【KARAOKE/VTuber】",
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCNskpCCH661BeRJkN8n8d-A",
-          "name": "UTANO ch. 白玖ウタノ",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-27T10:02:58.969Z",
       "updatedAt": "2026-10-27T10:02:58.969Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
@@ -1695,56 +1649,6 @@
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
       "updatedAt": "2026-10-27T10:02:58.969Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_k6PdZ12JYiwdp1pPrTz03Hl473vWS4jpA",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_k6PdZ12JYiwdp1pPrTz03Hl473vWS4jpA",
-      "type": "playlist",
-      "channelId": "UCFv2z4iM5vHrS8bZPq4fHQQ",
-      "channelName": "HIMEHINA Channel",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "HIMEHINA LIVE 2022『Kiryca and the Singing Hope』",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/3cp0XrX1DEw/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCFv2z4iM5vHrS8bZPq4fHQQ",
-          "name": "HIMEHINA Channel",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3130,6 +3034,56 @@
         {
           "channelId": "UCEjysNG2a2UgCBIpJxBqn3w",
           "name": "Tacitly Channel",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_nxE6WESH88o2rV1A47TLN86gPOfsacAJ8",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_nxE6WESH88o2rV1A47TLN86gPOfsacAJ8",
+      "type": "playlist",
+      "channelId": "UC0TXe_LYZ4scaW2XMyi5_kw",
+      "channelName": "AZKi Channel",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "Re:Start",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/rWodZoF-Ktk/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC0TXe_LYZ4scaW2XMyi5_kw",
+          "name": "AZKi Channel",
           "kind": "virtual",
           "region": "jp"
         }
