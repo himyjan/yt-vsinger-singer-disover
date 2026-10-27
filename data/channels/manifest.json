@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-27T12:07:34.435Z",
-  "total": 14340,
+  "generatedAt": "2026-10-27T16:14:46.307Z",
+  "total": 16786,
   "regions": [
     {
       "code": "jp",
-      "channels": 1108,
+      "channels": 2084,
       "virtual": {
-        "channels": 1093,
+        "channels": 2059,
         "buckets": [
           "00",
           "01",
@@ -28,12 +28,14 @@
         ]
       },
       "real": {
-        "channels": 15,
+        "channels": 25,
         "buckets": [
           "00",
           "01",
           "02",
           "03",
+          "04",
+          "05",
           "06",
           "07",
           "08",
@@ -48,9 +50,9 @@
     },
     {
       "code": "cn",
-      "channels": 8745,
+      "channels": 8747,
       "virtual": {
-        "channels": 8745,
+        "channels": 8747,
         "buckets": [
           "00",
           "01",
@@ -77,9 +79,9 @@
     },
     {
       "code": "tw",
-      "channels": 3644,
+      "channels": 3668,
       "virtual": {
-        "channels": 3644,
+        "channels": 3668,
         "buckets": [
           "00",
           "01",
@@ -106,9 +108,9 @@
     },
     {
       "code": "hk",
-      "channels": 402,
+      "channels": 409,
       "virtual": {
-        "channels": 402,
+        "channels": 409,
         "buckets": [
           "00",
           "01",
@@ -135,14 +137,26 @@
     },
     {
       "code": "kr",
-      "channels": 5,
+      "channels": 119,
       "virtual": {
-        "channels": 4,
+        "channels": 118,
         "buckets": [
+          "00",
+          "01",
+          "02",
+          "03",
+          "04",
           "05",
+          "06",
+          "07",
+          "08",
+          "09",
           "0a",
+          "0b",
           "0c",
-          "0d"
+          "0d",
+          "0e",
+          "0f"
         ]
       },
       "real": {
@@ -154,9 +168,9 @@
     },
     {
       "code": "en",
-      "channels": 94,
+      "channels": 980,
       "virtual": {
-        "channels": 88,
+        "channels": 955,
         "buckets": [
           "00",
           "01",
@@ -177,39 +191,29 @@
         ]
       },
       "real": {
-        "channels": 6,
+        "channels": 25,
         "buckets": [
           "01",
           "02",
           "03",
           "04",
-          "0a"
+          "06",
+          "07",
+          "08",
+          "09",
+          "0a",
+          "0c",
+          "0d",
+          "0e",
+          "0f"
         ]
       }
     },
     {
       "code": "id",
-      "channels": 6,
+      "channels": 208,
       "virtual": {
-        "channels": 6,
-        "buckets": [
-          "02",
-          "06",
-          "07",
-          "0a",
-          "0b"
-        ]
-      },
-      "real": {
-        "channels": 0,
-        "buckets": []
-      }
-    },
-    {
-      "code": "my",
-      "channels": 196,
-      "virtual": {
-        "channels": 196,
+        "channels": 204,
         "buckets": [
           "00",
           "01",
@@ -230,29 +234,83 @@
         ]
       },
       "real": {
-        "channels": 0,
-        "buckets": []
+        "channels": 4,
+        "buckets": [
+          "05",
+          "0a",
+          "0c",
+          "0d"
+        ]
+      }
+    },
+    {
+      "code": "my",
+      "channels": 235,
+      "virtual": {
+        "channels": 233,
+        "buckets": [
+          "00",
+          "01",
+          "02",
+          "03",
+          "04",
+          "05",
+          "06",
+          "07",
+          "08",
+          "09",
+          "0a",
+          "0b",
+          "0c",
+          "0d",
+          "0e",
+          "0f"
+        ]
+      },
+      "real": {
+        "channels": 2,
+        "buckets": [
+          "0c",
+          "0e"
+        ]
       }
     },
     {
       "code": "sea",
-      "channels": 1,
+      "channels": 128,
       "virtual": {
-        "channels": 1,
+        "channels": 127,
         "buckets": [
-          "07"
+          "00",
+          "01",
+          "02",
+          "03",
+          "04",
+          "05",
+          "06",
+          "07",
+          "08",
+          "09",
+          "0a",
+          "0b",
+          "0c",
+          "0d",
+          "0e",
+          "0f"
         ]
       },
       "real": {
-        "channels": 0,
-        "buckets": []
+        "channels": 1,
+        "buckets": [
+          "02"
+        ]
       }
     },
     {
       "code": "unknown",
-      "channels": 139,
+      "channels": 208,
       "virtual": {
-        "channels": 139,
+        "channels": 208,
         "buckets": [
           "00",
           "01",
