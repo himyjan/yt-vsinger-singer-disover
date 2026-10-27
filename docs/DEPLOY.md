@@ -206,11 +206,12 @@ apply on its own:
   dataset under `/data/` is rewritten by the sync workflow every six hours, so
   it stays open for ten minutes with a day-long `stale-while-revalidate`: the
   next visit is served from cache immediately and refreshed in the background.
-- **The SPA fallback.** Every unmatched path renders the app, which a static
-  SPA needs — but `/assets/` and `/data/` are excluded from that rewrite.
-  Without the exclusion a shard that is not there answers `200` with the app's
-  HTML, hiding the miss from the browser, the network panel and any uptime
-  check; with it, a file that does not exist is a plain `404`.
+- **The routing chain.** Filesystem first, then a `404` for anything under
+  `/assets/` or `/data/` that no file matches, and the app for everything
+  else. A plain SPA fallback answers `200` with the app's HTML for a shard
+  that is not there, which hides the miss from the browser, the network panel
+  and any uptime check; naming those two prefixes keeps a missing file a plain
+  `404` without losing the fallback the app needs.
 
 GitHub Pages does not let a repository set response headers, so the same
 deployment there is served with `Cache-Control: max-age=600` on everything —
