@@ -53,16 +53,33 @@ npm run data:bacharu-import -- --agencies               # empty agency ← the r
 npm run data:bacharu-import -- --retry-dead             # retry ids a recent run could not resolve
 npm run data:vtuberhk                    # 672 HK channels + /data/*.json (5 requests)
 npm run data:vtuberhk-import -- --stats --apply  # + the counts the records lack
+npm run data:hololist                    # 9,359 entries through the sitemaps → .cache/
+npm run data:hololist -- --limit 50      # a sample, for a parser check
+npm run data:hololist -- --merge-only    # rebuild the snapshot from the page files
+npm run data:hololist-import             # report the channels and links the gate admits
+npm run data:hololist-import -- --apply          # import the new channels
+npm run data:hololist-import -- --links --apply  # + the Twitch/X/IG/TikTok/Bilibili/Niconico handles
 npm run data:vtubie-groups               # vTubie groups (browser, resumable)
 npm run data:vtubie-import -- --apply    # the harvested YouTube channels
 ```
 
 A roster states the **claim** (`rosterIds`), never the name; it may state the
-**region** when the profile decided nothing and the **activity** when the site
-groups its entries by state. `data:vtuberhk-import -- --stats` also fills the
-`viewCount` / `videoCount` / `subscriberCount` a record is missing, because
-VtuberHK dumps a `channels.list` response and InnerTube does not publish a
-channel's total views.
+**region** when the profile decided nothing, the **activity** when the site
+groups its entries by state, and — through `RosterHint` — the **agency**, the
+**languages** (which choose the UI language the profile is fetched in), the
+**debut date** and the **gender** (a fallback behind the classifier).
+`data:vtuberhk-import -- --stats` also fills the `viewCount` / `videoCount` /
+`subscriberCount` a record is missing, because VtuberHK dumps a
+`channels.list` response and InnerTube does not publish a channel's total
+views.
+
+HoloList is the one roster that publishes a performer's **other accounts**:
+its `#links` section names the Twitch, X, Instagram, TikTok, Bilibili and
+Niconico profile beside the YouTube `@handle`, and `--links --apply` writes
+the ones a tracked record is missing into `externals`. It never overwrites a
+handle already on the record, and it never renames one: the roster has no
+`UC…` id, so the YouTube handle is resolved through InnerTube (cached in
+`.cache/hololist-resolved.json`) and the platform still owns the name.
 
 Always finish with `npm run data:index && npm run data:validate`.
 

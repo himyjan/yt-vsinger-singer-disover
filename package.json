@@ -24,6 +24,8 @@
     "data:vtubie-import": "tsx scripts/import-vtubie-groups.ts",
     "data:bacharu": "tsx scripts/harvest-bacharu.ts",
     "data:bacharu-import": "tsx scripts/import-bacharu.ts",
+    "data:hololist": "tsx scripts/harvest-hololist.ts",
+    "data:hololist-import": "tsx scripts/import-hololist.ts",
     "data:analytics:append": "tsx scripts/append-analytics.ts",
     "data:ids": "tsx scripts/fill-details.ts --normalize-ids",
     "data:avatars": "tsx scripts/fill-details.ts",

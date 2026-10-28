@@ -53,7 +53,8 @@ scripts/
 └── lib/               types, youtube, twitch, platforms, classify, regions,
                        identity, discovery-evidence, debut-sources,
                        promote-candidates, search, link-discovery, shard,
-                       volume, aislist, music-dataset, seeds, dataset, io
+                       volume, aislist, music-dataset, seeds, dataset, io,
+                       hololist, bacharu, vtuberhk
 ```
 
 ### The web app (`src/`)
@@ -461,6 +462,8 @@ create non-fast-forward push failures.
 | Add a platform | `scripts/lib/platforms/<name>.ts` + `platform-registry.ts` |
 | Add a discovery source | `scripts/lib/debut-sources/<name>.ts` |
 | Add Hong Kong VTubers | `npm run data:vtuberhk` then `npm run data:vtuberhk-import -- --apply` (`scripts/lib/vtuberhk.ts` parses `/channels/` for the roster and its state, and `/data/channels.json` for the counts; the roster files `hk` only where the profile decided nothing). `-- --stats` also fills the empty `viewCount`/`videoCount`/`subscribers` of the records it already tracks |
+| Add VTubers from the HoloList directory | `npm run data:hololist` (9,359 entries through the sitemaps, resumable and incremental on `<lastmod>`) then `npm run data:hololist-import -- --apply`; the site publishes an `@handle`, never a `UC…` id, so the importer resolves it through InnerTube and caches the answer in `.cache/hololist-resolved.json`. The roster supplies the agency, the languages, the debut date, the gender and the `Retired` state; the platform still owns the name |
+| A record is missing the performer's Twitch / X / Instagram / TikTok / Bilibili / Niconico account | `npm run data:hololist-import -- --links --apply` fills `externals` from the entry's `#links` section for records the roster knows by handle; nothing already on the record is overwritten |
 | Change the search behaviour | `scripts/lib/search.ts`, then `npm run data:index` |
 | Fix a wrong `kind` or `role` across the dataset | `scripts/lib/classify.ts`, then `npm run data:reclassify -- --apply` — it re-derives both from the records on disk, no network, and the roster ids in `.cache/` count as the virtual claim |
 | Add a UI filter | `src/lib/dataset.ts` (`filterItems`) + `src/App.vue` |
@@ -505,9 +508,17 @@ npm run data:bacharu-import -- --apply --resolve-handles 6000   # + the @handle-
 npm run data:bacharu-import -- --apply --search-names 200      # + rows with no link at all
 npm run data:bacharu-import -- --apply --agencies              # + the agency its group names
 npm run data:bacharu-import -- --apply --retry-dead            # retry ids a recent run could not resolve
+npm run data:bacharu-import -- --links --apply                  # + attach social links to tracked records
+npm run data:bacharu-import -- --hints --apply                  # + fill region, debutDate and gender on tracked records
 npm run data:vtuberhk                 # vtuber.hk roster + /data/channels.json + live/archive (5 requests)
 npm run data:vtuberhk-import          # report the HK channels the directory lists; --apply to add them
 npm run data:vtuberhk-import -- --stats --apply  # + fill the view/video/subscriber counts it is missing
+npm run data:hololist                 # the HoloList directory → .cache/hololist.json (sitemaps, resumable)
+npm run data:hololist -- --limit 50   # a sample, for a parser check
+npm run data:hololist -- --merge-only # rebuild the snapshot from the page files
+npm run data:hololist-import          # report the channels and links the gate admits
+npm run data:hololist-import -- --apply          # import the new channels
+npm run data:hololist-import -- --links --apply  # + fill externals from the entry links
 npm run data:ids                     # re-key handle / bilibili / roster ids to the UC… id
 npm run data:validate                # structure + budgets
 npm run repo:size                    # the stored history, not the tree

@@ -194,21 +194,25 @@ export const SOURCES: SourceInfo[] = [
   },
   {
     id: "hololist",
-    label: "Hololist",
+    label: "HoloList",
     url: "https://hololist.net",
-    provides: "A list of Hololive talents",
-    access: "api",
-    used: false,
-    usedFor: "Agency-limited, so it adds little over vdb and the Taiwan tracker",
+    provides:
+      "9,359 V-Tuber / V-Streamer / V-Singer / V-UP entries with the debut date, birthday, height, affiliation, languages, gender, model, status and the performer's own links",
+    access: "html",
+    used: true,
+    usedFor:
+      "New channels, the agency and languages it states, and the Twitch / X / Instagram / TikTok / Bilibili / Niconico accounts of records it already tracks",
   },
   {
     id: "bacharu",
     label: "bacharu",
     url: "https://bacharu.io",
-    provides: "A Japanese VTuber directory",
-    access: "none",
-    used: false,
-    usedFor: "A client-side application with no public data endpoint",
+    provides:
+      "A Japanese VTuber directory: about 110,000 performers with their group, country, debut, status and YouTube account",
+    access: "api",
+    used: true,
+    usedFor:
+      "The YouTube channel id and group of every performer it lists, and the handle-only and linkless rows `--resolve-handles` and `--search-names` can still reach",
   },
   {
     id: "vtubie",
@@ -244,10 +248,12 @@ export const SOURCES: SourceInfo[] = [
     id: "vtuber-hk",
     label: "VTuber.hk",
     url: "https://vtuber.hk",
-    provides: "Hong Kong VTubers",
-    access: "none",
-    used: false,
-    usedFor: "The page is server-rendered but has no documented data format",
+    provides:
+      "672 Hong Kong YouTube channels with their state (活動中 / 準備中 / 己引退), plus a channels.json dump carrying the description, country and the three counts",
+    access: "html",
+    used: true,
+    usedFor:
+      "Hong Kong channels, their graduation state, and the total view / video / subscriber counts InnerTube does not publish",
   },
   {
     id: "holodex",

@@ -179,6 +179,141 @@ clip account, which the import rejects. `-- --stats` then filled **876 empty
 counts across 360 records** from `channels.json`, mostly the `viewCount` and
 `videoCount` the platform adapter never writes.
 
+### HoloList — the VTuber directory
+
+`https://hololist.net` · read by `scripts/harvest-hololist.ts`
+
+A general VTuber directory — not an agency site — of **9,359 entries**, each a
+WordPress post at `https://hololist.net/<slug>/` and each filed under one or
+more of four types:
+
+| Type | Entries | What it is |
+| --- | ---: | --- |
+| V-Tuber | 9,127 | the mainstream virtual performer |
+| V-Streamer | 3,751 | a streamer-first virtual performer |
+| V-Singer | 905 | a virtual **singer** — the part of the roster this project is named after |
+| V-UP | 143 | 虚拟UP主, the Chinese word for the same thing |
+
+The types overlap, so the four sum past the roster. Entries are global: every
+Hololive and Holostars branch, NIJISANJI and NIJISANJI EN, VShojo, Phase
+Connect, KAMITSUBAKI, VirtuaReal and several thousand independent performers.
+
+**How it is read.** The site's own front end would use the WordPress REST API,
+but `/wp-json/wp/v2/posts` answers `403` through Cloudflare, `robots.txt`
+disallows `/*?*`, and the archive pages (`/debut/`, `/newest/`) are
+client-rendered shells. What is left is the path the site itself advertises:
+
+| Request | What it gives |
+| --- | --- |
+| `GET /wp-sitemap.xml` | the index: five post sitemaps |
+| `GET /wp-sitemap-posts-post-{1..5}.xml` | 2,000 + 2,000 + 2,000 + 2,000 + 1,359 = **9,359 entry URLs**, each with a `<lastmod>` |
+| `GET /<slug>/` | one server-rendered entry, about 56 KB |
+
+That is one request per entry and ~525 MB for the first census — lighter than
+bacharu's 2.9 GB — and `<lastmod>` makes every later run incremental: the
+harvester keeps the last modification it saw per URL and refetches only what
+moved. `npm run data:hololist` writes one file per entry under
+`.cache/hololist/pages/` (so an interrupted pass resumes) and merges them into
+`.cache/hololist.json`.
+
+**What an entry publishes.** The page is a stack of `<section id="…">` blocks,
+which is a better shape than most rosters:
+
+| Section | Example | This project's field |
+| --- | --- | --- |
+| `h1` | `Akugaki Koa` | `name` (the platform's title still wins) |
+| `#nickname` | `Koa-tan`, `AKGK` | `aliases` — *planned* |
+| `#type` | `V-Tuber`, `V-Streamer` | the roster's virtual claim (`rosterIds`) |
+| `#tags`, `#content` | `Demon`, `Singing` | `tags`, `isSinging` — *planned* |
+| `#debut` | `May 3, 2024` | `debutDate` (`RosterHint.debut`) |
+| `#birthday` | `October 28` | **no field yet** |
+| `#height` | `135 cm` | **no field yet** |
+| `#affiliation` | `ChromaSHIFT` | `agency` (`RosterHint.agency`, canonicalised) |
+| `#language` | `English`, `Japanese`, `Spanish` | `languages`, and the language the profile is asked in (`RosterHint.languages`) |
+| `#gender` | `Female` | `gender` — a fallback behind the classifier (`RosterHint.gender`) |
+| `#model` | `L2D`, `3D` | **no field yet** |
+| `#status` | `Active`, `Retired` | `activity` (`RosterHint.activity`) |
+| `#description`, `#lore` | prose | the profile's description wins; the lore has **no field** |
+| `#links` | YouTube `@handle`, Twitch, X, Instagram, TikTok, Bilibili, Niconico | `platforms[]` and `externals` |
+| `#fanbase`, `#oshi-mark`, `#hashtag`, `#likes`, `#dislikes`, `#character-sheet` | `Koanikis`, `↝ ⛓️`, `#AKGKart` | **no field yet** |
+| the count `<a title="63,600">63.6K</a>` | the exact subscriber count | `subscribers` |
+
+The links are the reason the roster is worth reading. The YouTube account is
+an `@handle` — never a `UC…` id — so the importer resolves it through
+InnerTube once and caches the answer, but the **Twitch, X, Instagram, TikTok,
+Bilibili and Niconico** accounts beside it are exactly what a record built
+from a roster is usually missing. `npm run data:hololist-import -- --links`
+reports them and `--links --apply` writes them into `externals`, which is the
+same field a description harvest fills and the same field `data:links` reads
+as a source. Nothing already on the record is overwritten.
+
+What the roster decides, and what it does not (`AGENTS.md` rule 15):
+
+- **The claim.** Every entry is a virtual performer (`rosterIds`), so `kind`
+  is settled even when the bio never says "VTuber".
+- **The agency, the languages, the debut, the gender and the state.** All five
+  are fallbacks or facts the profile does not publish: the agency only where
+  the title and description name none, the languages as the language to
+  *ask* the profile in, the gender only where the classifier answered
+  `unknown`, and `Retired` as `activity: "graduated"`.
+- **Not the name, the region or the role.** The platform still owns the name.
+  The site publishes no country, so the region is whatever YouTube's about
+  page, the agency or the language gives; a Spanish-speaking VTuber stays
+  `unknown` with `languages: ["es", "en", "ja"]` rather than being guessed
+  into a country. A `V-Singer` is a claim about content, and content is what
+  `classifyChannel()` reads from the channel.
+- **Not a fan account.** `detectClipAccount()` and `isFanAccountName()` still
+  run: a clip channel files itself as a VTuber while duplicating the
+  performer it clips, and a directory that accepts submissions lists them.
+
+**What the roster does not give.** It publishes a `@handle`, never a `UC…`
+id — so an entry costs one InnerTube resolution, cached in
+`.cache/hololist-resolved.json` — and it publishes no country, so a
+Spanish-speaking performer stays `unknown` rather than being guessed into
+`es`'s nearest region (there is none). Some entries are Twitch-only: the
+importer reports them as `no-youtube` and writes nothing, because its import
+path is YouTube's. The site also lists **fans** — a directory that accepts
+submissions always does — which is why the clip and fan tests run before
+anything else.
+
+#### What HoloList has that this project does not
+
+Read from the site on 2026-10-28, one entry at a time, against the dataset.
+
+| HoloList | What it publishes | This project today | Plan |
+| --- | --- | --- | --- |
+| **2.5× the roster of any single source** | 9,359 entries across every agency | 72,361 channels, most from vdb and bacharu | import the ids the gate admits (`data:hololist-import --apply`) |
+| **the performer's other accounts** | Twitch, X, Instagram, TikTok, Bilibili, Niconico beside the YouTube channel | `externals` is filled from a description harvest, and most records have none | **done** — `--links` |
+| **the debut date** | `May 3, 2024` | `debutDate` exists; InnerTube never states it | **done** — `RosterHint.debut` |
+| **birthdays** | `October 28`, per entry | **no field** | `birthday` (`MM-DD`) on `Channel`, then a `/birthday/` view — the site's own birthday page is its most-used one |
+| **anniversaries** | debut month + day, computed | `debutDate` is stored | a `/anniversary/` view over `debutDate`, once the dates are filled |
+| **height, weight, zodiac, MBTI** | `135 cm`, `Scorpio` | **no field** | **not planned** — profile trivia, and a schema field with no view is a field that forks the record |
+| **model type** | `L2D`, `3D` | **no field** | `modelType` on `Channel`, shown in the drawer — cheap, and a real filter for VTuber users |
+| **fanbase name, oshi mark, hashtags** | `Koanikis`, `↝ ⛓️`, `#AKGKart` | **no field** | `fanbaseName` and the hashtags as `tags`; the oshi mark is decoration |
+| **likes / dislikes / lore** | prose lists | **no field** | **not planned** — it is the character's biography, not the performer's, and the dataset is a tracker rather than a wiki |
+| **ratings, favourites, watchlist, spotlight** | a signed-in account feature | the Subs view and the account menu | nothing to build — a different product |
+| **live / debuts / retirements calendars** | `/live/`, `/debut/`, `/retirement/` | live items exist per card; retirements are `activity` | the **timetable** and **recent** views already planned from VtuberHK cover `/live/`; `/retirement/` is a filter over `activity` |
+| **exact counts in the markup** | `title="63,600"` | `subscribers` from InnerTube; `viewCount` / `videoCount` are usually empty | the subscriber count is passed for new imports; a `data:details --stats` pass is still the missing half |
+
+#### The build plan
+
+1. **Harvest and import** — `data:hololist` (resumable, incremental) and
+   `data:hololist-import` with the performer gate. `--apply` writes the new
+   channels with `rosterIds`, the agency, the languages, the debut, the gender
+   and the state.
+2. **The links** — `--links --apply` fills `externals` for tracked records
+   from the `#links` section, which is the field that makes the drawer and the
+   cross-platform block complete.
+3. **The two fields the roster states and the schema lacks** — `birthday`
+   (`MM-DD`) and `modelType` (`L2D` / `3D`). Both are additive, both are
+   cheap, and both have a view.
+4. **The dates reach the UI** — a birthday view and an anniversary view over
+   the data already on disk, which is the same work the VtuberHK comparison
+   asks for under *the timetable and the recent feed*.
+
+The first two are implemented; the third and fourth are the honest gaps the
+comparison leaves.
+
 ### 4. VocaDB
 
 `https://vocadb.net`
@@ -604,6 +739,20 @@ channel's title or description names still wins — the roster fills an empty
 field, it never takes one back. A group that matches no known agency is kept
 as the roster writes it, because that is all the source states.
 
+### The links and hints of tracked rows
+
+Bacharu knows more than just the YouTube channel: each row carries the performer's social accounts (Twitch, X, Instagram, TikTok, Bilibili, Niconico, KICK, CHZZK, SOOP, VK), plus a country, a debut date and a gender. Two passes attach what the roster knows to records the dataset already tracks:
+
+**Social links** — `npm run data:bacharu-import -- --links` reports the handles bacharu publishes that the dataset does not yet have; `--links --apply` writes them into `externals`. The record **is** the YouTube channel, so a `youtube.com/channel/…` link is skipped, and a link already on the record (read from the performer's own text) is never overwritten. `clips` links are skipped too — a clips channel publishes the performer, it is not the performer. Every other address lands in `externals` as its platform key (`twitch`, `twitter`, `instagram`, `tiktok`, …), or as `web:<n>` for a personal site or shop.
+
+**Region, debut and gender** — `npm run data:bacharu-import -- --hints` reports empty fields bacharu can fill; `--hints --apply` writes them:
+
+- `region` is written **only** where `classifyChannel()` could not place the channel at all (`unknown`) — bacharu's country outranks nothing stronger, and an already-known region is never changed.
+- `debutDate` is parsed from bacharu's free-text `debut` (`2022/07/03`, `June 18, 2022`, `YouTube: 2024/06/01`) — anything that is not a clean date (`TBA`, `2022`, `N/N/N as Indie VTuber`) is left blank.
+- `gender` is written only where the channel's own text did not answer (`unknown`) — bacharu's `Female`/`Male` maps to `female`/`male`, anything else stays with the classifier's answer. A written gender re-derives `variant` (`female_vtuber`, `male_vtuber`).
+
+Both passes run under the run lock, re-read the dataset inside it, and write nothing when nothing changed.
+
 ### Rate limiting
 
 The free sources have no published quota, but they do push back. All three go
@@ -624,7 +773,6 @@ are not in the pipeline.
 | Source | Why not |
 | --- | --- |
 | [Virtual YouTuber Wiki](https://virtualyoutuber.fandom.com/) | The MediaWiki API works, and it is used by the debut discovery — but the roster is not wired in yet |
-| [Hololist](https://hololist.net) | Agency-limited: Hololive only, so it adds little over vdb and the Taiwan tracker |
 | [AI VTuber DB](https://aivtuberdb.com) | Worth reading for the AI flag, but it publishes no machine-readable file |
 | [PVC.moe](https://pvc.moe) | The data is only in the client bundle |
 | [Streams Charts](https://streamscharts.com/vtubers) | Blocks automated requests |
@@ -655,16 +803,16 @@ Method: `curl --compressed` from one US VM plus each site's own published
 files. Payload and TTFB are network facts; Core Web Vitals need a browser and
 are not measured here.
 
-| | this project | Holodex | Musicdex | Taiwan tracker | vdb | VtuberHK |
-| --- | --- | --- | --- | --- | --- | --- |
-| blocking JS + CSS | **125 KB** (116,014 B JS + 9,373 B CSS) | 276 KB | 385 KB | 165 KB | 32 KB of static HTML | 229 KB (131,307 B JS + 97,686 B CSS) + Google Fonts |
-| hashed asset cache | `immutable`, one year (Vercel) | hashed | hashed | ten minutes, flat | ten minutes, flat | no `Cache-Control`, ETag only |
-| data access | committed JSON, no key | API v2, `X-APIKEY` | same key | static JSON | static `list.json` | server-rendered HTML, no key |
-| inventory | **72,110 channels**, 1,749 items | not published; `403` without a key | not published | 288 groups; performer list not published | 10,138 records | 672 channels (235 Twitch logins) |
-| platforms tracked | 9 with adapters | YouTube (Twitch in Multiview only) | YouTube | YouTube, Twitch | Bilibili stats; ids for any | YouTube; Twitch as a directory |
-| regions | 10, aliases per locale | language filters | — | TW, HK, MY | `cn`-centric | HK |
-| refresh | every 6 h | undocumented | undocumented | ~30 min (its own timestamps) | ~5 min stats / <15 s live (its own claim) | undocumented; the state is edited, not measured |
-| licence | MIT | MIT frontend | Apache-2.0 | Unlicense | VDBL (CC BY-NC-SA data, GPL code) | not stated |
+| | this project | HoloList | Holodex | Musicdex | Taiwan tracker | vdb | VtuberHK |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| blocking JS + CSS | **125 KB** (116,014 B JS + 9,373 B CSS) | 282 KB (48,642 B JS + 233,943 B CSS), plus a 206 KB ad script | 276 KB | 385 KB | 165 KB | 32 KB of static HTML | 229 KB (131,307 B JS + 97,686 B CSS) + Google Fonts |
+| hashed asset cache | `immutable`, one year (Vercel) | no `Cache-Control`; ETag only | hashed | hashed | ten minutes, flat | ten minutes, flat | no `Cache-Control`, ETag only |
+| data access | committed JSON, no key | sitemap + one server-rendered page per entry, no key; the REST API is behind Cloudflare | API v2, `X-APIKEY` | same key | static JSON | static `list.json` | server-rendered HTML, no key |
+| inventory | **72,361 channels**, 1,749 items | 9,359 entries (905 V-Singer, 3,751 V-Streamer, 9,127 V-Tuber, 143 V-UP) | not published; `403` without a key | not published | 288 groups; performer list not published | 10,138 records | 672 channels (235 Twitch logins) |
+| platforms tracked | 9 with adapters | YouTube plus Twitch / X / Instagram / TikTok / Bilibili / Niconico links | YouTube (Twitch in Multiview only) | YouTube | YouTube, Twitch | Bilibili stats; ids for any | YouTube; Twitch as a directory |
+| regions | 10, aliases per locale | none — languages instead | language filters | — | TW, HK, MY | `cn`-centric | HK |
+| refresh | every 6 h | undocumented; `<lastmod>` allows incremental reads | undocumented | undocumented | ~30 min (its own timestamps) | ~5 min stats / <15 s live (its own claim) | undocumented; the state is edited, not measured |
+| licence | MIT | not stated | MIT frontend | Apache-2.0 | Unlicense | VDBL (CC BY-NC-SA data, GPL code) | not stated |
 
 **This project's edge:** cross-platform identity rebuilt from each platform,
 the region-evidence chain with recorded provenance, ten regions where the
@@ -676,8 +824,10 @@ equivalent in any of them.
 tagging and a player (Musicdex), a public API (Holodex, vdb, the Taiwan
 tracker), Bilibili live history at minute resolution (`vtbs.moe`), the
 sort-and-scan channel list (VtuberHK sorts 672 channels by subscriber, video
-and view count from the page itself), and — the one architectural win that
-matters — incremental fetching. A cold visit here transfers the catalogue
+and view count from the page itself), the birthday and anniversary calendars
+and the dates behind them (HoloList — 9,359 entries with a debut and a
+birthday apiece), and — the one architectural win that matters — incremental
+fetching. A cold visit here transfers the catalogue
 rather than a page of it (~2.4 MB compressed / 16 MB raw over ~220 requests),
 which is the remaining performance debt against sites that ask an API for
 twenty rows at a time.

@@ -45,16 +45,18 @@ import {
   refreshManifestChannelCounts,
   writeChannelShards,
 } from "./lib/dataset";
-import { detectClipAccount, isFanAccountName, normalize } from "./lib/classify";
-import { importYouTubeChannels } from "./lib/import-channels";
+import { deriveVariant, detectClipAccount, isFanAccountName, normalize } from "./lib/classify";
+import { importYouTubeChannels, rosterGender } from "./lib/import-channels";
 import { acquireRunLock } from "./lib/io";
 import { isDistinctiveName } from "./lib/link-discovery";
-import { canonicalAgency } from "./lib/regions";
+import { applyChannelEdits } from "./lib/roster-fill";
+import { canonicalAgency, COUNTRY_REGION, normalizeCountry } from "./lib/regions";
 import { normalizeName } from "./lib/identity";
+import { extractExternalLinks } from "./lib/twitch";
 import { InnerTubeSource } from "./lib/youtubei";
-import { namesAgree, rosterLanguageCodes } from "./lib/bacharu";
+import { namesAgree, parseBacharuDebut, rosterLanguageCodes } from "./lib/bacharu";
 import type { BacharuVtuber } from "./lib/bacharu";
-import type { Channel } from "./lib/types";
+import type { Channel, Gender } from "./lib/types";
 
 /* -------------------------------------------------------------------------- */
 /* Snapshot                                                                   */
@@ -239,6 +241,29 @@ interface Options {
   agencies: boolean;
   /** Attempt the ids a previous run could not resolve, whatever their age. */
   retryDead: boolean;
+  /**
+   * Attach the links the roster publishes to the records it already tracks.
+   *
+   * `extractVtuber()` keeps `social.all` as `links` — Twitch, X, Instagram,
+   * TikTok, Bilibili, Niconico, KICK, CHZZK, SOOP, VK and the performer's own
+   * site — and the dataset's `externals` is where those belong. The harvester
+   * collected them and no import ever wrote them; this is that pass. Nothing
+   * already on a record is overwritten, and `externals.youtube` is never
+   * written because the record **is** the channel.
+   */
+  links: boolean;
+  /**
+   * Fill the empty `region`, `debutDate` and `gender` of the records it
+   * already tracks.
+   *
+   * The roster files every performer under a country, a debut and a gender,
+   * and the profile publishes none of them reliably: YouTube states a country
+   * it was told and a description rarely says when the channel started. The
+   * region is written **only** where `classifyChannel()` decided nothing, and
+   * the gender **only** where the text did not answer — a roster fills an
+   * empty field, it never takes one back.
+   */
+  hints: boolean;
 }
 
 function parseArgs(argv: string[]): Options {
@@ -251,6 +276,8 @@ function parseArgs(argv: string[]): Options {
     searchNames: 0,
     agencies: false,
     retryDead: false,
+    links: false,
+    hints: false,
   };
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i]!;
@@ -284,6 +311,12 @@ function parseArgs(argv: string[]): Options {
       case "--retry-dead":
         options.retryDead = true;
         break;
+      case "--links":
+        options.links = true;
+        break;
+      case "--hints":
+        options.hints = true;
+        break;
       case "--help":
       case "-h":
         console.log(
@@ -298,6 +331,8 @@ function parseArgs(argv: string[]): Options {
             "  --search-names <n>     search YouTube for up to n rows that have no link at all",
             "  --agencies             fill the empty agency of tracked rows from their group",
             "  --retry-dead           try the ids a recent run could not resolve",
+            "  --links                attach the social links of tracked rows (--links --apply)",
+            "  --hints                fill the empty region, debut and gender of tracked rows",
           ].join("\n"),
         );
         process.exit(0);
@@ -467,6 +502,268 @@ function backfillAgencies(
   return { records: touched, written };
 }
 
+/* -------------------------------------------------------------------------- */
+/* Links                                                                      */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * Addresses that identify a performer somewhere else.
+ *
+ * `extractExternalLinks()` also keeps every other address as `web:<n>`, which
+ * is right for a description: a shop or a personal site is a link the
+ * performer published. But it reads a *platform* address the same way, so
+ * `https://twitter.com/name` yields both `twitter: name` and a `web:` entry
+ * for the very same URL — and the "all links" block would render it twice.
+ * The hosts below belong to the platform patterns, so their second reading is
+ * dropped.
+ */
+const PLATFORM_HOSTS = [
+  "twitter.com",
+  "x.com",
+  "twitch.tv",
+  "instagram.com",
+  "tiktok.com",
+  "bilibili.com",
+  "nicovideo.jp",
+  "nico.ms",
+  "kick.com",
+  "chzzk.naver.com",
+  "sooplive",
+  "vk.com",
+  "youtube.com",
+  "youtu.be",
+  "discord.gg",
+  "discord.com",
+  "open.spotify.com",
+  "ci.me",
+];
+
+function isPlatformAddress(url: string): boolean {
+  const folded = url.toLowerCase();
+  return PLATFORM_HOSTS.some((host) => folded.includes(host));
+}
+
+/**
+ * The links an entry publishes, as `externals` handles.
+ *
+ * One URL at a time, so that two links to the same host (`twitch.tv/a` and
+ * `twitch.tv/b`) do not collapse into one the way a single joined string
+ * would. The first link of a platform wins, which is the roster's own order:
+ * `main` is listed before `alt`, and a clips channel is not the performer.
+ */
+function externalHandles(entry: BacharuVtuber): Record<string, string> {
+  const urls: string[] = [];
+  for (const link of entry.links) {
+    /** A clips channel publishes the performer; it is not the performer. */
+    if (link.role === "clips") continue;
+    urls.push(link.url);
+  }
+  if (entry.social.twitter) urls.push(entry.social.twitter);
+  if (entry.social.twitch) urls.push(entry.social.twitch);
+
+  const out: Record<string, string> = {};
+  const web: string[] = [];
+  for (const url of urls) {
+    const found = extractExternalLinks(url);
+    /** The record **is** the YouTube channel; that link is not an external. */
+    delete found.youtube;
+    for (const [key, handle] of Object.entries(found)) {
+      if (!handle) continue;
+      if (key.startsWith("web:")) {
+        if (!isPlatformAddress(handle) && !web.includes(handle)) web.push(handle);
+        continue;
+      }
+      if (!out[key]) out[key] = handle;
+    }
+  }
+  for (const [index, url] of web.entries()) out[`web:${index + 1}`] = url;
+  return out;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Matching a roster row to a tracked record                                  */
+/* -------------------------------------------------------------------------- */
+
+interface MatchedRow {
+  entry: BacharuVtuber;
+  channel: Channel;
+  name: string;
+}
+
+/**
+ * The roster rows that name a channel the dataset already has.
+ *
+ * A row is matched by the `UC…` id it publishes, or — when it publishes only
+ * an `@handle` — by the handle on the record, which is the same channel: a
+ * handle is unique, and the record's handle came from the platform itself.
+ *
+ * A fan or clip row is never matched, even when its link points at a
+ * performer: the roster files clip channels beside their subject, and the
+ * links on such a row belong to the clip account.
+ */
+function matchRecords(
+  entries: BacharuVtuber[],
+  records: Channel[],
+): MatchedRow[] {
+  const byId = new Map<string, Channel>();
+  for (const record of records) byId.set(record.id, record);
+  const byHandle = new Map<string, Channel>();
+  for (const record of records) {
+    for (const platform of record.platforms) {
+      if (platform.platform !== "youtube" || !platform.handle) continue;
+      const handle = platform.handle.replace(/^@/, "").toLowerCase();
+      if (!byHandle.has(handle)) byHandle.set(handle, record);
+    }
+  }
+
+  const matched: MatchedRow[] = [];
+  const seen = new Set<string>();
+  for (const entry of entries) {
+    if (entry.redirectTo) continue;
+    if (entry.visibility && entry.visibility !== "public") continue;
+    const name = entry.name ?? entry.canonicalName ?? entry.id;
+    if (isFanAccountName(name) || detectClipAccount(name, entry.description)) continue;
+
+    const channel =
+      (entry.youtubeId ? byId.get(entry.youtubeId) : undefined) ??
+      (entry.youtubeHandle
+        ? byHandle.get(entry.youtubeHandle.toLowerCase())
+        : undefined);
+    if (!channel || seen.has(channel.id)) continue;
+    seen.add(channel.id);
+    matched.push({ entry, channel, name });
+  }
+  return matched;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Links                                                                      */
+/* -------------------------------------------------------------------------- */
+
+interface LinkPlan {
+  channel: Channel;
+  name: string;
+  fields: Record<string, string>;
+}
+
+/**
+ * The tracked records that can take a link the roster publishes.
+ *
+ * Only fields the record does not have are planned: a link on the record was
+ * read from the performer's own text, and a roster is not allowed to overrule
+ * it.
+ */
+function planLinks(matched: MatchedRow[]): LinkPlan[] {
+  const plans: LinkPlan[] = [];
+  for (const { entry, channel, name } of matched) {
+    const found = externalHandles(entry);
+    const fields: Record<string, string> = {};
+    for (const [key, handle] of Object.entries(found)) {
+      if (!handle) continue;
+      if (!channel.externals?.[key]) fields[key] = handle;
+    }
+    if (Object.keys(fields).length) plans.push({ channel, name, fields });
+  }
+  return plans;
+}
+
+/** Writes the planned links: an `externals` field per handle, never replaced. */
+function writeLinks(plans: LinkPlan[], at: string): number {
+  return applyChannelEdits(
+    plans.map((plan) => ({
+      id: plan.channel.id,
+      update: (channel) => {
+        channel.externals = { ...(channel.externals ?? {}) };
+        let touched = false;
+        for (const [key, handle] of Object.entries(plan.fields)) {
+          if (channel.externals[key]) continue;
+          channel.externals[key] = handle;
+          touched = true;
+        }
+        return touched;
+      },
+    })),
+    "bacharu-links",
+    at,
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+/* Hints                                                                      */
+/* -------------------------------------------------------------------------- */
+
+interface HintPlan {
+  channel: Channel;
+  name: string;
+  /** `region` / `debutDate` / `gender`, and the value the roster states. */
+  fields: Record<string, string>;
+}
+
+/**
+ * The facts the roster states and the profile does not publish.
+ *
+ * `region` is the **scene** the roster files the performer in, and it only
+ * fills a record the classifier could not place at all — a country YouTube
+ * publishes, an agency, or kana already outrank it. `debutDate` and `gender`
+ * are empty until a roster supplies them; the gender is then re-derived into
+ * `variant`, because `female_vtuber` and `vtuber` are the same channel filed
+ * under what the record knows.
+ */
+function planHints(matched: MatchedRow[]): HintPlan[] {
+  const plans: HintPlan[] = [];
+  for (const { entry, channel, name } of matched) {
+    const fields: Record<string, string> = {};
+    if (channel.region === "unknown") {
+      for (const country of entry.countries) {
+        const code = normalizeCountry(country);
+        const region = code ? COUNTRY_REGION[code] : undefined;
+        if (region) {
+          fields.region = region;
+          break;
+        }
+      }
+    }
+    if (!channel.debutDate) {
+      const debut = parseBacharuDebut(entry.debut);
+      if (debut) fields.debutDate = debut;
+    }
+    if (channel.gender === "unknown") {
+      const gender = rosterGender(entry.gender);
+      if (gender) fields.gender = gender;
+    }
+    if (Object.keys(fields).length) plans.push({ channel, name, fields });
+  }
+  return plans;
+}
+
+function writeHints(plans: HintPlan[], at: string): number {
+  return applyChannelEdits(
+    plans.map((plan) => ({
+      id: plan.channel.id,
+      update: (channel) => {
+        let touched = false;
+        const { region, debutDate, gender } = plan.fields;
+        if (region && channel.region === "unknown") {
+          channel.region = region as Channel["region"];
+          touched = true;
+        }
+        if (debutDate && !channel.debutDate) {
+          channel.debutDate = debutDate;
+          touched = true;
+        }
+        if (gender && channel.gender === "unknown") {
+          channel.gender = gender as Channel["gender"];
+          channel.variant = deriveVariant(channel.role, channel.gender, channel.isAi);
+          touched = true;
+        }
+        return touched;
+      },
+    })),
+    "bacharu-hints",
+    at,
+  );
+}
+
 /**
  * The ids a recent run could not resolve.
  *
@@ -587,6 +884,78 @@ async function main(): Promise<void> {
     rosterNames.set(entry.youtubeId, [entry.name ?? "", ...entry.aliases].filter(Boolean));
   }
 
+  /* --- the links and hints of tracked rows, when asked ------------------- */
+  if (options.links || options.hints) {
+    const matched = matchRecords(snapshot.vtubers, readAllChannelRecords());
+    const at = new Date().toISOString();
+
+    if (options.links) {
+      const plans = planLinks(matched);
+      const fields = new Map<string, number>();
+      let handles = 0;
+      for (const plan of plans) {
+        for (const key of Object.keys(plan.fields)) {
+          fields.set(key, (fields.get(key) ?? 0) + 1);
+          handles++;
+        }
+      }
+      console.log(
+        `\nlinks: ${plans.length} tracked record(s) can take ${handles} handle(s) ` +
+          `bacharu publishes and the dataset does not have:` +
+          (fields.size
+            ? `\n  ${[...fields.entries()]
+                .sort((a, b) => b[1] - a[1])
+                .map(([key, count]) => `${count} ${key}`)
+                .join(" · ")}`
+            : ""),
+      );
+      for (const plan of plans.slice(0, 10)) {
+        console.log(
+          `  ${plan.name} → ${Object.entries(plan.fields)
+            .map(([key, handle]) => `${key}:${handle}`)
+            .join(", ")}`,
+        );
+      }
+      if (plans.length > 10) console.log(`  … ${plans.length - 10} more`);
+      if (options.apply) {
+        const written = writeLinks(plans, at);
+        console.log(`${written} record(s) had their externals filled from bacharu`);
+      }
+    }
+
+    if (options.hints) {
+      const plans = planHints(matched);
+      const fields = new Map<string, number>();
+      for (const plan of plans) {
+        for (const key of Object.keys(plan.fields)) {
+          fields.set(key, (fields.get(key) ?? 0) + 1);
+        }
+      }
+      console.log(
+        `\nhints: ${plans.length} tracked record(s) can take ` +
+          `${[...fields.entries()].map(([key, count]) => `${count} ${key}`).join(" · ")} ` +
+          `that bacharu states and the record does not:`,
+      );
+      for (const plan of plans.slice(0, 10)) {
+        console.log(
+          `  ${plan.name} → ${Object.entries(plan.fields)
+            .map(([key, value]) => `${key}:${value}`)
+            .join(", ")}`,
+        );
+      }
+      if (plans.length > 10) console.log(`  … ${plans.length - 10} more`);
+      if (options.apply) {
+        const written = writeHints(plans, at);
+        console.log(`${written} record(s) had their region, debut or gender filled from bacharu`);
+      }
+    }
+
+    if (!options.apply) {
+      console.log("\nNothing was written. Re-run with --apply.");
+    }
+    return;
+  }
+
   if (options.agencies && !options.apply) {
     const preview = backfillAgencies(rows, readAllChannelRecords(), false);
     console.log(
@@ -698,6 +1067,18 @@ async function main(): Promise<void> {
    * own.
    */
   const languages: Record<string, string[]> = {};
+  /**
+   * The debut date and the gender the roster states, per channel.
+   *
+   * The profile publishes neither: a channel's description may mention the
+   * debut, but the roster files the performer by it, and `RosterHint` takes
+   * both as a fallback — `classifyChannel()` still decides the gender from
+   * the text where the text answers, and a date that is not a date
+   * (`parseBacharuDebut()`) is not written.
+   */
+  const debut: Record<string, string> = {};
+  const gender: Record<string, Gender> = {};
+  const byRosterId = new Map(snapshot.vtubers.map((entry) => [entry.id, entry]));
   for (const row of rows) {
     if (!row.youtubeId || row.verdict === "fan" || row.verdict === "hidden") continue;
     const name = agencyOfGroups(row.currentGroups);
@@ -706,6 +1087,11 @@ async function main(): Promise<void> {
     if (row.status === "active" || row.status === "preparing" || row.status === "graduated") {
       activity[row.youtubeId] = row.status;
     }
+    const entry = byRosterId.get(row.id);
+    const date = parseBacharuDebut(entry?.debut);
+    if (date) debut[row.youtubeId] = date;
+    const stated = rosterGender(entry?.gender);
+    if (stated) gender[row.youtubeId] = stated;
   }
 
   const batchSize = options.batchSize;
@@ -736,7 +1122,7 @@ async function main(): Promise<void> {
     const result = await importYouTubeChannels(slice, {
       limit: batchSize,
       rosterIds: new Set(rosterNames.keys()),
-      rosterHint: { agency, activity, languages },
+      rosterHint: { agency, activity, languages, debut, gender },
     });
     added += result.added.length;
     existing += result.existing;

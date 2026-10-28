@@ -141,6 +141,28 @@ See `docs/PLATFORMS.md` for the full checklist. In short:
    `scripts/lib/platforms.ts` and `src/lib/links.ts`.
 5. Add discovery keywords to `config/platform-keywords.json`.
 
+## Adding a roster
+
+A roster is a directory that lists performers rather than a platform that hosts
+them — vdb, bacharu, vtuber.hk, HoloList, vTubie's groups. The pattern is the
+same every time, and it keeps the network out of the writing path:
+
+1. **A parser** in `scripts/lib/<name>.ts`: the site's page or JSON → a plain
+   entry (name, ids, links, region hints), with no network call in it.
+2. **A harvester** `scripts/harvest-<name>.ts` that writes `.cache/<name>.json`
+   and one file per row, so a pass resumes and a second pass is incremental
+   (HoloList uses its sitemap's `<lastmod>`).
+3. **A gated importer** `scripts/import-<name>.ts` that reports what would
+   change and writes nothing without `--apply`, then calls
+   `importYouTubeChannels()` with `rosterIds` and a `RosterHint`.
+4. A row in `docs/SOURCES.md` with what the roster states and what it does
+   not, and a line in `scripts/lib/sources.ts`.
+
+A roster supplies the **claim** and the facts the platform does not publish —
+the agency, the languages, the debut date, the retirement state — never the
+name, and the fan tests (`detectClipAccount()`, `isFanAccountName()`) still
+run.
+
 ## Adding a discovery source
 
 `scripts/lib/debut-sources/types.ts` defines the interface:
