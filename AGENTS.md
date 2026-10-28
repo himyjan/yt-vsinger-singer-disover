@@ -278,6 +278,15 @@ volume moves about `1/(N+1)` of the catalogue. `npm run data:volumes` plans it
 into `.volumes/` (git-ignored) and `--verify` proves nothing was duplicated or
 lost; taking it live is one repository per volume, by hand.
 
+Each `<out>/vol-N` is a **site root with the dataset under `data/`**, so it can
+be published as a repository's root unchanged. `--base-url` writes where each
+volume will be served into `data/volumes.json` (default `{name}/`, or
+`https://host/vol-{index}/` for separate sites); volume 0 is the origin the
+page came from, so its base is `""`. **The client already reads N origins**:
+`src/lib/origins.ts` discovers them from `data/volumes.json` and every loader
+in `src/lib/dataset.ts` fans out and merges. The file is optional — absent is
+the single-origin deployment, and that path must stay exactly as it is.
+
 ### 10. Every record keeps its provenance
 
 `mergeById()` preserves `addedAt`, and preserves `source: "seed"` and
@@ -413,7 +422,8 @@ create non-fast-forward push failures.
 | Add a UI filter | `src/lib/dataset.ts` (`filterItems`) + `src/App.vue` |
 | Check the repository's real size | `npm run repo:size` — the stored history, not the tree; `--repack` measures what `git gc` would reclaim |
 | The repository is approaching 1 GB | squash first (`data-squash.yml`, monthly), split into volumes only if a squash stops being enough — `docs/DEPLOY.md` → *The capacity ladder* |
-| Plan or check the split into volumes | `npm run data:volumes -- --dry-run`, then `--count N`, then `--verify .volumes` — `scripts/lib/volume.ts` holds `volumeOf()` |
+| Plan or check the split into volumes | `npm run data:volumes -- --dry-run`, then `--count N --base-url "…/{name}/"`, then `--verify .volumes` — `scripts/lib/volume.ts` holds `volumeOf()`, `src/lib/origins.ts` reads the result |
+| The app shows one volume's counts | every loader must fetch through an origin's `url()`, and a catalogue total must come from the merged manifest — `src/lib/origins.ts`, `src/lib/dataset.ts` |
 
 ## Running things
 
@@ -430,6 +440,7 @@ npm run data:index                   # rebuild the search index
 npm run data:reclassify              # re-derive kind/role from disk; --apply to write
 npm run data:volumes -- --dry-run    # plan the split into volumes, write nothing
 npm run data:volumes -- --count 4    # write .volumes/vol-0 … vol-3 (git-ignored)
+npm run data:volumes -- --count 4 --base-url "/volumes/{name}/"  # + where each is served
 npm run data:volumes -- --verify .volumes  # prove the partition holds
 npm run data:volumes -- --self-test  # check volumeOf() is stable and balanced
 npm run data:details -- --limit 2000 # fill the missing avatars

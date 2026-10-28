@@ -14,8 +14,11 @@
  * verified from the ids alone.
  *
  * This writes to `--out` (default `.volumes/`, git-ignored) and never touches
- * `data/`. Taking the split live is still a manual step: create one repository
- * per volume, push `<out>/vol-N` into it, and point the client at the origins.
+ * `data/`. Each `<out>/vol-N` is a **site root**: it holds its dataset under
+ * `data/`, exactly like `public/` does, so it can be published as the root of
+ * its own repository. Taking the split live is still a manual step: create one
+ * repository per volume, push `<out>/vol-N` into it, and point the client at
+ * the origins.
  * The point of doing it here first is that the expensive, irreversible part —
  * deciding which channel belongs where — is done and checked before anything
  * is published.
@@ -63,6 +66,12 @@ interface Options {
   selfTest: boolean;
   index: boolean;
   items: boolean;
+  /**
+   * Where each volume will be served, with `{name}` and `{index}` placeholders.
+   * The default — a subdirectory beside the primary — is what a local check and
+   * a single-site deployment use; separate repositories pass their own host.
+   */
+  baseUrl: string;
 }
 
 function parseOptions(argv: string[]): Options {
@@ -80,6 +89,7 @@ function parseOptions(argv: string[]): Options {
     selfTest: argv.includes("--self-test"),
     index: argv.includes("--index"),
     items: !argv.includes("--no-items"),
+    baseUrl: value("--base-url") ?? "{name}/",
   };
 }
 
@@ -140,17 +150,56 @@ function writeVolumeManifest(
       "by volumeOf(id). The other volumes are separate repositories.",
   };
   writeJson(layoutFor(root).manifest, manifest);
+}
 
-  // The descriptor a client needs to discover the rest without guessing URLs.
-  writeJson(path.join(root, "volumes.json"), {
+/** The directory of one volume — the site root, holding `data/`. */
+function volumeSite(out: string, index: number): string {
+  return path.join(out, volumeName(index));
+}
+
+/** Fills in the placeholders of `--base-url` for one volume. */
+function baseOf(template: string, index: number): string {
+  return template
+    .replace(/\{name\}/g, volumeName(index))
+    .replace(/\{index\}/g, String(index));
+}
+
+/**
+ * The descriptor a client reads to find the other volumes.
+ *
+ * It is written into **every** volume, and it is the same file in each: a
+ * client that lands on any one of them can discover the rest without being
+ * told which is the primary. `base` is where that volume is served — relative
+ * to the deployment (`vol-2/`) or absolute (`https://…/vol-2/`), because the
+ * volumes are separate repositories and may be separate sites.
+ */
+function writeVolumesDescriptor(
+  out: string,
+  count: number,
+  totals: { channels: number; items: number }[],
+  template: string,
+  now: string,
+): void {
+  const file = {
     schemaVersion: SCHEMA_VERSION,
     generatedAt: now,
-    index,
     count,
-    name: volumeName(index),
-    channels: channels.length,
-    items: items.length,
-  });
+    volumes: totals.map((total, index) => ({
+      index,
+      name: volumeName(index),
+      /**
+       * Volume 0 is the origin the page was served from, so its base is empty
+       * and its dataset is read from `data/` exactly as a single-origin
+       * deployment reads it. Every other volume says where it is served.
+       */
+      base: index === 0 ? "" : baseOf(template, index),
+      channels: total.channels,
+      items: total.items,
+    })),
+  };
+  for (let index = 0; index < count; index++) {
+    writeJson(path.join(volumeSite(out, index), "data", "volumes.json"), file);
+  }
 }
 
 /**
@@ -246,10 +295,12 @@ function split(options: Options): void {
   fs.rmSync(options.out, { recursive: true, force: true });
   fs.mkdirSync(options.out, { recursive: true });
 
+  const totals: { channels: number; items: number }[] = [];
   for (const slice of slices) {
-    const root = path.join(options.out, slice.name);
+    const root = path.join(volumeSite(options.out, slice.index), "data");
     fs.mkdirSync(root, { recursive: true });
     const sliceItems = itemSlices[slice.index].records;
+    totals.push({ channels: slice.records.length, items: sliceItems.length });
 
     writeChannelShards(slice.records, now, root);
     rebuildChannelsManifest(slice.records, now, root);
@@ -267,6 +318,8 @@ function split(options: Options): void {
         `${sliceItems.length} item(s), ${formatBytes(bytes)} of records`,
     );
   }
+
+  writeVolumesDescriptor(options.out, count, totals, options.baseUrl, now);
 
   const problems = checkPartition(
     channels.map((c) => c.id),
@@ -319,7 +372,15 @@ function verify(dir: string): void {
   console.log("  volume      channels   virtual     real   manifest");
   for (const name of names) {
     const index = volumeIndexOf(name) as number;
-    const root = path.join(dir, name);
+    /**
+     * A volume is a site root with its dataset under `data/`. Older splits
+     * wrote the dataset at the root itself, and a verifier that refuses to
+     * read them would call a valid split broken.
+     */
+    const site = path.join(dir, name);
+    const root = fs.existsSync(path.join(site, "data"))
+      ? path.join(site, "data")
+      : site;
     const records = readAllChannelRecords(root);
     found.set(index, records.map((c) => c.id));
     total += records.length;

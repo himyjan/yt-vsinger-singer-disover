@@ -33,6 +33,7 @@ data/.lock
 # The dataset is copied into public/ by `npm run prepare:public` for the
 # build. It is generated, not authored — the source of truth is data/.
 /public/data/
+/public/volumes/
 
 # Python bytecode from the harvest scripts
 __pycache__/

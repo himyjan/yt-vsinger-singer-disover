@@ -32,25 +32,36 @@ import { toLanguageList } from "@shared/lib/regions";
 import { toSummary } from "@shared/lib/summary";
 import { isScheduleTitle } from "@shared/lib/classify";
 
-/** Base path of the deployment (handles GitHub Pages sub-paths). */
-const BASE = import.meta.env.BASE_URL || "/";
-
-function url(path: string): string {
-  return `${BASE}${path.replace(/^\//, "")}`;
-}
+import {
+  fetchUrl,
+  loadOrigins,
+  resetOrigins,
+  type DatasetOrigin,
+} from "./origins";
 
 /* -------------------------------------------------------------------------- */
 /* Fetching                                                                   */
 /* -------------------------------------------------------------------------- */
 
-async function fetchJson<T>(path: string): Promise<T | null> {
-  try {
-    const res = await fetch(url(path), { headers: { Accept: "application/json" } });
-    if (!res.ok) return null;
-    return (await res.json()) as T;
-  } catch {
-    return null;
-  }
+/**
+ * One file, from one origin.
+ *
+ * Every loader below asks for the same relative path on **every** origin and
+ * merges the answers. With one origin — no `data/volumes.json`, which is the
+ * normal deployment — that is exactly the single request it always was.
+ */
+function fetchJson<T>(origin: DatasetOrigin, path: string): Promise<T | null> {
+  return fetchUrl<T>(origin.url(path));
+}
+
+/** Items arrive from several volumes; an id is still an id. */
+function uniqueById<T extends { id: string }>(items: T[]): T[] {
+  const seen = new Set<string>();
+  return items.filter((item) => {
+    if (seen.has(item.id)) return false;
+    seen.add(item.id);
+    return true;
+  });
 }
 
 /* -------------------------------------------------------------------------- */
@@ -73,6 +84,9 @@ const cache = {
   channelManifest: null as ChannelRegionMeta[] | null,
   /** The manifest while it is downloading, so parallel readers share one. */
   channelManifestPending: null as Promise<ChannelRegionMeta[]> | null,
+  /** Each volume's own shard map — a merged map cannot say who has what. */
+  channelManifestByOrigin: new Map<number, ChannelRegionMeta[]>(),
+  itemsManifestByOrigin: new Map<number, { code: RegionCode; buckets: string[] }[]>(),
   summaries: null as ChannelSummary[] | null,
   summariesByRegion: new Map<RegionCode, ChannelSummary[]>(),
   /** Regions whose summary is being built right now. */
@@ -80,15 +94,14 @@ const cache = {
   channelsByKind: new Map<string, Channel[]>(),
   /** Shard lists that are being downloaded right now, keyed `kind:region`. */
   channelsPending: new Map<string, Promise<Channel[]>>(),
-  shards: new Map<string, string[]>(),
   virtual: null as Channel[] | null,
   real: null as Channel[] | null,
   live: null as Item[] | null,
   upcoming: null as Item[] | null,
   items: new Map<string, Item[]>(),
   packs: new Map<string, SearchPack[]>(),
-  /** Packs that actually exist, in the order they belong together. */
-  packFiles: null as { region: RegionCode; shard: number }[] | null,
+  /** Packs that actually exist per origin, in the order they belong together. */
+  packFilesByOrigin: new Map<number, { region: RegionCode; shard: number }[]>(),
 };
 
 /**
@@ -102,19 +115,21 @@ export function resetDatasetCache(): void {
   cache.manifest = null;
   cache.channelManifest = null;
   cache.channelManifestPending = null;
+  cache.channelManifestByOrigin.clear();
+  cache.itemsManifestByOrigin.clear();
+  resetOrigins();
   cache.summaries = null;
   cache.summariesByRegion.clear();
   cache.summariesPending.clear();
   cache.channelsByKind.clear();
   cache.channelsPending.clear();
-  cache.shards.clear();
   cache.virtual = null;
   cache.real = null;
   cache.live = null;
   cache.upcoming = null;
   cache.items.clear();
   cache.packs.clear();
-  cache.packFiles = null;
+  cache.packFilesByOrigin.clear();
 }
 
 /* -------------------------------------------------------------------------- */
@@ -123,9 +138,58 @@ export function resetDatasetCache(): void {
 
 export async function loadManifest(): Promise<Manifest | null> {
   if (cache.manifest) return cache.manifest;
-  const manifest = await fetchJson<Manifest>("data/manifest.json");
-  if (manifest) cache.manifest = manifest;
-  return manifest;
+  const origins = await loadOrigins();
+  const manifests = await Promise.all(
+    origins.map((origin) => fetchJson<Manifest>(origin, "data/manifest.json")),
+  );
+  const found = manifests.filter((m): m is Manifest => !!m);
+  if (!found.length) return null;
+  cache.manifest = found.length === 1 ? found[0] : mergeManifests(found);
+  return cache.manifest;
+}
+
+/**
+ * Adds up the manifests of several volumes.
+ *
+ * The counts are the **catalogue's**, not one volume's — that is what the
+ * header and the footer mean when they say how many channels there are. The
+ * quota is the one number that is not a sum: every volume's workflow spends
+ * from the same project allowance, so the total spent adds up while the limit
+ * stays where it is.
+ */
+function mergeManifests(manifests: Manifest[]): Manifest {
+  const first = manifests[0];
+  const counts = { ...first.counts };
+  for (const key of Object.keys(counts) as (keyof Manifest["counts"])[]) {
+    counts[key] = manifests.reduce((sum, m) => sum + (m.counts[key] ?? 0), 0);
+  }
+
+  const regions = new Map<RegionCode, Manifest["regions"][number]>();
+  for (const manifest of manifests) {
+    for (const region of manifest.regions ?? []) {
+      const seen = regions.get(region.code);
+      if (!seen) {
+        regions.set(region.code, { ...region });
+        continue;
+      }
+      seen.channels = (seen.channels ?? 0) + (region.channels ?? 0);
+      seen.items = (seen.items ?? 0) + (region.items ?? 0);
+    }
+  }
+
+  const used = manifests.reduce((sum, m) => sum + (m.quota?.used ?? 0), 0);
+  return {
+    ...first,
+    counts,
+    regions: [...regions.values()],
+    quota: first.quota
+      ? {
+          used,
+          limit: first.quota.limit,
+          remaining: Math.max(0, first.quota.limit - used),
+        }
+      : first.quota,
+  };
 }
 
 /**
@@ -182,7 +246,15 @@ export interface ChannelRegionMeta {
   real: ChannelKindMeta;
 }
 
-/** The region list for the channel dataset. */
+/**
+ * The region list for the whole catalogue.
+ *
+ * When the dataset is split, this is the **union** of the volumes' maps: the
+ * app needs the regions, and a region may be spread over several of them. The
+ * per-volume maps are kept separately, because a merged bucket list does not
+ * say which origin holds the file — and a shard fetched from the wrong origin
+ * is a 404, not a record.
+ */
 export async function loadChannelManifest(): Promise<ChannelRegionMeta[]> {
   if (cache.channelManifest) return cache.channelManifest;
   /**
@@ -193,34 +265,68 @@ export async function loadChannelManifest(): Promise<ChannelRegionMeta[]> {
    * same manifest once per reader before any of them finished.
    */
   if (!cache.channelManifestPending) {
-    cache.channelManifestPending = fetchJson<{ regions?: ChannelRegionMeta[] }>(
-      "data/channels/manifest.json",
-    ).then((parsed) => (cache.channelManifest = parsed?.regions ?? []));
+    cache.channelManifestPending = (async () => {
+      const origins = await loadOrigins();
+      const perOrigin = await Promise.all(
+        origins.map((origin) => loadOriginChannelManifest(origin)),
+      );
+      cache.channelManifest = mergeChannelManifests(perOrigin);
+      return cache.channelManifest;
+    })();
   }
   return cache.channelManifestPending;
 }
 
-/**
- * The shard files that hold one kind's records for a region.
- *
- * The manifest lists them, so the browser never has to probe for files that
- * do not exist — which would fill the console with 404s. The two kinds have
- * their own lists: a region can have a `real` shard that no `virtual` file
- * matches, and fetching the wrong list would silently skip records.
- */
-async function loadShards(
-  kind: "virtual" | "real",
-  region: RegionCode,
-): Promise<string[]> {
-  const key = `${kind}:${region}`;
-  const cached = cache.shards.get(key);
+/** One origin's own shard map, exactly as that volume wrote it. */
+async function loadOriginChannelManifest(
+  origin: DatasetOrigin,
+): Promise<ChannelRegionMeta[]> {
+  const cached = cache.channelManifestByOrigin.get(origin.index);
   if (cached) return cached;
+  const parsed = await fetchJson<{ regions?: ChannelRegionMeta[] }>(
+    origin,
+    "data/channels/manifest.json",
+  );
+  const regions = parsed?.regions ?? [];
+  cache.channelManifestByOrigin.set(origin.index, regions);
+  return regions;
+}
 
-  const manifest = await loadChannelManifest();
-  const entry = manifest.find((r) => r.code === region);
-  const buckets = entry?.[kind]?.buckets ?? [];
-  cache.shards.set(key, buckets);
-  return buckets;
+function mergeChannelManifests(list: ChannelRegionMeta[][]): ChannelRegionMeta[] {
+  const byRegion = new Map<RegionCode, ChannelRegionMeta>();
+  const add = (target: ChannelKindMeta, source: ChannelKindMeta) => {
+    target.channels += source.channels;
+    for (const bucket of source.buckets) {
+      if (!target.buckets.includes(bucket)) target.buckets.push(bucket);
+    }
+  };
+
+  for (const regions of list) {
+    for (const region of regions) {
+      const seen = byRegion.get(region.code);
+      if (!seen) {
+        byRegion.set(region.code, {
+          code: region.code,
+          channels: region.channels,
+          virtual: {
+            channels: region.virtual.channels,
+            buckets: [...region.virtual.buckets],
+          },
+          real: { channels: region.real.channels, buckets: [...region.real.buckets] },
+        });
+        continue;
+      }
+      seen.channels += region.channels;
+      add(seen.virtual, region.virtual);
+      add(seen.real, region.real);
+    }
+  }
+
+  for (const region of byRegion.values()) {
+    region.virtual.buckets.sort();
+    region.real.buckets.sort();
+  }
+  return [...byRegion.values()];
 }
 
 /** Full channel records for one artist kind, in the given regions. */
@@ -243,13 +349,6 @@ export async function loadChannels(
   return all;
 }
 
-/**
- * One kind of one region, cached and de-duplicated in flight.
- *
- * `loadSummaries()` and `loadAllChannels()` are called together by the app,
- * and both need these shards. Without the in-flight map the page would
- * download every shard twice and use whichever copy finished last.
- */
 /** The defaults a compact shard leaves out, so a record is complete. */
 const CHANNEL_DEFAULTS: Record<string, unknown> = {
   aliases: [],
@@ -292,6 +391,14 @@ function expandChannel(raw: Channel): Channel {
   return channel as Channel;
 }
 
+/**
+ * One kind of one region.
+ *
+ * With volumes this is a fan-out: every origin is asked whether it holds that
+ * region, and only the ones that do are downloaded from. That is why the
+ * merged manifest is not used here — it answers "who has this region", not
+ * "which of them has bucket 07".
+ */
 async function loadKind(
   kind: "virtual" | "real",
   region: RegionCode,
@@ -304,17 +411,30 @@ async function loadKind(
   if (pending) return pending;
 
   const promise = (async () => {
-    const buckets = await loadShards(kind, region);
-    const list: Channel[] = [];
-    for (const bucket of buckets) {
-      const parsed = await fetchJson<{ channels?: Channel[] }>(
-        `data/channels/${kind}/${region}/${bucket}.json`,
-      );
-      for (const raw of parsed?.channels ?? []) {
-        if (raw?.id) list.push(expandChannel(raw));
-      }
-    }
-    return list;
+    const origins = await loadOrigins();
+    const lists = await Promise.all(
+      origins.map(async (origin) => {
+        const manifest = await loadOriginChannelManifest(origin);
+        const buckets =
+          manifest.find((entry) => entry.code === region)?.[kind]?.buckets ?? [];
+        const shards = await Promise.all(
+          buckets.map((bucket) =>
+            fetchJson<{ channels?: Channel[] }>(
+              origin,
+              `data/channels/${kind}/${region}/${bucket}.json`,
+            ),
+          ),
+        );
+        const list: Channel[] = [];
+        for (const parsed of shards) {
+          for (const raw of parsed?.channels ?? []) {
+            if (raw?.id) list.push(expandChannel(raw));
+          }
+        }
+        return list;
+      }),
+    );
+    return lists.flat();
   })();
 
   cache.channelsPending.set(key, promise);
@@ -335,22 +455,43 @@ export async function loadAllChannels(
   return [...virtual, ...real];
 }
 
-/** Currently live streams. */
+/** Currently live streams, from every volume. */
 export async function loadLive(): Promise<Item[]> {
   if (cache.live) return cache.live;
-  const parsed = await fetchJson<{ items?: Item[] }>("data/items/live.json");
-  cache.live = parsed?.items ?? [];
-  return cache.live!;
+  const origins = await loadOrigins();
+  const pages = await Promise.all(
+    origins.map((origin) => fetchJson<{ items?: Item[] }>(origin, "data/items/live.json")),
+  );
+  cache.live = uniqueById(pages.flatMap((page) => page?.items ?? []));
+  return cache.live;
 }
 
-/** Scheduled streams and premieres. */
+/** Scheduled streams and premieres, from every volume. */
 export async function loadUpcoming(): Promise<Item[]> {
   if (cache.upcoming) return cache.upcoming;
-  const parsed = await fetchJson<{ items?: Item[] }>(
-    "data/items/upcoming.json",
+  const origins = await loadOrigins();
+  const pages = await Promise.all(
+    origins.map((origin) =>
+      fetchJson<{ items?: Item[] }>(origin, "data/items/upcoming.json"),
+    ),
   );
-  cache.upcoming = parsed?.items ?? [];
-  return cache.upcoming!;
+  cache.upcoming = uniqueById(pages.flatMap((page) => page?.items ?? []));
+  return cache.upcoming;
+}
+
+/** One origin's items shard map. */
+async function loadOriginItemsManifest(
+  origin: DatasetOrigin,
+): Promise<{ code: RegionCode; buckets: string[] }[]> {
+  const cached = cache.itemsManifestByOrigin.get(origin.index);
+  if (cached) return cached;
+  const parsed = await fetchJson<{ regions?: { code: RegionCode; buckets: string[] }[] }>(
+    origin,
+    "data/items/manifest.json",
+  );
+  const regions = parsed?.regions ?? [];
+  cache.itemsManifestByOrigin.set(origin.index, regions);
+  return regions;
 }
 
 /**
@@ -360,31 +501,36 @@ export async function loadUpcoming(): Promise<Item[]> {
 export async function loadItems(
   regions: RegionCode[] | "all",
 ): Promise<Item[]> {
-  const manifest = await fetchJson<{
-    regions?: { code: RegionCode; buckets: string[] }[];
-  }>("data/items/manifest.json");
+  const origins = await loadOrigins();
+  const manifests = await Promise.all(
+    origins.map((origin) => loadOriginItemsManifest(origin)),
+  );
 
-  const targets = regions === "all"
-    ? (manifest?.regions ?? []).map((r) => r.code)
-    : regions;
+  const targets =
+    regions === "all"
+      ? [...new Set(manifests.flatMap((regions) => regions.map((r) => r.code)))]
+      : regions;
 
   const results = await Promise.all(
     targets.map(async (region) => {
-      const key = region;
-      const cached = cache.items.get(key);
+      const cached = cache.items.get(region);
       if (cached) return cached;
 
-      const buckets = manifest?.regions?.find((r) => r.code === region)?.buckets ?? [];
-      const lists = await Promise.all(
-        buckets.map(async (bucket) => {
-          const parsed = await fetchJson<{ items?: Item[] }>(
-            `data/items/${region}/${bucket}.json`,
+      const perOrigin = await Promise.all(
+        origins.map(async (origin, position) => {
+          const buckets =
+            manifests[position].find((entry) => entry.code === region)?.buckets ?? [];
+          const shards = await Promise.all(
+            buckets.map((bucket) =>
+              fetchJson<{ items?: Item[] }>(origin, `data/items/${region}/${bucket}.json`),
+            ),
           );
-          return parsed?.items ?? [];
+          return shards.flatMap((parsed) => parsed?.items ?? []);
         }),
       );
-      const items = lists.flat();
-      cache.items.set(key, items);
+
+      const items = uniqueById(perOrigin.flat());
+      cache.items.set(region, items);
       return items;
     }),
   );
@@ -403,8 +549,25 @@ function packFile(region: string, shard: number): string {
   return shard === 0 ? `data/search/${region}.json` : `data/search/${region}.${shard}.json`;
 }
 
+/** One origin's list of packs, from its own search manifest. */
+async function loadOriginSearchPacks(
+  origin: DatasetOrigin,
+): Promise<{ region: RegionCode; shard: number }[]> {
+  const cached = cache.packFilesByOrigin.get(origin.index);
+  if (cached) return cached;
+  const manifest = await fetchJson<{
+    regions?: { code: RegionCode; shard?: number }[];
+  }>(origin, "data/search/manifest.json");
+  const files = (manifest?.regions ?? []).map((row) => ({
+    region: row.code,
+    shard: row.shard ?? 0,
+  }));
+  cache.packFilesByOrigin.set(origin.index, files);
+  return files;
+}
+
 /**
- * Loads every pack of a region.
+ * Loads every pack of a region, from every volume that has one.
  *
  * The pack carries its own inverted index, so two packs of one region are not
  * a problem: a query looks up each of them and the hits are merged. What must
@@ -415,13 +578,21 @@ export async function loadSearchPack(region: RegionCode): Promise<SearchPack[]> 
   const cached = cache.packs.get(region);
   if (cached) return cached;
 
-  const shards = cache.packFiles
-    ? cache.packFiles.filter((file) => file.region === region).map((file) => file.shard)
-    : [0];
-  const packs = await Promise.all(
-    shards.map((shard) => fetchJson<SearchPack>(packFile(region, shard))),
+  const origins = await loadOrigins();
+  const perOrigin = await Promise.all(
+    origins.map(async (origin) => {
+      const files = await loadOriginSearchPacks(origin);
+      const shards = files
+        .filter((file) => file.region === region)
+        .map((file) => file.shard);
+      const packs = await Promise.all(
+        shards.map((shard) => fetchJson<SearchPack>(origin, packFile(region, shard))),
+      );
+      return packs.filter((pack): pack is SearchPack => !!pack);
+    }),
   );
-  const found = packs.filter((pack): pack is SearchPack => !!pack);
+
+  const found = perOrigin.flat();
   cache.packs.set(region, found);
   return found;
 }
@@ -431,17 +602,23 @@ export async function loadSearchPacks(
   regions: RegionCode[] | "all" = "all",
 ): Promise<SearchPack[]> {
   if (regions === "all") {
-    // Only fetch regions that actually have a pack, so the browser does not
-    // log 404s for regions with no data.
-    if (!cache.packFiles) {
-      const manifest = await fetchJson<{
-        regions?: { code: RegionCode; shard?: number }[];
-      }>("data/search/manifest.json");
-      cache.packFiles = (manifest?.regions ?? [])
-        .filter((r) => r.code !== "unknown")
-        .map((r) => ({ region: r.code, shard: r.shard ?? 0 }));
-    }
-    const wanted = [...new Set(cache.packFiles.map((file) => file.region))];
+    /**
+     * Only regions that actually have a pack, so the browser does not log
+     * 404s for regions with no data. With volumes, that is the union of the
+     * volumes' manifests — a region may live in one volume and not another.
+     */
+    const origins = await loadOrigins();
+    const perOrigin = await Promise.all(
+      origins.map((origin) => loadOriginSearchPacks(origin)),
+    );
+    const wanted = [
+      ...new Set(
+        perOrigin
+          .flat()
+          .filter((file) => file.region !== "unknown")
+          .map((file) => file.region),
+      ),
+    ];
     const packs = await Promise.all(wanted.map((region) => loadSearchPack(region)));
     return packs.flat();
   }

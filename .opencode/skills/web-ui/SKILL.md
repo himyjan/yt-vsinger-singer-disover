@@ -12,6 +12,7 @@ JSON dataset and never talks to a backend.
 src/
 ├── App.vue              shell: header, filters, views, drawer, mobile nav
 ├── lib/store.ts         reactive state: scope, filters, accounts, theme
+├── lib/origins.ts       one origin, or the N volumes named by volumes.json
 ├── lib/dataset.ts       loads and filters the dataset
 ├── lib/auth.ts          account linking for four platforms
 ├── lib/links.ts         the "all links" block
@@ -20,6 +21,27 @@ src/
     ├── LiveCard.vue     thumbnail + info block + all links
     └── ChannelDrawer.vue  channel detail, links, uploads and releases
 ```
+
+## The dataset may come from several origins
+
+A large catalogue is split into **volumes**, one deployment each. The client
+does not need to know: `src/lib/origins.ts` reads `data/volumes.json` and
+returns the origins, and every loader in `src/lib/dataset.ts` fans out and
+merges — manifests are summed, channel and item lists concatenated, search
+packs concatenated per region.
+
+- **`volumes.json` is optional.** Absent (the normal deployment) means one
+  origin, and the code path is the one it always was. Never require the file.
+- **A loader that fetches a path must fetch it with an origin's `url()`,**
+  never with a hard-coded `/data/…`. `loadKind()`, `loadItems()` and
+  `loadSearchPack()` ask each origin for *its own* manifest first, because a
+  merged map answers "who has this region", not "who has bucket 07".
+- **Volume 0 is the origin the page came from** (`base: ""`); the rest name
+  where they are served, relative or absolute.
+- **All or none.** A descriptor that names a volume with no address is ignored
+  as a whole: a half-read split would look like a complete catalogue.
+- Anything shown as a catalogue total (region counts, item counts) comes from
+  the merged manifest, so it adds up across volumes.
 
 ## The scope switch is enforced in the data layer
 

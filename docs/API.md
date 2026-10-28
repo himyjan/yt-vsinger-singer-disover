@@ -44,22 +44,44 @@ advertise a route that is not deployed.
 
 ### Volumes
 
-One day the catalogue may be served from several origins. When it is, the
-contract is unchanged **per volume**: each origin serves a complete dataset —
-its own manifests, shards, items and search packs — and every record is served
-by exactly one of them. A volume publishes `data/volumes.json` at its root:
+A large enough catalogue is served from several origins — **volumes**. The
+contract is unchanged **per volume**: each origin serves a complete dataset,
+with its own manifests, shards, items and search packs, and every record is
+served by exactly one of them. A volume publishes `data/volumes.json`:
 
 ```json
-{ "schemaVersion": 1, "index": 2, "count": 4, "name": "vol-2",
-  "channels": 17993, "items": 404 }
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-28T12:06:35.296Z",
+  "count": 3,
+  "volumes": [
+    { "index": 0, "name": "vol-0", "base": "",                  "channels": 23975, "items": 511 },
+    { "index": 1, "name": "vol-1", "base": "/volumes/vol-1/",   "channels": 24133, "items": 708 },
+    { "index": 2, "name": "vol-2", "base": "https://…/vol-2/",  "channels": 24005, "items": 530 }
+  ]
+}
 ```
 
-so the split can be discovered from any single origin. The assignment is
-`volumeOf(id, count)`, a pure function of the channel id (rendezvous hashing
-over FNV-1a — `scripts/lib/volume.ts`, about forty lines, which a client can
-port), so a client that knows `count` can compute the origin holding a record
-instead of probing every one. Nothing deployed today is split: treat
-`volumes.json` as optional, and a missing file as `count: 1`.
+`base` is where that volume is served, relative to the deployment
+(`/volumes/vol-1/`) or absolute (`https://…/vol-2/`), because volumes are
+usually separate repositories and therefore separate sites. Volume 0 is the
+origin the page was served from: its base is `""` and its records are the ones
+at `/data`. The same file is written into every volume, so a client that lands
+on any one of them can find the rest without being told which is primary.
+
+The client (`src/lib/origins.ts`) reads it, then fetches each volume's
+`data/manifest.json`, `data/channels/manifest.json` and `data/items/*` and
+merges the answers: counts and region tables are summed, channel and item
+lists are concatenated, and search packs are concatenated per region (each is a
+complete inverted index over its own slice, so a query looks them all up). The
+file is **optional**: absent, the client reads one origin exactly as before. A
+file that names a volume with no address is ignored as a whole rather than
+half-read, so a broken split cannot look like a complete catalogue.
+
+The assignment is `volumeOf(id, count)`, a pure function of the channel id
+(rendezvous hashing over FNV-1a — `scripts/lib/volume.ts`), so a client that
+knows `count` can compute the origin holding a record instead of probing every
+one. Nothing deployed today is split.
 
 ## Endpoints
 

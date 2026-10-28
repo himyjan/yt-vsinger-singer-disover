@@ -237,6 +237,7 @@ src/
 ├── App.vue                  the application shell
 ├── lib/
 │   ├── store.ts             reactive state: scope, filters, accounts, theme
+│   ├── origins.ts           where the dataset lives: one origin or N volumes
 │   ├── dataset.ts           loads and filters the committed dataset
 │   ├── auth.ts              account linking for four platforms
 │   ├── takeout.ts           reads a Takeout/export subscriptions.csv
