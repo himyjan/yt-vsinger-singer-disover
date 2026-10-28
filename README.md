@@ -151,7 +151,7 @@ data/
 ├── channels/            virtual/<region>/<bucket>.json · real/<region>/<bucket>.json
 ├── items/               <region>/<bucket>.json · live.json · upcoming.json
 ├── songs/               the music-centric projection
-└── search/              the inverted index, per region
+└── search/              the inverted index, per region (one or more packs)
 ```
 
 The same files are the **read-only API**: `data/api/v1/index.json` is a
@@ -191,7 +191,7 @@ language they sing in.
 
 | Axis | Values |
 | --- | --- |
-| `kind` | `virtual` · `real` |
+| `kind` | `virtual` · `real` — a curated `kind`, then a roster's membership, then the text |
 | `role` | `vtuber` · `vsinger` · `singer` · `musician` · `producer` · `composer` |
 | `region` | `jp` · `cn` · `tw` · `hk` · `kr` · `en` · `id` · `my` · `sea` |
 | `gender` | `female` · `male` · `unknown` |
@@ -200,9 +200,25 @@ language they sing in.
 | `affiliation` | independent · community · business group (the 勢 vocabulary) |
 | `regionSource` | which source decided the region — a roster, the platform's published country, kana, a script |
 
+`kind` and `role` are separate questions. **A roster files every entry it
+carries as a virtual performer** — vdb, vTubie's groups, bacharu and each
+platform's VTuber directory — and that membership is the only claim a channel
+has when its whole bio is 「I'm just a guy trying to have fun, png made by
+@owo_uou」. It settles `virtual` or `real` and leaves `role` to the text: a
+VTuber who writes 「ボカロP兼Vtuber」 is a virtual performer **and** a producer.
+`singer`, `composer` and `songwriter` are jobs, not evidence of a human body;
+only an explicit statement — 「I'm not a VTuber」, 「An actual real person」 —
+files a roster entry as `real`. A hand-written `kind` in
+[`data/overrides.json`](data/overrides.json) is the last word.
+
 Uploads are classified as `cover`, `mv`, `original`, `live`, `premiere` or
 `performance`, and carry an `isAcoustic` flag for 弾き語り / 彈唱 — singing
 while playing an instrument.
+
+The classifier reads only the record, so a correction can be applied to the
+whole catalogue without touching the network: `npm run data:reclassify`
+reports what would move, `--apply` writes it, and `--explain <name>` prints
+why one record is what it is.
 
 ## License
 

@@ -108,18 +108,26 @@ calls — so the same input always produces the same record. Keep it that way.
 ### The marker tiers
 
 ```ts
-const VIRTUAL_STRONG = [...];   // "vtuber", "hololive", "vsinger" …
-const VIRTUAL_WEAK   = [...];   // "live2d", "uber", "oshis" …
-const REAL_STRONG    = [...];   // "singer-songwriter", "ボカロp", "composer" …
-const REAL_WEAK      = [...];   // "singer", "歌手", "musician" …
+const VIRTUAL_STRONG  = [...];  // "vtuber", "vtype", "virtual artist", "hololive" …
+const VIRTUAL_WEAK    = [...];  // "live2d", "uber", "oshis" …
+const REAL_STRONG     = [...];  // "singer-songwriter", "ボカロp", "composer" …
+const REAL_WEAK       = [...];  // "singer", "歌手", "musician" …
+const REAL_IDENTITY   = [...];  // "not a vtuber", "face reveal", "actual real person"
+const VSINGER_ROLE    = [...];  // "vsinger", "virtual singer", "歌い手" — virtual only
 const AGGREGATOR_MARKERS = [...];
 const SINGING_MARKERS    = [...];
 const ACOUSTIC_MARKERS   = [...];  // 弾き語り / 彈唱 / acoustic
 ```
 
-**Strong markers outweigh weak ones.** A channel that says "Vocaloid producer
-and virtual singer" is a *producer*: the strong real marker wins over the
-weak virtual one.
+**Strong markers outweigh weak ones — for the role.** A channel that says
+"Vocaloid producer and virtual singer" is a *producer*.
+
+**They do not decide `kind` on their own.** `singer`, `composer` and
+`songwriter` are jobs a VTuber holds; 「resident Vtuber, Cosplayer, Guitarist,
+Singer and Songwriter」 is not a human being. Only `REAL_IDENTITY` — a
+statement about a body — overrules a virtual claim, and only the
+`virtualClaim: "roster"` entry point is overrulable at all: a roster entry, a
+curated `kind` and an override all outrank the word score.
 
 ### The weighting
 
@@ -141,7 +149,7 @@ sample as `localeHints` so that a kanji-only name can be disambiguated
 
 | Field | Notes |
 | --- | --- |
-| `kind` | virtual vs. real |
+| `kind` | virtual vs. real — a curated `kind`, then a roster's `virtualClaim`, then the text; see `docs/DATA-SCHEMA.md` → *How `kind` is decided* |
 | `role` | vtuber / vsinger / singer / musician / producer / composer |
 | `region` | agency → published country → kana in the name → explicit markers → platform prior → script detection → locale hints |
 | `gender` | explicit self-description first, honorifics only as a fallback |
@@ -295,10 +303,26 @@ for (const [r, list] of Object.entries(byRegion)) {
 
 ## After a classifier change
 
-A classifier fix changes many records at once. Always:
+A classifier fix changes many records at once. The classifier reads only the
+record, so the whole dataset can be re-derived without a single request:
 
-1. run the sync and the index;
-2. run `npm run data:validate`;
+```bash
+npm run data:reclassify            # report: what would move, and why
+npm run data:reclassify -- --apply # write it
+npm run data:reclassify -- --explain "Some Name"   # one record, with its claim
+npm run data:index
+npm run data:validate
+```
+
+`reclassify` reads `data/overrides.json` and `source: "seed"` as the last
+word, and the roster snapshots in `.cache/` as the claim — so a record the
+roster named is judged the way its import judged it.
+
+Always:
+
+1. run `data:reclassify` and read the report — the per-move counts, with
+   `[roster|text,platform]`, say *why* each group moved;
+2. run the index and `npm run data:validate`;
 3. **look at the diff** — `git diff --stat data/` tells you how many records
    moved;
 4. commit the regenerated `data/` in the same commit, so the diff is

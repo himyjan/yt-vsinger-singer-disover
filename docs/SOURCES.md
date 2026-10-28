@@ -410,7 +410,10 @@ YouTube RSS feed carrying `channel_id` — the key the dataset is built on. So
 `npm run data:vtubie-groups` walks the three levels and writes a snapshot to
 `.cache/vtubie-groups.json`, and `npm run data:vtubie-import` compares it with
 the dataset and, with `--apply`, imports the new channels. Nothing is guessed
-from a name: the id comes from the profile itself.
+from a name: the id comes from the profile itself. A profile page is also
+rate-limited well below the directory's own pace — 1.2 requests a second
+sustains, 2.5 gets a 429 and then a 403 — so the profile pass runs at that
+rate and resumes from its state file.
 
 The harvest runs through a real browser for the same Cloudflare reason, then
 reads every following page with a same-origin `fetch` **inside** that page so
@@ -457,6 +460,28 @@ gate: it reports what is new, what is already tracked, what is a fan account,
 what has no key, and imports only the rows whose `UC…` id it can verify
 through the platform — the platform's name wins, and a roster name that shares
 no word with the channel's title is reported rather than imported.
+
+**The roster's membership is the claim.** bacharu files every entry as a
+virtual performer, and that is the only evidence some channels have: their
+whole YouTube bio is 「I'm just a guy trying to have fun, png made by
+@owo_uou」. The importer therefore passes `rosterIds` to
+`importYouTubeChannels()`, which hands `virtualClaim: "roster"` to
+`classifyChannel()` — it settles `kind`, leaves `role` to the profile, and an
+explicit statement of a human body (「not a VTuber」) still overrules it.
+Without the claim, the 854 channels whose bio never says "vtuber" were filed
+as human singers.
+
+### Reading a roster without a link
+
+A row with no `UC…` id and only an `@handle` is one InnerTube resolution away
+from an import: `npm run data:bacharu-import -- --resolve-handles 6000`
+resolves the handle to the real channel id and imports it like any other
+candidate. A handle that resolves to a channel the dataset already tracks is
+skipped, not duplicated, and a channel the roster itself names under another
+row is imported once.
+
+`--limit` caps **what a run imports**, not what it reports, so a batch that
+resolves handles always has something to write.
 
 ### Rate limiting
 

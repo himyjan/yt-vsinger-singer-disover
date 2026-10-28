@@ -142,11 +142,14 @@ data/items/{live,upcoming}.json
 data/songs/{index,manifest}.json
 data/songs/<region>.json
 data/songs/categories/<category>.json
-data/search/<region>.json
+data/search/<region>.json          (shard 0 of the region's index)
+data/search/<region>.<n>.json      (further packs when a region outgrows 4 MB)
 ```
 
 Stale shards are pruned automatically. **Never write a file larger than 8 MB**
-(`SIZE_BUDGET.maxFileBytes` throws) and never let `data/` exceed 180 MB.
+(`SIZE_BUDGET.maxFileBytes` throws), keep each search pack under 4 MB
+(`maxSearchPackBytes` — the builder splits a region into as many packs as that
+needs) and never let `data/` exceed 180 MB.
 
 ## Extending the pipeline
 

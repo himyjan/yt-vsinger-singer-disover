@@ -40,7 +40,7 @@ and asks for a structured JSON answer:
 
 | Field | Question |
 | --- | --- |
-| `kind` | VTuber/VSinger, or a real human artist? |
+| `kind` | VTuber/VSinger, or a real human artist? — a roster saying "VTuber" is already the claim; what is worth verifying is whether the *person behind* is presenting a real body |
 | `role` | What do they do? |
 | `region` | Which language area do they perform in? |
 | `gender` | **Only** if the channel states it |
@@ -51,6 +51,11 @@ and asks for a structured JSON answer:
 
 The grounding metadata is read back, so the **sources the model actually read
 are recorded** next to each answer.
+
+`kind` and `role` are separate. `singer`, `composer` and `producer` are what a
+performer does, not what they are: a VTuber who writes 「ボカロP兼Vtuber」 is
+virtual **and** a producer, and verifying the role is not a reason to change
+the kind.
 
 ## Why grounding, not just a model
 
