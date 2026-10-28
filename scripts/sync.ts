@@ -148,6 +148,7 @@ interface Args {
   quotaLimit: number;
   limitChannels: number | null;
   limitLive: number | null;
+  limitMultiPlatformLive: number | null;
   keywords: string[];
   force: boolean;
   /**
@@ -171,6 +172,7 @@ function parseArgs(argv: string[]): Args {
     quotaLimit: 10_000,
     limitChannels: null,
     limitLive: null,
+    limitMultiPlatformLive: null,
     keywords: [],
     force: false,
     shardIndex: 0,
@@ -187,6 +189,7 @@ function parseArgs(argv: string[]): Args {
     else if (a === "--quota") args.quotaLimit = Number(argv[++i]);
     else if (a === "--limit-channels") args.limitChannels = Number(argv[++i]);
     else if (a === "--limit-live") args.limitLive = Number(argv[++i]);
+    else if (a === "--limit-multi-platform-live") args.limitMultiPlatformLive = Number(argv[++i]);
     else if (a === "--keyword") args.keywords.push(argv[++i]);
     else if (a === "--shard") {
       const [indexRaw, countRaw] = String(argv[++i] ?? "").split("/");
@@ -2861,6 +2864,112 @@ async function main(): Promise<void> {
       } catch (err) {
         log(`warn: live detail fetch failed: ${(err as Error).message}`);
       }
+    }
+
+    /**
+     * Multi-platform live stream check — CHZZK, KICK, SOOP (and any platform
+     * with a `live()` adapter). YouTube and Twitch are handled separately
+     * (InnerTube Live tab and Twitch GQL profile).
+     *
+     * Each platform's `live()` adapter returns the currently live streams for
+     * a channel. We iterate through all channels that link to those platforms
+     * and check whether they are live right now.
+     */
+    const liveAdapterPlatforms = new Set(["chzzk", "kick", "soop"]);
+    const adapterById = new Map(adapters.map((a) => [a.id as string, a]));
+
+    const multiPlatformLiveTargets: Array<{
+      channel: Channel;
+      platform: PlatformId;
+      link: PlatformLink;
+    }> = [];
+    for (const channel of channels) {
+      if (!channel.id.startsWith("UC")) continue; // only YouTube-keyed records
+      for (const link of channel.platforms) {
+        if (liveAdapterPlatforms.has(link.platform)) {
+          multiPlatformLiveTargets.push({ channel, platform: link.platform, link });
+        }
+      }
+    }
+
+    // Sort by least recently checked first
+    multiPlatformLiveTargets.sort((a, b) =>
+      (a.link.lastCheckedAt ?? "").localeCompare(b.link.lastCheckedAt ?? ""),
+    );
+
+    const multiLiveLimit = args.limitMultiPlatformLive ?? 2000;    const multiLiveItemIds = new Set<string>();
+    if (multiPlatformLiveTargets.length) {
+      let checked = 0;
+      let found = 0;
+      let retired = 0;
+      for (const target of multiPlatformLiveTargets.slice(0, multiLiveLimit)) {
+        const adapter = adapterById.get(target.platform);
+        if (!adapter || !adapter.live) continue;
+
+        try {
+          const liveChannel: PlatformChannel = {
+            platform: target.link.platform,
+            id: target.link.id,
+            handle: target.link.handle,
+            name: target.link.name,
+            url: target.link.url,
+            subscribers: target.link.subscribers,
+            avatar: target.link.avatar,
+            description: null,
+            tags: [],
+          };
+          const streams = await adapter.live(liveChannel);
+          if (!streams || streams.length === 0) {
+            checked++;
+            continue;
+          }
+          checked++;
+          found += streams.length;
+          const current = new Set(streams.map((stream) => stream.id));
+
+          for (const stream of streams) {
+            const item = platformUploadToItem(stream, now, target.channel);
+            if (!item) continue;
+            item.type = "live";
+            item.status = stream.status ?? "live";
+            item.platform = target.platform;
+            const prev = itemById.get(item.id);
+            itemById.set(item.id, {
+              ...item,
+              addedAt: prev?.addedAt ?? item.addedAt,
+            });
+            multiLiveItemIds.add(item.id);
+          }
+
+          // Retire streams that are no longer live
+          for (const existing of itemsByChannel.get(target.channel.id) ?? []) {
+            if (existing.type !== "live") continue;
+            if (existing.platform !== target.platform) continue;
+            if (existing.status !== "live" && existing.status !== "upcoming") continue;
+            if (current.has(existing.id)) continue;
+            const ended = itemById.get(existing.id);
+            if (!ended) continue;
+            ended.status = "past";
+            ended.actualEnd = ended.actualEnd ?? now;
+            ended.publishedAt =
+              ended.publishedAt ?? ended.actualStart ?? ended.scheduledStart ?? now;
+            ended.updatedAt = now;
+            retired++;
+          }
+        } catch (error) {
+          log(
+            `warn: ${target.platform} live check failed for ${target.link.id}: ${(error as Error).message}`,
+          );
+        }
+        checked++;
+      }
+      log(
+        `multi-platform live: checked ${checked}/${Math.min(
+          multiPlatformLiveTargets.length,
+          multiLiveLimit,
+        )} channel(s) across ${[...liveAdapterPlatforms].join(", ")}, ` +
+          `found ${found}, stored ${multiLiveItemIds.size}, retired ${retired}`,
+      );
     }
   }
 
