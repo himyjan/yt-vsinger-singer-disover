@@ -221,7 +221,7 @@ function main(): void {
   const notes: string[] = [];
   if (storedMb > options.maxMb) {
     notes.push(
-      `stored repository is ${formatBytes(stored)} — above the ${options.maxMb} MB budget. GitHub Free warns around 1 GB and refuses pushes around 2 GB.`,
+      `stored repository is ${formatBytes(stored)} — above the ${options.maxMb} MB budget. GitHub recommends under 1 GB, documents 10 GB of .git as its maximum, and refuses a push above 2 GB.`,
     );
   } else if (storedMb > options.warnMb) {
     notes.push(

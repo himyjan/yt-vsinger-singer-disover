@@ -715,8 +715,10 @@ for discovery/profile refresh do not by themselves provide account linking.
 
 ### 8.1 Repository size (GitHub Free)
 
-GitHub Free allows ~1 GB of repository content (hard limit 2 GB) and a 2 GB
-maximum for a single Git LFS file.
+GitHub recommends a repository under 1 GB and documents **10 GB of `.git`**
+as its maximum. The *enforced* limits are **2 GB per push** and **100 MB per
+object** (1 MB is the recommended object size). Git LFS caps a single file at
+2 GB on the Free plan.
 
 - `[x]` The **tree** is budgeted (8 MB per file, 180 MB for `data/`); the
       **history** is bounded by policy — a monthly squash to one snapshot,
