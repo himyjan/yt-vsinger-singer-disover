@@ -46,6 +46,13 @@ The contract:
 - `live()` — live and scheduled streams.
 - `search()` — optional, for discovery.
 
+**If `search()` returns the platform's VTuber directory**, say so: the roster
+build in `scripts/lib/roster.ts` treats its results as a `virtualClaim:
+"roster"`, because membership in such a directory is a claim of a virtual
+identity even when the channel's own bio never says "vtuber". An adapter that
+searches a *general* catalogue (all streamers, all musicians) must not be
+wired that way — then `classifyChannel()` decides the kind from the text.
+
 **Every network call must degrade gracefully.** Return an empty array on
 failure; never throw. A broken endpoint must never take the YouTube sync
 down with it.

@@ -79,11 +79,14 @@ blob that large is unusable in a browser anyway. So the dataset is split:
 | `data/items/upcoming.json` | scheduled streams and premieres | small |
 | `data/songs/<region>.json` | the music-centric projection | ~200 KB |
 | `data/songs/categories/<c>.json` | one file per song category | ~100 KB |
-| `data/search/<region>.json` | inverted index for one region | ~200 KB |
+| `data/search/<region>.json` | inverted index for one region — shard 0 | 1–5 MB |
+| `data/search/<region>.<n>.json` | further packs of a region too big for one file | 1–5 MB |
 
 The browser loads only the slice it needs: the channel manifest on startup,
 the shards of the regions and kinds it is showing when the user picks one, the
-live/upcoming files for those views, and the search packs for the query. The
+live/upcoming files for those views, and the search packs for the query. A
+region may be several packs — `en` is three — but they are one index: a query
+looks up each and merges the hits, exactly as it merges regions. The
 list is a projection of those records — there is no separate summary file to
 download.
 
@@ -308,7 +311,7 @@ segmenter, because `歌い手` is indexed as `歌い` + `い手`.
 
 | Field | How |
 | --- | --- |
-| `kind` (virtual / real) | weighted score over strong and weak markers, with the channel name weighted highest and the opening of the description next |
+| `kind` (virtual / real) | a curated `kind`, then a roster's `virtualClaim` (vdb, vTubie's groups, bacharu, each platform's VTuber directory), then a weighted score over strong and weak markers with the channel name weighted highest and the opening of the description next. `singer` / `composer` / `songwriter` are jobs and do not decide it; `REAL_IDENTITY` holds the words that state a human body |
 | `role` | the strongest matching role marker, unless the channel looks like an aggregator |
 | `region` | agency → published country → kana in the name → explicit region markers → platform prior → script detection → locale hints. A link to another platform is not a signal, and the winning source is stored in `regionSource` |
 | `gender` | explicit self-description first; honorifics only as a fallback |
@@ -319,6 +322,13 @@ segmenter, because `歌い手` is indexed as `歌い` + `い手`.
 
 Everything is overridable from `data/overrides.json`, and the curated catalog
 in `data/seed-catalog.json` has the highest precedence of all.
+
+The classifier reads **only the record** — no clock, no network — so the whole
+catalogue can be re-derived in seconds with `npm run data:reclassify`, which is
+how a corrected vocabulary becomes a correct dataset without re-fetching
+sixty thousand profiles. It reads `.cache/bacharu-vtubers.json` and
+`.cache/vtubie-groups.json` for the roster claim, and honours overrides and
+seeds as the last word.
 
 ## De-duplication
 

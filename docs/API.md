@@ -106,8 +106,15 @@ the site runs — no endpoint needed:
 4. resolve each posting index through `entries[index]`.
 
 `scripts/lib/search.ts` is the reference implementation (MIT), and
-[`ARCHITECTURE.md`](ARCHITECTURE.md#the-search-engine) explains the format. A
-pack is 2.3 MB for Japan, so cache it.
+[`ARCHITECTURE.md`](ARCHITECTURE.md#the-search-engine) explains the format.
+
+**A region may be several packs.** When one region's index outgrew
+`SIZE_BUDGET.maxSearchPackBytes` (4 MB) it is written as `<region>.json` plus
+`<region>.1.json`, `<region>.2.json` … and `data/search/manifest.json` names
+each with its `shard`. Each pack is a complete inverted index over its own
+slice, so a client looks the query up in **every** pack of the regions it
+wants and merges the hits — the same loop it already runs across regions. A
+reader that fetches only `<region>.json` sees the first third of `en`.
 
 ## Caching and etiquette
 

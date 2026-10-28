@@ -73,6 +73,13 @@ Every record carries `source`:
       accidentally leak the wrong kind.
 - `[x]` Manual overrides in `data/overrides.json` can force a channel's kind,
       role or region.
+- `[x]` A **roster's membership** is a claim of a virtual identity — vdb,
+      vTubie's groups, bacharu and each platform's VTuber directory — and it
+      settles `kind` when a channel's own description never says "vtuber".
+      The work (singer, composer, producer) decides `role`, not the kind.
+- `[x]` `npm run data:reclassify` re-derives both from the records on disk,
+      without the network, so a corrected classifier is a dataset fix rather
+      than a re-fetch.
 
 ---
 

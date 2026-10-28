@@ -940,7 +940,7 @@ Enforced by `scripts/lib/io.ts` (on write) and `scripts/validate.ts` (in CI).
 | --- | --- | --- |
 | `maxFileBytes` | 8 MB | No single file gets big enough to slow the app down |
 | `maxDataBytes` | 180 MB | Comfortably inside GitHub Free's ~1 GB repository limit |
-| `maxSearchIndexBytes` | 40 MB | |
+| `maxSearchPackBytes` | 4 MB | One search pack. Every pack is downloaded and parsed by the browser, so the ceiling is what a phone holds, not what git stores |
 | `maxLfsBytes` | 2 GB | GitHub's LFS per-file ceiling |
 
 Retention rules keep the dataset inside those budgets: up to 30 routine items

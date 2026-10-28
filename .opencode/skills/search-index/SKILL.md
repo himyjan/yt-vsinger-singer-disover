@@ -10,7 +10,12 @@ region; the browser answers a query with a few binary searches.
 
 ## The format
 
-`data/search/<region>.json`:
+`data/search/<region>.json` — and, when a region outgrows
+`SIZE_BUDGET.maxSearchPackBytes` (4 MB), `data/search/<region>.<n>.json` for
+the rest. Every pack is a complete inverted index over its own slice; the
+browser loads them together and `searchPacks()` merges the hits across packs
+exactly as it does across regions. `manifest.json` gives each pack its `shard`
+number.
 
 ```jsonc
 {
@@ -141,5 +146,6 @@ regions that actually exist, and the app only requests those.
 | Results ignore a filter | the option is not forwarded from `src/lib/dataset.ts` |
 | Search is slow | the packs ended up inside a `reactive()` object |
 | A channel that is clearly in the dataset does not come up | the value is only in a **field that is not indexed** — a YouTube handle, a Bilibili mid, a description. Index the name, never the description. |
-| Fewer results the narrower the query gets | the query matched a **context token** (a word nearly every record carries). `haystackFor()` once added the literal `channel`, so `channel` matched all 14,665 records and `channel <name>` collapsed to the same 120 hits. A token that every record shares carries no information — do not add one. |
+| Fewer results the narrower the query gets | the query matched a **context token** (a word nearly every record carries). `haystackFor()` once added the literal `channel`, so `channel` matched every record and `channel <name>` collapsed to the same 120 hits. A token that every record shares carries no information — do not add one. |
+| `en.json` is written but only half the channels are findable | a region now has several packs (`en.json`, `en.1.json`, …). A reader that fetches only `<region>.json` sees only shard 0 — `loadSearchPack()` returns every shard, so use it. |
 | A platform filter empties the list | the filter was applied *after* `search()` had already cut its results to a limit. Filter the whole result set: `src/App.vue` asks for 1,200 hits when a platform is selected. |

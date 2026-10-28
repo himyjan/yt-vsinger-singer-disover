@@ -56,10 +56,14 @@ This is the most common contribution, and it does not need any code.
 Then:
 
 ```bash
-npm run data:sync -- --no-search   # re-apply the overrides
+npm run data:reclassify -- --apply   # re-derive kind/role with the override applied
 npm run data:index
 npm run data:validate
 ```
+
+`data:reclassify` needs no network and is the fastest way to see the effect:
+`--explain <id or name>` prints the record's claim and what the classifier
+makes of it.
 
 ### The permanent way
 
