@@ -39,6 +39,14 @@ export const AGENCY_REGION: Record<string, RegionCode> = {
   hololive_dev_ism: "id",
   hololivecn: "cn",
   hololivecn_hy: "cn",
+  /**
+   * Holostars is a separate brand and is **not** folded into `hololive`, but
+   * it is spelled as many ways as hololive is, and the UI groups by the
+   * string: `HOLOSTARS`, `Holostars` and `holostars` are one agency, and
+   * `HOLOSTARS_EN` is the English branch.
+   */
+  holostars: "jp",
+  "holostars en": "en",
   nijisanji: "jp",
   "nijisanji en": "en",
   "nijisanji id": "id",
@@ -135,6 +143,31 @@ export const AGENCY_SUBREGION: Record<string, RegionCode> = {
  * production” is the parent company, not the talent brand, so it is left
  * alone; holostars is a separate brand and is not touched either.
  */
+/**
+ * A string with its case, spaces, hyphens and punctuation removed.
+ *
+ * `canonicalAgency()` compares agency names through this, because a source
+ * that writes `Re:AcT` and one that writes `ReAcT` name the same agency.
+ */
+function agencyLetters(value: string): string {
+  return value
+    .normalize("NFKC")
+    .toLowerCase()
+    .replace(/[^\p{L}\p{N}]+/gu, "");
+}
+
+/**
+ * `AGENCY_REGION`'s keys by their letter-only form, built once.
+ *
+ * The first key wins: the table lists `vspo` before `v-spo` and `ReAcT`
+ * before `Re:AcT`, and the first spelling is the one a performer writes.
+ */
+const AGENCY_KEYS: Map<string, string> = new Map();
+for (const key of Object.keys(AGENCY_REGION)) {
+  const letters = agencyLetters(key);
+  if (!AGENCY_KEYS.has(letters)) AGENCY_KEYS.set(letters, key);
+}
+
 export function canonicalAgency(
   agency: string | null | undefined,
 ): string | null {
@@ -154,7 +187,17 @@ export function canonicalAgency(
   if (key.startsWith("hololive") || key.startsWith("ホロライブ")) {
     return "hololive";
   }
-  return agency;
+  /**
+   * A known agency keeps the spelling this file gives it.
+   *
+   * `AGENCY_REGION` is the vocabulary every branch of the pipeline reads, and
+   * a source that writes `NIJISANJI` where another writes `Nijisanji` would
+   * otherwise become two affiliations in the UI — the same failure the
+   * hololive fold exists to prevent. Only an exact match counts: `NIJISANJI
+   * EN` is a branch with its own key, and an agency that is not in the table
+   * keeps whatever the source wrote.
+   */
+  return AGENCY_KEYS.get(agencyLetters(agency)) ?? agency;
 }
 
 /** Region → YouTube search keyword hints used by the discovery sweep. */
@@ -311,6 +354,159 @@ const HANGUL_RE = /[\uAC00-\uD7AF\u1100-\u11FF]/;
  */
 const SIMPLIFIED_ONLY = SIMPLIFIED_ONLY_CHARS;
 const TRAD_MARKERS = TRADITIONAL_ONLY_CHARS;
+/** Cyrillic and Thai are not latin, but they are not "no language" either. */
+const CYRILLIC_RE = /[\u0400-\u04FF]/;
+const THAI_RE = /[\u0E00-\u0E7F]/;
+/** Characters that exist only in Ukrainian, not in Russian. */
+const UKRAINIAN_RE = /[іїєґ]/;
+
+/**
+ * Function words that identify a latin-script language.
+ *
+ * A latin-script description used to be labelled `en` because the alphabet is
+ * the same one English is written in — which turned every Spanish, Portuguese,
+ * Tagalog, Turkish or Vietnamese VTuber into an English one, and dragged their
+ * region to `en` with it. The alphabet is not the language; the words are.
+ *
+ * The lists hold **function words** rather than vocabulary: they are what a
+ * description cannot avoid, and they are short enough that the file stays
+ * readable. Only English carries two-letter words (`is`, `of`, `my`): at that
+ * length two languages almost always share the spelling, and a Dutch `is` or
+ * `of` is the same word anyway — the Dutch list wins on `het`/`een`/`van`.
+ */
+const LATIN_MARKERS: Record<string, string[]> = {
+  en: [
+    "is", "it", "of", "my", "we", "us", "be", "if", "do", "so", "an", "to",
+    "in", "on", "at", "or", "as", "me", "he", "no", "up", "by",
+    "the", "and", "with", "for", "you", "this", "that", "are", "was", "were",
+    "have", "has", "not", "from", "but", "what", "when", "where", "who", "how",
+    "can", "will", "would", "your", "our", "their", "they", "she", "his", "her",
+    "about", "just", "very", "also", "hello", "welcome", "thanks", "thank",
+    "into", "over", "than", "then", "there", "here", "some", "more", "most",
+    "because", "while", "which", "still", "every", "much", "many", "only",
+  ],
+  es: [
+    "que", "por", "para", "con", "una", "unos", "unas", "los", "las", "del",
+    "muy", "pero", "también", "tambien", "soy", "eres", "esto", "este", "esta",
+    "estos", "estas", "cuando", "donde", "porque", "hola", "canal", "gracias",
+    "mucho", "muchos", "bien", "aquí", "aqui", "así", "asi", "más", "cómo",
+    "qué", "sus", "nuestro", "nuestra", "juego", "jugar", "siempre", "nunca",
+    "todos", "toda", "hasta", "desde", "entre", "sobre", "quiero", "gusta",
+    "hago", "hacer", "estoy", "están", "estan", "tengo", "tiene", "cosas",
+    "ustedes", "vosotros", "además", "ademas", "entonces", "aunque",
+    "mientras", "nada", "algo", "alguien", "tampoco", "todavía", "todavia",
+    "después", "despues", "antes", "casi", "solo", "sólo", "otro", "otra",
+    "otros", "otras", "mismo", "misma", "bueno", "buena", "mejor", "grande",
+    "pequeño", "pequeno", "siempre", "juntos", "juntas", "ustedes",
+  ],
+  pt: [
+    "não", "nao", "você", "voce", "uma", "com", "para", "por", "que", "dos",
+    "das", "nos", "nas", "muito", "muita", "muitos", "muitas", "obrigado",
+    "obrigada", "também", "tambem", "meu", "minha", "meus", "minhas", "seu",
+    "sua", "são", "sao", "estou", "está", "esta", "aqui", "brasil", "canal",
+    "conteúdo", "conteudo", "jogos", "jogo", "sempre", "nunca", "quando",
+    "onde", "porque", "estamos", "fazer", "coisas", "gosto", "quero",
+    "olá", "ola", "sou", "vocês", "voces", "nós", "nosso", "nossa", "nossos",
+    "nossas", "dele", "dela", "então", "entao", "porém", "porem", "apesar",
+    "depois", "antes", "quase", "assim", "outro", "outra", "outros",
+    "outras", "mesmo", "mesma", "bom", "boa", "melhor", "grande", "pequeno",
+    "pequena", "hoje", "ontem", "amanhã", "amanha", "juntos", "juntas",
+  ],
+  fr: [
+    "les", "des", "une", "pour", "avec", "dans", "sur", "pas", "plus", "mon",
+    "mes", "vous", "nous", "bonjour", "aussi", "mais", "très", "tres", "qui",
+    "que", "quoi", "quand", "sont", "être", "etre", "fait", "faire", "monde",
+    "tout", "tous", "cette", "ces", "votre", "notre", "merci", "salut",
+    "chaîne", "chaine", "vidéo", "video", "beaucoup", "toujours", "jamais",
+  ],
+  de: [
+    "der", "die", "das", "und", "ist", "nicht", "ein", "eine", "einen",
+    "einem", "mit", "für", "fur", "auf", "ich", "mein", "meine", "wir",
+    "guten", "auch", "aber", "sehr", "hier", "nur", "oder", "wenn", "weil",
+    "noch", "schon", "immer", "nie", "dich", "mich", "mir", "uns", "euch",
+    "sind", "haben", "hat", "werden", "wird", "danke", "hallo", "kanal",
+    "spiel", "spiele", "viel", "viele", "alles", "etwas", "heute",
+  ],
+  it: [
+    "gli", "che", "per", "con", "non", "sono", "mio", "mia", "ciao", "più",
+    "piu", "anche", "questo", "questa", "quella", "della", "delle", "dello",
+    "come", "quando", "dove", "perché", "perche", "molto", "tanto", "sempre",
+    "mai", "tutti", "tutto", "grazie", "canale", "gioco", "giochi", "siamo",
+    "fare", "cose", "voglio", "piace", "oggi",
+  ],
+  id: [
+    "yang", "dan", "dengan", "untuk", "saya", "aku", "ini", "itu", "tidak",
+    "dari", "juga", "sudah", "belum", "bisa", "kamu", "kami", "kita",
+    "mereka", "kapan", "karena", "sangat", "sekali", "banget", "terima",
+    "kasih", "selamat", "datang", "gue", "indonesia", "banyak", "sedang",
+    "sekarang", "tetapi", "hanya", "suka", "main", "orang",
+  ],
+  ms: [
+    "yang", "dengan", "untuk", "saya", "ini", "itu", "tidak", "dari", "juga",
+    "sudah", "belum", "boleh", "awak", "kami", "kita", "mereka", "bila",
+    "kerana", "sangat", "terima", "kasih", "selamat", "datang", "memang",
+    "ialah", "banyak", "sekarang", "tetapi", "hanya", "orang", "malaysia",
+    "bahasa", "melayu", "suka",
+  ],
+  vi: [
+    "và", "của", "là", "có", "không", "tôi", "bạn", "một", "những", "cho",
+    "này", "được", "người", "nhiều", "rất", "với", "để", "khi", "thì",
+    "mình", "chúng", "nhé", "vâng", "cảm", "ơn", "chào", "mừng", "kênh",
+    "trò", "chơi", "thích", "muốn", "hôm", "nay", "cũng", "nhưng",
+  ],
+  tl: [
+    "ang", "mga", "ako", "ikaw", "siya", "hindi", "para", "ito", "iyan",
+    "kumusta", "salamat", "mabuhay", "kami", "kayo", "sila", "naman", "yung",
+    "pero", "dahil", "kapag", "saan", "paano", "bakit", "mahal", "natin",
+    "namin", "inyo", "gusto", "ko", "lang", "ngayon", "bukas", "araw",
+  ],
+  tr: [
+    "bir", "için", "icin", "ile", "ben", "çok", "cok", "değil", "degil",
+    "ama", "daha", "gibi", "kadar", "şey", "sey", "var", "yok", "nasıl",
+    "nasil", "merhaba", "geldiniz", "kanal", "oyun", "oyunlar", "bugün",
+    "bugun", "zaman", "herkes", "teşekkürler", "tesekkurler", "seviyorum",
+  ],
+  pl: [
+    "nie", "jest", "się", "sie", "mój", "moj", "moja", "moje", "bardzo",
+    "dla", "jak", "ale", "czy", "tylko", "tak", "już", "juz", "będzie",
+    "bedzie", "jestem", "dzień", "dzien", "kanał", "kanal", "gry", "cześć",
+    "czesc", "witam", "dziękuję", "dziekuje", "wszystko", "zawsze", "nigdy",
+  ],
+  nl: [
+    "het", "een", "van", "niet", "met", "voor", "zijn", "dat", "dit", "maar",
+    "ook", "hallo", "welkom", "kanaal", "spel", "spelen", "bedankt", "goed",
+    "hoe", "waarom", "omdat", "altijd", "nooit", "jullie", "wij", "veel",
+    "alles", "iets", "vandaag", "leuk",
+  ],
+  sv: [
+    "och", "att", "jag", "det", "är", "ar", "för", "for", "med", "inte",
+    "på", "pa", "som", "har", "kan", "också", "ocksa", "mycket", "alltid",
+    "aldrig", "hej", "välkommen", "valkommen", "kanal", "spel", "spela",
+    "idag", "roligt",
+  ],
+  da: [
+    "og", "jeg", "ikke", "det", "er", "til", "med", "på", "pa", "for", "som",
+    "har", "kan", "også", "ogsa", "meget", "altid", "aldrig", "hej",
+    "velkommen", "kanal", "spil", "spille", "i dag", "sjovt",
+  ],
+};
+
+/**
+ * Accented characters that no other listed language uses.
+ *
+ * A diacritic is evidence, never proof — `ö` is German, Swedish and Finnish —
+ * so each one adds a single point and the words carry the decision.
+ */
+const LATIN_DIACRITICS: Record<string, RegExp> = {
+  es: /[ñ¿¡]/,
+  pt: /[ãõ]/,
+  vi: /[ạảấầẩẫậắằẳẵặếềểễệốồổỗộớờởỡợụưứừửữựỳỵỷỹđ]/,
+  pl: /[ąćęłńśźż]/,
+  tr: /[ışğ]/,
+  ro: /[ăâîșț]/,
+  cs: /[ěščřžů]/,
+  hu: /[őű]/,
+};
 
 /**
  * Guesses the primary language of a blob of text.
@@ -353,9 +549,97 @@ export function detectLanguage(text: string | null | undefined): string | null {
     // a VTuber dataset is full of kanji-only Japanese names.
     return "ja";
   }
+  if (CYRILLIC_RE.test(text)) return UKRAINIAN_RE.test(text) ? "uk" : "ru";
+  /**
+   * Thai is a script, not a kaomoji.
+   *
+   * `ฅ` is one character in a cat face and three of them in a cheerful
+   * English bio — which is how a Malaysian VTuber's description became
+   * `th`. A description is Thai when Thai characters are a real share of it
+   * and there are enough of them to be words.
+   */
+  const thai = (text.match(/[\u0E00-\u0E7F]/g) ?? []).length;
+  if (thai >= 4 && thai / (text.replace(/\s/g, "").length || 1) >= 0.15) {
+    return "th";
+  }
   const latin = (text.match(/[A-Za-z]/g) ?? []).length;
   const total = text.replace(/\s/g, "").length || 1;
-  if (latin / total > 0.8) return "en";
+  if (latin / total <= 0.6) return null;
+  return detectLatinLanguage(text);
+}
+
+/**
+ * The language of a latin-script text, from the words it uses.
+ *
+ * A score is the number of listed function words, weighted by length: a
+ * three-letter word is ambiguous enough to be worth one point, a word of four
+ * or more is worth two. A diacritic adds one, because `ñ` or `ł` narrows the
+ * field without deciding it alone.
+ *
+ * The winner has to reach two points and lead the runner-up by one. Anything
+ * less stays `en`: most of what reaches here is a **name**, not a sentence
+ * (「Sameko Saba」 has no function word in it), and a name written in the latin
+ * alphabet is labelled `en` — the weakest region signal there is
+ * (`regionSource: "script"`), and not worse than leaving it unknown. A
+ * language the lists do not cover (Finnish, Greek, …) therefore keeps the old
+ * answer instead of flipping a whole catalogue to `unknown`.
+ */
+function detectLatinLanguage(text: string): string | null {
+  const normalised = text.normalize("NFC");
+  const tokens = normalised
+    .toLowerCase()
+    .match(/[\p{L}\p{M}]+/gu);
+  if (!tokens?.length) return null;
+  const counts = new Map<string, number>();
+  for (const token of tokens) counts.set(token, (counts.get(token) ?? 0) + 1);
+
+  let best: string | null = null;
+  let bestScore = 0;
+  let runnerUp = 0;
+  for (const [language, words] of Object.entries(LATIN_MARKERS)) {
+    let score = 0;
+    for (const word of words) {
+      const hits = counts.get(word) ?? 0;
+      /**
+       * A word of four letters or more is worth two points, and so is any
+       * word that needs more than ASCII: 「más」 is three letters and
+       * unmistakably not English, while 「mas」 could be half a dozen things.
+       */
+      const weight = word.length >= 4 || /[^\u0000-\u007F]/.test(word) ? 2 : 1;
+      if (hits) score += hits * weight;
+    }
+    const diacritics = LATIN_DIACRITICS[language];
+    if (diacritics && diacritics.test(normalised)) score += 1;
+    if (score > bestScore) {
+      runnerUp = bestScore;
+      best = language;
+      bestScore = score;
+    } else if (score > runnerUp) {
+      runnerUp = score;
+    }
+  }
+
+  if (
+    best &&
+    bestScore >= runnerUp + 1 &&
+    (bestScore >= 2 || best === "en")
+  ) {
+    return best;
+  }
+  /**
+   * Nothing matched at all, so the alphabet is the only evidence there is —
+   * and a latin-script name (`「Sameko Saba」`, "Casual gamer messin around
+   * streaming") keeps the old `en` answer, which is the weakest region signal
+   * there is (`regionSource: "script"`). English is also the one language a
+   * single short function word may decide, because `the`/`you`/`and` are
+   * everywhere in a description and nowhere else unquoted.
+   */
+  if (bestScore === 0) return "en";
+  /**
+   * Something matched, but two languages are as likely as each other. English
+   * is not a safer guess than silence, so the caller gets `null` and the
+   * record keeps the region its other evidence decided.
+   */
   return null;
 }
 
@@ -710,25 +994,67 @@ export function buildRegionMeta(
  * `Aoi / Vtuber` in English. The profile is therefore always requested in the
  * language of the record's own region, and this is the mapping.
  */
+/**
+ * The UI language YouTube answers a profile in, by dataset language code.
+ *
+ * `zh-Hans`/`zh-Hant`/`yue` are BCP-47 script and language subtags, while
+ * YouTube wants a **locale**: `zh-CN`, `zh-TW`, `zh-HK`. Filipino is `fil` to
+ * YouTube and `tl` here.
+ */
+const PROFILE_LANGUAGES: Record<string, string> = {
+  en: "en",
+  ja: "ja",
+  "zh-Hans": "zh-CN",
+  "zh-Hant": "zh-TW",
+  yue: "zh-HK",
+  ko: "ko",
+  es: "es",
+  pt: "pt",
+  de: "de",
+  fr: "fr",
+  it: "it",
+  id: "id",
+  ms: "ms",
+  vi: "vi",
+  th: "th",
+  tr: "tr",
+  pl: "pl",
+  nl: "nl",
+  sv: "sv",
+  da: "da",
+  ru: "ru",
+  uk: "uk",
+  tl: "fil",
+};
+
+/**
+ * The language to ask YouTube in for a record.
+ *
+ * A channel publishes a localized title **and description** per UI language,
+ * and English is the wrong answer for most of this dataset: the Japanese
+ * channel 「向葵 / あおい」 answers with `Aoi / Vtuber`, and a Spanish performer
+ * who set an English localization answers with an English description that
+ * the language detector then reads as `en`. A localization YouTube has no
+ * translation for comes back in the channel's own language, so asking in the
+ * performer's language is the rule, not an optimisation.
+ *
+ * The region decides it, and the `languages` the record already carries break
+ * the tie: the region vocabulary covers the scenes this project tracks
+ * (`jp`, `cn`, `hk`, …) and not Spanish, Portuguese or German, whose records
+ * are `unknown` with the language in `languages`. A region whose language is
+ * English — `en`, `sea` — is not a decision about the performer, so a
+ * `ja`-speaking performer in the English scene is still asked in Japanese.
+ */
 export function profileLanguage(
   region: string | null | undefined,
+  languages?: readonly string[] | null,
 ): string {
-  switch (region) {
-    case "jp":
-      return "ja";
-    case "cn":
-      return "zh-CN";
-    case "tw":
-      return "zh-TW";
-    case "hk":
-      return "zh-HK";
-    case "kr":
-      return "ko";
-    case "id":
-      return "id";
-    case "my":
-      return "ms";
-    default:
-      return "en";
+  const fromRegion = region ? REGION_LANGUAGE[region as RegionCode] : null;
+  const regionHl = fromRegion ? PROFILE_LANGUAGES[fromRegion] : null;
+  if (regionHl && regionHl !== "en") return regionHl;
+  for (const language of languages ?? []) {
+    const hl = PROFILE_LANGUAGES[language];
+    if (hl && hl !== "en") return hl;
   }
+  return "en";
 }

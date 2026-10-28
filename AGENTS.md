@@ -95,11 +95,20 @@ Two rules follow:
   account must not rename a Japanese YouTube channel.
 - **A placeholder is not a name.** 「账号已注销」 and 「(알 수 없음)」 are
   tombstones, and they are rejected.
-- **The platform's name has a language too.** YouTube publishes a title per
-  localization, so the profile is fetched in the language of the record's
-  region — `ja` for a Japanese channel. The English localization of
+- **The platform's name has a language too.** YouTube publishes a title and a
+  **description** per localization, so the profile is fetched in the language
+  of the record — `ja` for a Japanese channel, `es` for a Spanish performer
+  whose region is `unknown` and whose roster states Spanish — through
+  `profileLanguage(region, languages)`. The English localization of
   「向葵 / あおい」 is `Aoi / Vtuber`, and storing that as the name is how a
-  Japanese channel looks Chinese: the other localizations become aliases.
+  Japanese channel looks Chinese. The description matters just as much: a
+  channel that published an English localization answers InnerTube's default
+  (`en`) with an English description, which `detectLanguage()` then reads as
+  `en` — so a Spanish or Thai performer ends up filed as English. A
+  localization YouTube has no translation for comes back in the channel's own
+  language, so asking in the performer's language is the rule, not an
+  optimisation; a roster that states one (bacharu's `languages`) supplies it
+  where the region cannot (`RosterHint.languages`).
 
 A rename is **recorded**: the old name goes into `aliases`, and the aliases
 are indexed for search, so a channel that renamed is still findable under
@@ -154,6 +163,23 @@ common romanisation belongs to something else: the Canadian city of Victoria
 has a YouTube channel. A link found in the performer's **own text** is taken
 at face value, because there the performer said it themselves.
 
+The name the two sides publish is decorated differently, so containment is
+tested **both** ways: 「雫るる_Official」 normalises to 「雫るるofficial」 — the
+suffix is not a word boundary in a CJK name, so `normalizeName()` keeps it —
+while the YouTube channel is just 「雫るる」. The record's name is still the
+distinctive one (a one- or two-character name never confirms anything), and it
+is the side that has to appear in the other. A **search** candidate is also
+rejected when it is a clip, fan or re-upload account, because 切片/烤肉 channels
+are named after the person they clip and are exactly what a name search finds
+first. A link harvested from the performer's own text needs no such check:
+they would not link their own re-uploader.
+
+YouTube's own channel search is a discovery source in its own right
+(`ctx.innertube.searchChannels()`, no quota): a Japanese VTuber filed under
+Bilibili alone usually *has* a YouTube channel named after them, and it is the
+account whose published country corrects the region. `npm run data:links --
+--platform bilibili --region jp` walks exactly that backlog.
+
 Note that vdb's `jp` **name field is not kana evidence**: it stores kana
 readings of Chinese names (「小卯」 → 「コウサギ」), which would re-file
 thousands of Chinese performers as Japanese. Only the display name counts,
@@ -171,7 +197,9 @@ They live in `handle`, beside the id, and are refreshed from the profile.
 `bilibili:123`, `vdb:<uuid>` or `twitter:<handle>` when its `platforms[]`
 already names a `UC…` channel, merges the duplicates that creates, and takes
 its items with it — this is a YouTube-first tracker, and one performer must not
-be two records under two ids.
+be two records under two ids. It runs at load in the sync, and at the write
+path of `data:links` and `fill-details`, so the pass that *finds* the channel
+re-keys the record in the same run rather than leaving it for tomorrow.
 
 The test is deliberately conservative, because a wrong link would make the
 record *be* someone else's channel. The link must not be a clip, fan or
@@ -422,16 +450,17 @@ create non-fast-forward push failures.
 | A record keyed by a handle, or by a `bilibili:` / roster id although the performer has their own YouTube channel | `npm run data:ids` — re-keys to the `UC…` id offline, then resolves the handle ids over the network |
 | Fill the missing avatars | `npm run data:details -- --limit 2000` |
 | Fill the missing follower counts | `npm run data:details -- --counts-only --limit 500` |
-| A Bilibili-only record with no YouTube/Twitch link | `npm run data:links -- --limit 200` (add `--platform bilibili --shard 2/4` to slice it) |
+| A Bilibili-only record with no YouTube/Twitch link | `npm run data:links -- --limit 200` (add `--platform bilibili --shard 2/4` to slice it, or `--region jp` for the Japanese mirror case) |
 | A record filed under `cn` that is really Japanese | `npm run data:details -- --weak-region` re-derives it; `data:links` corrects it from the discovered YouTube country |
 | Fix the classifier itself | `scripts/lib/classify.ts` |
 | Add a curated channel | `data/seed-catalog.json` |
 | Discover new performers | `npm run data:discover` — vTubie's directory, read with a browser (`puppeteer-core`, optional); candidates land in `data/identities.json`, and `--promote` adds the ones that pass the two-video gate to `data/channels/` |
 | Add a VTuber group's members | `npm run data:vtubie-groups` (browser, resumable) then `npm run data:vtubie-import -- --apply`; the group page is the only vTubie path that publishes the `UC…` id, so no name search is involved |
-| Add new VTubers from the bacharu roster | `npm run data:bacharu` (JSON API, resumable) then `npm run data:bacharu-import -- --apply`; a row with only an `@handle` needs `--resolve-handles` first |
+| Add new VTubers from the bacharu roster | `npm run data:bacharu` (JSON API, resumable) then `npm run data:bacharu-import -- --apply`; a row with only an `@handle` needs `--resolve-handles` first, a row with no link at all is `--search-names <n>`, and `--agencies` fills an empty `agency` from the row's group |
 | Add a region | `scripts/lib/types.ts`, `scripts/lib/regions.ts` |
 | Add a platform | `scripts/lib/platforms/<name>.ts` + `platform-registry.ts` |
 | Add a discovery source | `scripts/lib/debut-sources/<name>.ts` |
+| Add Hong Kong VTubers | `npm run data:vtuberhk` then `npm run data:vtuberhk-import -- --apply` (`scripts/lib/vtuberhk.ts` parses `/channels/` for the roster and its state, and `/data/channels.json` for the counts; the roster files `hk` only where the profile decided nothing). `-- --stats` also fills the empty `viewCount`/`videoCount`/`subscribers` of the records it already tracks |
 | Change the search behaviour | `scripts/lib/search.ts`, then `npm run data:index` |
 | Fix a wrong `kind` or `role` across the dataset | `scripts/lib/classify.ts`, then `npm run data:reclassify -- --apply` — it re-derives both from the records on disk, no network, and the roster ids in `.cache/` count as the virtual claim |
 | Add a UI filter | `src/lib/dataset.ts` (`filterItems`) + `src/App.vue` |
@@ -463,6 +492,7 @@ npm run data:details -- --counts-only --limit 500 # fill the hidden follower cou
 npm run data:details -- --name-only  # correct the names and the aliases
 npm run data:details -- --platform bilibili --dry-run
 npm run data:links -- --limit 200    # find the missing cross-platform accounts
+npm run data:links -- --platform bilibili --region jp --limit 320  # the Japanese mirror backlog
 npm run data:links -- --shard 2/4 --web --dry-run  # + search-grounded fallback
 npm run data:discover                # new performers from the directory sources (vTubie)
 npm run data:discover -- --promote   # + add the ones that pass the virtual-and-singing gate
@@ -471,6 +501,13 @@ npm run data:vtubie-import -- --apply # add the harvested YouTube channels that 
 npm run data:bacharu                  # the bacharu roster → .cache/bacharu-vtubers.json (JSON, resumable)
 npm run data:bacharu -- --merge-only  # rebuild the snapshot from the page files
 npm run data:bacharu-import           # report what the roster adds; --apply to import the ids
+npm run data:bacharu-import -- --apply --resolve-handles 6000   # + the @handle-only rows
+npm run data:bacharu-import -- --apply --search-names 200      # + rows with no link at all
+npm run data:bacharu-import -- --apply --agencies              # + the agency its group names
+npm run data:bacharu-import -- --apply --retry-dead            # retry ids a recent run could not resolve
+npm run data:vtuberhk                 # vtuber.hk roster + /data/channels.json + live/archive (5 requests)
+npm run data:vtuberhk-import          # report the HK channels the directory lists; --apply to add them
+npm run data:vtuberhk-import -- --stats --apply  # + fill the view/video/subscriber counts it is missing
 npm run data:ids                     # re-key handle / bilibili / roster ids to the UC… id
 npm run data:validate                # structure + budgets
 npm run repo:size                    # the stored history, not the tree
@@ -534,6 +571,7 @@ separate from what it **tracks**.
 | --- | --- | --- | --- |
 | [vdb.vtbs.moe](https://vdb.vtbs.moe) | The Virtual YouTuber Name List Database — **read** | Static `list.json`, no key | The roster this project builds on: 10,138 identity records, names in `cn`/`jp`/`en`, accounts on up to 35 platforms |
 | [taiwanvtuberdata.github.io](https://taiwanvtuberdata.github.io/) | A Taiwan-centred tracking project — **read** | Static JSON, no key, Unlicense | The `nationality` field, the strongest region signal this project has, and the currently-live / calendar / debut / graduate lists it does not publish itself |
+| [vtuber.hk](https://vtuber.hk) | A Hong Kong–centred directory of 672 YouTube channels — **read** | HTML roster + static JSON (`/data/channels.json`, `live-hkv`, `archive-hkv`), no key | 253 channels this catalogue did not have, the `UC…` id published outright (no name search), the 己引退 / 準備中 state as `activity`, and the channel `viewCount` InnerTube never gives us |
 | [holodex.net](https://holodex.net) | A YouTube VTuber stream index with a clip index and **Multiview** | Public site; API v2 needs `X-APIKEY` and answers `403` without one | The depth this project does not attempt: clips, mentions, subber relations, several streams in one player |
 | [music.holodex.net](https://music.holodex.net) | Musicdex — songs and set lists tagged out of singing streams | Same API and key | Song-level tagging of a stream, which this project classifies but does not tag |
 
@@ -541,5 +579,9 @@ Measured on 2026-10-27, so a later reader can tell what moved: the Holodex API
 refuses `/api/v2/stats`, `/channels`, `/videos` and `/live` with `403`
 unauthenticated — its inventory cannot be counted from outside; vdb's
 `list.json` is 2.36 MB and holds 10,138 records (9,903 of them `vtuber`); the
-Taiwan tracker's `api/v2/all/groups.json` is 374 KB and holds 288 groups. The
-full comparison is in `docs/SOURCES.md`.
+Taiwan tracker's `api/v2/all/groups.json` is 374 KB and holds 288 groups;
+vtuber.hk's `/channels/` is 812 KB and holds 672 channels (452 活動中, 39
+準備中, 162 己引退, 17 organizations, 2 觀察中), of which 253 were missing from
+this dataset; its `/data/channels.json` is 1.3 MB and covers 523 of them with
+descriptions, published countries and all three counts, and `live-hkv` +
+`archive-hkv` add 146 live/upcoming and 278 recent videos. The full comparison is in `docs/SOURCES.md`.

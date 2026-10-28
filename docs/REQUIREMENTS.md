@@ -83,6 +83,15 @@ Every record carries `source`:
 - `[x]` `npm run data:reclassify` re-derives both from the records on disk,
       without the network, so a corrected classifier is a dataset fix rather
       than a re-fetch.
+- `[x]` **A roster also states the affiliation.** bacharu files each performer
+      under its current groups, so `npm run data:bacharu-import -- --agencies`
+      fills an empty `agency` from them — canonicalised, so `NIJISANJI`,
+      `Nijisanji` and `NIJISANJI (main branch)` are one agency and every
+      `hololive` branch is `hololive`. An agency the channel's own text names
+      still wins, and a former group is not a current affiliation.
+- `[x]` **A source row can be dead.** The roster keeps the rows of channels
+      that have since been deleted; the import reports them, writes nothing,
+      and remembers the id for seven days so the next run does not ask again.
 
 ---
 
@@ -163,7 +172,17 @@ is published.
       Before this was fixed, 5,895 mainland Chinese channels were recorded as
       Japanese because their stage names use kana.
 - `[x]` Hong Kong is Cantonese — `yue`, its own language rather than
-      `zh-Hant`.
+      `zh-Hant`. The Hong Kong scene itself is read from **vtuber.hk**, a
+      directory of 672 channels that publishes the `UC…` id and the state
+      (活動中 / 準備中 / 己引退); 253 of them were not in the catalogue.
+- `[x]` **The alphabet is not the language.** A latin-script description is
+      no longer `en` by default: the detector scores function words and
+      diacritics for `es`, `pt`, `fr`, `de`, `it`, `id`, `ms`, `vi`, `tl`,
+      `tr`, `pl`, `nl`, `sv`, `da`, and reads Cyrillic as `ru`/`uk` and Thai
+      as `th`. A name with no function word still falls back to `en`.
+      `npm run data:reclassify -- --languages` re-derived 8,011 records
+      written by the old detector (1,990 `en → es`, 653 `→ de`, 559 `→ pt`,
+      534 `→ fr`), and the region of a guessed `en` record follows it.
 - `[x]` Cantonese markers (粵語 · 廣東話 · 廣州話) identify the Cantonese
       performers in the mainland scene too.
 - `[x]` `regionSource` records which source decided the region.

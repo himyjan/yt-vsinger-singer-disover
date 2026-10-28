@@ -46,6 +46,7 @@ import type { PlatformAdapter, PlatformChannel } from "./platforms";
 import type { InnerTubeSource } from "./youtubei";
 import type { TwitchGqlSource } from "./twitch-gql";
 import { normalizeName } from "./identity";
+import { detectClipAccount, isFanAccountName } from "./classify";
 import { toCountRef } from "./types";
 import type { Channel, PlatformId, PlatformLink } from "./types";
 
@@ -320,13 +321,27 @@ export function identityNeedles(channel: Channel): string[] {
  */
 export function confirmingNames(channel: Channel): string[] {
   const name = normalizeName(channel.name ?? "");
-  if (!name) return [];
+  return isDistinctiveName(name) ? [name] : [];
+}
+
+/**
+ * Whether a normalised name is distinctive enough to confirm an identity.
+ *
+ * Three CJK characters are a name, while two are shared by too many
+ * performers (「小卯」, 「星野」), and six latin letters are the shortest name
+ * that is not an acronym dozens of channels share. A roster row used as a
+ * search query is held to the same rule: searching a two-character name
+ * returns the wrong performer first.
+ */
+export function isDistinctiveName(name: string): boolean {
+  const normalised = normalizeName(name ?? "");
+  if (!normalised) return false;
   const cjk = (
-    name.match(/[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]/gu) ??
-    []
+    normalised.match(
+      /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]/gu,
+    ) ?? []
   ).length;
-  const distinctive = cjk >= 2 ? name.length >= 3 : name.length >= 6;
-  return distinctive ? [name] : [];
+  return cjk >= 2 ? normalised.length >= 3 : normalised.length >= 6;
 }
 
 /**
@@ -364,8 +379,20 @@ export function confirmsIdentity(
   if (!channelNames.length) return false;
   const candidateName = normalizeName(resolved.link.name ?? "");
   if (!candidateName) return false;
+  /**
+   * Either side may carry the decoration the other dropped.
+   *
+   * 「雫るる_Official」 normalises to 「雫るるofficial」 — the suffix is not a
+   * word in a CJK name, so `normalizeName()` keeps it — while the YouTube
+   * channel is just 「雫るる」. The record's name is the distinctive one and
+   * the channel's name is a *prefix* of it, so containment has to be tested
+   * in both directions, not only candidate-inside-record.
+   */
   return channelNames.some(
-    (name) => name === candidateName || candidateName.includes(name),
+    (name) =>
+      name === candidateName ||
+      candidateName.includes(name) ||
+      name.includes(candidateName),
   );
 }
 
@@ -456,6 +483,21 @@ export async function addMissingLinks(
     const resolved = await resolveCandidate(candidate, ctx);
     if (!resolved) continue;
     if (isPlaceholderName(resolved.link.name)) continue;
+    /**
+     * A **search** result can be the fan account, not the performer.
+     *
+     * 搬運組, 字幕組 and 切片 channels are named after the person they clip,
+     * so a name search finds them first. A link the performer wrote down
+     * themselves needs no such check — they would not link their own
+     * re-uploader — but a name match does.
+     */
+    if (
+      candidate.via === "search" &&
+      (detectClipAccount(resolved.link.name, resolved.text) ||
+        isFanAccountName(resolved.link.name))
+    ) {
+      continue;
+    }
     if (!confirmsIdentity(resolved, channel, candidate)) continue;
 
     channel.platforms.push(resolved.link);

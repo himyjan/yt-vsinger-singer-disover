@@ -49,7 +49,32 @@ import { splitName } from "./names";
 import { removeSuggestions, suggestionKey } from "./suggestions";
 import { toCountRef } from "./types";
 import { buildSearchIndex } from "../build-index";
-import type { Channel } from "./types";
+import type { Activity, Channel, CountRef, RegionCode } from "./types";
+
+/**
+ * The subscriber count a record starts with.
+ *
+ * The platform's own number is the one to keep. When the profile carries none
+ * — InnerTube omits it for a channel that hides it, and the import has no
+ * second source — a roster that dumped `channels.list` has the count and the
+ * `hiddenSubscriberCount` flag with it, so it fills the hole. A roster must
+ * not turn a hidden count into a number the channel never published, which is
+ * why the flag wins over the value.
+ */
+function subscriberCount(
+  platform: CountRef,
+  roster?: {
+    subscribers?: number | null;
+    subscribersHidden?: boolean;
+  },
+): CountRef {
+  if (platform.tag === "has") return platform;
+  if (roster?.subscribersHidden) return { tag: "hidden" };
+  if (typeof roster?.subscribers === "number" && roster.subscribers > 0) {
+    return { tag: "has", count: roster.subscribers };
+  }
+  return platform;
+}
 
 /* -------------------------------------------------------------------------- */
 /* InnerTube                                                                  */
@@ -122,6 +147,7 @@ function recordFromProfile(
   now: string,
   override?: ChannelOverride,
   rosterClaim = false,
+  hint?: RosterHint,
 ): Channel | null {
   const id = normalizeChannelId(profile.id);
   if (!id.startsWith("UC")) return null;
@@ -173,6 +199,7 @@ function recordFromProfile(
 
   const subscribers = toCountRef(profile.subscribers);
   const avatar = profile.avatar ?? first.avatar ?? null;
+  const textActivity = detectActivity(name, description, null);
 
   return {
     id,
@@ -182,21 +209,41 @@ function recordFromProfile(
     handle,
     kind: classification.kind,
     role: classification.role,
-    region: classification.region,
-    regionSource: classification.regionSource,
+    /**
+     * A roster's region is a fallback, never an override: it fills the answer
+     * the profile left `unknown` and leaves everything else alone.
+     */
+    region:
+      hint?.region && classification.region === "unknown"
+        ? hint.region
+        : classification.region,
+    regionSource:
+      hint?.region && classification.region === "unknown"
+        ? "roster"
+        : classification.regionSource,
     languages: classification.languages,
     statedLanguages: classification.statedLanguages,
 
-    agency: classification.agency,
+    agency: classification.agency ?? hint?.agency?.[id] ?? null,
     affiliation:
       override?.affiliation ??
-      detectAffiliation(name, description, classification.agency),
+      detectAffiliation(
+        name,
+        description,
+        classification.agency ?? hint?.agency?.[id] ?? null,
+      ),
     avatar,
     banner: null,
     description,
-    subscribers,
-    videoCount: null,
-    viewCount: null,
+    /**
+     * The platform's count wins; the roster's is the fallback, because a
+     * roster's dump is a snapshot and the profile was read a moment ago.
+     * `toCountRef()` turns an absent count into `hidden`, which would claim
+     * the channel hides it, so the roster's number replaces that too.
+     */
+    subscribers: subscriberCount(subscribers, hint?.stats?.[id]),
+    videoCount: hint?.stats?.[id]?.videoCount ?? null,
+    viewCount: hint?.stats?.[id]?.viewCount ?? null,
     uploadsPlaylistId: null,
     country,
     tags: override?.tags ?? [],
@@ -219,7 +266,15 @@ function recordFromProfile(
     lastItemsFetchedAt: null,
     lastDetailsFetchedAt: now,
 
-    activity: detectActivity(name, description, null),
+    /**
+     * A graduation the text states is a fact about the performer and outranks
+     * a roster that still lists them as active — a roster is a snapshot, and
+     * 「卒業しました」 is the performer saying it themselves. Everything else
+     * is the roster's to state, because a directory that groups its rows by
+     * state knows more than a description that mentions none.
+     */
+    activity:
+      textActivity === "graduated" ? "graduated" : hint?.activity?.[id] ?? textActivity,
     debutDate: null,
     graduateDate: null,
 
@@ -245,6 +300,66 @@ function recordFromProfile(
 /* Import                                                                     */
 /* -------------------------------------------------------------------------- */
 
+/**
+ * What the roster that supplied an id says about it.
+ *
+ * A roster is not the platform: it does not decide the name, and it must not
+ * overrule a country the channel publishes. It does know two things the
+ * profile cannot always state — which **scene** it files the performer in
+ * (`region`) and whether the performer has graduated (`activity`).
+ */
+export interface RosterHint {
+  /**
+   * The region the roster is scoped to, applied only where the profile
+   * decided nothing. A Japanese performer who streams with a Hong Kong group
+   * keeps the `jp` their own country and kana gave them.
+   */
+  region?: RegionCode;
+  /** The state the roster lists the performer in, per channel id. */
+  activity?: Record<string, Activity>;
+  /**
+   * The agency the roster files the performer under, per channel id.
+   *
+   * bacharu publishes the group a performer belongs to — `hololive`,
+   * `NIJISANJI`, `ReAcT` — and that is a statement about the performer's
+   * affiliation, which `classifyChannel()` can only guess from the text. It
+   * is a **fallback**: an agency the title or the description names, and a
+   * hand-written override, still win.
+   */
+  agency?: Record<string, string>;
+  /**
+   * The languages the roster states for the performer, per channel id.
+   *
+   * YouTube answers a profile in the UI language it is asked in, and a
+   * channel that published an English localization answers with its English
+   * **description** — which the language detector then reads as `en`, the
+   * very mistake this field exists to avoid. The roster knows the performer
+   * speaks Spanish, so the profile is asked for in Spanish and the stored
+   * description is the one the performer wrote.
+   *
+   * It decides the **request**, not the record: `languages` is still the
+   * classifier's answer, and a roster's claim does not overrule the text.
+   */
+  languages?: Record<string, string[]>;
+  /**
+   * Counts the roster publishes and the profile does not.
+   *
+   * InnerTube's channel page carries subscribers but not the channel's total
+   * view count, and the import has never written `videoCount`. A roster that
+   * dumps a `channels.list` response — VtuberHK's `channels.json` — has all
+   * three, so it fills them where the profile cannot.
+   */
+  stats?: Record<
+    string,
+    {
+      subscribers?: number | null;
+      subscribersHidden?: boolean;
+      videoCount?: number | null;
+      viewCount?: number | null;
+    }
+  >;
+}
+
 export interface ImportOptions {
   /** How many ids to fetch in this call. */
   limit?: number;
@@ -262,6 +377,13 @@ export interface ImportOptions {
    * choose the name, the region or the role.
    */
   rosterIds?: Set<string>;
+  /**
+   * What the roster says about the region and the state of its entries.
+   *
+   * See `RosterHint`: the region is a fallback, never an override, and the
+   * activity is a fact about the performer the profile does not publish.
+   */
+  rosterHint?: RosterHint;
   onLog?: (message: string) => void;
 }
 
@@ -369,7 +491,13 @@ export async function importYouTubeChannels(
         country: first.country,
         platform: "youtube",
       }).region;
-      const lang = profileLanguage(regionHint);
+      /**
+       * The roster knows the language when the country does not: a Spanish
+       * performer publishes no country and has an `unknown` region, and asking
+       * YouTube in English would store the English localization of a Spanish
+       * description.
+       */
+      const lang = profileLanguage(regionHint, options.rosterHint?.languages?.[id]);
       const localized =
         lang === "en"
           ? null
@@ -382,6 +510,7 @@ export async function importYouTubeChannels(
         now,
         overrides[id],
         !!options.rosterIds?.has(id),
+        options.rosterHint,
       );
       if (!record) {
         failed.push({ id, reason: "the channel has no usable name" });

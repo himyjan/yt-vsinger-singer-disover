@@ -116,6 +116,69 @@ This source enriches Taiwan, Hong Kong and Malaysia records; it is not the
 only source of regional coverage. vdb and the other classification sources
 provide global roster coverage.
 
+### VtuberHK — the Hong Kong directory
+
+`https://vtuber.hk` · read by `scripts/harvest-vtuberhk.ts`
+
+A Hong Kong–centred tracker — 俗稱的DD網 — that lists every channel it covers
+on one page, with the `UC…` id, the name, the subscriber count, the video
+count and the total view count, grouped by the performer's state:
+
+| Section | Count | This project's field |
+| --- | ---: | --- |
+| 活動中 (active) | 452 | `activity: "active"` |
+| 準備中 (preparing) | 39 | `activity: "preparing"` |
+| 己引退 (retired) | 162 | `activity: "graduated"` |
+| 觀察中 (watching) | 2 | `activity: "active"` |
+| 相關組織 (organizations) | 17 | reported, **not** imported: an agency is not a performer |
+
+The **roster and its state** are the one thing the site does not publish as
+JSON: 活動中 / 準備中 / 己引退 are `<section>` lists in `GET /channels/` (812 KB
+of server-rendered HTML). Everything else is a static JSON file, and the
+harvest reads it instead of scraping:
+
+| Request | Size | What it gives |
+| --- | ---: | --- |
+| `GET /data/channels.json` | 1.3 MB | a YouTube `channels.list` dump keyed by channel id: title, description, `customUrl`, published country, and `statistics.viewCount` / `videoCount` / `subscriberCount` |
+| `GET /data/live-hkv.json` | 50 KB | 146 live and upcoming streams: `cid`, video id, title, `u` (start, Unix seconds), `vc` (viewers), `pf` |
+| `GET /data/archive-hkv.json` | 92 KB | 278 recently ended streams and uploads, keyed by index, with `d` (runtime) |
+| `GET /data/featured.json?p=N` | 14 KB a page | 50 精華 clips a page, 29 pages: the **clip channel** (`ct`) and the video |
+| `GET /data/list-hkv-watching.json` | 55 B | the site's own watch list, two channel ids |
+| `GET /twitch` | 112 KB | 235 Twitch logins, no counts |
+
+It is the cheapest region source the project has — **the id is published, so
+no name search is involved** — and the only one that states graduation for the
+Hong Kong scene. `channels.json` is also the only free source of a channel's
+**total view count** — a field InnerTube does not publish, and the one this
+project fills from here.
+
+The clip list (`/data/featured.json`, 29 pages of 50) is documented and not
+read: a clip channel is a fan re-upload (`detectClipAccount()`), and the
+dataset drops those rather than tracking them.
+
+What the roster decides, and what it does not:
+
+- **The claim.** Every entry it carries is a virtual performer
+  (`rosterIds`), the same claim vTubie's groups and bacharu make.
+- **The region.** The site is the Hong Kong scene, so its entries are `hk` —
+  but only where `classifyChannel()` returned `unknown`. A Japanese performer
+  who streams with a Hong Kong group keeps the `jp` her country and kana
+  gave her; the roster fills a gap, it does not overwrite a fact
+  (`RosterHint` in `scripts/lib/import-channels.ts`).
+- **The state.** 己引退 is `activity: "graduated"`, and the roster is the only
+  source that states it for these channels.
+- **Not the name.** The platform's own title is still the name, as in every
+  import (`AGENTS.md` rule 2).
+
+The harvest is `npm run data:vtuberhk`; the gated import is
+`npm run data:vtuberhk-import` (report) and `-- --apply` (write). Of its 672
+rows, 253 were channels the catalogue did not have and 401 it already tracked;
+250 were written — two ids no longer resolve to a channel at all
+(`UCPcMERb50-gZ5-rGnUjX4OA`, `UCPbZzX8Uq3iCsPtclDcIlfQ`) and one row was a
+clip account, which the import rejects. `-- --stats` then filled **876 empty
+counts across 360 records** from `channels.json`, mostly the `viewCount` and
+`videoCount` the platform adapter never writes.
+
 ### 4. VocaDB
 
 `https://vocadb.net`
@@ -350,9 +413,10 @@ publishes about themselves, strongest first:
 | the record's `externals` | handles harvested from a description | the same |
 | the performer's **X profile** (FxTwitter) | the bio, the website field, the location | the same |
 | **Wikidata**, by name in `ja` / `zh` / `en` | `P2397` YouTube, `P4047` Twitch | the profile must point back at the record |
+| **YouTube channel search** (InnerTube) | the record's display name, through `searchChannels()` — no Data API quota | the channel's name must be the record's, and it must not be a clip/fan account |
 | **web search** (`--web`, `GEMINI_API_KEY`) | a search-grounded model | the profile must point back at the record |
 
-The last two answer a **name** match, so what they return is a *candidate*,
+The last three answer a **name** match, so what they return is a *candidate*,
 not a link. A candidate is accepted only when the resolved profile points back
 at the record — the Bilibili space id in the YouTube description, the same X
 handle — or when its title is the record's distinctive **display name**. A
@@ -364,6 +428,20 @@ common romanisation belongs to something else as often as to the performer: the
 Canadian city of Victoria has a YouTube channel, and a name match on the alias
 adopted it. A link found in the performer's **own text** is taken at face
 value, because there the performer said it themselves.
+
+Containment is tested in both directions, because the two sides decorate a name
+differently: 「雫るる_Official」 keeps its suffix (`normalizeName()` strips
+`official` only where it is a word — never after kana), and the channel is
+just 「雫るる」. The record's name is the distinctive side and has to appear in
+the candidate's; a one- or two-character name confirms nothing. A **search**
+candidate that turns out to be a clip, fan or re-upload account is rejected
+outright (`detectClipAccount()`, `isFanAccountName()`): 切片/烤肉 channels are
+named after the person they clip, so they are what a name search returns first.
+
+`--region <code>` and `--platform <id>` narrow the queue. The Japanese
+Bilibili backlog is the case the search exists for — 310 records whose shape is
+「a Japanese VTuber whose only roster account is a Bilibili mirror」 — and
+`npm run data:links -- --platform bilibili --region jp` walks it.
 
 The new link lands in `platforms[]`, and the handles its profile publishes are
 harvested into `externals`. It never renames the record: the performer's own
@@ -461,6 +539,23 @@ what has no key, and imports only the rows whose `UC…` id it can verify
 through the platform — the platform's name wins, and a roster name that shares
 no word with the channel's title is reported rather than imported.
 
+**A stale id is not an import.** The first full import of the rows the
+catalogue did not have attempted 715 channel ids and wrote **one**. Most of
+the failures are channels YouTube no longer has — the profile answers `null`
+and the channel page says 「This channel does not exist」 or 「This account has
+been terminated」 — and the rest were a placeholder name or an id that now
+belongs to another record.
+The roster is a historical census — it keeps the rows of channels that have
+since been deleted — so a run that reports hundreds of failures is reporting
+dead source rows, not a broken pipeline.
+
+A channel that no longer exists is not written, and its id is remembered in
+`.cache/bacharu-dead.json` for **seven days**, so the next run does not spend
+the same fifteen minutes asking YouTube about the same dead accounts.
+`--retry-dead` ignores that list; a failure older than the window is tried
+again on its own. The list is a cache, not a dataset fact, which is why it
+does not live in `data/`.
+
 **The roster's membership is the claim.** bacharu files every entry as a
 virtual performer, and that is the only evidence some channels have: their
 whole YouTube bio is 「I'm just a guy trying to have fun, png made by
@@ -482,6 +577,32 @@ row is imported once.
 
 `--limit` caps **what a run imports**, not what it reports, so a batch that
 resolves handles always has something to write.
+
+A row with **no YouTube link at all** — 47,630 of bacharu's 109,828 — is a
+different case: the roster knows the performer and not where they stream, so
+the channel has to be found before it can be imported. `--search-names <n>`
+searches YouTube by the row's name, fetches the candidates' profiles and
+accepts one only when the channel's own title confirms the roster's display
+name in either direction, the name is distinctive (`isDistinctiveName()`), the
+account is not a clip or fan channel, and **exactly one** candidate matches.
+Two channels that both carry the name are an ambiguity, not a link — the same
+rule a name search follows for a record that already exists.
+
+### The groups, and the agency
+
+A bacharu row carries its groups with a `current` / `former` status, and that
+is a statement about affiliation the channel's own text often never makes:
+1,332 of the tracked rows are in a current group, and 1,044 of those have no
+`agency` at all. `--agencies` fills exactly those, and only where the row's
+current groups agree on one agency.
+
+The name is **canonicalised** before it is written, because the roster spells
+an agency several ways: `NIJISANJI`, `Nijisanji` and `NIJISANJI (main branch)`
+are one agency, and every `hololive` branch is `hololive` (`canonicalAgency()`,
+`AGENTS.md`). A former group is not a current affiliation, and an agency the
+channel's title or description names still wins — the roster fills an empty
+field, it never takes one back. A group that matches no known agency is kept
+as the roster writes it, because that is all the source states.
 
 ### Rate limiting
 
@@ -506,7 +627,6 @@ are not in the pipeline.
 | [Hololist](https://hololist.net) | Agency-limited: Hololive only, so it adds little over vdb and the Taiwan tracker |
 | [AI VTuber DB](https://aivtuberdb.com) | Worth reading for the AI flag, but it publishes no machine-readable file |
 | [PVC.moe](https://pvc.moe) | The data is only in the client bundle |
-| [VTuber.hk](https://vtuber.hk) | Server-rendered, but with no documented data format |
 | [Streams Charts](https://streamscharts.com/vtubers) | Blocks automated requests |
 | [JustOneAPI](https://github.com/justoneapi/justoneapi-python) | A token-based proxy for the protected platforms — a paid service, so the free sources are preferred. Its generated resources are a useful catalogue of which endpoints exist |
 | [facebook-gql-scraper](https://github.com/XD-MHLOO/facebook-gql-scraper) | Facebook's internal GraphQL, driven by `scripts/harvest-facebook-groups.py`. It needs a **logged-in cookie session**: without one, a group URL answers `302 → /login/?next=…`, the `fb_dtsg` token never appears, and search and group reads both fail. Worth using with a session, because group posts are where Taiwanese VTubers are announced |
@@ -535,16 +655,16 @@ Method: `curl --compressed` from one US VM plus each site's own published
 files. Payload and TTFB are network facts; Core Web Vitals need a browser and
 are not measured here.
 
-| | this project | Holodex | Musicdex | Taiwan tracker | vdb |
-| --- | --- | --- | --- | --- | --- |
-| blocking JS + CSS | **125 KB** (116,014 B JS + 9,373 B CSS) | 276 KB | 385 KB | 165 KB | 32 KB of static HTML |
-| hashed asset cache | `immutable`, one year (Vercel) | hashed | hashed | ten minutes, flat | ten minutes, flat |
-| data access | committed JSON, no key | API v2, `X-APIKEY` | same key | static JSON | static `list.json` |
-| inventory | **16,786 channels**, 1,449 items | not published; `403` without a key | not published | 288 groups; performer list not published | 10,138 records |
-| platforms tracked | 9 with adapters | YouTube (Twitch in Multiview only) | YouTube | YouTube, Twitch | Bilibili stats; ids for any |
-| regions | 10, aliases per locale | language filters | — | TW, HK, MY | `cn`-centric |
-| refresh | every 6 h | undocumented | undocumented | ~30 min (its own timestamps) | ~5 min stats / <15 s live (its own claim) |
-| licence | MIT | MIT frontend | Apache-2.0 | Unlicense | VDBL (CC BY-NC-SA data, GPL code) |
+| | this project | Holodex | Musicdex | Taiwan tracker | vdb | VtuberHK |
+| --- | --- | --- | --- | --- | --- | --- |
+| blocking JS + CSS | **125 KB** (116,014 B JS + 9,373 B CSS) | 276 KB | 385 KB | 165 KB | 32 KB of static HTML | 229 KB (131,307 B JS + 97,686 B CSS) + Google Fonts |
+| hashed asset cache | `immutable`, one year (Vercel) | hashed | hashed | ten minutes, flat | ten minutes, flat | no `Cache-Control`, ETag only |
+| data access | committed JSON, no key | API v2, `X-APIKEY` | same key | static JSON | static `list.json` | server-rendered HTML, no key |
+| inventory | **72,110 channels**, 1,749 items | not published; `403` without a key | not published | 288 groups; performer list not published | 10,138 records | 672 channels (235 Twitch logins) |
+| platforms tracked | 9 with adapters | YouTube (Twitch in Multiview only) | YouTube | YouTube, Twitch | Bilibili stats; ids for any | YouTube; Twitch as a directory |
+| regions | 10, aliases per locale | language filters | — | TW, HK, MY | `cn`-centric | HK |
+| refresh | every 6 h | undocumented | undocumented | ~30 min (its own timestamps) | ~5 min stats / <15 s live (its own claim) | undocumented; the state is edited, not measured |
+| licence | MIT | MIT frontend | Apache-2.0 | Unlicense | VDBL (CC BY-NC-SA data, GPL code) | not stated |
 
 **This project's edge:** cross-platform identity rebuilt from each platform,
 the region-evidence chain with recorded provenance, ten regions where the
@@ -554,11 +674,31 @@ equivalent in any of them.
 
 **Where they are ahead:** Multiview and the clip index (Holodex), song-level
 tagging and a player (Musicdex), a public API (Holodex, vdb, the Taiwan
-tracker), Bilibili live history at minute resolution (`vtbs.moe`), and — the
-one architectural win that matters — incremental fetching. A cold visit here
-transfers the catalogue rather than a page of it (~2.4 MB compressed / 16 MB
-raw over ~220 requests), which is the remaining performance debt against
-sites that ask an API for twenty rows at a time.
+tracker), Bilibili live history at minute resolution (`vtbs.moe`), the
+sort-and-scan channel list (VtuberHK sorts 672 channels by subscriber, video
+and view count from the page itself), and — the one architectural win that
+matters — incremental fetching. A cold visit here transfers the catalogue
+rather than a page of it (~2.4 MB compressed / 16 MB raw over ~220 requests),
+which is the remaining performance debt against sites that ask an API for
+twenty rows at a time.
+
+### What VtuberHK has that this project does not
+
+Read from the site on 2026-10-28. Its whole feature set is five pages, and
+four of them are things this project has the data for but no view of:
+
+| VtuberHK | What it shows | This project today | Plan |
+| --- | --- | --- | --- |
+| 節目 (`/`) | the live and upcoming schedule | live and upcoming **items** exist, but only per card | a **timetable** view — group the upcoming items by start time (`live-hkv.json` shows the shape: one row per stream with its start) |
+| 影片 (`/archive/`) | the most recently ended streams and uploads, in YouTube's delivery order | the same items exist, with `publishedAt` | a **recent** feed, ordered by `publishedAt`, across the whole scope |
+| 精華 (`/highlight/`) | a curated clip list | clips are *rejected* as duplicates (`detectClipAccount()`) | **not planned** — a clip is a fan re-upload, and the dataset hides those (`data/overrides.json`). A "clips mentioning this performer" index is Holodex's ground, not this one's |
+| sorting (`頻道` by subscriber / videos / views) | three sort keys over 672 channels | `subscribers` and `videoCount` are stored, `viewCount` is not filled | `data:vtuberhk-import -- --stats` fills the three counts for HK records from `channels.json` (876 fields over 360 records); a general `data:details --stats` pass is still to be written, then the sort |
+| 觀察中 (watch list) | a local list of channels to watch | the Subs view is stronger — it is account-linked and synced | nothing to build |
+| `/twitch` (235 logins) | a Twitch directory for the same scene | Twitch is a platform adapter, and a record may hold both accounts | feed the logins to `data:links` as **candidates**: a login that matches a tracked performer is a cross-platform link, and the confirmation rules are the same ones a name search follows |
+
+The two worth building are the timetable and the recent feed — both are views
+over data already on disk — and the sort needs one field the details pass never
+fills, which the HK roster now supplies for its own scene.
 
 ## Adding a source
 

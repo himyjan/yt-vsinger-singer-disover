@@ -84,7 +84,11 @@ import {
   extractAgency,
   mergeActivity,
 } from "./lib/classify";
-import { REGION_LANGUAGE, profileLanguage } from "./lib/regions";
+import {
+  REGION_LANGUAGE,
+  profileLanguage,
+  toLanguageList,
+} from "./lib/regions";
 import { splitName } from "./lib/names";
 import {
   applyOfficialArtist,
@@ -324,7 +328,7 @@ async function fetchProfile(
        * 「向葵 / あおい」.
        */
       const profile = await ctx.innertube.profile(youtubeId, {
-        lang: profileLanguage(channel.region),
+        lang: profileLanguage(channel.region, toLanguageList(channel.languages)),
         about: true,
       });
       if (!profile) return null;

@@ -33,6 +33,8 @@ npm run data:index          # rebuild the search index
 npm run data:validate       # check structure and size budgets
 npm run data:links          # find the missing cross-platform accounts
 npm run data:discover       # new performers from vTubie (--source all: + the wiki)
+npm run data:bacharu        # the bacharu roster (109,828 rows) → .cache/
+npm run data:vtuberhk       # the Hong Kong directory → .cache/
 ```
 
 `npm run data:all` does the first three.
@@ -65,7 +67,16 @@ scripts/sync.ts
        classify → data/*.json → committed → GitHub Pages / Vercel
 
 scripts/resolve-links.ts   the missing accounts: the performer's own text,
-                           their X bio, Wikidata, optional web search
+                           their X bio, Wikidata, optional web search, and
+                           YouTube's own channel search by name
+
+scripts/harvest-bacharu.ts the bacharu roster: 109,828 rows and 685 groups,
+scripts/import-bacharu.ts  published as JSON, gated into data/ — a row with
+                           only an @handle is `--resolve-handles`, a row with
+                           no link at all is `--search-names`
+
+scripts/harvest-vtuberhk.ts the Hong Kong directory: /channels/ for the roster
+scripts/import-vtuberhk.ts  and its state, /data/channels.json for the counts
 
 scripts/discover.ts        new performers: the Virtual YouTuber Wiki, and the
                            vTubie directory through a real browser
@@ -83,7 +94,8 @@ singing evidence; non-YouTube discovery only accepts identities already in
 vdb, the dataset, or the seed catalog.
 The sync pipeline also
 reads the global vdb roster (including links across many platforms), Taiwan
-VTuber Tracking Data, VocaDB and curated music datasets. The Data API free tier
+VTuber Tracking Data, the bacharu directory, the Hong Kong directory at
+vtuber.hk, VocaDB and curated music datasets. The Data API free tier
 allows 10,000 quota units a day. The app supports YouTube, Twitch, Bilibili,
 Niconico, VK, CHZZK, KICK, SOOP and CI.ME; public roster links are retained
 even when a platform does not have a dedicated profile adapter.
@@ -196,7 +208,13 @@ anything is published). See
 Each channel is classified along several axes, deterministically. The **region
 is authoritative** and the language follows it — a Taiwanese performer often
 has a Japanese-style stage name, and the kana in it says nothing about the
-language they sing in.
+language they sing in. The reverse is not true: a latin-script description is
+**not** English by default. `detectLanguage()` scores the function words a
+text uses (`el`/`que`/`por`, `não`/`você`, `der`/`und`/`nicht`, …) and the
+diacritics that narrow the field, so a Spanish, Portuguese, German, French,
+Italian, Polish, Indonesian, Vietnamese, Tagalog or Turkish performer keeps
+their own `languages` — and an honest `unknown` region, since the region codes
+are the scenes this project tracks rather than every country.
 
 | Axis | Values |
 | --- | --- |

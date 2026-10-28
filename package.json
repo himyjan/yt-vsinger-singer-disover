@@ -33,7 +33,9 @@
     "sync": "npm run data:sync",
     "build:index": "npm run data:index",
     "validate": "npm run data:validate",
-    "data:verify": "tsx scripts/verify.ts"
+    "data:verify": "tsx scripts/verify.ts",
+    "data:vtuberhk": "tsx scripts/harvest-vtuberhk.ts",
+    "data:vtuberhk-import": "tsx scripts/import-vtuberhk.ts"
   },
   "dependencies": {
     "@google/genai": "^2.31.0",

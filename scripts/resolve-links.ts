@@ -12,6 +12,7 @@
  * npm run data:links -- --limit 200
  * npm run data:links -- --dry-run --limit 20
  * npm run data:links -- --platform bilibili --shard 2/4
+ * npm run data:links -- --platform bilibili --region jp   # the Japanese mirror backlog
  * npm run data:links -- --web --limit 50      # + search-grounded fallback
  * ```
  *
@@ -23,13 +24,20 @@
  *    and the website field are where a Japanese VTuber puts their YouTube.
  * 3. **Wikidata**, by name in Japanese, Chinese and English — `P2397` is the
  *    YouTube channel id, `P4047` the Twitch login.
- * 4. **Web search** (`--web`, needs `GEMINI_API_KEY`), for the ones nothing
+ * 4. **YouTube's own channel search**, by the record's display name. It costs
+ *    no Data API quota, and it is the source a Japanese VTuber filed under
+ *    Bilibili alone needs: they *have* a YouTube channel, named after them.
+ * 5. **Web search** (`--web`, needs `GEMINI_API_KEY`), for the ones nothing
  *    else covers.
  *
- * Sources 3 and 4 answer a **name** match, so the account they return has to
- * prove it is the same performer: its description must point back at the
+ * Sources 3, 4 and 5 answer a **name** match, so the account they return has
+ * to prove it is the same performer: its description must point back at the
  * record (the Bilibili space id, the X handle) or its name must be the
- * record's. A candidate that cannot prove it is dropped.
+ * record's — containment either way, because 「雫るる_Official」 and 「雫るる」
+ * are the same name with different decoration. A search result that is a clip
+ * or fan account is dropped even when the name matches, because 切片 channels
+ * are named after the person they clip. A candidate that cannot prove it is
+ * dropped.
  *
  * ## What it writes
  *
@@ -37,6 +45,11 @@
  * fetched, and — when a YouTube channel was found and publishes a country —
  * the **region**. It never renames the record: the performer's own platform
  * is still the authority for the name.
+ *
+ * It does **re-key** it: a record keyed `bilibili:…` whose own YouTube channel
+ * has just been found is keyed by that `UC…` id when the run writes
+ * (`canonicalizeChannelIds()`), its items are re-pointed at it, and the
+ * duplicate that creates is merged.
  */
 
 import {
@@ -46,14 +59,21 @@ import {
 import {
   layout,
   readAllChannelRecords,
+  readAllItems,
   rebuildChannelsManifest,
   refreshManifestChannelCounts,
   writeChannelShards,
+  writeItemShards,
 } from "./lib/dataset";
 import { InnerTubeSource } from "./lib/youtubei";
 import { TwitchGqlSource } from "./lib/twitch-gql";
 import { createAdapters } from "./lib/platform-registry";
-import { dedupePlatformLinks, mergeChannels, REGION_TRUST } from "./lib/dedupe";
+import {
+  canonicalizeChannelIds,
+  dedupePlatformLinks,
+  mergeChannels,
+  REGION_TRUST,
+} from "./lib/dedupe";
 import { classifyChannel } from "./lib/classify";
 import { REGION_LANGUAGE, profileLanguage } from "./lib/regions";
 import { isPlaceholderName, primaryPlatformOf } from "./lib/platforms";
@@ -73,7 +93,7 @@ import {
   type LinkContext,
   type ResolvedLink,
 } from "./lib/link-discovery";
-import type { Channel, PlatformId } from "./lib/types";
+import type { Channel, PlatformId, RegionCode } from "./lib/types";
 
 /* -------------------------------------------------------------------------- */
 /* Arguments                                                                  */
@@ -94,6 +114,15 @@ interface Options {
   force: boolean;
   /** Only the records whose region is a guess. */
   weakRegion: boolean;
+  /**
+   * Only the records of one region.
+   *
+   * The backlog is 9,000 Bilibili-only performers, and the ones worth asking
+   * first are not the head of an alphabetical list: a Japanese VTuber filed
+   * under Bilibili is the *mirror* case this pass exists to correct, and
+   * their YouTube channel is the account that proves it.
+   */
+  region: RegionCode | null;
 }
 
 function parseArgs(argv: string[]): Options {
@@ -107,6 +136,7 @@ function parseArgs(argv: string[]): Options {
     shardCount: 1,
     force: false,
     weakRegion: false,
+    region: null,
   };
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i];
@@ -120,6 +150,8 @@ function parseArgs(argv: string[]): Options {
     else if (arg === "--force") options.force = true;
     else if (arg === "--weak-region" || arg === "--regions") {
       options.weakRegion = true;
+    } else if (arg === "--region") {
+      options.region = (argv[++i] ?? "") as RegionCode;
     } else if (arg === "--shard") {
       const match = /^(\d+)\s*\/\s*(\d+)$/.exec(argv[++i] ?? "");
       if (match) {
@@ -364,6 +396,7 @@ async function main(): Promise<void> {
         return false;
       }
       if (overrides[channel.id]?.region) return false;
+      if (options.region && channel.region !== options.region) return false;
       const platforms = new Set((channel.platforms ?? []).map((p) => p.platform));
       if (!options.force) {
         // The gap this pass exists to close, plus the X-only accounts whose
@@ -506,6 +539,29 @@ async function main(): Promise<void> {
       }
     }
 
+    /* --- 3b. YouTube's own channel search, by name --------------------- */
+    /**
+     * A Japanese VTuber filed under Bilibili alone usually *does* have a
+     * YouTube channel, and it is named after them. InnerTube's channel search
+     * costs no quota, and the confirmation is the same one a name search
+     * always gets: the channel's name has to be the record's, and a clip or
+     * fan account that happens to carry the name is rejected
+     * (`addMissingLinks()` → `confirmsIdentity()`).
+     */
+    if (!added.length) {
+      const byName = await youtubeNameSearch(channel, ctx);
+      if (byName.length) {
+        const found = await addMissingLinks(channel, byName, ctx);
+        added.push(...found);
+        if (found.length) {
+          log(
+            `  youtube: name search → ` +
+              found.map((link) => link.link.name ?? link.link.id).join(", "),
+          );
+        }
+      }
+    }
+
     /* --- 4. web search, the optional fallback -------------------------- */
     const hasVideo = channel.platforms.some(
       (link) => link.platform === "youtube" || link.platform === "twitch",
@@ -631,15 +687,35 @@ async function main(): Promise<void> {
     const seen = byId.get(record.id);
     byId.set(record.id, seen ? mergeChannels(record, seen) : record);
   }
-  const shards = writeChannelShards([...byId.values()], now);
+  /**
+   * The id follows the channel that was found.
+   *
+   * A record keyed `bilibili:…` whose own YouTube channel has just been
+   * discovered is keyed by that `UC…` id — the same rule the sync runs — and
+   * the duplicate it creates, when the YouTube channel already had a record,
+   * is merged. Without this the link would be stored and the record would stay
+   * on the id the link was found to replace.
+   */
+  const canonical = canonicalizeChannelIds([...byId.values()]);
+  if (canonical.renamed.length) {
+    for (const { from, to } of canonical.renamed) log(`ids: ${from} → ${to}`);
+    if (canonical.merged) {
+      log(
+        `ids: merged ${canonical.merged} duplicate record(s) with the same channel`,
+      );
+    }
+    const followed = remapItemChannelIds(canonical.renamed, now);
+    if (followed) log(`ids: ${followed} item(s) re-pointed at their channel`);
+  }
+  const shards = writeChannelShards(canonical.channels, now);
   /**
    * A region corrected from the discovered channel moves the record to
    * another shard **and** changes the per-region counts, so both maps are
    * rebuilt with it — otherwise the manifest names a file that no longer
    * exists, or reports a region size the app cannot load.
    */
-  rebuildChannelsManifest([...byId.values()], now);
-  refreshManifestChannelCounts([...byId.values()], now);
+  rebuildChannelsManifest(canonical.channels, now);
+  refreshManifestChannelCounts(canonical.channels, now);
   log(`${written} channel(s) updated · ${shards.files} shard(s) written`);
 
   releaseLock();
@@ -648,6 +724,47 @@ async function main(): Promise<void> {
 /* -------------------------------------------------------------------------- */
 /* Helpers                                                                    */
 /* -------------------------------------------------------------------------- */
+
+/** Re-points items at their channel's new id, after a re-key. */
+function remapItemChannelIds(
+  renamed: { from: string; to: string }[],
+  now: string,
+): number {
+  const remap = new Map(renamed.map((entry) => [entry.from, entry.to]));
+  const items = readAllItems();
+  let changed = 0;
+  for (const item of items) {
+    const to = remap.get(item.channelId);
+    if (!to) continue;
+    item.channelId = to;
+    changed++;
+  }
+  if (changed) writeItemShards(items, now);
+  return changed;
+}
+
+/**
+ * YouTube channels whose name is the record's own.
+ *
+ * Only the **display name** is searched, never an alias: an alias is a
+ * romanisation or a translation the pipeline added (`vdb` lists 「维多利亚」 as
+ * `Victoria`), and a common romanisation belongs to something else. The name
+ * also has to be distinctive — `confirmingNames()` refuses one- and
+ * two-character names, because 「ゆず」 is hundreds of channels.
+ */
+async function youtubeNameSearch(
+  channel: Channel,
+  ctx: LinkContext,
+): Promise<LinkCandidate[]> {
+  const query = (channel.name ?? "").trim();
+  if (!query || !confirmingNames(channel).length) return [];
+  const ids = await ctx.innertube.searchChannels(query, 8);
+  return ids.map((id) => ({
+    platform: "youtube" as const,
+    id,
+    via: "search" as const,
+  }));
+}
 
 /** The X handle a record publishes, from a platform link or `externals`. */
 function xHandleOf(channel: Channel): string | null {

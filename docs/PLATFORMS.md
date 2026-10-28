@@ -75,13 +75,22 @@ streams on Twitch be recognised.
 A vdb record often lists only a Bilibili account, so the YouTube or Twitch
 identity exists but the dataset does not know it. `npm run data:links` looks
 for it in the performer's own text (the Bilibili signature, the About page),
-their **X bio** read through FxTwitter, Wikidata by name, and — with `--web` —
-a search-grounded model.
+their **X bio** read through FxTwitter, Wikidata by name, YouTube's own
+channel search by the record's display name (InnerTube, no Data API quota),
+and — with `--web` — a search-grounded model.
 
 A name-search result is a candidate until the resolved profile proves it:
 the Bilibili space id or X handle has to appear in the profile, or its title
-has to be one of the record's distinctive names. Only then is the
-`PlatformLink` written.
+has to be one of the record's distinctive names — containment either way, so
+「雫るる」 confirms 「雫るる_Official」 — and it must not be a clip or fan
+account, which is named after its subject and therefore matched first. Only
+then is the `PlatformLink` written.
+
+Once the link is written the record is re-keyed to the YouTube channel's
+`UC…` id (`canonicalizeChannelIds()`), its items re-pointed, and a duplicate
+with an existing YouTube record merged. `--platform <id>` and `--region
+<code>` narrow the queue; the Japanese Bilibili backlog is
+`--platform bilibili --region jp`.
 
 The discovered account also supplies the one fact a mirror cannot: YouTube
 publishes the channel's **country**, and a country outranks the "Bilibili
@@ -466,11 +475,11 @@ honest about the well-known databases it *cannot* read.
 | [Wikipedia REST](https://en.wikipedia.org/api/rest_v1/) | ✅ | A one-line description, the lead paragraph, the infobox image |
 | [Virtual YouTuber Wiki](https://virtualyoutuber.fandom.com/) | — | Wiki identities and debut dates |
 | [Hololist](https://hololist.net) | — | Hololive talents — agency-limited, so it adds little |
-| [bacharu](https://bacharu.io) | — | A Japanese directory — a client-side app with no public data |
+| [bacharu](https://bacharu.io) | ✅ | A directory of 109,828 performers and 685 groups — a JSON API read by `npm run data:bacharu` (109,828 rows, ~1,099 pages) |
 | [vTubie](https://vtubie.com/allvtubers/) | ✅ | A directory with follower counts — read with a browser, because the pages sit behind a Cloudflare challenge (`npm run data:discover`) |
 | [AI VTuber DB](https://aivtuberdb.com) | — | A list of AI VTubers — no machine-readable file |
 | [PVC.moe](https://pvc.moe) | — | Profile data — only in the client bundle |
-| [VTuber.hk](https://vtuber.hk) | — | Hong Kong VTubers — no documented format |
+| [VTuber.hk](https://vtuber.hk) | ✅ | 672 Hong Kong channels with their state (活動中 / 準備中 / 己引退), plus `/data/channels.json` statistics and `live-hkv` / `archive-hkv` — read by `npm run data:vtuberhk` |
 | [Holodex](https://holodex.net) | — | A YouTube stream index with a clip index and Multiview — the API needs a key (`HOLODEX_API_KEY`) and answers `403` without one |
 | [Musicdex](https://music.holodex.net) | — | Songs and set lists tagged out of singing streams — the same API and key |
 | [Streams Charts](https://streamscharts.com/vtubers) | — | Channel statistics — blocks automated requests |

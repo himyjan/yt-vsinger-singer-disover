@@ -473,6 +473,34 @@ a handle is a coincidence. Getting this wrong was not subtle: before the
 region took precedence, **5,895 mainland Chinese channels were recorded as
 Japanese** because their names used kana.
 
+**The alphabet is not the language.** Every latin-script description used to
+be read as English, which turned a Spanish, Portuguese, German, French,
+Italian, Polish, Indonesian, Vietnamese, Tagalog or Turkish VTuber into an
+`en` one — and, because the region is derived from the language, into an `en`
+region as well. There was a second half to the bug: YouTube publishes a
+**localized** title and description, and InnerTube's default answer is the
+English one, so a Japanese or Spanish channel that had set an English
+localization was described in English before the detector ever saw it. Every
+profile is therefore requested in the record's own language
+(`profileLanguage()`), and a roster that states the language — bacharu's
+`languages`, carried into the import as `RosterHint.languages` — chooses the
+request when the region cannot, because a Spanish performer's region is
+`unknown`. `detectLanguage()` now scores the **function words** the text
+uses (`the`/`and`/`you` for English, `el`/`que`/`por` for Spanish, `não`/`você`
+for Portuguese, `der`/`und`/`nicht` for German, …) and the diacritics that
+narrow the field (`ñ`, `ã`, `ạ … đ`, `ą`, `ı`, `ő`), and accepts a language
+only when it leads the runner-up. A text with no function word at all is a
+name, and a latin-script name still falls back to `en` — the weakest region
+signal there is. Cyrillic is `ru`, or `uk` when it has `і ї є ґ`; Thai is `th`
+when Thai characters are a real share of the text — a single `ฅ` in a kaomoji
+is not a language.
+
+There is **no region** for `es`, `pt`, `fr`, `de` and the rest: the region
+codes are the *scenes* this project tracks (`jp`, `cn`, `tw`, `hk`, `kr`,
+`en`, `id`, `my`, `sea`), and a Spanish-language performer is `unknown` until
+a source states where they belong, with `languages: ["es"]` carrying the fact
+the region cannot. That is deliberate: `unknown` is honest, `en` was wrong.
+
 `languages` accepts **a single code or a list**. Performers usually stream in
 more than one language, and the first entry is the primary one — but some
 sources only ever name one, so both shapes are valid. Use
@@ -515,7 +543,7 @@ provenance is stored with it.
 | `name` | Kana in a Japanese name — they occur in Japanese and nowhere else | decisive for Japanese, still evidence |
 | `platform` | The platform they are on — Bilibili → China, Niconico → Japan | a prior — a mirror breaks it |
 | `declared` | The language vdb lists for display (`name.default`) | weak — a display choice, not an origin |
-| `script` | The characters in the name | a guess |
+| `script` | The characters in the name, and the words of the description | a guess |
 
 The platform prior applies when the performer exists on **one** platform
 only — a Bilibili account and nothing else. Their audience is mainland
@@ -634,6 +662,16 @@ Two boundaries:
   branch — a Hololive EN member writes the same line — so an agency read out
   of a description never decides a region.
 
+A roster that records membership is a second source, and it is a **fallback**:
+`npm run data:bacharu-import -- --agencies` fills an `agency` that is empty,
+from the groups bacharu lists as current, and only where they agree on one.
+The roster spells an agency its own way — `NIJISANJI`, `Nijisanji`,
+`NIJISANJI (main branch)`, `Hololive`, `Hololive EN` — so the name is
+canonicalised before it is written, which is what keeps one agency one string.
+An agency the title or the description names still wins, a former group is not
+a current affiliation, and a group that matches no known agency is kept as the
+roster writes it rather than invented into the vocabulary.
+
 #### One “hololive”
 
 On 2026-09-07 COVER announced that Hololive stops operating as regional and
@@ -651,7 +689,11 @@ spell the old branches, so `canonicalAgency()` folds them into one value:
 | `holostars`, `HOLOSTARS_EN` | unchanged — a separate brand |
 
 The rule is a **prefix** match, so a branch a source invents tomorrow is still
-`hololive`. `canonicalAgency()` runs in `classifyChannel()`, in
+`hololive`. Every **known** agency in `AGENCY_REGION` gets that table's
+spelling back, compared without case, spaces, hyphens or punctuation: a source
+that writes `NIJISANJI`, `Nijisanji` or `NIJISANJI EN` stores `nijisanji` and
+`nijisanji en`, and `Re:AcT` stores `ReAcT`. A source's typography is not a
+second agency, and the UI groups by the string. `canonicalAgency()` runs in `classifyChannel()`, in
 `expandChannel()` on read, and in both dataset writers, which means a stale
 branch label is corrected the next time a record passes through the pipeline.
 
@@ -901,6 +943,22 @@ not the same question as `role`, which is the work: a VTuber who writes
 disk, which is what makes a corrected vocabulary usable without re-fetching
 sixty thousand profiles: the classifier reads only the record, so the same
 record always produces the same answer (`AGENTS.md` rule 8).
+
+`--languages` goes one field further, because the language detector changed
+underneath the stored records: it re-derives `region` and `languages` — but
+**only for a record whose region is a guess** (`regionSource: script` or
+`unknown`). A region a person, a roster or an agency decided is not the
+classifier's to take back, and a record that was blank stays blank when the
+only evidence is a latin alphabet with no function word in it. The pass needs
+no network; the Spanish descriptions that used to be `en/en` are why it
+exists.
+
+Two refinements make the pass honest. It reads the **record's own** description
+and tags, not the merged evidence the kind/role pass uses: a roster's note is a
+second voice, and a German description beside an English note is a mixed blob
+that the detector answers `en` to. And an ambiguous text does not erase what
+the record already knew — when the detector returns nothing, the language the
+record carries survives, because a roster's note may be why it was known.
 
 ## `override.json`
 

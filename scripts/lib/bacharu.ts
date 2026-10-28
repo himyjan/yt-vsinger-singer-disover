@@ -334,3 +334,92 @@ export function namesAgree(
       nameSimilarity(needle, candidate) >= NAME_SIMILARITY,
   );
 }
+
+/* -------------------------------------------------------------------------- */
+/* Languages                                                                  */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * bacharu's language names in this dataset's codes.
+ *
+ * The roster writes a language the way a person does — `Japanese`,
+ * `taiwanese`, `cantonese` — and the pipeline needs a code, because the code
+ * is what picks the UI language YouTube answers a profile in. A language
+ * outside this table is dropped rather than guessed: the profile then falls
+ * back to the region, which is the answer it had before.
+ */
+const LANGUAGE_CODES: Record<string, string> = {
+  english: "en",
+  japanese: "ja",
+  chinese: "zh-Hans",
+  mandarin: "zh-Hans",
+  taiwanese: "zh-Hant",
+  cantonese: "yue",
+  hakka: "zh-Hant",
+  indonesian: "id",
+  malay: "ms",
+  filipino: "tl",
+  tagalog: "tl",
+  spanish: "es",
+  portuguese: "pt",
+  german: "de",
+  french: "fr",
+  italian: "it",
+  dutch: "nl",
+  polish: "pl",
+  swedish: "sv",
+  danish: "da",
+  norwegian: "no",
+  finnish: "fi",
+  russian: "ru",
+  ukrainian: "uk",
+  czech: "cs",
+  slovak: "sk",
+  hungarian: "hu",
+  romanian: "ro",
+  croatian: "hr",
+  serbian: "sr",
+  bosnian: "bs",
+  greek: "el",
+  turkish: "tr",
+  arabic: "ar",
+  hebrew: "he",
+  hindi: "hi",
+  thai: "th",
+  vietnamese: "vi",
+  khmer: "km",
+  burmese: "my",
+  bengali: "bn",
+  tamil: "ta",
+  korean: "ko",
+  javanese: "jv",
+  sundanese: "su",
+  catalan: "ca",
+  galician: "gl",
+  irish: "ga",
+  afrikaans: "af",
+  latin: "la",
+  hmong: "hmn",
+  guarani: "gn",
+  armenian: "hy",
+  luxembourgish: "lb",
+  persian: "fa",
+  kazakh: "kk",
+  belarusian: "be",
+};
+
+/**
+ * The codes for the languages a roster row states.
+ *
+ * Duplicates are collapsed and order is kept: the first language a performer
+ * lists is the one their stream is in, and that is the one the profile is
+ * asked for in.
+ */
+export function rosterLanguageCodes(values: readonly string[]): string[] {
+  const codes: string[] = [];
+  for (const value of values) {
+    const code = LANGUAGE_CODES[value.trim().toLowerCase()];
+    if (code && !codes.includes(code)) codes.push(code);
+  }
+  return codes;
+}
