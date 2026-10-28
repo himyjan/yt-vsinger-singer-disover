@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-28T05:38:36.215Z",
+  "generatedAt": "2026-10-28T22:33:18.686Z",
   "items": [
     {
       "id": "-1xPHHPaRvQ",
@@ -332,12 +332,12 @@
       "channelName": "ミナミイズミ / MINAMI IZUMI",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
       "isAi": false,
-      "variant": "singer",
+      "variant": "female_vsinger",
       "title": "✧weekly schedule✧free chat✧",
       "description": null,
       "thumbnail": "https://i.ytimg.com/vi/99WVY1xqjYg/hq720.jpg",
@@ -470,12 +470,12 @@
       "channelName": "Mirine CH. 満咲ミリネ",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
       "isAi": false,
-      "variant": "vtuber",
+      "variant": "female_vtuber",
       "title": "なんか10月のお知らせ書いてるやつ【 ☆10/22は4周年！！】",
       "description": null,
       "thumbnail": "https://i.ytimg.com/vi/aQN-rnmrAW8/hq720.jpg",
@@ -746,12 +746,12 @@
       "channelName": "司賀りこ / Shiga Riko【にじさんじ】",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
       "isAi": false,
-      "variant": "vtuber",
+      "variant": "female_vtuber",
       "title": "司賀りこグッズ販売💛",
       "description": null,
       "thumbnail": "https://i.ytimg.com/vi/HsRkzS_JLms/hq720.jpg",
@@ -792,12 +792,12 @@
       "channelName": "黒燿リラ / KOKUYOU LIRA",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
       "isAi": false,
-      "variant": "unknown",
+      "variant": "female_vtuber",
       "title": "【 Free Chat / Schedule 】BARとか喫茶店にある誰でも書けるお客様ノート的なあれ【黒燿リラ / VEE】",
       "description": null,
       "thumbnail": "https://i.ytimg.com/vi/hThyayCbx-o/hq720.jpg",
@@ -1298,12 +1298,12 @@
       "channelName": "黒燿リラ / KOKUYOU LIRA",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
       "isAi": false,
-      "variant": "unknown",
+      "variant": "female_vtuber",
       "title": "【 #雑談 】ただいま【黒燿リラ】",
       "description": null,
       "thumbnail": "https://i.ytimg.com/vi/NHGAFqqMqP0/hq720.jpg",
@@ -1344,12 +1344,12 @@
       "channelName": "桃川ニジマス",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
       "isAi": false,
-      "variant": "unknown",
+      "variant": "female_vtuber",
       "title": "⋆͛📢桃川ニジマスRe生誕記念グッズ販売中🌈【うおむすめ】",
       "description": null,
       "thumbnail": "https://i.ytimg.com/vi/nWwtDG-jFus/hq720.jpg",
@@ -1437,7 +1437,7 @@
       "channelName": "Mari Channelかしこまり",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
@@ -1560,6 +1560,56 @@
         {
           "channelId": "UCXRlIK3Cw_TJIQC5kSJJQMg",
           "name": "戌亥とこ -Inui Toko-",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_knZcjnqErpFv0M4wQtd5U9IDC8e_meMcM",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_knZcjnqErpFv0M4wQtd5U9IDC8e_meMcM",
+      "type": "playlist",
+      "channelId": "UCWCc8tO-uUl_7SJXIKJACMw",
+      "channelName": "神楽めあ / KaguraMea",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "Growin",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/3YUptsZEsac/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCWCc8tO-uUl_7SJXIKJACMw",
+          "name": "神楽めあ / KaguraMea",
           "kind": "virtual",
           "region": "jp"
         }
@@ -1737,12 +1787,12 @@
       "channelName": "深影",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
       "isAi": false,
-      "variant": "singer",
+      "variant": "female_vsinger",
       "title": "The Planet Dreams",
       "description": null,
       "thumbnail": "https://i.ytimg.com/vi/PeceLcx9wJs/hqdefault.jpg",
@@ -1837,7 +1887,7 @@
       "channelName": "AZKi Channel",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
@@ -1937,7 +1987,7 @@
       "channelName": "Koyori ch. 博衣こより - holoX -",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
@@ -2237,7 +2287,7 @@
       "channelName": "Koyori ch. 博衣こより - holoX -",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
@@ -2387,7 +2437,7 @@
       "channelName": "Koyori ch. 博衣こより - holoX -",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
@@ -2425,52 +2475,6 @@
       "source": "api",
       "addedAt": "2026-10-25T07:43:14.768Z",
       "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OlWXUF3Gf98",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCykMWf8B8I7c_jA8FTy2tGw",
-      "channelName": "Amiya Ch. アミヤ・アラニャ",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "unknown",
-      "title": "【Mr Bones】Finishing Big Bones!【Sega Saturn】",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/OlWXUF3Gf98/hq720.jpg",
-      "publishedAt": "2026-10-27T22:11:16.041Z",
-      "scheduledStart": null,
-      "actualStart": "2026-10-27T22:11:16.041Z",
-      "actualEnd": null,
-      "duration": null,
-      "status": "live",
-      "category": "live",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCykMWf8B8I7c_jA8FTy2tGw",
-          "name": "Amiya Ch. アミヤ・アラニャ",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-27T22:11:16.041Z",
-      "updatedAt": "2026-10-27T22:11:16.041Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -2583,7 +2587,7 @@
       "channelName": "AZKi Channel",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
@@ -2670,56 +2674,6 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_n9oxMSWIt85z33DdM4O7Z7cxCqOUs9FM8",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_n9oxMSWIt85z33DdM4O7Z7cxCqOUs9FM8",
-      "type": "playlist",
-      "channelId": "UCFjU-kRnqfn9wtcGsFbe7aA",
-      "channelName": "ユプシロン | Yupsilon",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "producer",
-      "title": "フォージェリィ (English Ver.)",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/0y-__KpjILM/hqdefault.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCFjU-kRnqfn9wtcGsFbe7aA",
-          "name": "ユプシロン | Yupsilon",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:36:28.069Z",
       "updatedAt": "2026-10-25T07:43:14.768Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
@@ -2833,12 +2787,12 @@
       "channelName": "凛々咲 / Ririsya",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
       "isAi": false,
-      "variant": "singer",
+      "variant": "female_vtuber",
       "title": "Hallelujah Sky",
       "description": null,
       "thumbnail": "https://i.ytimg.com/vi/xAliCVelchw/hqdefault.jpg",
@@ -2875,12 +2829,12 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "OLAK5uy_nMb_5Ry01OQ8SaJkgPjBnisEGzUlC4GPY",
+      "id": "OLAK5uy_noLSKKp2eJL2lT_o8DOSlRBLCVChi1Zao",
       "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_nMb_5Ry01OQ8SaJkgPjBnisEGzUlC4GPY",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_noLSKKp2eJL2lT_o8DOSlRBLCVChi1Zao",
       "type": "playlist",
-      "channelId": "UCJSzxbt4Acel9JdeLiY7tJQ",
-      "channelName": "DUSTCELL",
+      "channelId": "UCu2n3qHuOuQIygREMnWeQWg",
+      "channelName": "hololive FLOW GLOW",
       "channelKind": "virtual",
       "region": "jp",
       "gender": "unknown",
@@ -2889,9 +2843,9 @@
       ],
       "isAi": false,
       "variant": "vtuber",
-      "title": "SUMMIT",
+      "title": "good enough",
       "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/Mo2iFGSdDBM/default.jpg",
+      "thumbnail": "https://i.ytimg.com/vi/yL5VICm6ewo/default.jpg",
       "publishedAt": null,
       "scheduledStart": null,
       "actualStart": null,
@@ -2904,8 +2858,8 @@
       "isCollab": false,
       "collaborators": [
         {
-          "channelId": "UCJSzxbt4Acel9JdeLiY7tJQ",
-          "name": "DUSTCELL",
+          "channelId": "UCu2n3qHuOuQIygREMnWeQWg",
+          "name": "hololive FLOW GLOW",
           "kind": "virtual",
           "region": "jp"
         }
@@ -2921,6 +2875,52 @@
       "source": "api",
       "addedAt": "2026-10-25T07:43:14.768Z",
       "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OlWXUF3Gf98",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCykMWf8B8I7c_jA8FTy2tGw",
+      "channelName": "Amiya Ch. アミヤ・アラニャ",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "female",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "【Mr Bones】Finishing Big Bones!【Sega Saturn】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/OlWXUF3Gf98/hq720.jpg",
+      "publishedAt": "2026-10-27T22:11:16.041Z",
+      "scheduledStart": null,
+      "actualStart": "2026-10-27T22:11:16.041Z",
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCykMWf8B8I7c_jA8FTy2tGw",
+          "name": "Amiya Ch. アミヤ・アラニャ",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-27T22:11:16.041Z",
+      "updatedAt": "2026-10-27T22:11:16.041Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3028,7 +3028,7 @@
       "channelName": "巫てんり / Kannagi Tenri",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
@@ -3113,112 +3113,12 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "OLAK5uy_knZcjnqErpFv0M4wQtd5U9IDC8e_meMcM",
+      "id": "OLAK5uy_nrJlTu3EwtAT2wMgU9268zslY3FH4g40I",
       "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_knZcjnqErpFv0M4wQtd5U9IDC8e_meMcM",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_nrJlTu3EwtAT2wMgU9268zslY3FH4g40I",
       "type": "playlist",
-      "channelId": "UCWCc8tO-uUl_7SJXIKJACMw",
-      "channelName": "神楽めあ / KaguraMea",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "Growin",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/3YUptsZEsac/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCWCc8tO-uUl_7SJXIKJACMw",
-          "name": "神楽めあ / KaguraMea",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_noLSKKp2eJL2lT_o8DOSlRBLCVChi1Zao",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_noLSKKp2eJL2lT_o8DOSlRBLCVChi1Zao",
-      "type": "playlist",
-      "channelId": "UCu2n3qHuOuQIygREMnWeQWg",
-      "channelName": "hololive FLOW GLOW",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "good enough",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/yL5VICm6ewo/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCu2n3qHuOuQIygREMnWeQWg",
-          "name": "hololive FLOW GLOW",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_nrCTkna1hhaSGAE8OWDmVbpkHkXzYO9wk",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_nrCTkna1hhaSGAE8OWDmVbpkHkXzYO9wk",
-      "type": "playlist",
-      "channelId": "UCQ1U65-CQdIoZ2_NA4Z4F7A",
-      "channelName": "花譜 -KAF-",
+      "channelId": "UC1opHUrw8rvnsadT-iGp7Cg",
+      "channelName": "Aqua Ch. 湊あくあ",
       "channelKind": "virtual",
       "region": "jp",
       "gender": "female",
@@ -3226,10 +3126,10 @@
         "ja"
       ],
       "isAi": false,
-      "variant": "vtuber",
-      "title": "I SCREAM LIVE3",
+      "variant": "female_vtuber",
+      "title": "♡あくあたいむ・せれくと♡",
       "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/2NtRVmvvYX0/default.jpg",
+      "thumbnail": "https://i.ytimg.com/vi/fXeM0fXvOp8/default.jpg",
       "publishedAt": null,
       "scheduledStart": null,
       "actualStart": null,
@@ -3242,8 +3142,8 @@
       "isCollab": false,
       "collaborators": [
         {
-          "channelId": "UCQ1U65-CQdIoZ2_NA4Z4F7A",
-          "name": "花譜 -KAF-",
+          "channelId": "UC1opHUrw8rvnsadT-iGp7Cg",
+          "name": "Aqua Ch. 湊あくあ",
           "kind": "virtual",
           "region": "jp"
         }
@@ -3359,23 +3259,23 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "OLAK5uy_nrJlTu3EwtAT2wMgU9268zslY3FH4g40I",
+      "id": "OLAK5uy_n9oxMSWIt85z33DdM4O7Z7cxCqOUs9FM8",
       "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_nrJlTu3EwtAT2wMgU9268zslY3FH4g40I",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_n9oxMSWIt85z33DdM4O7Z7cxCqOUs9FM8",
       "type": "playlist",
-      "channelId": "UC1opHUrw8rvnsadT-iGp7Cg",
-      "channelName": "Aqua Ch. 湊あくあ",
+      "channelId": "UCFjU-kRnqfn9wtcGsFbe7aA",
+      "channelName": "ユプシロン | Yupsilon",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "female",
+      "gender": "unknown",
       "languages": [
         "ja"
       ],
       "isAi": false,
-      "variant": "female_vtuber",
-      "title": "♡あくあたいむ・せれくと♡",
+      "variant": "producer",
+      "title": "フォージェリィ (English Ver.)",
       "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/fXeM0fXvOp8/default.jpg",
+      "thumbnail": "https://i.ytimg.com/vi/0y-__KpjILM/hqdefault.jpg",
       "publishedAt": null,
       "scheduledStart": null,
       "actualStart": null,
@@ -3388,8 +3288,108 @@
       "isCollab": false,
       "collaborators": [
         {
-          "channelId": "UC1opHUrw8rvnsadT-iGp7Cg",
-          "name": "Aqua Ch. 湊あくあ",
+          "channelId": "UCFjU-kRnqfn9wtcGsFbe7aA",
+          "name": "ユプシロン | Yupsilon",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:36:28.069Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_nMb_5Ry01OQ8SaJkgPjBnisEGzUlC4GPY",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_nMb_5Ry01OQ8SaJkgPjBnisEGzUlC4GPY",
+      "type": "playlist",
+      "channelId": "UCJSzxbt4Acel9JdeLiY7tJQ",
+      "channelName": "DUSTCELL",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "SUMMIT",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/Mo2iFGSdDBM/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCJSzxbt4Acel9JdeLiY7tJQ",
+          "name": "DUSTCELL",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_nrCTkna1hhaSGAE8OWDmVbpkHkXzYO9wk",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_nrCTkna1hhaSGAE8OWDmVbpkHkXzYO9wk",
+      "type": "playlist",
+      "channelId": "UCQ1U65-CQdIoZ2_NA4Z4F7A",
+      "channelName": "花譜 -KAF-",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "female",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "I SCREAM LIVE3",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/2NtRVmvvYX0/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCQ1U65-CQdIoZ2_NA4Z4F7A",
+          "name": "花譜 -KAF-",
           "kind": "virtual",
           "region": "jp"
         }
@@ -3416,12 +3416,12 @@
       "channelName": "桃川ニジマス",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
       "isAi": false,
-      "variant": "unknown",
+      "variant": "female_vtuber",
       "title": "【桃川界隈】⋆͛📢メンバーシップ紹介🌈【うおむすめ】",
       "description": null,
       "thumbnail": "https://i.ytimg.com/vi/PA8C1u8EYqU/hq720.jpg",
@@ -3600,7 +3600,7 @@
       "channelName": "巫てんり / Kannagi Tenri",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
@@ -3738,12 +3738,12 @@
       "channelName": "黒燿リラ / KOKUYOU LIRA",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
       "isAi": false,
-      "variant": "unknown",
+      "variant": "female_vtuber",
       "title": "【 FANBOX 】新たな拠点が出来ました【黒燿リラ】",
       "description": null,
       "thumbnail": "https://i.ytimg.com/vi/zjL-R9sunp8/hq720.jpg",
