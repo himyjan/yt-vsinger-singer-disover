@@ -63,6 +63,14 @@
 The cost is a size ceiling, which is why the dataset is **sharded** and
 **budgeted** (see below).
 
+The ceiling applies to the **tree**, not to its history. A snapshot of `data/`
+packs to about 24 MiB and a routine commit adds about 0.3 MiB, so the history
+is squashed to one snapshot every month and the shards stay the only part of
+the repository that grows. When a squash stops being enough the catalogue is
+split into **volumes** — one repository per slice, `volumeOf(id)` deciding
+which — and the app reads them the way it already reads regions. The ladder and
+both procedures are in [DEPLOY.md](DEPLOY.md#the-capacity-ladder).
+
 ### 2. Sharding is a product decision, not an implementation detail
 
 GitHub Free allows roughly 1 GB of repository content, and a single JSON

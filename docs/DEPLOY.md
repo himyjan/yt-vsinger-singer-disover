@@ -310,15 +310,119 @@ The workflows install the LFS client explicitly:
 - `reference/` and the reference checkouts are **git-ignored**. They are
   several GB and would destroy the repository budget. They exist for
   research only.
-- `node_modules/` is ignored.
+- `node_modules/` and `public/data/` are ignored — the second is the copy
+  `prepare:public` makes for the build, and committing it stored the dataset
+  twice.
 - The dataset has hard size budgets — 8 MB per file, 180 MB for `data/` —
   enforced on write and checked in CI.
 - Retention rules keep the dataset bounded: 30 items per channel, 1095-day
   (three-year) age limit, live and upcoming items always kept.
-- `npm run repo:size` measures the other number: the *history*. A reset, an
-  aborted rebase or a force-push leaves packs behind that no ref reaches, and
-  they are counted against the repository until a local `git gc --prune=now`
-  removes them. The weekly `repo-size.yml` run is what notices.
+
+#### The tree is not the repository
+
+`trackedRepoSize()` in `validate.ts` sums the files git tracks *now*.
+GitHub stores the **history**: every shard a run rewrites adds a blob, and a
+reset, an aborted rebase or a force-push can leave packs behind that no ref
+reaches. Measured on 2026-10-28, after the last of those were cleared:
+
+| | |
+| --- | --- |
+| one `data/` snapshot, packed | 24 MiB |
+| code, `docs/` and skills history | 5 MiB |
+| the whole repository after 77 data commits | 107 MiB |
+| a routine data commit (median) | 0.3 MiB |
+| a bulk rewrite — `reclassify --apply` over the catalogue | 20 MiB |
+
+Two things follow. A snapshot is not what costs; the *number of them* is, and
+delta compression keeps each one cheap. And the expensive commit is the bulk
+rewrite, not the daily refresh.
+
+#### The capacity ladder
+
+Four rungs, each with its own trigger. Do not skip one.
+
+| When | Do this | Leaves |
+| --- | --- | --- |
+| weekly | `repo-size.yml` reports the stored size | a number, once a week |
+| **the 1st of every month** | squash the data history to one snapshot | ~32 MiB, one month of diffs |
+| still above 700 MB after a squash, or two squashes inside six months | split the catalogue into **volumes** | each volume under 700 MB |
+| the sync's `repo:size --max-mb 900` gate fails | **stop** — the run refuses to commit and a person decides | never crosses 1 GB |
+
+The gate is what makes the ladder work: no run can push the repository past
+900 MB, so there is always 100 MB of room to act in.
+
+#### The monthly squash
+
+Data history older than a month is **disposable**. The records are generated,
+and `addedAt`, `source`, the aliases and `verification` carry everything a
+commit would show, so a squash costs a review window, not information.
+
+```bash
+git clone --no-local . /tmp/squash     # a fresh clone, not a working copy
+cd /tmp/squash
+pip install git-filter-repo            # the tool GitHub itself recommends
+
+cp -a data /tmp/data-current           # filter-repo deletes it
+git filter-repo --path data --invert-paths --force
+cp -a /tmp/data-current data
+git add data
+git commit -m "data: snapshot $(date +%F)"
+git push --force-with-lease origin main
+```
+
+Then check, in the repository:
+
+```bash
+npm run data:validate                  # the rewritten tree must still be valid
+git log --oneline -- data | wc -l       # 1
+npm run repo:size
+```
+
+`data-squash.yml` does the same, `workflow_dispatch` only: it takes a typed
+confirmation, shares the dataset writers' concurrency group, validates before
+it pushes, and uses `--force-with-lease`, so it can never overwrite a run that
+committed while it was rewriting.
+
+Two things to expect afterwards:
+
+- **GitHub does not shrink immediately.** The old objects become unreachable
+  and GitHub's own housekeeping prunes them (occasionally after asking
+  Support). A fresh clone is the honest measurement.
+- **Every clone, fork and open pull request is invalidated**, because a
+  rewrite changes every commit sha. Announce it, or run it when nobody is
+  mid-branch.
+
+#### When a squash is not enough: volumes
+
+If two squashes inside six months still leave the repository climbing, the
+catalogue has outgrown one repository and the data moves to **volumes**: one
+repository per slice, each written by its own workflow, each refreshed
+independently.
+
+One rule makes it safe:
+
+> `volumeOf(id)` is a pure function of the channel id, and a channel lives in
+> exactly one volume.
+
+`shardOf()` in `scripts/lib/shard.ts` already is this function for the
+rotation. A volume uses rendezvous hashing — `argmax hash(id, i)` — rather
+than `hash % N`, so adding a volume moves about `1/(N+1)` of the records and
+never moves one between the volumes that already exist.
+
+A volume is **not** a rotation. An old volume keeps receiving updates — a
+rename, an avatar, a live status — for the channels it owns, for as long as
+the project runs. What it never receives is a channel that belongs to another
+volume. That is the invariant `data:validate` has to hold:
+
+- every id appears once across all volumes (`validate.ts` already fails on a
+  duplicate id inside one tree);
+- the volume holding a record is the one `volumeOf(id)` names;
+- every declared volume is present and its counts match its manifest.
+
+Splitting costs more than it saves until the ladder reaches it: N origins to
+fetch from, N workflows, the API quota split N ways, and every global file —
+`items/live.json`, the counts in `manifest.json` — becoming per-volume and
+merged by the client.
 
 ## Local development
 

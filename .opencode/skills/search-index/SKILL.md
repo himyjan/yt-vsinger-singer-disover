@@ -12,7 +12,9 @@ region; the browser answers a query with a few binary searches.
 
 `data/search/<region>.json` — and, when a region outgrows
 `SIZE_BUDGET.maxSearchPackBytes` (4 MB), `data/search/<region>.<n>.json` for
-the rest. Every pack is a complete inverted index over its own slice; the
+the rest. The packs are a large share of a snapshot (~24 MiB packed for the
+whole tree), but they are regenerated from the records on every run, which is
+why `data/` history is squashed monthly rather than kept forever. Every pack is a complete inverted index over its own slice; the
 browser loads them together and `searchPacks()` merges the hits across packs
 exactly as it does across regions. `manifest.json` gives each pack its `shard`
 number.

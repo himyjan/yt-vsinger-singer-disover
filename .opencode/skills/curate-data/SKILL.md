@@ -318,6 +318,11 @@ npm run data:validate
 word, and the roster snapshots in `.cache/` as the claim — so a record the
 roster named is judged the way its import judged it.
 
+A catalogue-wide `--apply` rewrites every shard, which is about **20 MiB of
+history in one commit** (a routine sync commit is ~0.3 MiB). Run one decisive
+reclassify rather than five exploratory ones, and expect that commit to be one
+of the biggest things in `git log` until the monthly squash folds it in.
+
 Always:
 
 1. run `data:reclassify` and read the report — the per-move counts, with

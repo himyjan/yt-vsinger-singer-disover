@@ -947,3 +947,9 @@ Retention rules keep the dataset inside those budgets: up to 30 routine items
 per channel plus a preferential set of covers, MVs, originals and YouTube Music
 releases; items older than 365 days are dropped except for live/upcoming items
 and that preferential set.
+
+Those budgets bound the **tree**. The repository also stores its history, and
+that is bounded by policy rather than by a constant: a monthly squash to one
+snapshot keeps it near 32 MiB, `npm run repo:size` reports it, and the sync
+refuses to commit past 900 MiB. See
+[DEPLOY.md](DEPLOY.md#the-capacity-ladder).

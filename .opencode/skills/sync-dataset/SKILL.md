@@ -151,6 +151,13 @@ Stale shards are pruned automatically. **Never write a file larger than 8 MB**
 (`maxSearchPackBytes` — the builder splits a region into as many packs as that
 needs) and never let `data/` exceed 180 MB.
 
+Those budgets bound the **tree**. The history is bounded by policy: a routine
+commit adds ~0.3 MiB and a catalogue-wide reclassify ~20 MiB, so `data/`
+history is squashed to one snapshot every month, and the sync runs
+`npm run repo:size -- --max-mb 900` after validation and refuses to commit
+past it. A failing gate is not a bug to work around — it is the run telling you
+the ladder in `docs/DEPLOY.md` needs its next rung.
+
 ## Extending the pipeline
 
 | I want to… | Do this |
@@ -162,6 +169,8 @@ needs) and never let `data/` exceed 180 MB.
 | Run discovery, or promote its candidates | `npm run data:discover [-- --source all --promote]` |
 | Change the virtual-and-singing evidence | `scripts/lib/discovery-evidence.ts` (shared with the sync) |
 | Add a data source that enriches records | A module with a `fetch*()` that returns `null` on failure |
+| Check how big the repository has become | `npm run repo:size` (`--repack` measures what `git gc` would reclaim) |
+| Shrink the repository | squash the data history — `data-squash.yml`, or `docs/DEPLOY.md` → *The monthly squash* |
 
 Every network call must be wrapped so that a failure yields an empty result
 and a log line — never an exception that aborts the run.
