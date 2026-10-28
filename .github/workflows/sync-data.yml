@@ -167,6 +167,13 @@ jobs:
       - name: Validate dataset
         run: npm run data:validate
 
+      # The dataset is committed, so the repository grows by every shard this
+      # run rewrote. Nothing can shrink it from here — `git gc` in a run only
+      # cleans the throwaway clone — so stop *before* the push that would take
+      # it over the line, and leave the decision to a human with room to act.
+      - name: Check the stored repository size
+        run: npm run repo:size -- --max-mb 900 --warn-mb 700
+
       - name: Rebase data changes onto the latest branch
         env:
           BRANCH: ${{ github.ref_name }}
