@@ -49,7 +49,7 @@ import { splitName } from "./names";
 import { removeSuggestions, suggestionKey } from "./suggestions";
 import { toCountRef } from "./types";
 import { buildSearchIndex } from "../build-index";
-import type { Activity, Channel, CountRef, RegionCode } from "./types";
+import type { Activity, Channel, CountRef, Gender, RegionCode } from "./types";
 
 /**
  * The subscriber count a record starts with.
@@ -188,6 +188,17 @@ function recordFromProfile(
       : undefined,
   });
 
+  /**
+   * The gender: the classifier's answer, then the roster's, then nothing.
+   * It decides the `variant` label as well, so it is read once.
+   */
+  const gender: Gender =
+    override?.gender ??
+    (classification.gender !== "unknown"
+      ? classification.gender
+      : hint?.gender?.[id]) ??
+    "unknown";
+
   const handle = (profile.handle ?? first.handle ?? "")
     .replace(/^@/, "")
     .trim() || null;
@@ -248,14 +259,14 @@ function recordFromProfile(
     country,
     tags: override?.tags ?? [],
     isSinging: override?.isSinging ?? classification.isSinging,
-    gender: override?.gender ?? classification.gender,
+    gender,
     isAi: override?.isAi ?? classification.isAi,
     // The import fetches the channel page, which is where the 🎵 badge lives.
     isOfficialArtist: profile.officialArtist,
     officialArtistCheckedAt: now,
     variant: deriveVariant(
       classification.role,
-      override?.gender ?? classification.gender,
+      gender,
       override?.isAi ?? classification.isAi,
     ),
     verification: null,
@@ -275,7 +286,7 @@ function recordFromProfile(
      */
     activity:
       textActivity === "graduated" ? "graduated" : hint?.activity?.[id] ?? textActivity,
-    debutDate: null,
+    debutDate: hint?.debut?.[id] ?? null,
     graduateDate: null,
 
     platforms: [
@@ -327,6 +338,22 @@ export interface RosterHint {
    * hand-written override, still win.
    */
   agency?: Record<string, string>;
+  /**
+   * The debut date the roster publishes, per channel id (`YYYY-MM-DD`).
+   *
+   * YouTube's profile does not state a debut, and the dataset's `debutDate`
+   * is otherwise filled only by the Taiwan tracker and the wiki sources. A
+   * directory that files its entries by debut knows it.
+   */
+  debut?: Record<string, string>;
+  /**
+   * The gender the roster states, per channel id.
+   *
+   * A **fallback**: `classifyChannel()` reads the text, and a channel that
+   * says 「female VTuber」 has already answered. This is for the ones that do
+   * not — a bio in a language the classifier has no pronoun for.
+   */
+  gender?: Record<string, Gender>;
   /**
    * The languages the roster states for the performer, per channel id.
    *
@@ -412,6 +439,21 @@ export interface ImportResult {
 }
 
 const DEFAULT_LIMIT = 12;
+
+/**
+ * The gender a roster states, in this dataset's two values.
+ *
+ * Rosters write it freely — `Female`, `female`, `Non-Binary (she/they)`,
+ * `prefer-not-to-say` — and only the two the dataset models are taken. A
+ * roster's gender is a **hint** on the record, never a decision: an unmapped
+ * value is `null`, which leaves the classifier's answer in place.
+ */
+export function rosterGender(value: string | null | undefined): Gender | null {
+  const text = (value ?? "").trim().toLowerCase();
+  if (text === "female" || text === "f" || text === "woman") return "female";
+  if (text === "male" || text === "m" || text === "man") return "male";
+  return null;
+}
 
 export async function importYouTubeChannels(
   rawIds: string[],

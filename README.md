@@ -35,6 +35,7 @@ npm run data:links          # find the missing cross-platform accounts
 npm run data:discover       # new performers from vTubie (--source all: + the wiki)
 npm run data:bacharu        # the bacharu roster (109,828 rows) → .cache/
 npm run data:vtuberhk       # the Hong Kong directory → .cache/
+npm run data:hololist       # the HoloList directory (9,359 entries) → .cache/
 ```
 
 `npm run data:all` does the first three.
@@ -78,6 +79,12 @@ scripts/import-bacharu.ts  published as JSON, gated into data/ — a row with
 scripts/harvest-vtuberhk.ts the Hong Kong directory: /channels/ for the roster
 scripts/import-vtuberhk.ts  and its state, /data/channels.json for the counts
 
+scripts/harvest-hololist.ts the HoloList directory: its sitemaps enumerate
+scripts/import-hololist.ts  9,359 entries, one page each; the importer adds
+                            the new channels and fills the Twitch / X /
+                            Instagram / TikTok / Bilibili / Niconico accounts
+                            the entries publish (`--links`)
+
 scripts/discover.ts        new performers: the Virtual YouTuber Wiki, and the
                            vTubie directory through a real browser
                            → data/identities.json; --promote adds the ones
@@ -95,7 +102,8 @@ vdb, the dataset, or the seed catalog.
 The sync pipeline also
 reads the global vdb roster (including links across many platforms), Taiwan
 VTuber Tracking Data, the bacharu directory, the Hong Kong directory at
-vtuber.hk, VocaDB and curated music datasets. The Data API free tier
+vtuber.hk, the HoloList directory at hololist.net, VocaDB and curated music
+datasets. The Data API free tier
 allows 10,000 quota units a day. The app supports YouTube, Twitch, Bilibili,
 Niconico, VK, CHZZK, KICK, SOOP and CI.ME; public roster links are retained
 even when a platform does not have a dedicated profile adapter.

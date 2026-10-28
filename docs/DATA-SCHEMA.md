@@ -214,7 +214,10 @@ The record for one performer.
 
 `externals` holds two kinds of value. For a platform the pipeline has an
 adapter for, the value is a **handle** (`twitter: "KenshiYonezu"`) and the app
-builds the URL. For a site it does not know — a personal site, a shop, a
+builds the URL. The handles come from the performer's own description, and
+from a directory that files them beside the YouTube account — HoloList's
+`#links` section is where `npm run data:hololist-import -- --links`
+reads them. For a site it does not know — a personal site, a shop, a
 Spotify **album** — the key is `web:<n>` and the value is the **address
 itself** (`web:1: "bq-uwu.github.io/"`). The number only orders them, so it is
 never merged across descriptions; a record keeps at most two, because a
@@ -483,9 +486,9 @@ English one, so a Japanese or Spanish channel that had set an English
 localization was described in English before the detector ever saw it. Every
 profile is therefore requested in the record's own language
 (`profileLanguage()`), and a roster that states the language — bacharu's
-`languages`, carried into the import as `RosterHint.languages` — chooses the
-request when the region cannot, because a Spanish performer's region is
-`unknown`. `detectLanguage()` now scores the **function words** the text
+`languages`, and HoloList's `#language` section, carried into the import as
+`RosterHint.languages` — chooses the request when the region cannot, because
+a Spanish performer's region is `unknown`. `detectLanguage()` now scores the **function words** the text
 uses (`the`/`and`/`you` for English, `el`/`que`/`por` for Spanish, `não`/`você`
 for Portuguese, `der`/`und`/`nicht` for German, …) and the diacritics that
 narrow the field (`ñ`, `ã`, `ạ … đ`, `ą`, `ı`, `ő`), and accepts a language

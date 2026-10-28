@@ -89,6 +89,13 @@ Every record carries `source`:
       `Nijisanji` and `NIJISANJI (main branch)` are one agency and every
       `hololive` branch is `hololive`. An agency the channel's own text names
       still wins, and a former group is not a current affiliation.
+- `[x]` **A directory states the rest.** **HoloList** (9,359 entries, no
+      agency limit) publishes the debut date, the language list, the gender,
+      the affiliation and whether the performer has retired, beside the
+      performer's Twitch, X, Instagram, TikTok, Bilibili and Niconico
+      accounts. `npm run data:hololist-import` adds the channels, and
+      `-- --links --apply` fills the `externals` of the records it already
+      knows — the field a description harvest otherwise has to guess.
 - `[x]` **A source row can be dead.** The roster keeps the rows of channels
       that have since been deleted; the import reports them, writes nothing,
       and remembers the id for seven days so the next run does not ask again.

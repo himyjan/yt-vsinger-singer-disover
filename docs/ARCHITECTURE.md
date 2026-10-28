@@ -126,8 +126,10 @@ scripts/
 ├── prepare-public.ts        copies data/ into public/ for the build
 ├── harvest-bacharu.ts       bacharu's roster → .cache/ (resumable, JSON API)
 ├── harvest-vtuberhk.ts      vtuber.hk: /channels/ + /data/*.json → .cache/
+├── harvest-hololist.ts      hololist.net: sitemaps + one page per entry → .cache/
 ├── import-bacharu.ts        gates a bacharu snapshot into data/
 ├── import-vtuberhk.ts       gates a VtuberHK snapshot into data/
+├── import-hololist.ts       gates a HoloList snapshot into data/ (+ --links)
 └── lib/
     ├── types.ts             the canonical data model (shared with the app)
     ├── youtube.ts           YouTube Data API v3 client + quota budget
@@ -154,6 +156,7 @@ scripts/
     ├── search.ts            tokenizer + inverted index + query engine
     ├── aislist.ts           AI-channel list
     ├── vdb.ts               the Virtual YouTuber Name List Database
+    ├── hololist.ts          the HoloList directory: entry and sitemap parsers
     ├── taiwan-vtuber-data.ts  the Taiwan VTuber track list
     ├── chinese-scripts.ts   simplified vs. traditional character sets
     ├── dedupe.ts            identity-based de-duplication
@@ -336,7 +339,7 @@ segmenter, because `歌い手` is indexed as `歌い` + `い手`.
 
 | Field | How |
 | --- | --- |
-| `kind` (virtual / real) | a curated `kind`, then a roster's `virtualClaim` (vdb, vTubie's groups, bacharu, VtuberHK, each platform's VTuber directory), then a weighted score over strong and weak markers with the channel name weighted highest and the opening of the description next. `singer` / `composer` / `songwriter` are jobs and do not decide it; `REAL_IDENTITY` holds the words that state a human body |
+| `kind` (virtual / real) | a curated `kind`, then a roster's `virtualClaim` (vdb, vTubie's groups, bacharu, VtuberHK, HoloList, each platform's VTuber directory), then a weighted score over strong and weak markers with the channel name weighted highest and the opening of the description next. `singer` / `composer` / `songwriter` are jobs and do not decide it; `REAL_IDENTITY` holds the words that state a human body |
 | `role` | the strongest matching role marker, unless the channel looks like an aggregator |
 | `region` | agency → published country → kana in the name → explicit region markers → platform prior → script detection → locale hints. A link to another platform is not a signal, and the winning source is stored in `regionSource` |
 | `gender` | explicit self-description first; honorifics only as a fallback |

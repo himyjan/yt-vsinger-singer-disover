@@ -63,12 +63,14 @@ Without a YouTube API key, the sync may still rebuild its roster; automatic
 roster additions are limited to vdb, existing dataset identities, and curated
 seeds. See the `sync-dataset` skill for the discovery admission rules.
 
-A roster — vdb, vTubie's groups, bacharu, VtuberHK — is a claim of **virtual
-identity** and nothing more: it does not rename a record, and it supplies a
-region only where the profile's own text decided nothing. The Hong Kong
-directory is imported with `npm run data:vtuberhk-import -- --apply`; its
+A roster — vdb, vTubie's groups, bacharu, VtuberHK, HoloList — is a claim of
+**virtual identity** and nothing more: it does not rename a record, and it
+supplies a region only where the profile's own text decided nothing. The Hong
+Kong directory is imported with `npm run data:vtuberhk-import -- --apply`; its
 `--stats` pass fills the empty `viewCount` / `videoCount` of the records it
-lists.
+lists. HoloList is imported with `npm run data:hololist-import -- --apply`,
+and `-- --links --apply` fills the `externals` handle a record is missing from
+the entry's own link block.
 
 A performer the Virtual YouTuber Wiki or the vTubie directory lists is a
 *candidate*, not a record. `npm run data:discover` records the name in

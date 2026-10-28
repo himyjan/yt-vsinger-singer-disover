@@ -26,6 +26,8 @@
  * and the country the roster files the performer under.
  */
 
+import { languageCodesFromNames } from "./regions";
+
 /** One link from `social.all`, narrowed to the platforms the dataset knows. */
 export interface BacharuLink {
   platform: string;
@@ -342,84 +344,56 @@ export function namesAgree(
 /**
  * bacharu's language names in this dataset's codes.
  *
- * The roster writes a language the way a person does — `Japanese`,
- * `taiwanese`, `cantonese` — and the pipeline needs a code, because the code
- * is what picks the UI language YouTube answers a profile in. A language
- * outside this table is dropped rather than guessed: the profile then falls
- * back to the region, which is the answer it had before.
+ * The table lives in `regions.ts`, beside the codes it produces, because
+ * hololist speaks the same vocabulary; this is the bacharu-facing name for it.
  */
-const LANGUAGE_CODES: Record<string, string> = {
-  english: "en",
-  japanese: "ja",
-  chinese: "zh-Hans",
-  mandarin: "zh-Hans",
-  taiwanese: "zh-Hant",
-  cantonese: "yue",
-  hakka: "zh-Hant",
-  indonesian: "id",
-  malay: "ms",
-  filipino: "tl",
-  tagalog: "tl",
-  spanish: "es",
-  portuguese: "pt",
-  german: "de",
-  french: "fr",
-  italian: "it",
-  dutch: "nl",
-  polish: "pl",
-  swedish: "sv",
-  danish: "da",
-  norwegian: "no",
-  finnish: "fi",
-  russian: "ru",
-  ukrainian: "uk",
-  czech: "cs",
-  slovak: "sk",
-  hungarian: "hu",
-  romanian: "ro",
-  croatian: "hr",
-  serbian: "sr",
-  bosnian: "bs",
-  greek: "el",
-  turkish: "tr",
-  arabic: "ar",
-  hebrew: "he",
-  hindi: "hi",
-  thai: "th",
-  vietnamese: "vi",
-  khmer: "km",
-  burmese: "my",
-  bengali: "bn",
-  tamil: "ta",
-  korean: "ko",
-  javanese: "jv",
-  sundanese: "su",
-  catalan: "ca",
-  galician: "gl",
-  irish: "ga",
-  afrikaans: "af",
-  latin: "la",
-  hmong: "hmn",
-  guarani: "gn",
-  armenian: "hy",
-  luxembourgish: "lb",
-  persian: "fa",
-  kazakh: "kk",
-  belarusian: "be",
+export function rosterLanguageCodes(values: readonly string[]): string[] {
+  return languageCodesFromNames(values);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Dates                                                                      */
+/* -------------------------------------------------------------------------- */
+
+const MONTHS: Record<string, number> = {
+  january: 1,
+  february: 2,
+  march: 3,
+  april: 4,
+  may: 5,
+  june: 6,
+  july: 7,
+  august: 8,
+  september: 9,
+  october: 10,
+  november: 11,
+  december: 12,
 };
 
 /**
- * The codes for the languages a roster row states.
+ * The debut date, `YYYY-MM-DD`, or `null`.
  *
- * Duplicates are collapsed and order is kept: the first language a performer
- * lists is the one their stream is in, and that is the one the profile is
- * asked for in.
+ * bacharu's `debut` is **free text**, because it is user-contributed: the
+ * roster holds `2022/07/03`, `June 18, 2022`, `YouTube: 2024/06/01` and a
+ * hundred other spellings, including dates that are not dates ("TBA",
+ * "2022", a whole sentence). Only an unambiguous full date is taken — a
+ * month alone would put a performer's debut in the wrong year, and
+ * `debutDate` is a fact the app shows.
  */
-export function rosterLanguageCodes(values: readonly string[]): string[] {
-  const codes: string[] = [];
-  for (const value of values) {
-    const code = LANGUAGE_CODES[value.trim().toLowerCase()];
-    if (code && !codes.includes(code)) codes.push(code);
-  }
-  return codes;
+export function parseBacharuDebut(input: string | null | undefined): string | null {
+  const raw = (input ?? "").trim();
+  if (!raw) return null;
+  /** `YouTube: 2024/06/01`, `Twitch: 2020.04.27` — the platform is not the date. */
+  const text = raw.replace(/^[A-Za-z][A-Za-z .]{0,15}:\s*/, "");
+  const numeric = /^(\d{4})[-/.](\d{1,2})[-/.](\d{1,2})\b/.exec(text);
+  const spelled = /^([A-Za-z]+)\s+(\d{1,2})(?:st|nd|rd|th)?,?\s+(\d{4})\b/.exec(text);
+  if (!numeric && !spelled) return null;
+  const year = Number(numeric ? numeric[1] : spelled![3]);
+  const month = numeric
+    ? Number(numeric[2])
+    : (MONTHS[spelled![1]!.toLowerCase()] ?? 0);
+  const day = Number(numeric ? numeric[3] : spelled![2]);
+  if (year < 1990 || year > new Date().getUTCFullYear() + 1) return null;
+  if (month < 1 || month > 12 || day < 1 || day > 31) return null;
+  return `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
 }
