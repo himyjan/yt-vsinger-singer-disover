@@ -26,6 +26,7 @@
     "data:bacharu-import": "tsx scripts/import-bacharu.ts",
     "data:hololist": "tsx scripts/harvest-hololist.ts",
     "data:hololist-import": "tsx scripts/import-hololist.ts",
+    "data:import-suggestions": "tsx scripts/import-suggestions.ts",
     "data:analytics:append": "tsx scripts/append-analytics.ts",
     "data:ids": "tsx scripts/fill-details.ts --normalize-ids",
     "data:avatars": "tsx scripts/fill-details.ts",
