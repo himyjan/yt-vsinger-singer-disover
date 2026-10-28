@@ -89,6 +89,19 @@ Every record carries `source`:
       `Nijisanji` and `NIJISANJI (main branch)` are one agency and every
       `hololive` branch is `hololive`. An agency the channel's own text names
       still wins, and a former group is not a current affiliation.
+- `[x]` **A directory states the rest — social links.** bacharu publishes each
+      performer's Twitch, X, Instagram, TikTok, Bilibili, Niconico, KICK,
+      CHZZK, SOOP and VK accounts beside the YouTube channel.
+      `npm run data:bacharu-import -- --links --apply` attaches them to the
+      tracked record's `externals` — nothing already there is overwritten, and
+      `clips` links are skipped because a clips channel publishes the
+      performer, it is not the performer.
+- `[x]` **A directory states the rest — region, debut, gender.**
+      `npm run data:bacharu-import -- --hints --apply` fills empty `region`
+      (only where `classifyChannel()` left it `unknown`), empty `debutDate`
+      (parsed from free text like `2022/07/03` or `June 18, 2022`), and empty
+      `gender` (`Female`/`Male` → `female`/`male`) — the roster fills a gap,
+      it never takes a fact back.
 - `[x]` **A directory states the rest.** **HoloList** (9,359 entries, no
       agency limit) publishes the debut date, the language list, the gender,
       the affiliation and whether the performer has retired, beside the

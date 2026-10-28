@@ -74,7 +74,9 @@ scripts/resolve-links.ts   the missing accounts: the performer's own text,
 scripts/harvest-bacharu.ts the bacharu roster: 109,828 rows and 685 groups,
 scripts/import-bacharu.ts  published as JSON, gated into data/ — a row with
                            only an @handle is `--resolve-handles`, a row with
-                           no link at all is `--search-names`
+                           no link at all is `--search-names`, `--links` fills social accounts on
+                            tracked records, `--hints` fills region / debut /
+                            gender
 
 scripts/harvest-vtuberhk.ts the Hong Kong directory: /channels/ for the roster
 scripts/import-vtuberhk.ts  and its state, /data/channels.json for the counts

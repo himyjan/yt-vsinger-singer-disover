@@ -217,9 +217,10 @@ adapter for, the value is a **handle** (`twitter: "KenshiYonezu"`) and the app
 builds the URL. The handles come from the performer's own description, and
 from a directory that files them beside the YouTube account — HoloList's
 `#links` section is where `npm run data:hololist-import -- --links`
-reads them. For a site it does not know — a personal site, a shop, a
-Spotify **album** — the key is `web:<n>` and the value is the **address
-itself** (`web:1: "bq-uwu.github.io/"`). The number only orders them, so it is
+reads them, and bacharu's `social`/`links` is where
+`npm run data:bacharu-import -- --links` reads them. For a site it does not
+know — a personal site, a shop, a Spotify **album** — the key is `web:<n>`
+and the value is the **address itself** (`web:1: "bq-uwu.github.io/"`). The number only orders them, so it is
 never merged across descriptions; a record keeps at most two, because a
 description with ten links is a fan page listing.
 
