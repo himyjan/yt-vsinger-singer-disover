@@ -1,7 +1,53 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-28T05:38:36.215Z",
+  "generatedAt": "2026-10-28T12:50:03.253Z",
   "items": [
+    {
+      "id": "aFArl8l4w1k",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCTWJfva0AreBP-D4w4MTqGA",
+      "channelName": "Torineesan - Dream Bunny",
+      "channelKind": "virtual",
+      "region": "en",
+      "gender": "male",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "[SCHEDULE] Time to make Dreams come True!",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/aFArl8l4w1k/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCTWJfva0AreBP-D4w4MTqGA",
+          "name": "Torineesan - Dream Bunny",
+          "kind": "virtual",
+          "region": "en"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-28T12:50:03.253Z",
+      "updatedAt": "2026-10-28T12:50:03.253Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
     {
       "id": "b6mcVgI0JjY",
       "platform": "youtube",
@@ -45,6 +91,52 @@
       "source": "api",
       "addedAt": "2026-10-24T15:54:59.721Z",
       "updatedAt": "2026-10-27T22:11:16.041Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "C1K2Um4zD_k",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCT44ajV-3yIW25-QICtpSeA",
+      "channelName": "Arietty",
+      "channelKind": "virtual",
+      "region": "en",
+      "gender": "unknown",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "05.10. - 11.10. | Schedule",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/C1K2Um4zD_k/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": "05.10.",
+      "originalArtist": "11.10. | Schedule",
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCT44ajV-3yIW25-QICtpSeA",
+          "name": "Arietty",
+          "kind": "virtual",
+          "region": "en"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-28T12:50:03.253Z",
+      "updatedAt": "2026-10-28T12:50:03.253Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -783,6 +875,52 @@
       "source": "api",
       "addedAt": "2026-10-26T12:56:51.125Z",
       "updatedAt": "2026-10-26T12:56:51.125Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "SYdcyFeANdY",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UClp5HhAKRA-TcJ1fGW0dJlQ",
+      "channelName": "Evolite",
+      "channelKind": "virtual",
+      "region": "en",
+      "gender": "male",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "【VALORANT】 5 STACKING WITH A FOX, A DOG, A DUCK, A SHARK, AND A DRAGONSCALE #evolive",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/SYdcyFeANdY/hq720.jpg",
+      "publishedAt": "2026-10-28T12:50:03.253Z",
+      "scheduledStart": null,
+      "actualStart": "2026-10-28T12:50:03.253Z",
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": true,
+      "collaborators": [
+        {
+          "channelId": "UClp5HhAKRA-TcJ1fGW0dJlQ",
+          "name": "Evolite",
+          "kind": "virtual",
+          "region": "en"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-28T12:50:03.253Z",
+      "updatedAt": "2026-10-28T12:50:03.253Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }
