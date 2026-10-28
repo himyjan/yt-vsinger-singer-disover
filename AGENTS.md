@@ -255,8 +255,8 @@ can shrink the remote, so treat `repo-size.yml` as an alarm.
 repository is kept bounded in rungs, and each rung has a trigger:
 
 1. **monthly** — squash the `data/` history to one snapshot (`data-squash.yml`,
-   or the procedure in `docs/DEPLOY.md`); this leaves ~32 MiB and one month of
-   diffs;
+   or the procedure in `docs/DEPLOY.md`); this leaves ~28 MiB just after the
+   squash and ~55 MiB by the next, with one month of diffs;
 2. **when a squash is no longer enough** (still above 700 MB afterwards, or two
    squashes inside six months) — split the catalogue into **volumes**, where
    `volumeOf(id)` is a pure function of the id and a channel lives in exactly

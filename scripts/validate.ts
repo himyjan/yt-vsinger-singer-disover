@@ -372,7 +372,7 @@ function validateSizes(): void {
   const tracked = trackedRepoSize();
   if (tracked > 900 * 1024 * 1024) {
     warn(
-      `tracked repository content is ${formatBytes(tracked)} — GitHub Free warns above ~1 GB. Consider Git LFS for binaries.`,
+      `tracked repository content is ${formatBytes(tracked)} — GitHub recommends staying under 1 GB (10 GB of .git is its documented maximum). Consider Git LFS for binaries.`,
     );
   }
 }

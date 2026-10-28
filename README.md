@@ -182,10 +182,12 @@ See [docs/DEPLOY.md](docs/DEPLOY.md) and [docs/PLATFORMS.md](docs/PLATFORMS.md).
 Everything is sharded so no single file grows large — see
 [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md#2-sharding-is-a-product-decision-not-an-implementation-detail).
 
-The repository is bounded too. A `data/` snapshot is ~24 MiB and a routine
-commit ~0.3 MiB, so the data history is squashed to one snapshot every month
-and `npm run repo:size` reports what GitHub actually stores; if a squash ever
-stops being enough, the catalogue splits into volumes. See
+The repository is bounded too. A `data/` snapshot is ~28 MiB and a routine
+commit ~0.3 MiB, so the data history is squashed to one snapshot every month:
+about 28 MiB right after a squash, and ~55 MiB just before the next, once a
+month of commits has accumulated. `npm run repo:size` reports what GitHub
+actually stores; if a squash ever stops being enough, the catalogue splits
+into volumes. See
 [docs/DEPLOY.md](docs/DEPLOY.md#the-capacity-ladder).
 
 ## Classification

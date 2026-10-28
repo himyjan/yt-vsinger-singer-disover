@@ -276,8 +276,8 @@ hashed bundles included.
 
 ## Git LFS
 
-GitHub Free allows roughly **1 GB** of repository content (hard limit 2 GB)
-and a **2 GB** maximum for a single LFS file.
+GitHub recommends keeping a repository under **1 GB** (10 GB of `.git` is the
+documented maximum) and caps a single LFS file at **2 GB** on the Free plan.
 
 The JSON dataset is deliberately **not** in LFS: it is small, it needs to
 diff cleanly in pull requests, and Pages has to serve it as plain text.
@@ -343,9 +343,9 @@ reaches. Measured on 2026-10-28, after the last of those were cleared:
 
 | | |
 | --- | --- |
-| one `data/` snapshot, packed | 24 MiB |
+| one `data/` snapshot, packed | 28 MiB |
 | code, `docs/` and skills history | 5 MiB |
-| the whole repository after 77 data commits | 107 MiB |
+| the whole repository after 78 data commits | 134.6 MiB |
 | a routine data commit (median) | 0.3 MiB |
 | a bulk rewrite — `reclassify --apply` over the catalogue | 20 MiB |
 | the 10,254-record import plus that reclassify, together | 27 MiB |
@@ -361,7 +361,7 @@ Four rungs, each with its own trigger. Do not skip one.
 | When | Do this | Leaves |
 | --- | --- | --- |
 | weekly | `repo-size.yml` reports the stored size | a number, once a week |
-| **the 1st of every month** | squash the data history to one snapshot | ~32 MiB, one month of diffs |
+| **the 1st of every month** | squash the data history to one snapshot | ~28 MiB now, ~55 MiB by the next squash |
 | still above 700 MB after a squash, or two squashes inside six months | split the catalogue into **volumes** | each volume under 700 MB |
 | the sync's `repo:size --max-mb 900` gate fails | **stop** — the run refuses to commit and a person decides | never crosses 1 GB |
 

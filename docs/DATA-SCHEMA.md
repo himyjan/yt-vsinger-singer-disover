@@ -939,7 +939,7 @@ Enforced by `scripts/lib/io.ts` (on write) and `scripts/validate.ts` (in CI).
 | Budget | Value | Why |
 | --- | --- | --- |
 | `maxFileBytes` | 8 MB | No single file gets big enough to slow the app down |
-| `maxDataBytes` | 180 MB | Comfortably inside GitHub Free's ~1 GB repository limit |
+| `maxDataBytes` | 180 MB | Comfortably inside the 1 GB repository size GitHub recommends |
 | `maxSearchPackBytes` | 4 MB | One search pack. Every pack is downloaded and parsed by the browser, so the ceiling is what a phone holds, not what git stores |
 | `maxLfsBytes` | 2 GB | GitHub's LFS per-file ceiling |
 
@@ -950,6 +950,7 @@ and that preferential set.
 
 Those budgets bound the **tree**. The repository also stores its history, and
 that is bounded by policy rather than by a constant: a monthly squash to one
-snapshot keeps it near 32 MiB, `npm run repo:size` reports it, and the sync
+snapshot keeps it near 28 MiB just after a squash (~55 MiB before the next),
+`npm run repo:size` reports it, and the sync
 refuses to commit past 900 MiB. See
 [DEPLOY.md](DEPLOY.md#the-capacity-ladder).
