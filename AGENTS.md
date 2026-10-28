@@ -240,6 +240,15 @@ network-derived values into a record's classification.
 180 MB. GitHub Free allows ~1 GB for the whole repository. If a change makes
 the dataset grow, add a retention rule rather than raising the budget.
 
+The tree is not the repository. `trackedRepoSize()` in `validate.ts` sums the
+files git tracks *now*; the number GitHub stores is the **history**, and it
+grows by every shard rewrite. A reset, an aborted rebase or a force-push can
+also leave packs behind that no ref reaches — this repository once sat on
+8.37 GiB of them while the reachable history was 107 MB — and `git gc
+--prune=now` reclaims that without touching a commit. `npm run repo:size`
+measures the stored side (and `--repack` what gc would reclaim); no workflow
+can shrink the remote, so treat `repo-size.yml` as an alarm.
+
 ### 10. Every record keeps its provenance
 
 `mergeById()` preserves `addedAt`, and preserves `source: "seed"` and
@@ -372,6 +381,7 @@ create non-fast-forward push failures.
 | Change the search behaviour | `scripts/lib/search.ts`, then `npm run data:index` |
 | Fix a wrong `kind` or `role` across the dataset | `scripts/lib/classify.ts`, then `npm run data:reclassify -- --apply` — it re-derives both from the records on disk, no network, and the roster ids in `.cache/` count as the virtual claim |
 | Add a UI filter | `src/lib/dataset.ts` (`filterItems`) + `src/App.vue` |
+| Check the repository's real size | `npm run repo:size` — the stored history, not the tree; `--repack` measures what `git gc` would reclaim |
 
 ## Running things
 
@@ -401,6 +411,7 @@ npm run data:bacharu -- --merge-only  # rebuild the snapshot from the page files
 npm run data:bacharu-import           # report what the roster adds; --apply to import the ids
 npm run data:ids                     # re-key handle ids to UC… ids
 npm run data:validate                # structure + budgets
+npm run repo:size                    # the stored history, not the tree
 npm run data:import-legacy           # migrate the old SQLite database
 ```
 
