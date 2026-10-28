@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-28T13:57:46.871Z",
-  "total": 72361,
+  "generatedAt": "2026-10-28T15:52:42.119Z",
+  "total": 72656,
   "regions": [
     {
       "code": "jp",
-      "channels": 9900,
+      "channels": 9932,
       "virtual": {
-        "channels": 9880,
+        "channels": 9912,
         "buckets": [
           "00",
           "01",
@@ -49,9 +49,9 @@
     },
     {
       "code": "cn",
-      "channels": 8771,
+      "channels": 8772,
       "virtual": {
-        "channels": 8770,
+        "channels": 8771,
         "buckets": [
           "00",
           "01",
@@ -80,9 +80,9 @@
     },
     {
       "code": "tw",
-      "channels": 4222,
+      "channels": 4249,
       "virtual": {
-        "channels": 4222,
+        "channels": 4249,
         "buckets": [
           "00",
           "01",
@@ -109,9 +109,9 @@
     },
     {
       "code": "hk",
-      "channels": 700,
+      "channels": 703,
       "virtual": {
-        "channels": 700,
+        "channels": 703,
         "buckets": [
           "00",
           "01",
@@ -138,9 +138,9 @@
     },
     {
       "code": "kr",
-      "channels": 353,
+      "channels": 369,
       "virtual": {
-        "channels": 352,
+        "channels": 368,
         "buckets": [
           "00",
           "01",
@@ -169,9 +169,9 @@
     },
     {
       "code": "en",
-      "channels": 37846,
+      "channels": 38099,
       "virtual": {
-        "channels": 37833,
+        "channels": 38086,
         "buckets": [
           "00",
           "01",
@@ -208,9 +208,9 @@
     },
     {
       "code": "id",
-      "channels": 1110,
+      "channels": 1127,
       "virtual": {
-        "channels": 1110,
+        "channels": 1127,
         "buckets": [
           "00",
           "01",
@@ -237,9 +237,9 @@
     },
     {
       "code": "my",
-      "channels": 616,
+      "channels": 623,
       "virtual": {
-        "channels": 615,
+        "channels": 622,
         "buckets": [
           "00",
           "01",
@@ -268,9 +268,9 @@
     },
     {
       "code": "sea",
-      "channels": 1298,
+      "channels": 1349,
       "virtual": {
-        "channels": 1298,
+        "channels": 1349,
         "buckets": [
           "00",
           "01",
@@ -297,9 +297,9 @@
     },
     {
       "code": "unknown",
-      "channels": 7545,
+      "channels": 7433,
       "virtual": {
-        "channels": 7543,
+        "channels": 7431,
         "buckets": [
           "00",
           "01",
