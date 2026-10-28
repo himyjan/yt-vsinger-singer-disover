@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-28T12:50:03.253Z",
+  "generatedAt": "2026-10-28T22:33:18.686Z",
   "items": [
     {
       "id": "193eInAo5TQ",
@@ -10,12 +10,12 @@
       "channelName": "Cassis Gummi",
       "channelKind": "virtual",
       "region": "en",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "en"
       ],
       "isAi": false,
-      "variant": "vtuber",
+      "variant": "female_vtuber",
       "title": "[Donut Panic] IT'S DEMO TIME (again)! [1999 Tokyo Building] [Lacey's flash games]+more",
       "description": null,
       "thumbnail": "https://i.ytimg.com/vi/193eInAo5TQ/hq720.jpg",
@@ -102,12 +102,12 @@
       "channelName": "Vestige Soul",
       "channelKind": "virtual",
       "region": "en",
-      "gender": "unknown",
+      "gender": "male",
       "languages": [
         "en"
       ],
       "isAi": false,
-      "variant": "vtuber",
+      "variant": "male_vtuber",
       "title": "They Said NOT to Open It… 【Seasonal Escape from Tarkov】 (Indie VTuber)",
       "description": null,
       "thumbnail": "https://i.ytimg.com/vi/2tPhv0rKl1E/hq720.jpg",
@@ -141,52 +141,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "4zMPe5YPGYY",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UC3NIbNL4KePRcV08tdUGROg",
-      "channelName": "PromeVT",
-      "channelKind": "virtual",
-      "region": "en",
-      "gender": "unknown",
-      "languages": [
-        "en"
-      ],
-      "isAi": false,
-      "variant": "unknown",
-      "title": "PromeVT Live Stream",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/4zMPe5YPGYY/hq720.jpg",
-      "publishedAt": "2026-10-28T05:38:36.215Z",
-      "scheduledStart": null,
-      "actualStart": "2026-10-28T05:38:36.215Z",
-      "actualEnd": null,
-      "duration": null,
-      "status": "live",
-      "category": "live",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UC3NIbNL4KePRcV08tdUGROg",
-          "name": "PromeVT",
-          "kind": "virtual",
-          "region": "en"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-28T05:38:36.215Z",
-      "updatedAt": "2026-10-28T05:38:36.215Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "bHThI5nHNO0",
       "platform": "youtube",
       "type": "live",
@@ -194,12 +148,12 @@
       "channelName": "Baion",
       "channelKind": "virtual",
       "region": "en",
-      "gender": "unknown",
+      "gender": "male",
       "languages": [
         "en"
       ],
       "isAi": false,
-      "variant": "vtuber",
+      "variant": "male_vtuber",
       "title": "TERROR DA VIDA REAL!  | Fears to Fathom: Scratch Creek",
       "description": null,
       "thumbnail": "https://i.ytimg.com/vi/bHThI5nHNO0/hq720.jpg",
@@ -574,12 +528,12 @@
       "channelName": "Punk Brock Ch.",
       "channelKind": "virtual",
       "region": "en",
-      "gender": "unknown",
+      "gender": "male",
       "languages": [
         "en"
       ],
       "isAi": false,
-      "variant": "vtuber",
+      "variant": "male_vtuber",
       "title": "[Schedule & Chat] Weekly Punkdates!",
       "description": null,
       "thumbnail": "https://i.ytimg.com/vi/r_p1xQ-Ne1g/hq720.jpg",
@@ -620,7 +574,7 @@
       "channelName": "Shiori Novella Ch. hololive",
       "channelKind": "virtual",
       "region": "en",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "en"
       ],
@@ -666,12 +620,12 @@
       "channelName": "Manori Umare Ch.",
       "channelKind": "virtual",
       "region": "en",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "en"
       ],
       "isAi": false,
-      "variant": "unknown",
+      "variant": "female_vtuber",
       "title": "【hololive Dreams】GRINDNG MY OSHI'S SONGS",
       "description": null,
       "thumbnail": "https://i.ytimg.com/vi/USBWWK_5PKQ/hq720.jpg",
@@ -701,6 +655,52 @@
       "source": "api",
       "addedAt": "2026-10-28T05:38:36.215Z",
       "updatedAt": "2026-10-28T05:38:36.215Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "xkRjJuhFMiI",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCkZJfJZ4h5Pk9ltUqz-WiQw",
+      "channelName": "Mellipop ch.",
+      "channelKind": "virtual",
+      "region": "en",
+      "gender": "female",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "【Schedule and chewb free chat!】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/xkRjJuhFMiI/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCkZJfJZ4h5Pk9ltUqz-WiQw",
+          "name": "Mellipop ch.",
+          "kind": "virtual",
+          "region": "en"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-28T22:33:18.686Z",
+      "updatedAt": "2026-10-28T22:33:18.686Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
