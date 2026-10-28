@@ -318,6 +318,22 @@ The workflows install the LFS client explicitly:
 - Retention rules keep the dataset bounded: 30 items per channel, 1095-day
   (three-year) age limit, live and upcoming items always kept.
 
+#### The limits that apply
+
+| Limit | Value | Enforced? |
+| --- | --- | --- |
+| repository on disk (`.git`) | 10 GB | recommended maximum |
+| a comfortable repository | 1 GB | recommendation |
+| a single push | 2 GB | **enforced** |
+| a single object | 100 MB | **enforced** (1 MB recommended) |
+| files in one diff | 300, or 1 MB of raw diff | the UI truncates the rest |
+| entries in one directory | 3,000 | recommendation |
+| pushes | 6 per minute | recommendation |
+
+The 900 MB gate is set by the top three: 1 GB is where clone and fetch start
+to hurt, the Pages site has its own 1 GB ceiling, and 2 GB is where a push is
+refused outright.
+
 #### The tree is not the repository
 
 `trackedRepoSize()` in `validate.ts` sums the files git tracks *now*.

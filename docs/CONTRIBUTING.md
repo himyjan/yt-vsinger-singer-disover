@@ -215,6 +215,10 @@ Ties break on recency.
   seen — `mergeById()` in `scripts/lib/io.ts` handles this.
 - **Preserve provenance.** `source: "seed"` and `source: "manual"` survive
   an API refresh.
+- **A `data/` commit is not reviewable in the web UI.** GitHub truncates a
+  diff over 300 files or 1 MB of raw diff, and a refresh touches more than
+  that. Review the shape instead: `git diff --stat`, the counts
+  `data:reclassify` prints, and `npm run data:validate`.
 - **`data/` history is squashed monthly.** A commit older than a month may
   vanish in a rewrite, so do not base work on `git log -p data/` alone — the
   records carry `addedAt`, `source`, the aliases and `verification`, which is

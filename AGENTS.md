@@ -237,8 +237,9 @@ network-derived values into a record's classification.
 ### 9. Never write a file over the size budget
 
 `scripts/lib/io.ts` throws when a file exceeds 8 MB, and `data/` is capped at
-180 MB. GitHub Free allows ~1 GB for the whole repository. If a change makes
-the dataset grow, add a retention rule rather than raising the budget.
+180 MB. GitHub recommends a repository under 1 GB, documents 10 GB of `.git`
+as its maximum, and enforces 2 GB per push and 100 MB per object. If a change
+makes the dataset grow, add a retention rule rather than raising the budget.
 
 The tree is not the repository. `trackedRepoSize()` in `validate.ts` sums the
 files git tracks *now*; the number GitHub stores is the **history**, and it
