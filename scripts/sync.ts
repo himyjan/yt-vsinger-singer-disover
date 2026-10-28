@@ -2765,7 +2765,7 @@ async function main(): Promise<void> {
 
     const liveLimit = args.limitLive ?? config.maxLiveChannelsPerRun;
     const liveTargets = channels
-      .filter((c) => c.id.startsWith("UC") && inShard(c.id, args))
+      .filter((c) => c.id.startsWith("UC"))
       .sort((a, b) =>
         (a.lastItemsFetchedAt ?? "").localeCompare(
           b.lastItemsFetchedAt ?? "",

@@ -5,7 +5,7 @@
   "maxItemsPerChannel": 25,
   "maxItemsPerChannelRetained": 30,
   "maxItemAgeDays": 1095,
-  "maxLiveChannelsPerRun": 5000,
+  "maxLiveChannelsPerRun": 50000,
   "maxChannelDetailsPerRun": 500,
   "maxTwitchResolutionsPerRun": 150,
   "detailsDelayMs": 700,
@@ -13,28 +13,117 @@
   "searchResultsPerKeyword": 25,
   "refreshLiveEveryRun": true,
   "searches": [
-    { "query": "VTuber 歌い手", "type": "channel", "region": "jp" },
-    { "query": "vsinger 歌い手", "type": "channel", "region": "jp" },
-    { "query": "ホロライブ 歌", "type": "channel", "region": "jp" },
-    { "query": "にじさんじ 歌い手", "type": "channel", "region": "jp" },
-    { "query": "VOCALOID 歌い手", "type": "channel", "region": "jp" },
-    { "query": "vtuber music video original song", "type": "channel", "region": "en" },
-    { "query": "vsinger cover song", "type": "channel", "region": "en" },
-    { "query": "vtuber singer", "type": "channel", "region": "en" },
-    { "query": "hololive EN singer", "type": "channel", "region": "en" },
-    { "query": "nijisanji EN vsinger", "type": "channel", "region": "en" },
-    { "query": "vtuber indonesia nyanyi", "type": "channel", "region": "id" },
-    { "query": "idvtuber singer", "type": "channel", "region": "id" },
-    { "query": "虚拟主播 唱歌", "type": "channel", "region": "cn" },
-    { "query": "中文 虚拟歌姬", "type": "channel", "region": "cn" },
-    { "query": "台灣 VTuber 唱歌", "type": "channel", "region": "tw" },
-    { "query": "VTuber 歌枠", "type": "channel", "region": "jp" },
-
-    { "query": "VTuber 歌ってみた", "type": "video", "region": "jp" },
-    { "query": "vsinger cover", "type": "video", "region": "en" },
-    { "query": "VTuber MV", "type": "video", "region": "jp" },
-    { "query": "vtuber live singing", "type": "video", "region": "en", "eventType": "live" },
-    { "query": "VTuber 歌枠 live", "type": "video", "region": "jp", "eventType": "live" },
-    { "query": "VTuber 歌い定期", "type": "video", "region": "jp" }
+    {
+      "query": "VTuber \u6b4c\u3044\u624b",
+      "type": "channel",
+      "region": "jp"
+    },
+    {
+      "query": "vsinger \u6b4c\u3044\u624b",
+      "type": "channel",
+      "region": "jp"
+    },
+    {
+      "query": "\u30db\u30ed\u30e9\u30a4\u30d6 \u6b4c",
+      "type": "channel",
+      "region": "jp"
+    },
+    {
+      "query": "\u306b\u3058\u3055\u3093\u3058 \u6b4c\u3044\u624b",
+      "type": "channel",
+      "region": "jp"
+    },
+    {
+      "query": "VOCALOID \u6b4c\u3044\u624b",
+      "type": "channel",
+      "region": "jp"
+    },
+    {
+      "query": "vtuber music video original song",
+      "type": "channel",
+      "region": "en"
+    },
+    {
+      "query": "vsinger cover song",
+      "type": "channel",
+      "region": "en"
+    },
+    {
+      "query": "vtuber singer",
+      "type": "channel",
+      "region": "en"
+    },
+    {
+      "query": "hololive EN singer",
+      "type": "channel",
+      "region": "en"
+    },
+    {
+      "query": "nijisanji EN vsinger",
+      "type": "channel",
+      "region": "en"
+    },
+    {
+      "query": "vtuber indonesia nyanyi",
+      "type": "channel",
+      "region": "id"
+    },
+    {
+      "query": "idvtuber singer",
+      "type": "channel",
+      "region": "id"
+    },
+    {
+      "query": "\u865a\u62df\u4e3b\u64ad \u5531\u6b4c",
+      "type": "channel",
+      "region": "cn"
+    },
+    {
+      "query": "\u4e2d\u6587 \u865a\u62df\u6b4c\u59ec",
+      "type": "channel",
+      "region": "cn"
+    },
+    {
+      "query": "\u53f0\u7063 VTuber \u5531\u6b4c",
+      "type": "channel",
+      "region": "tw"
+    },
+    {
+      "query": "VTuber \u6b4c\u67a0",
+      "type": "channel",
+      "region": "jp"
+    },
+    {
+      "query": "VTuber \u6b4c\u3063\u3066\u307f\u305f",
+      "type": "video",
+      "region": "jp"
+    },
+    {
+      "query": "vsinger cover",
+      "type": "video",
+      "region": "en"
+    },
+    {
+      "query": "VTuber MV",
+      "type": "video",
+      "region": "jp"
+    },
+    {
+      "query": "vtuber live singing",
+      "type": "video",
+      "region": "en",
+      "eventType": "live"
+    },
+    {
+      "query": "VTuber \u6b4c\u67a0 live",
+      "type": "video",
+      "region": "jp",
+      "eventType": "live"
+    },
+    {
+      "query": "VTuber \u6b4c\u3044\u5b9a\u671f",
+      "type": "video",
+      "region": "jp"
+    }
   ]
 }
