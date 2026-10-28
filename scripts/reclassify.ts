@@ -32,7 +32,12 @@
  */
 
 import fs from "node:fs";
-import { readAllChannelRecords, writeChannelShards } from "./lib/dataset";
+import {
+  readAllChannelRecords,
+  rebuildChannelsManifest,
+  refreshManifestChannelCounts,
+  writeChannelShards,
+} from "./lib/dataset";
 import { classifyChannel } from "./lib/classify";
 import { primaryPlatformOf } from "./lib/platforms";
 import type { BacharuVtuber } from "./lib/bacharu";
@@ -383,11 +388,26 @@ function main(): void {
     console.log("\nNothing was written. Re-run with --apply.");
     return;
   }
+  const now = new Date().toISOString();
+  const result = changed
+    ? writeChannelShards(rows, now)
+    : { records: rows.length, files: 0 };
+  /**
+   * A record that changed `kind` or `region` moved to another shard, and one
+   * that changed `region` may have emptied the last shard of the old one.
+   * `writeChannelShards()` writes records only — the shard **map** is what
+   * tells the browser which files exist — so rebuilding it is part of writing
+   * the dataset, not a later step.
+   *
+   * It runs even when nothing changed: a previous run, or a producer that
+   * wrote records without the map, can leave the manifest stale on its own.
+   */
+  rebuildChannelsManifest(rows, now);
+  refreshManifestChannelCounts(rows, now);
   if (!changed) {
-    console.log("\nNothing to write.");
+    console.log("\nNo record changed; the shard map and counts were rebuilt.");
     return;
   }
-  const result = writeChannelShards(rows, new Date().toISOString());
   console.log(`\nwrote ${result.records} record(s) across ${result.files} shard(s).`);
   console.log("Run `npm run data:index` and `npm run data:validate` next.");
 }
