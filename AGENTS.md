@@ -166,6 +166,21 @@ A `@handle` and a Twitch login are **names**: unique today, renameable
 tomorrow, and a record keyed by one breaks the day the performer changes it.
 They live in `handle`, beside the id, and are refreshed from the profile.
 
+**A record that has its own YouTube channel is keyed by it.**
+`canonicalizeChannelIds()` in `scripts/lib/dedupe.ts` re-keys a record stored as
+`bilibili:123`, `vdb:<uuid>` or `twitter:<handle>` when its `platforms[]`
+already names a `UC…` channel, merges the duplicates that creates, and takes
+its items with it — this is a YouTube-first tracker, and one performer must not
+be two records under two ids.
+
+The test is deliberately conservative, because a wrong link would make the
+record *be* someone else's channel. The link must not be a clip, fan or
+re-upload account (`detectClipAccount()`, `isFanAccountName()` — those publish
+the performer, they are not the performer), and the YouTube channel's name must
+be one of the record's own names or aliases. A link that cannot be confirmed is
+left alone: keeping a roster id costs a duplicate, while a wrong re-key
+publishes someone else's channel under the performer's name.
+
 `scripts/lib/youtubei.ts` returns the real id from the response — not the one
 that was asked for — because that is the only one that can be trusted.
 
@@ -404,7 +419,7 @@ create non-fast-forward push failures.
 | Suggest channels for the dataset | Subs view → **＋ Suggest** / **Suggest all** (`data/suggestions.json`), then **Add to dataset** |
 | Fix an outdated channel name | the platform corrects it; `npm run data:details -- --name-only` to apply it now |
 | Fix a Bilibili avatar (mixed content / 403) | `scripts/lib/platforms/bilibili.ts` (`absoluteUrl`), `src/lib/image.ts`, and `referrerpolicy="no-referrer"` on `<img>` |
-| A record keyed by a handle | `npm run data:ids` — resolves it to the `UC…` id |
+| A record keyed by a handle, or by a `bilibili:` / roster id although the performer has their own YouTube channel | `npm run data:ids` — re-keys to the `UC…` id offline, then resolves the handle ids over the network |
 | Fill the missing avatars | `npm run data:details -- --limit 2000` |
 | Fill the missing follower counts | `npm run data:details -- --counts-only --limit 500` |
 | A Bilibili-only record with no YouTube/Twitch link | `npm run data:links -- --limit 200` (add `--platform bilibili --shard 2/4` to slice it) |
@@ -456,7 +471,7 @@ npm run data:vtubie-import -- --apply # add the harvested YouTube channels that 
 npm run data:bacharu                  # the bacharu roster → .cache/bacharu-vtubers.json (JSON, resumable)
 npm run data:bacharu -- --merge-only  # rebuild the snapshot from the page files
 npm run data:bacharu-import           # report what the roster adds; --apply to import the ids
-npm run data:ids                     # re-key handle ids to UC… ids
+npm run data:ids                     # re-key handle / bilibili / roster ids to the UC… id
 npm run data:validate                # structure + budgets
 npm run repo:size                    # the stored history, not the tree
 ```

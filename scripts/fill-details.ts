@@ -56,9 +56,11 @@ import {
   bucketFor,
   layout,
   readAllChannelRecords,
+  readAllItems,
   rebuildChannelsManifest,
   refreshManifestChannelCounts,
   writeChannelShards,
+  writeItemShards,
 } from "./lib/dataset";
 import { InnerTubeSource } from "./lib/youtubei";
 import { TwitchGqlSource } from "./lib/twitch-gql";
@@ -69,7 +71,12 @@ import {
   normalizeChannelId,
   primaryPlatformOf,
 } from "./lib/platforms";
-import { dedupePlatformLinks, mergeChannels, REGION_TRUST } from "./lib/dedupe";
+import {
+  canonicalizeChannelIds,
+  dedupePlatformLinks,
+  mergeChannels,
+  REGION_TRUST,
+} from "./lib/dedupe";
 import {
   classifyChannel,
   detectActivity,
@@ -703,6 +710,31 @@ function applyProfile(
   applyOfficialArtist(channel, profile.officialArtist, new Date().toISOString());
 }
 
+/**
+ * Re-points items at their channel's new id.
+ *
+ * An item carries `channelId`, and a record re-keyed from a roster id or a
+ * Bilibili id to its YouTube channel would otherwise leave its videos
+ * pointing at an id nothing has: the Songs view joins on it, so they would
+ * quietly disappear.
+ */
+function remapItemChannelIds(
+  renamed: { from: string; to: string }[],
+  now: string,
+): number {
+  const remap = new Map(renamed.map((entry) => [entry.from, entry.to]));
+  const items = readAllItems();
+  let changed = 0;
+  for (const item of items) {
+    const to = remap.get(item.channelId);
+    if (!to) continue;
+    item.channelId = to;
+    changed++;
+  }
+  if (changed) writeItemShards(items, now);
+  return changed;
+}
+
 /* -------------------------------------------------------------------------- */
 /* Main                                                                       */
 /* -------------------------------------------------------------------------- */
@@ -722,7 +754,35 @@ async function main(): Promise<void> {
   );
 
   log(`reading the dataset…`);
-  const all = readAllChannelRecords();
+  /**
+   * Identity first, before a single profile is fetched.
+   *
+   * `canonicalizeChannelIds()` is the pass the sync runs at load: a tab in an
+   * id is stripped, records of one channel are merged, and a record that has
+   * its own YouTube channel is keyed by it rather than by a roster or a
+   * Bilibili id. Running it here means the profile fetched below is stored
+   * under the id the dataset actually keeps, instead of being written to an
+   * id that the next sync would re-key away.
+   */
+  const canonical = canonicalizeChannelIds(readAllChannelRecords());
+  const all = canonical.channels;
+  if (canonical.renamed.length) {
+    for (const { from, to } of canonical.renamed) log(`ids: ${from} → ${to}`);
+    if (canonical.merged) {
+      log(`ids: merged ${canonical.merged} duplicate record(s) with the same channel`);
+    }
+    if (!options.dryRun) {
+      const idsAt = new Date().toISOString();
+      const followed = remapItemChannelIds(canonical.renamed, idsAt);
+      const shards = writeChannelShards(all, idsAt);
+      rebuildChannelsManifest(all, idsAt);
+      refreshManifestChannelCounts(all, idsAt);
+      log(
+        `ids: ${canonical.renamed.length} record(s) re-keyed, ` +
+          `${followed} item(s) re-pointed · ${shards.files} shard(s) written`,
+      );
+    }
+  }
   log(`${all.length} channel(s) in the dataset`);
 
   /** Every record this run changed, by the id it had when it was read. */
