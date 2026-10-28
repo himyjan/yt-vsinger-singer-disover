@@ -250,7 +250,7 @@ measures the stored side (and `--repack` what gc would reclaim); no workflow
 can shrink the remote, so treat `repo-size.yml` as an alarm.
 
 **History is disposable; the tree is not.** A routine data commit costs about
-0.3 MiB of history and a catalogue-wide reclassify about 20 MiB, so the
+0.3 MiB of history and a catalogue-wide reclassify 20–30 MiB, so the
 repository is kept bounded in rungs, and each rung has a trigger:
 
 1. **monthly** — squash the `data/` history to one snapshot (`data-squash.yml`,

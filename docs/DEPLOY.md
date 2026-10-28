@@ -332,6 +332,7 @@ reaches. Measured on 2026-10-28, after the last of those were cleared:
 | the whole repository after 77 data commits | 107 MiB |
 | a routine data commit (median) | 0.3 MiB |
 | a bulk rewrite — `reclassify --apply` over the catalogue | 20 MiB |
+| the 10,254-record import plus that reclassify, together | 27 MiB |
 
 Two things follow. A snapshot is not what costs; the *number of them* is, and
 delta compression keeps each one cheap. And the expensive commit is the bulk
