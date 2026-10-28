@@ -462,6 +462,17 @@ Two things about it are easy to miss, and both were wrong for a long time:
   opened. Tracked cards use the committed dataset instead. The route is
   unauthenticated, local-only, and limited to two requests in flight.
 
+**Multi-platform live streaming.** The sync checks live/upcoming status for
+YouTube channels via the InnerTube Live tab, and for channels linked to
+CHZZK, KICK and SOOP via each platform's `live()` adapter. Non-singing VTubers
+are included — a VTuber who also streams on Twitch or goes live on CHZZK is
+caught regardless of `isSinging`. The live check covers all YouTube-keyed
+records in the catalogue (`maxLiveChannelsPerRun` default 50,000), not just
+the current shard, because live status is time-sensitive.
+
+Ended streams are retired to `past` on every run so the Live page stays
+current.
+
 ### The subscription export
 
 A person's subscription list is not in any public source, so the app grows the
@@ -753,6 +764,34 @@ Bacharu knows more than just the YouTube channel: each row carries the performer
 
 Both passes run under the run lock, re-read the dataset inside it, and write nothing when nothing changed.
 
+#### What bacharu has that this project does not
+
+Read from the site on 2026-10-28, one entry at a time, against the dataset.
+
+| bacharu | What it publishes | This project today | Plan |
+| --- | --- | --- | --- |
+| **109,828 performers** | the largest single roster | 72,691 channels across all sources | import the ids the gate admits (`data:bacharu-import --apply`) |
+| **every platform link** | Twitch, X, Instagram, TikTok, Bilibili, Niconico, KICK, CHZZK, SOOP, VK plus `web:` | `externals` for tracked records from `--links` | done — `--links --apply` |
+| **country / region** | `countries` + `nationality`, filed per performer | `region`, filled only where unknown | done — `--hints --apply` |
+| **debut date** | free text (`2022/07/03`, `June 18, 2022`, `YouTube: 2024/06/01`) | `debutDate` | done — `--hints --apply` parses it |
+| **gender** | `Female` / `Male` / free text | `gender`, filled only where unknown | done — `--hints --apply` maps `Female`→`female` |
+| **status** | `active` / `preparing` / `graduated` / `hidden` | `activity` | done — `--hints --apply` maps it |
+| **groups with current/former** | affiliation history per performer | `agency` + `affiliation` | done — `--agencies` fills empty agency |
+| **avatar on its own CDN** | `avatar`, `banner` as fallbacks | `avatar` from `data:details` | done — used until the profile pass overwrites |
+| **debut page** | lists everyone who debuted on a day | **no field** | not planned — roster trivia, not a tracker field |
+| **birthday** | `October 28`, per entry | **no field** | `birthday` (`MM-DD`) on `Channel`, then a `/birthday/` view |
+| **anniversary** | debut month + day, computed | `debutDate` is stored | an `/anniversary/` view over `debutDate` |
+| **model type** | `L2D`, `3D` | **no field** | not planned — profile trivia |
+| **fanbase name, hashtags** | prose lists per entry | **no field** | not planned — biography, not tracker data |
+| **follower counts** | Twitch, X subscriber counts per entry | `subscribers` / counts per platform link | done — the Twitch-keying import reads the follower count |
+
+#### The build plan
+
+1. **Harvest and import** — `data:bacharu` (one-off census, ~1,099 pages) and `data:bacharu-import` with the performer gate. `--apply` writes new YouTube-keyed channels with `rosterIds`, agency, activity, languages, debut and gender.
+2. **Dead-YouTube keying** — the Twitch-keying pass: rows whose `UC…` id YouTube no longer has (or never had) but who carry a Twitch login become records keyed by `twitch:<login>`, with the GQL profile supplying name, avatar and follower count.
+3. **Links and hints** -- `--links --apply` fills `externals` on tracked records; `--hints --apply` fills empty `region`, `debutDate` and `gender`.
+4. **The two missing UI fields** — `birthday` and `modelType` on `Channel`, then views over them.
+
 ### Rate limiting
 
 The free sources have no published quota, but they do push back. All three go
@@ -772,7 +811,7 @@ are not in the pipeline.
 
 | Source | Why not |
 | --- | --- |
-| [Virtual YouTuber Wiki](https://virtualyoutuber.fandom.com/) | The MediaWiki API works, and it is used by the debut discovery — but the roster is not wired in yet |
+| [Virtual YouTuber Wiki](https://virtualyoutuber.fandom.com/) | The MediaWiki API works, and it is wired in as a **debut discovery source** (`scripts/lib/debut-sources/fandom.ts`) — debut dates, graduation dates, YouTube handles, X handles and affiliations from `{{Character}}` infoboxes. The roster itself is not yet wired for direct channel import |
 | [AI VTuber DB](https://aivtuberdb.com) | Worth reading for the AI flag, but it publishes no machine-readable file |
 | [PVC.moe](https://pvc.moe) | The data is only in the client bundle |
 | [Streams Charts](https://streamscharts.com/vtubers) | Blocks automated requests |
@@ -808,7 +847,7 @@ are not measured here.
 | blocking JS + CSS | **125 KB** (116,014 B JS + 9,373 B CSS) | 282 KB (48,642 B JS + 233,943 B CSS), plus a 206 KB ad script | 276 KB | 385 KB | 165 KB | 32 KB of static HTML | 229 KB (131,307 B JS + 97,686 B CSS) + Google Fonts |
 | hashed asset cache | `immutable`, one year (Vercel) | no `Cache-Control`; ETag only | hashed | hashed | ten minutes, flat | ten minutes, flat | no `Cache-Control`, ETag only |
 | data access | committed JSON, no key | sitemap + one server-rendered page per entry, no key; the REST API is behind Cloudflare | API v2, `X-APIKEY` | same key | static JSON | static `list.json` | server-rendered HTML, no key |
-| inventory | **72,361 channels**, 1,749 items | 9,359 entries (905 V-Singer, 3,751 V-Streamer, 9,127 V-Tuber, 143 V-UP) | not published; `403` without a key | not published | 288 groups; performer list not published | 10,138 records | 672 channels (235 Twitch logins) |
+| inventory | **72,691 channels**, 1,803 items | 9,359 entries (905 V-Singer, 3,751 V-Streamer, 9,127 V-Tuber, 143 V-UP) | not published; `403` without a key | not published | 288 groups; performer list not published | 10,138 records | 672 channels (235 Twitch logins) |
 | platforms tracked | 9 with adapters | YouTube plus Twitch / X / Instagram / TikTok / Bilibili / Niconico links | YouTube (Twitch in Multiview only) | YouTube | YouTube, Twitch | Bilibili stats; ids for any | YouTube; Twitch as a directory |
 | regions | 10, aliases per locale | none — languages instead | language filters | — | TW, HK, MY | `cn`-centric | HK |
 | refresh | every 6 h | undocumented; `<lastmod>` allows incremental reads | undocumented | undocumented | ~30 min (its own timestamps) | ~5 min stats / <15 s live (its own claim) | undocumented; the state is edited, not measured |

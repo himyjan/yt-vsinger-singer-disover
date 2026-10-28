@@ -375,6 +375,23 @@ channel search, uploads or live-list endpoint. CI.ME therefore refreshes only
 known IDs when credentials are configured; it does not discover channels or
 media. The project does not offer CI.ME account linking or subscription import.
 
+### Multi-platform live streaming
+
+The sync checks live/upcoming status across platforms on every run:
+
+- **YouTube** — InnerTube channel Live tab (`liveStreams()`), checked for all
+  YouTube-keyed records (`maxLiveChannelsPerRun` default 50,000, not shard-limited).
+- **Twitch** — Twitch GQL profile's `live` field, checked during the details pass
+  for channels linked to Twitch.
+- **CHZZK** — `GET /service/v3/channels/{id}/live-detail`, checked for channels
+  linked to CHZZK.
+- **KICK** — `GET /api/v2/channels/{login}`, checked for channels linked to KICK.
+- **SOOP** — `main_broad_list_api.php` live list, matched against SOOP-linked channels.
+
+Ended streams are retired to `past` on every run so the Live page stays current.
+Non-singing VTubers are included — the live check is not gated on `isSinging`.
+
+
 ## Sync discovery coverage
 
 The scheduled and manually triggered sync runs the platform searches enabled

@@ -36,6 +36,7 @@ npm run data:discover       # new performers from vTubie (--source all: + the wi
 npm run data:bacharu        # the bacharu roster (109,828 rows) → .cache/
 npm run data:vtuberhk       # the Hong Kong directory → .cache/
 npm run data:hololist       # the HoloList directory (9,359 entries) → .cache/
+npm run data:import-suggestions  # import YouTube UC… ids from data/suggestions.json
 ```
 
 `npm run data:all` does the first three.

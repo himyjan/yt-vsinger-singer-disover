@@ -465,6 +465,7 @@ create non-fast-forward push failures.
 | Add VTubers from the HoloList directory | `npm run data:hololist` (9,359 entries through the sitemaps, resumable and incremental on `<lastmod>`) then `npm run data:hololist-import -- --apply`; the site publishes an `@handle`, never a `UC…` id, so the importer resolves it through InnerTube and caches the answer in `.cache/hololist-resolved.json`. The roster supplies the agency, the languages, the debut date, the gender and the `Retired` state; the platform still owns the name |
 | A record is missing the performer's Twitch / X / Instagram / TikTok / Bilibili / Niconico account | `npm run data:hololist-import -- --links --apply` fills `externals` from the entry's `#links` section for records the roster knows by handle; nothing already on the record is overwritten |
 | A record is missing its social links, debut or region | `npm run data:bacharu-import -- --links --apply` attaches social accounts from bacharu's `social`/`links` to tracked records; `--hints --apply` fills empty `region`, `debutDate` and `gender` from the roster's country, debut and gender — only where `classifyChannel()` left them unknown |
+| Live/premiere streams across platforms | `npm run data:sync` checks YouTube via InnerTube Live tab (all channels, 50k limit), Twitch via GQL profile, CHZZK/KICK/SOOP via each platform's `live()` adapter. Ended streams are retired to `past`; non-singing VTubers included |
 | Change the search behaviour | `scripts/lib/search.ts`, then `npm run data:index` |
 | Fix a wrong `kind` or `role` across the dataset | `scripts/lib/classify.ts`, then `npm run data:reclassify -- --apply` — it re-derives both from the records on disk, no network, and the roster ids in `.cache/` count as the virtual claim |
 | Add a UI filter | `src/lib/dataset.ts` (`filterItems`) + `src/App.vue` |
@@ -511,6 +512,8 @@ npm run data:bacharu-import -- --apply --agencies              # + the agency it
 npm run data:bacharu-import -- --apply --retry-dead            # retry ids a recent run could not resolve
 npm run data:bacharu-import -- --links --apply                  # + attach social links to tracked records
 npm run data:bacharu-import -- --hints --apply                  # + fill region, debutDate and gender on tracked records
+npm run data:import-suggestions        # import YouTube UC… ids from data/suggestions.json
+npm run data:import-suggestions -- --apply # import and clear resolved ids from the queue
 npm run data:vtuberhk                 # vtuber.hk roster + /data/channels.json + live/archive (5 requests)
 npm run data:vtuberhk-import          # report the HK channels the directory lists; --apply to add them
 npm run data:vtuberhk-import -- --stats --apply  # + fill the view/video/subscriber counts it is missing

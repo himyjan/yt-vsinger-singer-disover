@@ -53,6 +53,8 @@ npm run data:bacharu-import -- --agencies               # empty agency ← the r
 npm run data:bacharu-import -- --retry-dead             # retry ids a recent run could not resolve
 npm run data:bacharu-import -- --links --apply           # + social links on tracked records
 npm run data:bacharu-import -- --hints --apply           # + region, debutDate, gender on tracked records
+npm run data:import-suggestions        # import YouTube UC… ids from data/suggestions.json
+npm run data:import-suggestions -- --apply # import and clear resolved ids from the queue
 npm run data:vtuberhk                    # 672 HK channels + /data/*.json (5 requests)
 npm run data:vtuberhk-import -- --stats --apply  # + the counts the records lack
 npm run data:hololist                    # 9,359 entries through the sitemaps → .cache/
@@ -114,10 +116,13 @@ new roster records can be added.
 6. **Enrich** — Twitch, AiSList, and the other platform adapters.
 7. **Fetch items** — InnerTube uploads; `playlistItems.list` + `videos.list`
    as fallback.
-8. **Fetch live** — the InnerTube channel Live tab. A successful empty check
-   retires the stale live item to `past`; a failed check (`null`) changes
-   nothing. The Data API optionally enriches discovered broadcasts with exact
-   times and viewer counts.
+8. **Fetch live** — InnerTube channel Live tab (all YouTube-keyed records,
+   50k limit per run, not shard-limited), Twitch via GQL profile `live` field,
+   CHZZK/KICK/SOOP via each platform's `live()` adapter. A successful empty
+   check retires the stale live item to `past`; a failed check changes nothing.
+   Ended streams are retired on every run; non-singing VTubers are included.
+   The Data API optionally enriches discovered broadcasts with exact times and
+   viewer counts.
 9. **Backfill durations** — `videos.list` for records that have no duration.
 10. **Enrich songs** — the VTuber Music Dataset overrides the heuristic song
    extraction.
