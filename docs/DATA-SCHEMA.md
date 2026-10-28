@@ -939,7 +939,7 @@ Enforced by `scripts/lib/io.ts` (on write) and `scripts/validate.ts` (in CI).
 | Budget | Value | Why |
 | --- | --- | --- |
 | `maxFileBytes` | 8 MB | No single file gets big enough to slow the app down |
-| `maxDataBytes` | 180 MB | Comfortably inside the 1 GB repository size GitHub recommends |
+| `maxDataBytes` | 180 MB | Inside the 1 GB GitHub Pages ceiling the published copy must fit, and well inside the repository's own |
 | `maxSearchPackBytes` | 4 MB | One search pack. Every pack is downloaded and parsed by the browser, so the ceiling is what a phone holds, not what git stores |
 | `maxLfsBytes` | 2 GB | GitHub's LFS per-file ceiling |
 
