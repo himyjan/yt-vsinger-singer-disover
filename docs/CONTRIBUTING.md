@@ -215,6 +215,10 @@ Ties break on recency.
   seen — `mergeById()` in `scripts/lib/io.ts` handles this.
 - **Preserve provenance.** `source: "seed"` and `source: "manual"` survive
   an API refresh.
+- **`data/` history is squashed monthly.** A commit older than a month may
+  vanish in a rewrite, so do not base work on `git log -p data/` alone — the
+  records carry `addedAt`, `source`, the aliases and `verification`, which is
+  what a commit would have told you. The tree itself is never lost.
 
 ## Pull requests
 

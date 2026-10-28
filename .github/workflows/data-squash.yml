@@ -1,0 +1,119 @@
+name: Squash the data history
+
+# Replaces the history of `data/` with a single snapshot commit and keeps the
+# code history. This is the monthly rung of the capacity ladder in
+# docs/DEPLOY.md.
+#
+# Why it exists: a snapshot of `data/` packs to about 24 MiB and a routine
+# commit adds about 0.3 MiB, so the history — not the tree — is what makes the
+# repository grow. One snapshot a month keeps it near 32 MiB with a month of
+# diffs still reviewable.
+#
+# Manual only, on purpose. A rewrite changes every commit sha, which
+# invalidates every clone, every fork and every open pull request. That is a
+# decision a person makes, not a cron. The typed confirmation is there so a
+# stray dispatch cannot do it either.
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Type "squash" to rewrite the history'
+        required: true
+        default: ""
+      push:
+        description: "Push the rewritten branch (false = rewrite and validate only)"
+        type: boolean
+        required: false
+        default: false
+
+concurrency:
+  group: dataset-writer-${{ github.repository }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  squash:
+    name: Squash data/ to one snapshot
+    if: inputs.confirm == 'squash'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          lfs: true
+
+      - name: Remember the tip
+        id: tip
+        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          cache: npm
+
+      # filter-repo deletes the working tree along with the history, so keep
+      # the one thing that must survive it.
+      - name: Keep the current tree
+        run: |
+          mkdir -p "$RUNNER_TEMP/keep"
+          cp -a data "$RUNNER_TEMP/keep/data"
+
+      - name: Rewrite the data history away
+        run: |
+          # Ubuntu 24.04's python is externally managed; older pip rejects the
+          # flag, so try both spellings. The script lands in ~/.local/bin.
+          python3 -m pip install --user --quiet --break-system-packages git-filter-repo \
+            || python3 -m pip install --user --quiet git-filter-repo
+          "$HOME/.local/bin/git-filter-repo" --path data --invert-paths --force
+
+      - name: Re-add it as one snapshot
+        run: |
+          rm -rf data
+          cp -a "$RUNNER_TEMP/keep/data" data
+          git add data
+          git -c user.name="github-actions[bot]" \
+              -c user.email="github-actions[bot]@users.noreply.github.com" \
+              commit -m "data: snapshot $(date -u +%F)"
+          echo "data commits now: $(git log --oneline -- data | wc -l)"
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      # The tree must be byte-for-byte as valid as it was: a rewrite is only
+      # allowed to remove history.
+      - name: Validate the rewritten tree
+        run: npm run data:validate
+
+      - name: Report
+        run: |
+          {
+            echo "## Data history squashed"
+            echo
+            echo "| | |"
+            echo "| --- | --- |"
+            echo "| previous tip | \`${{ steps.tip.outputs.sha }}\` |"
+            echo "| data commits | $(git log --oneline -- data | wc -l) |"
+            echo "| history size | $(git count-objects -vH | awk -F': ' '/size-pack/{print $2 " KiB"}') |"
+            echo
+            echo "GitHub prunes the old objects on its own schedule; a fresh clone is the honest measurement."
+          } >> "$GITHUB_STEP_SUMMARY"
+          git count-objects -vH
+
+      - name: Push
+        if: inputs.push
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # filter-repo removes `origin` so a rewritten history cannot be
+          # pushed by accident; put it back deliberately, and lease the exact
+          # commit we started from so a concurrent sync cannot be overwritten.
+          git remote add origin "https://x-access-token:${TOKEN}@github.com/${{ github.repository }}.git"
+          git push --force-with-lease=main:${{ steps.tip.outputs.sha }} origin HEAD:main
+          git remote remove origin

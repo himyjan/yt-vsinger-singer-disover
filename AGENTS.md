@@ -249,6 +249,20 @@ also leave packs behind that no ref reaches — this repository once sat on
 measures the stored side (and `--repack` what gc would reclaim); no workflow
 can shrink the remote, so treat `repo-size.yml` as an alarm.
 
+**History is disposable; the tree is not.** A routine data commit costs about
+0.3 MiB of history and a catalogue-wide reclassify about 20 MiB, so the
+repository is kept bounded in rungs, and each rung has a trigger:
+
+1. **monthly** — squash the `data/` history to one snapshot (`data-squash.yml`,
+   or the procedure in `docs/DEPLOY.md`); this leaves ~32 MiB and one month of
+   diffs;
+2. **when a squash is no longer enough** (still above 700 MB afterwards, or two
+   squashes inside six months) — split the catalogue into **volumes**, where
+   `volumeOf(id)` is a pure function of the id and a channel lives in exactly
+   one volume;
+3. **never** — raise a budget to buy time, or let a run push past the
+   `repo:size --max-mb 900` gate in the sync.
+
 ### 10. Every record keeps its provenance
 
 `mergeById()` preserves `addedAt`, and preserves `source: "seed"` and
@@ -382,6 +396,7 @@ create non-fast-forward push failures.
 | Fix a wrong `kind` or `role` across the dataset | `scripts/lib/classify.ts`, then `npm run data:reclassify -- --apply` — it re-derives both from the records on disk, no network, and the roster ids in `.cache/` count as the virtual claim |
 | Add a UI filter | `src/lib/dataset.ts` (`filterItems`) + `src/App.vue` |
 | Check the repository's real size | `npm run repo:size` — the stored history, not the tree; `--repack` measures what `git gc` would reclaim |
+| The repository is approaching 1 GB | squash first (`data-squash.yml`, monthly), split into volumes only if a squash stops being enough — `docs/DEPLOY.md` → *The capacity ladder* |
 
 ## Running things
 

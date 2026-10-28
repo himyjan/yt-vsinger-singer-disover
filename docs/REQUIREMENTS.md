@@ -708,7 +708,7 @@ for discovery/profile refresh do not by themselves provide account linking.
 - `[x]` Everything runs with plain Node — **no native modules in the CI path**
       (`better-sqlite3` is an `optionalDependency`; only the local migration
       script uses it).
-- `[x] `npm run data:validate` fails the build on a malformed, oversized or
+- `[x]` `npm run data:validate` fails the build on a malformed, oversized or
       inconsistent dataset.
 - `[x]` The quota state is cached between workflow runs so several runs a day
       can never exceed the daily allowance.
@@ -717,6 +717,14 @@ for discovery/profile refresh do not by themselves provide account linking.
 
 GitHub Free allows ~1 GB of repository content (hard limit 2 GB) and a 2 GB
 maximum for a single Git LFS file.
+
+- `[x]` The **tree** is budgeted (8 MB per file, 180 MB for `data/`); the
+      **history** is bounded by policy — a monthly squash to one snapshot,
+      reported by `npm run repo:size`, and a sync that refuses to commit past
+      900 MB.
+- `[x]` When a squash is no longer enough the catalogue splits into
+      **volumes**: `volumeOf(id)` is a pure function of the channel id and a
+      channel lives in exactly one volume, which `data:validate` checks.
 
 - `[x]` A channel is stored **once**, in `virtual/` or `real/` — the
       dataset of its kind. The scope switch is served without downloading the
