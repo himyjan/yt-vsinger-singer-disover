@@ -725,8 +725,11 @@ object** (1 MB is the recommended object size). Git LFS caps a single file at
       reported by `npm run repo:size`, and a sync that refuses to commit past
       900 MB.
 - `[x]` When a squash is no longer enough the catalogue splits into
-      **volumes**: `volumeOf(id)` is a pure function of the channel id and a
-      channel lives in exactly one volume, which `data:validate` checks.
+      **volumes**: `volumeOf(id)` (`scripts/lib/volume.ts`, rendezvous
+      hashing) is a pure function of the channel id, and a channel lives in
+      exactly one volume — planned by `npm run data:volumes -- --count N` and
+      proved by `--verify`, which fails on a duplicate, an omission or a
+      record in the wrong volume.
 
 - `[x]` A channel is stored **once**, in `virtual/` or `real/` — the
       dataset of its kind. The scope switch is served without downloading the

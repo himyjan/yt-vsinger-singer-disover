@@ -48,12 +48,13 @@ scripts/
 ├── discover.ts        discover new performers into data/identities.json
 ├── validate.ts        CI gate
 ├── verify.ts          verify classifications with web-search grounding
+├── split-volumes.ts   plan, write and verify the split into volumes
 ├── import-legacy-db.ts  one-off SQLite migration
 ├── prepare-public.ts  copy data/ into public/ for the build
 └── lib/               types, youtube, twitch, platforms, classify, regions,
                        identity, discovery-evidence, debut-sources,
                        promote-candidates, search, link-discovery, shard,
-                       aislist, music-dataset, seeds, dataset, io
+                       volume, aislist, music-dataset, seeds, dataset, io
 ```
 
 ### The web app (`src/`)
@@ -272,6 +273,12 @@ site and fails the build above the ceiling. A 7.5 GB catalogue is ten volumes
 of ~750 MB, not one repository of 7.5 GB — see `docs/DEPLOY.md` →
 *What actually binds*.
 
+The split itself is not a rewrite: `volumeOf(id)` in `scripts/lib/volume.ts` is
+rendezvous hashing, so a channel lives in exactly one volume and adding a
+volume moves about `1/(N+1)` of the catalogue. `npm run data:volumes` plans it
+into `.volumes/` (git-ignored) and `--verify` proves nothing was duplicated or
+lost; taking it live is one repository per volume, by hand.
+
 ### 10. Every record keeps its provenance
 
 `mergeById()` preserves `addedAt`, and preserves `source: "seed"` and
@@ -406,6 +413,7 @@ create non-fast-forward push failures.
 | Add a UI filter | `src/lib/dataset.ts` (`filterItems`) + `src/App.vue` |
 | Check the repository's real size | `npm run repo:size` — the stored history, not the tree; `--repack` measures what `git gc` would reclaim |
 | The repository is approaching 1 GB | squash first (`data-squash.yml`, monthly), split into volumes only if a squash stops being enough — `docs/DEPLOY.md` → *The capacity ladder* |
+| Plan or check the split into volumes | `npm run data:volumes -- --dry-run`, then `--count N`, then `--verify .volumes` — `scripts/lib/volume.ts` holds `volumeOf()` |
 
 ## Running things
 
@@ -420,6 +428,10 @@ npm run data:import-playlist -- "playlist.docx" --dry-run # preview a DOCX impor
 npm run data:verify                   # verify classifications with search grounding
 npm run data:index                   # rebuild the search index
 npm run data:reclassify              # re-derive kind/role from disk; --apply to write
+npm run data:volumes -- --dry-run    # plan the split into volumes, write nothing
+npm run data:volumes -- --count 4    # write .volumes/vol-0 … vol-3 (git-ignored)
+npm run data:volumes -- --verify .volumes  # prove the partition holds
+npm run data:volumes -- --self-test  # check volumeOf() is stable and balanced
 npm run data:details -- --limit 2000 # fill the missing avatars
 npm run data:details -- --counts-only --limit 500 # fill the hidden follower counts
 npm run data:details -- --name-only  # correct the names and the aliases

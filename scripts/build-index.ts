@@ -22,7 +22,7 @@ import {
   writeJson,
   writeJsonIfChanged,
 } from "./lib/io";
-import { layout, readAllChannelRecords } from "./lib/dataset";
+import { layoutFor, readAllChannelRecords } from "./lib/dataset";
 import { primaryPlatformOf } from "./lib/platforms";
 import { ALL_REGIONS, SCHEMA_VERSION } from "./lib/types";
 import type {
@@ -177,15 +177,16 @@ export function buildPack(
  * app has started, and a record that is not in a pack is not searchable —
  * the list would show the channel while the search box did not.
  */
-export function buildSearchIndex(): void {
+export function buildSearchIndex(root: string = DATA_DIR): void {
   const now = new Date().toISOString();
+  const l = layoutFor(root);
 
   // Full channel records live in the kind datasets, sharded by region; the
   // index file only holds lightweight summaries.
-  const channels: Channel[] = readAllChannelRecords();
+  const channels: Channel[] = readAllChannelRecords(root);
 
   const items: Item[] = [];
-  const itemsRoot = path.join(DATA_DIR, "items");
+  const itemsRoot = path.join(root, "items");
   if (fs.existsSync(itemsRoot)) {
     for (const region of fs.readdirSync(itemsRoot)) {
       const dir = path.join(itemsRoot, region);
@@ -244,7 +245,7 @@ export function buildSearchIndex(): void {
   }
   for (const i of items) push(i.region, itemRecord(i));
 
-  const searchDir = path.join(DATA_DIR, "search");
+  const searchDir = path.join(root, "search");
   ensureDir(searchDir);
 
   const keep = new Set<string>();
@@ -278,7 +279,7 @@ export function buildSearchIndex(): void {
       const file = shard === 0 ? `${region}.json` : `${region}.${shard}.json`;
       const pack = buildPack(region, slice, now, aliasText);
       keep.add(file);
-      const target = layout.searchRegion(region, shard);
+      const target = l.searchRegion(region, shard);
       writeJsonIfChanged(target, pack);
       const bytes = fs.statSync(target).size;
       meta.push({ code: region, shard, entries: pack.count, bytes });
@@ -293,7 +294,7 @@ export function buildSearchIndex(): void {
     fs.rmSync(path.join(searchDir, file), { force: true });
   }
 
-  writeJson(layout.searchManifest, {
+  writeJson(l.searchManifest, {
     schemaVersion: SCHEMA_VERSION,
     generatedAt: now,
     regions: meta,
@@ -321,4 +322,8 @@ const invokedDirectly =
   process.argv[1] !== undefined &&
   path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
 
-if (invokedDirectly) buildSearchIndex();
+if (invokedDirectly) {
+  const rootFlag = process.argv.indexOf("--root");
+  const root = rootFlag >= 0 ? process.argv[rootFlag + 1] : DATA_DIR;
+  buildSearchIndex(root);
+}

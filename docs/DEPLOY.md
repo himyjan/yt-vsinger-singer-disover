@@ -445,25 +445,49 @@ One rule makes it safe:
 > `volumeOf(id)` is a pure function of the channel id, and a channel lives in
 > exactly one volume.
 
-`shardOf()` in `scripts/lib/shard.ts` already is this function for the
-rotation. A volume uses rendezvous hashing — `argmax hash(id, i)` — rather
-than `hash % N`, so adding a volume moves about `1/(N+1)` of the records and
-never moves one between the volumes that already exist.
+`shardOf()` in `scripts/lib/shard.ts` is that function for the rotation;
+`volumeOf()` in `scripts/lib/volume.ts` is the one for the split. It uses
+rendezvous hashing — `argmax hash(id, i)` — rather than `hash % N`, because
+`% N` remaps about 80 % of the catalogue when a fourth volume becomes a fifth.
+Rendezvous moves about `1/(N+1)`, and never moves a record between the volumes
+that already exist.
 
 A volume is **not** a rotation. An old volume keeps receiving updates — a
 rename, an avatar, a live status — for the channels it owns, for as long as
 the project runs. What it never receives is a channel that belongs to another
-volume. That is the invariant `data:validate` has to hold:
+volume.
 
-- every id appears once across all volumes (`validate.ts` already fails on a
-  duplicate id inside one tree);
-- the volume holding a record is the one `volumeOf(id)` names;
-- every declared volume is present and its counts match its manifest.
+**Planning a split** writes to `.volumes/` (git-ignored) and never touches
+`data/`:
 
-Splitting costs more than it saves until the ladder reaches it: N origins to
-fetch from, N workflows, the API quota split N ways, and every global file —
-`items/live.json`, the counts in `manifest.json` — becoming per-volume and
-merged by the client.
+```bash
+npm run data:volumes -- --dry-run        # counts, sizes, and the cost of one more volume
+npm run data:volumes -- --count 4        # write .volumes/vol-0 … vol-3
+npm run data:volumes -- --count auto     # the smallest split whose largest volume fits --budget-mb (700)
+npm run data:volumes -- --count 4 --index # …and build each volume's search packs
+npm run data:volumes -- --verify .volumes # prove the partition holds
+npm run data:volumes -- --self-test       # check volumeOf() itself
+```
+
+Each volume directory is a complete dataset: `channels/<kind>/<region>/`,
+`channels/manifest.json`, `items/` (partitioned by `volumeOf(item.channelId)`,
+so a video is in exactly one volume too), its own `manifest.json` with its own
+counts, `volumes.json` naming the split, and `overrides.json` — curation is
+**copied, not split**, because an override that hides a fan channel has to
+reach the volume that would otherwise publish it.
+
+`--verify` reads the volumes *and* `data/`, and fails when a record is in two
+volumes, in none, or in a volume other than the one `volumeOf()` names — a
+verification that only looked at the volumes would accept a split that lost a
+million records. `--self-test` checks the other half: that the function is
+deterministic, balanced, and moves about `1/(N+1)` when the count grows.
+
+**Taking a split live is still manual**, and deliberately so: create one
+repository per volume, push `<out>/vol-N` into it, run the sync per volume, and
+give the client the origins. Until the client merges N datasets, `items/live`
+and the region counts are per-volume, and the app sees one volume at a time.
+That is the work the ladder buys time for, and it is why the split is planned
+before it is needed.
 
 ## Local development
 

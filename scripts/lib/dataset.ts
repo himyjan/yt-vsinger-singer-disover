@@ -44,7 +44,7 @@ import {
   writeTextShard,
 } from "./io";
 import { ALL_REGIONS, SCHEMA_VERSION } from "./types";
-import { buildRegionMeta, canonicalAgency } from "./regions";
+import { REGION_META, buildRegionMeta, canonicalAgency } from "./regions";
 import type {
   Channel,
   ChannelFile,
@@ -67,33 +67,47 @@ export const SHARD_COUNT = 16;
 /* Paths                                                                      */
 /* -------------------------------------------------------------------------- */
 
-export const layout = {
-  manifest: path.join(DATA_DIR, "manifest.json"),
-  channelsManifest: path.join(DATA_DIR, "channels", "manifest.json"),
-  channelsVirtual: (r: string, b: string) =>
-    path.join(DATA_DIR, "channels", "virtual", r, `${b}.json`),
-  channelsReal: (r: string, b: string) =>
-    path.join(DATA_DIR, "channels", "real", r, `${b}.json`),
-  itemsManifest: path.join(DATA_DIR, "items", "manifest.json"),
-  itemsRegion: (r: string, b: string) =>
-    path.join(DATA_DIR, "items", r, `${b}.json`),
-  itemsLive: path.join(DATA_DIR, "items", "live.json"),
-  itemsUpcoming: path.join(DATA_DIR, "items", "upcoming.json"),
-  songsManifest: path.join(DATA_DIR, "songs", "manifest.json"),
-  songsIndex: path.join(DATA_DIR, "songs", "index.json"),
-  songsRegion: (r: string) => path.join(DATA_DIR, "songs", `${r}.json`),
-  songsCategory: (c: string) =>
-    path.join(DATA_DIR, "songs", "categories", `${c}.json`),
-  searchManifest: path.join(DATA_DIR, "search", "manifest.json"),
-  /**
-   * One pack of a region's search index. A region with ten thousand records
-   * no longer fits in one file, so the builder writes as many packs as the
-   * per-file budget needs and the browser downloads them together.
-   */
-  searchRegion: (r: string, shard = 0) =>
-    path.join(DATA_DIR, "search", shard === 0 ? `${r}.json` : `${r}.${shard}.json`),
-  overrides: path.join(DATA_DIR, "overrides.json"),
-} as const;
+export function layoutFor(root: string) {
+  return {
+    manifest: path.join(root, "manifest.json"),
+    channelsManifest: path.join(root, "channels", "manifest.json"),
+    channelsVirtual: (r: string, b: string) =>
+      path.join(root, "channels", "virtual", r, `${b}.json`),
+    channelsReal: (r: string, b: string) =>
+      path.join(root, "channels", "real", r, `${b}.json`),
+    itemsManifest: path.join(root, "items", "manifest.json"),
+    itemsRegion: (r: string, b: string) =>
+      path.join(root, "items", r, `${b}.json`),
+    itemsLive: path.join(root, "items", "live.json"),
+    itemsUpcoming: path.join(root, "items", "upcoming.json"),
+    songsManifest: path.join(root, "songs", "manifest.json"),
+    songsIndex: path.join(root, "songs", "index.json"),
+    songsRegion: (r: string) => path.join(root, "songs", `${r}.json`),
+    songsCategory: (c: string) =>
+      path.join(root, "songs", "categories", `${c}.json`),
+    searchManifest: path.join(root, "search", "manifest.json"),
+    /**
+     * One pack of a region's search index. A region with ten thousand records
+     * no longer fits in one file, so the builder writes as many packs as the
+     * per-file budget needs and the browser downloads them together.
+     */
+    searchRegion: (r: string, shard = 0) =>
+      path.join(
+        root,
+        "search",
+        shard === 0 ? `${r}.json` : `${r}.${shard}.json`,
+      ),
+    overrides: path.join(root, "overrides.json"),
+  } as const;
+}
+
+export type DatasetLayout = ReturnType<typeof layoutFor>;
+
+/**
+ * The dataset rooted at `data/`. A **volume** is the same tree written under
+ * another root, so every writer takes a root and this is the default one.
+ */
+export const layout: DatasetLayout = layoutFor(DATA_DIR);
 
 /** FNV-1a hash → bucket index in `[0, SHARD_COUNT)`. */
 export function bucketFor(id: string): string {
@@ -187,6 +201,113 @@ export interface WriteResult {
   files: number;
   bytes: number;
   removed: string[];
+}
+
+/**
+ * Writes the item dataset: one shard per region and bucket, the live and
+ * upcoming projections, and the items manifest.
+ *
+ * Items are derived from channels but stored beside them, so a **volume**
+ * writes its own slice of them: an item belongs to the volume of its
+ * `channelId`, the same function that places the channel. Anything else would
+ * either duplicate a video across volumes or leave it in none.
+ *
+ * `writeDataset()` calls this for `data/`; `split-volumes.ts` calls it once per
+ * volume, so the two cannot drift in the shard format.
+ */
+export function writeItemShards(
+  items: Item[],
+  now: string,
+  root: string = DATA_DIR,
+): { removed: string[] } {
+  const l = layoutFor(root);
+  const removed: string[] = [];
+
+  const itemsByRegion = new Map<RegionCode, Map<string, Item[]>>();
+  for (const item of items) {
+    const region = item.region ?? "unknown";
+    let byBucket = itemsByRegion.get(region);
+    if (!byBucket) {
+      byBucket = new Map();
+      itemsByRegion.set(region, byBucket);
+    }
+    const bucket = bucketFor(item.id);
+    const list = byBucket.get(bucket) ?? [];
+    list.push(item);
+    byBucket.set(bucket, list);
+  }
+
+  const itemsRoot = path.join(root, "items");
+  const keepItemDirs = new Set<string>();
+  const regionMeta: ItemsManifest["regions"] = [];
+
+  for (const region of ALL_REGIONS) {
+    const byBucket = itemsByRegion.get(region);
+    if (!byBucket || byBucket.size === 0) continue;
+    keepItemDirs.add(region);
+    const dir = path.join(itemsRoot, region);
+    ensureDir(dir);
+    const keepFiles = new Set<string>();
+    let regionCount = 0;
+    const buckets = [...byBucket.keys()].sort();
+    for (const bucket of buckets) {
+      const list = (byBucket.get(bucket) ?? []).sort((a, b) =>
+        b.publishedAt?.localeCompare(a.publishedAt ?? "") ??
+        a.id.localeCompare(b.id),
+      );
+      keepFiles.add(`${bucket}.json`);
+      writeJsonIfChanged(l.itemsRegion(region, bucket), {
+        schemaVersion: SCHEMA_VERSION,
+        generatedAt: now,
+        items: list,
+      } satisfies ItemFile);
+      regionCount += list.length;
+    }
+    removed.push(...pruneStale(dir, keepFiles));
+    regionMeta.push({
+      code: region,
+      label: REGION_META[region]?.label ?? region,
+      badge: REGION_META[region]?.badge ?? "",
+      buckets,
+      items: regionCount,
+    });
+  }
+
+  // Remove region directories that no longer hold data.
+  if (fs.existsSync(itemsRoot)) {
+    for (const entry of fs.readdirSync(itemsRoot, { withFileTypes: true })) {
+      if (!entry.isDirectory()) continue;
+      if (keepItemDirs.has(entry.name)) continue;
+      fs.rmSync(path.join(itemsRoot, entry.name), { recursive: true, force: true });
+      removed.push(`${entry.name}/`);
+    }
+  }
+
+  const live = items.filter((i) => i.status === "live");
+  const upcoming = items.filter((i) => i.status === "upcoming");
+  writeJsonIfChanged(l.itemsLive, {
+    schemaVersion: SCHEMA_VERSION,
+    generatedAt: now,
+    items: live,
+  } satisfies ItemFile);
+  writeJsonIfChanged(l.itemsUpcoming, {
+    schemaVersion: SCHEMA_VERSION,
+    generatedAt: now,
+    items: upcoming,
+  } satisfies ItemFile);
+
+  writeJson(l.itemsManifest, {
+    schemaVersion: SCHEMA_VERSION,
+    generatedAt: now,
+    regions: regionMeta,
+    counts: {
+      total: items.length,
+      live: live.length,
+      upcoming: upcoming.length,
+    },
+  } satisfies ItemsManifest);
+
+  return { removed };
 }
 
 /** Writes the whole dataset. */
@@ -331,90 +452,7 @@ export function writeDataset(
     regions: channelRegionMeta,
   } satisfies ChannelsManifest);
 
-  /* --- items, sharded by region then bucket --------------------------- */
-  const itemsByRegion = new Map<RegionCode, Map<string, Item[]>>();
-  for (const item of items) {
-    const region = item.region ?? "unknown";
-    let byBucket = itemsByRegion.get(region);
-    if (!byBucket) {
-      byBucket = new Map();
-      itemsByRegion.set(region, byBucket);
-    }
-    const bucket = bucketFor(item.id);
-    const list = byBucket.get(bucket) ?? [];
-    list.push(item);
-    byBucket.set(bucket, list);
-  }
-
-  const itemsRoot = path.join(DATA_DIR, "items");
-  const keepItemDirs = new Set<string>();
-  const regionMeta: ItemsManifest["regions"] = [];
-
-  for (const region of ALL_REGIONS) {
-    const byBucket = itemsByRegion.get(region);
-    if (!byBucket || byBucket.size === 0) continue;
-    keepItemDirs.add(region);
-    const dir = path.join(itemsRoot, region);
-    ensureDir(dir);
-    const keepFiles = new Set<string>();
-    let regionCount = 0;
-    const buckets = [...byBucket.keys()].sort();
-    for (const bucket of buckets) {
-      const list = (byBucket.get(bucket) ?? []).sort((a, b) =>
-        b.publishedAt?.localeCompare(a.publishedAt ?? "") ??
-        a.id.localeCompare(b.id),
-      );
-      keepFiles.add(`${bucket}.json`);
-      writeJsonIfChanged(layout.itemsRegion(region, bucket), {
-        schemaVersion: SCHEMA_VERSION,
-        generatedAt: now,
-        items: list,
-      } satisfies ItemFile);
-      regionCount += list.length;
-    }
-    removed.push(...pruneStale(dir, keepFiles));
-    regionMeta.push({
-      code: region,
-      label: manifest.regions.find((r) => r.code === region)?.label ?? region,
-      badge: manifest.regions.find((r) => r.code === region)?.badge ?? "",
-      buckets,
-      items: regionCount,
-    });
-  }
-
-  // Remove region directories that no longer hold data.
-  if (fs.existsSync(itemsRoot)) {
-    for (const entry of fs.readdirSync(itemsRoot, { withFileTypes: true })) {
-      if (!entry.isDirectory()) continue;
-      if (keepItemDirs.has(entry.name)) continue;
-      fs.rmSync(path.join(itemsRoot, entry.name), { recursive: true, force: true });
-      removed.push(`${entry.name}/`);
-    }
-  }
-
-  const live = items.filter((i) => i.status === "live");
-  const upcoming = items.filter((i) => i.status === "upcoming");
-  writeJsonIfChanged(layout.itemsLive, {
-    schemaVersion: SCHEMA_VERSION,
-    generatedAt: now,
-    items: live,
-  } satisfies ItemFile);
-  writeJsonIfChanged(layout.itemsUpcoming, {
-    schemaVersion: SCHEMA_VERSION,
-    generatedAt: now,
-    items: upcoming,
-  } satisfies ItemFile);
-
-  writeJson(layout.itemsManifest, {
-    schemaVersion: SCHEMA_VERSION,
-    generatedAt: now,
-    regions: regionMeta,
-    counts: {
-      total: items.length,
-      live: live.length,
-      upcoming: upcoming.length,
-    },
-  } satisfies ItemsManifest);
+  removed.push(...writeItemShards(items, now).removed);
 
   /* --- songs: the music-centric projection --------------------------- */
   /**
@@ -653,13 +691,13 @@ function compactChannelFile(channels: Channel[], now: string): string {
 /**
  * Reads every full channel record, from both kind datasets.
  */
-export function readAllChannelRecords(): Channel[] {
+export function readAllChannelRecords(root: string = DATA_DIR): Channel[] {
   const out: Channel[] = [];
   for (const kind of ["virtual", "real"] as const) {
-    const root = path.join(DATA_DIR, "channels", kind);
-    if (!fs.existsSync(root)) continue;
-    for (const region of fs.readdirSync(root)) {
-      const dir = path.join(root, region);
+    const kindRoot = path.join(root, "channels", kind);
+    if (!fs.existsSync(kindRoot)) continue;
+    for (const region of fs.readdirSync(kindRoot)) {
+      const dir = path.join(kindRoot, region);
       if (!fs.statSync(dir).isDirectory()) continue;
       for (const file of fs.readdirSync(dir)) {
         if (!file.endsWith(".json")) continue;
@@ -679,12 +717,12 @@ export function readAllChannelRecords(): Channel[] {
 }
 
 /** Reads the region shards; root live/upcoming files are projections. */
-export function readAllItems(): Item[] {
+export function readAllItems(root: string = DATA_DIR): Item[] {
   const out: Item[] = [];
-  const root = path.join(DATA_DIR, "items");
-  if (!fs.existsSync(root)) return out;
-  for (const region of fs.readdirSync(root)) {
-    const dir = path.join(root, region);
+  const itemsRoot = path.join(root, "items");
+  if (!fs.existsSync(itemsRoot)) return out;
+  for (const region of fs.readdirSync(itemsRoot)) {
+    const dir = path.join(itemsRoot, region);
     if (!fs.statSync(dir).isDirectory()) continue;
     for (const file of fs.readdirSync(dir)) {
       if (!file.endsWith(".json")) continue;
@@ -712,8 +750,10 @@ export function readAllItems(): Item[] {
 export function writeChannelShards(
   channels: Channel[],
   now: string,
+  root: string = DATA_DIR,
 ): { records: number; files: number } {
   channels = channels.map(withCanonicalAgency);
+  const l = layoutFor(root);
   let files = 0;
   const write = (
     list: Channel[],
@@ -765,13 +805,13 @@ export function writeChannelShards(
 
   write(
     channels.filter((c) => c.kind === "virtual"),
-    path.join(DATA_DIR, "channels", "virtual"),
-    layout.channelsVirtual,
+    path.join(root, "channels", "virtual"),
+    l.channelsVirtual,
   );
   write(
     channels.filter((c) => c.kind === "real"),
-    path.join(DATA_DIR, "channels", "real"),
-    layout.channelsReal,
+    path.join(root, "channels", "real"),
+    l.channelsReal,
   );
   return { records: channels.length, files };
 }
@@ -790,6 +830,7 @@ export function writeChannelShards(
 export function rebuildChannelsManifest(
   channels: Channel[],
   now: string,
+  root: string = DATA_DIR,
 ): ChannelsManifest {
   const byRegion = new Map<
     string,
@@ -836,7 +877,7 @@ export function rebuildChannelsManifest(
     total: channels.length,
     regions,
   };
-  writeJson(layout.channelsManifest, manifest);
+  writeJson(layoutFor(root).channelsManifest, manifest);
   return manifest;
 }
 
