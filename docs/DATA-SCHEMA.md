@@ -172,7 +172,7 @@ The record for one performer.
 
 | Field | Type | Notes |
 | --- | --- | --- |
-| `id` | string | The **immutable** id of the primary platform: a YouTube `UC…` channel id, or `<platform>:<id>` elsewhere |
+| `id` | string | The **immutable** id of the primary platform: a YouTube `UC…` channel id, or `<platform>:<id>` elsewhere. A record with its own YouTube channel is keyed by it — `canonicalizeChannelIds()` re-keys a `bilibili:`/roster id to the `UC…` id, merges the duplicate, and re-points the items |
 | `handle` | string \| null | `@handle` without the `@` — a name, not an identity |
 | `name` | string | Display name |
 | `nameSource` | `"manual"` \| `"platform"` \| `"seed"` \| `"roster"` \| `"unknown"` | Where the name came from — see below |

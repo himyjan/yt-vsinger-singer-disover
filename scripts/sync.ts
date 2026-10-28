@@ -824,6 +824,26 @@ async function main(): Promise<void> {
   }
   let channels = existingChannels;
   let items = existingItems;
+  /**
+   * Items point at their channel by id, so a re-keyed record takes its items
+   * with it.
+   *
+   * `canonicalizeChannelIds()` above may have moved a record from
+   * `bilibili:123` to the `UC…` id of its own YouTube channel. Without this
+   * the videos keep a `channelId` nothing has, and the Songs view — which
+   * joins on it — would lose them.
+   */
+  if (loaded.renamed.length) {
+    const remap = new Map(loaded.renamed.map((r) => [r.from, r.to]));
+    let followed = 0;
+    for (const item of existingItems) {
+      const to = remap.get(item.channelId);
+      if (!to) continue;
+      item.channelId = to;
+      followed++;
+    }
+    if (followed) log(`ids: ${followed} item(s) re-pointed at their channel`);
+  }
   log(`loaded ${channels.length} channels / ${items.length} items from disk`);
 
   /* --- resolve seeds --------------------------------------------------- */

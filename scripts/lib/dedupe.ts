@@ -31,6 +31,7 @@ import type {
 } from "./types";
 import { normalizeChannelId, pickAvatar } from "./platforms";
 import { mergeLanguages } from "./regions";
+import { detectClipAccount, isFanAccountName } from "./classify";
 
 /**
  * Strips the URL tabs out of channel ids, and merges the records that clash.
@@ -61,6 +62,20 @@ export function canonicalizeChannelIds(channels: Channel[]): {
         link.id = normalizeChannelId(link.id);
       }
     }
+    /**
+     * A record with its own YouTube channel is keyed by it.
+     *
+     * The sync, the live status and the details fill all address a channel by
+     * `UC…`, and a record that arrived from a roster or a Bilibili-only source
+     * is keyed by that source's id instead. Left alone, the same performer is
+     * fetched twice and can be listed twice — once as `bilibili:123`, once as
+     * the YouTube channel the roster also knows.
+     */
+    const youtube = youtubeIdentityOf(channel);
+    if (youtube && !channel.id.startsWith("UC")) {
+      channel.id = youtube.id;
+      channel.handle ??= youtube.handle;
+    }
     if (channel.id !== before) renamed.push({ from: before, to: channel.id });
 
     const seen = byId.get(channel.id);
@@ -73,6 +88,64 @@ export function canonicalizeChannelIds(channels: Channel[]): {
   }
 
   return { channels: [...byId.values()], renamed, merged };
+}
+
+/**
+ * The YouTube channel a record can be keyed by, when it has one of its own.
+ *
+ * This tracker is YouTube-first: the sync, the live status and the details
+ * fill all address a channel by `UC…`. A record that arrived from a roster or
+ * a Bilibili-only source may still be keyed by that source's id, and when the
+ * performer also has their own YouTube channel the record should carry the
+ * YouTube id — otherwise one performer is fetched twice and can be listed
+ * twice.
+ *
+ * The test is deliberately conservative, because re-keying is not reversible
+ * in one direction: a wrong link would make the record *be* someone else's
+ * channel. Three things must hold:
+ *
+ *  - the link's id is a real `UC…` id;
+ *  - nothing about it says fan, clip or re-upload (`detectClipAccount()`,
+ *    `isFanAccountName()`), because those accounts publish *the performer*,
+ *    and are not the performer;
+ *  - the YouTube channel's name is one of the record's own names, which is
+ *    the evidence both sides publish. A link is only as good as the evidence
+ *    that attached it.
+ */
+function youtubeIdentityOf(
+  channel: Channel,
+): { id: string; handle: string | null } | null {
+  const link = (channel.platforms ?? []).find((p) => p.platform === "youtube");
+  if (!link) return null;
+  const id = normalizeChannelId(String(link.id ?? ""));
+  if (!id.startsWith("UC")) return null;
+  if (isFanAccountName(link.name) || isFanAccountName(channel.name)) return null;
+  if (detectClipAccount(link.name, channel.description)) return null;
+  if (!samePerformerName(channel, link.name)) return null;
+  return { id, handle: link.handle ?? null };
+}
+
+/**
+ * Whether a platform name is one of the record's names.
+ *
+ * Exact after normalisation, or one contains the other — 「森野莓洛Official」
+ * is 「Merun Ch. MorinoMerun」 under an alias, and aliases count: they are how
+ * a performer's name in another language is stored. A short name is not
+ * evidence on its own, for the same reason `confirmingNames()` refuses a
+ * one- or two-character name — 「小卯」 belongs to too many people.
+ */
+function samePerformerName(channel: Channel, other: string | null): boolean {
+  const target = normalizeName(other ?? "");
+  if (!target) return false;
+  const names = [channel.name, ...(channel.aliases ?? [])];
+  return names.some((name) => {
+    const key = normalizeName(name ?? "");
+    if (!key) return false;
+    if (key === target) return true;
+    const [shorter, longer] =
+      key.length <= target.length ? [key, target] : [target, key];
+    return shorter.length >= 3 && longer.includes(shorter);
+  });
 }
 
 /** The identity keys a channel contributes. */
