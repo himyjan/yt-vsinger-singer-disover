@@ -189,6 +189,19 @@ thousands of unchanged lines — which is how a 344-record fix became an
 `scripts/lib/dataset.ts` and in `src/lib/dataset.ts`); keep their
 `CHANNEL_DEFAULTS` tables in step.
 
+**A roster's membership is the only claim some records have.** vdb, vTubie's
+groups, bacharu and each platform's VTuber directory all file every entry they
+carry as a virtual performer, and the profile usually says so too — but not
+always: 「I'm just a guy trying to have fun, png made by @owo_uou」 is a VTuber's
+whole bio. So a roster entry is passed to `classifyChannel()` as
+`virtualClaim: "roster"`, it settles **kind**, and it leaves **role** to the
+text: a VTuber who writes 「ボカロP兼Vtuber」 is a virtual performer and a
+producer, not either/or. Never hard-code `kind: "virtual"` in a roster
+builder and never let the real-word score outvote the claim on its own —
+`singer`, `composer` and `songwriter` are jobs, and `REAL_IDENTITY` holds the
+words that actually state a human body. A curated `kind` — an override or a
+seed — still outranks all of it.
+
 **A fan account is not a performer.** 搬运组, 字幕组, 切片/烤肉 channels and
 accounts named after their subject (「Petra的极地考察队」) are duplicates of
 the artist they publish for. `detectClipAccount()` and `isFanAccountName()`
