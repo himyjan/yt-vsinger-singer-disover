@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-28T12:50:03.253Z",
-  "total": 72110,
+  "generatedAt": "2026-10-28T13:57:46.871Z",
+  "total": 72361,
   "regions": [
     {
       "code": "jp",
-      "channels": 9841,
+      "channels": 9900,
       "virtual": {
-        "channels": 9823,
+        "channels": 9880,
         "buckets": [
           "00",
           "01",
@@ -28,7 +28,7 @@
         ]
       },
       "real": {
-        "channels": 18,
+        "channels": 20,
         "buckets": [
           "00",
           "01",
@@ -49,9 +49,9 @@
     },
     {
       "code": "cn",
-      "channels": 8774,
+      "channels": 8771,
       "virtual": {
-        "channels": 8773,
+        "channels": 8770,
         "buckets": [
           "00",
           "01",
@@ -80,9 +80,9 @@
     },
     {
       "code": "tw",
-      "channels": 4173,
+      "channels": 4222,
       "virtual": {
-        "channels": 4173,
+        "channels": 4222,
         "buckets": [
           "00",
           "01",
@@ -109,9 +109,9 @@
     },
     {
       "code": "hk",
-      "channels": 517,
+      "channels": 700,
       "virtual": {
-        "channels": 517,
+        "channels": 700,
         "buckets": [
           "00",
           "01",
@@ -138,9 +138,9 @@
     },
     {
       "code": "kr",
-      "channels": 296,
+      "channels": 353,
       "virtual": {
-        "channels": 295,
+        "channels": 352,
         "buckets": [
           "00",
           "01",
@@ -169,9 +169,9 @@
     },
     {
       "code": "en",
-      "channels": 43170,
+      "channels": 37846,
       "virtual": {
-        "channels": 43155,
+        "channels": 37833,
         "buckets": [
           "00",
           "01",
@@ -192,7 +192,7 @@
         ]
       },
       "real": {
-        "channels": 15,
+        "channels": 13,
         "buckets": [
           "01",
           "02",
@@ -202,16 +202,15 @@
           "09",
           "0a",
           "0c",
-          "0d",
-          "0e"
+          "0d"
         ]
       }
     },
     {
       "code": "id",
-      "channels": 848,
+      "channels": 1110,
       "virtual": {
-        "channels": 848,
+        "channels": 1110,
         "buckets": [
           "00",
           "01",
@@ -238,9 +237,9 @@
     },
     {
       "code": "my",
-      "channels": 550,
+      "channels": 616,
       "virtual": {
-        "channels": 549,
+        "channels": 615,
         "buckets": [
           "00",
           "01",
@@ -298,9 +297,9 @@
     },
     {
       "code": "unknown",
-      "channels": 2643,
+      "channels": 7545,
       "virtual": {
-        "channels": 2643,
+        "channels": 7543,
         "buckets": [
           "00",
           "01",
@@ -321,8 +320,11 @@
         ]
       },
       "real": {
-        "channels": 0,
-        "buckets": []
+        "channels": 2,
+        "buckets": [
+          "01",
+          "0e"
+        ]
       }
     }
   ]
