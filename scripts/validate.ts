@@ -179,6 +179,15 @@ function validateChannelLayout(): void {
     "channels manifest lists no regions — run `npm run data:sync`",
   );
 
+  /**
+   * The manifest names the buckets that **hold** a record; the writer prunes
+   * the rest. A file on disk that the manifest does not name is a stale
+   * shard, and a bucket the manifest names but that holds no record is a
+   * bucket the writer has not pruned — both are reported by name rather than
+   * one at a time, because a re-key that moves a hundred records otherwise
+   * prints a hundred lines about the same cause.
+   */
+  const extra: string[] = [];
   for (const kind of ["virtual", "real"] as const) {
     const kindRoot = path.join(root, kind);
     if (!fs.existsSync(kindRoot)) continue;
@@ -188,11 +197,16 @@ function validateChannelLayout(): void {
       for (const file of fs.readdirSync(dir)) {
         if (!file.endsWith(".json")) continue;
         const key = `${kind}/${region}/${file}`;
-        if (!declared.has(key)) {
-          fail(`data/channels/${key} is not in the manifest — run \`npm run data:sync\``);
-        }
+        if (!declared.has(key)) extra.push(key);
       }
     }
+  }
+  if (extra.length) {
+    fail(
+      `${extra.length} channel shard(s) are not in the manifest — run \`npm run data:sync\`: ` +
+        extra.slice(0, 5).join(", ") +
+        (extra.length > 5 ? `, … ${extra.length - 5} more` : ""),
+    );
   }
   for (const key of declared.keys()) {
     if (!fs.existsSync(path.join(root, key))) {

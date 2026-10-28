@@ -42,6 +42,12 @@ export const CACHE_DIR = path.join(ROOT, ".cache");
 export const SIZE_BUDGET = {
   /** Maximum size of a single committed JSON file. */
   maxFileBytes: 8 * 1024 * 1024,
+  /**
+   * Maximum size of one search pack. A *shard* of the dataset, not a
+   * catalogue: every pack is downloaded by the browser and held as JSON, so
+   * the ceiling is what a phone can parse, not what git can store.
+   */
+  maxSearchPackBytes: 4 * 1024 * 1024,
   /** Soft ceiling for the whole `data/` directory. */
   maxDataBytes: 180 * 1024 * 1024,
   /** Maximum size of the search index. */

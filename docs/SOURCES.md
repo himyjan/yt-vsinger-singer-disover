@@ -54,9 +54,9 @@ YouTube videos and playlists.
 
 `https://vdb.vtbs.moe/json/list.json`
 
-~10,100 performers, each with their accounts on up to 35 platforms, their
-group and the names they use in each language — `cn`, `jp`, `en` and
-`extra`. It is the backbone of the roster: it is where most of the platform
+**10,138 identity records** — 9,903 performers, 221 groups, 13 fan accounts —
+each performer with their accounts on up to 35 platforms, their group and the
+names they use in each language — `cn`, `jp`, `en` and `extra`. It is the backbone of the roster: it is where most of the platform
 identities come from. All valid account platform keys are retained, not just
 the platforms with an API adapter in this project. The app's platform filter
 therefore includes these additional roster identities too.
@@ -172,11 +172,30 @@ with their pre-fame career, and its infobox image is a photograph of them.
 
 ### Holodex and Music Holodex
 
-The Holodex sites are useful discovery references, but their website pages are
-not ingested by this pipeline. Holodex API ingestion would require an API
-adapter and a `HOLODEX_API_KEY` repository secret. Music metadata is currently
-read from the linked VTuber Music Dataset and VocaDB rather than scraped from
-`music.holodex.net`.
+`https://holodex.net` · `https://music.holodex.net`
+
+**Discovery references, not sources** — no page of either is ingested.
+Holodex indexes YouTube VTuber streams (live, upcoming, channels,
+organisations, a **clip index** with the clipper relations behind it) and its
+**Multiview** plays several streams at once; Musicdex is the music layer —
+songs and set lists tagged out of singing streams, with playlists by performer
+and organisation.
+
+What ingestion would take: the API v2 (live/upcoming, videos, channels,
+search, comment search) is the only machine-readable path, it needs a
+`HOLODEX_API_KEY` repository secret, and the docs publish no fixed quota —
+the terms reserve the right to throttle “excessive” use, so an adapter would
+have to sit behind `scripts/lib/rate-limit.ts` like every other source that
+pushes back. Every endpoint answers `403` without a key, so the inventory
+cannot even be counted before the work starts.
+
+What is already covered without them: the song and original-artist metadata
+comes from the linked VTuber Music Dataset and VocaDB, and the live/upcoming
+list from InnerTube, so neither site is the only route to anything this
+project needs. Read them for the two things it does not build — a clip index,
+and song-level tagging of a stream — not for their data. Their frontends are
+open (Holodex MIT, Musicdex Apache-2.0); their backend crawler and dataset are
+not.
 
 ### 9–13. The platform APIs
 
@@ -384,6 +403,61 @@ is confirmed against the channel's own title, and the channel enters
 `data/channels/` only when two of its videos show virtual-creator identity and
 singing evidence — the same rule the sync applies to a discovered channel.
 
+**vTubie's group pages are the exception that does publish an id.** The
+directory's `groups/` index (1,028 groups over 103 pages) links each circle and
+agency, `/g/<slug>/` lists its members, and a member's own page carries the
+YouTube RSS feed carrying `channel_id` — the key the dataset is built on. So
+`npm run data:vtubie-groups` walks the three levels and writes a snapshot to
+`.cache/vtubie-groups.json`, and `npm run data:vtubie-import` compares it with
+the dataset and, with `--apply`, imports the new channels. Nothing is guessed
+from a name: the id comes from the profile itself.
+
+The harvest runs through a real browser for the same Cloudflare reason, then
+reads every following page with a same-origin `fetch` **inside** that page so
+the clearance cookie (HttpOnly, so invisible to the page's scripts) rides
+along. A 404 is an answer — a deleted group or profile — and is recorded; a
+403 is the challenge coming back, and stops the pass instead of grinding
+through the rest of the directory.
+
+**bacharu** is the largest roster the pipeline reads: about 110,000 performers
+at `bacharu.io`, each filed under a country, a group, a debut and a status. It
+is an Astro front end over a Fastify JSON API, so unlike vTubie it needs no
+browser: `GET /api/vtubers?limit=100&page=N` answers a hundred **whole**
+records (about 2.6 MB and three seconds a page), `GET /api/vtubers/<_id>`
+answers one, and `?search=<name>` filters — which makes it the cheapest
+`name → YouTube channel` resolver the pipeline has, and the reason the
+`data:links` gap can be closed without a search-grounding key.
+
+`fields=card` is the only projection and it **drops `social`**, so a card page
+has no channel id; every other value of `fields` returns the whole record.
+`/api/groups` lists the groups without their members, and
+`/api/vtubers/filters` lists the values the filters accept. Of the 109,828
+rows, 27,099 carry a `/channel/UC…` URL, 35,099 a `@handle` only and 47,630 no
+YouTube link at all (Twitch-first performers, Bilibili, IRIAM).
+
+Two things make the harvest unlike the others:
+
+- **The roster is sorted by `last_active_at`, and the site keeps updating it.**
+  A paginated crawl therefore sees rows move between pages while it runs: one
+  pass of 1,099 requests returned 13,500 rows twice and skipped as many, where
+  a second pass of 1,181 requests at a different page size returned all
+  109,828 exactly once. The harvester writes one file per page, so a second
+  pass can be unioned in with `--merge-dir`, and the snapshot is de-duplicated
+  by `_id`. `sortBy` accepts `last_active_at` and nothing else, so there is no
+  stable order to ask for.
+- **`robots.txt` disallows `/api/` for every agent**, and lists GPTBot and
+  ClaudeBot by name. The roster is therefore read as a **one-off census**, not
+  polled: two pages at a time, about one request a second, and a 429 doubles
+  the gap and cools down for two minutes.
+
+`npm run data:bacharu` writes `.cache/bacharu-vtubers.json` — one flat extract
+per performer, about 900 bytes, with the YouTube id, the handle, the groups,
+the country, the debut and the avatar. `npm run data:bacharu-import` is the
+gate: it reports what is new, what is already tracked, what is a fan account,
+what has no key, and imports only the rows whose `UC…` id it can verify
+through the platform — the platform's name wins, and a roster name that shares
+no word with the channel's title is reported rather than imported.
+
 ### Rate limiting
 
 The free sources have no published quota, but they do push back. All three go
@@ -405,7 +479,6 @@ are not in the pipeline.
 | --- | --- |
 | [Virtual YouTuber Wiki](https://virtualyoutuber.fandom.com/) | The MediaWiki API works, and it is used by the debut discovery — but the roster is not wired in yet |
 | [Hololist](https://hololist.net) | Agency-limited: Hololive only, so it adds little over vdb and the Taiwan tracker |
-| [bacharu](https://bacharu.io) | A client-side Astro application with no public data endpoint |
 | [AI VTuber DB](https://aivtuberdb.com) | Worth reading for the AI flag, but it publishes no machine-readable file |
 | [PVC.moe](https://pvc.moe) | The data is only in the client bundle |
 | [VTuber.hk](https://vtuber.hk) | Server-rendered, but with no documented data format |
@@ -429,6 +502,38 @@ These are read for **how** a platform's API is called, not for their data.
 | [biliscope](https://github.com/gaogaotiantian/biliscope) | The WBI signature, the mixin key (file names **without** the `.jpg`), the fact that `web_location` is not required (PR #287), and the `w_webid` that `space/wbi/acc/info` wants |
 | [youtubei.js](https://github.com/LuanRT/YouTube.js) | InnerTube: the profile, the upload grid, the live streams, and `navigation/resolve_url` for turning a `@handle` into a channel id |
 | `gql.twitch.tv` | The GQL endpoint and the public web client id |
+
+## How this compares to the other trackers
+
+A snapshot taken on **2026-10-27**, so a later reader can tell what moved.
+Method: `curl --compressed` from one US VM plus each site's own published
+files. Payload and TTFB are network facts; Core Web Vitals need a browser and
+are not measured here.
+
+| | this project | Holodex | Musicdex | Taiwan tracker | vdb |
+| --- | --- | --- | --- | --- | --- |
+| blocking JS + CSS | **125 KB** (116,014 B JS + 9,373 B CSS) | 276 KB | 385 KB | 165 KB | 32 KB of static HTML |
+| hashed asset cache | `immutable`, one year (Vercel) | hashed | hashed | ten minutes, flat | ten minutes, flat |
+| data access | committed JSON, no key | API v2, `X-APIKEY` | same key | static JSON | static `list.json` |
+| inventory | **16,786 channels**, 1,449 items | not published; `403` without a key | not published | 288 groups; performer list not published | 10,138 records |
+| platforms tracked | 9 with adapters | YouTube (Twitch in Multiview only) | YouTube | YouTube, Twitch | Bilibili stats; ids for any |
+| regions | 10, aliases per locale | language filters | — | TW, HK, MY | `cn`-centric |
+| refresh | every 6 h | undocumented | undocumented | ~30 min (its own timestamps) | ~5 min stats / <15 s live (its own claim) |
+| licence | MIT | MIT frontend | Apache-2.0 | Unlicense | VDBL (CC BY-NC-SA data, GPL code) |
+
+**This project's edge:** cross-platform identity rebuilt from each platform,
+the region-evidence chain with recorded provenance, ten regions where the
+others are Chinese- or Taiwan-centred, and the whole subscription path
+(account linking, Takeout/PocketTube/export import, suggestions) which has no
+equivalent in any of them.
+
+**Where they are ahead:** Multiview and the clip index (Holodex), song-level
+tagging and a player (Musicdex), a public API (Holodex, vdb, the Taiwan
+tracker), Bilibili live history at minute resolution (`vtbs.moe`), and — the
+one architectural win that matters — incremental fetching. A cold visit here
+transfers the catalogue rather than a page of it (~2.4 MB compressed / 16 MB
+raw over ~220 requests), which is the remaining performance debt against
+sites that ask an API for twenty rows at a time.
 
 ## Adding a source
 

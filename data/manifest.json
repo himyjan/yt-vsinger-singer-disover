@@ -1,18 +1,18 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-27T12:07:34.435Z",
+  "generatedAt": "2026-10-28T08:55:38.110Z",
   "counts": {
-    "channels": 14340,
-    "channelsVirtual": 14318,
-    "channelsReal": 22,
-    "channelsSinging": 1241,
-    "items": 1449,
-    "itemsLive": 23,
-    "itemsUpcoming": 389,
+    "channels": 63447,
+    "channelsVirtual": 63416,
+    "channelsReal": 31,
+    "channelsSinging": 7926,
+    "items": 1749,
+    "itemsLive": 40,
+    "itemsUpcoming": 621,
     "itemsVideo": 0,
-    "itemsPlaylist": 874,
+    "itemsPlaylist": 893,
     "itemsCover": 0,
-    "itemsMv": 4,
+    "itemsMv": 5,
     "itemsOriginal": 0
   },
   "regions": [
@@ -20,70 +20,70 @@
       "code": "jp",
       "label": "Japan",
       "badge": "🇯🇵",
-      "channels": 1108,
-      "items": 1241
+      "channels": 8650,
+      "items": 1412
     },
     {
       "code": "cn",
       "label": "China",
       "badge": "🇨🇳",
-      "channels": 8745,
-      "items": 0
+      "channels": 8769,
+      "items": 6
     },
     {
       "code": "tw",
       "label": "Taiwan",
       "badge": "🇹🇼",
-      "channels": 3644,
-      "items": 35
+      "channels": 4109,
+      "items": 37
     },
     {
       "code": "hk",
       "label": "Hong Kong",
       "badge": "🇭🇰",
-      "channels": 402,
-      "items": 0
+      "channels": 497,
+      "items": 3
     },
     {
       "code": "kr",
       "label": "Korea",
       "badge": "🇰🇷",
-      "channels": 5,
-      "items": 1
+      "channels": 276,
+      "items": 2
     },
     {
       "code": "en",
       "label": "English",
       "badge": "🌐",
-      "channels": 94,
-      "items": 126
+      "channels": 36525,
+      "items": 228
     },
     {
       "code": "id",
       "label": "Indonesia",
       "badge": "🇮🇩",
-      "channels": 6,
-      "items": 19
+      "channels": 747,
+      "items": 24
     },
     {
       "code": "my",
       "label": "Malaysia",
       "badge": "🇲🇾",
-      "channels": 196,
-      "items": 2
+      "channels": 516,
+      "items": 3
     },
     {
       "code": "sea",
       "label": "SEA",
       "badge": "🌏",
-      "channels": 1,
-      "items": 1
+      "channels": 1140,
+      "items": 10
     },
     {
       "code": "unknown",
       "label": "Unknown",
       "badge": "❔",
-      "channels": 139,
+      "channels": 2218,
       "items": 24
     }
   ],

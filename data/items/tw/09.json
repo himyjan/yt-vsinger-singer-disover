@@ -1,7 +1,53 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-27T10:02:58.969Z",
+  "generatedAt": "2026-10-27T22:11:16.041Z",
   "items": [
+    {
+      "id": "cYY3sibkzDw",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCIf6cffSRZqS7TUXbUAK_hw",
+      "channelName": "熙歌",
+      "channelKind": "virtual",
+      "region": "tw",
+      "gender": "unknown",
+      "languages": [
+        "zh-Hant"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "【週三早安熙八】YA █熙歌Cygnus",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/cYY3sibkzDw/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCIf6cffSRZqS7TUXbUAK_hw",
+          "name": "熙歌",
+          "kind": "virtual",
+          "region": "tw"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-27T22:11:16.041Z",
+      "updatedAt": "2026-10-27T22:11:16.041Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
     {
       "id": "TAaMcZeAsbI",
       "platform": "youtube",
@@ -44,7 +90,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-27T10:02:58.969Z",
+      "updatedAt": "2026-10-27T22:11:16.041Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

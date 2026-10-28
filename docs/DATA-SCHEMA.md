@@ -27,9 +27,17 @@ data/
 │   ├── <region>.json           SongRecord[] — one region
 │   └── categories/<c>.json     SongRecord[] — cover / mv / original / performance
 └── search/
-    ├── manifest.json           which regions have a pack
-    └── <region>.json           SearchPack — the inverted index
+    ├── manifest.json           every pack, in the order they belong together
+    ├── <region>.json           SearchPack — the inverted index, shard 0
+    └── <region>.<n>.json       SearchPack — the rest of a large region
 ```
+
+A region used to be one search pack. Once `en` passed 19,000 records the pack
+came to 9.8 MB, over the per-file budget, so a region is now written as **as
+many packs as the budget needs** (`SIZE_BUDGET.maxSearchPackBytes`, 4 MB).
+Each is a complete inverted index over its own slice — a query looks up every
+pack and merges the hits — and the manifest names each with its `shard`
+number. `en.json` keeps the historical name for shard 0.
 
 Historical platform analytics are intentionally stored outside this
 repository in `himyjan/yt-vsinger-singer-disover-analytics`. Its
@@ -129,7 +137,7 @@ The record for one performer.
 | `name` | string | Display name |
 | `nameSource` | `"manual"` \| `"platform"` \| `"seed"` \| `"roster"` \| `"unknown"` | Where the name came from — see below |
 | `aliases` | string[] | The other names the performer is known by |
-| `kind` | `"virtual"` \| `"real"` | Virtual performer vs. real human artist |
+| `kind` | `"virtual"` \| `"real"` | Virtual performer vs. real human artist — see below |
 | `role` | see below | What they do |
 | `region` | see below | Where they belong |
 | `language` | string \| null | BCP-47 tag detected from the description |
@@ -763,7 +771,10 @@ from.
 
 ## `SearchPack`
 
-The inverted index for one region.
+The inverted index for one region — or, past `SIZE_BUDGET.maxSearchPackBytes`,
+for one shard of a region. A query loads every pack of every region it can
+see and merges the hits; `manifest.json` gives each pack its `shard` number in
+the order the parts belong together.
 
 | Field | Type | Notes |
 | --- | --- | --- |
@@ -823,6 +834,33 @@ across runs and `data/identities.json` keeps a readable diff.
 | `sources` | string[] | Which sources contributed — the `DebutSource` ids, e.g. `vtubie`, `fandom` |
 | `firstSeen` / `updatedAt` | string | |
 | `verification` | `Verification \| null` | What was looked up, and where — see above |
+
+## How `kind` is decided
+
+`kind` is **identity** — is there a character, or is this a person — and it is
+not the same question as `role`, which is the work: a VTuber who writes
+「ボカロP兼Vtuber」 is a virtual performer *and* a producer.
+
+`classifyChannel()` weighs four things, in this order:
+
+1. **A curated `kind` in `data/overrides.json`.** A person filed the channel.
+2. **A roster's membership.** vdb, vTubie's groups and bacharu file every entry
+   they carry as a virtual performer; that is a claim about identity, and it is
+   the only claim when the profile says nothing (「I'm just a guy trying to have
+   fun, png made by @owo_uou」). An **explicit real-identity marker** — 「not a
+   VTuber」, 「実写とVの両方」 is the opposite — still overrules it.
+3. **The text**: the name, the aliases, the first 320 characters of the
+   description, and the tags. `vtuber`, `vsinger`, `vtype`,
+   `virtual artist` … count for virtual; `singer`, `composer`, `songwriter`
+   count for real, **weakly** — they describe the work, and a VTuber writes
+   them beside the word VTuber.
+4. **An image and nothing else**: a channel with an avatar and no evidence
+   either way is more likely a PNG avatar than a studio photograph.
+
+`npm run data:reclassify` applies the current classifier to every record on
+disk, which is what makes a corrected vocabulary usable without re-fetching
+sixty thousand profiles: the classifier reads only the record, so the same
+record always produces the same answer (`AGENTS.md` rule 8).
 
 ## `override.json`
 

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-27T12:07:34.435Z",
+  "generatedAt": "2026-10-28T05:38:36.215Z",
   "regions": [
     {
       "code": "jp",
@@ -24,7 +24,20 @@
         "0e",
         "0f"
       ],
-      "items": 1241
+      "items": 1412
+    },
+    {
+      "code": "cn",
+      "label": "China",
+      "badge": "🇨🇳",
+      "buckets": [
+        "01",
+        "02",
+        "03",
+        "06",
+        "07"
+      ],
+      "items": 6
     },
     {
       "code": "tw",
@@ -48,16 +61,28 @@
         "0e",
         "0f"
       ],
-      "items": 35
+      "items": 37
+    },
+    {
+      "code": "hk",
+      "label": "Hong Kong",
+      "badge": "🇭🇰",
+      "buckets": [
+        "06",
+        "09",
+        "0e"
+      ],
+      "items": 3
     },
     {
       "code": "kr",
       "label": "Korea",
       "badge": "🇰🇷",
       "buckets": [
-        "00"
+        "00",
+        "04"
       ],
-      "items": 1
+      "items": 2
     },
     {
       "code": "en",
@@ -81,7 +106,7 @@
         "0e",
         "0f"
       ],
-      "items": 126
+      "items": 228
     },
     {
       "code": "id",
@@ -97,10 +122,11 @@
         "09",
         "0a",
         "0b",
+        "0d",
         "0e",
         "0f"
       ],
-      "items": 19
+      "items": 24
     },
     {
       "code": "my",
@@ -108,18 +134,26 @@
       "badge": "🇲🇾",
       "buckets": [
         "00",
+        "06",
         "0d"
       ],
-      "items": 2
+      "items": 3
     },
     {
       "code": "sea",
       "label": "SEA",
       "badge": "🌏",
       "buckets": [
-        "01"
+        "00",
+        "01",
+        "02",
+        "09",
+        "0b",
+        "0d",
+        "0e",
+        "0f"
       ],
-      "items": 1
+      "items": 10
     },
     {
       "code": "unknown",
@@ -141,8 +175,8 @@
     }
   ],
   "counts": {
-    "total": 1449,
-    "live": 23,
-    "upcoming": 389
+    "total": 1749,
+    "live": 40,
+    "upcoming": 621
   }
 }

@@ -39,8 +39,9 @@
                                   │
                                   ▼
                     ┌───────────────────────────┐
-                    │  GitHub Pages (static)    │
+                    │  static host              │
                     │  Vue SPA + /data/*.json   │
+                    │  GitHub Pages · Vercel    │
                     └───────────────────────────┘
 ```
 
@@ -53,8 +54,9 @@
 - **versioned** — every change is a commit you can diff and revert;
 - **auditable** — the classifier is deterministic, so the same input always
   produces the same output;
-- **free to serve** — GitHub Pages publishes it with the app, same origin, no
-  CORS setup;
+- **free to serve** — a static host publishes it with the app, same origin, no
+  CORS setup; GitHub Pages serves both, and the Vercel deployment adds the
+  cache headers a static host has no way to set;
 - **reviewable** — a pull request that changes `data/` shows exactly which
   channels were added or reclassified.
 
@@ -239,6 +241,37 @@ src/
 `scripts/lib/types.ts` and `scripts/lib/search.ts` are imported by **both**
 the pipeline and the app, through the `@shared/*` alias. There is exactly one
 definition of the data model and one tokenizer.
+
+### What the first paint waits for
+
+The shell is deliberately small and the dataset deliberately late.
+
+- **The app's own CSS and bundle are the only render-blocking resources** —
+  51 KB of CSS and 333 KB of JavaScript (9 KB and 113 KB gzip). The theme
+  class is applied by an inline script in the head, which must stay blocking:
+  it decides the colour scheme before the first pixel.
+- **The webfonts are not on the critical path.** They are linked from
+  `index.html` rather than `@import`ed in the bundle, and the Google sheet is
+  larger than the JavaScript — 383 KB uncompressed, 344 `@font-face` rules
+  across 118 subsets, ~104 KB gzip. So it is loaded as a print-media sheet
+  that swaps itself in when it lands, with a `<noscript>` fallback for a
+  browser without JavaScript. Because the URL already carries
+  `display=swap`, text painted in the fallback face either way; blocking on
+  the sheet only bought a later first paint. A second blocking stylesheet in
+  the head is what would put that 104 KB back on the critical path.
+- **The dataset loads after the first paint.** `loadDataset()` waits for two
+  `requestAnimationFrame` callbacks (with a timeout fallback) and then fetches
+  the channel manifest, the channel shards, `live.json` and `upcoming.json` in
+  parallel, followed by the item shards the Songs view needs. The Live tab
+  reads three small files; the roster it downloads beside them is the largest
+  transfer in the app, so a view-scoped boot is the remaining byte cut.
+
+A cold visit transfers roughly 2.4 MB compressed — the vast majority of it
+channel JSON, sharded by region — and a repeat visit inside ten minutes costs
+one conditional request, because the dataset is served with a ten-minute
+`max-age` and `stale-while-revalidate`, and the hashed bundle as `immutable`.
+Those headers are per host, not per app: see
+[docs/DEPLOY.md](DEPLOY.md#serving-from-vercel).
 
 ## The search engine
 

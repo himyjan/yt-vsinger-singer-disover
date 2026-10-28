@@ -14,7 +14,8 @@ Three things it does:
 1. **Collects** VTuber singing videos, music videos, covers, originals and live
    streams.
 2. **Stores** the result as JSON committed to this repository (`data/`), so it
-   is versioned, diffable and served straight from GitHub Pages.
+   is versioned, diffable and served straight from a static host (GitHub Pages,
+   and a separate Vercel deployment with real cache headers).
 3. **Searches** it instantly with an inverted index built at pipeline time.
 
 ## Before you change anything
@@ -272,7 +273,9 @@ Non-YouTube automatic discovery only accepts platform identities already
 listed in vdb, present in the dataset, or explicitly added through
 `data/seed-catalog.json`. If vdb is unavailable, do not admit new
 non-YouTube identities automatically. Existing records are never deleted by
-this discovery filter.
+this discovery filter. A curated directory — vTubie's groups, bacharu's
+roster — is a roster of the same kind: an entry there is the **claim**, and
+the performer gate above still decides whether it is admitted.
 
 YouTube has a deliberate discovery exception because singing-stream and relay
 hashtags vary. A new YouTube identity can enter virtual data only after at
@@ -348,10 +351,13 @@ create non-fast-forward push failures.
 | Fix the classifier itself | `scripts/lib/classify.ts` |
 | Add a curated channel | `data/seed-catalog.json` |
 | Discover new performers | `npm run data:discover` — vTubie's directory, read with a browser (`puppeteer-core`, optional); candidates land in `data/identities.json`, and `--promote` adds the ones that pass the two-video gate to `data/channels/` |
+| Add a VTuber group's members | `npm run data:vtubie-groups` (browser, resumable) then `npm run data:vtubie-import -- --apply`; the group page is the only vTubie path that publishes the `UC…` id, so no name search is involved |
+| Add new VTubers from the bacharu roster | `npm run data:bacharu` (JSON API, resumable) then `npm run data:bacharu-import -- --apply`; a row with only an `@handle` needs `--resolve-handles` first |
 | Add a region | `scripts/lib/types.ts`, `scripts/lib/regions.ts` |
 | Add a platform | `scripts/lib/platforms/<name>.ts` + `platform-registry.ts` |
 | Add a discovery source | `scripts/lib/debut-sources/<name>.ts` |
 | Change the search behaviour | `scripts/lib/search.ts`, then `npm run data:index` |
+| Fix a wrong `kind` or `role` across the dataset | `scripts/lib/classify.ts`, then `npm run data:reclassify -- --apply` — it re-derives both from the records on disk, no network, and the roster ids in `.cache/` count as the virtual claim |
 | Add a UI filter | `src/lib/dataset.ts` (`filterItems`) + `src/App.vue` |
 
 ## Running things
@@ -366,6 +372,7 @@ npm run data:sync -- --keyword "…"   # run one discovery query
 npm run data:import-playlist -- "playlist.docx" --dry-run # preview a DOCX import
 npm run data:verify                   # verify classifications with search grounding
 npm run data:index                   # rebuild the search index
+npm run data:reclassify              # re-derive kind/role from disk; --apply to write
 npm run data:details -- --limit 2000 # fill the missing avatars
 npm run data:details -- --counts-only --limit 500 # fill the hidden follower counts
 npm run data:details -- --name-only  # correct the names and the aliases
@@ -374,6 +381,11 @@ npm run data:links -- --limit 200    # find the missing cross-platform accounts
 npm run data:links -- --shard 2/4 --web --dry-run  # + search-grounded fallback
 npm run data:discover                # new performers from the directory sources (vTubie)
 npm run data:discover -- --promote   # + add the ones that pass the virtual-and-singing gate
+npm run data:vtubie-groups            # vTubie groups → .cache/vtubie-groups.json (browser, resumable)
+npm run data:vtubie-import -- --apply # add the harvested YouTube channels that pass the performer gate
+npm run data:bacharu                  # the bacharu roster → .cache/bacharu-vtubers.json (JSON, resumable)
+npm run data:bacharu -- --merge-only  # rebuild the snapshot from the page files
+npm run data:bacharu-import           # report what the roster adds; --apply to import the ids
 npm run data:ids                     # re-key handle ids to UC… ids
 npm run data:validate                # structure + budgets
 npm run data:import-legacy           # migrate the old SQLite database
@@ -405,6 +417,7 @@ Load one with the `skill` tool, e.g. `skill({ id: "sync-dataset" })`.
 | `docs/PLATFORMS.md` | The platform adapters and their discovery coverage |
 | `docs/SOURCES.md` | Every data source, and which are read |
 | `docs/DEPLOY.md` | GitHub Actions, Pages, secrets, LFS |
+| `docs/API.md` | The read-only JSON API, and its generated index |
 | `docs/CONTRIBUTING.md` | How to add a channel, a region, a platform |
 
 ## External data sources
@@ -428,8 +441,20 @@ Load one with the `skill` tool, e.g. `skill({ id: "sync-dataset" })`.
 | Niconico | `api.search.nicovideo.jp/api/v2` | Japanese original songs and covers |
 | VK | `api.vk.com/method` | Russian VTuber channels |
 
-Reference sites worth looking at:
-[holodex.net](https://holodex.net) ·
-[music.holodex.net](https://music.holodex.net) ·
-[taiwanvtuberdata.github.io](https://taiwanvtuberdata.github.io/) ·
-[vdb.vtbs.moe](https://vdb.vtbs.moe)
+The other trackers. Only the ones marked *read* are sources for this
+pipeline; the rest are the comparison set, so keep what a site **lists**
+separate from what it **tracks**.
+
+| Site | What it is | Access | Worth looking at for |
+| --- | --- | --- | --- |
+| [vdb.vtbs.moe](https://vdb.vtbs.moe) | The Virtual YouTuber Name List Database — **read** | Static `list.json`, no key | The roster this project builds on: 10,138 identity records, names in `cn`/`jp`/`en`, accounts on up to 35 platforms |
+| [taiwanvtuberdata.github.io](https://taiwanvtuberdata.github.io/) | A Taiwan-centred tracking project — **read** | Static JSON, no key, Unlicense | The `nationality` field, the strongest region signal this project has, and the currently-live / calendar / debut / graduate lists it does not publish itself |
+| [holodex.net](https://holodex.net) | A YouTube VTuber stream index with a clip index and **Multiview** | Public site; API v2 needs `X-APIKEY` and answers `403` without one | The depth this project does not attempt: clips, mentions, subber relations, several streams in one player |
+| [music.holodex.net](https://music.holodex.net) | Musicdex — songs and set lists tagged out of singing streams | Same API and key | Song-level tagging of a stream, which this project classifies but does not tag |
+
+Measured on 2026-10-27, so a later reader can tell what moved: the Holodex API
+refuses `/api/v2/stats`, `/channels`, `/videos` and `/live` with `403`
+unauthenticated — its inventory cannot be counted from outside; vdb's
+`list.json` is 2.36 MB and holds 10,138 records (9,903 of them `vtuber`); the
+Taiwan tracker's `api/v2/all/groups.json` is 374 KB and holds 288 groups. The
+full comparison is in `docs/SOURCES.md`.

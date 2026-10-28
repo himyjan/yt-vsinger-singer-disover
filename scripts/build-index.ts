@@ -15,6 +15,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   DATA_DIR,
+  SIZE_BUDGET,
   ensureDir,
   formatBytes,
   readJson,
@@ -38,7 +39,11 @@ import { countValue } from "./lib/types";
 export interface SearchManifestFile {
   schemaVersion: number;
   generatedAt: string;
-  regions: { code: RegionCode; entries: number; bytes: number }[];
+  /**
+   * One row per **pack**, in the order they belong together: `shard` 0 is
+   * `<region>.json`, shard 1 `<region>.1.json`, and so on.
+   */
+  regions: { code: RegionCode; shard: number; entries: number; bytes: number }[];
   total: number;
 }
 
@@ -249,13 +254,36 @@ export function buildSearchIndex(): void {
   for (const region of ALL_REGIONS) {
     const records = byRegion.get(region);
     if (!records?.length) continue;
-    const pack = buildPack(region, records, now, aliasText);
-    const file = `${region}.json`;
-    keep.add(file);
-    writeJsonIfChanged(layout.searchRegion(region), pack);
-    const bytes = fs.statSync(layout.searchRegion(region)).size;
-    meta.push({ code: region, entries: pack.count, bytes });
-    total += pack.count;
+
+    /**
+     * A pack is a file, and a file has a ceiling. `en` outgrew it — 19,000
+     * records of token list, postings and idf came to 9.8 MB — so a region is
+     * written as as many packs as the budget needs, the first one keeping the
+     * historical `<region>.json` name so an older reader still finds it.
+     * Each pack is a complete inverted index over its own slice, which is why
+     * the browser concatenates them: token lookups are per pack anyway.
+     */
+    const bytesOf = (list: typeof records): number =>
+      Buffer.byteLength(JSON.stringify(buildPack(region, list, now, aliasText)), "utf8") + 1;
+
+    const parts = Math.max(
+      1,
+      Math.ceil(bytesOf(records) / SIZE_BUDGET.maxSearchPackBytes),
+    );
+    const per = Math.ceil(records.length / parts);
+
+    for (let shard = 0; shard < parts; shard++) {
+      const slice = records.slice(shard * per, (shard + 1) * per);
+      if (!slice.length) continue;
+      const file = shard === 0 ? `${region}.json` : `${region}.${shard}.json`;
+      const pack = buildPack(region, slice, now, aliasText);
+      keep.add(file);
+      const target = layout.searchRegion(region, shard);
+      writeJsonIfChanged(target, pack);
+      const bytes = fs.statSync(target).size;
+      meta.push({ code: region, shard, entries: pack.count, bytes });
+      total += pack.count;
+    }
   }
 
   // Drop packs for regions that no longer exist.
@@ -274,11 +302,13 @@ export function buildSearchIndex(): void {
 
   const bytes = meta.reduce((sum, m) => sum + m.bytes, 0);
   console.log(
-    `[build:index] ${total} entries across ${meta.length} region packs · ${formatBytes(bytes)}`,
+    `[build:index] ${total} entries across ${meta.length} pack(s) of ` +
+      `${byRegion.size} region(s) · ${formatBytes(bytes)}`,
   );
   for (const m of meta) {
     console.log(
-      `  ${m.code.padEnd(8)} ${String(m.entries).padStart(7)} entries  ${formatBytes(m.bytes).padStart(9)}`,
+      `  ${(m.shard === 0 ? m.code : `${m.code}.${m.shard}`).padEnd(10)} ` +
+        `${String(m.entries).padStart(7)} entries  ${formatBytes(m.bytes).padStart(9)}`,
     );
   }
 }
