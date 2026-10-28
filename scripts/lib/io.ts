@@ -54,6 +54,14 @@ export const SIZE_BUDGET = {
   maxSearchIndexBytes: 40 * 1024 * 1024,
   /** Maximum size of a single LFS-tracked binary (db / zip). */
   maxLfsBytes: 2 * 1024 * 1024 * 1024,
+  /**
+   * Ceiling for the *published* site, not the repository. GitHub Pages:
+   * "Published GitHub Pages sites may be no larger than 1 GB." The site is
+   * `dist/`, which is `public/data/` plus about a megabyte of assets, so this
+   * is the number the dataset actually has to fit inside — long before the
+   * 10 GB repository limit or the monthly squash comes into play.
+   */
+  maxSiteBytes: 1024 * 1024 * 1024,
 } as const;
 
 /** Human-readable byte size. */

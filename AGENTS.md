@@ -264,6 +264,14 @@ repository is kept bounded in rungs, and each rung has a trigger:
 3. **never** — raise a budget to buy time, or let a run push past the
    `repo:size --max-mb 900` gate in the sync.
 
+The gate and the volume trigger are sized by the **published site**, not by
+the repository ceiling: GitHub Pages refuses a site over 1 GB, and the site is
+one snapshot of a dataset that grows every day, while the 10 GB repository
+limit is ten snapshots away from ever binding. `prepare:public` checks the
+site and fails the build above the ceiling. A 7.5 GB catalogue is ten volumes
+of ~750 MB, not one repository of 7.5 GB — see `docs/DEPLOY.md` →
+*What actually binds*.
+
 ### 10. Every record keeps its provenance
 
 `mergeById()` preserves `addedAt`, and preserves `source: "seed"` and

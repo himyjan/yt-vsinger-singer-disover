@@ -324,15 +324,39 @@ The workflows install the LFS client explicitly:
 | --- | --- | --- |
 | repository on disk (`.git`) | 10 GB | recommended maximum |
 | a comfortable repository | 1 GB | recommendation |
+| **published site** | **1 GB** | **enforced** — the deploy fails |
 | a single push | 2 GB | **enforced** |
 | a single object | 100 MB | **enforced** (1 MB recommended) |
 | files in one diff | 300, or 1 MB of raw diff | the UI truncates the rest |
 | entries in one directory | 3,000 | recommendation |
 | pushes | 6 per minute | recommendation |
 
-The 900 MB gate is set by the top three: 1 GB is where clone and fetch start
-to hurt, the Pages site has its own 1 GB ceiling, and 2 GB is where a push is
-refused outright.
+#### What actually binds
+
+Two of those measure **different things**, and they are an order of magnitude
+apart:
+
+| | Repository | Site |
+| --- | --- | --- |
+| measures | every snapshot ever committed | the one snapshot that is published |
+| ceiling | 10 GB | **1 GB** |
+| grows by | every commit | the catalogue |
+
+`prepare:public` checks the site, not the repository: it warns at 75 % of the
+Pages ceiling and fails the build above it, because a deploy that runs for ten
+minutes and is then refused is the worst place to learn the size.
+
+At 1,773 bytes per record (72,113 records in 121.9 MB) the 1 GB ceiling lands
+at roughly **580,000 channels** — about eight times today's catalogue, and
+while the repository is still around 250 MB. That is the number the plan is
+actually racing.
+
+So the gate is 900 MB and the volume trigger is 700 MB, not 7.5 GB. A 7.5 GB
+*catalogue* is a reasonable target; a 7.5 GB *repository* is not, because it
+could only be published as a site ten times the ceiling. The way to own 7.5 GB
+is ten volumes of ~750 MB, each with its own site, which is what the ladder's
+third rung does — and then the gate is checked **per volume**, not for the
+catalogue as a whole.
 
 #### The tree is not the repository
 
