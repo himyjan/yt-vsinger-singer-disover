@@ -62,11 +62,19 @@ export async function buildRoster(
   /* --- Taiwan VTuber Tracking Data ------------------------------------- */
   const tracked = await fetchTrackedVtubers();
   for (const [youtubeId, record] of tracked) {
+    /**
+     * The Taiwan tracker is a **roster of VTubers**: an entry is a claim of a
+     * virtual identity, and the record has no description to repeat it. The
+     * kind is therefore taken from the roster rather than hard-coded — the
+     * classifier still refuses an explicit real-identity statement, and still
+     * decides the role — so a reclassification can move a record either way.
+     */
     const classification = classifyChannel({
       name: record.name,
       description: null,
       tags: [],
       country: null,
+      virtualClaim: "roster",
     });
 
     byId.set(youtubeId, {
@@ -80,8 +88,8 @@ export async function buildRoster(
        */
       aliases: [...record.aliases],
       handle: null,
-      kind: "virtual",
-      role: classification.role === "unknown" ? "vtuber" : classification.role,
+      kind: classification.kind,
+      role: classification.role,
       region: record.region,
       regionSource: "roster",
       // The language follows the region, not the name: a Taiwanese performer
@@ -174,6 +182,12 @@ export async function buildRoster(
   log(`roster: ${tracked.size} performers from the Taiwan VTuber roster`);
 
   /* --- curated seeds ---------------------------------------------------- */
+  /**
+   * A seed is a hand-verified classification, so `kind` here is a **curated
+   * claim** — the same standing as an `override.kind`. Records built from a
+   * seed carry it, and `scripts/reclassify.ts` passes the stored `kind` back
+   * as `recordedKind`, so the two agree instead of fighting.
+   */
   for (const seed of ALL_SEEDS) {
     if (!seed.channelId) continue; // handles need the API to resolve
     const existing = byId.get(seed.channelId);
@@ -280,11 +294,21 @@ export async function buildRoster(
       continue;
     }
 
+    /**
+     * vdb's `type` is its own filing: `fan` and `misc` are aggregator entries
+     * rather than performers, and everything else is a virtual performer.
+     * `VdbSource` already turns that into `kind` and `isAggregator`; this call
+     * is only for the fields the roster cannot supply — the role, the singing
+     * flag, the languages — and the claim is passed so a reclassify sees the
+     * same evidence the record was written with.
+     */
     const classification = classifyChannel({
       name: entry.name,
+      aliases: entry.aliases,
       description: null,
       tags: entry.aliases,
       country: null,
+      virtualClaim: entry.kind === "virtual" ? "roster" : null,
       // The platform is deliberately **not** passed: one platform is not
       // enough to decide the region. A performer with both a Bilibili and a
       // YouTube account presents to a global audience, and their
@@ -301,7 +325,7 @@ export async function buildRoster(
       aliases: [...entry.aliases],
       handle: null,
       kind: entry.kind,
-      role: classification.role === "unknown" ? "vtuber" : classification.role,
+      role: classification.role,
       region: entry.region,
       // The source travels with the region — a region whose provenance is
       // lost cannot be weighed against the region already on disk.
@@ -383,6 +407,15 @@ export async function buildRoster(
             // A performer found on Bilibili is mainland Chinese, and one
             // found on Niconico is Japanese.
             platform: adapter.id,
+            /**
+             * The adapter's search returns the platform's **VTuber**
+             * directory, so membership is the same claim the rosters carry —
+             * without it a Twitch-first performer whose bio never says
+             * "vtuber" is filed as a human singer on the one word it does
+             * say.
+             */
+            virtualClaim: "roster",
+            hasAvatar: !!channel.avatar,
           });
           byId.set(id, {
             id,

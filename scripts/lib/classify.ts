@@ -201,9 +201,18 @@ const REAL_IDENTITY = [
   "real person",
   "face reveal",
   "facereveal",
+  /**
+   * 「not a VTuber」 and its negations. 「an actual real person」 is here
+   * because of 「No she doesn't talk, but she does chat. Not artificially
+   * generated. An actual real person.」 — the same statement about a body,
+   * and the reason it has to be a phrase and not the word `real`: a VTuber
+   * writes 「totally real human」 as a joke.
+   */
   "not a vtuber",
   "not an vtuber",
   "not vtuber",
+  "actual real person",
+  "actually a real person",
   "vtuberではない",
   "vtuberじゃない",
   "本人出演",
@@ -214,6 +223,21 @@ const REAL_IDENTITY = [
   "live band",
   "cover band",
   "session musician",
+];
+
+/**
+ * The words that make a virtual performer a **VSinger** rather than a VTuber.
+ *
+ * Kept out of `REAL_ROLE` on purpose: 「vsinger」 is a virtual word, and
+ * `Taylor Swift — singer` must not be read as 「VSinger」.
+ */
+const VSINGER_ROLE = [
+  "vsinger",
+  "v singer",
+  "virtual singer",
+  "virtual idol",
+  "歌い手",
+  "歌勢",
 ];
 
 /**
@@ -674,7 +698,13 @@ export function classifyChannel(signals: ChannelSignals): ChannelClassification 
     countHits(body, VIRTUAL_STRONG) +
     countHits(tags, VIRTUAL_STRONG) +
     1 * countHits(names, VIRTUAL_WEAK) +
-    countHits(intro, VIRTUAL_WEAK);
+    countHits(intro, VIRTUAL_WEAK) +
+    /**
+     * An image **is** a weak hint, and it counts beside the words rather
+     * than only when there are none: 「German Vtuber desu」 already scores 3,
+     * and 「PNGtuber」 is a word the vocabulary knows.
+     */
+    (signals.hasAvatar ? 1 : 0);
 
   const realScore =
     3 * countHits(names, REAL_STRONG) +
@@ -695,9 +725,19 @@ export function classifyChannel(signals: ChannelSignals): ChannelClassification 
    * identity, and it does not make the performer a human. These do.
    */
   const explicitReal =
-    3 * countHits(names, REAL_IDENTITY) +
-    2 * countHits(intro, REAL_IDENTITY) +
-    countHits(body, REAL_IDENTITY);
+    /**
+     * A clip or archive account is **not a fan account** — it is the
+     * performer's own second channel, and its description is full of the
+     * performer's own words. 「This is an archive channel for my Twitch
+     * streams」 and 「Official clips channel for SeaFairyStars」 are not
+     * statements about a body, so an aggregator-flagged record is not
+     * allowed to use them as if they were.
+     */
+    isAggregator
+      ? 0
+      : 3 * countHits(names, REAL_IDENTITY) +
+        2 * countHits(intro, REAL_IDENTITY) +
+        countHits(body, REAL_IDENTITY);
 
   let kind: ArtistKind;
   let kindScore: number;
@@ -746,7 +786,12 @@ export function classifyChannel(signals: ChannelSignals): ChannelClassification 
   if (isAggregator) {
     role = "unknown";
   } else if (kind === "virtual") {
-    if (has(all(name, intro, body, tags), ["vsinger", "virtual singer", "歌い手"])) {
+    /**
+     * The `vsinger` vocabulary is the virtual one; a real singer who happens
+     * to use it would be given a virtual role, which is how `Taylor Swift`
+     * became `real/vtuber`.
+     */
+    if (has(all(name, intro, body, tags), VSINGER_ROLE)) {
       role = "vsinger";
     } else if (has(all(name, intro, body, tags), SINGING_CAMP)) {
       // 歌勢 — posts MVs and holds singing streams; the community also calls

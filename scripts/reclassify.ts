@@ -51,7 +51,17 @@ import type { BacharuVtuber } from "./lib/bacharu";
 interface RosterIndex {
   ids: Set<string>;
   handles: Set<string>;
-  notes: string[];
+  /**
+   * What the roster says about the channel.
+   *
+   * The platform's description is what the import stored, and it is often a
+   * fragment — `Schoko`'s YouTube page says 「Singer who hates their own
+   * voice」, while bacharu says 「I'm A Chocolate Loving Arctic demon」. The
+   * roster's text is the same kind of evidence as the platform's, so it is
+   * offered to the classifier beside it, never instead of it.
+   */
+  notes: Map<string, { description: string | null; tags: string[]; name: string | null }>;
+  log: string[];
 }
 
 function readJson<T>(file: string): T | null {
@@ -64,29 +74,48 @@ function readJson<T>(file: string): T | null {
 }
 
 function loadRosters(files: string[]): RosterIndex {
-  const index: RosterIndex = { ids: new Set(), handles: new Set(), notes: [] };
+  const index: RosterIndex = {
+    ids: new Set(),
+    handles: new Set(),
+    notes: new Map(),
+    log: [],
+  };
+
+  const remember = (keys: string[], entry: BacharuVtuber) => {
+    const note = {
+      description: entry.description,
+      tags: entry.tags,
+      name: entry.name,
+    };
+    for (const key of keys) if (key) index.notes.set(key, note);
+  };
 
   for (const file of files) {
     if (!fs.existsSync(file)) {
-      index.notes.push(`${file} — not on disk, skipped`);
+      index.log.push(`${file} — not on disk, skipped`);
       continue;
     }
     const snapshot = readJson<{ vtubers?: BacharuVtuber[] }>(file);
     if (!snapshot?.vtubers) {
-      index.notes.push(`${file} — not a roster snapshot, skipped`);
+      index.log.push(`${file} — not a roster snapshot, skipped`);
       continue;
     }
     let added = 0;
     for (const entry of snapshot.vtubers) {
+      const keys: string[] = [];
       if (entry.youtubeId) {
         index.ids.add(entry.youtubeId);
+        keys.push(entry.youtubeId);
         added++;
       }
       if (entry.youtubeHandle) {
-        index.handles.add(entry.youtubeHandle.replace(/^@/, "").toLowerCase());
+        const handle = entry.youtubeHandle.replace(/^@/, "").toLowerCase();
+        index.handles.add(handle);
+        keys.push(`handle:${handle}`);
       }
+      remember(keys, entry);
     }
-    index.notes.push(`${file} — ${added} channel id(s)`);
+    index.log.push(`${file} — ${added} channel id(s)`);
   }
 
   const vt = readJson<{
@@ -96,15 +125,25 @@ function loadRosters(files: string[]): RosterIndex {
     let added = 0;
     for (const member of vt.members) {
       const profile = member.profile;
+      const keys: string[] = [];
       if (profile?.youtubeId) {
         index.ids.add(profile.youtubeId);
+        keys.push(profile.youtubeId);
         added++;
       }
       if (profile?.handle) {
-        index.handles.add(String(profile.handle).replace(/^@/, "").toLowerCase());
+        const handle = String(profile.handle).replace(/^@/, "").toLowerCase();
+        index.handles.add(handle);
+        keys.push(`handle:${handle}`);
       }
+      const note = {
+        description: (profile as { description?: string | null })?.description ?? null,
+        tags: [] as string[],
+        name: (profile as { name?: string | null })?.name ?? null,
+      };
+      for (const key of keys) index.notes.set(key, note);
     }
-    index.notes.push(`.cache/vtubie-groups.json — ${added} channel id(s)`);
+    index.log.push(`.cache/vtubie-groups.json — ${added} channel id(s)`);
   }
 
   return index;
@@ -175,6 +214,31 @@ function parseArgs(argv: string[]): Options {
   return options;
 }
 
+/**
+ * The description and tags the classifier reads for one record.
+ *
+ * The platform's own text first, and the roster's beside it: a YouTube
+ * description that says 「Singer who hates their own voice」 and a bacharu
+ * description that says 「I'm A Chocolate Loving Arctic demon」 are two halves
+ * of the same evidence, and the classifier only sees what it is given.
+ */
+function evidenceFor(
+  channel: { id: string; handle?: string | null; description: string | null; tags: string[] },
+  rosters: RosterIndex,
+): { description: string | null; tags: string[] } {
+  const note = rosters.notes.get(channel.id) ??
+    (channel.handle ? rosters.notes.get(`handle:${channel.handle.toLowerCase()}`) : undefined);
+  if (!note) return { description: channel.description, tags: channel.tags };
+
+  const parts = [channel.description, note.description].filter(
+    (part): part is string => !!part && part.trim().length > 0,
+  );
+  /** The classifier reads the first 320 characters as the identity line. */
+  const description = parts.length ? [...new Set(parts)].join("\n").slice(0, 1000) : null;
+  const tags = [...new Set([...channel.tags, ...note.tags])];
+  return { description, tags };
+}
+
 /* -------------------------------------------------------------------------- */
 
 function main(): void {
@@ -182,10 +246,23 @@ function main(): void {
 
   const rosters = options.rosters
     ? loadRosters([options.snapshot])
-    : { ids: new Set<string>(), handles: new Set<string>(), notes: [] };
-  for (const note of rosters.notes) console.log(`roster: ${note}`);
+    : {
+        ids: new Set<string>(),
+        handles: new Set<string>(),
+        notes: new Map<string, { description: string | null; tags: string[]; name: string | null }>(),
+        log: [] as string[],
+      };
+  for (const line of rosters.log) console.log(`roster: ${line}`);
+  console.log(`roster: ${rosters.ids.size} id(s), ${rosters.handles.size} handle(s), ${rosters.notes.size} description(s)`);
 
   const all = readAllChannelRecords();
+  /**
+   * `data/overrides.json` is the last word — a hand-written `kind` outranks
+   * every classifier, here as in the sync and the import.
+   */
+  const overrides = readJson<Record<string, { kind?: "virtual" | "real" }>>(
+    "data/overrides.json",
+  ) ?? {};
 
   if (options.explain) {
     const record = all.find((row) => row.id === options.explain || row.name === options.explain);
@@ -198,11 +275,12 @@ function main(): void {
     const byHandle = record.handle
       ? rosters.handles.has(record.handle.toLowerCase())
       : false;
+    const evidence = evidenceFor(record, rosters);
     const fresh = classifyChannel({
       name: record.name,
       aliases: record.aliases,
-      description: record.description,
-      tags: record.tags,
+      description: evidence.description,
+      tags: evidence.tags,
       country: record.country,
       platform,
       virtualClaim: byId || byHandle ? "roster" : null,
@@ -234,23 +312,45 @@ function main(): void {
   for (const channel of rows) {
     const platform = primaryPlatformOf(channel);
     if (!platform) continue;
+    const overrideKind = overrides[channel.id]?.kind;
 
     const claim =
       rosters.ids.has(channel.id) ||
       (channel.handle ? rosters.handles.has(channel.handle.toLowerCase()) : false);
     if (claim) rostered++;
 
+    const evidence = evidenceFor(channel, rosters);
+    /**
+     * A **hand-written** classification — an override or a curated seed — is
+     * the last word, here as everywhere else (`AGENTS.md` rule 5). The
+     * reclassify must not undo a person's decision just because the text
+     * does not repeat it: `Taylor Swift` is in the dataset because somebody
+     * filed her as a real singer, not because a classifier found her.
+     */
+    const curated = channel.source === "seed" || !!overrideKind;
     const fresh = classifyChannel({
       name: channel.name,
       aliases: channel.aliases,
-      description: channel.description,
-      tags: channel.tags,
+      description: evidence.description,
+      tags: evidence.tags,
       country: channel.country,
       platform,
       virtualClaim: claim ? "roster" : null,
       hasAvatar: !!channel.avatar,
       recordedKind: channel.kind,
+      override: overrideKind ? { kind: overrideKind, curated: true } : undefined,
     });
+    /**
+     * A curated record keeps the kind **and** the role it was given. A
+     * person's classification is not a text the classifier can re-read:
+     * `Taylor Swift — singer` is a statement about a real musician, and
+     * re-deriving her role from the word 「singer」 produced `vtuber` when
+     * the kind was forced back to `real`.
+     */
+    if (curated) {
+      fresh.kind = overrideKind ?? channel.kind;
+      if (channel.source === "seed") fresh.role = channel.role;
+    }
 
     const before = `${channel.kind}/${channel.role}`;
     const after = `${fresh.kind}/${fresh.role}`;
