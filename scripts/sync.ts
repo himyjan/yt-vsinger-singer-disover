@@ -2897,7 +2897,8 @@ async function main(): Promise<void> {
       (a.link.lastCheckedAt ?? "").localeCompare(b.link.lastCheckedAt ?? ""),
     );
 
-    const multiLiveLimit = args.limitMultiPlatformLive ?? 2000;    const multiLiveItemIds = new Set<string>();
+    const multiLiveLimit = args.limitMultiPlatformLive ?? 2000;
+    const multiLiveItemIds = new Set<string>();
     if (multiPlatformLiveTargets.length) {
       let checked = 0;
       let found = 0;
@@ -2970,6 +2971,76 @@ async function main(): Promise<void> {
         )} channel(s) across ${[...liveAdapterPlatforms].join(", ")}, ` +
           `found ${found}, stored ${multiLiveItemIds.size}, retired ${retired}`,
       );
+    }
+  }
+
+  /**
+   * Bilibili live stream check.
+   *
+   * Bilibili's live list is partition-wide (online/list?rid=160), not
+   * per-channel, so it is fetched once via `search()` and filtered against
+   * known VTuber channel ids. `knownMids` is populated earlier in the run
+   * from the shared discovery allowlist and linked Bilibili identities.
+   */
+  const bili = adapters.find((a) => a.id === "bilibili") as
+    | (typeof adapters)[number] & {
+        liveUploads?: PlatformUpload[];
+        knownMids?: Set<string>;
+        search?: (query: string, limit: number) => Promise<PlatformChannel[]>;
+      }
+    | undefined;
+  const biliLiveItemIds = new Set<string>();
+  if (bili?.search && bili.liveUploads !== undefined) {
+    try {
+      // Populate liveUploads from the VTuber partition live feed
+      await bili.search("", 50);
+      const liveStreams = bili.liveUploads ?? [];
+      let biliChecked = 0;
+      let biliFound = 0;
+      let biliRetired = 0;
+      const currentBiliIds = new Set(liveStreams.map((s) => s.id));
+
+      for (const stream of liveStreams) {
+        const mid = stream.channelId;
+        if (!mid) continue;
+        const channel = channelById.get(mid) ?? channelById.get(`bilibili:${mid}`);
+        if (!channel) continue;
+        biliChecked++;
+        biliFound++;
+
+        const item = platformUploadToItem(stream, now, channel);
+        if (!item) continue;
+        item.type = "live";
+        item.status = stream.status ?? "live";
+        item.platform = "bilibili";
+        const prev = itemById.get(item.id);
+        itemById.set(item.id, {
+          ...item,
+          addedAt: prev?.addedAt ?? item.addedAt,
+        });
+        biliLiveItemIds.add(item.id);
+      }
+
+      // Retire streams that are no longer live
+      for (const item of itemById.values()) {
+        if (item.type !== "live" || item.platform !== "bilibili") continue;
+        if (item.status !== "live" && item.status !== "upcoming") continue;
+        if (currentBiliIds.has(item.id)) continue;
+        const ended = itemById.get(item.id);
+        if (!ended) continue;
+        ended.status = "past";
+        ended.actualEnd = ended.actualEnd ?? now;
+        ended.publishedAt =
+          ended.publishedAt ?? ended.actualStart ?? ended.scheduledStart ?? now;
+        ended.updatedAt = now;
+        biliRetired++;
+      }
+
+      log(
+        `bilibili live: checked ${biliChecked} channel(s), found ${biliFound}, stored ${biliLiveItemIds.size}, retired ${biliRetired}`,
+      );
+    } catch (error) {
+      log(`warn: bilibili live check failed: ${(error as Error).message}`);
     }
   }
 
