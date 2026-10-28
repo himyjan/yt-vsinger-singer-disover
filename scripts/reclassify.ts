@@ -9,8 +9,11 @@
  * classifier free of clocks and requests (`AGENTS.md` rule 8).
  *
  * **It is a rewrite of stored evidence, not of history.** A record keeps its
- * `addedAt`, its `source`, its name and region. Only two fields move, and only
- * when the classifier now reads the same evidence differently.
+ * `addedAt`, its `source` and its name. Only the fields the classifier derives
+ * move, and only when it now reads the same evidence differently: `kind` and
+ * `role` always, and — with `--languages` — the `region` and `languages` of a
+ * record whose region is only a **guess** (`script` or `unknown`), which is
+ * how a Spanish description that used to be read as English stops being `en`.
  *
  * ## The roster claim
  *
@@ -39,6 +42,7 @@ import {
   writeChannelShards,
 } from "./lib/dataset";
 import { classifyChannel } from "./lib/classify";
+import { toLanguageList } from "./lib/regions";
 import { primaryPlatformOf } from "./lib/platforms";
 import type { BacharuVtuber } from "./lib/bacharu";
 
@@ -164,6 +168,18 @@ interface Options {
   snapshot: string;
   limit: number | null;
   explain: string | null;
+  /**
+   * Re-derive `region` and `languages` too, for the records whose region is a
+   * guess.
+   *
+   * The language detector reads the script of the text, and it used to call
+   * every latin-script description English — which made a Spanish VTuber an
+   * `en` region as well. The pipeline classifies a record when it writes it,
+   * so the records written before the fix keep the wrong answer until a pass
+   * re-derives them; that pass needs no network, and it must not touch a
+   * region a person, a roster or an agency decided.
+   */
+  languages: boolean;
 }
 
 function parseArgs(argv: string[]): Options {
@@ -173,6 +189,7 @@ function parseArgs(argv: string[]): Options {
     snapshot: ".cache/bacharu-vtubers.json",
     limit: null,
     explain: null,
+    languages: false,
   };
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i]!;
@@ -182,6 +199,9 @@ function parseArgs(argv: string[]): Options {
         break;
       case "--no-rosters":
         options.rosters = false;
+        break;
+      case "--languages":
+        options.languages = true;
         break;
       case "--snapshot":
         options.snapshot = argv[i + 1] ?? options.snapshot;
@@ -205,6 +225,7 @@ function parseArgs(argv: string[]): Options {
             "  --snapshot <p>   the roster whose ids are the virtual claim",
             "  --no-rosters     judge every record on its own text only",
             "  --limit <n>      look at the first n records",
+            "  --languages      re-derive the region and languages of a guessed region",
             "  --explain <id>   print one record's claim and classification",
           ].join("\n"),
         );
@@ -355,6 +376,80 @@ function main(): void {
     if (curated) {
       fresh.kind = overrideKind ?? channel.kind;
       if (channel.source === "seed") fresh.role = channel.role;
+    }
+
+    /**
+     * The region follows the language, and the language follows the text.
+     *
+     * Only a **guessed** region is rewritten. A region a person, a roster or
+     * an agency decided is not the classifier's to take back — a Spanish
+     * performer's text says `es`, but if a curated override filed them in the
+     * `en` scene that is the decision, and it stays.
+     */
+    const regionIsGuess =
+      channel.regionSource === "script" || channel.regionSource === "unknown";
+    /**
+     * The language is read from the **record's own** text.
+     *
+     * `evidenceFor()` merges a roster's description into the classifier's
+     * input, which is right for `kind` and `role` — the roster's note is the
+     * only sentence some channels have — but wrong for the language: a
+     * German description beside a roster's English note is a mixed blob, and
+     * the detector answers `en`. The channel's own words are what it speaks.
+     */
+    const ownLanguage = options.languages
+      ? classifyChannel({
+          name: channel.name,
+          aliases: channel.aliases,
+          description: channel.description,
+          tags: channel.tags,
+          country: channel.country,
+          platform,
+          virtualClaim: claim ? "roster" : null,
+          hasAvatar: !!channel.avatar,
+          recordedKind: channel.kind,
+          override: overrideKind ? { kind: overrideKind, curated: true } : undefined,
+        })
+      : fresh;
+    const regionAfter = regionIsGuess ? ownLanguage.region : channel.region;
+    const sourceAfter = regionIsGuess
+      ? ownLanguage.regionSource
+      : channel.regionSource;
+    /**
+     * An ambiguous text is not evidence that the old answer was wrong, so a
+     * language the record already carries survives a `null` from the
+     * detector — a roster's note may be the reason it was known.
+     */
+    const languagesAfter =
+      regionIsGuess && ownLanguage.languages.length
+        ? ownLanguage.languages
+        : channel.languages;
+    /**
+     * A region that is `unknown` and has no language is not improved by the
+     * alphabet alone: 「Milz Malakite Ch.」 is latin-script and tells us
+     * nothing about where the performer belongs, so the old behaviour — a
+     * latin name counts as `en` — stays where it already was and is not
+     * written into a record that had no answer at all.
+     */
+    const blankAndAlphabet =
+      channel.region === "unknown" &&
+      toLanguageList(channel.languages).length === 0 &&
+      regionAfter === "en" &&
+      toLanguageList(ownLanguage.languages)[0] === "en";
+    if (options.languages && regionIsGuess && !blankAndAlphabet) {
+      const beforeLang = `${channel.region}/${toLanguageList(channel.languages).join(",")}`;
+      const afterLang = `${regionAfter}/${toLanguageList(languagesAfter).join(",")}`;
+      if (beforeLang !== afterLang) {
+        const key = `${beforeLang} → ${afterLang}`;
+        moves.set(key, (moves.get(key) ?? 0) + 1);
+        const list = examples.get(key) ?? [];
+        if (list.length < 4) list.push(channel.name);
+        examples.set(key, list);
+        channel.region = regionAfter;
+        channel.regionSource = sourceAfter;
+        channel.languages = languagesAfter;
+        changed++;
+      }
     }
 
     const before = `${channel.kind}/${channel.role}`;

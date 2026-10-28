@@ -63,6 +63,13 @@ Without a YouTube API key, the sync may still rebuild its roster; automatic
 roster additions are limited to vdb, existing dataset identities, and curated
 seeds. See the `sync-dataset` skill for the discovery admission rules.
 
+A roster — vdb, vTubie's groups, bacharu, VtuberHK — is a claim of **virtual
+identity** and nothing more: it does not rename a record, and it supplies a
+region only where the profile's own text decided nothing. The Hong Kong
+directory is imported with `npm run data:vtuberhk-import -- --apply`; its
+`--stats` pass fills the empty `viewCount` / `videoCount` of the records it
+lists.
+
 A performer the Virtual YouTuber Wiki or the vTubie directory lists is a
 *candidate*, not a record. `npm run data:discover` records the name in
 `data/identities.json`; `--promote` adds the channel once two of its videos
@@ -201,7 +208,10 @@ running it never undoes curated work.
 
 A link the pass found by **searching a name** is confirmed against the
 record's display name only — never an alias. 「维多利亚」's alias `Victoria`
-once matched the Canadian city's YouTube channel. Hand-written names in
+once matched the Canadian city's YouTube channel. The match is containment in
+either direction, because the record and the channel decorate a name
+differently (「雫るる_Official」 vs 「雫るる」), and a candidate that is a clip
+or fan channel is rejected even when the name matches. Hand-written names in
 `data/overrides.json` are safe from this entirely: `data:links` skips a record
 with an overridden region.
 

@@ -28,7 +28,7 @@ import type {
 } from "@shared/lib/types";
 import type { SearchPack, SearchHit } from "@shared/lib/search";
 import { searchPacks } from "@shared/lib/search";
-import { toLanguageList } from "@shared/lib/regions";
+import { canonicalAgency, toLanguageList } from "@shared/lib/regions";
 import { toSummary } from "@shared/lib/summary";
 import { isScheduleTitle } from "@shared/lib/classify";
 
@@ -388,6 +388,16 @@ function expandChannel(raw: Channel): Channel {
   for (const [key, value] of Object.entries(CHANNEL_DEFAULTS)) {
     if (channel[key] === undefined) channel[key] = value;
   }
+  /**
+   * One agency is one string, whatever the shard says.
+   *
+   * The pipeline canonicalises an agency when it writes a record, but a shard
+   * written before a spelling was added still holds the old one —
+   * `NIJISANJI` beside `nijisanji`, `HOLOSTARS` beside `holostars`. The list
+   * views group by this value, so the same fold runs on read, from the one
+   * definition in `scripts/lib/regions.ts`.
+   */
+  channel.agency = canonicalAgency(channel.agency as string | null);
   return channel as Channel;
 }
 

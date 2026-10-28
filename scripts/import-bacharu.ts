@@ -35,15 +35,26 @@
  *   npm run data:bacharu-import -- --limit 100 # report 100 rows
  *   npm run data:bacharu-import -- --apply     # import, 50 at a time
  *   npm run data:bacharu-import -- --apply --resolve-handles --limit 200
+ *   npm run data:bacharu-import -- --apply --search-names 200
  */
 
 import fs from "node:fs";
-import { readAllChannelRecords } from "./lib/dataset";
+import {
+  readAllChannelRecords,
+  rebuildChannelsManifest,
+  refreshManifestChannelCounts,
+  writeChannelShards,
+} from "./lib/dataset";
 import { detectClipAccount, isFanAccountName, normalize } from "./lib/classify";
 import { importYouTubeChannels } from "./lib/import-channels";
+import { acquireRunLock } from "./lib/io";
+import { isDistinctiveName } from "./lib/link-discovery";
+import { canonicalAgency } from "./lib/regions";
+import { normalizeName } from "./lib/identity";
 import { InnerTubeSource } from "./lib/youtubei";
-import { namesAgree } from "./lib/bacharu";
+import { namesAgree, rosterLanguageCodes } from "./lib/bacharu";
 import type { BacharuVtuber } from "./lib/bacharu";
+import type { Channel } from "./lib/types";
 
 /* -------------------------------------------------------------------------- */
 /* Snapshot                                                                   */
@@ -89,6 +100,10 @@ interface Row {
   youtubeId: string | null;
   handle: string | null;
   groups: string[];
+  /** The groups the roster lists as **current**; the former ones stay in `groups`. */
+  currentGroups: string[];
+  /** The languages the performer streams in, as dataset codes. */
+  languages: string[];
   status: string | null;
   countries: string[];
   verdict: Verdict;
@@ -135,6 +150,10 @@ function judge(entry: BacharuVtuber, lookup: Lookup, seenIds: Set<string>): Row 
     youtubeId: entry.youtubeId,
     handle: entry.youtubeHandle,
     groups: entry.groups.map((group) => group.name),
+    currentGroups: entry.groups
+      .filter((group) => group.status !== "former")
+      .map((group) => group.name),
+    languages: rosterLanguageCodes(entry.languages),
     status: entry.status,
     countries: entry.countries,
   };
@@ -197,6 +216,29 @@ interface Options {
   snapshotPath: string;
   batchSize: number;
   resolveHandles: number;
+  /**
+   * Rows with **no YouTube link at all** to look for on YouTube by name.
+   *
+   * 47,630 of the roster's 109,828 rows carry neither a channel id nor a
+   * handle: the roster knows the performer and not where they stream. A name
+   * search can find the channel, but only under the same rule a name search
+   * follows everywhere else — the channel's own title confirms the roster's
+   * display name, the name is distinctive, and a clip or fan account that
+   * carries the name is rejected. Ambiguity is a no: two candidates that both
+   * match is not a link.
+   */
+  searchNames: number;
+  /**
+   * Fill the empty `agency` of the records the roster already tracks.
+   *
+   * 1,044 of the 1,332 tracked bacharu rows that belong to a group have no
+   * agency, because the channel's own text never names it. The roster does,
+   * and `canonicalAgency()` keeps one agency one string: every `Hololive`
+   * variant is `hololive`, exactly as `AGENTS.md` requires.
+   */
+  agencies: boolean;
+  /** Attempt the ids a previous run could not resolve, whatever their age. */
+  retryDead: boolean;
 }
 
 function parseArgs(argv: string[]): Options {
@@ -206,6 +248,9 @@ function parseArgs(argv: string[]): Options {
     snapshotPath: ".cache/bacharu-vtubers.json",
     batchSize: 50,
     resolveHandles: 0,
+    searchNames: 0,
+    agencies: false,
+    retryDead: false,
   };
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i]!;
@@ -229,6 +274,16 @@ function parseArgs(argv: string[]): Options {
         options.resolveHandles = Math.max(1, Number(argv[i + 1] ?? 1));
         i++;
         break;
+      case "--search-names":
+        options.searchNames = Math.max(1, Number(argv[i + 1] ?? 1));
+        i++;
+        break;
+      case "--agencies":
+        options.agencies = true;
+        break;
+      case "--retry-dead":
+        options.retryDead = true;
+        break;
       case "--help":
       case "-h":
         console.log(
@@ -240,6 +295,9 @@ function parseArgs(argv: string[]): Options {
             "  --batch <n>          ids per import call, max 50 (default 50)",
             "  --snapshot <path>    the harvest to read (default .cache/bacharu-vtubers.json)",
             "  --resolve-handles <n>  resolve up to n @handles to channel ids, then import them",
+            "  --search-names <n>     search YouTube for up to n rows that have no link at all",
+            "  --agencies             fill the empty agency of tracked rows from their group",
+            "  --retry-dead           try the ids a recent run could not resolve",
           ].join("\n"),
         );
         process.exit(0);
@@ -276,6 +334,181 @@ async function resolveHandles(
   }
   log(`resolve: ${resolved.size} of ${handles.length} handles resolved to a channel id`);
   return resolved;
+}
+
+/**
+ * Whether a candidate channel is the performer a roster row names.
+ *
+ * The rule is `confirmsIdentity()`'s, read from the other side: there is no
+ * record yet, so the roster's **display name** is what the channel's own
+ * title has to match — in either direction, because the two sides decorate
+ * differently (`雫るる_Official` and `雫るる`) — and the name has to be
+ * distinctive enough to mean one performer.
+ */
+function nameConfirms(rosterName: string, candidateName: string): boolean {
+  const roster = normalizeName(rosterName);
+  const candidate = normalizeName(candidateName);
+  if (!roster || !candidate || !isDistinctiveName(roster)) return false;
+  if (roster === candidate) return true;
+  return candidate.includes(roster) || roster.includes(candidate);
+}
+
+/**
+ * Searches YouTube for the rows that carry no link at all.
+ *
+ * Each row costs one channel search and one profile read per candidate that
+ * is not already tracked — a candidate's title is the evidence, and the search
+ * result only gives an id. A row is accepted only when **exactly one**
+ * candidate matches; two channels that both carry the name are an ambiguity,
+ * not a link, and a clip or fan account that carries the name is a duplicate
+ * of the performer rather than the performer.
+ */
+async function searchNames(
+  source: InnerTubeSource,
+  rows: Row[],
+  lookup: Lookup,
+  rosterNames: Map<string, string[]>,
+  log: (message: string) => void,
+): Promise<number> {
+  let found = 0;
+  let scanned = 0;
+  for (const row of rows) {
+    scanned++;
+    const query = row.name.replace(/\s+/g, " ").trim();
+    if (!nameConfirms(query, query)) {
+      if (scanned % 25 === 0) log(`search: ${scanned}/${rows.length} · ${found} found`);
+      continue;
+    }
+    const ids = await source.searchChannels(query, 6);
+    const matches: string[] = [];
+    for (const id of ids) {
+      if (lookup.ids.has(id) || rosterNames.has(id)) continue;
+      const profile = await source.profile(id, { about: false });
+      if (!profile) continue;
+      const title = profile.title ?? "";
+      if (isFanAccountName(title)) continue;
+      if (detectClipAccount(title, profile.description ?? null)) continue;
+      if (!nameConfirms(row.name, title)) continue;
+      matches.push(id);
+    }
+    if (matches.length === 1) {
+      row.youtubeId = matches[0]!;
+      row.verdict = "new";
+      rosterNames.set(matches[0]!, [row.name]);
+      found++;
+      log(`  search: ${row.name} → ${matches[0]} (${scanned}/${rows.length})`);
+    } else if (matches.length > 1) {
+      log(`  search: ${row.name} → ${matches.length} candidates, skipped`);
+    }
+    if (scanned % 25 === 0) log(`search: ${scanned}/${rows.length} · ${found} found`);
+  }
+  log(`search: ${found} of ${rows.length} rows found a channel`);
+  return found;
+}
+
+/**
+ * The agency a roster group names, or `null`.
+ *
+ * A group is written the way its owner writes it — `NIJISANJI`,
+ * `Nijisanji` and `NIJISANJI (main branch)` are one agency — so the name is
+ * canonicalised before it is stored: `canonicalAgency()` folds the spellings
+ * and the hololive branches, and a parenthetical branch is folded onto the
+ * agency it belongs to. `hololive production` stays the parent company and
+ * `holostars` a separate brand, exactly as `canonicalAgency()` defines them.
+ * A group that matches nothing known is kept as written, because that is all
+ * the roster states.
+ */
+function canonicalGroupAgency(name: string): string | null {
+  const canonical = canonicalAgency(name);
+  if (!canonical) return null;
+  const branch = name.replace(/\s*\(.*?\)\s*$/, "").trim();
+  return branch && branch !== name ? canonicalAgency(branch) : canonical;
+}
+
+/** One agency for a row, when its current groups agree on one. */
+function agencyOfGroups(groups: string[]): string | null {
+  const values = new Set<string>();
+  for (const group of groups) {
+    const agency = canonicalGroupAgency(group);
+    if (agency) values.add(agency);
+  }
+  return values.size === 1 ? [...values][0]! : null;
+}
+
+/**
+ * Fills the empty agency of the records the roster already tracks.
+ *
+ * Only empty ones, and only where the roster's own groups agree: an agency
+ * the channel's title or description stated is a fact about the performer,
+ * and a former group is not a current affiliation. `affiliation` follows the
+ * agency to `group` where it said nothing either — a record with an agency
+ * is not `independent`.
+ */
+function backfillAgencies(
+  rows: Row[],
+  records: Channel[],
+  apply: boolean,
+): { records: number; written: Channel[] } {
+  const byId = new Map(records.map((record) => [record.id, record]));
+  let touched = 0;
+  const written: Channel[] = [];
+  for (const row of rows) {
+    if (!row.youtubeId) continue;
+    const record = byId.get(row.youtubeId);
+    if (!record || record.agency) continue;
+    const agency = agencyOfGroups(row.currentGroups);
+    if (!agency) continue;
+    touched++;
+    if (!apply) continue;
+    record.agency = agency;
+    if (record.affiliation === "unknown") record.affiliation = "group";
+    written.push(record);
+  }
+  return { records: touched, written };
+}
+
+/**
+ * The ids a recent run could not resolve.
+ *
+ * The roster is a historical census: of the first batch of rows it called
+ * new, almost none still exist — YouTube answers `This channel does not
+ * exist` for them. Asking again costs a request each and writes nothing, so a
+ * failure is remembered for a week: long enough that a run does not repeat
+ * the same dead ids, short enough that a channel that was briefly unavailable
+ * comes back on its own. `--retry-dead` ignores the list.
+ *
+ * The list is **not** a dataset fact — it lives in `.cache/` beside the
+ * snapshot, because it changes every run and would make every data commit a
+ * diff.
+ */
+const DEAD_CACHE = ".cache/bacharu-dead.json";
+const DEAD_DAYS = 7;
+
+interface DeadEntry {
+  /** When the id last failed to resolve. */
+  at: string;
+  reason: string;
+}
+
+function readDead(): Record<string, DeadEntry> {
+  try {
+    const raw = fs.readFileSync(DEAD_CACHE, "utf8");
+    const parsed = JSON.parse(raw) as Record<string, DeadEntry>;
+    return parsed && typeof parsed === "object" ? parsed : {};
+  } catch {
+    return {};
+  }
+}
+
+function isRecentlyDead(
+  dead: Record<string, DeadEntry>,
+  id: string,
+  now: number,
+): boolean {
+  const entry = dead[id];
+  if (!entry?.at) return false;
+  const at = Date.parse(entry.at);
+  return Number.isFinite(at) && now - at < DEAD_DAYS * 86_400_000;
 }
 
 async function main(): Promise<void> {
@@ -354,9 +587,23 @@ async function main(): Promise<void> {
     rosterNames.set(entry.youtubeId, [entry.name ?? "", ...entry.aliases].filter(Boolean));
   }
 
+  if (options.agencies && !options.apply) {
+    const preview = backfillAgencies(rows, readAllChannelRecords(), false);
+    console.log(
+      `\n${preview.records} tracked record(s) have no agency and a roster group names one.`,
+    );
+  }
+
   if (!options.apply) {
+    const deadNow = readDead();
+    const deadFresh = fresh.filter(
+      (row) => row.youtubeId && isRecentlyDead(deadNow, row.youtubeId, Date.now()),
+    ).length;
     console.log(
       `\n${fresh.length} channel(s) with an id would be imported` +
+        (deadFresh
+          ? `, but ${deadFresh} of them failed to resolve in the last ${DEAD_DAYS} days and are skipped`
+          : "") +
         (options.limit !== null ? `, the first ${options.limit} of them per run` : "") +
         (fresh.length ? `:\n${fresh.slice(0, 20).map((row) =>
             `  ${row.youtubeId}  ${row.name}  [${row.groups[0] ?? "no group"}]`,
@@ -364,6 +611,11 @@ async function main(): Promise<void> {
         (counts.get("handle-only")
           ? `\n\n${counts.get("handle-only")} row(s) carry only an @handle; ` +
             "`--resolve-handles <n>` resolves them into imports."
+          : "") +
+        (counts.get("no-youtube")
+          ? `\n${counts.get("no-youtube")} row(s) carry no YouTube link at all; ` +
+            "`--search-names <n>` searches YouTube for them and accepts only " +
+            "a single, distinctive, non-fan match."
           : "") +
         "\n\nNothing was written. Re-run with --apply.",
     );
@@ -405,6 +657,22 @@ async function main(): Promise<void> {
     }
   }
 
+  /* --- search for the rows with no link at all, when asked --------------- */
+  const searchRows = rows
+    .filter((row) => row.verdict === "no-youtube")
+    .slice(0, options.searchNames);
+  if (searchRows.length > 0) {
+    const source = new InnerTubeSource({ delayMs: 150 });
+    const ready = await source.connect();
+    if (!ready) {
+      console.error("InnerTube is unavailable — no name search was made.");
+    } else {
+      await searchNames(source, searchRows, lookup, rosterNames, (message) =>
+        console.log(message),
+      );
+    }
+  }
+
   /**
    * A channel import fetches each profile, so the list is walked in batches —
    * `importYouTubeChannels()` caps a call at 50 and writes the shards at the
@@ -414,8 +682,47 @@ async function main(): Promise<void> {
     if (row.verdict === "new" && row.youtubeId) ids.push(row.youtubeId);
   }
 
+  /**
+   * What the roster states and the profile cannot: the agency its groups
+   * name, and the state it files the performer in.
+   */
+  const agency: Record<string, string> = {};
+  const activity: Record<string, "active" | "preparing" | "graduated"> = {};
+  /**
+   * The languages the roster states, per channel — the **request** language.
+   *
+   * A channel that published an English localization answers InnerTube's
+   * default with an English title and description even though the performer
+   * streams in Japanese or Thai. The roster knows the language, so the
+   * profile is asked for in it and the stored description is the performer's
+   * own.
+   */
+  const languages: Record<string, string[]> = {};
+  for (const row of rows) {
+    if (!row.youtubeId || row.verdict === "fan" || row.verdict === "hidden") continue;
+    const name = agencyOfGroups(row.currentGroups);
+    if (name) agency[row.youtubeId] = name;
+    if (row.languages.length) languages[row.youtubeId] = row.languages;
+    if (row.status === "active" || row.status === "preparing" || row.status === "graduated") {
+      activity[row.youtubeId] = row.status;
+    }
+  }
+
   const batchSize = options.batchSize;
-  const pending = options.limit === null ? ids : ids.slice(0, options.limit);
+  /**
+   * An id YouTube no longer has is not worth a request a week later, let
+   * alone a week later in every run.
+   */
+  const dead = readDead();
+  const known = Date.now();
+  const live = options.retryDead
+    ? ids
+    : ids.filter((id) => !isRecentlyDead(dead, id, known));
+  const skipped = ids.length - live.length;
+  if (skipped) {
+    console.log(`${skipped} id(s) recently failed to resolve — skipped (--retry-dead retries).`);
+  }
+  const pending = options.limit === null ? live : live.slice(0, options.limit);
   let added = 0;
   let existing = 0;
   const kinds = new Map<string, number>();
@@ -429,6 +736,7 @@ async function main(): Promise<void> {
     const result = await importYouTubeChannels(slice, {
       limit: batchSize,
       rosterIds: new Set(rosterNames.keys()),
+      rosterHint: { agency, activity, languages },
     });
     added += result.added.length;
     existing += result.existing;
@@ -449,6 +757,13 @@ async function main(): Promise<void> {
         `${added} added · ${existing} already tracked · ${failed.length} failed`,
     );
   }
+
+  const at = new Date().toISOString();
+  for (const failure of failed) {
+    if (failure.reason !== "the channel did not resolve") continue;
+    dead[failure.id] = { at, reason: failure.reason };
+  }
+  fs.writeFileSync(DEAD_CACHE, JSON.stringify(dead, null, 0));
 
   for (const failure of failed.slice(0, 20)) {
     console.log(`  failed ${failure.id}: ${failure.reason}`);
@@ -478,6 +793,23 @@ async function main(): Promise<void> {
     }
     if (mismatched.length > 30) console.log(`  … ${mismatched.length - 30} more`);
   }
+  if (options.agencies) {
+    const now = new Date().toISOString();
+    const release = acquireRunLock("bacharu-agencies");
+    try {
+      const all = readAllChannelRecords();
+      const filled = backfillAgencies(rows, all, true);
+      if (filled.records) {
+        writeChannelShards(all, now);
+        rebuildChannelsManifest(all, now);
+        refreshManifestChannelCounts(all, now);
+      }
+      console.log(`${filled.records} record(s) had their agency filled from the roster.`);
+    } finally {
+      release();
+    }
+  }
+
   console.log("\nRun `npm run data:index` next.");
 }
 

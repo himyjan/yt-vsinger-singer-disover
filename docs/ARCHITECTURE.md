@@ -124,6 +124,10 @@ scripts/
 ├── split-volumes.ts         plans, writes and verifies the split into volumes
 ├── validate.ts              CI gate: structure, consistency, size budgets
 ├── prepare-public.ts        copies data/ into public/ for the build
+├── harvest-bacharu.ts       bacharu's roster → .cache/ (resumable, JSON API)
+├── harvest-vtuberhk.ts      vtuber.hk: /channels/ + /data/*.json → .cache/
+├── import-bacharu.ts        gates a bacharu snapshot into data/
+├── import-vtuberhk.ts       gates a VtuberHK snapshot into data/
 └── lib/
     ├── types.ts             the canonical data model (shared with the app)
     ├── youtube.ts           YouTube Data API v3 client + quota budget
@@ -137,7 +141,8 @@ scripts/
     ├── platform-registry.ts assembles every adapter
     ├── platforms.ts         the PlatformAdapter interface
     ├── classify.ts          virtual/real, role, region, gender, AI, category
-    ├── regions.ts           region metadata, agency → region, script detection
+    ├── regions.ts           region metadata, agency → region, script and
+    │                        latin-language detection (es/pt/fr/de/…)
     ├── link-discovery.ts    the identities a performer publishes, resolved
     ├── web-links.ts         optional search-grounded link finder (`--web`)
     ├── shard.ts             the deterministic shard, shared by every pass
@@ -224,11 +229,19 @@ run.
 `scripts/resolve-links.ts` is the pass for the records whose platform list is
 incomplete — 9,000+ of them, filed under Bilibili alone. It reads what the
 performer publishes about themselves (description, X bio through FxTwitter),
-then Wikidata by name, then — with `--web` — a search-grounded model, and
-writes the accounts it can **prove** belong to the record. A discovered
-YouTube channel's published country may correct the region; nothing else about
-the record is rewritten. It never renames and never merges, and it skips an
-account another record already owns.
+then Wikidata by name, then YouTube's own channel search by the display name
+(InnerTube, no quota) — a name candidate is confirmed by the profile's name,
+either direction of containment, and rejected if it is a clip or fan account —
+then, with `--web`, a search-grounded model. It writes the accounts it can
+**prove** belong to the record. A discovered YouTube channel's published
+country may correct the region; nothing else about the record is rewritten.
+
+The account also decides the **id**: the record is re-keyed to the YouTube
+`UC…` channel (`canonicalizeChannelIds()`), its items are re-pointed, and a
+duplicate with an existing YouTube record is merged, so a pass that finds the
+channel leaves the record on the id that channel owns. It skips an account
+another record already owns. `--platform <id>` and `--region <code>` narrow the
+queue — `--platform bilibili --region jp` is the Japanese mirror backlog.
 
 ### The web app (`src/`)
 
@@ -323,7 +336,7 @@ segmenter, because `歌い手` is indexed as `歌い` + `い手`.
 
 | Field | How |
 | --- | --- |
-| `kind` (virtual / real) | a curated `kind`, then a roster's `virtualClaim` (vdb, vTubie's groups, bacharu, each platform's VTuber directory), then a weighted score over strong and weak markers with the channel name weighted highest and the opening of the description next. `singer` / `composer` / `songwriter` are jobs and do not decide it; `REAL_IDENTITY` holds the words that state a human body |
+| `kind` (virtual / real) | a curated `kind`, then a roster's `virtualClaim` (vdb, vTubie's groups, bacharu, VtuberHK, each platform's VTuber directory), then a weighted score over strong and weak markers with the channel name weighted highest and the opening of the description next. `singer` / `composer` / `songwriter` are jobs and do not decide it; `REAL_IDENTITY` holds the words that state a human body |
 | `role` | the strongest matching role marker, unless the channel looks like an aggregator |
 | `region` | agency → published country → kana in the name → explicit region markers → platform prior → script detection → locale hints. A link to another platform is not a signal, and the winning source is stored in `regionSource` |
 | `gender` | explicit self-description first; honorifics only as a fallback |
@@ -340,7 +353,10 @@ catalogue can be re-derived in seconds with `npm run data:reclassify`, which is
 how a corrected vocabulary becomes a correct dataset without re-fetching
 sixty thousand profiles. It reads `.cache/bacharu-vtubers.json` and
 `.cache/vtubie-groups.json` for the roster claim, and honours overrides and
-seeds as the last word.
+seeds as the last word. `--languages` goes one field further: it re-derives
+the `region` and `languages` of a record whose region is only a guess
+(`script` or `unknown`), which is how the Spanish descriptions that used to
+be read as English stop being `en`.
 
 ## De-duplication
 

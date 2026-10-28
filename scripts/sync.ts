@@ -71,7 +71,12 @@ import {
   PLATFORM_URLS,
   extractPlatformId,
 } from "./lib/platforms";
-import { languagesForRegion, mergeLanguages } from "./lib/regions";
+import {
+  languagesForRegion,
+  mergeLanguages,
+  profileLanguage,
+  toLanguageList,
+} from "./lib/regions";
 import { fetchAiList, isOnAiList } from "./lib/aislist";
 import { fetchTrackedVtubers } from "./lib/taiwan-vtuber-data";
 import { buildRoster } from "./lib/roster";
@@ -869,7 +874,9 @@ async function main(): Promise<void> {
   const resolvedSeeds: any[] = [];
   const resolvedSeedIds = new Set<string>();
   const resolveSeedProfile = async (seed: SeedEntry, id: string) => {
-    const profile = await innertube.profile(id);
+    const profile = await innertube.profile(id, {
+      lang: profileLanguage(seed.region),
+    });
     const channel = channelFromInnerTubeProfile(profile, now, "seed", {
       kind: seed.kind,
       role: seed.role,
@@ -1823,7 +1830,19 @@ async function main(): Promise<void> {
        * renamed keeps the old name until the platform corrects it.
        */
       if (channel.id.startsWith("UC") && innertube.isAvailable) {
-        const profile = await innertube.profile(channel.id);
+        /**
+         * The profile is asked for in the **record's** language.
+         *
+         * A channel publishes a title and a description per localization, and
+         * YouTube answers the English one by default. A Japanese channel with
+         * an English localization would then be renamed to its English alias
+         * and described in English on every refresh — which is exactly how a
+         * Japanese channel ends up looking like an English one
+         * (`AGENTS.md` rule 2).
+         */
+        const profile = await innertube.profile(channel.id, {
+          lang: profileLanguage(channel.region, toLanguageList(channel.languages)),
+        });
         if (profile) {
           if (profile.title) {
             rename(profile.title, "youtube");
