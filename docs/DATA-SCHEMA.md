@@ -32,19 +32,45 @@ data/
     └── <region>.<n>.json       SearchPack — the rest of a large region
 ```
 
-A **volume** is the same tree, written under another root: the channel and
-item shards, both manifests, the search packs and a copy of `overrides.json`,
-all holding only the records `volumeOf(id)` assigns to that volume, plus a
-`volumes.json` that names the split:
+A **volume** is the same tree under another root, holding only the records
+`volumeOf(id)` assigns to it: the channel and item shards, both manifests, the
+search packs and a copy of `overrides.json` (curation is copied, not split).
+`npm run data:volumes` writes each volume as a **site root** — the dataset sits
+under `data/`, exactly as `public/` lays it out — so a volume directory can be
+published as the root of its own repository:
 
-```json
-{ "schemaVersion": 1, "index": 2, "count": 4, "name": "vol-2",
-  "channels": 17993, "items": 404 }
+```
+.volumes/
+└── vol-2/                     a deployable site root
+    └── data/
+        ├── manifest.json      this volume's own counts
+        ├── volumes.json       the split, identical in every volume
+        ├── overrides.json
+        ├── channels/…
+        ├── items/…            partitioned by volumeOf(item.channelId)
+        └── search/…           each volume indexes its own records
 ```
 
-Nothing in `data/` carries that file: a volume is a deployment of the dataset,
-not a part of it. `npm run data:volumes` writes the trees under `.volumes/`
-and `--verify` checks that they are a partition of `data/`.
+`volumes.json` names every volume and where it is served:
+
+```json
+{
+  "schemaVersion": 1,
+  "count": 3,
+  "volumes": [
+    { "index": 0, "name": "vol-0", "base": "",                "channels": 23975, "items": 511 },
+    { "index": 1, "name": "vol-1", "base": "/volumes/vol-1/", "channels": 24133, "items": 708 },
+    { "index": 2, "name": "vol-2", "base": "/volumes/vol-2/", "channels": 24005, "items": 530 }
+  ]
+}
+```
+
+Volume 0 is the origin the page was served from (base `""`, records at
+`/data`); the others name their address, relative to the deployment or
+absolute. Nothing in `data/` of a single-origin repository carries the file:
+a volume is a deployment of the dataset, not a part of it. `--verify` checks
+that the volumes are a partition of `data/`, and the client
+(`src/lib/origins.ts`) merges the volumes when the file is present.
 
 A region used to be one search pack. Once `en` passed 19,000 records the pack
 came to 9.8 MB, over the per-file budget, so a region is now written as **as

@@ -469,12 +469,28 @@ npm run data:volumes -- --verify .volumes # prove the partition holds
 npm run data:volumes -- --self-test       # check volumeOf() itself
 ```
 
-Each volume directory is a complete dataset: `channels/<kind>/<region>/`,
-`channels/manifest.json`, `items/` (partitioned by `volumeOf(item.channelId)`,
-so a video is in exactly one volume too), its own `manifest.json` with its own
-counts, `volumes.json` naming the split, and `overrides.json` — curation is
-**copied, not split**, because an override that hides a fan channel has to
-reach the volume that would otherwise publish it.
+Each volume directory is a **site root with its dataset under `data/`** — the
+same layout `prepare:public` produces — so it can be pushed straight into its
+own repository and published as that repository's site. Inside `data/` it
+holds `channels/<kind>/<region>/`, `channels/manifest.json`, `items/`
+(partitioned by `volumeOf(item.channelId)`, so a video is in exactly one
+volume too), its own `manifest.json` with its own counts, `overrides.json` —
+curation is **copied, not split**, because an override that hides a fan
+channel has to reach the volume that would otherwise publish it — and
+`volumes.json`, the descriptor a client reads to find the others:
+
+```bash
+# every volume beside the primary, under /volumes/ — one site, several origins
+npm run data:volumes -- --count 4 --base-url "/volumes/{name}/"
+
+# one GitHub Pages repository per volume
+npm run data:volumes -- --count 4 \
+  --base-url "https://<user>.github.io/yt-vsinger-disover-{name}/"
+```
+
+`{name}` is `vol-0`…`vol-N` and `{index}` is the number; the default is
+`{name}/`. Volume 0 is the origin the page was served from, so its `base` is
+always `""` and its records are the ones under `/data`.
 
 `--verify` reads the volumes *and* `data/`, and fails when a record is in two
 volumes, in none, or in a volume other than the one `volumeOf()` names — a
@@ -484,10 +500,16 @@ deterministic, balanced, and moves about `1/(N+1)` when the count grows.
 
 **Taking a split live is still manual**, and deliberately so: create one
 repository per volume, push `<out>/vol-N` into it, run the sync per volume, and
-give the client the origins. Until the client merges N datasets, `items/live`
-and the region counts are per-volume, and the app sees one volume at a time.
-That is the work the ladder buys time for, and it is why the split is planned
-before it is needed.
+publish it at the address written into `volumes.json`. The client already
+reads N origins — `src/lib/origins.ts` discovers them from `data/volumes.json`
+and every loader merges — so the only thing that changes on the day is that
+the file exists. Until then the file is absent and the app reads one origin
+exactly as it always has. Keeping the split planned and verified before it is
+needed is what makes that day a deployment rather than a migration.
+
+Check the pages locally before publishing: copy `vol-0/data` to `public/data`
+and the other volumes to `public/volumes/vol-N`, then load the app and confirm
+the region counts add up to the whole catalogue.
 
 ## Local development
 
