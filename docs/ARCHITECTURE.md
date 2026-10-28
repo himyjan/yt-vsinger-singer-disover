@@ -68,7 +68,8 @@ packs to about 28 MiB and a routine commit adds about 0.3 MiB, so the history
 is squashed to one snapshot every month and the shards stay the only part of
 the repository that grows. When a squash stops being enough the catalogue is
 split into **volumes** — one repository per slice, `volumeOf(id)` deciding
-which — and the app reads them the way it already reads regions. The ladder and
+which, planned and verified by `npm run data:volumes` — and the app reads them
+the way it already reads regions. The ladder and
 both procedures are in [DEPLOY.md](DEPLOY.md#the-capacity-ladder).
 
 ### 2. Sharding is a product decision, not an implementation detail

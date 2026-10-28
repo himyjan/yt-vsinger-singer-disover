@@ -32,6 +32,20 @@ data/
     └── <region>.<n>.json       SearchPack — the rest of a large region
 ```
 
+A **volume** is the same tree, written under another root: the channel and
+item shards, both manifests, the search packs and a copy of `overrides.json`,
+all holding only the records `volumeOf(id)` assigns to that volume, plus a
+`volumes.json` that names the split:
+
+```json
+{ "schemaVersion": 1, "index": 2, "count": 4, "name": "vol-2",
+  "channels": 17993, "items": 404 }
+```
+
+Nothing in `data/` carries that file: a volume is a deployment of the dataset,
+not a part of it. `npm run data:volumes` writes the trees under `.volumes/`
+and `--verify` checks that they are a partition of `data/`.
+
 A region used to be one search pack. Once `en` passed 19,000 records the pack
 came to 9.8 MB, over the per-file budget, so a region is now written as **as
 many packs as the budget needs** (`SIZE_BUDGET.maxSearchPackBytes`, 4 MB).

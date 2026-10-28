@@ -187,7 +187,8 @@ commit ~0.3 MiB, so the data history is squashed to one snapshot every month:
 about 28 MiB right after a squash, and ~55 MiB just before the next, once a
 month of commits has accumulated. `npm run repo:size` reports what GitHub
 actually stores; if a squash ever stops being enough, the catalogue splits
-into volumes. See
+into volumes with `npm run data:volumes` (planned, written and verified before
+anything is published). See
 [docs/DEPLOY.md](docs/DEPLOY.md#the-capacity-ladder).
 
 ## Classification

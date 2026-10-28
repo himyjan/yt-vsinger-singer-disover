@@ -34,9 +34,17 @@ npm run data:links -- --limit 200     # find the missing cross-platform accounts
 npm run data:links -- --shard 2/4 --dry-run
 npm run data:discover                 # new performers → data/identities.json
 npm run data:discover -- --promote    # + the ones that pass the two-video gate
+npm run data:volumes -- --dry-run     # plan the split into volumes
+npm run data:volumes -- --count 4     # write .volumes/vol-0 … vol-3
+npm run data:volumes -- --verify .volumes  # prove the partition holds
 ```
 
 Always finish with `npm run data:index && npm run data:validate`.
+
+`data:volumes` is not part of the refresh: it reads `data/` and writes a
+planned split under `.volumes/`, and only when the capacity ladder reaches its
+third rung. `--verify` is the check to run after any split, and `--self-test`
+checks `volumeOf()` itself — it needs no dataset.
 Without a Data API key, sync may still rebuild the roster and discover new
 channels and videos through InnerTube; `--no-search` is not a promise that no
 new roster records can be added.
