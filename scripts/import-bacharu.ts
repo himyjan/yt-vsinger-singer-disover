@@ -45,18 +45,29 @@ import {
   refreshManifestChannelCounts,
   writeChannelShards,
 } from "./lib/dataset";
-import { deriveVariant, detectClipAccount, isFanAccountName, normalize } from "./lib/classify";
+import {
+  classifyChannel,
+  detectActivity,
+  detectAffiliation,
+  detectClipAccount,
+  deriveVariant,
+  isFanAccountName,
+  normalize,
+} from "./lib/classify";
 import { importYouTubeChannels, rosterGender } from "./lib/import-channels";
 import { acquireRunLock } from "./lib/io";
 import { isDistinctiveName } from "./lib/link-discovery";
+import { isPlaceholderName } from "./lib/platforms";
 import { applyChannelEdits } from "./lib/roster-fill";
 import { canonicalAgency, COUNTRY_REGION, normalizeCountry } from "./lib/regions";
 import { normalizeName } from "./lib/identity";
 import { extractExternalLinks } from "./lib/twitch";
+import { TwitchGqlSource } from "./lib/twitch-gql";
 import { InnerTubeSource } from "./lib/youtubei";
 import { namesAgree, parseBacharuDebut, rosterLanguageCodes } from "./lib/bacharu";
 import type { BacharuVtuber } from "./lib/bacharu";
 import type { Channel, Gender } from "./lib/types";
+import { toCountRef } from "./lib/types";
 
 /* -------------------------------------------------------------------------- */
 /* Snapshot                                                                   */
@@ -1116,6 +1127,9 @@ async function main(): Promise<void> {
   const notVirtual: { id: string; name: string; kind: string }[] = [];
   const mismatched: { id: string; platform: string; roster: string }[] = [];
   const failed: { id: string; reason: string }[] = [];
+  /** YouTube ids successfully imported in this run — used so a channel the
+   *  YouTube import just created is not re-imported under its Twitch login. */
+  const importedYouTubeIds = new Set<string>();
 
   for (let offset = 0; offset < pending.length; offset += batchSize) {
     const slice = pending.slice(offset, offset + batchSize);
@@ -1128,6 +1142,7 @@ async function main(): Promise<void> {
     existing += result.existing;
     failed.push(...result.failed);
     for (const entry of result.added) {
+      importedYouTubeIds.add(entry.id);
       kinds.set(entry.kind, (kinds.get(entry.kind) ?? 0) + 1);
       regions.set(entry.region, (regions.get(entry.region) ?? 0) + 1);
       if (entry.kind !== "virtual") {
@@ -1142,6 +1157,163 @@ async function main(): Promise<void> {
       `import: ${Math.min(offset + batchSize, pending.length)}/${pending.length} · ` +
         `${added} added · ${existing} already tracked · ${failed.length} failed`,
     );
+  }
+
+  /* --- import rows whose YouTube channel is dead but have a Twitch link ---- */
+/**
+ * A dead YouTube channel is not a dead performer: the same person streams on
+ * Twitch. A row whose `UC…` id YouTube no longer has — or that never had one
+ * — can still become a record, keyed by `twitch:<login>` instead.
+ *
+ * The platform's own id is the record's id: a Twitch login renames, but the
+ * numeric id does not. GQL resolves either to the current profile, which
+ * corrects a stale roster entry. A row whose YouTube channel was just
+ * imported in this run is not re-imported under Twitch.
+ */
+  const twitchKeyed = rows.filter((row) => {
+    if (row.verdict === "fan" || row.verdict === "hidden") return false;
+    const entry = byRosterId.get(row.id);
+    if (!entry || !entry.social?.twitch) return false;
+    const login = entry.social.twitch.replace(/^@/, "").toLowerCase();
+    const twitchId = `twitch:${login}`;
+    if (lookup.ids.has(twitchId)) return false; // already tracked on any platform
+    if (row.youtubeId && (lookup.ids.has(row.youtubeId) || importedYouTubeIds.has(row.youtubeId)))
+      return false; // YouTube record already exists
+    return true;
+  });
+
+  if (twitchKeyed.length > 0) {
+    const source = new TwitchGqlSource({ delayMs: 300 });
+    const twitchRecords: Channel[] = [];
+    const twitchAdded: { id: string; name: string; region: string; kind: string }[] = [];
+    const twitchFailed: { id: string; reason: string }[] = [];
+    const now = new Date().toISOString();
+
+    for (const row of twitchKeyed) {
+      const entry = byRosterId.get(row.id)!;
+      const login = entry.social!.twitch!.replace(/^@/, "").toLowerCase();
+      const id = `twitch:${login}`;
+
+      try {
+        const profile = await source.profile(login);
+        if (!profile) {
+          twitchFailed.push({ id, reason: "the Twitch profile did not resolve" });
+          continue;
+        }
+
+        const name = (profile.displayName ?? login).trim();
+        if (isPlaceholderName(name)) {
+          twitchFailed.push({ id, reason: "the name is a placeholder" });
+          continue;
+        }
+
+        const description = profile.description
+          ? profile.description.slice(0, 1000)
+          : null;
+        const classification = classifyChannel({
+          name,
+          description,
+          tags: [],
+          country: null,
+          platform: "twitch",
+          /** Bacharu files every entry as a virtual performer — the roster's
+           *  claim settles kind, the description settles role. */
+          virtualClaim: "roster",
+          hasAvatar: !!profile.avatar,
+        });
+
+        const gender =
+          classification.gender !== "unknown" ? classification.gender : "unknown";
+        const agencyName = agencyOfGroups(row.currentGroups);
+
+        const record: Channel = {
+          id,
+          name,
+          nameSource: "platform",
+          aliases: [],
+          handle: login,
+          kind: classification.kind,
+          role: classification.role,
+          region: classification.region,
+          regionSource: classification.regionSource,
+          languages: classification.languages,
+          statedLanguages: classification.statedLanguages,
+          agency: agencyName ?? classification.agency ?? null,
+          affiliation: detectAffiliation(
+            name,
+            description,
+            agencyName ?? classification.agency ?? null,
+          ),
+          avatar: profile.avatar,
+          banner: null,
+          description,
+          subscribers: toCountRef(profile.followers),
+          videoCount: null,
+          viewCount: null,
+          uploadsPlaylistId: null,
+          country: null,
+          tags: [],
+          isSinging: classification.isSinging,
+          gender,
+          isAi: classification.isAi,
+          isOfficialArtist: false,
+          officialArtistCheckedAt: null,
+          variant: deriveVariant(classification.role, gender, classification.isAi),
+          verification: null,
+          source: "api",
+          addedAt: now,
+          updatedAt: now,
+          lastItemsFetchedAt: null,
+          lastDetailsFetchedAt: null,
+          activity: detectActivity(name, description, null),
+          debutDate: null,
+          graduateDate: null,
+          platforms: [
+            {
+              platform: "twitch",
+              id: profile.id,
+              handle: login,
+              name: profile.displayName ?? login,
+              url: `https://www.twitch.tv/${login}`,
+              subscribers: toCountRef(profile.followers),
+              avatar: profile.avatar,
+              lastCheckedAt: now,
+            },
+          ],
+          externals: {},
+          popularVideoId: null,
+        };
+
+        twitchRecords.push(record);
+        twitchAdded.push({ id, name, region: record.region, kind: record.kind });
+      } catch (err) {
+        twitchFailed.push({ id, reason: (err as Error).message });
+      }
+    }
+
+    if (twitchRecords.length > 0) {
+      const release = acquireRunLock("bacharu-twitch");
+      try {
+        const fresh = readAllChannelRecords();
+        const byId = new Map(fresh.map((c) => [c.id, c]));
+        for (const record of twitchRecords) {
+          if (!byId.has(record.id)) byId.set(record.id, record);
+        }
+        const all = [...byId.values()];
+        writeChannelShards(all, now);
+        rebuildChannelsManifest(all, now);
+        refreshManifestChannelCounts(all, now);
+      } finally {
+        release();
+      }
+    }
+
+    console.log(
+      `twitch: ${twitchAdded.length} added · ${twitchFailed.length} failed`,
+    );
+    for (const f of twitchFailed.slice(0, 10)) {
+      console.log(`  failed ${f.id}: ${f.reason}`);
+    }
   }
 
   const at = new Date().toISOString();
