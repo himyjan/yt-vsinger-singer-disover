@@ -42,6 +42,25 @@ for (const endpoint of index.endpoints) console.log(endpoint.path, "—", endpoi
 A documented endpoint is checked to exist at build time, so the index cannot
 advertise a route that is not deployed.
 
+### Volumes
+
+One day the catalogue may be served from several origins. When it is, the
+contract is unchanged **per volume**: each origin serves a complete dataset —
+its own manifests, shards, items and search packs — and every record is served
+by exactly one of them. A volume publishes `data/volumes.json` at its root:
+
+```json
+{ "schemaVersion": 1, "index": 2, "count": 4, "name": "vol-2",
+  "channels": 17993, "items": 404 }
+```
+
+so the split can be discovered from any single origin. The assignment is
+`volumeOf(id, count)`, a pure function of the channel id (rendezvous hashing
+over FNV-1a — `scripts/lib/volume.ts`, about forty lines, which a client can
+port), so a client that knows `count` can compute the origin holding a record
+instead of probing every one. Nothing deployed today is split: treat
+`volumes.json` as optional, and a missing file as `count: 1`.
+
 ## Endpoints
 
 | Path | Returns |

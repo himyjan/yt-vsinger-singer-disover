@@ -224,6 +224,28 @@ Ties break on recency.
   records carry `addedAt`, `source`, the aliases and `verification`, which is
   what a commit would have told you. The tree itself is never lost.
 
+## The size budget
+
+Three different ceilings apply, and only the first is enforced by the dataset
+itself:
+
+| What | Ceiling | Where |
+| --- | --- | --- |
+| one file | 8 MB | `SIZE_BUDGET.maxFileBytes`, on write |
+| the tree | 180 MB | `SIZE_BUDGET.maxDataBytes`, in `data:validate` |
+| the published site | 1 GB | `prepare:public` warns at 75 %, fails above |
+| the stored history | 900 MB | `repo:size --max-mb 900` in the sync |
+
+The history is bounded by policy, not by a constant: a monthly squash folds it
+back to one snapshot, and a catalogue that no squash can keep under 700 MB is
+split into **volumes** — `npm run data:volumes -- --dry-run` plans it,
+`--count N` writes the trees under `.volumes/`, and `--verify .volumes` proves
+no record was duplicated, omitted or filed under the wrong volume. See
+[DEPLOY.md](DEPLOY.md#the-capacity-ladder).
+
+If a change makes the dataset grow, add a retention rule or a new volume — do
+not raise a budget.
+
 ## Pull requests
 
 1. `npm run data:validate` must pass.

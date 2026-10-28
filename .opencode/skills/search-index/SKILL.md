@@ -14,10 +14,16 @@ region; the browser answers a query with a few binary searches.
 `SIZE_BUDGET.maxSearchPackBytes` (4 MB), `data/search/<region>.<n>.json` for
 the rest. The packs are a large share of a snapshot (~28 MiB packed for the
 whole tree), but they are regenerated from the records on every run, which is
-why `data/` history is squashed monthly rather than kept forever. Every pack is a complete inverted index over its own slice; the
-browser loads them together and `searchPacks()` merges the hits across packs
-exactly as it does across regions. `manifest.json` gives each pack its `shard`
-number.
+why `data/` history is squashed monthly rather than kept forever.
+
+Every pack is a complete inverted index over its own slice; the browser loads
+them together and `searchPacks()` merges the hits across packs exactly as it
+does across regions. `manifest.json` gives each pack its `shard` number.
+
+When the catalogue is split into volumes, each volume gets its own packs —
+`npm run data:index -- --root .volumes/vol-0`, or `data:volumes -- --index` —
+built from that volume's records only. A pack never spans two origins, which
+is what keeps the browser's search a per-origin operation.
 
 ```jsonc
 {

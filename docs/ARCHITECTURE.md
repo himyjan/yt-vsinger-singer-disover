@@ -120,7 +120,8 @@ scripts/
 ├── resolve-links.ts         finds the missing cross-platform accounts
 ├── discover.ts              finds performers nobody has recorded yet
 ├── verify.ts                verifies classifications with search grounding
-├── build-index.ts           builds the inverted search index
+├── build-index.ts           builds the inverted search index (`--root` for a volume)
+├── split-volumes.ts         plans, writes and verifies the split into volumes
 ├── validate.ts              CI gate: structure, consistency, size budgets
 ├── prepare-public.ts        copies data/ into public/ for the build
 └── lib/
@@ -140,6 +141,7 @@ scripts/
     ├── link-discovery.ts    the identities a performer publishes, resolved
     ├── web-links.ts         optional search-grounded link finder (`--web`)
     ├── shard.ts             the deterministic shard, shared by every pass
+    ├── volume.ts            the deterministic volume: rendezvous hashing
     ├── identity.ts          de-duplication registry
     ├── discovery-evidence.ts  virtual-creator and singing evidence rules
     ├── debut-sources/       the wiki and the vTubie directory, as adapters
@@ -151,7 +153,6 @@ scripts/
     ├── chinese-scripts.ts   simplified vs. traditional character sets
     ├── dedupe.ts            identity-based de-duplication
     ├── roster.ts            builds the channel roster from those sources
-    ├── dedupe.ts            identity-based de-duplication
     ├── music-dataset.ts     curated cover-song metadata
     ├── seed-catalog.ts      validates and loads data/seed-catalog.json
     ├── suggestions.ts       data/suggestions.json — the import queue
