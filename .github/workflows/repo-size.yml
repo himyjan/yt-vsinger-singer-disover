@@ -1,0 +1,73 @@
+name: Repository size
+
+# Measures the size GitHub actually stores — the history, not the working
+# tree — and fails when it grows past a budget.
+#
+# No workflow can shrink the repository: `git gc` in a run cleans a throwaway
+# clone and nothing else, and GitHub does its own housekeeping on its side.
+# What a schedule can do is notice the growth while it is still cheap to fix.
+# The cheap fix is almost never a rewrite: three 2.7 GB packs once sat in this
+# repository that no ref reached, left by a reset and an aborted rebase, and
+# `git gc --prune=now` in a local clone reclaimed them without touching a
+# single commit.
+#
+# `fetch-depth: 0` is required — a shallow clone has almost no history, so it
+# would report a few megabytes and pass forever.
+
+on:
+  schedule:
+    # Weekly, Monday morning, off the shared cron pool's peak.
+    - cron: "29 5 * * 1"
+  workflow_dispatch:
+    inputs:
+      max-mb:
+        description: "Fail above this size (MB)"
+        required: false
+        default: "1024"
+      warn-mb:
+        description: "Warn above this size (MB)"
+        required: false
+        default: "600"
+      repack:
+        description: "Also re-pack the reachable history to measure what gc would reclaim (slow)"
+        required: false
+        default: "false"
+
+concurrency:
+  group: repo-size-${{ github.repository }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  measure:
+    name: Measure the stored repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          lfs: true
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Measure
+        env:
+          MAX_MB: ${{ inputs.max-mb || '1024' }}
+          WARN_MB: ${{ inputs.warn-mb || '600' }}
+          REPACK: ${{ inputs.repack || 'false' }}
+        run: |
+          args=(--max-mb "$MAX_MB" --warn-mb "$WARN_MB")
+          if [ "$REPACK" = "true" ]; then args+=(--repack); fi
+          npm run repo:size -- "${args[@]}"

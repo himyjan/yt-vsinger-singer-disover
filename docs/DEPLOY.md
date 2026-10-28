@@ -98,6 +98,25 @@ origin. No CORS configuration is needed.
 Runs on pushes and pull requests: validate → type-check → build. A broken
 dataset or a broken build never reaches `main`.
 
+### `repo-size.yml` — the history, not the tree
+
+Runs weekly and on demand: checkout with `fetch-depth: 0`, then
+`npm run repo:size`. It reports what GitHub actually stores — the packed
+history, the loose objects, where the bytes went per top-level path, and the
+largest blobs ever committed — writes it to the job summary, warns above
+600 MB and fails above 1 GB.
+
+**No workflow can shrink the repository.** `git gc` in a run cleans a
+throwaway clone; GitHub does its own housekeeping on its side. A schedule here
+is a smoke alarm, not a mop. The cheap fix is almost never a rewrite: this
+repository once carried 8.37 GiB of packs of which 107 MB was reachable — a
+reset and an aborted rebase had left three 2.7 GB copies of the same history
+that nothing reached — and `git gc --prune=now` in a local clone reclaimed all
+of it without touching a commit.
+
+`fetch-depth: 0` is not optional: a shallow clone has almost no history, so it
+reports a few megabytes and passes forever.
+
 ## Repository secrets
 
 Add these under **Settings → Secrets and variables → Actions**:
@@ -296,6 +315,10 @@ The workflows install the LFS client explicitly:
   enforced on write and checked in CI.
 - Retention rules keep the dataset bounded: 30 items per channel, 1095-day
   (three-year) age limit, live and upcoming items always kept.
+- `npm run repo:size` measures the other number: the *history*. A reset, an
+  aborted rebase or a force-push leaves packs behind that no ref reaches, and
+  they are counted against the repository until a local `git gc --prune=now`
+  removes them. The weekly `repo-size.yml` run is what notices.
 
 ## Local development
 
@@ -353,5 +376,9 @@ path. For a project page it must be `/<repo>/`, with both leading and
 trailing slashes.
 
 **The push is rejected for being too large** — something large got committed.
-Check `git count-objects -vH`, and confirm the offending path is matched by
-`.gitignore` or `.gitattributes`.
+Check `git count-objects -vH` and `npm run repo:size`. If the packs are far
+larger than the reachable history (`repo:size` says so outright, and
+`--repack` measures it), a reset or an aborted rebase left packs nobody
+reaches: `git gc --prune=now` in a clone reclaims them. Only if the reachable
+history itself is over budget do you need a rewrite, and rewriting is a
+force-push that every clone has to follow.

@@ -27,6 +27,7 @@
     "data:ids": "tsx scripts/fill-details.ts --normalize-ids",
     "data:avatars": "tsx scripts/fill-details.ts",
     "data:validate": "tsx scripts/validate.ts",
+    "repo:size": "tsx scripts/repo-size.ts",
     "data:all": "npm run data:sync && npm run data:index && npm run data:validate",
     "sync": "npm run data:sync",
     "build:index": "npm run data:index",
