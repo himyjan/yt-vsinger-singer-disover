@@ -84,6 +84,26 @@ function has(haystack: string, needles: string[]): boolean {
  */
 const VIRTUAL_STRONG = [
   "vtuber",
+  /**
+   * The forms the rosters write. 「vtype」 is what bacharu and the Taiwanese
+   * community call a VTuber, and 「virtual artist」/「virtual composer」 are
+   * how a music-making VTuber describes themselves — 「The virtual artist
+   * APOKI」, 「a rabbit and virtual music producer」. Without these a roster
+   * entry whose own description is only 「The virtual artist …」 has no
+   * virtual evidence at all, and one real word — `artist` — files it as a
+   * human singer.
+   */
+  "vtype",
+  "v-type",
+  "virtual artist",
+  "virtual musician",
+  "virtual composer",
+  "virtual producer",
+  "virtual streamer",
+  "virtual gamer",
+  "virtual tuber",
+  "버튜버",
+  "ブイチューバー",
   "v tubers",
   "vtubers",
   "virtual youtuber",
@@ -159,6 +179,41 @@ const REAL_WEAK = [
   "instrumentalist",
   "vocaloid",
   "lead singer",
+];
+
+/**
+ * The words that state a **human identity**, not a job.
+ *
+ * `singer`, `composer` and `songwriter` are what a VTuber writes beside
+ * 「Vtuber」 on their own channel; they describe the work, not the body. These
+ * describe the body: a photograph, a face, a band that plays live — the things
+ * a character does not do.
+ *
+ * 「実写」 is **not** here even though it means "live action": 「実写とVの両方で
+ * 活動し」 is how a VTuber says they do both, which makes the word evidence of
+ * a virtual performer, not of a human one.
+ *
+ * 「real human」 is **not** here: it is a VTuber joke. 「ENVTuber and totally
+ * real human」 is the first line of Suzume Tekina's channel, and the phrase
+ * would file a stick-figure VTuber as a person.
+ */
+const REAL_IDENTITY = [
+  "real person",
+  "face reveal",
+  "facereveal",
+  "not a vtuber",
+  "not an vtuber",
+  "not vtuber",
+  "vtuberではない",
+  "vtuberじゃない",
+  "本人出演",
+  "实写",
+  "真人出镜",
+  "乐队",
+  "樂隊",
+  "live band",
+  "cover band",
+  "session musician",
 ];
 
 /**
@@ -413,6 +468,17 @@ export interface ChannelSignals {
   name: string;
   description: string | null;
   tags: string[];
+  /**
+   * The names a roster or an earlier pass already derived — the romanised
+   * name beside the CJK one, the former name, the handle.
+   *
+   * The profile's own text is not the only evidence *this channel* carries:
+   * 「YinXian | 阴仙 Ch.【 𝐗𝐈𝐀𝐋𝐓𝐄𝐑 】」 is two names, and 「唐茶」 has an empty
+   * description but was recorded as a VTuber by the pipeline that named it.
+   * They are read like the description — never as a name the platform
+   * confirmed — because that is what they are: more of this channel's text.
+   */
+  aliases?: string[];
   country: string | null;
   /**
    * The platform the channel was found on.
@@ -430,6 +496,42 @@ export interface ChannelSignals {
    * every other signal.
    */
   localeHints?: string | null;
+  /**
+   * What the **source** that found this channel says it is.
+   *
+   * A roster — vdb, vTubie's groups, bacharu — files every entry it lists as
+   * a virtual performer. That is a claim about **identity**, and it is not a
+   * guess: the entry exists because the roster put it there. It is not
+   * strength of evidence either — a roster has no idea what the channel's
+   * description says, and a clip channel is filed as a VTuber as readily as
+   * a performer is.
+   *
+   * So it settles *virtual or real* and leaves the **role** alone. A
+   * VTuber who writes 「composer」 in their description is still a VTuber;
+   * they are a virtual performer who writes music, and that is what `role`
+   * is for.
+   */
+  virtualClaim?: "roster" | null;
+  /**
+   * The identity an **earlier run** recorded, when nothing else says.
+   *
+   * The pipeline is not guessing when it re-reads its own output: a record
+   * that a previous pass — working from the full profile, before an importer
+   * replaced the description with the platform's English one — already filed
+   * as a VTuber is evidence about that channel. It is weaker than a
+   * roster's membership and weaker than the text, which is why it only
+   * decides when the text is silent.
+   */
+  recordedKind?: ArtistKind | null;
+  /**
+   * True when the profile carries an avatar at all.
+   *
+   * It is not evidence by itself — a human band uploads a photograph — but
+   * it is the single most common thing a VTuber channel has and a
+   * description does not say: 「Jay_Platypus: I'm just a guy trying to have
+   * fun and play videogames, png made by @owo_uou」.
+   */
+  hasAvatar?: boolean;
   /** Curated overrides, keyed by channel id. Always wins. */
   override?: {
     kind?: ArtistKind;
@@ -503,6 +605,8 @@ export function classifyChannel(signals: ChannelSignals): ChannelClassification 
   const name = normalize(signals.name);
   const description = normalize(signals.description);
   const tags = normalize(signals.tags.join(" "));
+  /** Every name recorded for this channel, folded into the name evidence. */
+  const names = normalize([signals.name, ...(signals.aliases ?? [])].join(" "));
 
   // The first 320 characters of a description are the "identity line".
   const intro = description.slice(0, 320);
@@ -564,25 +668,58 @@ export function classifyChannel(signals: ChannelSignals): ChannelClassification 
 
   /* --- virtual vs real --------------------------------------------------- */
   const virtualScore =
-    3 * countHits(name, VIRTUAL_STRONG) +
+    3 * countHits(names, VIRTUAL_STRONG) +
     2 * countHits(intro, PERSON_BEHIND) +
     2 * countHits(intro, VIRTUAL_STRONG) +
     countHits(body, VIRTUAL_STRONG) +
     countHits(tags, VIRTUAL_STRONG) +
-    1 * countHits(name, VIRTUAL_WEAK) +
+    1 * countHits(names, VIRTUAL_WEAK) +
     countHits(intro, VIRTUAL_WEAK);
 
   const realScore =
-    3 * countHits(name, REAL_STRONG) +
+    3 * countHits(names, REAL_STRONG) +
     2 * countHits(intro, REAL_STRONG) +
     countHits(body, REAL_STRONG) +
     countHits(tags, REAL_STRONG) +
-    1 * countHits(name, REAL_WEAK) +
+    1 * countHits(names, REAL_WEAK) +
     countHits(intro, REAL_WEAK);
+
+  /**
+   * The words that say "a human being, not a character".
+   *
+   * The real score is a majority vote between singing words and virtual ones,
+   * and it gets this wrong in a way that matters: a VTuber who writes
+   * 「resident Vtuber, Cosplayer, Guitarist, Singer and Songwriter」 has three
+   * real words to one virtual, and 「ボカロP兼Vtuber」 has exactly as many of
+   * each. Being a singer, a composer or a songwriter is a **job**, not an
+   * identity, and it does not make the performer a human. These do.
+   */
+  const explicitReal =
+    3 * countHits(names, REAL_IDENTITY) +
+    2 * countHits(intro, REAL_IDENTITY) +
+    countHits(body, REAL_IDENTITY);
 
   let kind: ArtistKind;
   let kindScore: number;
-  if (virtualScore === 0 && realScore === 0) {
+  if (signals.override?.kind) {
+    /**
+     * A person filed this channel. `override.curated` already outranks the
+     * aggregator test, and the kind is the same kind of statement.
+     */
+    kind = signals.override.kind;
+    kindScore = 1;
+  } else if (signals.virtualClaim === "roster") {
+    /**
+     * The roster says virtual. Only an explicit statement of a human body
+     * overrules it, and the records this was written for say so — see
+     * `REAL_IDENTITY`.
+     */
+    kind = explicitReal > 0 ? "real" : "virtual";
+    kindScore = kind === "virtual" ? Math.max(1, virtualScore) : explicitReal;
+  } else if (virtualScore === 0 && realScore === 0 && signals.recordedKind === "virtual") {
+    kind = "virtual";
+    kindScore = 0.5;
+  } else if (virtualScore === 0 && realScore === 0) {
     // No evidence either way. A dataset built around VTuber content is more
     // likely to be virtual, but the confidence stays low so the UI can flag it.
     kind = "virtual";
@@ -590,6 +727,15 @@ export function classifyChannel(signals: ChannelSignals): ChannelClassification 
   } else if (virtualScore >= realScore) {
     kind = "virtual";
     kindScore = virtualScore;
+  } else if (explicitReal === 0 && signals.hasAvatar) {
+    /**
+     * 「Jay_Platypus」 has a `singer` and nothing else. A channel that
+     * publishes an image and claims nothing else is more likely a PNG avatar
+     * than a studio photograph — the same prior as the no-evidence case
+     * above, and just as weak.
+     */
+    kind = "virtual";
+    kindScore = 0.4;
   } else {
     kind = "real";
     kindScore = realScore;
@@ -606,7 +752,28 @@ export function classifyChannel(signals: ChannelSignals): ChannelClassification 
       // 歌勢 — posts MVs and holds singing streams; the community also calls
       // these performers 虛擬歌手 (virtual singers).
       role = "vsinger";
-    } else if (virtualScore > 0) {
+    } else if (
+      virtualScore > 0 ||
+      /**
+       * A record an earlier pass already filed as a VTuber, whose text is
+       * silent now, keeps its role: 「唐茶」 has no description and nothing
+       * else to go on, and 「unknown」 would be a loss of information, not a
+       * finding.
+       */
+      (signals.recordedKind === "virtual" && !realScore) ||
+      /**
+       * The roster's claim is *membership*, not a word: it knows this account
+       * is a performer even when the profile says 「I'm just a guy trying to
+       * have fun, png made by @owo_uou」 and nothing else. A roster is a list
+       * of VTubers; 「unknown」 on every entry would throw the claim away.
+       */
+      signals.virtualClaim === "roster"
+    ) {
+      /**
+       * A roster entry with a silent profile is still a VTuber: 「唐茶」 has no
+       * description at all, and 「unknown」 is not what the roster that named
+       * it says.
+       */
       role = "vtuber";
     }
   } else {
@@ -1310,6 +1477,11 @@ export function isScheduleTitle(title: string | null | undefined): boolean {
  * performer they translate — often as `Artist/Original name` — and they are
  * *not* performers. Counting them as VTubers pollutes the dataset with
  * duplicates of the real artist under a second channel.
+ *
+ * These are the words that are a claim when they are the **name**:
+ * 「XX切片」, 「XX搬运组」, 「XX翻译」. In a description the same words are
+ * weaker — a performer writes 「不定期直播，剪辑游戏影片」 about their own
+ * editing — so the description test uses `CLIP_DESCRIPTION_MARKERS`.
  */
 const CLIP_ACCOUNT_MARKERS = [
   // translation and subtitles
@@ -1338,9 +1510,7 @@ const CLIP_ACCOUNT_MARKERS = [
   "精华",
   "烤肉",
   // English
-  "unofficial",
   "unofficial fan",
-  "non-official",
   "fan translation",
   "fan channel",
   "subtitles by",
@@ -1348,26 +1518,41 @@ const CLIP_ACCOUNT_MARKERS = [
   "on subtitles",
   "clip channel",
   "clip account",
-  // a place a performer keeps their own props
-  // a place that only exists for someone else
-  "工坊",
-  "万事屋",
-  "万事屋",
-  "食堂",
-  "专区",
-  "專區",
-  "神殿",
-  "总部",
-  "總部",
-  "支部",
-  "根据地",
-  "根據地",
-  "后援会",
-  "後援會",
-  "粉丝团",
-  "粉絲團",
-  "应援会",
-  "應援會",
+];
+
+/**
+ * Markers strong enough to identify a fan account from the **description**.
+ *
+ * A noun phrase, not a verb: 「本频道是搬运组」 is a statement about the
+ * account, where 「剪辑游戏影片」 is something the performer does to their own
+ * work, and 「an unofficial group of VTubers」 is how people describe a friend
+ * group — the vTubie harvest flagged a variety streamer on that phrase alone.
+ *
+ * The place words (「食堂」, 「万事屋」, 「总部」…) are absent for the same
+ * reason: they caught 「ひま食堂channel」, a Japanese performer whose name is a
+ * cafeteria. The pattern that matters — 「Hime的万事屋」 — is
+ * `isFanAccountName()`.
+ */
+const CLIP_DESCRIPTION_MARKERS = [
+  "翻译组",
+  "翻譯組",
+  "字幕组",
+  "字幕組",
+  "轴翻剪校",
+  "軸翻剪校",
+  "搬运组",
+  "搬運組",
+  "切片man",
+  "录播频道",
+  "錄播頻道",
+  "unofficial fan",
+  "fan translation",
+  "fan channel",
+  "subtitles by",
+  "translated by",
+  "on subtitles",
+  "clip channel",
+  "clip account",
 ];
 
 /**
@@ -1542,7 +1727,7 @@ export function detectClipAccount(
    * re-uploader, which is what this test is for.
    */
   if (has(normalize(name ?? ""), CLIP_ACCOUNT_MARKERS)) return true;
-  if (has(text, CLIP_ACCOUNT_MARKERS)) return true;
+  if (has(text, CLIP_DESCRIPTION_MARKERS)) return true;
   if (isFanAccountName(name)) return true;
 
   const trimmed = (name ?? "").trim();
@@ -1557,7 +1742,35 @@ export function detectClipAccount(
   const firstIsLatin = /^[A-Za-z0-9 ._'-]+$/.test(first);
   const secondIsLatin = /^[A-Za-z0-9 ._'-]+$/.test(second);
   // Both romanised, or both CJK — that is a normal name, not a clip account.
-  return firstIsLatin !== secondIsLatin;
+  if (firstIsLatin === secondIsLatin) return false;
+
+  /**
+   * 「VTuber/VStreamer」 and 「Cat | ENVTuber | They/He」 are a **role** and a
+   * pronoun, not two names: the roster is full of slashes that separate
+   * labels, and the emoji or the pipe beside them is what makes one half
+   * "not Latin" in the test above. The signature this rule is for is
+   * 「YUA/藤崎由愛」 — a romanised name and a CJK name — so both halves have to
+   * look like one.
+   */
+  if (NAME_ROLE_WORD.test(first) || NAME_ROLE_WORD.test(second)) return false;
+  if (latinCount(first) < 3 || latinCount(second) < 3) return false;
+  const cjk = firstIsLatin ? second : first;
+  if (cjkCount(cjk) < 2) return false;
+  return true;
+}
+
+/** A slash half that names a job rather than a person. */
+const NAME_ROLE_WORD =
+  /\bvtuber\b|\bvstreamer\b|\bvstream\b|\bvartist\b|\bvsinger\b|\bchannel\b|\bch\b|they\/|\bshe\b|\bhe\b|\bofficial\b/i;
+
+/** Latin letters in a string. */
+function latinCount(text: string): number {
+  return (text.match(/[A-Za-z]/g) ?? []).length;
+}
+
+/** Kana and CJK ideographs in a string. */
+function cjkCount(text: string): number {
+  return (text.match(/[\u3040-\u30ff\u4e00-\u9fff]/g) ?? []).length;
 }
 
 /**

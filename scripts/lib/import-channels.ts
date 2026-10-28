@@ -121,6 +121,7 @@ function recordFromProfile(
   first: InnerTubeProfile,
   now: string,
   override?: ChannelOverride,
+  rosterClaim = false,
 ): Channel | null {
   const id = normalizeChannelId(profile.id);
   if (!id.startsWith("UC")) return null;
@@ -140,6 +141,14 @@ function recordFromProfile(
     tags: [],
     country,
     platform: "youtube",
+    /**
+     * The roster that named this id files it as a virtual performer. The
+     * description usually says the same thing; when it does not —
+     * 「I'm just a guy trying to have fun, png made by @owo_uou」 — this is
+     * the only claim there is.
+     */
+    virtualClaim: rosterClaim ? "roster" : null,
+    hasAvatar: !!(profile.avatar ?? first.avatar),
     override: override
       ? {
           kind: override.kind,
@@ -243,6 +252,16 @@ export interface ImportOptions {
   offset?: number;
   /** Rebuild the search index at the end of the whole list. */
   rebuildIndex?: boolean;
+  /**
+   * The ids a **roster** supplied, rather than a search or a subscription.
+   *
+   * The roster files each of them as a virtual performer, and that is a claim
+   * about identity the profile itself may not repeat — see
+   * `ChannelSignals.virtualClaim`. Membership, not the name, is the claim:
+   * the fan and clip tests still run, and the roster still does not get to
+   * choose the name, the region or the role.
+   */
+  rosterIds?: Set<string>;
   onLog?: (message: string) => void;
 }
 
@@ -357,7 +376,13 @@ export async function importYouTubeChannels(
           : await source.profile(id, { lang, about: false });
       const profile = localized ?? first;
 
-      const record = recordFromProfile(profile, first, now, overrides[id]);
+      const record = recordFromProfile(
+        profile,
+        first,
+        now,
+        overrides[id],
+        !!options.rosterIds?.has(id),
+      );
       if (!record) {
         failed.push({ id, reason: "the channel has no usable name" });
         continue;

@@ -86,9 +86,9 @@ const cache = {
   live: null as Item[] | null,
   upcoming: null as Item[] | null,
   items: new Map<string, Item[]>(),
-  packs: new Map<string, SearchPack>(),
-  /** Regions that actually have a search pack (avoids pointless 404s). */
-  packRegions: null as RegionCode[] | null,
+  packs: new Map<string, SearchPack[]>(),
+  /** Packs that actually exist, in the order they belong together. */
+  packFiles: null as { region: RegionCode; shard: number }[] | null,
 };
 
 /**
@@ -114,7 +114,7 @@ export function resetDatasetCache(): void {
   cache.upcoming = null;
   cache.items.clear();
   cache.packs.clear();
-  cache.packRegions = null;
+  cache.packFiles = null;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -392,13 +392,38 @@ export async function loadItems(
   return results.flat();
 }
 
-/** Loads the search index pack for a region. */
-export async function loadSearchPack(region: RegionCode): Promise<SearchPack | null> {
+/**
+ * The file a pack is written to.
+ *
+ * A region used to be one file. Ten thousand records of tokens and postings
+ * are more than a file should be, so a region may now be several packs:
+ * `<region>.json` is the first, `<region>.1.json` the second, and so on.
+ */
+function packFile(region: string, shard: number): string {
+  return shard === 0 ? `data/search/${region}.json` : `data/search/${region}.${shard}.json`;
+}
+
+/**
+ * Loads every pack of a region.
+ *
+ * The pack carries its own inverted index, so two packs of one region are not
+ * a problem: a query looks up each of them and the hits are merged. What must
+ * stay true is the *order*, because the app ranks hits by score across packs
+ * anyway — the order only decides which region is fetched first.
+ */
+export async function loadSearchPack(region: RegionCode): Promise<SearchPack[]> {
   const cached = cache.packs.get(region);
   if (cached) return cached;
-  const pack = await fetchJson<SearchPack>(`data/search/${region}.json`);
-  if (pack) cache.packs.set(region, pack);
-  return pack;
+
+  const shards = cache.packFiles
+    ? cache.packFiles.filter((file) => file.region === region).map((file) => file.shard)
+    : [0];
+  const packs = await Promise.all(
+    shards.map((shard) => fetchJson<SearchPack>(packFile(region, shard))),
+  );
+  const found = packs.filter((pack): pack is SearchPack => !!pack);
+  cache.packs.set(region, found);
+  return found;
 }
 
 /** Loads the search index for every region (or a subset). */
@@ -408,21 +433,20 @@ export async function loadSearchPacks(
   if (regions === "all") {
     // Only fetch regions that actually have a pack, so the browser does not
     // log 404s for regions with no data.
-    if (!cache.packRegions) {
-      const manifest = await fetchJson<{ regions?: { code: RegionCode }[] }>(
-        "data/search/manifest.json",
-      );
-      cache.packRegions = (manifest?.regions ?? [])
-        .map((r) => r.code)
-        .filter((code) => code !== "unknown");
+    if (!cache.packFiles) {
+      const manifest = await fetchJson<{
+        regions?: { code: RegionCode; shard?: number }[];
+      }>("data/search/manifest.json");
+      cache.packFiles = (manifest?.regions ?? [])
+        .filter((r) => r.code !== "unknown")
+        .map((r) => ({ region: r.code, shard: r.shard ?? 0 }));
     }
-    const packs = await Promise.all(
-      cache.packRegions.map((c) => loadSearchPack(c)),
-    );
-    return packs.filter((p): p is SearchPack => !!p);
+    const wanted = [...new Set(cache.packFiles.map((file) => file.region))];
+    const packs = await Promise.all(wanted.map((region) => loadSearchPack(region)));
+    return packs.flat();
   }
-  const packs = await Promise.all(regions.map((r) => loadSearchPack(r)));
-  return packs.filter((p): p is SearchPack => !!p);
+  const packs = await Promise.all(regions.map((region) => loadSearchPack(region)));
+  return packs.flat();
 }
 
 /* -------------------------------------------------------------------------- */

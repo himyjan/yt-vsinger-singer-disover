@@ -85,7 +85,13 @@ export const layout = {
   songsCategory: (c: string) =>
     path.join(DATA_DIR, "songs", "categories", `${c}.json`),
   searchManifest: path.join(DATA_DIR, "search", "manifest.json"),
-  searchRegion: (r: string) => path.join(DATA_DIR, "search", `${r}.json`),
+  /**
+   * One pack of a region's search index. A region with ten thousand records
+   * no longer fits in one file, so the builder writes as many packs as the
+   * per-file budget needs and the browser downloads them together.
+   */
+  searchRegion: (r: string, shard = 0) =>
+    path.join(DATA_DIR, "search", shard === 0 ? `${r}.json` : `${r}.${shard}.json`),
   overrides: path.join(DATA_DIR, "overrides.json"),
 } as const;
 

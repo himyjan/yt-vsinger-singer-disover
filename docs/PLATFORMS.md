@@ -457,7 +457,7 @@ honest about the well-known databases it *cannot* read.
 | Bilibili | ✅ | Chinese VTuber channels, uploads, follower counts |
 | Niconico | ✅ | Japanese original songs and covers |
 | VK | ✅ | The Russian VTuber scene |
-| [vdb](https://vdb.vtbs.moe/json/list.json) | ✅ | ~10,100 performers on 35 platforms, their group and language |
+| [vdb](https://vdb.vtbs.moe/json/list.json) | ✅ | 10,138 identity records (9,903 performers) on up to 35 platforms, their group and language |
 | [Taiwan VTuber Tracking Data](https://taiwanvtuberdata.github.io/) | ✅ | YouTube and Twitch ids, aliases, nationality, debut and graduation dates |
 | [VocaDB](https://vocadb.net) | ✅ | Artists with their platform links, their songs and their releases |
 | [AiSList](https://github.com/Override92/AiSList) | ✅ | The channels that use AI-generated content |
@@ -471,6 +471,8 @@ honest about the well-known databases it *cannot* read.
 | [AI VTuber DB](https://aivtuberdb.com) | — | A list of AI VTubers — no machine-readable file |
 | [PVC.moe](https://pvc.moe) | — | Profile data — only in the client bundle |
 | [VTuber.hk](https://vtuber.hk) | — | Hong Kong VTubers — no documented format |
+| [Holodex](https://holodex.net) | — | A YouTube stream index with a clip index and Multiview — the API needs a key (`HOLODEX_API_KEY`) and answers `403` without one |
+| [Musicdex](https://music.holodex.net) | — | Songs and set lists tagged out of singing streams — the same API and key |
 | [Streams Charts](https://streamscharts.com/vtubers) | — | Channel statistics — blocks automated requests |
 
 ## The quota-free sources

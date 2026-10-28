@@ -7,7 +7,8 @@ channel and media details from supported platform APIs.
 
 - Collects VTuber singing streams, music videos, covers and original songs.
 - Keeps the dataset **in the repository** as versioned JSON, so it is
-  diffable, auditable and served directly from GitHub Pages.
+  diffable, auditable and served directly from a static host — GitHub Pages,
+  and a separate deployment on Vercel with real cache headers.
 - Searches it instantly with an inverted index built at pipeline time.
 - Separates the **virtual** and **real** datasets, and splits everything by
   **region**. The app can filter channels and media by region and platform.
@@ -47,6 +48,7 @@ npm run data:discover       # new performers from vTubie (--source all: + the wi
 | [docs/PLATFORMS.md](docs/PLATFORMS.md) | Platform identities, adapters and account-linking coverage |
 | [docs/SOURCES.md](docs/SOURCES.md) | Every data source, and which are read |
 | [docs/DEPLOY.md](docs/DEPLOY.md) | GitHub Actions, Pages, secrets, LFS |
+| [docs/API.md](docs/API.md) | The read-only JSON API: endpoints, shapes, caching |
 | [docs/ANALYTICS.md](docs/ANALYTICS.md) | Historical platform metrics and dashboard |
 | [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) | How to add a channel, a region, a platform |
 | [AGENTS.md](AGENTS.md) | Guide for AI agents |
@@ -60,7 +62,7 @@ scripts/sync.ts
   └── platform adapters: YouTube, Twitch, Bilibili, Niconico, VK,
                          CHZZK, KICK, SOOP and CI.ME
           ↓
-       classify → data/*.json → committed → GitHub Pages
+       classify → data/*.json → committed → GitHub Pages / Vercel
 
 scripts/resolve-links.ts   the missing accounts: the performer's own text,
                            their X bio, Wikidata, optional web search
@@ -151,6 +153,11 @@ data/
 ├── songs/               the music-centric projection
 └── search/              the inverted index, per region
 ```
+
+The same files are the **read-only API**: `data/api/v1/index.json` is a
+generated, versioned index of every endpoint and the shape of its response,
+and both deployments serve the tree cross-origin with a ten-minute cache. See
+[docs/API.md](docs/API.md).
 
 The scheduled GitHub Actions workflow refreshes the roster and supported
 platform data every six hours, rebuilds search, validates the dataset and
