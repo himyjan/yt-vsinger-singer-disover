@@ -386,7 +386,7 @@ Four rungs, each with its own trigger. Do not skip one.
 | --- | --- | --- |
 | weekly | `repo-size.yml` reports the stored size | a number, once a week |
 | **the 1st of every month** | squash the data history to one snapshot | ~28 MiB now, ~55 MiB by the next squash |
-| still above 700 MB after a squash, or two squashes inside six months | split the catalogue into **volumes** | each volume under 700 MB |
+| still above 700 MB after a squash, or two squashes inside six months | split the catalogue into **volumes** — `npm run data:volumes -- --count N`, then `--verify` | each volume under 700 MB |
 | the sync's `repo:size --max-mb 900` gate fails | **stop** — the run refuses to commit and a person decides | never crosses 1 GB |
 
 The gate is what makes the ladder work: no run can push the repository past
@@ -512,6 +512,7 @@ npm run data:sync -- --limit-channels 50 --limit-live 100
 npm run data:sync -- --keyword "vtuber 歌い手"
 npm run data:index                      # rebuild the search index
 npm run data:validate                   # check structure and budgets
+npm run data:volumes -- --dry-run       # plan the split into volumes
 ```
 
 `--shard N/M` is 1-based and selects the channels whose deterministic hash

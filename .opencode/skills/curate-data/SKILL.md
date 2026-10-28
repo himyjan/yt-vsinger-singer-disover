@@ -43,7 +43,12 @@ you fix it.
 | `affiliation` | `independent` \| `community` \| `group` \| `unknown` |
 | `tags` | string[] — merged into the record's tags (`["Fan Clip"]`) |
 | `isSinging` | boolean |
-| `hidden` | `true` removes it from the published dataset |
+| `hidden` | `true` — hide a fan channel or a duplicate from the published dataset without deleting it |
+
+The file is **global**, and a split catalogue copies it rather than dividing
+it: `npm run data:volumes` writes the whole `overrides.json` into every volume
+it produces, because an override that hides a fan channel has to reach the
+volume that would otherwise publish it. If you ever split by hand, copy it too.
 
 Apply them:
 

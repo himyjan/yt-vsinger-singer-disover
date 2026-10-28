@@ -64,8 +64,11 @@ Every record carries `source`:
 
 ## 3. Separate datasets: virtual vs. real
 
-- `[x]` `data/channels/virtual.json` — the VTuber / VSinger dataset.
-- `[x]` `data/channels/real.json` — the real human singer / producer dataset.
+- `[x]` `data/channels/virtual/` — the VTuber / VSinger dataset, sharded by
+      region and id (`<region>/<bucket>.json`).
+- `[x]` `data/channels/real/` — the real human singer / producer dataset, the
+      same layout. Both were one file each until the catalogue outgrew the
+      per-file budget.
 - `[x]` A **global scope switch** — `Virtual` / `Real` / `Both` — that applies
       to **every** web function: search, live, upcoming, songs, channels,
       subscriptions and saved items.
@@ -705,9 +708,9 @@ for discovery/profile refresh do not by themselves provide account linking.
       push and pull request.
 - `[x]` Dataset-writing workflows share a concurrency group and rebase
       generated data changes onto the latest branch before committing.
-- `[x]` Everything runs with plain Node — **no native modules in the CI path**
-      (`better-sqlite3` is an `optionalDependency`; only the local migration
-      script uses it).
+- `[x]` Everything runs with plain Node — **no native modules in the CI
+      path**. `better-sqlite3` is an `optionalDependency` and no script
+      imports it; the one-off SQLite migration it was added for is gone.
 - `[x]` `npm run data:validate` fails the build on a malformed, oversized or
       inconsistent dataset.
 - `[x]` The quota state is cached between workflow runs so several runs a day

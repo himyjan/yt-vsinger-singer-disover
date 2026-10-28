@@ -49,7 +49,6 @@ scripts/
 ├── validate.ts        CI gate
 ├── verify.ts          verify classifications with web-search grounding
 ├── split-volumes.ts   plan, write and verify the split into volumes
-├── import-legacy-db.ts  one-off SQLite migration
 ├── prepare-public.ts  copy data/ into public/ for the build
 └── lib/               types, youtube, twitch, platforms, classify, regions,
                        identity, discovery-evidence, debut-sources,
@@ -304,8 +303,9 @@ a direct `fetch` to the API.
 
 ### 13. `better-sqlite3` is an optional dependency
 
-It is only used by the one-off legacy migration. The CI path must stay free
-of native modules.
+No current script imports it — the one-off SQLite migration it was added for
+has been removed — and it stays an `optionalDependency` so the CI path never
+needs a native module. Do not add one.
 
 ### 14. YouTube Refresh needs the full scope and the local bridge
 
@@ -448,7 +448,6 @@ npm run data:bacharu-import           # report what the roster adds; --apply to 
 npm run data:ids                     # re-key handle ids to UC… ids
 npm run data:validate                # structure + budgets
 npm run repo:size                    # the stored history, not the tree
-npm run data:import-legacy           # migrate the old SQLite database
 ```
 
 ## Skills
