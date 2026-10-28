@@ -70,7 +70,12 @@ Kong directory is imported with `npm run data:vtuberhk-import -- --apply`; its
 `--stats` pass fills the empty `viewCount` / `videoCount` of the records it
 lists. HoloList is imported with `npm run data:hololist-import -- --apply`,
 and `-- --links --apply` fills the `externals` handle a record is missing from
-the entry's own link block.
+the entry's own link block. Bacharu is imported with
+`npm run data:bacharu-import -- --apply`; `--links --apply` attaches its social
+accounts (Twitch, X, Instagram, TikTok, Bilibili, Niconico, KICK, CHZZK, SOOP,
+VK, web) to tracked records' `externals`, and `--hints --apply` fills empty
+`region`, `debutDate` and `gender` from the roster's country, debut and gender
+fields — but only where `classify_channel()` left them unknown.
 
 A performer the Virtual YouTuber Wiki or the vTubie directory lists is a
 *candidate*, not a record. `npm run data:discover` records the name in

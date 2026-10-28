@@ -51,6 +51,8 @@ npm run data:bacharu-import -- --resolve-handles 6000   # handle-only rows
 npm run data:bacharu-import -- --search-names 200       # rows with no link at all
 npm run data:bacharu-import -- --agencies               # empty agency ← the row's group
 npm run data:bacharu-import -- --retry-dead             # retry ids a recent run could not resolve
+npm run data:bacharu-import -- --links --apply           # + social links on tracked records
+npm run data:bacharu-import -- --hints --apply           # + region, debutDate, gender on tracked records
 npm run data:vtuberhk                    # 672 HK channels + /data/*.json (5 requests)
 npm run data:vtuberhk-import -- --stats --apply  # + the counts the records lack
 npm run data:hololist                    # 9,359 entries through the sitemaps → .cache/

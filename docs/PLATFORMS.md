@@ -475,7 +475,7 @@ honest about the well-known databases it *cannot* read.
 | [Wikipedia REST](https://en.wikipedia.org/api/rest_v1/) | ✅ | A one-line description, the lead paragraph, the infobox image |
 | [Virtual YouTuber Wiki](https://virtualyoutuber.fandom.com/) | — | Wiki identities and debut dates |
 | [HoloList](https://hololist.net) | ✅ | 9,359 entries — 905 V-Singer, 3,751 V-Streamer, 9,127 V-Tuber, 143 V-UP — with the debut, birthday, affiliation, languages, status and the performer's Twitch / X / Instagram / TikTok / Bilibili / Niconico accounts; read from its sitemaps by `npm run data:hololist` (one page per entry, incremental on `<lastmod>`) |
-| [bacharu](https://bacharu.io) | ✅ | A directory of 109,828 performers and 685 groups — a JSON API read by `npm run data:bacharu` (109,828 rows, ~1,099 pages) |
+| [bacharu](https://bacharu.io) | ✅ | A directory of 109,828 performers and 685 groups — a JSON API read by `npm run data:bacharu` (109,828 rows, ~1,099 pages). `npm run data:bacharu-import -- --links --apply` attaches social accounts to tracked records; `--hints --apply` fills empty region, debutDate and gender |
 | [vTubie](https://vtubie.com/allvtubers/) | ✅ | A directory with follower counts — read with a browser, because the pages sit behind a Cloudflare challenge (`npm run data:discover`) |
 | [AI VTuber DB](https://aivtuberdb.com) | — | A list of AI VTubers — no machine-readable file |
 | [PVC.moe](https://pvc.moe) | — | Profile data — only in the client bundle |
