@@ -2880,7 +2880,14 @@ async function main(): Promise<void> {
 
     const liveLimit = args.limitLive ?? config.maxLiveChannelsPerRun;
     const liveTargets = channels
-      .filter((c) => c.id.startsWith("UC"))
+      /**
+       * The shard rotates with the run number in the scheduled workflow, so
+       * every channel is checked over a handful of runs instead of every run
+       * paying for the whole catalogue. A run without `--shard` still checks
+       * `maxLiveChannelsPerRun` of the least recently checked channels, so the
+       * ordering alone rotates the rest.
+       */
+      .filter((c) => c.id.startsWith("UC") && inShard(c.id, args))
       .sort((a, b) =>
         (a.lastItemsFetchedAt ?? "").localeCompare(
           b.lastItemsFetchedAt ?? "",
