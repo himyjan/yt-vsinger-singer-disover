@@ -372,19 +372,19 @@ function log(msg: string): void {
 }
 
 /** Dynamic in-place progress task for the sync pipeline. */
-let progressTask: any = null;
 let progressCount = 0;
 const totalPhases = 22;
 function progress(phase: string, detail?: string): void {
   progressCount++;
   const pct = Math.round((progressCount / totalPhases) * 100);
-  if (!progressTask) {
-    progressTask = consola.start("sync pipeline");
-  }
-  progressTask.update({
-    msg: `${phase}${detail ? ` — ${detail}` : ""}`,
-    progress: pct / 100,
-  });
+  const filled = Math.floor(pct / 5);
+  const bar = "█".repeat(filled) + "░".repeat(20 - filled);
+  process.stdout.write(
+    `\r[sync pipeline] ${bar} ${pct}% ${phase}${detail ? ` — ${detail}` : ""}`,
+  );
+}
+function stopProgress(): void {
+  process.stdout.write("\n");
 }
 
 function toNumber(v: unknown): number | null {
@@ -4287,10 +4287,10 @@ function printSummary(
   console.log("");
 }
 
-progressTask?.stop();
+stopProgress();
 
 main().catch((err) => {
-  progressTask?.stop();
+  stopProgress();
   console.error("[sync] fatal:", err);
   process.exit(1);
 });
