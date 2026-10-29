@@ -383,10 +383,17 @@ The sync checks live/upcoming status across platforms on every run:
   YouTube-keyed records (`maxLiveChannelsPerRun` default 50,000, not shard-limited).
 - **Twitch** — Twitch GQL profile's `live` field, checked during the details pass
   for channels linked to Twitch.
+- **Bilibili** — `GET /x/web-interface/online/list?rid=160` (VTuber partition
+  live feed), fetched via `search()` once per run and filtered against known
+  VTuber channel ids (`knownMids`). Ended streams are retired to `past`.
 - **CHZZK** — `GET /service/v3/channels/{id}/live-detail`, checked for channels
   linked to CHZZK.
 - **KICK** — `GET /api/v2/channels/{login}`, checked for channels linked to KICK.
 - **SOOP** — `main_broad_list_api.php` live list, matched against SOOP-linked channels.
+
+**Platforms without live checking:**
+- **Niconico** — no public live listing endpoint; `live()` returns empty.
+- **CI.ME** — API has no live-list endpoint; `live()` returns empty.
 
 Ended streams are retired to `past` on every run so the Live page stays current.
 Non-singing VTubers are included — the live check is not gated on `isSinging`.
