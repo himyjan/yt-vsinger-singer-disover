@@ -415,12 +415,13 @@ stable or complete search API:
 | --- | --- | --- | --- |
 | YouTube | Data API v3 | **InnerTube** (`youtubei.js`) | channel and video search, description, avatar, subscribers, uploads, releases, live/upcoming |
 | Twitch | Helix (client id **and** secret) | **GQL** (`gql.twitch.tv`) for browser account features | description, avatar, followers, live; sync keyword discovery uses Helix |
-| Bilibili | — | **WBI-signed public API** | description, avatar, followers, uploads, live |
+| Bilibili | — | **WBI-signed public API** | description, avatar, followers, uploads, live (via `online/list?rid=160` VTuber partition) |
 | CHZZK | — | **the public API** | channel search, profile, followers, live |
 | KICK | — | **the public API** | profile and live data for known channels; no usable public keyword search |
 | SOOP | — | **the public live-list API** | first-page live titles, channel names, viewer counts |
-| [CI.ME Open API](https://developers.ci.me/docs/api-channels) | **Open API** (`Client-Id` / `Client-Secret`) | same API | channel profile and follower count for known channel IDs; no documented search/media API |
+| [CI.ME Open API](https://developers.ci.me/docs/api-channels) | **Open API** (`Client-Id` / `Client-Secret`) | same API | channel profile and follower count for known channel IDs; no documented search/media/live API |
 | X / Twitter | — (no free read API) | [**FxTwitter**](https://github.com/FixTweet/FxTwitter) (`api.fxtwitter.com/<handle>`) | the bio, the website field and the location — where a Bilibili-only performer usually writes their YouTube link |
+| Niconico | — | **the public API** | search, uploads; no public live listing endpoint |
 
 **InnerTube** (`scripts/lib/youtubei.ts`) — the channel's *description* is the
 richest field in the project: it is where a performer states their own
@@ -464,14 +465,18 @@ Two things about it are easy to miss, and both were wrong for a long time:
 
 **Multi-platform live streaming.** The sync checks live/upcoming status for
 YouTube channels via the InnerTube Live tab, and for channels linked to
-CHZZK, KICK and SOOP via each platform's `live()` adapter. Non-singing VTubers
+CHZZK, KICK, SOOP and Bilibili via each platform's adapter. Non-singing VTubers
 are included — a VTuber who also streams on Twitch or goes live on CHZZK is
 caught regardless of `isSinging`. The live check covers all YouTube-keyed
 records in the catalogue (`maxLiveChannelsPerRun` default 50,000), not just
 the current shard, because live status is time-sensitive.
 
-Ended streams are retired to `past` on every run so the Live page stays
-current.
+- **Bilibili** live streams come from `online/list?rid=160` (VTuber partition),
+  fetched once per run via `search()` and filtered against known VTuber channel ids.
+- **Niconico** and **CI.ME** have no public live-list endpoint and are not
+  checked for live status.
+
+Ended streams are retired to `past` on every run so the Live page stays current.
 
 ### The subscription export
 
