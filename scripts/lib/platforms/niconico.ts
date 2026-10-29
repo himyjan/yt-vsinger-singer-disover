@@ -35,6 +35,9 @@ interface NicoVideo {
   startTime?: number;
   contentType?: string;
   type?: string;
+  liveStatus?: string;
+  user?: string;
+  nickName?: string;
 }
 
 interface NicoChannel {
@@ -53,6 +56,8 @@ export class NiconicoAdapter implements PlatformAdapter {
   readonly label = "Niconico";
   readonly color = "#252525";
   discoveredUploads: PlatformUpload[] = [];
+  /** Live streams found by the last live() call — populated once per run. */
+  liveUploads: PlatformUpload[] = [];
   private readonly onLog: (message: string) => void;
 
   constructor(options: NiconicoOptions = {}) {
@@ -172,8 +177,70 @@ export class NiconicoAdapter implements PlatformAdapter {
   }
 
   async live(_channel: PlatformChannel): Promise<PlatformUpload[]> {
-    // Niconico Live has no public Helix-style listing endpoint.
-    return [];
+    /**
+     * Niconico Live streams are fetched from the Content Search API v2 once per
+     * run and cached in `liveUploads`. The endpoint is global — it returns
+     * live programs matching a query, not per-channel — so the first call
+     * fetches and subsequent calls return the cached list.
+     *
+     * `filters[liveStatus][0]=onair` returns streams live right now;
+     * `reserved` would return scheduled upcoming streams.
+     */
+    if (this.liveUploads.length > 0) return this.liveUploads;
+
+    const data = await this.getJson<{
+      data?: NicoVideo[];
+      meta?: { status: number };
+    }>("search", {
+      q: "",
+      targets: "title,description,tags",
+      fields: "contentId,title,viewCounter,commentCounter,startTime,liveStatus,user,nickName",
+      "filters[liveStatus][0]": "onair",
+      _sort: "-viewCounter",
+      _limit: "100",
+      _context: "vsinger-singer-tracker",
+    });
+
+    const list = data?.data ?? [];
+    const uploads: PlatformUpload[] = [];
+
+    for (const video of list) {
+      if (!video.contentId || video.liveStatus !== "onair") continue;
+      const user = (video as NicoVideo & { user?: string }).user;
+      const classified = classifyItem({
+        title: video.title ?? "",
+        description: null,
+        tags: video.tags ?? [],
+        channelKind: "virtual",
+        status: "live",
+        isShort: false,
+        durationSeconds: null,
+        channelRegion: "jp",
+      });
+      uploads.push({
+        platform: "niconico",
+        id: video.contentId,
+        channelId: user ?? "",
+        title: video.title ?? "",
+        description: null,
+        thumbnail: `https://img1.ssl.nimg.jp/thumb/${video.contentId}`,
+        publishedAt: video.startTime
+          ? new Date(video.startTime * 1000).toISOString()
+          : null,
+        scheduledStart: null,
+        duration: null,
+        status: "live",
+        category: "live",
+        songTitle: classified.songTitle,
+        originalArtist: classified.originalArtist,
+        viewCount: video.viewCounter ?? null,
+        url: `https://www.nicovideo.jp/watch/${video.contentId}`,
+      } satisfies PlatformUpload);
+    }
+
+    this.liveUploads = uploads;
+    this.onLog?.(`niconico: ${uploads.length} live stream(s) found`);
+    return uploads;
   }
 
   async search(query: string, limit: number): Promise<PlatformChannel[]> {
