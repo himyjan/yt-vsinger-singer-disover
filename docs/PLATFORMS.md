@@ -337,16 +337,35 @@ These platforms have public endpoints that need no credentials.
 | **CHZZK** (Naver) | `GET api.chzzk.naver.com/service/v1/channels/{id}` | name, image, description, follower count, live state |
 | | `GET api.chzzk.naver.com/service/v3/channels/{id}/live-detail` | the live stream |
 | | `GET api.chzzk.naver.com/service/v1/channels/followings` | the user's followed channels (needs a cookie) |
-| **KICK** | `GET kick.com/api/v2/channels/{login}` | slug, follower count, bio, the live stream |
+| **KICK** | `GET kick.com/api/v2/channels/{login}` | slug, follower count, bio, profile picture, the performer's social accounts, the live stream |
+| | `GET kick.com/api/v2/channels/{login}/videos` | the recent VOD list (the adapter does not ingest it) |
 | | `GET kick.com/api/v2/channels/followed` | the user's followed channels (needs a token) |
 | | `GET api.kick.com/public/v1/users` | the signed-in user (needs a token) |
 
 The sync discovers CHZZK channels with the public
 `GET /service/v1/search/channels` endpoint, refreshes their profiles and checks
 their current live streams. KICK profiles and live streams can be refreshed
-for known identities, but its currently served web search endpoint is not a
-usable public API, so KICK candidates come from the global roster and existing
-records rather than keyword discovery.
+for known identities, but its web search endpoint is not a usable public API,
+so KICK candidates come from the global roster, a seed and the suggestions
+queue rather than keyword discovery.
+
+Two KICK details are easy to get wrong:
+
+- **The picture is `user.profile_pic`.** `user.profile_image_url` is a
+  YouTube-shaped name that KICK never sends, and an adapter that asks for it
+  stores a null avatar for every KICK record. An account that never uploaded
+  one answers `…/default1-fullsize.webp`, which
+  `isPlaceholderAvatar()` rejects.
+- **The timestamps are `"2026-10-29 10:17:56"`** — UTC, a space instead of
+  the `T` and no zone. `Date.parse()` reads that as local time, so
+  `kickTimestamp()` normalises it to ISO 8601 before it reaches an item.
+
+Category discovery — `GET api.kick.com/public/v1/channels?category_id=…`, the
+endpoint the KICK SDKs wrap — needs an **app access token**; without one the
+`kick.com/public/…` paths answer 404 and `api.kick.com` answers 401. So the
+pipeline does not enumerate the VTuber category: a KICK record has to be known
+by its login first (roster, seed or suggestion), and the details pass then
+refreshes it.
 
 SOOP's unauthenticated `main_broad_list_api.php` endpoint provides a
 paginated global live list with broadcast titles, streamer IDs and viewer
@@ -366,14 +385,28 @@ It returns channel name, handle, image, description and follower count. The
 endpoint uses the app's `Client-Id` and `Client-Secret`; configure these as
 `CI_ME_CLIENT_ID` and `CI_ME_CLIENT_SECRET` in the dataset sync environment.
 The secret is never exposed to the web app. The adapter refreshes profiles
-for known CI.ME IDs (up to 20 per API request); the documented API does not
-provide public handle search, uploads or a live-list lookup, so those methods
-return no items.
+for known CI.ME IDs, and because the endpoint accepts a comma-separated list
+it implements `resolveMany()`: the details pass hands it a batch and spends
+one request per twenty records instead of one per record.
+
+**Live status is public and per channel**:
+
+```
+GET https://ci.me/api/openapi/v1/{channelId}/live-status
+```
+
+It needs no credentials and answers `{ isLive, title, openedAt }`, so
+`CiMeAdapter.live()` works in a run with no client ID — the platform-wide
+live list (`GET /api/openapi/open/v1/lives`, the `cime-sdk`
+`client.live.getLives()` path) is behind the client credentials and is no
+longer used for live checking. That list also could not be attributed: it was
+fetched once and returned for *every* channel, so each CI.ME record looked
+live whenever anyone on the platform was streaming.
 
 The documented API does not include a user follow-list endpoint, public
-channel search, uploads or live-list endpoint. CI.ME therefore refreshes only
-known IDs when credentials are configured; it does not discover channels or
-media. The project does not offer CI.ME account linking or subscription import.
+channel search or uploads. CI.ME therefore refreshes only known IDs when
+credentials are configured; it does not discover channels or media. The
+project does not offer CI.ME account linking or subscription import.
 
 ### Multi-platform live streaming
 
@@ -391,10 +424,10 @@ The sync checks live/upcoming status across platforms on every run:
 - **KICK** — `GET /api/v2/channels/{login}`, checked for channels linked to KICK.
 - **SOOP** — `main_broad_list_api.php` live list, matched against SOOP-linked channels.
 
-- **CI.ME** — `client.live.getLives()` via cime-sdk, fetched once per run and
-  filtered against CI.ME-linked channel IDs. Requires
-  `CI_ME_CLIENT_ID` and `CI_ME_CLIENT_SECRET`. `getLiveStatus(channelId)` is
-  available for per-channel checks with auth scopes.
+- **CI.ME** — `GET /api/openapi/v1/{channelId}/live-status`, checked for
+  channels linked to CI.ME. It is public: no client ID is needed, and it is
+  asked per channel, so a stream is attributed to the channel that is on air.
+  CI.ME-keyed records are included even when they have no YouTube channel.
 
 Ended streams are retired to `past` on every run so the Live page stays current.
 Non-singing VTubers are included — the live check is not gated on `isSinging`.
@@ -414,8 +447,8 @@ by the configured adapters:
 | VK | User search and recent videos; discovery requires `VK_ACCESS_TOKEN` |
 | CHZZK | Public keyword channel search and live streams |
 | SOOP | Matches configured terms against the first page of its global live feed |
-| KICK | Refreshes known profiles and live streams; public keyword search is unavailable |
-| CI.ME | Refreshes known channel IDs with configured credentials; public search/media endpoints are unavailable |
+| KICK | Refreshes known profiles, the performer's published accounts and live streams; category discovery needs an app access token |
+| CI.ME | Refreshes known channel IDs with configured credentials; live status is public and per channel; public search/media endpoints are unavailable |
 
 The sync logs when a platform is skipped because credentials are missing or
 discovery is unavailable. `--no-search` skips keyword discovery across all

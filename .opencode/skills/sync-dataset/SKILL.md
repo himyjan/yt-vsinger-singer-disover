@@ -118,7 +118,7 @@ new roster records can be added.
    as fallback.
 8. **Fetch live** — InnerTube channel Live tab (all YouTube-keyed records,
    50k limit per run, not shard-limited), Twitch via GQL profile `live` field,
-   CHZZK/KICK/SOOP via each platform's `live()` adapter. A successful empty
+   CHZZK/KICK/SOOP/CI.ME via each platform's `live()` adapter. A successful empty
    check retires the stale live item to `past`; a failed check changes nothing.
    Ended streams are retired on every run; non-singing VTubers are included.
    The Data API optionally enriches discovered broadcasts with exact times and

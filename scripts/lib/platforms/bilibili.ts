@@ -248,6 +248,9 @@ export class BilibiliAdapter implements PlatformAdapter {
   readonly label = "Bilibili";
   readonly color = "#fb7299";
 
+  /** Bilibili's card endpoint states the account's archive total. */
+  readonly reportsVideoCount = true;
+
   private readonly partition: number;
   private readonly maxUploads: number;
   private readonly onLog: (message: string) => void;

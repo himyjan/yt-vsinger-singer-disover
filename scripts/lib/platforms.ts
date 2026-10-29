@@ -40,6 +40,15 @@ export interface PlatformChannel {
   description: string | null;
   /** Declared tags / keywords. */
   tags: string[];
+  /**
+   * URLs the platform's own profile publishes for the performer.
+   *
+   * KICK lists the performer's YouTube, X, Instagram and TikTok beside the
+   * bio, and those are accounts the performer stated themselves — the same
+   * kind of evidence a YouTube About page gives. The details pass turns them
+   * into `externals`, where the "all links" block shows them.
+   */
+  links?: string[];
   /** The number of published videos, when the platform reports it. */
   videoCount?: number | null;
   /** Lifetime views, when the platform reports them. */
@@ -110,6 +119,16 @@ export interface PlatformAdapter {
    * Optional: not every platform publishes one without authentication.
    */
   followers?(channel: PlatformChannel): Promise<CountRef | null>;
+  /**
+   * Whether `resolve()` reports an upload total.
+   *
+   * A platform that has no public video list — KICK, CI.ME, CHZZK — never
+   * publishes one, so a record on it keeps `videoCount: null` forever. The
+   * details pass reads this flag instead of treating that as a missing
+   * detail, which would put every KICK record at the top of the backlog and
+   * re-fetch it every six hours for a number the platform does not have.
+   */
+  reportsVideoCount?: boolean;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -366,7 +385,7 @@ export function extractPlatformId(input: string): {
     ["chzzk", /chzzk\.naver\.com\/([A-Za-z0-9_-]+)/],
     ["kick", /kick\.com\/([A-Za-z0-9_]+)/],
     ["soop", /(?:sooplive\.com\/station\/|ch\.sooplive\.co\.kr\/)([A-Za-z0-9_-]+)/],
-    ["ci.me", /ci\.me\/(?:channel\/)?([A-Za-z0-9_-]+)/],
+    ["ci.me", /ci\.me\/(?:channel\/)?@?([A-Za-z0-9_-]+)/],
   ];
 
   for (const [platform, re] of patterns) {
@@ -429,8 +448,12 @@ export function isPlaceholderName(name: string | null | undefined): boolean {
  * `bfs/face/member/noface.jpg`, and storing that URL makes the card look
  * broken rather than empty — the app renders the same silhouette either way,
  * but the record claims to have an image it does not have.
+ *
+ * KICK's default is `…/profile_image/conversion/default1-fullsize.webp`, so
+ * the `default` pattern is followed by a number: every account that never
+ * uploaded a picture answers with it.
  */
-const PLACEHOLDER_AVATARS = /(?:^|[/_.-])(?:noface|no_face|no-avatar|no_avatar|default[_-]?avatar|avatar[_-]?default)(?:[/_.-]|$)/i;
+const PLACEHOLDER_AVATARS = /(?:^|[/_.-])(?:noface|no_face|no-avatar|no_avatar|default[_-]?avatar|avatar[_-]?default|default\d+)(?:[/_.-]|$)/i;
 
 export function isPlaceholderAvatar(url: string | null | undefined): boolean {
   const trimmed = (url ?? "").trim();
