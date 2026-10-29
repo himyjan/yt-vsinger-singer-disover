@@ -2999,7 +2999,13 @@ async function main(): Promise<void> {
      * that platform, and skipping it because its id is not a `UC…` id meant
      * their live streams were never checked at all.
      */
-    const liveAdapterPlatforms = new Set(["chzzk", "kick", "soop", "ci.me"]);
+    const liveAdapterPlatforms = new Set([
+      "chzzk",
+      "kick",
+      "soop",
+      "ci.me",
+      "vk",
+    ]);
     const adapterById = new Map(adapters.map((a) => [a.id as string, a]));
 
     const multiPlatformLiveTargets: Array<{
