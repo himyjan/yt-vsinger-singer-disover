@@ -38,7 +38,11 @@
     "validate": "npm run data:validate",
     "data:verify": "tsx scripts/verify.ts",
     "data:vtuberhk": "tsx scripts/harvest-vtuberhk.ts",
-    "data:vtuberhk-import": "tsx scripts/import-vtuberhk.ts"
+    "data:vtuberhk-import": "tsx scripts/import-vtuberhk.ts",
+    "data:fandom": "tsx scripts/harvest-fandom.ts",
+    "data:fandom-import": "tsx scripts/import-fandom.ts",
+    "data:vtuber-db": "tsx scripts/harvest-vtuber-db.ts",
+    "data:vtuber-db-import": "tsx scripts/import-vtuber-db.ts"
   },
   "dependencies": {
     "@google/genai": "^2.31.0",
