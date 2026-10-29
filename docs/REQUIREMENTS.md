@@ -826,7 +826,7 @@ object** (1 MB is the recommended object size). Git LFS caps a single file at
 - `[x]` A daily task that looks for **newly debuted** performers.
 - `[x]` Sources:
       - **Virtual YouTuber Wiki (Fandom)** — MediaWiki API, free, no key.
-        Its `{{Character}}` infobox carries debut date, retirement date,
+        Its `Character` infobox template carries debut date, retirement date,
         YouTube channel, X handle and affiliation.
       - **YouTube** — channel/video search results are candidates only. A new
         channel enters virtual data after at least two distinct videos each
