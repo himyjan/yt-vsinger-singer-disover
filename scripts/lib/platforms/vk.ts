@@ -223,8 +223,49 @@ export class VkAdapter implements PlatformAdapter {
     });
   }
 
-  async live(_channel: PlatformChannel): Promise<PlatformUpload[]> {
-    return [];
+  async live(channel: PlatformChannel): Promise<PlatformUpload[]> {
+    if (!this.hasToken || !channel.id) return [];
+
+    const response = await this.call<{ items?: VkVideo[] }>("video.get", {
+      owner_id: channel.id,
+      live: "1",
+      count: "10",
+    });
+
+    const videos = response?.items ?? [];
+    if (!videos?.length) return [];
+
+    return videos.map((video) => {
+      const classified = classifyItem({
+        title: video.title,
+        description: video.description ?? null,
+        tags: [],
+        channelKind: "virtual",
+        status: "live",
+        isShort: false,
+        durationSeconds: video.duration ?? null,
+        channelRegion: "unknown",
+      });
+      return {
+        platform: "vk",
+        id: String(video.id),
+        channelId: channel.id,
+        title: video.title,
+        description: video.description ?? null,
+        thumbnail: video.photo_200 ?? video.photo_100 ?? null,
+        publishedAt: video.date
+          ? new Date(video.date * 1000).toISOString()
+          : null,
+        scheduledStart: null,
+        duration: video.duration ?? null,
+        status: "live",
+        category: "live",
+        songTitle: classified.songTitle,
+        originalArtist: classified.originalArtist,
+        viewCount: video.views ?? null,
+        url: `https://vk.com/video${video.owner_id}_${video.id}`,
+      } satisfies PlatformUpload;
+    });
   }
 
   /** The follower count. */
