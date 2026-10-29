@@ -1,0 +1,29 @@
+# GitHub's **legacy** Pages build runs Jekyll over the repository root.
+#
+# This repository is not a Jekyll site. The published app is built by Vite and
+# uploaded from `dist/` by `.github/workflows/deploy-pages.yml`; the Markdown in
+# `docs/` and `AGENTS.md` is documentation for contributors and is served by
+# GitHub itself, not by Pages. It must not be part of the Pages artifact.
+#
+# Jekyll was still reading it, because `jekyll-optional-front-matter` (part of
+# the github-pages plugin set) treats every Markdown file as a page and runs the
+# Liquid renderer over it. Documentation quotes source verbatim, and source
+# contains things Liquid owns:
+#
+#   * an Actions expression in a YAML sample is `$` + `{{ … }}`, so Liquid sees
+#     an unterminated variable and fails the whole build:
+#       Liquid syntax error: Variable '{{ vars.VITE_BASE_PATH …' was not
+#       properly terminated with regexp: /\}\}/
+#   * a MediaWiki template name like `{{Character}}` is a valid but undefined
+#     Liquid variable, so it silently renders to nothing and the published page
+#     loses the word.
+#
+# Neither is a bug in the docs — a quote of source code should look like source
+# code. The fix is to keep the documentation out of the Jekyll build.
+#
+# `.opencode/` needs no entry: Jekyll skips dot-directories. `node_modules/` and
+# `vendor/` are in its default exclude list.
+exclude:
+  - AGENTS.md
+  - README.md
+  - docs

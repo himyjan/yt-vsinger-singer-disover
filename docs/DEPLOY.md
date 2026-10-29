@@ -212,9 +212,11 @@ A project site is served from `/<repo>/`, so the deploy workflow derives
 the base path from the repository name and the repository variable only
 overrides it:
 
+{% raw %}
 ```yaml
 VITE_BASE_PATH: ${{ vars.VITE_BASE_PATH || format('/{0}/', github.event.repository.name) }}
 ```
+{% endraw %}
 
 The Vite config reads it (`base: env.VITE_BASE_PATH || "/"`) and the data
 loader prefixes every request with `import.meta.env.BASE_URL`, so the app
