@@ -464,6 +464,7 @@ create non-fast-forward push failures.
 | Fill the missing avatars | `npm run data:details -- --limit 2000` |
 | A KICK record has no avatar, bio or follower count | `npm run data:details -- --platform kick` — the profile is `kick.com/api/v2/channels/{login}`, the picture is `user.profile_pic` (not `profile_image_url`, which KICK never sends), and `default1-fullsize.webp` is a placeholder |
 | A CI.ME record has no avatar, name or follower count | `npm run data:details -- --platform ci.me` with `CI_ME_CLIENT_ID` / `CI_ME_CLIENT_SECRET`; the channel lookup takes ids only and answers 20 per request (`resolveMany()`), while live status is the **public** `GET ci.me/api/openapi/v1/{channelId}/live-status` |
+| A SOOP record has no avatar, name or fan count | `npm run data:details -- --platform soop` — the offline profile is `GET api-channel.sooplive.com/v1.1/channel/{userId}/station`; `CHA1004` means the channel does not exist, and the live feed is only the fallback |
 | Fill the missing follower counts | `npm run data:details -- --counts-only --limit 500` |
 | A Bilibili-only record with no YouTube/Twitch link | `npm run data:links -- --limit 200` (add `--platform bilibili --shard 2/4` to slice it, or `--region jp` for the Japanese mirror case) |
 | A record filed under `cn` that is really Japanese | `npm run data:details -- --weak-region` re-derives it; `data:links` corrects it from the discovered YouTube country |
