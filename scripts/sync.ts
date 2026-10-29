@@ -18,6 +18,7 @@
 
 import path from "node:path";
 import fs from "node:fs";
+import consola from "consola";
 import {
   YouTubeClient,
   QuotaBudget,
@@ -368,6 +369,16 @@ function itemUrlForAnalytics(item: Item): string {
 
 function log(msg: string): void {
   console.log(`[sync] ${msg}`);
+}
+
+let progressIndex = 0;
+const totalPhases = 22;
+function progress(phase: string, detail?: string): void {
+  progressIndex++;
+  const pct = Math.round((progressIndex / totalPhases) * 100);
+  consola.info(
+    `[${progressIndex}/${totalPhases}] ${phase}${detail ? ` — ${detail}` : ""} (${pct}%)`,
+  );
 }
 
 function toNumber(v: unknown): number | null {
@@ -811,6 +822,7 @@ async function main(): Promise<void> {
   const now = nowIso();
 
   /* --- upstream revisions ---------------------------------------------- */
+  progress("upstream revisions");
   /**
    * Record which revision of each upstream the dataset is built from.
    *
@@ -833,6 +845,7 @@ async function main(): Promise<void> {
   }
 
   /* --- load current dataset ------------------------------------------- */
+  progress("load current dataset");
   /**
    * The ids are cleaned once, here.
    *
@@ -891,6 +904,7 @@ async function main(): Promise<void> {
   log(`loaded ${channels.length} channels / ${items.length} items from disk`);
 
   /* --- resolve seeds --------------------------------------------------- */
+  progress("resolve seeds");
   const seedByChannelId = new Map<string, SeedEntry>();
   const seedHandles: { seed: SeedEntry; handle: string }[] = [];
   for (const seed of ALL_SEEDS) {
@@ -1063,6 +1077,7 @@ async function main(): Promise<void> {
   };
 
   /* --- discovery searches --------------------------------------------- */
+  progress("discovery searches");
   const discoveredChannelIds = new Set<string>();
   const discoveredVideoIds = new Set<string>();
   /** Channels found through a VTuber singing-event name — see `SearchSpec.eventTag`. */
@@ -1261,10 +1276,12 @@ async function main(): Promise<void> {
   }
 
   /* --- assemble the channel set --------------------------------------- */
+  progress("assemble channel set");
   const channelById = new Map<string, Channel>();
   for (const c of channels) channelById.set(c.id, c);
 
   /* --- rebuild the channel roster -------------------------------------- */
+  progress("rebuild channel roster");
   /**
    * The roster comes from the authoritative public sources rather than from
    * the legacy SQLite database, which has been removed: the Taiwan VTuber
@@ -1640,6 +1657,7 @@ async function main(): Promise<void> {
   log(`channel set: ${channels.length}`);
 
   /* --- hand-written overrides -------------------------------------------- */
+  progress("hand-written overrides");
   /**
    * `data/overrides.json` is the last word.
    *
@@ -1710,6 +1728,7 @@ async function main(): Promise<void> {
   for (const i of items) itemById.set(i.id, i);
 
   /* --- de-duplicate ---------------------------------------------------- */
+  progress("de-duplicate");
   /**
    * The same performer arrives from several sources under different ids — a
    * YouTube channel id and a Bilibili space id for the same person, for
@@ -1750,6 +1769,7 @@ async function main(): Promise<void> {
   }
 
   /* --- platform profile details ----------------------------------------- */
+  progress("platform profile details");
   /**
    * Fetch the profile of the channels whose details are missing.
    *
@@ -2367,6 +2387,7 @@ async function main(): Promise<void> {
   }
 
   /* --- Twitch enrichment (optional) ------------------------------------ */
+  progress("Twitch enrichment");
   if (twitch) {
     /**
      * The Twitch identity lives in `platforms[]`, so the enrichment updates
@@ -2414,6 +2435,7 @@ async function main(): Promise<void> {
   }
 
   /* --- Taiwan VTuber Tracking Data: authoritative region + lifecycle --- */
+  progress("Taiwan VTuber tracking data");
   /**
    * Resolving a Twitch login costs a request, and there are thousands of
    * Twitch links. The budget keeps a run bounded; the rest are corrected on
@@ -2507,6 +2529,7 @@ async function main(): Promise<void> {
   }
 
   /* --- AiSList: authoritative AI-channel detection --------------------- */
+  progress("AiSList AI-channel detection");
   const aiList = await fetchAiList();
   if (aiList) {
     let marked = 0;
@@ -2530,6 +2553,7 @@ async function main(): Promise<void> {
   }
 
   /* --- other streaming platforms --------------------------------------- */
+  progress("other streaming platforms");
   const extraPlatforms = adapters.filter(
     (a) => a.id !== "youtube",
   );
@@ -2716,6 +2740,7 @@ async function main(): Promise<void> {
   }
 
   /* --- fetch items ----------------------------------------------------- */
+  progress("fetch items");
   const singingChannels = channels.filter((c) => c.isSinging);
 
   /**
@@ -2858,6 +2883,7 @@ async function main(): Promise<void> {
   );
 
   /* --- live + upcoming broadcasts -------------------------------------- */
+  progress("live + upcoming broadcasts");
   /**
    * InnerTube's channel Live tab is the live source.
    *
@@ -3301,6 +3327,7 @@ async function main(): Promise<void> {
   }
 
   /* --- discovered videos ------------------------------------------------ */
+  progress("discovered videos");
   if (discoveredVideoIds.size) {
     const ids = [...discoveredVideoIds].slice(0, 200);
     if (client && budget.canAfford(API_COST.videos)) {
@@ -3351,6 +3378,7 @@ async function main(): Promise<void> {
   }
 
   /* --- backfill missing durations -------------------------------------- */
+  progress("backfill missing durations");
   /**
    * `videos.list` returns `contentDetails.duration` for free (1 unit per 50
    * videos), but records imported from the legacy database have no duration
@@ -3391,6 +3419,7 @@ async function main(): Promise<void> {
   items = [...itemById.values()];
 
   /* --- curated song metadata (VTuber Music Dataset) -------------------- */
+  progress("curated song metadata");
   const musicEntries = await fetchMusicDataset();
   if (musicEntries?.length) {
     const index = indexMusicDataset(musicEntries);
@@ -3437,6 +3466,7 @@ async function main(): Promise<void> {
   }
 
   /* --- activity status, now that we know the newest upload ------------- */
+  progress("activity status");
   const newestByChannel = new Map<string, string>();
   for (const item of items) {
     const ts = item.publishedAt ?? item.scheduledStart;
@@ -3456,6 +3486,7 @@ async function main(): Promise<void> {
   }
 
   /* --- canonical ids, once more ---------------------------------------- */
+  progress("canonical ids");
   /**
    * A record is re-added after the load pass all the time: a roster or a
    * platform adapter that only knows a channel's **link** builds
@@ -3488,6 +3519,7 @@ async function main(): Promise<void> {
   }
 
   /* --- merge with the on-disk dataset ---------------------------------- */
+  progress("merge with on-disk dataset");
   const existingThumbnailById = new Map(
     existingItems
       .filter((item) => item.thumbnail)
@@ -3598,6 +3630,7 @@ async function main(): Promise<void> {
   );
 
   /* --- write ------------------------------------------------------------ */
+  progress("write dataset");
   const counts = computeCounts(channels, items);
   const regionCounts = new Map<
     string,
