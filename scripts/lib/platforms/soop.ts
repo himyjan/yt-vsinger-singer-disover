@@ -1,7 +1,14 @@
 /**
- * SOOP's public live-broadcast list. It can surface channels only while they
- * appear in the paginated global live feed; SOOP does not expose a verified
- * public channel-profile endpoint for offline lookups.
+ * SOOP — AfreecaTV's rebranded global platform.
+ *
+ * Offline profile lookups use the public station endpoint:
+ *
+ *   GET https://api-channel.sooplive.com/v1.1/channel/{userId}/station
+ *
+ * which returns the channel's name, avatar, description and fan count even
+ * when the channel is not live. The paginated live feed
+ * (`live.sooplive.co.kr/api/main_broad_list_api.php`) is kept as a fallback
+ * for channels the station API does not know about.
  */
 
 import { classifyItem } from "../classify";
@@ -14,6 +21,7 @@ import type {
 import type { PlatformId } from "../types";
 
 const LIVE_API = "https://live.sooplive.co.kr/api/main_broad_list_api.php";
+const STATION_API = "https://api-channel.sooplive.com/v1.1/channel";
 const USER_AGENT =
   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36";
 
@@ -30,6 +38,18 @@ interface SoopBroadcast {
 
 interface SoopLiveResponse {
   broad?: SoopBroadcast[];
+}
+
+interface SoopStation {
+  userId?: string;
+  userNick?: string;
+  profileImage?: string;
+  upd?: { fanCnt?: number };
+}
+
+interface SoopStationResponse {
+  station?: SoopStation;
+  display?: { profileText?: string };
 }
 
 export interface SoopOptions {
@@ -52,6 +72,52 @@ export class SoopAdapter implements PlatformAdapter {
 
   isConfigured(): boolean {
     return true;
+  }
+
+  private async getJson<T>(url: string): Promise<T | null> {
+    try {
+      const res = await fetch(url, {
+        signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
+        headers: {
+          Accept: "application/json",
+          "User-Agent": USER_AGENT,
+          Referer: "https://www.sooplive.com/",
+        },
+      });
+      if (!res.ok) return null;
+      return (await res.json()) as T;
+    } catch (error) {
+      this.onLog(`soop: station lookup failed: ${(error as Error).message}`);
+      return null;
+    }
+  }
+
+  /**
+   * Offline profile for a SOOP channel, from the station API.
+   *
+   * Answers 404 for an unknown channel id, so a null result means the
+   * performer does not exist on SOOP — not that the request failed.
+   */
+  private async stationProfile(userId: string): Promise<PlatformChannel | null> {
+    const url = `${STATION_API}/${encodeURIComponent(userId)}/station`;
+    const res = await this.getJson<SoopStationResponse>(url);
+    if (!res) return null;
+    const station = res.station;
+    if (!station?.userId && !station?.userNick) return null;
+
+    const fans = Number(station.upd?.fanCnt ?? 0);
+    const id = station.userId ?? userId;
+    return {
+      platform: "soop",
+      id,
+      handle: id,
+      name: station.userNick ?? null,
+      url: `https://www.sooplive.com/station/${encodeURIComponent(id)}`,
+      subscribers: fans > 0 ? { tag: "has" as const, count: fans } : { tag: "hidden" },
+      avatar: station.profileImage ?? null,
+      description: res.display?.profileText ?? null,
+      tags: [],
+    };
   }
 
   private async livePage(page: number): Promise<SoopBroadcast[]> {
@@ -178,6 +244,12 @@ export class SoopAdapter implements PlatformAdapter {
       .split(/[/?#]/)[0]!;
     if (!userId) return null;
 
+    // The station API answers offline — name, avatar, bio and fan count —
+    // even when the channel is not live.
+    const fromStation = await this.stationProfile(userId);
+    if (fromStation) return fromStation;
+
+    // Fall back to the live feed for channels the station API does not know.
     const broadcasts = await this.livePage(1);
     for (const broadcast of broadcasts) {
       if (broadcast.user_id?.toLowerCase() !== userId.toLowerCase()) continue;
