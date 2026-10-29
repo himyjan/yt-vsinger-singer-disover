@@ -55,7 +55,7 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v7
         with:
-          node-version: "24"
+          node-version: "26"
           cache: npm
 
       # filter-repo deletes the working tree along with the history, so keep
