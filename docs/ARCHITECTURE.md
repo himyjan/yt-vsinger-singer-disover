@@ -264,7 +264,7 @@ src/
 │   ├── store.ts             reactive state: scope, filters, accounts, theme
 │   ├── origins.ts           where the dataset lives: one origin or N volumes
 │   ├── dataset.ts           loads and filters the committed dataset
-│   ├── auth.ts              account linking for four platforms
+│   ├── auth.ts              account linking for seven platforms
 │   ├── takeout.ts           reads a Takeout/export subscriptions.csv
 │   ├── subs-export.ts       the in-page script that writes that CSV
 │   ├── youtube-detail.ts    browser client for the one-channel bridge

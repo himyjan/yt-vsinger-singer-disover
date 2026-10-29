@@ -662,6 +662,18 @@ const linkedProviders = computed(() =>
 
 const hasAnyAccount = computed(() => allAccounts().length > 0);
 
+/** Every linked account across all providers, flat. */
+const linkedAccounts = computed(() => allAccounts());
+
+/** Channels followed by every linked account (only when 2+ accounts). */
+const sharedSubscriptions = computed(() => {
+  if (linkedAccounts.value.length < 2) return [];
+  const comparison = subscriptionComparison.value;
+  return comparison.filter((entry) =>
+    entry.accounts.length === linkedAccounts.value.length,
+  );
+});
+
 /** The account popover. */
 const showAccountMenu = ref(false);
 
@@ -1219,6 +1231,53 @@ function youtubeSubscriptionIds(): string[] {
   }
   return [...ids];
 }
+
+/**
+ * Cross-account comparison: which channels each linked account follows,
+ * grouped by channel so you can see at a glance which accounts share a
+ * subscription and which do not.
+ */
+const subscriptionComparison = computed(() => {
+  const byChannel = new Map<string, {
+    channelId: string;
+    name: string;
+    handle: string | null;
+    known: boolean;
+    accounts: Array<{ provider: string; accountId: string; accountName: string | null }>;
+  }>();
+
+  for (const [key, subs] of Object.entries(state.subscriptions)) {
+    const colon = key.indexOf(":");
+    const provider = key.slice(0, colon);
+    const accountId = key.slice(colon + 1);
+    const account = (state.accounts[provider] ?? []).find((a) => a.id === accountId);
+    const accountName = account?.name ?? null;
+
+    for (const sub of subs) {
+      const existing: {
+        channelId: string;
+        name: string;
+        handle: string | null;
+        known: boolean;
+        accounts: Array<{ provider: string; accountId: string; accountName: string | null }>;
+      } = byChannel.get(sub.channelId) ?? {
+        channelId: sub.channelId,
+        name: sub.title,
+        handle: sub.handle,
+        known: sub.known,
+        accounts: [],
+      };
+      const already = existing.accounts.find(
+        (a) => a.provider === provider && a.accountId === accountId,
+      );
+      if (!already) existing.accounts.push({ provider, accountId, accountName });
+      if (sub.known) existing.known = true;
+      byChannel.set(sub.channelId, existing);
+    }
+  }
+
+  return [...byChannel.values()].sort((a, b) => a.name.localeCompare(b.name));
+});
 
 /**
  * The 🎵 badge of one channel, from whichever source actually asked.
@@ -2289,7 +2348,7 @@ onMounted(async () => {
                     </button>
 
                     <!-- Reconnect (expired OAuth token) -->
-                    <button v-if="account.provider === 'youtube'" type="button" class="shrink-0 rounded px-1.5 py-0.5 text-[10px] font-semibold text-neutral-500 transition hover:bg-black/5 hover:text-neutral-800 dark:hover:bg-white/10 dark:hover:text-neutral-100" title="Reconnect this account and refresh its token" @click="
+                    <button v-if="['youtube', 'twitch', 'vk', 'kick'].includes(account.provider)" type="button" class="shrink-0 rounded px-1.5 py-0.5 text-[10px] font-semibold text-neutral-500 transition hover:bg-black/5 hover:text-neutral-800 dark:hover:bg-white/10 dark:hover:text-neutral-100" title="Reconnect this account and refresh its token" @click="
                       showAccountMenu = false;
                     linkProvider(provider, account);
                     ">
@@ -2306,6 +2365,19 @@ onMounted(async () => {
                   <button type="button" class="w-full px-3 py-2 text-left text-[11px] font-semibold text-neutral-500 transition hover:bg-black/5 hover:text-neutral-800 dark:hover:bg-white/10 dark:hover:text-neutral-100" @click="linkProvider(provider)">
                     + Link another {{ provider.label }} account
                   </button>
+                </div>
+
+                <!-- Cross-account comparison: shared subscriptions -->
+                <div v-if="linkedAccounts.length > 1" class="border-t border-black/12 pt-2 px-3 pb-2 dark:border-white/12">
+                  <h3 class="text-[10px] font-semibold text-neutral-400 mb-1 uppercase tracking-wider">Shared subscriptions</h3>
+                  <p v-if="sharedSubscriptions.length === 0" class="text-[10px] text-neutral-500">No channel followed by all linked accounts.</p>
+                  <ul v-else class="text-[10px] space-y-0.5 max-h-32 overflow-y-auto">
+                    <li v-for="entry in sharedSubscriptions" :key="entry.channelId" class="flex items-center gap-2">
+                      <span class="shrink-0 text-emerald-500">✓</span>
+                      <span class="truncate min-w-0">{{ entry.name }}</span>
+                      <span class="ml-auto text-[9px] text-neutral-500">{{ entry.accounts.length }} account(s)</span>
+                    </li>
+                  </ul>
                 </div>
 
                 <button type="button" class="w-full border-t border-black/8 px-3 py-2 text-left text-[11px] font-semibold text-neutral-500 transition hover:bg-black/5 hover:text-neutral-800 dark:border-white/10 dark:hover:bg-white/10 dark:hover:text-neutral-100" @click="showAccountMenu = false">

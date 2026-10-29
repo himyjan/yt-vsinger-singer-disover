@@ -558,10 +558,10 @@ for discovery/profile refresh do not by themselves provide account linking.
       `api.chzzk.naver.com/service/v1/channels/followings`, which is the
       endpoint the CHZZK web app itself calls.
 - `[x]` **KICK** — OAuth 2.1 with PKCE against `id.kick.com`, the OAuth
-      host, which is *not* the API host. The token exchange asks for the
-      client secret, so a registered KICK app is needed; without one the user
-      pastes their `kick_session` cookie instead, which needs no
-      configuration at all.
+      host, which is *not* the API host. A registered KICK app gives a client
+      ID; the token exchange sends an empty client secret and relies on PKCE,
+      exactly like Twitch. Without a client ID the user pastes their
+      `kick_session` cookie instead, which needs no configuration at all.
 - `[x]` **SOOP** and **CI.ME** are not presented as account-link options:
       SOOP has no follow-list provider, and CI.ME's documented API does not
       expose a follow-list endpoint.
@@ -640,7 +640,8 @@ for discovery/profile refresh do not by themselves provide account linking.
       (silently when the scope is already granted, otherwise with the consent
       screen) and keeps the account id, so the stored subscription list is
       replaced rather than duplicated. “The Google token expired” now points
-      there instead of asking for an unlink.
+      there instead of asking for an unlink. Reconnect is available for
+      YouTube, Twitch, VK and KICK — the platforms whose tokens expire.
 - `[x]` Subscription lists are imported from a file — **Import CSV / JSON**
       reads a Google Takeout `subscriptions.csv`, the CSV produced by
       **Export from YouTube**, or a **PocketTube backup** (`Backup → Export`,

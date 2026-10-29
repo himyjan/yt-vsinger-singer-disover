@@ -499,12 +499,11 @@ Two sources feed the query list:
 | --- | --- | --- |
 | **歌枠リレーカレンダー** | @shimesaba_krm's Google Sheet, the community's canonical calendar of singing relays, one cell per event per day | `npm run data:singing-events` — the CSV export of the current month's sheet, plus the previous months from the year sheet's named tabs via `gviz/tq?tqx=out:csv&sheet=…` |
 | **X** | event announcements (`"歌枠リレー" "タイムテーブル"`) and recruitment posts (`#歌枠リレー募集`) | `scripts/harvest-x-singing-tags.py` through twscrape, keeping the hashtags that name a singing event |
+| **YouTube** | video search for `"歌枠リレー"` and related terms, extracting `#○○歌枠リレー` hashtags from titles and descriptions | `npm run data:singing-events-youtube` — InnerTube video search, no Data API quota |
+| **virtuallivecalendar.jp** | Japanese virtual live calendar of singing events | `npm run data:singing-events-virtuallivecalendar` — best-effort HTML scrape |
+| **twipla.jp** | Japanese TwiPla event dashboard, indie VTuber recruitment posts | `npm run data:singing-events-twipla` — best-effort HTML scrape |
 
-Both write a `.cache/` snapshot — `singing-events.json` and
-`x-singing-tags.json` — and `scripts/sync.ts` reads them through
-`scripts/lib/singing-events.ts`. The calendar's names come first (an event
-there has a date, a timetable and a participant list), and the X hashtags fill
-in the events the calendar has not filed yet.
+All sources write to a single unified `lists/singing-events.json` with unique event names — nothing is overwritten, and entries that name the same event (calendar name vs X hashtag) are merged into one entry. `scripts/sync.ts` reads them through `scripts/lib/singing-events.ts`. The calendar's names come first (an event there has a date, a timetable and a participant list), and the X/YouTube hashtags fill in the events the calendar has not filed yet.
 
 Each event becomes a **video** search (`SearchSpec.eventTag`), not a channel
 search, because the participants title their streams with the event name. A

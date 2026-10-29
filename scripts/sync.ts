@@ -2941,6 +2941,21 @@ async function main(): Promise<void> {
           ended.actualEnd = ended.actualEnd ?? now;
           ended.publishedAt =
             ended.publishedAt ?? ended.actualStart ?? ended.scheduledStart ?? now;
+          /**
+           * A live stream has no duration while it is live. When it ends,
+           * compute it from actualStart (or publishedAt) to actualEnd so the
+           * finished stream carries a real length instead of null.
+           */
+          if (
+            ended.duration === null &&
+            ended.actualEnd &&
+            (ended.actualStart || ended.publishedAt)
+          ) {
+            const start = ended.actualStart ?? ended.publishedAt;
+            ended.duration = Math.floor(
+              (Date.parse(ended.actualEnd) - Date.parse(start)) / 1000,
+            );
+          }
           ended.updatedAt = now;
           retired++;
         }
@@ -3086,6 +3101,16 @@ async function main(): Promise<void> {
             ended.actualEnd = ended.actualEnd ?? now;
             ended.publishedAt =
               ended.publishedAt ?? ended.actualStart ?? ended.scheduledStart ?? now;
+            if (
+              ended.duration === null &&
+              ended.actualEnd &&
+              (ended.actualStart || ended.publishedAt)
+            ) {
+              const start = ended.actualStart ?? ended.publishedAt;
+              ended.duration = Math.floor(
+                (Date.parse(ended.actualEnd) - Date.parse(start)) / 1000,
+              );
+            }
             ended.updatedAt = now;
             retired++;
           }
@@ -3164,6 +3189,16 @@ async function main(): Promise<void> {
         ended.actualEnd = ended.actualEnd ?? now;
         ended.publishedAt =
           ended.publishedAt ?? ended.actualStart ?? ended.scheduledStart ?? now;
+        if (
+          ended.duration === null &&
+          ended.actualEnd &&
+          (ended.actualStart || ended.publishedAt)
+        ) {
+          const start = ended.actualStart ?? ended.publishedAt;
+          ended.duration = Math.floor(
+            (Date.parse(ended.actualEnd) - Date.parse(start)) / 1000,
+          );
+        }
         ended.updatedAt = now;
         biliRetired++;
       }
@@ -3243,6 +3278,16 @@ async function main(): Promise<void> {
         ended.actualEnd = ended.actualEnd ?? now;
         ended.publishedAt =
           ended.publishedAt ?? ended.actualStart ?? ended.scheduledStart ?? now;
+        if (
+          ended.duration === null &&
+          ended.actualEnd &&
+          (ended.actualStart || ended.publishedAt)
+        ) {
+          const start = ended.actualStart ?? ended.publishedAt;
+          ended.duration = Math.floor(
+            (Date.parse(ended.actualEnd) - Date.parse(start)) / 1000,
+          );
+        }
         ended.updatedAt = now;
         nicoRetired++;
       }

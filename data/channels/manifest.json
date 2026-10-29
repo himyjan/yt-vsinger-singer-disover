@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T04:15:33.112683+00:00",
-  "total": 72693,
+  "generatedAt": "2026-10-29T14:34:19.508887Z",
+  "total": 72694,
   "regions": [
     {
       "code": "jp",
@@ -161,8 +161,9 @@
         ]
       },
       "real": {
-        "channels": 1,
+        "channels": 2,
         "buckets": [
+          "01",
           "0b"
         ]
       }

@@ -27,7 +27,7 @@ Three sources, in order of usefulness:
     # print just the tags, one per line
     ... --tags-only
 
-Output: `.cache/x-singing-tags.json`, which `scripts/sync.ts` reads and turns
+Output: `lists/singing-events.json`, which `scripts/sync.ts` reads and turns
 into YouTube video searches. Exit codes: 0 on success, 3 when twscrape is not
 installed, 4 when no account is in the pool.
 """
@@ -127,8 +127,8 @@ async def main() -> int:
     parser.add_argument("--tags-only", action="store_true")
     parser.add_argument(
         "--out",
-        default=".cache/x-singing-tags.json",
-        help="snapshot path (default .cache/x-singing-tags.json)",
+        default="lists/singing-events.json",
+        help="snapshot path (default lists/singing-events.json)",
     )
     parser.add_argument(
         "--db",
@@ -180,21 +180,58 @@ async def main() -> int:
             print("#" + entry["tag"])
         return 0
 
+    # Merge with existing unified file so previously harvested entries are kept
+    # and new tags are added without duplicating.
+    existing_entries: dict[str, dict] = {}
+    try:
+        existing = json.loads(pathlib.Path(args.out).read_text(encoding="utf-8"))
+        for entry in existing.get("entries", []):
+            existing_entries[entry["name"]] = entry
+    except Exception:
+        existing_entries = {}
+
+    now_iso = __import__("datetime").datetime.now(
+        __import__("datetime").timezone.utc
+    ).isoformat()
+
+    for tag, count in counts.most_common():
+        if tag in existing_entries:
+            entry = existing_entries[tag]
+            # Keep the higher count and the earlier firstSeen.
+            if count > (entry.get("count") or 0):
+                entry["count"] = count
+            if entry.get("firstSeen") is None:
+                entry["firstSeen"] = now_iso
+            if "x" not in entry.get("sources", []):
+                entry.setdefault("sources", []).append("x")
+        else:
+            existing_entries[tag] = {
+                "name": tag,
+                "month": None,
+                "count": count,
+                "firstSeen": now_iso,
+                "sources": ["x"],
+            }
+
+    merged_entries = sorted(
+        existing_entries.values(),
+        key=lambda e: -(e.get("count") or 0),
+    )
+
+    sources = sorted(
+        {s for e in merged_entries for s in (e.get("sources") or [])},
+    )
+
     out = {
-        "generatedAt": __import__("datetime").datetime.now(
-            __import__("datetime").timezone.utc
-        ).isoformat(),
-        "source": "x.com",
-        "calendarAccount": CALENDAR_ACCOUNT,
-        "searches": SEARCHES,
-        "tweets": len(tweets),
-        "tags": tags,
+        "generatedAt": now_iso,
+        "sources": sources,
+        "entries": merged_entries,
     }
     path = pathlib.Path(args.out)
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
     print(
-        f"{len(tweets)} tweet(s) → {len(tags)} singing-event tag(s) → {path}",
+        f"{len(tweets)} tweet(s) → {len(merged_entries)} unique singing-event entries → {path}",
         file=sys.stderr,
     )
     return 0

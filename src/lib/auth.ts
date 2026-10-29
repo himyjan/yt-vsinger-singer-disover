@@ -607,7 +607,7 @@ export const twitchProvider: AuthProvider = {
       : "Set VITE_TWITCH_CLIENT_ID to enable Twitch account linking.";
   },
 
-  async link(): Promise<ProviderAccount | null> {
+  async link(options?: { prompt?: "consent" | "" }): Promise<ProviderAccount | null> {
     const clientId = env.twitchClientId;
     if (!clientId) return null;
 
@@ -624,6 +624,8 @@ export const twitchProvider: AuthProvider = {
       state,
       code_challenge: challenge,
       code_challenge_method: "S256",
+      // Silent reconnect: skip the consent screen when the scope is already granted.
+      ...(options?.prompt === "" ? { prompt: "none" } : {}),
     });
 
     const result = await runPopupFlow(
@@ -903,7 +905,7 @@ export const vkProvider: AuthProvider = {
       : "Set VITE_VK_CLIENT_ID to enable VK account linking.";
   },
 
-  async link(): Promise<ProviderAccount | null> {
+  async link(options?: { prompt?: "consent" | "" }): Promise<ProviderAccount | null> {
     const clientId = env.vkClientId;
     if (!clientId) return null;
 
@@ -912,6 +914,9 @@ export const vkProvider: AuthProvider = {
       scope: "friends,offline",
       response_type: "token",
       redirect_uri: currentOrigin(),
+      // Silent reconnect is a full re-authorise for VK's implicit flow;
+      // prompt=none is not supported, so we accept but ignore it.
+      ...(options?.prompt === "" ? {} : {}),
     });
 
     const result = await runPopupFlow(
@@ -1015,19 +1020,21 @@ export const kickProvider: AuthProvider = {
     return null;
   },
 
-  async link(): Promise<ProviderAccount | null> {
+  async link(options?: { prompt?: "consent" | "" }): Promise<ProviderAccount | null> {
     const clientId = env.kickClientId;
     const clientSecret = env.kickClientSecret;
 
     /**
      * With a registered app the OAuth flow is used. Without one the user
      * pastes their KICK session token, exactly as on Bilibili.
+     *
+     * A public client (client ID only, no secret) works like Twitch: the
+     * token exchange sends an empty client_secret and relies on PKCE.
      */
-    if (!clientId || !clientSecret) {
+    if (!clientId) {
       const token = window.prompt(
         [
-          "KICK's OAuth flow needs a registered KICK app (VITE_KICK_CLIENT_ID",
-          "and VITE_KICK_CLIENT_SECRET).",
+          "KICK's OAuth flow needs a registered KICK app (VITE_KICK_CLIENT_ID).",
           "",
           "You can link with your session token instead:",
           "",
@@ -1076,6 +1083,7 @@ export const kickProvider: AuthProvider = {
       state,
       code_challenge: challenge,
       code_challenge_method: "S256",
+      ...(options?.prompt === "" ? { prompt: "none" } : {}),
     });
 
     const result = await runPopupFlow(
@@ -1087,7 +1095,7 @@ export const kickProvider: AuthProvider = {
     const body = new URLSearchParams({
       grant_type: "authorization_code",
       client_id: clientId,
-      client_secret: clientSecret,
+      client_secret: clientSecret ?? "",
       code: result.code,
       redirect_uri: redirectUri,
       code_verifier: verifier,
