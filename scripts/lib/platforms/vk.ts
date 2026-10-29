@@ -54,6 +54,9 @@ export class VkAdapter implements PlatformAdapter {
   readonly label = "VK";
   readonly color = "#0077ff";
 
+  /** VK reports `video_count` on the user record. */
+  readonly reportsVideoCount = true;
+
   private readonly token: string | null;
   private readonly onLog: (message: string) => void;
 

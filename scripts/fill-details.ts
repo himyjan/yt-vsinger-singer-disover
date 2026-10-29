@@ -12,6 +12,8 @@
  *
  *   npm run data:details -- --limit 2000
  *   npm run data:details -- --platform bilibili --limit 500
+ *   npm run data:details -- --platform kick --limit 100
+ *   npm run data:details -- --platform ci.me --limit 100
  *   npm run data:details -- --counts-only --limit 500
  *   npm run data:details -- --name-only
  *   npm run data:ids                   # re-key handle ids to UC… ids
@@ -31,6 +33,18 @@
  * | Twitch | GQL | no quota |
  * | Bilibili | the public `card` endpoint | no quota |
  * | Niconico / VK / CHZZK / KICK | the platform adapters | no quota |
+ * | CI.ME | the Open API channel lookup | 20 ids per request, `CI_ME_CLIENT_ID` + `CI_ME_CLIENT_SECRET` |
+ *
+ * A platform's profile is the source for **its own** link: the handle, the
+ * name and the profile URL are written back to that `PlatformLink`, so a KICK
+ * record keyed by the numeric user id gains the slug its URL needs. The
+ * record's avatar, follower count and name still follow its primary platform,
+ * which is what `pickAvatar()` and `pickSubscribers()` decide.
+ *
+ * A platform that publishes no upload total — KICK, CI.ME, CHZZK, SOOP,
+ * Niconico — keeps `videoCount: null` forever, so the backlog does not count
+ * that as a missing detail. Counting it meant every such record was re-fetched
+ * every six hours for a number the platform has never had.
  *
  * ## What it writes
  *
@@ -278,6 +292,28 @@ interface Profile {
   country?: string | null;
   /** URLs from the YouTube channel's dedicated Links section. */
   links?: string[];
+  /**
+   * The platform's own profile URL.
+   *
+   * A KICK record is keyed by the numeric user id, and `kick.com/<id>` is not
+   * a page — the profile URL has to come from the profile, which knows the
+   * slug. CI.ME is the same: profiles live at `ci.me/@handle`.
+   */
+  url?: string | null;
+}
+
+/** The slice of a platform adapter the details pass uses. */
+interface DetailsAdapter {
+  resolve(query: string): Promise<any>;
+  /**
+   * Resolves several channels in one request.
+   *
+   * CI.ME's channel lookup takes a comma-separated list of up to 20 ids, so
+   * asking one channel at a time wastes nineteen answers per request.
+   */
+  resolveMany?(queries: string[]): Promise<Map<string, any>>;
+  /** Whether the platform's profile states an upload total. */
+  reportsVideoCount?: boolean;
 }
 
 /**
@@ -293,12 +329,22 @@ async function fetchProfile(
   ctx: {
     innertube: InnerTubeSource;
     twitch: TwitchGqlSource;
-    adapters: Map<PlatformId, { resolve(q: string): Promise<any> }>;
+    adapters: Map<PlatformId, DetailsAdapter>;
+    /** Profiles fetched in batches before the loop, by `platform:query`. */
+    prefetched: Map<string, any>;
   },
 ): Promise<Profile | null> {
   const link = channel.platforms.find((p) => p.platform === platform);
   if (!link) return null;
-  const query = link.handle ?? link.id;
+  /**
+   * What to ask the platform with.
+   *
+   * CI.ME's lookup takes the channel **id** and has no handle search, so the
+   * link's id is what it wants; every other platform is asked for the handle
+   * first, because the handle is what a rename replaces and a redirect keeps
+   * working, while a stale login does not.
+   */
+  const query = platform === "ci.me" ? link.id : (link.handle ?? link.id);
 
   try {
     if (platform === "youtube") {
@@ -362,9 +408,16 @@ async function fetchProfile(
 
     const adapter = ctx.adapters.get(platform);
     if (!adapter) return null;
-    const profile = await adapter.resolve(
-      platform === "ci.me" ? link.id : query,
-    );
+    /**
+     * A batch adapter may already have answered: one CI.ME request carries
+     * twenty profiles, so the loop reads the prefetched answer instead of
+     * asking again. An id the platform does not know is cached as `null`,
+     * which is the same "nothing found" the single lookup reports.
+     */
+    const key = `${platform}:${query}`;
+    const profile = ctx.prefetched.has(key)
+      ? ctx.prefetched.get(key)
+      : await adapter.resolve(query);
     if (!profile) return null;
     const count =
       profile.subscribers && profile.subscribers.tag === "has"
@@ -376,6 +429,9 @@ async function fetchProfile(
       description: profile.description ?? null,
       subscribers: count,
       videoCount: profile.videoCount ?? null,
+      handle: profile.handle ?? null,
+      url: profile.url ?? null,
+      links: profile.links,
     };
   } catch {
     return null;
@@ -533,6 +589,29 @@ function applyProfile(
     if (link.id.startsWith("UC")) {
       link.url = `https://www.youtube.com/channel/${link.id}`;
     }
+  }
+
+  /**
+   * The platform's *own* handle, name and URL.
+   *
+   * These are facts about one account, so they are written to that account's
+   * link whatever the record's primary platform is: a KICK link keyed by the
+   * numeric user id has no slug until the profile supplies one, and
+   * `kick.com/<id>` is not a page. Only YouTube has a second, permanent
+   * identity to reconcile, which the branch above does.
+   */
+  if (platform !== "youtube") {
+    if (profile.handle) link.handle = profile.handle;
+    if (profile.url) link.url = profile.url;
+  }
+  /**
+   * The name the platform publishes for this account.
+   *
+   * A tombstone — 「账号已注销」 — is not a name, so it never reaches the
+   * link either.
+   */
+  if (profile.name && !isPlaceholderName(profile.name)) {
+    link.name = profile.name;
   }
 
   if (!nameOnly) {
@@ -823,6 +902,34 @@ async function main(): Promise<void> {
   }
 
   /**
+   * The adapters, built before the backlog is chosen.
+   *
+   * The backlog asks each adapter what its profile can even report — whether
+   * it publishes an upload total, for instance — so the registry has to be
+   * assembled first. Constructing an adapter costs nothing; only `resolve()`
+   * reaches the network.
+   */
+  const adapters = new Map<PlatformId, DetailsAdapter>();
+  for (const adapter of createAdapters({ youtubeClient: null, twitchClient: null })) {
+    adapters.set(adapter.id, adapter as unknown as DetailsAdapter);
+  }
+
+  /**
+   * Whether a platform's profile states an upload total.
+   *
+   * YouTube does (on the about page), Bilibili and VK do; KICK, CI.ME, CHZZK,
+   * SOOP and Niconico do not. A record on one of those keeps
+   * `videoCount: null` for its whole life, and treating that as a missing
+   * detail put every such record at the top of the backlog and re-fetched it
+   * every six hours for a number the platform has never published.
+   */
+  const reportsVideoCount = (platform: PlatformId | null): boolean => {
+    if (!platform) return false;
+    if (platform === "youtube") return true;
+    return Boolean(adapters.get(platform)?.reportsVideoCount);
+  };
+
+  /**
    * The channels that need details, worst first.
    *
    * A channel with no avatar at all is worth more than one that merely
@@ -873,9 +980,11 @@ async function main(): Promise<void> {
            *
            * YouTube's microformat omits it on the current page layout; the
            * about page publishes it. A record whose avatar and audience are
-           * known but whose video count is `null` is still worth a request.
+           * known but whose video count is `null` is still worth a request —
+           * but only on a platform that reports one.
            */
-          const needsVideos = c.videoCount === null;
+          const needsVideos =
+            c.videoCount === null && reportsVideoCount(primaryPlatformOf(c));
           if (c.avatar && !needsCount && !needsVideos) return false;
         }
         /**
@@ -889,8 +998,18 @@ async function main(): Promise<void> {
          * days even though the platform published the number.
          */
         if (!options.force && c.lastDetailsFetchedAt) {
+          /**
+           * A record is **incomplete** when something this pass can still
+           * fill is missing: no avatar, a hidden follower count, or an upload
+           * total on a platform that publishes one. An incomplete record is
+           * retried after six hours rather than a week — a record fetched by
+           * an older parser kept `hidden` for seven days even though the
+           * platform published the number.
+           */
           const incomplete =
-            c.subscribers.tag === "hidden" || c.videoCount === null;
+            !c.avatar ||
+            c.subscribers.tag === "hidden" ||
+            (c.videoCount === null && reportsVideoCount(primaryPlatformOf(c)));
           const window = incomplete
             ? 6 * 60 * 60 * 1000
             : 7 * 24 * 60 * 60 * 1000;
@@ -917,7 +1036,7 @@ async function main(): Promise<void> {
       const score = (c: Channel) =>
         (c.avatar ? 0 : 4) +
         (c.subscribers.tag === "has" ? 0 : 2) +
-        (c.videoCount === null ? 1 : 0) +
+        (c.videoCount === null && reportsVideoCount(primaryPlatformOf(c)) ? 1 : 0) +
         (c.description ? 0 : 1) +
         (c.lastDetailsFetchedAt ? 0 : 2);
       return score(b) - score(a);
@@ -947,12 +1066,47 @@ async function main(): Promise<void> {
     onLog: (m) => log(m),
   });
 
-  const adapters = new Map<PlatformId, { resolve(q: string): Promise<any> }>();
-  for (const adapter of createAdapters({ youtubeClient: null, twitchClient: null })) {
-    adapters.set(adapter.id, adapter);
+  /**
+   * The profiles a batch endpoint can answer before the loop starts.
+   *
+   * CI.ME takes up to twenty channel ids per request, so a per-channel loop
+   * would spend twenty requests on one page of answers. The batch is fetched
+   * here and the loop reads it by `platform:query`; an id the platform does
+   * not know is cached as `null`, so it is not asked twice either.
+   */
+  const prefetched = new Map<string, any>();
+  for (const [platform, adapter] of adapters) {
+    if (!adapter.resolveMany) continue;
+    const queries = [
+      ...new Set(
+        pending
+          .filter((channel) => primaryPlatformOf(channel) === platform)
+          .map((channel) => {
+            const link = channel.platforms.find(
+              (p) => p.platform === platform,
+            );
+            if (!link) return "";
+            return platform === "ci.me" ? link.id : (link.handle ?? link.id);
+          })
+          .filter(Boolean),
+      ),
+    ];
+    if (!queries.length) continue;
+    let found = 0;
+    for (let i = 0; i < queries.length; i += 20) {
+      const chunk = queries.slice(i, i + 20);
+      const batch = await adapter.resolveMany(chunk);
+      for (const query of chunk) {
+        const profile = batch.get(query) ?? null;
+        prefetched.set(`${platform}:${query}`, profile);
+        if (profile) found++;
+      }
+      await sleep(options.intervalMs);
+    }
+    log(`${platform}: ${found}/${queries.length} profile(s) fetched in batches`);
   }
 
-  const ctx = { innertube, twitch, adapters };
+  const ctx = { innertube, twitch, adapters, prefetched };
 
   /**
    * The failures of one platform in a row.

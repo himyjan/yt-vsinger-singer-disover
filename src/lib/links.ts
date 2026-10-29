@@ -363,7 +363,11 @@ export function externalUrl(
     case "soop":
       return `https://www.sooplive.com/station/${handle}`;
     case "ci.me":
-      return `https://ci.me/${handle}`;
+      // CI.ME profiles are `ci.me/@handle`; the value may be a handle or a
+      // channel id, and the `@` form is the one that resolves for a handle.
+      return /^\d+$/.test(handle)
+        ? `https://ci.me/${handle}`
+        : `https://ci.me/@${handle.replace(/^@/, "")}`;
     default:
       /**
        * A key with no adapter — `other`, `email`, a platform added to the
