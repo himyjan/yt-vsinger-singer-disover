@@ -284,7 +284,7 @@ export function extractExternalLinks(
     ],
     [
       "ci.me",
-      /(?:https?:\/\/)?(?:www\.)?ci\.me\/([A-Za-z0-9_-]+)/i,
+      /(?:https?:\/\/)?(?:www\.)?ci\.me\/@?([A-Za-z0-9_-]+)/i,
       (m) => m[1]!,
     ],
     /**

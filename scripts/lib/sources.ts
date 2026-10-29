@@ -292,10 +292,12 @@ export const SOURCES: SourceInfo[] = [
     id: "kick",
     label: "KICK",
     url: "https://kick.com",
-    provides: "Channel profiles, follower counts and live streams",
+    provides:
+      "Channel profiles, profile pictures, follower counts, the performer's published accounts and live streams",
     access: "api",
     used: true,
-    usedFor: "The growing Western VTuber scene on KICK",
+    usedFor:
+      "The growing Western VTuber scene on KICK; category discovery needs an app access token, so known logins are refreshed",
   },
   {
     id: "soop",
@@ -311,11 +313,12 @@ export const SOURCES: SourceInfo[] = [
     id: "ci.me",
     label: "CI.ME Open API",
     url: "https://developers.ci.me/docs/api-channels",
-    provides: "Channel names, handles, profile images, descriptions and follower counts",
+    provides:
+      "Channel names, handles, profile images, descriptions and follower counts; per-channel live status",
     access: "api",
     used: true,
     usedFor:
-      "Profile refresh for CI.ME channel IDs; app Client ID and Client Secret are required",
+      "Profile refresh for CI.ME channel IDs (20 per request; app Client ID and Client Secret are required) and live status from the public, unauthenticated live-status endpoint",
   },
   {
     id: "justoneapi",

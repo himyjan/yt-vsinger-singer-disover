@@ -419,7 +419,7 @@ stable or complete search API:
 | CHZZK | — | **the public API** | channel search, profile, followers, live |
 | KICK | — | **the public API** | profile and live data for known channels; no usable public keyword search |
 | SOOP | — | **the public live-list API** | first-page live titles, channel names, viewer counts |
-| [CI.ME Open API](https://developers.ci.me/docs/api-channels) | **Open API** (`Client-Id` / `Client-Secret`) | same API + **cime-sdk** | channel profile, follower count, and live program list via `client.live.getLives()`; per-channel status via `getLiveStatus(channelId)` |
+| [CI.ME Open API](https://developers.ci.me/docs/api-channels) | **Open API** (`Client-Id` / `Client-Secret`) | **the public live-status endpoint** | channel profile and follower count (batched, 20 ids per request); per-channel live status via `GET /api/openapi/v1/{channelId}/live-status`, which needs no credentials |
 | X / Twitter | — (no free read API) | [**FxTwitter**](https://github.com/FixTweet/FxTwitter) (`api.fxtwitter.com/<handle>`) | the bio, the website field and the location — where a Bilibili-only performer usually writes their YouTube link |
 | Niconico | — | **the public API** | search, uploads, live programs via Content Search API v2 |
 
@@ -476,10 +476,13 @@ the current shard, because live status is time-sensitive.
 - **Niconico** live programs come from the Content Search API v2 with
   `filters[liveStatus]=onair`, fetched once per run and matched against
   Niconico-linked channels.
-- **CI.ME** live programs come from `client.live.getLives()` via cime-sdk,
-  fetched once per run and matched against CI.ME-linked channel IDs. Requires
-  `CI_ME_CLIENT_ID` and `CI_ME_CLIENT_SECRET`. Per-channel status is available
-  via `client.live.getLiveStatus(channelId)` with auth scopes.
+- **CI.ME** live streams come from the **public** per-channel
+  `GET /api/openapi/v1/{channelId}/live-status`, so no client credentials are
+  needed; the answer names the stream's title and start time, and the item id
+  is `ci.me:<channelId>:<openedAt>` so each stream of a channel is its own
+  item. The platform-wide live list (`GET /api/openapi/open/v1/lives`, the
+  `cime-sdk` `client.live.getLives()` path) needs the credentials and could
+  not be attributed to a channel, so it is not used.
 
 Ended streams are retired to `past` on every run so the Live page stays current.
 
@@ -825,7 +828,7 @@ are not in the pipeline.
 
 | Source | Why not |
 | --- | --- |
-| [Virtual YouTuber Wiki](https://virtualyoutuber.fandom.com/) | The MediaWiki API works, and it is wired in as a **debut discovery source** (`scripts/lib/debut-sources/fandom.ts`) — debut dates, graduation dates, YouTube handles, X handles and affiliations from the wiki's `Character` infobox template. The roster itself is not yet wired for direct channel import |
+| [Virtual YouTuber Wiki](https://virtualyoutuber.fandom.com/) | The MediaWiki API works, and it is wired in as a **debut discovery source** (`scripts/lib/debut-sources/fandom.ts`) — debut dates, graduation dates, YouTube handles, X handles and affiliations from `{{Character}}` infoboxes. The roster itself is not yet wired for direct channel import |
 | [AI VTuber DB](https://aivtuberdb.com) | Worth reading for the AI flag, but it publishes no machine-readable file |
 | [PVC.moe](https://pvc.moe) | The data is only in the client bundle |
 | [Streams Charts](https://streamscharts.com/vtubers) | Blocks automated requests |
