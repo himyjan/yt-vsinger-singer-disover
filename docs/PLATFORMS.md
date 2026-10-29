@@ -392,7 +392,6 @@ The sync checks live/upcoming status across platforms on every run:
 - **SOOP** — `main_broad_list_api.php` live list, matched against SOOP-linked channels.
 
 **Platforms without live checking:**
-- **Niconico** — no public live listing endpoint; `live()` returns empty.
 - **CI.ME** — API has no live-list endpoint; `live()` returns empty.
 
 Ended streams are retired to `past` on every run so the Live page stays current.
