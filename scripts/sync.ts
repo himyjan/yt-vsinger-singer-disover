@@ -3044,6 +3044,85 @@ async function main(): Promise<void> {
     }
   }
 
+  /**
+   * Niconico live stream check.
+   *
+   * Niconico's Content Search API v2 returns a global list of live programs,
+   * not per-channel, so it is fetched once via `live()` and matched against
+   * channels the dataset links to Niconico.
+   */
+  const nico = adapters.find((a) => a.id === "niconico") as
+    | (typeof adapters)[number] & {
+        liveUploads?: PlatformUpload[];
+        live: (channel: PlatformChannel) => Promise<PlatformUpload[]>;
+      }
+    | undefined;
+  const nicoLiveItemIds = new Set<string>();
+  if (nico?.live) {
+    try {
+      // Populate liveUploads from the global live list
+      const dummyChannel: PlatformChannel = {
+        platform: "niconico",
+        id: "",
+        handle: null,
+        name: null,
+        url: "https://www.nicovideo.jp/",
+        subscribers: { tag: "hidden" },
+        avatar: null,
+        description: null,
+        tags: [],
+      };
+      const liveStreams = await nico.live(dummyChannel);
+      let nicoChecked = 0;
+      let nicoFound = 0;
+      let nicoRetired = 0;
+      const currentNicoIds = new Set(liveStreams.map((s) => s.id));
+
+      for (const stream of liveStreams) {
+        const userId = stream.channelId;
+        if (!userId) continue;
+        const channel =
+          channelById.get(userId) ?? channelById.get(`niconico:${userId}`);
+        if (!channel) continue;
+        nicoChecked++;
+        nicoFound++;
+
+        const item = platformUploadToItem(stream, now, channel);
+        if (!item) continue;
+        item.type = "live";
+        item.status = stream.status ?? "live";
+        item.platform = "niconico";
+        const prev = itemById.get(item.id);
+        itemById.set(item.id, {
+          ...item,
+          addedAt: prev?.addedAt ?? item.addedAt,
+        });
+        nicoLiveItemIds.add(item.id);
+      }
+
+      // Retire streams that are no longer live
+      for (const item of itemById.values()) {
+        if (item.type !== "live" || item.platform !== "niconico") continue;
+        if (item.status !== "live" && item.status !== "upcoming") continue;
+        if (currentNicoIds.has(item.id)) continue;
+        const ended = itemById.get(item.id);
+        if (!ended) continue;
+        ended.status = "past";
+        ended.actualEnd = ended.actualEnd ?? now;
+        ended.publishedAt =
+          ended.publishedAt ?? ended.actualStart ?? ended.scheduledStart ?? now;
+        ended.updatedAt = now;
+        nicoRetired++;
+      }
+
+      log(
+        `niconico live: checked ${nicoChecked} channel(s), found ${nicoFound}, stored ${nicoLiveItemIds.size}, retired ${nicoRetired}`,
+      );
+    } catch (error) {
+      log(`warn: niconico live check failed: ${(error as Error).message}`);
+    }
+  }
+
   /* --- discovered videos ------------------------------------------------ */
   if (discoveredVideoIds.size) {
     const ids = [...discoveredVideoIds].slice(0, 200);
