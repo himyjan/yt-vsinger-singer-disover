@@ -109,6 +109,15 @@ gender filter, the AI filter and the acoustic filter in one place. A new view
 cannot accidentally leak the wrong kind of performer, because it has to go
 through the same funnel.
 
+The platform filter goes through the same funnel, and it matches by **site**,
+not by raw key: `platformFilterKey()` in `src/lib/links.ts` folds the numbered
+`web:<n>` address slots (and the `web`/`other` spellings, and the
+`x`/`twitter`, `weibo`/`weiboByName`, `youtube_video`/`youtube_playlist`
+aliases) into one option, and `matchesPlatform()` is the matching half. The
+dropdown is built from the same grouped keys, which is why it lists one
+「Website」 rather than `web:1` … `web:56` — the raw keys are storage slots in
+`externals`, not platforms.
+
 ## Layers
 
 ### The pipeline (`scripts/`)
@@ -373,6 +382,28 @@ keeps a registry of identity keys:
 Records that share a key are merged, never duplicated. The registry also
 enriches channels the YouTube API knows nothing about — the wiki supplies
 debut dates and graduation dates, which the API does not expose.
+
+## Reincarnation (轉生)
+
+A talent can graduate and return under a new name, model and, often, another
+agency. De-duplication deliberately does **not** merge those two records: they
+are two channels with two audiences, two histories and two sets of items, and
+the merge would erase one of them.
+
+The relation is a curated edge, `reincarnationOf`, stored **once** on the newer
+record — `data/overrides.json` is the input, and the sync applies it the same
+way it applies a curated `kind`. The drawer derives the other direction by
+scanning the summaries for records that point at the one open, so
+`轉生帳號 · Reincarnation account` and `前世 · Previous persona` are two views of
+one field and cannot disagree. `openChannelById()` in `App.vue` resolves the
+other persona from the full catalogue when the current region filter has not
+loaded it.
+
+The edge chains: `B.reincarnationOf = A`, `C.reincarnationOf = B` walks
+A → B → C one hop at a time, and any number of records may name the same
+predecessor. It is never inferred — a shared voice or a fan wiki's guess is not
+evidence, and a wrong edge would publish one performer's page under another's
+history.
 
 ## Growing the catalogue from a subscription list
 

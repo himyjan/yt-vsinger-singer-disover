@@ -51,6 +51,7 @@ This is the most common contribution, and it does not need any code.
 | `region` | `jp` \| `cn` \| `tw` \| `hk` \| `kr` \| `en` \| `id` \| `my` \| `sea` \| `unknown` |
 | `agency` | any string, or `null` |
 | `isSinging` | boolean |
+| `reincarnationOf` | the previous persona's channel id — written on the **newer** record only; the drawer derives the reverse link |
 | `hidden` | `true` removes the channel from the published dataset |
 
 Then:

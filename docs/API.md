@@ -110,14 +110,16 @@ A channel shard holds **one record per line**, with every field equal to its
 default omitted, so a one-record change stays a one-line diff in the
 repository. Put the defaults back before reading anything: they are listed in
 [`DATA-SCHEMA.md`](DATA-SCHEMA.md), and `expandChannel()` in
-`src/lib/dataset.ts` is the reference implementation. `isSinging`, `aliases`
-and `externals` in particular are usually absent rather than `false`/`[]`/`{}`.
+`src/lib/dataset.ts` is the reference implementation. `isSinging`, `aliases`,
+`externals` and `reincarnationOf` in particular are usually absent rather than
+`false`/`[]`/`{}`/`null`.
 
 ```js
 const DEFAULTS = {
   aliases: [], tags: [], statedLanguages: [], platforms: [], externals: {},
   banner: null, description: null, country: null, agency: null, handle: null,
-  debutDate: null, graduateDate: null, uploadsPlaylistId: null,
+  debutDate: null, graduateDate: null, reincarnationOf: null,
+  uploadsPlaylistId: null,
   popularVideoId: null, verification: null, officialArtistCheckedAt: null,
   isOfficialArtist: false, isAi: false, isSinging: false,
   videoCount: null, viewCount: null,

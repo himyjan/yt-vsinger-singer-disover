@@ -32,6 +32,7 @@ import { canonicalAgency, toLanguageList } from "@shared/lib/regions";
 import { toSummary } from "@shared/lib/summary";
 import { isScheduleTitle } from "@shared/lib/classify";
 
+import { matchesPlatform } from "./links";
 import {
   fetchUrl,
   loadOrigins,
@@ -782,8 +783,10 @@ export function filterChannels(
     if (region !== "all" && channel.region !== region) return false;
     if (
       platform !== "all" &&
-      !channel.links.some((link) => link.p === platform) &&
-      !channel.externals?.[platform]
+      !channel.links.some((link) => matchesPlatform(platform, link.p)) &&
+      !Object.keys(channel.externals ?? {}).some((key) =>
+        matchesPlatform(platform, key),
+      )
     ) {
       return false;
     }

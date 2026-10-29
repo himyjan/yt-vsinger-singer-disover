@@ -109,6 +109,53 @@ export function platformMeta(platform: string): {
   return { label: platform, color: "#6b7280", icon: "🔗" };
 }
 
+/**
+ * The key a platform filter groups an account under.
+ *
+ * The stored key is whatever the source called the account, and three kinds
+ * of key are not one option per key:
+ *
+ * - `web:1`, `web:2`, … `web:56` are **not platforms**. They are the numbered
+ *   slots a roster uses to store the addresses a performer published — a shop,
+ *   a Spotify album, a personal site — because `externals` is a map and every
+ *   key must be different. The number is bookkeeping; the value is the address.
+ *   This is why the filter used to list 56 「web:1」 … 「web:56」 options: the
+ *   dropdown unioned `Object.keys(externals)` and `platformMeta()` has no label
+ *   for `web:1`, so it fell through to printing the raw key.
+ * - `other` is the same thing under another name — `platformMeta()` renders
+ *   both as 「Website」 — so listing both showed the option twice.
+ * - `x`/`twitter`, `weibo`/`weiboByName`, and `youtube_video`/`youtube_playlist`
+ *   are one site written several ways. Grouping them is what keeps the menu
+ *   free of two identical labels that filter differently for no reason.
+ *
+ * Matching has to use the same grouping, or a grouped option matches nothing.
+ */
+export function platformFilterKey(platform: string): string {
+  if (platform.startsWith("web:")) return "web";
+  switch (platform) {
+    // An address, not an account — `platformMeta()` labels it 「Website」 too.
+    case "other":
+      return "web";
+    // One site, two spellings.
+    case "x":
+      return "twitter";
+    case "weiboByName":
+      return "weibo";
+    // A link on YouTube is still YouTube, whatever kind of link it is.
+    case "youtube_video":
+    case "youtube_playlist":
+      return "youtube";
+    default:
+      return platform;
+  }
+}
+
+/** Whether an account key belongs to the platform filter's group. */
+export function matchesPlatform(filter: string, platform: string): boolean {
+  if (filter === "all") return true;
+  return platformFilterKey(platform) === platformFilterKey(filter);
+}
+
 /** Collects every known link for a channel, in a stable order. */
 export function channelLinks(
   channel: Channel | ChannelSummary | null | undefined,

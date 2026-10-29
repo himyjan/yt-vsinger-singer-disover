@@ -254,6 +254,18 @@ hidden with `"hidden": true` in `data/overrides.json`, never deleted by hand.
 A curated `kind` outranks the test — a person filing a channel is not a
 name pattern.
 
+**A reincarnation is a second record, not a duplicate.** A talent who graduates
+and returns as someone else (轉生) has two channels, two audiences and two
+histories, so `canonicalizeChannelIds()` must not merge them. The relation is a
+curated edge, `reincarnationOf`, written **once** on the newer record in
+`data/overrides.json`; the drawer derives the reverse 「轉生帳號」 link by
+looking for records that point at the open one. Write it twice and the pair can
+disagree about which persona is which; infer it from a voice or a fan wiki and
+a wrong edge publishes one performer's history under another's name. The edge
+chains — `B.reincarnationOf = A`, `C.reincarnationOf = B` — so a talent may
+reincarnate any number of times, and several records may name the same
+predecessor, but one record names only its immediate predecessor.
+
 ### 6. One writer at a time
 
 `acquireRunLock()` refuses to start when another run holds the dataset. Both
@@ -454,6 +466,7 @@ create non-fast-forward push failures.
 | A Bilibili-only record with no YouTube/Twitch link | `npm run data:links -- --limit 200` (add `--platform bilibili --shard 2/4` to slice it, or `--region jp` for the Japanese mirror case) |
 | A record filed under `cn` that is really Japanese | `npm run data:details -- --weak-region` re-derives it; `data:links` corrects it from the discovered YouTube country |
 | Fix the classifier itself | `scripts/lib/classify.ts` |
+| Link a talent who returned under a new persona (轉生) | `data/overrides.json` — `reincarnationOf` on the **new** record, naming the previous channel id. The drawer derives 「轉生帳號」 on the old record from that one field, so never write it twice; the edge chains (`B.reincarnationOf = A`, `C.reincarnationOf = B`) and any number of records may point at the same predecessor |
 | Add a curated channel | `data/seed-catalog.json` |
 | Discover new performers | `npm run data:discover` — vTubie's directory, read with a browser (`puppeteer-core`, optional); candidates land in `data/identities.json`, and `--promote` adds the ones that pass the two-video gate to `data/channels/` |
 | Add a VTuber group's members | `npm run data:vtubie-groups` (browser, resumable) then `npm run data:vtubie-import -- --apply`; the group page is the only vTubie path that publishes the `UC…` id, so no name search is involved |
@@ -469,6 +482,7 @@ create non-fast-forward push failures.
 | Change the search behaviour | `scripts/lib/search.ts`, then `npm run data:index` |
 | Fix a wrong `kind` or `role` across the dataset | `scripts/lib/classify.ts`, then `npm run data:reclassify -- --apply` — it re-derives both from the records on disk, no network, and the roster ids in `.cache/` count as the virtual claim |
 | Add a UI filter | `src/lib/dataset.ts` (`filterItems`) + `src/App.vue` |
+| The platform filter lists `web:1` … `web:56`, or two options with the same label | `platformFilterKey()` and `matchesPlatform()` in `src/lib/links.ts` — the menu and the match must group `externals` keys the same way (a `web:<n>` slot is an address, not a platform); add a new alias there, never a per-view special case |
 | Check the repository's real size | `npm run repo:size` — the stored history, not the tree; `--repack` measures what `git gc` would reclaim |
 | The repository is approaching 1 GB | squash first (`data-squash.yml`, monthly), split into volumes only if a squash stops being enough — `docs/DEPLOY.md` → *The capacity ladder* |
 | Plan or check the split into volumes | `npm run data:volumes -- --dry-run`, then `--count N --base-url "…/{name}/"`, then `--verify .volumes` — `scripts/lib/volume.ts` holds `volumeOf()`, `src/lib/origins.ts` reads the result |
