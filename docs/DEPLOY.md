@@ -166,6 +166,7 @@ set as repository _variables_ so the deploy workflow can inject them.
 | `VITE_GOOGLE_CLIENT_ID` | Enables YouTube account linking (Google Identity Services) |
 | `VITE_TWITCH_CLIENT_ID` | Enables Twitch account linking (public client, PKCE)       |
 | `VITE_VK_CLIENT_ID`     | Enables VK account linking                                 |
+| `VITE_KICK_CLIENT_ID`   | Enables KICK account linking (OAuth 2.1 PKCE, public client) |
 
 Bilibili account linking needs no configuration — the user supplies their own
 `SESSDATA`.

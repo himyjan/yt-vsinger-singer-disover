@@ -16,6 +16,7 @@
  */
 
 import { classifyItem } from "../classify";
+import { RateLimiter, detectRateLimit } from "../rate-limit";
 import type { CountRef, PlatformId } from "../types";
 import type {
   PlatformAdapter,
@@ -25,6 +26,9 @@ import type {
 import { REQUEST_TIMEOUT_MS } from "../io";
 
 const SEARCH = "https://api.search.nicovideo.jp/api/v2";
+
+/** Niconico rate-limits aggressively — one request per second at minimum. */
+const REQUEST_INTERVAL_MS = 1_000;
 
 interface NicoVideo {
   contentId: string;
@@ -59,9 +63,17 @@ export class NiconicoAdapter implements PlatformAdapter {
   /** Live streams found by the last live() call — populated once per run. */
   liveUploads: PlatformUpload[] = [];
   private readonly onLog: (message: string) => void;
+  /** Adaptive limiter — Niconico blocks bursts, so requests are spaced out. */
+  private readonly limiter: RateLimiter;
 
   constructor(options: NiconicoOptions = {}) {
     this.onLog = options.onLog ?? (() => {});
+    this.limiter = new RateLimiter({
+      minIntervalMs: REQUEST_INTERVAL_MS,
+      maxIntervalMs: 60_000,
+      onLimit: (m) => this.onLog(`niconico: ${m}`),
+      onChange: (ms) => this.onLog(`niconico: interval → ${Math.round(ms)}ms`),
+    });
   }
 
   isConfigured(): boolean {
@@ -69,6 +81,14 @@ export class NiconicoAdapter implements PlatformAdapter {
   }
 
   private async getJson<T>(path: string, params: Record<string, string>): Promise<T | null> {
+    // Circuit breaker: if Niconico has pushed back hard enough, stop calling it.
+    if (this.limiter.isTripped()) {
+      this.onLog(`niconico: rate limiter tripped, skipping ${path}`);
+      return null;
+    }
+
+    await this.limiter.wait();
+
     try {
       const url = new URL(`${SEARCH}/${path}`);
       for (const [k, v] of Object.entries(params)) url.searchParams.set(k, v);
@@ -76,15 +96,26 @@ export class NiconicoAdapter implements PlatformAdapter {
         signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
         headers: {
           Accept: "application/json",
-          "User-Agent": "Mozilla/5.0",
+          // Niconico blocks requests that look like scripts — a real browser UA
+          // and a Referer are needed.
+          "User-Agent":
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+          Referer: "https://www.nicovideo.jp/",
         },
       });
-      if (!res.ok) {
+      const text = await res.text();
+      const limited = detectRateLimit(res.status, text);
+
+      if (limited.limited || !res.ok) {
+        this.limiter.penalise();
         this.onLog(`niconico: ${path} returned HTTP ${res.status}`);
         return null;
       }
-      return (await res.json()) as T;
+
+      this.limiter.reward();
+      return JSON.parse(text) as T;
     } catch (error) {
+      this.limiter.penalise();
       this.onLog(`niconico: ${path} request failed: ${(error as Error).message}`);
       return null;
     }
