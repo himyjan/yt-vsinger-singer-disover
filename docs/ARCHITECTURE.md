@@ -212,8 +212,9 @@ link resolver put a channel in the same shard.
 `scripts/discover.ts` answers the other question: who exists that the
 catalogue has never seen. A **debut source** (`scripts/lib/debut-sources/`)
 publishes candidates in its own shape — the Virtual YouTuber Wiki's
-`{{Character}}` infobox, the vTubie directory's cards — and the runner merges
-every one through `IdentityRegistry.upsert()` into `data/identities.json`.
+`Character` infobox template, the vTubie directory's cards — and the runner
+merges every one through `IdentityRegistry.upsert()` into
+`data/identities.json`.
 
 The registry is the de-duplication database: a performer is keyed by every
 strong identity a source knows (YouTube channel id, handle, X handle, wiki
