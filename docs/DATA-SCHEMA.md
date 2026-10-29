@@ -206,6 +206,7 @@ The record for one performer.
 | `activity` | `"active"` \| `"preparing"` \| `"graduated"` \| `"unknown"` | Streaming status — one per performer, not one per platform |
 | `debutDate` | string \| null | ISO date of debut |
 | `graduateDate` | string \| null | ISO date of graduation |
+| `popularVideoId` | string \| null | A representative upload |
 | `reincarnationOf` | string \| null | The channel this performer streamed as before reincarnating (轉生) — the previous persona's id. Curated in `data/overrides.json`; the old record's drawer derives the reverse "轉生帳號" link, so the pair cannot disagree |
 | `platforms` | `PlatformLink[]` | Every platform identity |
 | `twitchId` | string \| null | |
@@ -236,7 +237,27 @@ the performer published: sometimes the address **percent-encoded**
 `scripts/lib/address.ts` is the one place that turns any of those into an
 absolute address (or `mailto:`); the app drops a link it cannot resolve
 instead of rendering it relative to its own origin.
-| `popularVideoId` | string \| null | A representative upload |
+
+#### `web:<n>` is an address, not a platform
+
+The number in `web:1`, `web:2`, … `web:56` is bookkeeping: an `externals` object
+needs a distinct key per value, so the second address a performer published
+becomes `web:2`. It says nothing about the site and must not be treated as a
+platform id.
+
+The app therefore groups the keys before it builds the **platform filter**:
+`platformFilterKey()` in `src/lib/links.ts` folds every `web:<n>` — and the
+`platforms[].platform` spellings `web` and `other`, which the drawer already
+labels 「Website」 — into one `web` option, and folds the aliases that name one
+site (`x`/`twitter`, `weibo`/`weiboByName`, `youtube_video`/`youtube_playlist`).
+`matchesPlatform()` in the same module is the matching half, used by
+`filterChannels()` in `src/lib/dataset.ts` and by the App's saved and search
+paths, so choosing 「Website」 finds a record whose only address is `web:7`.
+
+Without that grouping the dropdown listed **56 options named `web:1` …
+`web:56`**: it unioned `Object.keys(externals)` into the menu, and
+`platformMeta()` has no entry for `web:7`, so it fell through to printing the
+raw key.
 
 ### `reincarnationOf` — the same talent under a new persona
 
@@ -253,6 +274,14 @@ be a copy that could drift.
 
 It is curated in `data/overrides.json`, because it is a statement about a
 person rather than something a platform publishes.
+
+The relation **chains**. Each record names only its immediate predecessor, so
+`A → B → C` is stored as `B.reincarnationOf = "A"` and
+`C.reincarnationOf = "B"`; the drawer shows the immediate neighbours on each
+side, and the history is walked one hop at a time. Several records may point at
+the same predecessor — a talent who returned on two accounts, or a persona that
+was split — and the older record lists every one of them. A record cannot name
+two predecessors at once: a person has one previous life, not a set.
 
 ### `activity` — one per performer, not one per platform
 
@@ -1001,6 +1030,10 @@ Manual corrections, keyed by channel id. A file the humans edit.
     "affiliation": "community",
     "tags": ["Fan Clip"],
     "note": "A fan translation/clip channel, not the performer"
+  },
+  "UCuuuuuuuuuuuuuuuuuuuuuu": {
+    "reincarnationOf": "UCvvvvvvvvvvvvvvvvvvvvvv",
+    "note": "Returned under a new persona and agency; the previous channel graduated"
   }
 }
 ```
@@ -1015,6 +1048,10 @@ the tag filter. `agency: null` removes an inferred affiliation.
 `region` also sets `regionSource: "override"`, so the drawer shows that a
 human decided it. `note` is not stored on the record — it is the reason,
 kept for whoever reads the file next.
+
+`reincarnationOf` is written on the **newer** record and names the previous
+channel id; the reverse link is derived, so the pair cannot disagree. See
+[`reincarnationOf`](#reincarnationof--the-same-talent-under-a-new-persona).
 
 ## `suggestions.json`
 
