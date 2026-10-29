@@ -3,8 +3,14 @@
  *
  * The public channel lookup requires application Client ID and Client Secret
  * credentials. It accepts known channel IDs; the API does not document a
- * public handle search or live-list endpoint, so this adapter only refreshes
- * profile details.
+ * public handle search, so this adapter only refreshes profile details.
+ *
+ * Live streaming is available through the unofficial `cime-sdk`, which wraps
+ * CI.ME's official OpenAPI. `client.live.getLives()` is a public endpoint that
+ * returns the current live stream list — fetched once per run and matched
+ * against known CI.ME channel IDs, the same pattern Bilibili and Niconico use.
+ *
+ * API: https://developers.ci.me/docs/api-channels
  */
 
 import { REQUEST_TIMEOUT_MS } from "../io";
@@ -35,6 +41,19 @@ export interface CiMeOptions {
   onLog?: (message: string) => void;
 }
 
+/** Live streams found by the last `live()` call — populated once per run. */
+interface CiMeLive {
+  channelId?: string;
+  channelName?: string;
+  channelHandle?: string;
+  title?: string;
+  viewerCount?: number;
+  liveId?: string;
+  thumbnailUrl?: string;
+  startedAt?: string;
+  categoryName?: string;
+}
+
 export class CiMeAdapter implements PlatformAdapter {
   readonly id: PlatformId = "ci.me";
   readonly label = "CI.ME";
@@ -43,6 +62,8 @@ export class CiMeAdapter implements PlatformAdapter {
   private readonly clientId: string;
   private readonly clientSecret: string;
   private readonly onLog: (message: string) => void;
+  /** Live streams found by the last `live()` call — cached once per run. */
+  liveUploads: PlatformUpload[] = [];
 
   constructor(options: CiMeOptions = {}) {
     this.clientId = options.clientId ?? process.env.CI_ME_CLIENT_ID ?? "";
@@ -128,9 +149,73 @@ export class CiMeAdapter implements PlatformAdapter {
     return [];
   }
 
-  async live(channel: PlatformChannel): Promise<PlatformUpload[]> {
-    void channel;
-    return [];
+  /**
+   * CI.ME live streams are fetched from `client.live.getLives()` once per run
+   * and cached in `liveUploads`. The endpoint is global — it returns live
+   * programs platform-wide, not per-channel — so the first call fetches and
+   * subsequent calls return the cached list.
+   *
+   * Requires `cime-sdk` (npm install cime-sdk) and CI_ME_CLIENT_ID /
+   * CI_ME_CLIENT_SECRET environment variables.
+   */
+  async live(_channel: PlatformChannel): Promise<PlatformUpload[]> {
+    if (this.liveUploads.length > 0) return this.liveUploads;
+
+    if (!this.isConfigured()) {
+      this.onLog("ci.me: live check unavailable — configure CI_ME_CLIENT_ID and CI_ME_CLIENT_SECRET");
+      return [];
+    }
+
+    try {
+      // Dynamic import so the SDK is only loaded when live checking runs.
+      const { CimeClient } = await import("cime-sdk");
+      const client = new CimeClient({
+        clientId: this.clientId,
+        clientSecret: this.clientSecret,
+      });
+
+      const lives = await client.live.getLives({ size: 100 });
+      const liveList: CiMeLive[] = lives.data ?? [];
+
+      const uploads: PlatformUpload[] = [];
+      for (const stream of liveList) {
+        if (!stream.channelId) continue;
+
+        const classified = this.classifyLiveItem(stream.title ?? "");
+
+        uploads.push({
+          platform: "ci.me",
+          id: stream.liveId ?? stream.channelId,
+          channelId: stream.channelId,
+          title: stream.title ?? "",
+          description: null,
+          thumbnail: stream.thumbnailUrl ?? null,
+          publishedAt: stream.startedAt ?? null,
+          scheduledStart: null,
+          duration: null,
+          status: "live",
+          category: "live",
+          songTitle: classified.songTitle,
+          originalArtist: classified.originalArtist,
+          viewCount: stream.viewerCount ?? null,
+          url: `https://ci.me/${stream.channelId}`,
+        });
+      }
+
+      this.liveUploads = uploads;
+      this.onLog?.(`ci.me: ${uploads.length} live stream(s) found`);
+      return uploads;
+    } catch (error) {
+      this.onLog(`ci.me: live check failed: ${(error as Error).message}`);
+      return [];
+    }
   }
 
+  private classifyLiveItem(title: string): {
+    songTitle: string | null;
+    originalArtist: string | null;
+  } {
+    // Minimal classification — CI.ME live titles rarely carry song metadata.
+    return { songTitle: null, originalArtist: null };
+  }
 }

@@ -391,8 +391,10 @@ The sync checks live/upcoming status across platforms on every run:
 - **KICK** — `GET /api/v2/channels/{login}`, checked for channels linked to KICK.
 - **SOOP** — `main_broad_list_api.php` live list, matched against SOOP-linked channels.
 
-**Platforms without live checking:**
-- **CI.ME** — API has no live-list endpoint; `live()` returns empty.
+- **CI.ME** — `client.live.getLives()` via cime-sdk, fetched once per run and
+  filtered against CI.ME-linked channel IDs. Requires
+  `CI_ME_CLIENT_ID` and `CI_ME_CLIENT_SECRET`. `getLiveStatus(channelId)` is
+  available for per-channel checks with auth scopes.
 
 Ended streams are retired to `past` on every run so the Live page stays current.
 Non-singing VTubers are included — the live check is not gated on `isSinging`.

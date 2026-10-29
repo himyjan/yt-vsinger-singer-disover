@@ -3131,6 +3131,85 @@ async function main(): Promise<void> {
     }
   }
 
+  /**
+   * CI.ME live stream check.
+   *
+   * CI.ME's `live.getLives()` returns a global list of live programs,
+   * fetched once via `live()` and matched against channels the dataset
+   * links to CI.ME. Requires CI_ME_CLIENT_ID and CI_ME_CLIENT_SECRET.
+   */
+  const cime = adapters.find((a) => a.id === "ci.me") as
+    | (typeof adapters)[number] & {
+        liveUploads?: PlatformUpload[];
+        live: (channel: PlatformChannel) => Promise<PlatformUpload[]>;
+      }
+    | undefined;
+  const cimeLiveItemIds = new Set<string>();
+  if (cime?.live && cime.isConfigured()) {
+    try {
+      // Populate liveUploads from the global live list
+      const dummyChannel: PlatformChannel = {
+        platform: "ci.me",
+        id: "",
+        handle: null,
+        name: null,
+        url: "https://ci.me/",
+        subscribers: { tag: "hidden" },
+        avatar: null,
+        description: null,
+        tags: [],
+      };
+      const liveStreams = await cime.live(dummyChannel);
+      let cimeChecked = 0;
+      let cimeFound = 0;
+      let cimeRetired = 0;
+      const currentCimeIds = new Set(liveStreams.map((s) => s.id));
+
+      for (const stream of liveStreams) {
+        const userId = stream.channelId;
+        if (!userId) continue;
+        const channel =
+          channelById.get(userId) ?? channelById.get(`ci.me:${userId}`);
+        if (!channel) continue;
+        cimeChecked++;
+        cimeFound++;
+
+        const item = platformUploadToItem(stream, now, channel);
+        if (!item) continue;
+        item.type = "live";
+        item.status = stream.status ?? "live";
+        item.platform = "ci.me";
+        const prev = itemById.get(item.id);
+        itemById.set(item.id, {
+          ...item,
+          addedAt: prev?.addedAt ?? item.addedAt,
+        });
+        cimeLiveItemIds.add(item.id);
+      }
+
+      // Retire streams that are no longer live
+      for (const item of itemById.values()) {
+        if (item.type !== "live" || item.platform !== "ci.me") continue;
+        if (item.status !== "live" && item.status !== "upcoming") continue;
+        if (currentCimeIds.has(item.id)) continue;
+        const ended = itemById.get(item.id);
+        if (!ended) continue;
+        ended.status = "past";
+        ended.actualEnd = ended.actualEnd ?? now;
+        ended.publishedAt =
+          ended.publishedAt ?? ended.actualStart ?? ended.scheduledStart ?? now;
+        ended.updatedAt = now;
+        cimeRetired++;
+      }
+
+      log(
+        `ci.me live: checked ${cimeChecked} channel(s), found ${cimeFound}, stored ${cimeLiveItemIds.size}, retired ${cimeRetired}`,
+      );
+    } catch (error) {
+      log(`warn: ci.me live check failed: ${(error as Error).message}`);
+    }
+  }
+
   /* --- discovered videos ------------------------------------------------ */
   if (discoveredVideoIds.size) {
     const ids = [...discoveredVideoIds].slice(0, 200);
