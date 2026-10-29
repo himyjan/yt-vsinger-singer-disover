@@ -18,12 +18,13 @@
  *   npm run data:singing-events -- --months 6   # a wider window
  *   npm run data:singing-events -- --names-only # print the event names
  *
- * Output: `.cache/singing-events.json`, which `scripts/sync.ts` reads and turns
+ * Output: `lists/singing-events.json`, which `scripts/sync.ts` reads and turns
  * into YouTube video searches.
  */
 
 import fs from "node:fs";
 import path from "node:path";
+import type { SingingEventEntry, SingingEventsFile } from "./lib/singing-events";
 
 const LIT_LINK = "https://lit.link/shimasabakirimi";
 
@@ -67,7 +68,7 @@ function parseArgs(argv: string[]): Options {
   const options: Options = {
     months: 3,
     namesOnly: false,
-    out: ".cache/singing-events.json",
+    out: "lists/singing-events.json",
   };
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i]!;
@@ -92,7 +93,7 @@ function parseArgs(argv: string[]): Options {
             "",
             "  --months <n>    harvest the current month and n-1 before it (default 3)",
             "  --names-only    print the event names, one per line",
-            "  --out <path>    snapshot path (default .cache/singing-events.json)",
+            "  --out <path>    snapshot path (default lists/singing-events.json)",
           ].join("\n"),
         );
         process.exit(0);
@@ -257,24 +258,59 @@ async function main(): Promise<void> {
     }
   }
 
-  const list = [...events.values()].sort((a, b) => a.name.localeCompare(b.name));
+  // Merge with existing unified file so previously harvested entries are kept
+  // and new ones are added without duplicating.
+  const existingEntries: SingingEventEntry[] = (() => {
+    try {
+      const data = JSON.parse(fs.readFileSync(options.out, "utf-8"));
+      return Array.isArray(data.entries) ? data.entries : [];
+    } catch {
+      return [];
+    }
+  })();
+
+  const byName = new Map<string, SingingEventEntry>();
+  for (const entry of existingEntries) byName.set(entry.name, entry);
+  for (const [name, entry] of events) {
+    const existing = byName.get(name);
+    if (!existing) {
+      byName.set(name, {
+        name,
+        month: entry.month,
+        count: null,
+        firstSeen: null,
+        sources: ["calendar"],
+      });
+    } else {
+      if (!existing.sources.includes("calendar")) {
+        existing.sources.push("calendar");
+      }
+      if (entry.month && (!existing.month || entry.month < existing.month)) {
+        existing.month = entry.month;
+      }
+    }
+  }
+
+  const list = [...byName.values()].sort((a, b) => a.name.localeCompare(b.name));
 
   if (options.namesOnly) {
     for (const entry of list) console.log(entry.name);
     return;
   }
 
-  const snapshot = {
+  const sources = [
+    ...new Set(list.flatMap((e) => e.sources).filter(Boolean)),
+  ].sort();
+
+  const snapshot: SingingEventsFile = {
     generatedAt: now.toISOString(),
-    source: LIT_LINK,
-    yearSheet: YEAR_SHEETS[year] ?? null,
-    months: options.months,
-    events: list,
+    sources,
+    entries: list,
   };
   fs.mkdirSync(path.dirname(options.out), { recursive: true });
   fs.writeFileSync(options.out, JSON.stringify(snapshot, null, 2));
   console.error(
-    `${list.length} singing event(s) across ${options.months} month(s) → ${options.out}`,
+    `${list.length} singing event(s) total (${events.size} new) → ${options.out}`,
   );
 }
 
