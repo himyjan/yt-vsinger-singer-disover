@@ -370,11 +370,17 @@ refreshes it.
 SOOP's unauthenticated `main_broad_list_api.php` endpoint provides a
 paginated global live list with broadcast titles, streamer IDs and viewer
 counts. The configured discovery terms are matched locally against the first
-page; this is not a server-side channel search. The adapter cannot resolve
-offline profiles or reliably find a channel outside that page. It filters
-password-protected broadcasts, caches the page briefly, and uses the direct
-play URL for the Watch link. SOOP's profile endpoint was not verified, so the
-adapter does not depend on it.
+page; this is not a server-side channel search. It filters password-protected
+broadcasts, caches the page briefly, and uses the direct play URL for the Watch
+link.
+
+**The station API is the offline profile** — the live feed can only surface a
+channel while it is broadcasting, but `GET api-channel.sooplive.com/v1.1/
+channel/{userId}/station` answers a channel that is offline with its name,
+avatar, description, fan count and published country. `resolve()` asks the
+station first and falls back to the live feed for an id the station does not
+know; an unknown id answers `CHA1004`, which is a "does not exist", not a
+failed request.
 
 ## CI.ME
 
