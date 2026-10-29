@@ -210,11 +210,21 @@ browser can run as the app. The page loads and stays blank.
 
 A project site is served from `/<repo>/`, so the deploy workflow derives
 the base path from the repository name and the repository variable only
-overrides it:
+overrides it. The Build step in
+[`deploy-pages.yml`](../.github/workflows/deploy-pages.yml) sets:
 
 ```yaml
-VITE_BASE_PATH: ${{ vars.VITE_BASE_PATH || format('/{0}/', github.event.repository.name) }}
+env:
+  # The repository variable when it is set, otherwise `/<repository-name>/`
+  # read from `github.event.repository.name`.
+  VITE_BASE_PATH: <vars.VITE_BASE_PATH, or /<repository-name>/>
 ```
+
+The exact expression is in the workflow file rather than quoted here on
+purpose: GitHub Pages may run Jekyll over this repository, Jekyll treats a
+double-braced Actions expression as Liquid, and writing one out in Markdown
+fails the build with *Liquid syntax error … not properly terminated*. Keep
+double braces out of the docs.
 
 The Vite config reads it (`base: env.VITE_BASE_PATH || "/"`) and the data
 loader prefixes every request with `import.meta.env.BASE_URL`, so the app
