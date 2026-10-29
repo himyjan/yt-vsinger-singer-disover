@@ -591,6 +591,7 @@ const CHANNEL_DEFAULTS: Partial<Record<keyof Channel, unknown>> = {
   handle: null,
   debutDate: null,
   graduateDate: null,
+  reincarnationOf: null,
   uploadsPlaylistId: null,
   popularVideoId: null,
   verification: null,

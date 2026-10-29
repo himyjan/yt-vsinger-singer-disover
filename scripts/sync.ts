@@ -286,6 +286,11 @@ interface Override {
   gender?: Channel["gender"];
   isAi?: boolean;
   isSinging?: boolean;
+  /**
+   * The channel this performer streamed as before reincarnating (轉生) — the
+   * previous persona's id. The reverse link is derived, never stored twice.
+   */
+  reincarnationOf?: string | null;
   /** A human-written description of the performer. */
   description?: string;
   /** A verified avatar URL, e.g. the Wikipedia infobox image. */
@@ -1612,6 +1617,9 @@ async function main(): Promise<void> {
       if (override.gender) channel.gender = override.gender;
       if (override.isAi !== undefined) channel.isAi = override.isAi;
       if (override.isSinging !== undefined) channel.isSinging = override.isSinging;
+      if (override.reincarnationOf !== undefined) {
+        channel.reincarnationOf = override.reincarnationOf || null;
+      }
       if (override.description) channel.description = override.description;
       if (override.avatar) channel.avatar = override.avatar;
       if (override.verification) channel.verification = override.verification;
