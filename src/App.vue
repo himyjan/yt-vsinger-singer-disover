@@ -88,7 +88,13 @@ import { parseSubscriptionsFile } from "@/lib/takeout";
 import { SUBS_EXPORT_SCRIPT } from "@/lib/subs-export";
 import { fetchYouTubeChannel, type YouTubeChannelDetail } from "@/lib/youtube-detail";
 import { imageUrl } from "@/lib/image";
-import { channelLinks, itemUrl, platformMeta } from "@/lib/links";
+import {
+  channelLinks,
+  itemUrl,
+  matchesPlatform,
+  platformFilterKey,
+  platformMeta,
+} from "@/lib/links";
 import { detectAnalyticsArchive } from "@/lib/analytics";
 import LiveCard from "@/components/LiveCard.vue";
 import ChannelCard from "@/components/ChannelCard.vue";
@@ -246,15 +252,27 @@ const summaryByName = computed(() => {
   return map;
 });
 
+/**
+ * The platform filter's options.
+ *
+ * The set is the adapters plus every key the loaded summaries actually carry,
+ * grouped through `platformFilterKey()` — a `web:<n>` key is a numbered slot
+ * for a published address, not a platform, so all 56 of them collapse into
+ * one 「Website」 option. Sorting by the rendered label then keeps the menu
+ * alphabetical rather than grouped by raw key.
+ */
 const availablePlatforms = computed(() =>
-  [...new Set([
-    ...ALL_PLATFORMS,
-    ...summaries.value.flatMap((summary) => [
-      ...summary.links.map((link) => link.p),
-      ...Object.keys(summary.externals ?? {}),
-    ]),
-  ])]
-    .sort((a, b) => platformMeta(a).label.localeCompare(platformMeta(b).label)),
+  [
+    ...new Set(
+      [
+        ...ALL_PLATFORMS,
+        ...summaries.value.flatMap((summary) => [
+          ...summary.links.map((link) => link.p),
+          ...Object.keys(summary.externals ?? {}),
+        ]),
+      ].map(platformFilterKey),
+    ),
+  ].sort((a, b) => platformMeta(a).label.localeCompare(platformMeta(b).label)),
 );
 
 /**
@@ -806,8 +824,10 @@ const savedChannels = computed<ChannelSummary[]>(() => {
     if (state.scope !== "both" && channel.kind !== state.scope) continue;
     if (
       state.platform !== "all" &&
-      !channel.links.some((link) => link.p === state.platform) &&
-      !channel.externals?.[state.platform]
+      !channel.links.some((link) => matchesPlatform(state.platform, link.p)) &&
+      !Object.keys(channel.externals ?? {}).some((key) =>
+        matchesPlatform(state.platform, key),
+      )
     ) {
       continue;
     }
@@ -949,12 +969,14 @@ async function runSearch(): Promise<void> {
           const channel = summaryById.value.get(hit.id);
           return Boolean(
             channel &&
-            (channel.links.some((link) => link.p === platform) ||
-              channel.externals?.[platform]),
+            (channel.links.some((link) => matchesPlatform(platform, link.p)) ||
+              Object.keys(channel.externals ?? {}).some((key) =>
+                matchesPlatform(platform, key),
+              )),
           );
         }
         const item = itemById.get(hit.id);
-        return item ? platformOfItem(item) === platform : false;
+        return item ? matchesPlatform(platform, platformOfItem(item)) : false;
       });
     }
     searchHits.value = matched.map((h) => h.entry);

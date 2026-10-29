@@ -115,6 +115,17 @@ A platform identity and an `externals` handle can name the same account;
 `twitter.com` / `x.com` spellings share one key, so an X account is not
 rendered twice.
 
+**The platform filter matches a site, not a key.** The menu in `App.vue`
+(`availablePlatforms`) unions the adapters with every key the loaded summaries
+carry, then runs each through `platformFilterKey()`. That folds the numbered
+`web:<n>` address slots, the `web`/`other` spellings of 「Website」 and the
+`x`/`twitter`, `weibo`/`weiboByName`, `youtube_video`/`youtube_playlist`
+aliases into one option each. Matching uses `matchesPlatform()` from the same
+module — in `filterChannels()`, in the saved list and in the search filter — so
+「Website」 finds a record whose only address is `web:7`. Unioning the raw keys
+without grouping is what listed `web:1` … `web:56` as 56 options: `platformMeta()`
+has no label for `web:7` and fell back to the key itself.
+
 ## The 🎵 badge
 
 The badge is **in the record** (`isOfficialArtist`) and `officialArtistCheckedAt`
