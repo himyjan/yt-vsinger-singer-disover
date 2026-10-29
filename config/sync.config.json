@@ -14,27 +14,27 @@
   "refreshLiveEveryRun": true,
   "searches": [
     {
-      "query": "VTuber \u6b4c\u3044\u624b",
+      "query": "VTuber 歌い手",
       "type": "channel",
       "region": "jp"
     },
     {
-      "query": "vsinger \u6b4c\u3044\u624b",
+      "query": "vsinger 歌い手",
       "type": "channel",
       "region": "jp"
     },
     {
-      "query": "\u30db\u30ed\u30e9\u30a4\u30d6 \u6b4c",
+      "query": "ホロライブ 歌",
       "type": "channel",
       "region": "jp"
     },
     {
-      "query": "\u306b\u3058\u3055\u3093\u3058 \u6b4c\u3044\u624b",
+      "query": "にじさんじ 歌い手",
       "type": "channel",
       "region": "jp"
     },
     {
-      "query": "VOCALOID \u6b4c\u3044\u624b",
+      "query": "VOCALOID 歌い手",
       "type": "channel",
       "region": "jp"
     },
@@ -74,27 +74,27 @@
       "region": "id"
     },
     {
-      "query": "\u865a\u62df\u4e3b\u64ad \u5531\u6b4c",
+      "query": "虚拟主播 唱歌",
       "type": "channel",
       "region": "cn"
     },
     {
-      "query": "\u4e2d\u6587 \u865a\u62df\u6b4c\u59ec",
+      "query": "中文 虚拟歌姬",
       "type": "channel",
       "region": "cn"
     },
     {
-      "query": "\u53f0\u7063 VTuber \u5531\u6b4c",
+      "query": "台灣 VTuber 唱歌",
       "type": "channel",
       "region": "tw"
     },
     {
-      "query": "VTuber \u6b4c\u67a0",
+      "query": "VTuber 歌枠",
       "type": "channel",
       "region": "jp"
     },
     {
-      "query": "VTuber \u6b4c\u3063\u3066\u307f\u305f",
+      "query": "VTuber 歌ってみた",
       "type": "video",
       "region": "jp"
     },
@@ -115,15 +115,16 @@
       "eventType": "live"
     },
     {
-      "query": "VTuber \u6b4c\u67a0 live",
+      "query": "VTuber 歌枠 live",
       "type": "video",
       "region": "jp",
       "eventType": "live"
     },
     {
-      "query": "VTuber \u6b4c\u3044\u5b9a\u671f",
+      "query": "VTuber 歌い定期",
       "type": "video",
       "region": "jp"
     }
-  ]
+  ],
+  "maxSingingEventSearchesPerRun": 24
 }

@@ -486,6 +486,39 @@ the current shard, because live status is time-sensitive.
 
 Ended streams are retired to `past` on every run so the Live page stays current.
 
+### The singing-event calendar — finding new singers by event
+
+VTuber singing events (歌枠リレー) are announced and indexed by the community,
+and a participant's stream is titled with the event's name. That makes an
+event name a **seed query** for YouTube discovery: searching for it finds
+every participant, and the event itself is evidence that the channel sings.
+
+Two sources feed the query list:
+
+| Source | What it is | How it is read |
+| --- | --- | --- |
+| **歌枠リレーカレンダー** | @shimesaba_krm's Google Sheet, the community's canonical calendar of singing relays, one cell per event per day | `npm run data:singing-events` — the CSV export of the current month's sheet, plus the previous months from the year sheet's named tabs via `gviz/tq?tqx=out:csv&sheet=…` |
+| **X** | event announcements (`"歌枠リレー" "タイムテーブル"`) and recruitment posts (`#歌枠リレー募集`) | `scripts/harvest-x-singing-tags.py` through twscrape, keeping the hashtags that name a singing event |
+
+Both write a `.cache/` snapshot — `singing-events.json` and
+`x-singing-tags.json` — and `scripts/sync.ts` reads them through
+`scripts/lib/singing-events.ts`. The calendar's names come first (an event
+there has a date, a timetable and a participant list), and the X hashtags fill
+in the events the calendar has not filed yet.
+
+Each event becomes a **video** search (`SearchSpec.eventTag`), not a channel
+search, because the participants title their streams with the event name. A
+result is admitted when the event name appears **inside** the video's title or
+description — a YouTube search returns unrelated hits too — and the event is
+then treated as **both halves** of the virtual-and-singing gate: the name
+`…歌枠リレー` is the singing evidence, and the VTuber calendar it came from is
+the virtual half. A channel found that way is classified `virtual` with
+`isSinging: true`.
+
+The number of event searches per run is `maxSingingEventSearchesPerRun`
+(default 24) in `config/sync.config.json`; `--no-search` skips them along with
+every other search.
+
 ### The subscription export
 
 A person's subscription list is not in any public source, so the app grows the
