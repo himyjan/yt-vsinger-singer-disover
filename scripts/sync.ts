@@ -61,6 +61,7 @@ import {
   hasSingingDiscoveryEvidence,
   hasVirtualIdentityEvidence,
 } from "./lib/discovery-evidence";
+import { singingEventQueries } from "./lib/singing-events";
 import {
   isPlaceholderName,
   orderPlatformLinks,
@@ -223,10 +224,19 @@ interface SearchSpec {
   type: "channel" | "video";
   region: string;
   eventType?: "live" | "upcoming";
+  /**
+   * True when the query is a VTuber **singing-event** name or hashtag, from
+   * the 歌枠リレーカレンダー or the X harvest. The event name is singing
+   * evidence by itself, and the calendar it came from is the virtual half, so
+   * a video result is admitted without re-testing both words.
+   */
+  eventTag?: boolean;
 }
 
 interface SyncConfig {
   maxSearchesPerRun: number;
+  /** How many singing-event names to search YouTube for per run. */
+  maxSingingEventSearchesPerRun: number;
   maxChannelsPerRun: number;
   maxItemsPerChannel: number;
   maxItemsPerChannelRetained: number;
@@ -245,6 +255,7 @@ const config: SyncConfig = readJson(
   path.join(ROOT, "config", "sync.config.json"),
   {
     maxSearchesPerRun: 40,
+    maxSingingEventSearchesPerRun: 24,
     maxChannelsPerRun: 150,
     maxItemsPerChannel: 25,
     maxItemsPerChannelRetained: 30,
@@ -709,6 +720,26 @@ async function fetchVideoDetails(
   return client.videos(ids);
 }
 
+/**
+ * Does a video name the event a search asked for?
+ *
+ * The comparison folds the decorations a title puts around an event name — the
+ * `#`, the brackets, the full-width space — because 「【#虹色シンフォニー歌枠リレー】」
+ * and 「虹色シンフォニー歌枠リレー」 are the same event. The query is matched
+ * **inside** the video's text, never the other way round: a short event name
+ * must not confirm an unrelated title that happens to contain its letters.
+ */
+function namesEvent(
+  evidence: (string | null | undefined)[],
+  query: string,
+): boolean {
+  const fold = (value: string) =>
+    value.replace(/[#＃\s　【】\[\]（）()「」『』]/g, "").toLowerCase();
+  const needle = fold(query);
+  if (needle.length < 4) return false;
+  return evidence.some((value) => !!value && fold(value).includes(needle));
+}
+
 /* -------------------------------------------------------------------------- */
 /* Main                                                                       */
 /* -------------------------------------------------------------------------- */
@@ -1034,6 +1065,8 @@ async function main(): Promise<void> {
   /* --- discovery searches --------------------------------------------- */
   const discoveredChannelIds = new Set<string>();
   const discoveredVideoIds = new Set<string>();
+  /** Channels found through a VTuber singing-event name — see `SearchSpec.eventTag`. */
+  const singingEventChannels = new Set<string>();
   /** Search-result metadata for InnerTube-discovered videos. */
   const discoveredVideoMeta = new Map<string, InnerTubeSearchVideo>();
   const youtubeVideoEvidence = new Map<string, Map<string, string[]>>();
@@ -1065,6 +1098,30 @@ async function main(): Promise<void> {
         }))
       : config.searches
   ).slice(0, config.maxSearchesPerRun);
+
+  /**
+   * The singing-event names harvested from the 歌枠リレーカレンダー and from X.
+   *
+   * Each event is a **video** search, not a channel search: the participants
+   * title their streams with the event name, so the videos are the way to find
+   * the channels. `eventTag` tells the gate that the name is already singing
+   * evidence — see `SearchSpec.eventTag`.
+   */
+  const eventQueries = args.noSearch
+    ? []
+    : singingEventQueries({ limit: config.maxSingingEventSearchesPerRun });
+  const eventSpecs: SearchSpec[] = eventQueries.map((query) => ({
+    query,
+    type: "video" as const,
+    region: "jp",
+    eventTag: true,
+  }));
+  if (eventSpecs.length) {
+    log(
+      `singing events: ${eventSpecs.length} event name(s) queued as YouTube video searches`,
+    );
+    searchSpecs.push(...eventSpecs);
+  }
 
   if (!args.noSearch) {
     for (const spec of searchSpecs) {
@@ -1168,25 +1225,36 @@ async function main(): Promise<void> {
         if (!video.channelId) continue;
         const evidence = [video.title, video.description];
         const knownChannel = isKnownPlatformIdentity("youtube", video.channelId);
-        const virtualAndSingingEvidence =
-          hasVirtualIdentityEvidence(evidence) &&
-          hasSingingDiscoveryEvidence(evidence);
+        /**
+         * An event-name search is singing evidence by itself, and the calendar
+         * it came from is the virtual half. The video still has to **name the
+         * event** — a YouTube search returns unrelated hits too — so the query
+         * is matched against the title and the description.
+         */
+        const eventMatch =
+          !!spec.eventTag && namesEvent(evidence, spec.query);
+        const virtualAndSingingEvidence = eventMatch
+          ? true
+          : hasVirtualIdentityEvidence(evidence) &&
+            hasSingingDiscoveryEvidence(evidence);
         if (!knownChannel && !virtualAndSingingEvidence) continue;
         discoveredChannelIds.add(video.channelId);
         discoveredVideoIds.add(video.id);
         discoveredVideoMeta.set(video.id, video);
+        if (eventMatch) singingEventChannels.add(video.channelId);
         if (!knownChannel) {
           rememberYouTubeVideoEvidence(
             video.channelId,
             video.id,
             video.title,
             video.description,
+            ...(eventMatch ? [spec.query] : []),
           );
         }
         allowedHits++;
       }
       log(
-        `InnerTube search "${spec.query}" (video) → ` +
+        `InnerTube search "${spec.query}" (video${spec.eventTag ? "/event" : ""}) → ` +
           `${allowedHits}/${videos.length} known or singing-relevant hits, no Data API quota`,
       );
     }
@@ -1381,12 +1449,21 @@ async function main(): Promise<void> {
     .slice(0, discoveredLimit);
 
   const hasTwoVirtualSingingVideos = async (channelId: string): Promise<boolean> => {
+    /**
+     * A channel found through a VTuber singing-event name already has the
+     * virtual half: the event it appears in is a VTuber event, and the event
+     * name is singing evidence by itself. Such a channel only needs its
+     * singing videos counted, not the virtual word repeated in each title.
+     */
+    const fromEventTag = singingEventChannels.has(channelId);
     const videos =
       youtubeVideoEvidence.get(channelId) ?? new Map<string, string[]>();
     const matches = new Set(
       [...videos.entries()]
-        .filter(([, values]) =>
-          hasVirtualIdentityEvidence(values) && hasSingingDiscoveryEvidence(values),
+        .filter(
+          ([, values]) =>
+            hasSingingDiscoveryEvidence(values) &&
+            (fromEventTag || hasVirtualIdentityEvidence(values)),
         )
         .map(([videoId]) => videoId),
     );
@@ -1394,8 +1471,8 @@ async function main(): Promise<void> {
 
     for (const upload of await innertube.uploads(channelId, 10)) {
       if (
-        hasVirtualIdentityEvidence([upload.title]) &&
-        hasSingingDiscoveryEvidence([upload.title])
+        hasSingingDiscoveryEvidence([upload.title]) &&
+        (fromEventTag || hasVirtualIdentityEvidence([upload.title]))
       ) {
         matches.add(upload.id);
         rememberYouTubeVideoEvidence(channelId, upload.id, upload.title);
@@ -1422,8 +1499,8 @@ async function main(): Promise<void> {
           ...(video.snippet?.tags ?? []),
         ];
         if (
-          hasVirtualIdentityEvidence(evidence) &&
-          hasSingingDiscoveryEvidence(evidence)
+          hasSingingDiscoveryEvidence(evidence) &&
+          (fromEventTag || hasVirtualIdentityEvidence(evidence))
         ) {
           matches.add(video.id);
           rememberYouTubeVideoEvidence(channelId, video.id, ...evidence);
@@ -2012,11 +2089,38 @@ async function main(): Promise<void> {
             ...extractExternalLinks(profile.description),
             ...channel.externals,
           };
+          /**
+           * The accounts the platform's own profile publishes.
+           *
+           * KICK lists the performer's YouTube, X, Instagram and TikTok
+           * beside the bio; those are accounts the performer stated, so they
+           * are read the same way a bio's text is.
+           */
+          if (profile.links?.length) {
+            channel.externals = {
+              ...extractExternalLinks(profile.links.join(" ")),
+              ...channel.externals,
+            };
+          }
+          /**
+           * The avatar belongs to the **account** it was published by, so a
+           * KICK or CI.ME picture lands on that platform's link even when the
+           * record is keyed by YouTube. The record's own avatar follows the
+           * primary platform only, which `pickAvatar()` decides.
+           */
+          if (profile.avatar && !link.avatar) link.avatar = profile.avatar;
           if (profile.avatar && !channel.avatar) channel.avatar = profile.avatar;
           if (profile.subscribers.tag !== "hidden") {
             link.subscribers = profile.subscribers;
           }
+          // The platform's current handle, name and profile URL, on its own
+          // link: a KICK record keyed by the numeric id has no slug until the
+          // profile supplies one, and `kick.com/<id>` is not a page.
           if (profile.handle) link.handle = profile.handle;
+          if (profile.name && !isPlaceholderName(profile.name)) {
+            link.name = profile.name;
+          }
+          if (profile.url) link.url = profile.url;
           if (profile.videoCount !== undefined) {
             link.videoCount = profile.videoCount;
             if (profile.videoCount !== null && !channel.videoCount) {
@@ -2875,15 +2979,20 @@ async function main(): Promise<void> {
     }
 
     /**
-     * Multi-platform live stream check — CHZZK, KICK, SOOP (and any platform
-     * with a `live()` adapter). YouTube and Twitch are handled separately
-     * (InnerTube Live tab and Twitch GQL profile).
+     * Multi-platform live stream check — CHZZK, KICK, SOOP and CI.ME (and any
+     * platform with a `live()` adapter). YouTube and Twitch are handled
+     * separately (InnerTube Live tab and Twitch GQL profile).
      *
      * Each platform's `live()` adapter returns the currently live streams for
-     * a channel. We iterate through all channels that link to those platforms
+     * a channel. We iterate through the channels that link to those platforms
      * and check whether they are live right now.
+     *
+     * A record whose **own** platform is one of them is included even when it
+     * has no YouTube channel — a CI.ME-only or KICK-only performer streams on
+     * that platform, and skipping it because its id is not a `UC…` id meant
+     * their live streams were never checked at all.
      */
-    const liveAdapterPlatforms = new Set(["chzzk", "kick", "soop"]);
+    const liveAdapterPlatforms = new Set(["chzzk", "kick", "soop", "ci.me"]);
     const adapterById = new Map(adapters.map((a) => [a.id as string, a]));
 
     const multiPlatformLiveTargets: Array<{
@@ -2892,7 +3001,9 @@ async function main(): Promise<void> {
       link: PlatformLink;
     }> = [];
     for (const channel of channels) {
-      if (!channel.id.startsWith("UC")) continue; // only YouTube-keyed records
+      const own = primaryPlatformOf(channel);
+      const native = own ? liveAdapterPlatforms.has(own) : false;
+      if (!channel.id.startsWith("UC") && !native) continue;
       for (const link of channel.platforms) {
         if (liveAdapterPlatforms.has(link.platform)) {
           multiPlatformLiveTargets.push({ channel, platform: link.platform, link });
@@ -3128,85 +3239,6 @@ async function main(): Promise<void> {
       );
     } catch (error) {
       log(`warn: niconico live check failed: ${(error as Error).message}`);
-    }
-  }
-
-  /**
-   * CI.ME live stream check.
-   *
-   * CI.ME's `live.getLives()` returns a global list of live programs,
-   * fetched once via `live()` and matched against channels the dataset
-   * links to CI.ME. Requires CI_ME_CLIENT_ID and CI_ME_CLIENT_SECRET.
-   */
-  const cime = adapters.find((a) => a.id === "ci.me") as
-    | (typeof adapters)[number] & {
-        liveUploads?: PlatformUpload[];
-        live: (channel: PlatformChannel) => Promise<PlatformUpload[]>;
-      }
-    | undefined;
-  const cimeLiveItemIds = new Set<string>();
-  if (cime?.live && cime.isConfigured()) {
-    try {
-      // Populate liveUploads from the global live list
-      const dummyChannel: PlatformChannel = {
-        platform: "ci.me",
-        id: "",
-        handle: null,
-        name: null,
-        url: "https://ci.me/",
-        subscribers: { tag: "hidden" },
-        avatar: null,
-        description: null,
-        tags: [],
-      };
-      const liveStreams = await cime.live(dummyChannel);
-      let cimeChecked = 0;
-      let cimeFound = 0;
-      let cimeRetired = 0;
-      const currentCimeIds = new Set(liveStreams.map((s) => s.id));
-
-      for (const stream of liveStreams) {
-        const userId = stream.channelId;
-        if (!userId) continue;
-        const channel =
-          channelById.get(userId) ?? channelById.get(`ci.me:${userId}`);
-        if (!channel) continue;
-        cimeChecked++;
-        cimeFound++;
-
-        const item = platformUploadToItem(stream, now, channel);
-        if (!item) continue;
-        item.type = "live";
-        item.status = stream.status ?? "live";
-        item.platform = "ci.me";
-        const prev = itemById.get(item.id);
-        itemById.set(item.id, {
-          ...item,
-          addedAt: prev?.addedAt ?? item.addedAt,
-        });
-        cimeLiveItemIds.add(item.id);
-      }
-
-      // Retire streams that are no longer live
-      for (const item of itemById.values()) {
-        if (item.type !== "live" || item.platform !== "ci.me") continue;
-        if (item.status !== "live" && item.status !== "upcoming") continue;
-        if (currentCimeIds.has(item.id)) continue;
-        const ended = itemById.get(item.id);
-        if (!ended) continue;
-        ended.status = "past";
-        ended.actualEnd = ended.actualEnd ?? now;
-        ended.publishedAt =
-          ended.publishedAt ?? ended.actualStart ?? ended.scheduledStart ?? now;
-        ended.updatedAt = now;
-        cimeRetired++;
-      }
-
-      log(
-        `ci.me live: checked ${cimeChecked} channel(s), found ${cimeFound}, stored ${cimeLiveItemIds.size}, retired ${cimeRetired}`,
-      );
-    } catch (error) {
-      log(`warn: ci.me live check failed: ${(error as Error).message}`);
     }
   }
 
