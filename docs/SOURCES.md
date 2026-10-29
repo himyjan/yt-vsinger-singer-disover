@@ -421,7 +421,7 @@ stable or complete search API:
 | SOOP | — | **the public live-list API** | first-page live titles, channel names, viewer counts |
 | [CI.ME Open API](https://developers.ci.me/docs/api-channels) | **Open API** (`Client-Id` / `Client-Secret`) | same API | channel profile and follower count for known channel IDs; no documented search/media/live API |
 | X / Twitter | — (no free read API) | [**FxTwitter**](https://github.com/FixTweet/FxTwitter) (`api.fxtwitter.com/<handle>`) | the bio, the website field and the location — where a Bilibili-only performer usually writes their YouTube link |
-| Niconico | — | **the public API** | search, uploads; no public live listing endpoint |
+| Niconico | — | **the public API** | search, uploads, live programs via Content Search API v2 |
 
 **InnerTube** (`scripts/lib/youtubei.ts`) — the channel's *description* is the
 richest field in the project: it is where a performer states their own
@@ -473,8 +473,10 @@ the current shard, because live status is time-sensitive.
 
 - **Bilibili** live streams come from `online/list?rid=160` (VTuber partition),
   fetched once per run via `search()` and filtered against known VTuber channel ids.
-- **Niconico** and **CI.ME** have no public live-list endpoint and are not
-  checked for live status.
+- **Niconico** live programs come from the Content Search API v2 with
+  `filters[liveStatus]=onair`, fetched once per run and matched against
+  Niconico-linked channels.
+- **CI.ME** has no public live-list endpoint and is not checked for live status.
 
 Ended streams are retired to `past` on every run so the Live page stays current.
 
@@ -783,12 +785,16 @@ Read from the site on 2026-10-28, one entry at a time, against the dataset.
 | **status** | `active` / `preparing` / `graduated` / `hidden` | `activity` | done — `--hints --apply` maps it |
 | **groups with current/former** | affiliation history per performer | `agency` + `affiliation` | done — `--agencies` fills empty agency |
 | **avatar on its own CDN** | `avatar`, `banner` as fallbacks | `avatar` from `data:details` | done — used until the profile pass overwrites |
-| **debut page** | lists everyone who debuted on a day | **no field** | not planned — roster trivia, not a tracker field |
+| **Twitter activity** | follower count, last tweet, locked/suspended state | **no field** | not planned — snapshot trivia, not tracker state |
 | **birthday** | `October 28`, per entry | **no field** | `birthday` (`MM-DD`) on `Channel`, then a `/birthday/` view |
 | **anniversary** | debut month + day, computed | `debutDate` is stored | an `/anniversary/` view over `debutDate` |
 | **model type** | `L2D`, `3D` | **no field** | not planned — profile trivia |
 | **fanbase name, hashtags** | prose lists per entry | **no field** | not planned — biography, not tracker data |
 | **follower counts** | Twitch, X subscriber counts per entry | `subscribers` / counts per platform link | done — the Twitch-keying import reads the follower count |
+| **Twitch schedule** | scheduled stream times per performer | **no field** | not planned — roster trivia |
+| **YouTube followers history** | historical subscriber counts | **no field** | not planned — historical trivia |
+| **Recent Activity (X)** | recent posts per performer | **no field** | not planned — social media trivia |
+| **debut page** | lists everyone who debuted on a day | **no field** | not planned — roster trivia, not a tracker field |
 
 #### The build plan
 
