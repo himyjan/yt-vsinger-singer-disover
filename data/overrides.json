@@ -2432,10 +2432,12 @@
   },
   "UCNWT73TXf_jA4msy-pAOjkg": {
     "kind": "real",
-    "note": "caiuwus LIVE is a real-person variety/FPS streamer, not a VTuber. Bacharu's roster listed it as vtuber, but the channel's own description says 'variety streamer that focuses mostly on FPS games'. Roster claim overrode the channel's own text; override corrects it back to real."
+    "isSinging": false,
+    "note": "caiuwus LIVE is a real-person variety/FPS streamer, not a VTuber. Bacharu's roster listed it as vtuber, but the channel's own description says 'variety streamer that focuses mostly on FPS games'. Roster claim overrode the channel's own text; override corrects it back to real. isSinging:false because 'LIVE' in the name matched SINGING_MARKERS='live' — false positive."
   },
   "UCyD59CI7beJDU493glZpxgA": {
     "kind": "real",
-    "note": "lofi geek is a lofi music channel with an Official Artist badge, not a VTuber. The 'official' keyword in YouTube's Official Artist Channel title triggered the virtual classifier. Override corrects it back to real."
+    "isSinging": false,
+    "note": "lofi geek is a lofi music channel with an Official Artist badge, not a VTuber. The 'official' keyword in YouTube's Official Artist Channel title triggered the virtual classifier; 'music' in description matched SINGING_MARKERS='music'. Override corrects it back to real with isSinging:false."
   }
 }
