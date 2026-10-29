@@ -6,7 +6,7 @@
  * performer's identity, their statistics, **all** of their links across
  * platforms, and their live/upcoming/recent uploads.
  */
-import { computed } from "vue";
+import { computed, ref, watch } from "vue";
 import type { Channel, ChannelSummary, Item } from "@shared/lib/types";
 import { formatCount, formatDuration, formatRelative } from "@/lib/dataset";
 import { imageUrl } from "@/lib/image";
@@ -38,6 +38,8 @@ const emit = defineEmits<{
   (e: "close"): void;
   (e: "open-item", item: Item): void;
   (e: "open-channel", channel: Channel | ChannelSummary): void;
+  /** Open a related persona the region filter has not loaded as a summary. */
+  (e: "open-channel-id", id: string): void;
   /** List the members of an agency, affiliation or tag. */
   (e: "show-members", filter: MemberFilter): void;
 }>();
@@ -46,6 +48,52 @@ const links = computed(() => channelLinks(props.channel));
 
 const summary = computed(
   () => props.summaries.find((s) => s.id === props.channel?.id) ?? null,
+);
+
+/**
+ * The reincarnation pair (轉生), in both directions.
+ *
+ * Only the **new** record stores the link: `reincarnationOf` names the persona
+ * it came from. The old record finds its successors by looking for records
+ * that point at it, so the pair never disagrees about which one is which.
+ */
+const previousPersonaId = computed(
+  () => props.channel?.reincarnationOf ?? null,
+);
+
+const previousPersona = computed(() => {
+  const id = previousPersonaId.value;
+  if (!id) return null;
+  return props.summaries.find((s) => s.id === id) ?? null;
+});
+
+/** The personas that reincarnated from this one. */
+const reincarnatedAs = computed(() => {
+  const id = props.channel?.id;
+  if (!id) return [];
+  return props.summaries.filter(
+    (s) => s.id !== id && s.reincarnationOf === id,
+  );
+});
+
+/**
+ * Opens a related persona.
+ *
+ * The record is normally in `summaries` — both personas usually share a
+ * region — but a filtered catalogue may not have downloaded it, so the id
+ * goes to the caller, which can fetch the record before opening it.
+ */
+function openPersona(id: string): void {
+  const known = props.summaries.find((s) => s.id === id);
+  if (known) emit("open-channel", known);
+  else emit("open-channel-id", id);
+}
+
+/** A new channel replaces the drawer's content, so it starts at the top. */
+const drawerBody = ref<HTMLElement | null>(null);
+watch(
+  () => props.channel?.id,
+  () => drawerBody.value?.scrollTo({ top: 0 }),
 );
 
 /** The Official Artist badge, from the subscription, the record or its summary. */
@@ -341,7 +389,7 @@ const saved = computed(() =>
     <Transition enter-active-class="transition duration-200 ease-out" enter-from-class="opacity-0" leave-active-class="transition duration-150 ease-in" leave-to-class="opacity-0">
       <div v-if="channel" class="fixed inset-0 z-50 flex justify-end bg-black/50 backdrop-blur-sm" role="dialog" aria-modal="true" @click.self="emit('close')">
         <Transition enter-active-class="transition duration-250 ease-out" enter-from-class="translate-x-full" leave-active-class="transition duration-150 ease-in" leave-to-class="translate-x-full" appear>
-          <div class="flex h-full w-full max-w-lg flex-col overflow-y-auto bg-[#f6f5f1] dark:bg-neutral-950">
+          <div ref="drawerBody" class="flex h-full w-full max-w-lg flex-col overflow-y-auto bg-[#f6f5f1] dark:bg-neutral-950">
             <!-- Header -->
             <div class="sticky top-0 z-10 flex items-start gap-3 border-b border-black/8 bg-[#f6f5f1]/95 p-4 backdrop-blur-xl dark:border-white/10 dark:bg-neutral-950/95">
               <img :src="imageUrl(channel.avatar)" :alt="channel.name" referrerpolicy="no-referrer" class="h-16 w-16 shrink-0 rounded-full object-cover ring-2 ring-black/5 dark:ring-white/10" />
@@ -501,6 +549,51 @@ const saved = computed(() =>
                     </dd>
                   </div>
                 </dl>
+              </section>
+
+              <!--
+                Reincarnation (轉生) — the same talent under another persona.
+
+                The link is two-way: the newer record names its previous
+                persona, and this section derives the successor from the
+                records that point here.
+              -->
+              <section v-if="previousPersonaId || reincarnatedAs.length">
+                <h3 class="mb-2 text-xs font-bold tracking-wide text-neutral-500 uppercase">
+                  Persona
+                </h3>
+                <ul class="space-y-1">
+                  <li v-if="previousPersonaId">
+                    <button type="button" class="flex w-full items-center gap-2.5 rounded-lg border border-black/6 bg-white p-2 text-left transition hover:border-purple-400 hover:bg-black/[0.02] dark:border-white/8 dark:bg-neutral-900 dark:hover:border-purple-500 dark:hover:bg-white/5" title="Open the previous persona" @click="openPersona(previousPersonaId)">
+                      <img v-if="previousPersona?.avatar" :src="imageUrl(previousPersona.avatar)" :alt="previousPersona.name" referrerpolicy="no-referrer" loading="lazy" class="h-9 w-9 shrink-0 rounded-full object-cover" />
+                      <span v-else class="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-black/5 text-neutral-500 dark:bg-white/10">↩</span>
+                      <span class="min-w-0 flex-1">
+                        <span class="block text-[10px] tracking-wide text-neutral-500 uppercase">
+                          前世 · Previous persona
+                        </span>
+                        <span class="block truncate text-xs font-semibold">
+                          {{ previousPersona?.name ?? previousPersonaId }}
+                        </span>
+                      </span>
+                      <span class="shrink-0 text-neutral-400" aria-hidden="true">→</span>
+                    </button>
+                  </li>
+                  <li v-for="next in reincarnatedAs" :key="next.id">
+                    <button type="button" class="flex w-full items-center gap-2.5 rounded-lg border border-black/6 bg-white p-2 text-left transition hover:border-purple-400 hover:bg-black/[0.02] dark:border-white/8 dark:bg-neutral-900 dark:hover:border-purple-500 dark:hover:bg-white/5" :title="`Open ${next.name}`" @click="openPersona(next.id)">
+                      <img v-if="next.avatar" :src="imageUrl(next.avatar)" :alt="next.name" referrerpolicy="no-referrer" loading="lazy" class="h-9 w-9 shrink-0 rounded-full object-cover" />
+                      <span v-else class="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-black/5 text-neutral-500 dark:bg-white/10">↪</span>
+                      <span class="min-w-0 flex-1">
+                        <span class="block text-[10px] tracking-wide text-neutral-500 uppercase">
+                          轉生帳號 · Reincarnation account
+                        </span>
+                        <span class="block truncate text-xs font-semibold">
+                          {{ next.name }}
+                        </span>
+                      </span>
+                      <span class="shrink-0 text-neutral-400" aria-hidden="true">→</span>
+                    </button>
+                  </li>
+                </ul>
               </section>
 
               <!-- Declared tags — each one lists the channels that carry it -->

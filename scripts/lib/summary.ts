@@ -66,6 +66,7 @@ export function toSummary(c: Channel): ChannelSummary {
     })),
     externals: c.externals,
     addedAt: c.addedAt,
+    reincarnationOf: c.reincarnationOf ?? null,
     followers: c.platforms
       /**
        * `other` / `web` / `email` are addresses, not accounts: they have no

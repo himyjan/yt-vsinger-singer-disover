@@ -1030,6 +1030,31 @@ function openChannel(
 }
 
 /**
+ * Opens a related persona by id.
+ *
+ * A reincarnation pair can span regions, and the drawer only holds the
+ * summaries of the region currently loaded. The record is resolved from the
+ * full catalogue before opening, without widening the loaded list the user is
+ * browsing.
+ */
+async function openChannelById(id: string): Promise<void> {
+  const loaded = channelById.value.get(id);
+  if (loaded) {
+    openChannel(loaded);
+    return;
+  }
+  // Prefer the full record: the drawer shows its description and uploads.
+  const all = await loadAllChannels("all");
+  const found = all.find((channel) => channel.id === id);
+  if (found) {
+    openChannel(found);
+    return;
+  }
+  const summary = summaryById.value.get(id);
+  if (summary) openChannel(summary);
+}
+
+/**
  * Lists the members of an agency, affiliation or tag.
  *
  * The drawer is closed first: the click is a navigation to a channel list,
@@ -2907,7 +2932,7 @@ onMounted(async () => {
     <ChannelDrawer :channel="drawerChannel" :item="drawerItem" :items="allItems" :summaries="summaries" :badge-override="drawerBadgeOverride" @close="
       drawerChannel = null;
     drawerItem = null;
-    " @open-item="openItem" @open-channel="openChannel" @show-members="openMembers" />
+    " @open-item="openItem" @open-channel="openChannel" @open-channel-id="openChannelById" @show-members="openMembers" />
 
     <!-- Untracked subscription: YouTube details fetched on open -->
     <SubscriptionDetail v-if="activeSub" :sub="activeSub" :detail="activeSubDetail" :loading="subDetailLoading" :error="subDetailError" @close="closeSubDetail" @retry="retrySubDetail" />

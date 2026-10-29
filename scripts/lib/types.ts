@@ -534,6 +534,18 @@ export interface Channel {
   debutDate: string | null;
   /** ISO date the performer graduated / stopped streaming. */
   graduateDate: string | null;
+  /**
+   * The channel this performer streamed as before reincarnating (轉生).
+   *
+   * A talent who changes agency, model and name continues as the same person,
+   * and the new record names the persona it came from. Only that direction is
+   * stored: the old record's drawer derives the reverse link, so the pair can
+   * never disagree about which one is the reincarnation account.
+   *
+   * Curated, because it is a statement about a person rather than something a
+   * platform publishes — it comes from `data/overrides.json`.
+   */
+  reincarnationOf?: string | null;
 
   /* --- cross-platform links -------------------------------------------- */
 
@@ -610,7 +622,11 @@ export interface ChannelSummary {
   addedAt: string;
   /** True when the channel publishes singing content. */
   isSinging: boolean;
-  /** True when the channel publishes singing content. */
+  /**
+   * The persona this one reincarnated from, when a curator recorded the pair.
+   * The drawer derives the reverse link from the other record's own field.
+   */
+  reincarnationOf?: string | null;
   /** The confidence estimate — optional, see `Channel.confidence`. */
   confidence?: ClassificationConfidence;
   avatar: string | null;

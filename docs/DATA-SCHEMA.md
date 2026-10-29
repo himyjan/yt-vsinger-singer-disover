@@ -206,6 +206,7 @@ The record for one performer.
 | `activity` | `"active"` \| `"preparing"` \| `"graduated"` \| `"unknown"` | Streaming status — one per performer, not one per platform |
 | `debutDate` | string \| null | ISO date of debut |
 | `graduateDate` | string \| null | ISO date of graduation |
+| `reincarnationOf` | string \| null | The channel this performer streamed as before reincarnating (轉生) — the previous persona's id. Curated in `data/overrides.json`; the old record's drawer derives the reverse "轉生帳號" link, so the pair cannot disagree |
 | `platforms` | `PlatformLink[]` | Every platform identity |
 | `twitchId` | string \| null | |
 | `twitchLogin` | string \| null | |
@@ -236,6 +237,22 @@ the performer published: sometimes the address **percent-encoded**
 absolute address (or `mailto:`); the app drops a link it cannot resolve
 instead of rendering it relative to its own origin.
 | `popularVideoId` | string \| null | A representative upload |
+
+### `reincarnationOf` — the same talent under a new persona
+
+A talent can graduate and return under a new name, model and agency — a
+**轉生** (reincarnation). The catalogue keeps both personas as their own
+records, because each has its own channel, audience and history.
+
+The relation is stored **once**, on the newer record: `reincarnationOf` names
+the previous channel id. The channel drawer derives both directions from that
+one field — the newer record shows 「前世 · Previous persona」, and the older
+record finds every record that points at it and shows
+「轉生帳號 · Reincarnation account」. A second field on the older record would
+be a copy that could drift.
+
+It is curated in `data/overrides.json`, because it is a statement about a
+person rather than something a platform publishes.
 
 ### `activity` — one per performer, not one per platform
 
