@@ -122,6 +122,8 @@ interface ChannelOverride {
   gender?: Channel["gender"];
   isAi?: boolean;
   isSinging?: boolean;
+  /** The channel this performer streamed as before reincarnating (轉生). */
+  reincarnationOf?: string | null;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -288,6 +290,7 @@ function recordFromProfile(
       textActivity === "graduated" ? "graduated" : hint?.activity?.[id] ?? textActivity,
     debutDate: hint?.debut?.[id] ?? null,
     graduateDate: null,
+    reincarnationOf: override?.reincarnationOf ?? null,
 
     platforms: [
       {
