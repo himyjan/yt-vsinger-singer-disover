@@ -498,14 +498,16 @@ same `parseSubscriptionsFile()`, but neither is required for a large account.
 | Workflow | Trigger | Does |
 | --- | --- | --- |
 | `sync-data.yml` | every 6 hours + manual | fetch → qualify discovery candidates → classify → index → validate → rebase → commit `data/`; rotates through the catalogue by shard |
-| `live.yml` | hourly + manual | `--live-only`: check who is streaming on every platform → retire ended streams → validate → rebase → commit `data/`; rotates by shard |
+| `live.yml` | every two hours + manual | `--live-only`: check who is streaming on every platform → retire ended streams → validate → rebase → commit `data/`; rotates by shard |
 | `verify-data.yml` | daily + manual | verify uncertain records → re-apply corrections → index → validate → rebase → commit `data/` |
 | `deploy-pages.yml` | push to `main` | validate → build → publish to Pages |
 | `ci.yml` | push + pull request | validate → type-check → build |
 
 The sync, live and verification workflows share one repository-wide
-dataset-writer concurrency group, so the hourly live run waits for a sync to
-finish rather than writing the same shards at the same time. Before committing,
+dataset-writer concurrency group (`cancel-in-progress: false`, `queue: max`), so
+a live run waits for a sync to finish rather than writing the same shards at the
+same time, and a sync that is already waiting is never dropped by a later
+arrival. Before committing,
 each fetches and rebases its generated data changes onto the latest branch head
 so intervening commits do not cause a non-fast-forward push failure.
 
