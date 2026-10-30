@@ -97,11 +97,21 @@ jobs:
           VOLUME_COUNT="${{ inputs.volume-count || 10 }}"
           for v in $(seq 0 $((VOLUME_COUNT - 1))); do
             echo "=== Processing volume $v / $((VOLUME_COUNT - 1)) ==="
+
+            # Copy shared root-level files into this volume's data/ so sync.ts
+            # can read them when data/ is symlinked to this volume.
+            VOL_DIR=".volumes/vol-$v/data"
+            for f in overrides.json seed-catalog.json suggestions.json upstream.json manifest.json; do
+              if [ -f "data/$f" ]; then
+                cp "data/$f" "$VOL_DIR/$f"
+              fi
+            done
+
             # Swap root data/ for this volume's slice so sync.ts only sees
             # this volume's channels. Restore afterwards so the next volume
             # starts from the full dataset.
             mv data data-full
-            ln -s .volumes/vol-$v/data data
+            ln -s "$VOL_DIR" data
 
             npx tsx scripts/sync.ts -- "${ARGS[@]}"
 
