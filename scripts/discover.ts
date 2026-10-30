@@ -36,6 +36,7 @@ import type { Candidate } from "./lib/identity";
 import { promoteCandidates } from "./lib/promote-candidates";
 import { FandomSource } from "./lib/debut-sources/fandom";
 import { VtubieSource } from "./lib/debut-sources/vtubie";
+import { ChuysanSource } from "./lib/debut-sources/chuysan";
 import type { DebutSource } from "./lib/debut-sources/types";
 
 interface Options {
@@ -102,7 +103,7 @@ function parseArgs(argv: string[]): Options {
           [
             "Usage: npm run data:discover -- [options]",
             "",
-            "  --source <vtubie|fandom|all>  which sources to run (default vtubie)",
+            "  --source <vtubie|fandom|chuysan|all>  which sources to run (default vtubie)",
             "  --pages <n>                   directory pages to read (default 20)",
             "  --since <ISO date>            only candidates first seen after this date",
             "  --limit <n>                   stop after n candidates",
@@ -144,9 +145,12 @@ function sourcesFor(options: Options): DebutSource[] {
   if (wantAll || options.source === "fandom") {
     sources.push(new FandomSource());
   }
+  if (wantAll || options.source === "chuysan") {
+    sources.push(new ChuysanSource());
+  }
   if (!sources.length) {
     console.error(
-      `unknown source: ${options.source} (expected vtubie, fandom, or all)`,
+      `unknown source: ${options.source} (expected vtubie, fandom, chuysan, or all)`,
     );
     process.exit(1);
   }
