@@ -17,7 +17,7 @@
  * duration, and a failed lookup changes nothing.
  */
 
-import type { InnerTubeSource } from "./youtubei";
+import type { InnerTubeLive, InnerTubeSource } from "./youtubei";
 import type { Channel, Item, PlatformId } from "./types";
 import type {
   PlatformAdapter,
@@ -57,6 +57,13 @@ export interface LiveRefreshContext {
   page: number;
   /** How many per-channel platform links this run may check. */
   limitMultiPlatformLive: number;
+  /**
+   * How many YouTube lookups may be in flight at once. Defaults to 4.
+   *
+   * The rate limiter, not this number, sets the request rate — this only
+   * decides how much network latency is hidden behind it.
+   */
+  concurrency?: number;
   /** The shard predicate the run was started with. */
   inShard: (channelId: string) => boolean;
   log: (msg: string) => void;
@@ -208,8 +215,38 @@ export async function refreshLivePass(
         ];
 
   if (liveTargets.length && innertube.isAvailable) {
+    /**
+     * The lookups run **concurrently**, but the results are applied in order.
+     *
+     * A check is two round-trips (~0.78 s measured with the 250 ms throttle),
+     * so 6,000 channels sequentially is 78 minutes — longer than the job that
+     * hosts it. The network is the cost, and it is almost all waiting, so a
+     * pool of workers overlaps the waits while the rate limiter keeps the gap
+     * between *requests* intact (`RateLimiter.wait()` serialises).
+     *
+     * Only the fetches overlap. `itemById` is still written in `liveTargets`
+     * order, so the stored item order does not depend on which request came
+     * back first — the pipeline stays deterministic (AGENTS rule 8).
+     */
+    const concurrency = Math.max(1, Math.min(16, ctx.concurrency ?? 4));
+    const streamsById = new Map<string, InnerTubeLive[] | null>();
+    let cursor = 0;
+
+    const workers = Array.from(
+      { length: Math.min(concurrency, liveTargets.length) },
+      async () => {
+        for (;;) {
+          const index = cursor++;
+          if (index >= liveTargets.length) return;
+          const channel = liveTargets[index]!;
+          streamsById.set(channel.id, await innertube.liveStreams(channel.id));
+        }
+      },
+    );
+    await Promise.all(workers);
+
     for (const channel of liveTargets) {
-      const streams = await innertube.liveStreams(channel.id);
+      const streams = streamsById.get(channel.id) ?? null;
       if (streams === null) continue;
       result.youtubeChecked++;
       const current = new Set(streams.map((stream) => stream.id));
