@@ -759,14 +759,13 @@ export function filterItems(items: Item[], query: ItemQuery): Item[] {
     return true;
   });
 
-  const limit = query.limit ?? 500;
-  return filtered
+  const filteredSorted = filtered
     .sort((a, b) => {
       const at = Date.parse(a.scheduledStart ?? a.publishedAt ?? "") || 0;
       const bt = Date.parse(b.scheduledStart ?? b.publishedAt ?? "") || 0;
       return bt - at;
-    })
-    .slice(0, limit);
+    });
+  return query.limit === undefined ? filteredSorted : filteredSorted.slice(0, query.limit);
 }
 
 /**
