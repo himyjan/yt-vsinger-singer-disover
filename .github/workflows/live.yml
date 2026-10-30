@@ -9,6 +9,12 @@ name: Live status
 # killed at 68% and committed nothing. Here it is the whole run, it fits, and
 # the full sync stays short enough to always reach its write step.
 #
+# The catalogue is split into 10 volumes (`npm run data:volumes -- --count 10`).
+# Each volume (~5,000–7,000 channels) is processed sequentially in one job
+# (~2–4 min each, ~30 min total), well inside the 90-minute ceiling. This gives
+# full catalogue coverage every sweep instead of ~1 day with the old shard
+# rotation.
+#
 # `--live-only` loads `data/`, checks the platforms, and writes back only the
 # item changes: new `live`/`upcoming` entries, and the streams that ended
 # retired to `past` with a real duration.
@@ -22,40 +28,22 @@ name: Live status
 on:
   schedule:
     # Every two hours, off the hour so the shared GitHub cron pool is happy.
-    #
-    # Two hours × 12 runs × 6,000 channels = 72,000 checks a day against a
-    # 63,662-channel catalogue, so one sweep takes ~0.9 days and every channel
-    # is checked at least once a day. Twelve runs is also exactly the number of
-    # windows the four shards hold at this limit (3 pages each), so the rotation
-    # closes cleanly. At ~40 minutes a run the dataset-writer group — one lane,
-    # shared with the sync — stays about a third busy.
     - cron: "7 */2 * * *"
   workflow_dispatch:
     inputs:
-      shard-count:
-        description: "Split the live rotation into N shards (1 disables sharding)"
-        required: false
-        default: "4"
-      limit-live:
-        description: "YouTube channels to check this run"
-        required: false
-        default: "6000"
-      limit-multi-platform-live:
-        description: "Per-channel platform links to check this run"
-        required: false
-        default: "400"
       dry-run:
         description: "Check live status but write nothing"
         required: false
         default: "false"
+      volume-count:
+        description: "Number of volumes to split the catalogue into"
+        required: false
+        default: "10"
 
-# One dataset, one writer: this shares the group with `sync-data.yml`,
-# `verify-data.yml` and `data-squash.yml`, so the live run waits for a sync to
-# finish rather than writing the same shards at the same time.
-#
-# `queue: max` keeps one run from dropping another out of the group. A live run
-# can always be repeated — the next hour checks a different slice of the
-# rotation — but a *sync* that is already waiting must never be replaced by it.
+# One dataset, one writer: shares the `dataset-writer` concurrency group with
+# `sync-data.yml`, `verify-data.yml` and `data-squash.yml`. `cancel-in-progress:
+# false` means a sync that is already waiting is never replaced by this live
+# run. `queue: max` keeps one run from dropping another out of the group.
 concurrency:
   group: dataset-writer-${{ github.repository }}
   cancel-in-progress: false
@@ -68,12 +56,9 @@ jobs:
   live:
     name: Refresh live status
     runs-on: ubuntu-latest
-    # Measured at ~0.39 s per channel (InnerTube with the 250 ms delay), plus
-    # ~20 s to load the dataset: 6,000 channels is about 40 minutes, so the
-    # ceiling leaves room for a slow source without letting a hung one hold the
-    # dataset-writer lane for the rest of the afternoon.
+    # 10 volumes × ~3 min each = ~30 min total, well inside the 90-minute
+    # ceiling with headroom for a slow source.
     timeout-minutes: 90
-
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -95,54 +80,41 @@ jobs:
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
 
-      - name: Restore cache
-        uses: actions/cache@v6
-        with:
-          path: .cache
-          key: live-${{ github.run_number }}
-          restore-keys: |
-            live-
-            yt-quota-
+      - name: Create volume split (10 volumes)
+        run: npm run data:volumes -- --count ${{ inputs.volume-count || 10 }}
 
-      - name: Refresh live status
+      - name: Process each volume sequentially
         env:
           TWITCH_CLIENT_ID: ${{ secrets.TWITCH_CLIENT_ID }}
           TWITCH_CLIENT_SECRET: ${{ secrets.TWITCH_CLIENT_SECRET }}
           VK_ACCESS_TOKEN: ${{ secrets.VK_ACCESS_TOKEN }}
           CI_ME_CLIENT_ID: ${{ secrets.CI_ME_CLIENT_ID }}
           CI_ME_CLIENT_SECRET: ${{ secrets.CI_ME_CLIENT_SECRET }}
-          LIVE_SHARD_COUNT: ${{ github.event.inputs.shard-count || '4' }}
-          LIVE_LIMIT: ${{ github.event.inputs.limit-live || '6000' }}
-          LIVE_MULTI_LIMIT: ${{ github.event.inputs.limit-multi-platform-live || '400' }}
         run: |
-          ARGS=(--live-only --limit-live "$LIVE_LIMIT" --limit-multi-platform-live "$LIVE_MULTI_LIMIT")
+          ARGS=(--live-only --limit-live 6000 --limit-multi-platform-live 400)
           if [ "${{ inputs.dry-run }}" = "true" ]; then ARGS+=(--dry-run); fi
 
-          # The shard rotates with the run number and the page walks the shard,
-          # so successive runs cover the catalogue deterministically.
-          SHARD_COUNT="$LIVE_SHARD_COUNT"
-          if ! [[ "$SHARD_COUNT" =~ ^[0-9]+$ ]] || [ "$SHARD_COUNT" -lt 1 ]; then
-            SHARD_COUNT=1
-          fi
-          if [ "$SHARD_COUNT" -gt 1 ]; then
-            SHARD_INDEX=$(( (GITHUB_RUN_NUMBER - 1) % SHARD_COUNT + 1 ))
-            ARGS+=(--shard "${SHARD_INDEX}/${SHARD_COUNT}")
-          fi
+          VOLUME_COUNT="${{ inputs.volume-count || 10 }}"
+          for v in $(seq 0 $((VOLUME_COUNT - 1))); do
+            echo "=== Processing volume $v / $((VOLUME_COUNT - 1)) ==="
+            # Swap root data/ for this volume's slice so sync.ts only sees
+            # this volume's channels. Restore afterwards so the next volume
+            # starts from the full dataset.
+            mv data data-full
+            ln -s .volumes/vol-$v/data data
 
-          # How many times this shard has been visited: the window to check.
-          # The live pass writes only item files, so nothing on the channel
-          # record records that it was polled — the page is the rotation, and
-          # it must advance by exactly one window per visit or the windows
-          # overlap and part of the catalogue is never reached.
-          ARGS+=(--live-page "$(( (GITHUB_RUN_NUMBER - 1) / SHARD_COUNT + 1 ))")
+            npx tsx scripts/sync.ts -- "${ARGS[@]}"
 
-          npm run data:live -- "${ARGS[@]}"
+            rm -f data
+            mv data-full data
+          done
 
-      # The search index is rebuilt by the full sync, not here. The live run
-      # mostly changes item status, and the few broadcasts it discovers make
-      # the index a handful of entries stale until the next sync (six hours)
-      # rebuilds it — cheaper than rewriting every `data/search/*.json` every
-      # two hours for that. `validate` warns about the drift, it does not fail.
+      - name: Merge all volumes into data/
+        run: npx tsx scripts/merge-volumes.ts --count ${{ inputs.volume-count || 10 }}
+
+      - name: Build search index
+        run: npm run data:index
+
       - name: Validate dataset
         run: npm run data:validate
 
@@ -167,3 +139,16 @@ jobs:
           skip_fetch: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Summary
+        run: |
+          {
+            echo "### Live status"
+            echo ""
+            echo "| Metric | Value |"
+            echo "| --- | --- |"
+            echo "| Volumes processed | ${{ inputs.volume-count || 10 }} (sequential in one job) |"
+            echo "| Live pass | `--live-only` per volume, then merged |"
+            echo "| Index | rebuilt after merge |"
+            echo "| Committed | \`data/\` |"
+          } >> "$GITHUB_STEP_SUMMARY"

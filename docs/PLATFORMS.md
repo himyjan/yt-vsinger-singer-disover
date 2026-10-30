@@ -122,6 +122,19 @@ InnerTube cannot complete. See `docs/YOUTUBE-API.md` for quota details.
   `liveBroadcasts.list` is not used: it requires OAuth, and the scheduled
   pipeline only has an API key.
 
+  The card's badge is a **hint**, not the status. A Live-tab card keeps its
+  `Upcoming` badge after the broadcast has aired, and the schedule it prints is
+  a localized string in the client's own timezone (`Scheduled for 10/31/26,
+  12:00 AM`), so neither can be trusted as a record. Each badged card is
+  confirmed against the video's own player response (`getBasicInfo()`, one
+  request per badged card at ~0.13 s, no quota), which states `is_upcoming`,
+  `is_live` and the exact `start_timestamp`: the item is stored only when the
+  player agrees, `scheduledStart` / `actualStart` come from that timestamp, and
+  a stream found long after it began is recorded with its real start rather
+  than the moment the run polled it. An `upcoming` item whose start passed more
+  than 12 hours ago is retired offline, so a schedule aired before its channel
+  came round in the rotation does not linger as upcoming.
+
 ## Twitch
 
 **Client:** `scripts/lib/twitch.ts`

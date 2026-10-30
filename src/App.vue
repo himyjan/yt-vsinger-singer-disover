@@ -124,7 +124,7 @@ const searching = ref(false);
 /**
  * Grows a capped list when its end comes into view.
  *
- * The lists are capped because mounting 14,340 cards is what made a click
+ * The lists are capped because mounting 72,698 cards is what made a click
  * take seconds; a 「Show more」 button would then make the reader ask for a
  * page they already asked for by scrolling. The sentinel sits at the end of
  * the grid and pulls the next page in before it is reached, so paging is
@@ -534,13 +534,24 @@ const memberFilterLabel = computed(() => {
   return "";
 });
 
-const filteredChannels = computed(() => {
+/**
+ * The summaries with the 🎵 badge the subscription cache knows about.
+ *
+ * This is its own computed on purpose. It walks all 72,698 summaries and asks
+ * `officialArtistOf()` about each — a reactive lookup into `youtubeBadges` per
+ * record, measured at ~16 ms — and it used to run *inside* `filteredChannels`,
+ * so every filter click, scope switch and sort change paid for it again
+ * although the badge map had not changed. Here Vue caches it: a chip click
+ * recomputes the filter, not the badge merge, and a badge sync still
+ * invalidates it exactly once.
+ */
+const badgeAwareSummaries = computed(() => {
   /**
    * The summaries carry the 🎵 badge the dataset recorded; the subscription
    * cache can overrule it when it is newer, so a channel checked in the Subs
    * tab shows the same badge here — and the 🎵 filter agrees with the cards.
    */
-  const badgeAwareSummaries = summaries.value.map((summary) => {
+  return summaries.value.map((summary) => {
     const badge = officialArtistOf(summary);
     const trusted =
       summary.role === "vsinger" ? summary.isSinging : true;
@@ -558,7 +569,10 @@ const filteredChannels = computed(() => {
           isOfficialArtist: badge,
         };
   });
-  const channels = filterChannels(badgeAwareSummaries, {
+});
+
+const filteredChannels = computed(() => {
+  const channels = filterChannels(badgeAwareSummaries.value, {
     kind: state.scope,
     region: state.region,
     platform: state.platform,
@@ -597,10 +611,11 @@ const filteredChannels = computed(() => {
 /**
  * How much of the channel list is in the DOM.
  *
- * `filterChannels()` returns every match, and the catalogue is 14,340
- * records, so rendering the result mounted 14,340 `ChannelCard`s — 102k DOM
+ * `filterChannels()` returns every match, and the catalogue is 72,698
+ * records, so rendering the result mounted 72,698 `ChannelCard`s — 500k DOM
  * nodes — on the first click into this tab. Filtering is cheap (measured at
- * 0.5–3 ms); it was the DOM that took seconds, which is what a 2.4 s INP is.
+ * 1–9 ms for the whole catalogue, see `src/lib/filter-index.ts`); it was the
+ * DOM that took seconds, which is what a 2.4 s INP is.
  *
  * The cap is applied **after** sorting, so the page shows the first N of the
  * user's sort order rather than an arbitrary N re-sorted. The sentinel at the
@@ -2722,7 +2737,7 @@ onMounted(async () => {
         <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
           <ChannelCard v-for="channel in visibleChannels" :key="channel.id" :channel="channel" @open="openChannel" />
           <!--
-            The list is paged: 14,340 cards in the DOM is what made this tab's
+            The list is paged: 72,698 cards in the DOM is what made this tab's
             first paint take seconds. The sentinel pulls the next page in as
             the grid's end comes into view, so paging needs no button.
           -->
