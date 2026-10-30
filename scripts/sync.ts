@@ -3044,16 +3044,38 @@ async function main(): Promise<void> {
   );
 
   /* --- live + upcoming broadcasts -------------------------------------- */
-  progress("live + upcoming broadcasts", `checking live status across platforms`);
   /**
-   * The live pass lives in `scripts/lib/live-refresh.ts`.
+   * The live pass is **opt-in** here, and normally does not run at all.
    *
    * It is the one phase whose cost is proportional to the whole catalogue —
-   * one InnerTube Live-tab lookup per YouTube channel — so it also runs on its
-   * own (`--live-only`, `.github/workflows/live.yml`). Here it is given the
-   * run's shard and limits, exactly as before.
+   * one InnerTube Live-tab lookup per YouTube channel, 63,000 of them, ~1-2 s
+   * each — so it has its own entry point (`--live-only`) and its own workflow
+   * (`live.yml`). Left in the full sync, it read `maxLiveChannelsPerRun`
+   * (25,000) against a `--shard 1/4` of ~15,900 channels, opened every Live
+   * tab, and outlived the job: the run was killed at 68% and committed
+   * nothing, twice.
+   *
+   * So a full sync runs it only when the caller names a bound:
+   *
+   *     npm run data:sync -- --limit-live 500
+   *
+   * `npm run data:live` is the unbounded-but-rotated path, and the one the
+   * schedule uses. A sync that skips it still writes the items it discovered;
+   * it just leaves who-is-streaming to the run that exists for it.
    */
-  const livePass = config.refreshLiveEveryRun
+  const livePassWanted =
+    config.refreshLiveEveryRun && args.limitLive !== null && args.limitLive > 0;
+  if (livePassWanted) {
+    progress("live + upcoming broadcasts", `checking live status across platforms`);
+  } else {
+    // One fewer phase ran, so the bar still reaches 100%.
+    totalPhases--;
+    log(
+      "live: skipped — the scheduled live rotation is `npm run data:live` " +
+        "(`live.yml`); pass --limit-live N to include it in this run",
+    );
+  }
+  const livePass = livePassWanted
     ? await refreshLivePass({
         channels,
         itemById,
@@ -3061,8 +3083,8 @@ async function main(): Promise<void> {
         adapters,
         innertube,
         now,
-        limitLive: args.limitLive ?? config.maxLiveChannelsPerRun,
-        limitMultiPlatformLive: args.limitMultiPlatformLive ?? 2000,
+        limitLive: args.limitLive ?? 0,
+        limitMultiPlatformLive: args.limitMultiPlatformLive ?? 0,
         inShard: (id: string) => inShard(id, args),
         log,
         buildYouTubeItem: liveStreamToItem,
