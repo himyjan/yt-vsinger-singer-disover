@@ -466,6 +466,22 @@ unless the run names a bound (`--limit-live N`). That opt-in is what makes
 `maxLiveChannelsPerRun` (25,000) against a ~15,900-channel shard, so every run
 opened every Live tab and was killed at 68% with nothing written.
 
+The live rotation is a **page**, and it is the only thing keeping coverage
+honest. The live pass writes only the item files, so it persists no "last
+checked" stamp — ordering candidates by `lastItemsFetchedAt` therefore looked
+like a rotation and was not one: that field is written by the full sync's
+upload pass (150 channels a run), so every run on a shard re-checked the same
+1,000 channels, and 59,662 of 63,662 were never polled at all. `--live-page`
+moves the window one step per run instead, and the page is the count of visits
+to *that shard* (`(GITHUB_RUN_NUMBER - 1) / SHARD_COUNT + 1`), not the run
+number: with four shards a run-number page would stride four windows at a time,
+overlap itself, and stop at a third of the catalogue after covering it once.
+
+At 1,000 channels a run and 12 runs a day that is a full sweep every ~5.3 days.
+Fetching all 63,662 every two hours would be 21 hours of work per two hours, so
+the number is a budget decision — raise `limit-live` (2,000 ≈ 40 min/run ≈ 2.7
+days, 3,000 ≈ 60 min/run ≈ 1.8 days) rather than adding runners.
+
 ## Common tasks
 
 | Task | Where |

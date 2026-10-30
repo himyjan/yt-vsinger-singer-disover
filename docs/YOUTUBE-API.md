@@ -271,9 +271,24 @@ quota, but it costs a request and a second or two per channel. The catalogue
 holds ~63,000 YouTube channels, so a full sweep is ~26 hours — longer than any
 job may live. That is why the pass has its own entry point (`--live-only`,
 `live.yml`): the workflow takes a deterministic shard and checks
-`maxLiveChannelsPerRun` (default 1,000) of it per run, least recently checked
-first, so the whole catalogue rotates through in about two days. The sync skips
-the pass entirely unless it is given `--limit-live N`.
+`maxLiveChannelsPerRun` (default 1,000) of it per run. 12 runs a day is 12,000
+checks, so the whole catalogue rotates through in ~5.3 days — the trade-off
+the budget forces, not a bug: checking every channel every two hours would be
+63,662 checks in two hours, ~21 hours of work.
+
+The window advances by one **page** per visit to the shard (`--live-page`), and
+that page is the count of visits to *that shard*, not the run number: with four
+shards one shard is visited every fourth run, so a page derived from the run
+number would stride by four windows and overlap itself, covering about a third
+of the catalogue and then stopping.
+
+There is deliberately no cursor file and no "last checked" stamp on the channel
+record: the live pass writes only the item files, so a timestamp it set would
+never be persisted — which is exactly what broke the earlier rotation. It
+ordered candidates by `lastItemsFetchedAt`, a field only the full sync's upload
+pass writes (150 channels a run), so every run on a shard selected the same
+1,000 channels: 4,000 distinct out of 63,662 a day, with 59,662 never checked.
+The sync skips the pass entirely unless it is given `--limit-live N`.
 
 ## Troubleshooting
 

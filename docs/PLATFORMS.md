@@ -421,8 +421,10 @@ live/upcoming status across platforms, and `npm run data:sync` skips the pass
 unless given `--limit-live N`:
 
 - **YouTube** — InnerTube channel Live tab (`liveStreams()`), checked for
-  YouTube-keyed records in the run's shard, up to `maxLiveChannelsPerRun`
-  (default 1,000). Least recently checked first, so the shard is covered.
+  YouTube-keyed records in the run's shard, `maxLiveChannelsPerRun` (default
+  1,000) at a time. The window advances one page per visit to the shard
+  (`--live-page`), so the whole catalogue is covered every ~5 days at the
+  two-hourly schedule.
 - **Twitch** — Twitch GQL profile's `live` field, checked during the details pass
   for channels linked to Twitch.
 - **Bilibili** — `GET /x/web-interface/online/list?rid=160` (VTuber partition
