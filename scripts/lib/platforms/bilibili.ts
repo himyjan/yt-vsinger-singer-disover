@@ -32,11 +32,7 @@ import crypto from "node:crypto";
 import { classifyItem } from "../classify";
 import { RateLimiter, detectRateLimit } from "../rate-limit";
 import type { CountRef, PlatformId } from "../types";
-import type {
-  PlatformAdapter,
-  PlatformChannel,
-  PlatformUpload,
-} from "../platforms";
+import type { PlatformAdapter, PlatformChannel, PlatformUpload } from "../platforms";
 import { REQUEST_TIMEOUT_MS } from "../io";
 
 const API = "https://api.bilibili.com";
@@ -50,10 +46,9 @@ const USER_AGENT =
 
 /** The permutation table for the WBI mixin key. */
 const MIXIN_KEY_ENC_TAB = [
-  46, 47, 18, 2, 53, 8, 23, 32, 15, 50, 10, 31, 58, 3, 45, 35, 27, 43, 5, 49,
-  33, 9, 42, 19, 29, 28, 14, 39, 12, 38, 41, 13, 37, 48, 7, 16, 24, 55, 40,
-  61, 26, 17, 0, 1, 60, 51, 30, 4, 22, 25, 54, 21, 56, 59, 6, 63, 57, 62, 11,
-  36, 20, 34, 44, 52,
+  46, 47, 18, 2, 53, 8, 23, 32, 15, 50, 10, 31, 58, 3, 45, 35, 27, 43, 5, 49, 33, 9, 42, 19, 29, 28,
+  14, 39, 12, 38, 41, 13, 37, 48, 7, 16, 24, 55, 40, 61, 26, 17, 0, 1, 60, 51, 30, 4, 22, 25, 54,
+  21, 56, 59, 6, 63, 57, 62, 11, 36, 20, 34, 44, 52,
 ];
 
 /* -------------------------------------------------------------------------- */
@@ -71,7 +66,7 @@ async function getMixinKey(buvid: string | null): Promise<string | null> {
   }
   try {
     const res = await fetch(`${API}/x/web-interface/nav`, {
-        signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
+      signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
       headers: {
         "User-Agent": USER_AGENT,
         Referer: "https://www.bilibili.com/",
@@ -79,9 +74,7 @@ async function getMixinKey(buvid: string | null): Promise<string | null> {
         // The same visitor id the rest of the client uses. Without it the
         // risk-control system answers with `-352`, and every signed request
         // is then rejected.
-        ...(buvid
-          ? { Cookie: `buvid3=${buvid}; b_nut=${Math.floor(Date.now() / 1000)}` }
-          : {}),
+        ...(buvid ? { Cookie: `buvid3=${buvid}; b_nut=${Math.floor(Date.now() / 1000)}` } : {}),
       },
     });
     if (!res.ok) return mixinKey;
@@ -102,8 +95,7 @@ async function getMixinKey(buvid: string | null): Promise<string | null> {
     const keyOf = (url: string): string =>
       url.slice(url.lastIndexOf("/") + 1, url.lastIndexOf("."));
     const raw = keyOf(img) + keyOf(sub);
-    mixinKey = MIXIN_KEY_ENC_TAB
-      .map((n) => raw[n])
+    mixinKey = MIXIN_KEY_ENC_TAB.map((n) => raw[n])
       .join("")
       .slice(0, 32);
     mixinKeyFetchedAt = Date.now();
@@ -122,17 +114,16 @@ async function signQuery(
   if (!key) return null;
 
   const wts = Math.floor(Date.now() / 1000);
-  const entries: [string, string][] = Object.entries(params).map(
-    ([k, v]) => [k, String(v)],
-  );
+  const entries: [string, string][] = Object.entries(params).map(([k, v]) => [k, String(v)]);
   entries.push(["wts", String(wts)]);
   // Values are URL-encoded before they are sorted and hashed.
   entries.sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0));
 
   const query = entries
     .map(([k, v]) => {
-      const encoded = encodeURIComponent(v).replace(/[!'()*]/g, (c) =>
-        `%${c.charCodeAt(0).toString(16).toUpperCase()}`,
+      const encoded = encodeURIComponent(v).replace(
+        /[!'()*]/g,
+        (c) => `%${c.charCodeAt(0).toString(16).toUpperCase()}`,
       );
       return `${k}=${encoded}`;
     })
@@ -298,8 +289,7 @@ export class BilibiliAdapter implements PlatformAdapter {
        */
       maxIntervalMs: 8_000,
       onLimit: (m) => this.onLog(`bilibili: ${m}`),
-      onChange: (ms) =>
-        this.onLog(`bilibili: interval → ${Math.round(ms)}ms`),
+      onChange: (ms) => this.onLog(`bilibili: interval → ${Math.round(ms)}ms`),
     });
   }
 
@@ -363,9 +353,7 @@ export class BilibiliAdapter implements PlatformAdapter {
           Referer: "https://www.bilibili.com/",
           // The visitor id — Bilibili's equivalent of InnerTube's visitor
           // data. Without it the risk-control system answers with HTTP 412.
-          ...(buvid
-            ? { Cookie: `buvid3=${buvid}; b_nut=${Math.floor(Date.now() / 1000)}` }
-            : {}),
+          ...(buvid ? { Cookie: `buvid3=${buvid}; b_nut=${Math.floor(Date.now() / 1000)}` } : {}),
           ...headers,
         },
       });
@@ -378,9 +366,7 @@ export class BilibiliAdapter implements PlatformAdapter {
         this.limiter.penalise();
         if (attempt < 2) {
           const wait = 2_000 * 2 ** attempt;
-          this.onLog(
-            `bilibili: rate limited (${res.status}), waiting ${wait / 1000}s`,
-          );
+          this.onLog(`bilibili: rate limited (${res.status}), waiting ${wait / 1000}s`);
           /**
            * A fresh visitor id.
            *
@@ -470,9 +456,7 @@ export class BilibiliAdapter implements PlatformAdapter {
    * Bilibili's risk-control wall, so it is the source of the subscriber
    * count.
    */
-  async followers(
-    channel: PlatformChannel | string,
-  ): Promise<CountRef | null> {
+  async followers(channel: PlatformChannel | string): Promise<CountRef | null> {
     const uid = typeof channel === "string" ? channel : channel.id;
     const json = await this.getJson<{
       code: number;
@@ -483,10 +467,7 @@ export class BilibiliAdapter implements PlatformAdapter {
     return count > 0 ? { tag: "has", count } : { tag: "no" };
   }
 
-  async uploads(
-    channel: PlatformChannel,
-    limit: number,
-  ): Promise<PlatformUpload[]> {
+  async uploads(channel: PlatformChannel, limit: number): Promise<PlatformUpload[]> {
     const query = await signQuery(
       {
         mid: channel.id,
@@ -518,9 +499,7 @@ export class BilibiliAdapter implements PlatformAdapter {
         title: arc.title,
         description: arc.desc ?? null,
         thumbnail: absoluteUrl(arc.pic),
-        publishedAt: arc.pubdate
-          ? new Date(arc.pubdate * 1000).toISOString()
-          : null,
+        publishedAt: arc.pubdate ? new Date(arc.pubdate * 1000).toISOString() : null,
         scheduledStart: null,
         duration: biliDurationToSeconds(arc.duration),
         status: "past",
@@ -539,12 +518,7 @@ export class BilibiliAdapter implements PlatformAdapter {
     const json = await this.getJson<{
       code: number;
       data?: { pic?: string };
-    }>(
-      `${API}/x/web-interface/view?bvid=${encodeURIComponent(bvid)}`,
-      {},
-      0,
-      false,
-    );
+    }>(`${API}/x/web-interface/view?bvid=${encodeURIComponent(bvid)}`, {}, 0, false);
     if (json?.code !== 0) return null;
     return absoluteUrl(json.data?.pic);
   }
@@ -605,9 +579,7 @@ export class BilibiliAdapter implements PlatformAdapter {
           title: stream.title ?? "",
           description: null,
           thumbnail: absoluteUrl(stream.cover),
-          publishedAt: stream.pubtime
-            ? new Date(stream.pubtime * 1000).toISOString()
-            : null,
+          publishedAt: stream.pubtime ? new Date(stream.pubtime * 1000).toISOString() : null,
           scheduledStart: null,
           duration: stream.duration ?? null,
           status: "live",
@@ -618,6 +590,32 @@ export class BilibiliAdapter implements PlatformAdapter {
           url: `https://www.bilibili.com/video/${stream.bvid}`,
         });
       }
+    }
+
+    /* --- the VTuber area page (live.bilibili.com, parentAreaId=9) ---------
+     * The partition feed does not honour rid=160 — it returns the general
+     * live feed and we match against knownMids. The area page is VTuber
+     * specific, so it can surface VTuber streams whose mid is not yet in
+     * knownMids.
+     */
+    const areaLive = await this.fetchAreaLiveStreams();
+    for (const stream of areaLive) {
+      // Deduplicate against streams already found from the partition feed
+      if (uploads.some((u) => u.id === stream.id)) continue;
+      if (!byId.has(stream.channelId)) {
+        byId.set(stream.channelId, {
+          platform: "bilibili",
+          id: stream.channelId,
+          handle: stream.channelId,
+          name: stream.title,
+          url: `https://space.bilibili.com/${stream.channelId}`,
+          subscribers: { tag: "hidden" },
+          avatar: stream.thumbnail ?? null,
+          description: null,
+          tags: [],
+        });
+      }
+      uploads.push(stream);
     }
 
     /* --- the VTuber ranking -------------------------------------------- */
@@ -646,11 +644,193 @@ export class BilibiliAdapter implements PlatformAdapter {
       }
     }
 
-    this.onLog(
-      `bilibili: ${byId.size} channel(s) in the VTuber partition, ${uploads.length} live`,
-    );
+    this.onLog(`bilibili: ${byId.size} channel(s) in the VTuber partition, ${uploads.length} live`);
     this.liveUploads = uploads;
     return [...byId.values()].slice(0, limit || 100);
+  }
+
+  /**
+   * Fetches VTuber live streams from live.bilibili.com's VTuber area page
+   * (`parentAreaId=9`). This supplements `online/list?rid=160` because the
+   * partition feed does not actually honour `rid` — it returns the general
+   * live feed and the streams are matched against `knownMids`. The area page
+   * is VTuber-specific, so it can surface VTuber streams even when their mid
+   * is not yet in `knownMids`.
+   *
+   * Tries `api.live.bilibili.com` first (JSON API), then falls back to
+   * `live.bilibili.com` (HTML). Both are wrapped in try/catch so a broken
+   * endpoint never breaks the run.
+   */
+  private async fetchAreaLiveStreams(): Promise<PlatformUpload[]> {
+    const urls = [
+      "https://api.live.bilibili.com/p/eden/area-tags?parentAreaId=9",
+      "https://live.bilibili.com/p/eden/area-tags?parentAreaId=9",
+    ];
+
+    for (const url of urls) {
+      try {
+        const res = await fetch(url, {
+          signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
+          headers: {
+            "User-Agent": USER_AGENT,
+            Accept: "application/json, text/html, */*",
+            Referer: "https://live.bilibili.com/",
+          },
+        });
+        if (!res.ok) continue;
+
+        const text = await res.text();
+        if (!text) continue;
+
+        // Try JSON first
+        try {
+          const json = JSON.parse(text);
+          const streams = this.parseAreaLiveJson(json);
+          if (streams.length > 0) return streams;
+        } catch {
+          // Not JSON — fall through to HTML extraction
+        }
+
+        // Try HTML extraction for bvid patterns
+        const streams = this.parseAreaLiveHtml(text);
+        if (streams.length > 0) return streams;
+      } catch {
+        // Try the next URL
+      }
+    }
+
+    return [];
+  }
+
+  /**
+   * Parses the area-tags JSON response. The exact shape depends on what
+   * live.bilibili.com returns, so this is defensive: it looks for bvid
+   * fields at several common nesting depths.
+   */
+  private parseAreaLiveJson(json: unknown): PlatformUpload[] {
+    const streams: PlatformUpload[] = [];
+
+    const walk = (node: unknown, depth = 0): void => {
+      if (depth > 8 || !node || typeof node !== "object") return;
+      if (Array.isArray(node)) {
+        for (const item of node) walk(item, depth + 1);
+        return;
+      }
+      const obj = node as Record<string, unknown>;
+
+      // Heuristic: this object looks like a live stream entry
+      let bvid: string | undefined;
+      if (typeof obj.bvid === "string") bvid = obj.bvid;
+      else if (typeof obj.video_id === "string") bvid = obj.video_id;
+      else if (typeof obj.id === "string") bvid = obj.id;
+      else if (obj.data && typeof obj.data === "object" && "bvid" in obj.data)
+        bvid = (obj.data as { bvid?: string }).bvid;
+      if (typeof bvid === "string" && /^BV[\w-]{10,}$/.test(bvid)) {
+        const owner =
+          obj.owner && typeof obj.owner === "object"
+            ? obj.owner
+            : obj.user && typeof obj.user === "object"
+              ? obj.user
+              : obj.data && typeof obj.data === "object"
+                ? (obj.data as { owner?: unknown }).owner
+                : undefined;
+        const mid =
+          owner && typeof owner === "object" && "mid" in owner
+            ? (owner as { mid?: number }).mid
+            : typeof obj.mid === "number"
+              ? obj.mid
+              : typeof obj.uid === "number"
+                ? obj.uid
+                : 0;
+        let title = "";
+        if (typeof obj.title === "string" && obj.title) title = obj.title;
+        else if (typeof obj.room_title === "string" && obj.room_title) title = obj.room_title;
+        else if (typeof obj.live_title === "string" && obj.live_title) title = obj.live_title;
+        let cover: string | null = null;
+        if (typeof obj.cover === "string" && obj.cover) cover = obj.cover;
+        else if (typeof obj.pic === "string" && obj.pic) cover = obj.pic;
+        else if (typeof obj.user_cover === "string" && obj.user_cover) cover = obj.user_cover;
+        let online: number | null = null;
+        if (typeof obj.online === "number") online = obj.online;
+        else if (typeof obj.viewer_count === "number") online = obj.viewer_count;
+        else if (typeof obj.online_num === "number") online = obj.online_num;
+        let pubtime: number | null = null;
+        if (typeof obj.pubtime === "number") pubtime = obj.pubtime;
+        else if (typeof obj.live_time === "number") pubtime = obj.live_time;
+        else if (typeof obj.start_time === "number") pubtime = obj.start_time;
+
+        streams.push({
+          platform: "bilibili",
+          id: bvid,
+          channelId: String(mid ?? 0),
+          title,
+          description: null,
+          thumbnail: absoluteUrl(cover),
+          publishedAt: pubtime ? new Date(pubtime * 1000).toISOString() : null,
+          scheduledStart: null,
+          duration: null,
+          status: "live",
+          category: "live",
+          songTitle: null,
+          originalArtist: null,
+          viewCount: online ?? null,
+          url: `https://www.bilibili.com/video/${bvid}`,
+        });
+        return; // Don't recurse into a matched stream object
+      }
+
+      for (const key of Object.keys(obj)) walk(obj[key], depth + 1);
+    };
+
+    walk(json);
+    return streams;
+  }
+
+  /**
+   * Extracts BVids from HTML. Bilibili's HTML typically contains
+   * `/video/BV1xx...` links, often with nearby `title="..."` attributes.
+   * Without JSON structure this is best-effort: we get the bvid and URL,
+   * but title/cover/viewer count may be missing.
+   */
+  private parseAreaLiveHtml(html: string): PlatformUpload[] {
+    const streams: PlatformUpload[] = [];
+    const seen = new Set<string>();
+
+    // Match /video/BV1xx... links
+    const bvidRegex = /\/video\/(BV[\w-]{10,})/g;
+    let match: RegExpExecArray | null;
+    while ((match = bvidRegex.exec(html))) {
+      const bvid = match[1];
+      if (seen.has(bvid)) continue;
+      seen.add(bvid);
+
+      // Try to find a title attribute near this bvid (within ~500 chars)
+      const start = Math.max(0, match.index - 500);
+      const end = Math.min(html.length, match.index + 500);
+      const window = html.slice(start, end);
+      const titleMatch = window.match(/title="([^"]{1,120})"/);
+      const title = titleMatch ? titleMatch[1] : "";
+
+      streams.push({
+        platform: "bilibili",
+        id: bvid,
+        channelId: "0", // mid unknown from HTML alone
+        title,
+        description: null,
+        thumbnail: null,
+        publishedAt: null,
+        scheduledStart: null,
+        duration: null,
+        status: "live",
+        category: "live",
+        songTitle: null,
+        originalArtist: null,
+        viewCount: null,
+        url: `https://www.bilibili.com/video/${bvid}`,
+      });
+    }
+
+    return streams;
   }
 
   /** The live streams found by the last `search()` call. */
