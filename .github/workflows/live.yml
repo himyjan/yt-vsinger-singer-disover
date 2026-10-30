@@ -105,7 +105,7 @@ jobs:
           VOL_DIR=".volumes/vol-${{ matrix.volume }}/data"
           mv data data-full
           ln -s "$VOL_DIR" data
-          npx tsx scripts/sync.ts -- "${ARGS[@]}"
+          npx oxnode scripts/sync.ts -- "${ARGS[@]}"
           rm -f data
           mv data-full data
 
@@ -172,7 +172,7 @@ jobs:
           done
 
       - name: Merge all volumes into data/
-        run: npx tsx scripts/merge-volumes.ts --count 20
+        run: npx oxnode scripts/merge-volumes.ts --count 20
 
       - name: Build search index
         run: npm run data:index

@@ -37,7 +37,15 @@ They share `scripts/lib/types.ts` and `scripts/lib/search.ts` through the
 
 ### The pipeline (`scripts/`)
 
-Node + TypeScript, no native dependencies. It runs unchanged in GitHub Actions.
+Node + TypeScript, run by `oxnode` (`@oxc-node/cli`, a `devDependency`). It
+runs unchanged in GitHub Actions.
+
+`oxnode` ships **prebuilt** binaries per platform (`@oxc-node/core-linux-x64-gnu`
+and friends), so installing it compiles nothing — which is the reason it is
+acceptable where a native module is not: `better-sqlite3` stays an optional
+dependency for the same rule, that the CI path must never need a build step.
+It replaces `tsx` and is a drop-in for it: same `oxnode <file>.ts` invocation,
+ESM and `tsconfig` path aliases included.
 
 ```
 scripts/
