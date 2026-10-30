@@ -251,10 +251,22 @@ export function writeItemShards(
     let regionCount = 0;
     const buckets = [...byBucket.keys()].sort();
     for (const bucket of buckets) {
-      const list = (byBucket.get(bucket) ?? []).sort((a, b) =>
-        b.publishedAt?.localeCompare(a.publishedAt ?? "") ??
-        a.id.localeCompare(b.id),
-      );
+      /**
+       * Newest first, and **ties broken by id**.
+       *
+       * The comparison used to fall back to `a.id.localeCompare(b.id)` only
+       * when `b.publishedAt` was absent, so two items sharing a timestamp —
+       * every live stream found in one pass — compared equal and kept
+       * whatever order they arrived in. The order then depended on which
+       * writer produced the file: the sync inserts in load order, the volume
+       * merge iterates volumes, so the two disagreed and every run rewrote
+       * every item shard (measured: 71,225 lines changed for one live
+       * update). A total order makes the file a function of its contents.
+       */
+      const list = (byBucket.get(bucket) ?? []).sort((a, b) => {
+        const byDate = (b.publishedAt ?? "").localeCompare(a.publishedAt ?? "");
+        return byDate !== 0 ? byDate : a.id.localeCompare(b.id);
+      });
       keepFiles.add(`${bucket}.json`);
       writeJsonIfChanged(l.itemsRegion(region, bucket), {
         schemaVersion: SCHEMA_VERSION,
