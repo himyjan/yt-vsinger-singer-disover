@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-30T11:03:31.030Z",
+  "generatedAt": "2026-10-30T12:52:02.982Z",
   "items": [
     {
       "id": "-rEMiOIoqbo",
@@ -417,12 +417,11 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "OLAK5uy_lCHlJ3f-QZ5GAoz39L6xB2HTGy3ZCgPa0",
+      "id": "kXQT3ZM5QTY",
       "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_lCHlJ3f-QZ5GAoz39L6xB2HTGy3ZCgPa0",
-      "type": "playlist",
-      "channelId": "UCraSj5QVRNO9UNwtGQ5mP9Q",
-      "channelName": "Wakakusa Kiyoka ch.",
+      "type": "live",
+      "channelId": "UCGZIyQzKyc3dcwpzLj7C6sQ",
+      "channelName": "Nollyky",
       "channelKind": "virtual",
       "region": "en",
       "gender": "unknown",
@@ -430,10 +429,103 @@
         "en"
       ],
       "isAi": false,
-      "variant": "vsinger",
-      "title": "BonsaiGekiomoAiIdol",
+      "variant": "vtuber",
+      "title": "【Half-Life】Absolute chaos and war crimes continues",
       "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/-Y5HLruYZh8/hqdefault.jpg",
+      "thumbnail": "https://i.ytimg.com/vi/kXQT3ZM5QTY/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2026-11-01T17:00:00.000Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCGZIyQzKyc3dcwpzLj7C6sQ",
+          "name": "Nollyky",
+          "kind": "virtual",
+          "region": "en"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-30T04:35:35.383Z",
+      "updatedAt": "2026-10-30T07:01:41.522Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "o8_f6fZBVpU",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCO9fQmKahoMU2wF1kuICwCg",
+      "channelName": "Yuni ☆彡",
+      "channelKind": "virtual",
+      "region": "en",
+      "gender": "female",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "【Schedule】 💫 Check out this week's schedule~! ☆彡 🦊 NOT A STREAM!! 💙 【Yuni ☆彡】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/o8_f6fZBVpU/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2028-01-01T05:00:00.000Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCO9fQmKahoMU2wF1kuICwCg",
+          "name": "Yuni ☆彡",
+          "kind": "virtual",
+          "region": "en"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-30T04:35:35.383Z",
+      "updatedAt": "2026-10-30T07:01:41.522Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_k4ch0G0r0YNGbJz1n25WBtIZWJX5_CK5k",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_k4ch0G0r0YNGbJz1n25WBtIZWJX5_CK5k",
+      "type": "playlist",
+      "channelId": "UC9lSHDmh1Aeg8L4DdIfXQYg",
+      "channelName": "Marsh Plaza",
+      "channelKind": "virtual",
+      "region": "en",
+      "gender": "unknown",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "producer",
+      "title": "Marsh BGM",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/c72RuSeJZX4/hqdefault.jpg",
       "publishedAt": null,
       "scheduledStart": null,
       "actualStart": null,
@@ -446,8 +538,8 @@
       "isCollab": false,
       "collaborators": [
         {
-          "channelId": "UCraSj5QVRNO9UNwtGQ5mP9Q",
-          "name": "Wakakusa Kiyoka ch.",
+          "channelId": "UC9lSHDmh1Aeg8L4DdIfXQYg",
+          "name": "Marsh Plaza",
           "kind": "virtual",
           "region": "en"
         }
@@ -461,8 +553,8 @@
       "likeCount": null,
       "concurrentViewers": null,
       "source": "api",
-      "addedAt": "2026-10-25T07:36:28.069Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "addedAt": "2026-10-30T12:52:02.982Z",
+      "updatedAt": "2026-10-30T12:52:02.982Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -663,52 +755,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "kXQT3ZM5QTY",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCGZIyQzKyc3dcwpzLj7C6sQ",
-      "channelName": "Nollyky",
-      "channelKind": "virtual",
-      "region": "en",
-      "gender": "unknown",
-      "languages": [
-        "en"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "【Half-Life】Absolute chaos and war crimes continues",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/kXQT3ZM5QTY/hq720.jpg",
-      "publishedAt": null,
-      "scheduledStart": "2026-11-01T17:00:00.000Z",
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "upcoming",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCGZIyQzKyc3dcwpzLj7C6sQ",
-          "name": "Nollyky",
-          "kind": "virtual",
-          "region": "en"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-10-30T07:01:41.522Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "n5-I6a8RlTA",
       "platform": "youtube",
       "type": "live",
@@ -755,48 +801,52 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "o8_f6fZBVpU",
+      "id": "OLAK5uy_lCHlJ3f-QZ5GAoz39L6xB2HTGy3ZCgPa0",
       "platform": "youtube",
-      "type": "live",
-      "channelId": "UCO9fQmKahoMU2wF1kuICwCg",
-      "channelName": "Yuni ☆彡",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_lCHlJ3f-QZ5GAoz39L6xB2HTGy3ZCgPa0",
+      "type": "playlist",
+      "channelId": "UCraSj5QVRNO9UNwtGQ5mP9Q",
+      "channelName": "Wakakusa Kiyoka ch.",
       "channelKind": "virtual",
       "region": "en",
-      "gender": "female",
+      "gender": "unknown",
       "languages": [
         "en"
       ],
       "isAi": false,
-      "variant": "female_vtuber",
-      "title": "【Schedule】 💫 Check out this week's schedule~! ☆彡 🦊 NOT A STREAM!! 💙 【Yuni ☆彡】",
+      "variant": "vsinger",
+      "title": "BonsaiGekiomoAiIdol",
       "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/o8_f6fZBVpU/hq720.jpg",
+      "thumbnail": "https://i.ytimg.com/vi/-Y5HLruYZh8/hqdefault.jpg",
       "publishedAt": null,
-      "scheduledStart": "2028-01-01T05:00:00.000Z",
+      "scheduledStart": null,
       "actualStart": null,
       "actualEnd": null,
       "duration": null,
-      "status": "upcoming",
-      "category": "premiere",
+      "status": "past",
+      "category": "other",
       "songTitle": null,
       "originalArtist": null,
       "isCollab": false,
       "collaborators": [
         {
-          "channelId": "UCO9fQmKahoMU2wF1kuICwCg",
-          "name": "Yuni ☆彡",
+          "channelId": "UCraSj5QVRNO9UNwtGQ5mP9Q",
+          "name": "Wakakusa Kiyoka ch.",
           "kind": "virtual",
           "region": "en"
         }
       ],
       "isAcoustic": false,
-      "tags": [],
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
       "viewCount": null,
       "likeCount": null,
       "concurrentViewers": null,
       "source": "api",
-      "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-10-30T07:01:41.522Z",
+      "addedAt": "2026-10-25T07:36:28.069Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },

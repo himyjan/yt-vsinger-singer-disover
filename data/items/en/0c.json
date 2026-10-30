@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-30T11:03:31.030Z",
+  "generatedAt": "2026-10-30T12:52:02.982Z",
   "items": [
     {
       "id": "_hxzVqjp8NU",
@@ -789,6 +789,56 @@
       "source": "api",
       "addedAt": "2026-10-25T07:43:14.768Z",
       "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_ndIS1nOwX1E_hYcQECvowXSq1IJG7NeMQ",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_ndIS1nOwX1E_hYcQECvowXSq1IJG7NeMQ",
+      "type": "playlist",
+      "channelId": "UC6IdDWhBAB_Gnz_ccdHK52w",
+      "channelName": "MEAT",
+      "channelKind": "virtual",
+      "region": "en",
+      "gender": "female",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "female_vsinger",
+      "title": "Butcher Vanity",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/etPaCYzGkE4/hqdefault.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC6IdDWhBAB_Gnz_ccdHK52w",
+          "name": "MEAT",
+          "kind": "virtual",
+          "region": "en"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-30T12:52:02.982Z",
+      "updatedAt": "2026-10-30T12:52:02.982Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },

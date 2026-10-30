@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-30T11:03:31.030Z",
+  "generatedAt": "2026-10-30T12:52:02.982Z",
   "items": [
     {
       "id": "_ewnZKDobwc",
@@ -1107,6 +1107,52 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "diEc2JKQAG4",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCrf-OKngOn5-gkuACHq0uEA",
+      "channelName": "甘寧みくる / mikuru amane",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "male",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "【メン限/雑談】ハッピーハロウィン💉🤍ナースコスプレ💗",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/diEc2JKQAG4/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2026-10-31T12:00:00.000Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCrf-OKngOn5-gkuACHq0uEA",
+          "name": "甘寧みくる / mikuru amane",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-30T04:35:35.383Z",
+      "updatedAt": "2026-10-30T07:01:41.522Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "fKnwWrHUvzU",
       "platform": "youtube",
       "type": "live",
@@ -1241,52 +1287,6 @@
       "source": "api",
       "addedAt": "2026-10-27T22:11:16.041Z",
       "updatedAt": "2026-10-27T22:11:16.041Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "diEc2JKQAG4",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCrf-OKngOn5-gkuACHq0uEA",
-      "channelName": "甘寧みくる / mikuru amane",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "male",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "unknown",
-      "title": "【メン限/雑談】ハッピーハロウィン💉🤍ナースコスプレ💗",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/diEc2JKQAG4/hq720.jpg",
-      "publishedAt": null,
-      "scheduledStart": "2026-10-31T12:00:00.000Z",
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "upcoming",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCrf-OKngOn5-gkuACHq0uEA",
-          "name": "甘寧みくる / mikuru amane",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-10-30T07:01:41.522Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -2535,56 +2535,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "OLAK5uy_l2WOo5355ylmJ3WXDAv2zGPv7z71gKCJk",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_l2WOo5355ylmJ3WXDAv2zGPv7z71gKCJk",
-      "type": "playlist",
-      "channelId": "UC3TlnHMKgmYFjDPzkyW1q2w",
-      "channelName": "比羽沢れいら",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "Flannel flower",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/n8mNkGldFKs/hqdefault.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UC3TlnHMKgmYFjDPzkyW1q2w",
-          "name": "比羽沢れいら",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:36:28.069Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "OLAK5uy_l3d-m9_Dk10j_hd6A-kYTbJU9yYqXN9KI",
       "platform": "youtube",
       "url": "https://www.youtube.com/playlist?list=OLAK5uy_l3d-m9_Dk10j_hd6A-kYTbJU9yYqXN9KI",
@@ -2630,56 +2580,6 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_l4aflPkZD4yiuhqwej7TvwqVH3LWFPvTg",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_l4aflPkZD4yiuhqwej7TvwqVH3LWFPvTg",
-      "type": "playlist",
-      "channelId": "UCBJ6nejlzes6mm9UruaxQsA",
-      "channelName": "涼海ネモ / Nemo Channel【ななしいんく】",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "female",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "female_vsinger",
-      "title": "Bridge Between Us",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/ua--qyH9HYM/hqdefault.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCBJ6nejlzes6mm9UruaxQsA",
-          "name": "涼海ネモ / Nemo Channel【ななしいんく】",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:36:28.069Z",
       "updatedAt": "2026-10-25T07:43:14.768Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
@@ -3135,6 +3035,56 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "OLAK5uy_maO6meDf-1ZYOfoDGYMOnzqfkr07OrbP8",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_maO6meDf-1ZYOfoDGYMOnzqfkr07OrbP8",
+      "type": "playlist",
+      "channelId": "UCgPGVORhti-KKcV4CqUyumQ",
+      "channelName": "XIDEN",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "male",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "male_vsinger",
+      "title": "Shukumei",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/jWGWFkILgS4/hqdefault.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCgPGVORhti-KKcV4CqUyumQ",
+          "name": "XIDEN",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:36:28.069Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "OLAK5uy_mj7s1PqzjdXNEJXbogtemb_s-mKChlZog",
       "platform": "youtube",
       "url": "https://www.youtube.com/playlist?list=OLAK5uy_mj7s1PqzjdXNEJXbogtemb_s-mKChlZog",
@@ -3181,56 +3131,6 @@
       "source": "api",
       "addedAt": "2026-10-25T07:43:14.768Z",
       "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_mRP0oX6yeXBO20zNZ009d5tQt7Za5XCCA",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_mRP0oX6yeXBO20zNZ009d5tQt7Za5XCCA",
-      "type": "playlist",
-      "channelId": "UCp-5t9SrOQwXMU7iIjQfARg",
-      "channelName": "Mio Channel 大神ミオ",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "My Sparkle",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/NXIDznszQhA/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCp-5t9SrOQwXMU7iIjQfARg",
-          "name": "Mio Channel 大神ミオ",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-26T12:56:51.125Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3531,56 +3431,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "OLAK5uy_maO6meDf-1ZYOfoDGYMOnzqfkr07OrbP8",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_maO6meDf-1ZYOfoDGYMOnzqfkr07OrbP8",
-      "type": "playlist",
-      "channelId": "UCgPGVORhti-KKcV4CqUyumQ",
-      "channelName": "XIDEN",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "male",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "male_vsinger",
-      "title": "Shukumei",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/jWGWFkILgS4/hqdefault.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCgPGVORhti-KKcV4CqUyumQ",
-          "name": "XIDEN",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:36:28.069Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "OLAK5uy_nlA1K3OpS_mtWfCOE9F02LLENA_DdI2xM",
       "platform": "youtube",
       "url": "https://www.youtube.com/playlist?list=OLAK5uy_nlA1K3OpS_mtWfCOE9F02LLENA_DdI2xM",
@@ -3626,6 +3476,56 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-25T07:36:28.069Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_nSnkAkeHDeS4aiPJ_Z9TZBh_auSHVSfWw",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_nSnkAkeHDeS4aiPJ_Z9TZBh_auSHVSfWw",
+      "type": "playlist",
+      "channelId": "UCFv2z4iM5vHrS8bZPq4fHQQ",
+      "channelName": "HIMEHINA Channel",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "HIMEHINA LIVE 2024『Remember the tears』",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/uA80Ek1XItM/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCFv2z4iM5vHrS8bZPq4fHQQ",
+          "name": "HIMEHINA Channel",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
       "updatedAt": "2026-10-25T07:43:14.768Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
@@ -3765,6 +3665,52 @@
       "source": "api",
       "addedAt": "2026-10-27T22:11:16.041Z",
       "updatedAt": "2026-10-30T07:01:41.522Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "rn0OJwZfC5U",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCGoCky9F0yIeUfHsr5LzsFQ",
+      "channelName": "黒瀬けい / KuroseKei",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "エイムでアセ帯破壊しよう　#VALORANT #ヴァロラント #Vtuber",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/rn0OJwZfC5U/hq720.jpg",
+      "publishedAt": "2026-10-30T04:35:35.383Z",
+      "scheduledStart": null,
+      "actualStart": "2026-10-30T04:35:35.383Z",
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCGoCky9F0yIeUfHsr5LzsFQ",
+          "name": "黒瀬けい / KuroseKei",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-30T04:35:35.383Z",
+      "updatedAt": "2026-10-30T04:35:35.383Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3961,56 +3907,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "OLAK5uy_nv3D0ZuL2EeEg_fPp-pPw0I3Y0wvcMBZI",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_nv3D0ZuL2EeEg_fPp-pPw0I3Y0wvcMBZI",
-      "type": "playlist",
-      "channelId": "UCRXWpdEe987CRaZt5HNf-WA",
-      "channelName": "ファム・ファタル - (f)EMME FATALE",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "female",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "female_vsinger",
-      "title": "Jinsei Over",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/H3oVt4PX0C0/hqdefault.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCRXWpdEe987CRaZt5HNf-WA",
-          "name": "ファム・ファタル - (f)EMME FATALE",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:36:28.069Z",
-      "updatedAt": "2026-10-25T11:22:49.894Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "pbhgkiwL6Vk",
       "platform": "youtube",
       "type": "live",
@@ -4099,6 +3995,56 @@
       "source": "api",
       "addedAt": "2026-10-26T10:32:00.415Z",
       "updatedAt": "2026-10-27T05:00:25.991Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_nv3D0ZuL2EeEg_fPp-pPw0I3Y0wvcMBZI",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_nv3D0ZuL2EeEg_fPp-pPw0I3Y0wvcMBZI",
+      "type": "playlist",
+      "channelId": "UCRXWpdEe987CRaZt5HNf-WA",
+      "channelName": "ファム・ファタル - (f)EMME FATALE",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "female",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "female_vsinger",
+      "title": "Jinsei Over",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/H3oVt4PX0C0/hqdefault.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCRXWpdEe987CRaZt5HNf-WA",
+          "name": "ファム・ファタル - (f)EMME FATALE",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:36:28.069Z",
+      "updatedAt": "2026-10-25T11:22:49.894Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4287,6 +4233,156 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "OLAK5uy_l2WOo5355ylmJ3WXDAv2zGPv7z71gKCJk",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_l2WOo5355ylmJ3WXDAv2zGPv7z71gKCJk",
+      "type": "playlist",
+      "channelId": "UC3TlnHMKgmYFjDPzkyW1q2w",
+      "channelName": "比羽沢れいら",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "Flannel flower",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/n8mNkGldFKs/hqdefault.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC3TlnHMKgmYFjDPzkyW1q2w",
+          "name": "比羽沢れいら",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:36:28.069Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_l4aflPkZD4yiuhqwej7TvwqVH3LWFPvTg",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_l4aflPkZD4yiuhqwej7TvwqVH3LWFPvTg",
+      "type": "playlist",
+      "channelId": "UCBJ6nejlzes6mm9UruaxQsA",
+      "channelName": "涼海ネモ / Nemo Channel【ななしいんく】",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "female",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "female_vsinger",
+      "title": "Bridge Between Us",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/ua--qyH9HYM/hqdefault.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCBJ6nejlzes6mm9UruaxQsA",
+          "name": "涼海ネモ / Nemo Channel【ななしいんく】",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:36:28.069Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_mRP0oX6yeXBO20zNZ009d5tQt7Za5XCCA",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_mRP0oX6yeXBO20zNZ009d5tQt7Za5XCCA",
+      "type": "playlist",
+      "channelId": "UCp-5t9SrOQwXMU7iIjQfARg",
+      "channelName": "Mio Channel 大神ミオ",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "My Sparkle",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/NXIDznszQhA/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCp-5t9SrOQwXMU7iIjQfARg",
+          "name": "Mio Channel 大神ミオ",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-26T12:56:51.125Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "OLAK5uy_neXJ7MW4HB14XhItxz4JhMfJoKXyYmfyY",
       "platform": "youtube",
       "url": "https://www.youtube.com/playlist?list=OLAK5uy_neXJ7MW4HB14XhItxz4JhMfJoKXyYmfyY",
@@ -4318,56 +4414,6 @@
         {
           "channelId": "UC--zuEfONeFXPvLqX0Kvbuw",
           "name": "松永依織 / IORI MATSUNAGA",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:36:28.069Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_nLtvPfqa_mRIvIaH4BFv1nLkeicWFdVi0",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_nLtvPfqa_mRIvIaH4BFv1nLkeicWFdVi0",
-      "type": "playlist",
-      "channelId": "UC6tIt6kTcMPI0t-Mml0jE1g",
-      "channelName": "箱乃なかみ / Hakono Nakami",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vsinger",
-      "title": "Kurae!",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/XnYJK4sXgNA/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UC6tIt6kTcMPI0t-Mml0jE1g",
-          "name": "箱乃なかみ / Hakono Nakami",
           "kind": "virtual",
           "region": "jp"
         }
@@ -4419,156 +4465,6 @@
           "channelId": "UCR1zT1s524Hbc85bdvno_8w",
           "name": "Aimer Official YouTube Channel",
           "kind": "real",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_nqm6Awul0fj59zxzTnFDnP8J3ZdjXxErw",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_nqm6Awul0fj59zxzTnFDnP8J3ZdjXxErw",
-      "type": "playlist",
-      "channelId": "UCaTLwEXK7A5hhMCSUU8CGow",
-      "channelName": "或夢 / um",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "unknown",
-      "title": "Transparent Message",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/-y-xY1WFdAE/hqdefault.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCaTLwEXK7A5hhMCSUU8CGow",
-          "name": "或夢 / um",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:36:28.069Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_nSnkAkeHDeS4aiPJ_Z9TZBh_auSHVSfWw",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_nSnkAkeHDeS4aiPJ_Z9TZBh_auSHVSfWw",
-      "type": "playlist",
-      "channelId": "UCFv2z4iM5vHrS8bZPq4fHQQ",
-      "channelName": "HIMEHINA Channel",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "HIMEHINA LIVE 2024『Remember the tears』",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/uA80Ek1XItM/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCFv2z4iM5vHrS8bZPq4fHQQ",
-          "name": "HIMEHINA Channel",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_nX-TJQX7xyAaD-kldbFvOEjNTueagzClI",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_nX-TJQX7xyAaD-kldbFvOEjNTueagzClI",
-      "type": "playlist",
-      "channelId": "UCJSzxbt4Acel9JdeLiY7tJQ",
-      "channelName": "DUSTCELL",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "Reason",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/mj79WGQo8eU/hqdefault.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCJSzxbt4Acel9JdeLiY7tJQ",
-          "name": "DUSTCELL",
-          "kind": "virtual",
           "region": "jp"
         }
       ],
@@ -4679,6 +4575,156 @@
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
       "updatedAt": "2026-10-25T16:14:08.234Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_nLtvPfqa_mRIvIaH4BFv1nLkeicWFdVi0",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_nLtvPfqa_mRIvIaH4BFv1nLkeicWFdVi0",
+      "type": "playlist",
+      "channelId": "UC6tIt6kTcMPI0t-Mml0jE1g",
+      "channelName": "箱乃なかみ / Hakono Nakami",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vsinger",
+      "title": "Kurae!",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/XnYJK4sXgNA/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC6tIt6kTcMPI0t-Mml0jE1g",
+          "name": "箱乃なかみ / Hakono Nakami",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:36:28.069Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_nqm6Awul0fj59zxzTnFDnP8J3ZdjXxErw",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_nqm6Awul0fj59zxzTnFDnP8J3ZdjXxErw",
+      "type": "playlist",
+      "channelId": "UCaTLwEXK7A5hhMCSUU8CGow",
+      "channelName": "或夢 / um",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "Transparent Message",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/-y-xY1WFdAE/hqdefault.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCaTLwEXK7A5hhMCSUU8CGow",
+          "name": "或夢 / um",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:36:28.069Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_nX-TJQX7xyAaD-kldbFvOEjNTueagzClI",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_nX-TJQX7xyAaD-kldbFvOEjNTueagzClI",
+      "type": "playlist",
+      "channelId": "UCJSzxbt4Acel9JdeLiY7tJQ",
+      "channelName": "DUSTCELL",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "Reason",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/mj79WGQo8eU/hqdefault.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCJSzxbt4Acel9JdeLiY7tJQ",
+          "name": "DUSTCELL",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4817,52 +4863,6 @@
       "source": "api",
       "addedAt": "2026-10-30T04:35:35.383Z",
       "updatedAt": "2026-10-30T07:01:41.522Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "rn0OJwZfC5U",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCGoCky9F0yIeUfHsr5LzsFQ",
-      "channelName": "黒瀬けい / KuroseKei",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "unknown",
-      "title": "エイムでアセ帯破壊しよう　#VALORANT #ヴァロラント #Vtuber",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/rn0OJwZfC5U/hq720.jpg",
-      "publishedAt": "2026-10-30T04:35:35.383Z",
-      "scheduledStart": null,
-      "actualStart": "2026-10-30T04:35:35.383Z",
-      "actualEnd": null,
-      "duration": null,
-      "status": "live",
-      "category": "live",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCGoCky9F0yIeUfHsr5LzsFQ",
-          "name": "黒瀬けい / KuroseKei",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-10-30T04:35:35.383Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
