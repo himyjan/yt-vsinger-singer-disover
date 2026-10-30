@@ -614,7 +614,8 @@ npm run data:details -- --platform bilibili --dry-run
 npm run data:links -- --limit 200    # find the missing cross-platform accounts
 npm run data:links -- --platform bilibili --region jp --limit 320  # the Japanese mirror backlog
 npm run data:links -- --shard 2/4 --web --dry-run  # + search-grounded fallback
-npm run data:discover                # new performers from the directory sources (vTubie)
+npm run data:discover                # new performers from the directory sources (vTubie, chuysan)
+npm run data:discover -- --source chuysan   # only the Chuysan Thai VTuber directory
 npm run data:discover -- --promote   # + add the ones that pass the virtual-and-singing gate
 npm run data:vtubie-groups            # vTubie groups → .cache/vtubie-groups.json (browser, resumable)
 npm run data:vtubie-import -- --apply # add the harvested YouTube channels that pass the performer gate
@@ -698,6 +699,7 @@ Load one with the `skill` tool, e.g. `skill({ id: "sync-dataset" })`.
 | CI.ME                 | `ci.me/api/openapi/open/v1/channels`              | Profile details for known CI.ME channel IDs; requires CI.ME app credentials                                                                                                            |
 | Niconico              | `api.search.nicovideo.jp/api/v2`                  | Japanese original songs and covers                                                                                                                                                     |
 | VK                    | `api.vk.com/method`                               | Russian VTuber channels                                                                                                                                                                |
+| Chuysan               | `storage.googleapis.com/thaivtuberranking.appspot.com` | Thai VTuber ranking directory — channel ids, names, descriptions, subscriber counts, publish dates; read via `/v2/channel_data/simple_list.json` |
 
 The other trackers. Only the ones marked _read_ are sources for this
 pipeline; the rest are the comparison set, so keep what a site **lists**
