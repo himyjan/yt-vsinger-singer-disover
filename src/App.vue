@@ -531,6 +531,26 @@ const visibleSongs = computed(() =>
   ),
 );
 
+/** True when any sub-filter is active (scope, region, platform, categories, etc.). */
+const hasAnyFilter = computed(() =>
+  state.scope !== "both" ||
+  state.region !== "all" ||
+  state.platform !== "all" ||
+  state.categories.length > 0 ||
+  state.acousticOnly ||
+  state.gender !== "all" ||
+  state.language !== "all" ||
+  state.singing !== "all" ||
+  state.role !== "all" ||
+  state.vtuberOnly !== "all" ||
+  state.ai !== "all" ||
+  state.affiliation !== "all" ||
+  state.oac !== "all" ||
+  state.upcomingType !== "all" ||
+  state.channelSubs !== "all" ||
+  state.subsTracked !== "all"
+);
+
 const memberFilterLabel = computed(() => {
   if (state.agency) return `🏢 ${state.agency}`;
   if (state.tag) return `#${state.tag}`;
@@ -1044,6 +1064,26 @@ function selectScope(scope: Scope): void {
 /** Sets the sort order of a view. */
 function setSort(view: ViewId, order: string): void {
   (state.sort as Record<string, string>)[view] = order;
+}
+
+/** Resets every sub-filter (scope, region, platform, categories, role, etc.) to its default. */
+function clearAllFilters(): void {
+  state.scope = "both";
+  state.region = "all";
+  state.platform = "all";
+  state.categories.splice(0);
+  state.acousticOnly = false;
+  state.gender = "all";
+  state.language = "all";
+  state.singing = "all";
+  state.role = "all";
+  state.vtuberOnly = "all";
+  state.ai = "all";
+  state.affiliation = "all";
+  state.oac = "all";
+  state.upcomingType = "all";
+  state.channelSubs = "all";
+  state.subsTracked = "all";
 }
 
 function toggleCategory(id: string): void {
@@ -2461,9 +2501,9 @@ onMounted(async () => {
           </select>
         </label>
 
-        <!-- Categories — multi-select, so MV + Covers can be combined -->
-        <button v-if="state.categories.length" type="button" class="shrink-0 rounded-full border border-purple-500 bg-purple-500/12 px-3 py-1.5 text-xs font-semibold whitespace-nowrap text-purple-700 transition dark:text-purple-300" @click="state.categories.splice(0)">
-          Clear filters
+        <!-- Clear all filters -->
+        <button v-if="hasAnyFilter" type="button" class="shrink-0 rounded-full border border-purple-500 bg-purple-500/12 px-3 py-1.5 text-xs font-semibold whitespace-nowrap text-purple-700 transition dark:text-purple-300" @click="clearAllFilters()">
+          Clear all filters
         </button>
         <button v-for="category in CATEGORIES" :key="category.id" type="button" class="shrink-0 rounded-full border px-3 py-1.5 text-xs font-semibold whitespace-nowrap transition" :class="state.categories.includes(category.id)
             ? 'border-purple-500 bg-purple-500/12 text-purple-700 dark:text-purple-300'
