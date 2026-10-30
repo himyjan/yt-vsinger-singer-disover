@@ -2269,9 +2269,10 @@ onMounted(async () => {
 <template>
   <div class="min-h-screen bg-[#f6f5f1] text-neutral-900 transition-colors duration-200 dark:bg-neutral-950 dark:text-neutral-100">
     <!-- ───────────────────────── Header ───────────────────────── -->
-    <header class="sticky top-0 z-40 border-b border-black/8 bg-[#f6f5f1]/90 backdrop-blur-xl dark:border-white/10 dark:bg-neutral-950/90">
+    <!-- ───────────────────────── Header + Filters (sticky together) ───────────────────────── -->
+    <div class="sticky top-0 z-40 border-b border-black/6 bg-[#f6f5f1]/95 backdrop-blur-xl dark:border-white/8 dark:bg-neutral-950/90">
       <div class="mx-auto max-w-[1600px] px-3 sm:px-5">
-        <!-- Top row -->
+        <!-- Top row: logo, search, scope, theme, account -->
         <div class="flex items-center gap-2 py-2.5 sm:gap-3 sm:py-3">
           <button type="button" class="flex shrink-0 items-center gap-2" @click="setView('live')">
             <span class="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 text-base font-black text-white shadow-sm" aria-hidden="true">
@@ -2419,10 +2420,10 @@ onMounted(async () => {
           </button>
         </nav>
       </div>
-    </header>
+    </div>
 
     <!-- ───────────────────────── Filters ───────────────────────── -->
-    <div class="sticky top-[104px] z-30 border-b border-black/6 bg-[#f6f5f1]/95 backdrop-blur-xl dark:border-white/8 dark:bg-neutral-950/95 sm:top-[112px]">
+    <div class="border-b border-black/6 bg-[#f6f5f1]/95 backdrop-blur-xl dark:border-white/8 dark:bg-neutral-950/95">
       <div class="mx-auto flex max-w-[1600px] items-center gap-2 overflow-x-auto px-3 py-2 sm:px-5">
         <!-- Sort -->
         <div v-if="state.view !== 'analytics'" class="shrink-0 flex items-center gap-1.5">
@@ -2561,6 +2562,7 @@ onMounted(async () => {
         </div>
       </div>
     </div>
+  </div>
 
     <!-- ───────────────────────── Content ───────────────────────── -->
     <main class="mx-auto max-w-[1600px] px-3 pt-4 pb-24 sm:px-5 sm:pb-8">
