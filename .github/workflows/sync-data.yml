@@ -48,18 +48,23 @@ on:
         required: false
         default: ""
 
-# One dataset, one writer. `sync`, `verify-data` and `data-squash` all share
-# this group, and `cancel-in-progress: false` means a run that arrives while
-# another is working **waits** instead of killing it mid-write — a half-written
-# shard is the one state the dataset must never be in.
+# One dataset, one writer. `sync`, `live`, `verify-data` and `data-squash` all
+# share this group, and `cancel-in-progress: false` means a run that arrives
+# while another is working **waits** instead of killing it mid-write — a
+# half-written shard is the one state the dataset must never be in.
 #
-# GitHub keeps one running job and one pending job per group: a third arrival
-# drops the *pending* one, never the running one. Nothing outside this group
-# (CI, Deploy site, Repository size) can cancel it, because concurrency groups
-# only affect runs inside the same group.
+# `queue: max` is what keeps this run from being dropped: by default a group
+# holds one running and one pending run, and a new arrival cancels the pending
+# one — which is how a scheduled sync could disappear behind an hourly live
+# run. With `queue: max` up to 100 runs wait and are processed FIFO, so a sync
+# that is already waiting is never replaced.
+#
+# Nothing outside this group (CI, Deploy site, Repository size) can cancel it,
+# because concurrency groups only affect runs inside the same group.
 concurrency:
   group: dataset-writer-${{ github.repository }}
   cancel-in-progress: false
+  queue: max
 
 permissions:
   contents: write

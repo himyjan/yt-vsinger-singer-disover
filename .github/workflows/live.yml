@@ -21,8 +21,11 @@ name: Live status
 
 on:
   schedule:
-    # Hourly, off the hour so the shared GitHub cron pool is happy.
-    - cron: "7 * * * *"
+    # Every two hours, off the hour so the shared GitHub cron pool is happy.
+    # A run holds the dataset-writer group for ~25 minutes, and the group is a
+    # single lane shared with the sync; hourly would leave the sync queueing
+    # behind it for no extra coverage, since one run only checks one slice.
+    - cron: "7 */2 * * *"
   workflow_dispatch:
     inputs:
       shard-count:
@@ -32,7 +35,7 @@ on:
       limit-live:
         description: "YouTube channels to check this run"
         required: false
-        default: "1500"
+        default: "1000"
       limit-multi-platform-live:
         description: "Per-channel platform links to check this run"
         required: false
@@ -43,11 +46,16 @@ on:
         default: "false"
 
 # One dataset, one writer: this shares the group with `sync-data.yml`,
-# `verify-data.yml` and `data-squash.yml`, so the hourly live run waits for a
-# sync to finish rather than writing the same shards at the same time.
+# `verify-data.yml` and `data-squash.yml`, so the live run waits for a sync to
+# finish rather than writing the same shards at the same time.
+#
+# `queue: max` keeps one run from dropping another out of the group. A live run
+# can always be repeated — the next hour checks a different slice of the
+# rotation — but a *sync* that is already waiting must never be replaced by it.
 concurrency:
   group: dataset-writer-${{ github.repository }}
   cancel-in-progress: false
+  queue: max
 
 permissions:
   contents: write
@@ -57,7 +65,7 @@ jobs:
     name: Refresh live status
     runs-on: ubuntu-latest
     # A run of `limit-live` channels at ~1-2 s each, plus the platform feeds.
-    # 1,500 channels is about 40 minutes; the ceiling is headroom, not a target.
+    # 1,000 channels is about 25 minutes; the ceiling is headroom, not a target.
     timeout-minutes: 60
 
     steps:
@@ -98,14 +106,14 @@ jobs:
           CI_ME_CLIENT_ID: ${{ secrets.CI_ME_CLIENT_ID }}
           CI_ME_CLIENT_SECRET: ${{ secrets.CI_ME_CLIENT_SECRET }}
           LIVE_SHARD_COUNT: ${{ github.event.inputs.shard-count || '4' }}
-          LIVE_LIMIT: ${{ github.event.inputs.limit-live || '1500' }}
+          LIVE_LIMIT: ${{ github.event.inputs.limit-live || '1000' }}
           LIVE_MULTI_LIMIT: ${{ github.event.inputs.limit-multi-platform-live || '400' }}
         run: |
           ARGS=(--live-only --limit-live "$LIVE_LIMIT" --limit-multi-platform-live "$LIVE_MULTI_LIMIT")
           if [ "${{ inputs.dry-run }}" = "true" ]; then ARGS+=(--dry-run); fi
 
-          # The shard rotates with the run number, so successive hourly runs
-          # cover different slices of the catalogue deterministically.
+          # The shard rotates with the run number, so successive runs cover
+          # different slices of the catalogue deterministically.
           SHARD_COUNT="$LIVE_SHARD_COUNT"
           if ! [[ "$SHARD_COUNT" =~ ^[0-9]+$ ]] || [ "$SHARD_COUNT" -lt 1 ]; then
             SHARD_COUNT=1
@@ -117,9 +125,11 @@ jobs:
 
           npm run data:live -- "${ARGS[@]}"
 
-      # The search index is rebuilt by the full sync, not here: the live run
-      # changes item status, not what is searchable, and rewriting every
-      # `data/search/*.json` once an hour would grow the history for nothing.
+      # The search index is rebuilt by the full sync, not here. The live run
+      # mostly changes item status, and the few broadcasts it discovers make
+      # the index a handful of entries stale until the next sync (six hours)
+      # rebuilds it — cheaper than rewriting every `data/search/*.json` every
+      # two hours for that. `validate` warns about the drift, it does not fail.
       - name: Validate dataset
         run: npm run data:validate
 
