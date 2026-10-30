@@ -487,7 +487,6 @@ const visibleLive = computed(() =>
     ai: state.ai,
     affiliation: state.affiliation,
     language: state.language,
-    limit: 300,
   }), state.sort.live),
 );
 
@@ -501,7 +500,6 @@ const visibleUpcoming = computed(() =>
     affiliation: state.affiliation,
     language: state.language,
     schedule: state.upcomingType,
-    limit: 1000,
   }), state.sort.upcoming),
 );
 
@@ -521,7 +519,6 @@ const visibleSongs = computed(() =>
         ai: state.ai,
         affiliation: state.affiliation,
         language: state.language,
-        limit: 400,
       },
     ),
     state.sort.songs,
