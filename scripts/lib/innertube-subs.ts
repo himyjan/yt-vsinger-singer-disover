@@ -17,7 +17,7 @@ const TV_USER_AGENT = "Mozilla/5.0 (ChromiumStylePlatform) Cobalt/Version";
 const BROWSER_UA =
   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 " +
   "(KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36";
-const MAX_PAGES = 300;
+const MAX_PAGES = 2000;
 const PAGE_TIMEOUT_MS = 20_000;
 
 export interface InnerTubeSubscription {
@@ -123,7 +123,9 @@ function parsePage(json: unknown): {
     }
     const node = value as Record<string, unknown>;
 
-    for (const param of (node.serviceTrackingParams as Array<{ params?: Array<{ key?: string; value?: string }> }> | undefined) ?? []) {
+    for (const param of (node.serviceTrackingParams as
+      | Array<{ params?: Array<{ key?: string; value?: string }> }>
+      | undefined) ?? []) {
       for (const pair of param?.params ?? []) {
         if (pair?.key === "logged_in") {
           loggedIn = pair.value === "1";
@@ -142,9 +144,7 @@ function parsePage(json: unknown): {
           | undefined;
         const canonical = navigation?.browseEndpoint?.canonicalBaseUrl;
         const handle =
-          typeof canonical === "string" && canonical.startsWith("/@")
-            ? canonical.slice(1)
-            : null;
+          typeof canonical === "string" && canonical.startsWith("/@") ? canonical.slice(1) : null;
         const description = renderer.descriptionSnippet
           ? textOf(renderer.descriptionSnippet)
           : null;
@@ -165,24 +165,26 @@ function parsePage(json: unknown): {
      */
     const tile = node.tileRenderer as Record<string, unknown> | undefined;
     if (tile) {
-      const target = (tile.onSelectCommand as
-        | { browseEndpoint?: { browseId?: unknown } }
-        | undefined)?.browseEndpoint;
+      const target = (
+        tile.onSelectCommand as { browseEndpoint?: { browseId?: unknown } } | undefined
+      )?.browseEndpoint;
       const channelId = target?.browseId;
-      if (typeof channelId === "string" && /^UC[\w-]{20,}$/.test(channelId) && !items.has(channelId)) {
-        const metadata = (tile.metadata as
-          | { tileMetadataRenderer?: Record<string, unknown> }
-          | undefined)?.tileMetadataRenderer;
-        const header = (tile.header as
-          | { tileHeaderRenderer?: Record<string, unknown> }
-          | undefined)?.tileHeaderRenderer;
+      if (
+        typeof channelId === "string" &&
+        /^UC[\w-]{20,}$/.test(channelId) &&
+        !items.has(channelId)
+      ) {
+        const metadata = (
+          tile.metadata as { tileMetadataRenderer?: Record<string, unknown> } | undefined
+        )?.tileMetadataRenderer;
+        const header = (tile.header as { tileHeaderRenderer?: Record<string, unknown> } | undefined)
+          ?.tileHeaderRenderer;
         const lineTexts: string[] = [];
         for (const line of (metadata?.lines as unknown[] | undefined) ?? []) {
-          const lineItems = (line as { lineRenderer?: { items?: unknown[] } })?.lineRenderer
-            ?.items;
+          const lineItems = (line as { lineRenderer?: { items?: unknown[] } })?.lineRenderer?.items;
           for (const item of lineItems ?? []) {
-            const text = (item as { lineItemRenderer?: { text?: unknown } })
-              ?.lineItemRenderer?.text;
+            const text = (item as { lineItemRenderer?: { text?: unknown } })?.lineItemRenderer
+              ?.text;
             const value = textOf(text);
             if (value) lineTexts.push(value);
           }
@@ -222,7 +224,9 @@ async function browse(
   body: Record<string, unknown>,
   config: ClientConfig,
 ): Promise<unknown> {
-  const query = config.apiKey ? `?key=${encodeURIComponent(config.apiKey)}&prettyPrint=false` : "?prettyPrint=false";
+  const query = config.apiKey
+    ? `?key=${encodeURIComponent(config.apiKey)}&prettyPrint=false`
+    : "?prettyPrint=false";
   const res = await fetch(`https://www.youtube.com/youtubei/v1/browse${query}`, {
     method: "POST",
     headers: {
@@ -239,9 +243,7 @@ async function browse(
   });
   if (!res.ok) {
     const detail = await res.text().catch(() => "");
-    throw new Error(
-      `InnerTube answered ${res.status}${detail ? `: ${detail.slice(0, 240)}` : ""}`,
-    );
+    throw new Error(`InnerTube answered ${res.status}${detail ? `: ${detail.slice(0, 240)}` : ""}`);
   }
   return res.json();
 }
