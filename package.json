@@ -9,7 +9,7 @@
     "build": "npm run prepare:public && npm run api:build && vite build",
     "start": "node server.ts",
     "clean": "rm -rf dist",
-    "lint": "vue-tsc --noEmit",
+    "lint": "tsc --runExternalCode",
     "prepare:public": "tsx scripts/prepare-public.ts",
     "api:build": "tsx scripts/build-api.ts",
     "data:sync": "tsx scripts/sync.ts",
@@ -50,7 +50,7 @@
     "data:vtuber-db-import": "tsx scripts/import-vtuber-db.ts"
   },
   "dependencies": {
-    "@google/genai": "^2.31.0",
+    "@google/genai": "^2.32.0",
     "@tailwindcss/vite": "^4.3.3",
     "@vitejs/plugin-vue": "^6.0.10",
     "cime-sdk": "^1.2.0",
@@ -68,11 +68,11 @@
   "devDependencies": {
     "@types/better-sqlite3": "^9.6.0",
     "@types/express": "^5.0.6",
-    "@types/node": "^26.6.5",
+    "@types/node": "^26.6.6",
+    "@vue/content-mapper": "^4.0.0-alpha.2",
     "tsx": "^4.23.15",
-    "typescript": "~6.0.3",
-    "vite": "^8.3.5",
-    "vue-tsc": "^3.3.13"
+    "typescript": "^7.1.0-beta",
+    "vite": "^8.3.5"
   },
   "overrides": {
     "@vitejs/plugin-vue": {

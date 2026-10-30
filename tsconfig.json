@@ -4,11 +4,7 @@
     "experimentalDecorators": true,
     "useDefineForClassFields": false,
     "module": "ESNext",
-    "lib": [
-      "ES2022",
-      "DOM",
-      "DOM.Iterable"
-    ],
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
     "moduleResolution": "bundler",
     "isolatedModules": true,
@@ -17,16 +13,19 @@
     "jsx": "react-jsx",
     "types": ["node"],
     "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "@shared/*": [
-        "./scripts/*"
-      ]
+      "@/*": ["./src/*"],
+      "@shared/*": ["./scripts/*"]
     },
     "allowImportingTsExtensions": true,
     "noEmit": true
   },
+  "contentMappers": [
+    {
+      "package": "@vue/content-mapper",
+      "extensions": [".vue"],
+      "options": { "target": 3.6 }
+    }
+  ],
   "include": ["src/**/*.ts", "src/**/*.vue", "scripts/**/*.ts", "server.ts"],
   "exclude": [
     "node_modules",
