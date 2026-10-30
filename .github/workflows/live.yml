@@ -121,10 +121,10 @@ jobs:
     needs: process-volumes
     runs-on: ubuntu-latest
     timeout-minutes: 90
-    concurrency:
-      group: dataset-writer-${{ github.repository }}
-      cancel-in-progress: false
-      queue: max
+    # No job-level `concurrency` here. Re-declaring the workflow's own group
+    # (`dataset-writer-…`) makes the job wait for a lock its own run holds, so
+    # GitHub cancels it at once — zero steps, zero seconds. The run-level block
+    # above already serialises every writer in this repository.
     steps:
       - name: Checkout
         uses: actions/checkout@v7
