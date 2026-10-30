@@ -15,7 +15,7 @@ Useful commands:
 npm run dev               # Express dev server (SQLite-backed, legacy)
 npm run dev:web           # Vite dev server (static dataset)
 npm run build             # prepare the dataset and build for production
-npm run lint              # vue-tsc type check
+npm run lint              # vue-tsc or @vue/content-mapper type check
 
 npm run data:sync         # refresh with InnerTube; API features are optional
 npm run data:sync -- --shard 2/4   # one deterministic slice of the rotation
@@ -44,15 +44,15 @@ This is the most common contribution, and it does not need any code.
 }
 ```
 
-| Key | Values |
-| --- | --- |
-| `kind` | `virtual` \| `real` |
-| `role` | `vtuber` \| `vsinger` \| `singer` \| `musician` \| `producer` \| `composer` \| `unknown` |
-| `region` | `jp` \| `cn` \| `tw` \| `hk` \| `kr` \| `en` \| `id` \| `my` \| `sea` \| `unknown` |
-| `agency` | any string, or `null` |
-| `isSinging` | boolean |
+| Key               | Values                                                                                                        |
+| ----------------- | ------------------------------------------------------------------------------------------------------------- |
+| `kind`            | `virtual` \| `real`                                                                                           |
+| `role`            | `vtuber` \| `vsinger` \| `singer` \| `musician` \| `producer` \| `composer` \| `unknown`                      |
+| `region`          | `jp` \| `cn` \| `tw` \| `hk` \| `kr` \| `en` \| `id` \| `my` \| `sea` \| `unknown`                            |
+| `agency`          | any string, or `null`                                                                                         |
+| `isSinging`       | boolean                                                                                                       |
 | `reincarnationOf` | the previous persona's channel id — written on the **newer** record only; the drawer derives the reverse link |
-| `hidden` | `true` removes the channel from the published dataset |
+| `hidden`          | `true` removes the channel from the published dataset                                                         |
 
 Then:
 
@@ -252,12 +252,12 @@ Ties break on recency.
 Three different ceilings apply, and only the first is enforced by the dataset
 itself:
 
-| What | Ceiling | Where |
-| --- | --- | --- |
-| one file | 8 MB | `SIZE_BUDGET.maxFileBytes`, on write |
-| the tree | 180 MB | `SIZE_BUDGET.maxDataBytes`, in `data:validate` |
-| the published site | 1 GB | `prepare:public` warns at 75 %, fails above |
-| the stored history | 900 MB | `repo:size --max-mb 900` in the sync |
+| What               | Ceiling | Where                                          |
+| ------------------ | ------- | ---------------------------------------------- |
+| one file           | 8 MB    | `SIZE_BUDGET.maxFileBytes`, on write           |
+| the tree           | 180 MB  | `SIZE_BUDGET.maxDataBytes`, in `data:validate` |
+| the published site | 1 GB    | `prepare:public` warns at 75 %, fails above    |
+| the stored history | 900 MB  | `repo:size --max-mb 900` in the sync           |
 
 The history is bounded by policy, not by a constant: a monthly squash folds it
 back to one snapshot, and a catalogue that no squash can keep under 700 MB is

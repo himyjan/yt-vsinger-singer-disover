@@ -414,7 +414,7 @@ is what a search result with "no detail page" looks like.
 ## After a change
 
 ```bash
-npm run lint      # vue-tsc
+npm run lint      # vue-tsc or @vue/content-mapper
 npm run build     # type-check + bundle
 npm run dev:web   # look at it
 ```
