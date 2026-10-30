@@ -112,8 +112,8 @@ jobs:
           ARGS=(--live-only --limit-live "$LIVE_LIMIT" --limit-multi-platform-live "$LIVE_MULTI_LIMIT")
           if [ "${{ inputs.dry-run }}" = "true" ]; then ARGS+=(--dry-run); fi
 
-          # The shard rotates with the run number, so successive runs cover
-          # different slices of the catalogue deterministically.
+          # The shard rotates with the run number and the page walks the shard,
+          # so successive runs cover the catalogue deterministically.
           SHARD_COUNT="$LIVE_SHARD_COUNT"
           if ! [[ "$SHARD_COUNT" =~ ^[0-9]+$ ]] || [ "$SHARD_COUNT" -lt 1 ]; then
             SHARD_COUNT=1
@@ -122,6 +122,13 @@ jobs:
             SHARD_INDEX=$(( (GITHUB_RUN_NUMBER - 1) % SHARD_COUNT + 1 ))
             ARGS+=(--shard "${SHARD_INDEX}/${SHARD_COUNT}")
           fi
+
+          # How many times this shard has been visited: the window to check.
+          # The live pass writes only item files, so nothing on the channel
+          # record records that it was polled — the page is the rotation, and
+          # it must advance by exactly one window per visit or the windows
+          # overlap and part of the catalogue is never reached.
+          ARGS+=(--live-page "$(( (GITHUB_RUN_NUMBER - 1) / SHARD_COUNT + 1 ))")
 
           npm run data:live -- "${ARGS[@]}"
 

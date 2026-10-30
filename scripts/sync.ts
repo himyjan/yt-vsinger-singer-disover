@@ -162,6 +162,8 @@ interface Args {
   limitChannels: number | null;
   limitLive: number | null;
   limitMultiPlatformLive: number | null;
+  /** Which window of the live shard this run owns; `live.yml` passes the run number. */
+  livePage: number;
   keywords: string[];
   force: boolean;
   /**
@@ -187,6 +189,7 @@ function parseArgs(argv: string[]): Args {
     limitChannels: null,
     limitLive: null,
     limitMultiPlatformLive: null,
+    livePage: 1,
     keywords: [],
     force: false,
     shardIndex: 0,
@@ -198,6 +201,8 @@ function parseArgs(argv: string[]): Args {
     else if (a === "--no-search") args.noSearch = true;
     else if (a === "--offline") args.offline = true;
     else if (a === "--live-only" || a === "--liveonly") args.liveOnly = true;
+    else if (a === "--live-page")
+      args.livePage = Math.max(1, toNumber(argv[++i]) ?? 1);
     else if (a === "--roster") args.roster = true;
     else if (a === "--force") args.force = true;
     else if (a === "--budget") args.budget = Number(argv[++i]);
@@ -814,6 +819,7 @@ async function runLiveOnly(opts: {
     now,
     limitLive: args.limitLive ?? config.maxLiveChannelsPerRun,
     limitMultiPlatformLive: args.limitMultiPlatformLive ?? 2000,
+    page: args.livePage,
     inShard: (id: string) => inShard(id, args),
     log,
     buildYouTubeItem: liveStreamToItem,
@@ -3085,6 +3091,7 @@ async function main(): Promise<void> {
         now,
         limitLive: args.limitLive ?? 0,
         limitMultiPlatformLive: args.limitMultiPlatformLive ?? 0,
+        page: args.livePage,
         inShard: (id: string) => inShard(id, args),
         log,
         buildYouTubeItem: liveStreamToItem,

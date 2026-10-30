@@ -474,8 +474,9 @@ The check splits the catalogue across runs rather than sweeping it: one
 InnerTube Live-tab lookup per YouTube channel over 63,000 channels is ~26 hours,
 which is why it is not part of the sync (it was killed there at 68% with nothing
 written). `live.yml` takes a deterministic shard and `maxLiveChannelsPerRun`
-(default 1,000) of it per run, so each channel's status is at most a couple of
-days old; `npm run data:sync` skips the pass unless given `--limit-live N`.
+(default 1,000) of it per run, which is 12,000 checks a day — a full sweep of
+63,662 channels every ~5 days. `npm run data:sync` skips the pass unless given
+`--limit-live N`.
 
 - **Bilibili** live streams come from `online/list?rid=160` (VTuber partition),
   fetched once per run via `search()` and filtered against known VTuber channel ids.
