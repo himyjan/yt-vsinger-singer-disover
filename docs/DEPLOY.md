@@ -14,7 +14,7 @@ on:
   workflow_dispatch:
     inputs:
       shard-count: { default: "4" }
-      limit-live: { default: "1000" }
+      limit-live: { default: "6000" }
       limit-multi-platform-live: { default: "400" }
       dry-run: { default: "false" }
 ```
@@ -33,7 +33,10 @@ cost is proportional to the whole catalogue: one InnerTube Live-tab lookup per
 YouTube channel, 63,000 of them, at roughly a second or two each. In the full
 sync it outlived the job's `timeout-minutes` and the run was killed at 68% with
 no commit. Here it is the whole run, so `limit-live` decides how much of the
-rotation it covers and the job finishes.
+rotation it covers and the job finishes: 6,000 channels, ~40 minutes at the
+measured ~0.39 s a check, and 12 runs a day is 72,000 checks against 63,662
+channels — one full sweep a day. Raise it only with that multiplication in
+hand; runtime scales linearly with it.
 
 The sync therefore **skips** this phase unless the run asks for it with
 `--limit-live N`; `sync-data.yml` never passes it. That is the fix, not the
