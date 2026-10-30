@@ -76,6 +76,7 @@ import {
   writeChannelShards,
   writeItemShards,
 } from "./lib/dataset";
+import { logLine, progressBar } from "./lib/progress";
 import { InnerTubeSource } from "./lib/youtubei";
 import { TwitchGqlSource } from "./lib/twitch-gql";
 import { createAdapters } from "./lib/platform-registry";
@@ -250,7 +251,12 @@ let failed = 0;
 
 function log(message: string): void {
   const seconds = ((Date.now() - started) / 1000).toFixed(0);
-  console.log(`[details:${seconds}s] ${message}`);
+  /**
+   * `logLine()` clears the progress bar, prints, and repaints it — a plain
+   * `console.log` would land in the middle of the bar's line and the next
+   * redraw would overwrite half the message.
+   */
+  logLine(`[details:${seconds}s] ${message}`);
 }
 
 function sleep(ms: number): Promise<void> {
@@ -1119,9 +1125,14 @@ async function main(): Promise<void> {
    */
   const consecutiveFailures = new Map<PlatformId, number>();
 
+  const bar = progressBar("details", pending.length, { unit: "channels" });
+
   for (const channel of pending) {
     const platform = primaryPlatformOf(channel);
-    if (!platform) continue;
+    if (!platform) {
+      bar.tick();
+      continue;
+    }
 
     const profile = await fetchProfile(channel, platform, ctx);
     fetched++;
@@ -1132,6 +1143,7 @@ async function main(): Promise<void> {
       consecutiveFailures.set(platform, streak);
       // The source is pushing back — wait a little longer before the next.
       await sleep(options.intervalMs * 2);
+      bar.tick(`${channel.name} · no profile · ${failed} failed`);
       continue;
     }
     consecutiveFailures.set(platform, 0);
@@ -1174,18 +1186,15 @@ async function main(): Promise<void> {
     updatedById.set(originalId, channel);
     if (channel.id !== originalId) log(`id: ${originalId} → ${channel.id}`);
 
-    if (fetched % 50 === 0) {
-      log(
-        `${fetched}/${pending.length} fetched · ` +
-          (options.nameOnly ? "" : `${filled} avatar(s) filled · `) +
-          `${renamed} renamed · ${regionFixed} region(s) fixed · ` +
-          `${grouped} grouped · ${rekeyed} re-keyed · ${failed} failed`,
-      );
-    }
+    bar.tick(
+      `${channel.name}` +
+        (options.nameOnly ? "" : ` · ${filled} avatar(s)`) +
+        (failed ? ` · ${failed} failed` : ""),
+    );
     await sleep(options.intervalMs);
   }
 
-  log(
+  bar.done(
     `${fetched} fetched · ` +
       (options.nameOnly ? "" : `${filled} avatar(s) filled · `) +
       `${renamed} renamed · ${regionFixed} region(s) fixed` +

@@ -20,6 +20,7 @@
  * `data/`: adding the channels is `npm run data:hololist-import`.
  */
 
+import { logLine, progressBar } from "./lib/progress";
 import fs from "node:fs";
 import path from "node:path";
 import {
@@ -120,7 +121,8 @@ function sleep(ms: number): Promise<void> {
 }
 
 function log(message: string): void {
-  console.log(`[hololist] ${message}`);
+  /* The bar taps `stdout`, so this clears the line before it prints. */
+  logLine(`[hololist] ${message}`);
 }
 
 function readState(): State {
@@ -277,7 +279,6 @@ async function readSitemaps(state: State): Promise<HoloListSitemapEntry[]> {
 
 async function main(): Promise<void> {
   const options = parseArgs(process.argv.slice(2));
-  const started = Date.now();
 
   if (options.mergeOnly) {
     mergeSnapshot();
@@ -339,6 +340,12 @@ async function main(): Promise<void> {
     return todo[index++]!;
   };
 
+  const bar = progressBar(
+    "hololist",
+    Number.isFinite(limit) ? Math.min(limit, todo.length) : todo.length,
+    { unit: "pages" },
+  );
+
   const workers = Array.from({ length: options.concurrency }, async () => {
     for (;;) {
       if (stopReason !== null) return;
@@ -399,33 +406,21 @@ async function main(): Promise<void> {
       state.failed = state.failed.filter((failed) => failed.url !== row.url);
 
       done++;
-      if (done % 25 === 0) {
-        writeState(state);
-        log(`${done}/${Number.isFinite(limit) ? Math.min(limit, todo.length) : todo.length}${eta(done, todo.length, started)}`);
-      }
+      bar.tick(entry.name);
+      if (done % 25 === 0) writeState(state);
       await sleep(delayMs);
     }
   });
 
   await Promise.all(workers);
   writeState(state);
-  log(
+  bar.done(
     `read ${done} entr(y/ies)` +
       (failures ? `, ${failures} could not be read` : "") +
       (stopReason ? ` — stopped: ${stopReason}` : ""),
   );
 
   mergeSnapshot();
-}
-
-/** ` at 2.1/s, 41 min left` — enough to tell a stuck run from a slow one. */
-function eta(done: number, total: number, startedAt: number): string {
-  const seconds = Math.max(1, (Date.now() - startedAt) / 1_000);
-  const rate = done / seconds;
-  if (!Number.isFinite(rate) || rate <= 0) return "";
-  const left = Math.max(0, total - done) / rate;
-  const minutes = Math.round(left / 60);
-  return ` · ${rate.toFixed(1)}/s, ${minutes > 90 ? `${Math.round(minutes / 60)}h` : `${minutes} min`} left`;
 }
 
 main();

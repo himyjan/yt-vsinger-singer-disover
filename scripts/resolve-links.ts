@@ -65,6 +65,7 @@ import {
   writeChannelShards,
   writeItemShards,
 } from "./lib/dataset";
+import { logLine, progressBar } from "./lib/progress";
 import { InnerTubeSource } from "./lib/youtubei";
 import { TwitchGqlSource } from "./lib/twitch-gql";
 import { createAdapters } from "./lib/platform-registry";
@@ -182,7 +183,8 @@ let webHits = 0;
 
 function log(message: string): void {
   const seconds = ((Date.now() - started) / 1000).toFixed(0);
-  console.log(`[links:${seconds}s] ${message}`);
+  /* Clears the bar, prints, repaints — see `lib/progress.ts`. */
+  logLine(`[links:${seconds}s] ${message}`);
 }
 
 function sleep(ms: number): Promise<void> {
@@ -492,6 +494,8 @@ async function main(): Promise<void> {
     }
   }
 
+  const bar = progressBar("links", pending.length, { unit: "channels" });
+
   for (const channel of pending) {
     scanned++;
     /** The links the record arrived with — never removed by this pass. */
@@ -641,15 +645,11 @@ async function main(): Promise<void> {
     channel.lastDetailsFetchedAt = now;
     updatedById.set(channel.id, channel);
 
-    if (scanned % 25 === 0) {
-      log(
-        `${scanned}/${pending.length} scanned · ${summaryLine()} · ${failed} failed`,
-      );
-    }
+    bar.tick(`${channel.name} · ${summaryLine()}`);
     await sleep(options.intervalMs);
   }
 
-  log(`${scanned} scanned · ${summaryLine()} · ${failed} failed`);
+  bar.done(`${scanned}/${pending.length} scanned · ${summaryLine()} · ${failed} failed`);
   if (web) {
     log(`web search: ${webQueries} queried · ${webHits} answered`);
   }
