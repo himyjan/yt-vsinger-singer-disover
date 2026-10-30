@@ -149,7 +149,7 @@ async function fetchInnerTubeSubscriptions(
   onProgress?: (progress: { loaded: number; total: number | null }) => void,
 ): Promise<RemoteSubscription[] | null> {
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 180_000);
+  const timer = setTimeout(() => controller.abort(), 600_000);
   try {
     const res = await fetch("/api/youtube/subscriptions", {
       method: "POST",
@@ -158,18 +158,16 @@ async function fetchInnerTubeSubscriptions(
       signal: controller.signal,
     });
     if (!res.ok) return null;
-    const json = (await res.json().catch(() => null)) as
-      | {
-          ok?: boolean;
-          items?: Array<{
-            channelId?: unknown;
-            name?: unknown;
-            handle?: unknown;
-            thumbnail?: unknown;
-            description?: unknown;
-          }>;
-        }
-      | null;
+    const json = (await res.json().catch(() => null)) as {
+      ok?: boolean;
+      items?: Array<{
+        channelId?: unknown;
+        name?: unknown;
+        handle?: unknown;
+        thumbnail?: unknown;
+        description?: unknown;
+      }>;
+    } | null;
     if (!json?.ok || !Array.isArray(json.items)) return null;
 
     const items: RemoteSubscription[] = [];
@@ -272,10 +270,7 @@ export const youtubeProvider: AuthProvider = {
          * and must be reported — silently resolving `null` made every one of
          * them look like the user changing their mind.
          */
-        if (
-          error?.type === "popup_closed" ||
-          error?.type === "popup_closed_by_user"
-        ) {
+        if (error?.type === "popup_closed" || error?.type === "popup_closed_by_user") {
           resolve(null);
           return;
         }
@@ -358,7 +353,7 @@ export const youtubeProvider: AuthProvider = {
          * nothing": the reason is read out of the body and thrown, so the
          * toast can name the actual cause (API disabled, scope missing…).
          */
-        const body = await res?.text().catch(() => "") ?? "";
+        const body = (await res?.text().catch(() => "")) ?? "";
         throw new Error(googleApiError(res?.status ?? 0, body));
       }
       const json = await res.json();
@@ -377,10 +372,7 @@ export const youtubeProvider: AuthProvider = {
           channelId: snippet.resourceId?.channelId ?? "",
           name: snippet.title ?? "Unknown",
           handle: null,
-          thumbnail:
-            snippet.thumbnails?.default?.url ??
-            snippet.thumbnails?.medium?.url ??
-            null,
+          thumbnail: snippet.thumbnails?.default?.url ?? snippet.thumbnails?.medium?.url ?? null,
           description: snippet.description ?? null,
         });
       }
@@ -417,9 +409,7 @@ async function getGoogleTokenClient(
 
 function loadScript(src: string): Promise<void> {
   return new Promise((resolve, reject) => {
-    const existing = document.querySelector<HTMLScriptElement>(
-      `script[src="${src}"]`,
-    );
+    const existing = document.querySelector<HTMLScriptElement>(`script[src="${src}"]`);
     if (existing) {
       /**
        * The script may already have run without the app having loaded it —
@@ -477,10 +467,7 @@ async function fetchProfile(
       if (snippet) {
         return {
           name: snippet.title ?? null,
-          picture:
-            snippet.thumbnails?.default?.url ??
-            snippet.thumbnails?.medium?.url ??
-            null,
+          picture: snippet.thumbnails?.default?.url ?? snippet.thumbnails?.medium?.url ?? null,
         };
       }
     }
@@ -488,10 +475,10 @@ async function fetchProfile(
     /* fall through to userinfo */
   }
 
-  const res = await fetch(
-    "https://www.googleapis.com/oauth2/v3/userinfo",
-    { headers, signal: AbortSignal.timeout(10_000) },
-  );
+  const res = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
+    headers,
+    signal: AbortSignal.timeout(10_000),
+  });
   if (!res.ok) throw new Error("profile request failed");
   const json = await res.json();
   return { name: json.name ?? null, picture: json.picture ?? null };
@@ -628,10 +615,7 @@ export const twitchProvider: AuthProvider = {
       ...(options?.prompt === "" ? { prompt: "none" } : {}),
     });
 
-    const result = await runPopupFlow(
-      `https://id.twitch.tv/oauth2/authorize?${params}`,
-      state,
-    );
+    const result = await runPopupFlow(`https://id.twitch.tv/oauth2/authorize?${params}`, state);
     if (!result.code) return null;
 
     // Exchange the code for an access token. A public client sends an empty
@@ -685,15 +669,12 @@ export const twitchProvider: AuthProvider = {
         first: "100",
         ...(cursor ? { after: cursor } : {}),
       });
-      const res = await fetch(
-        `https://api.twitch.tv/helix/channels/followed?${params}`,
-        {
-          headers: {
-            "Client-Id": clientId,
-            Authorization: `Bearer ${account.token}`,
-          },
+      const res = await fetch(`https://api.twitch.tv/helix/channels/followed?${params}`, {
+        headers: {
+          "Client-Id": clientId,
+          Authorization: `Bearer ${account.token}`,
         },
-      );
+      });
       if (!res.ok) break;
       const json = await res.json();
       for (const entry of json.data ?? []) {
@@ -867,10 +848,7 @@ export const bilibiliProvider: AuthProvider = {
   },
 };
 
-async function bilibiliFetch<T>(
-  url: string,
-  account: ProviderAccount,
-): Promise<T | null> {
+async function bilibiliFetch<T>(url: string, account: ProviderAccount): Promise<T | null> {
   try {
     const res = await fetch(url, {
       headers: {
@@ -900,9 +878,7 @@ export const vkProvider: AuthProvider = {
   },
 
   unavailableReason() {
-    return env.vkClientId
-      ? null
-      : "Set VITE_VK_CLIENT_ID to enable VK account linking.";
+    return env.vkClientId ? null : "Set VITE_VK_CLIENT_ID to enable VK account linking.";
   },
 
   async link(options?: { prompt?: "consent" | "" }): Promise<ProviderAccount | null> {
@@ -919,25 +895,18 @@ export const vkProvider: AuthProvider = {
       ...(options?.prompt === "" ? {} : {}),
     });
 
-    const result = await runPopupFlow(
-      `https://oauth.vk.com/authorize?${params}`,
-      "",
-    );
+    const result = await runPopupFlow(`https://oauth.vk.com/authorize?${params}`, "");
     if (!result.accessToken) return null;
 
     const profile = await vkFetch<{
       response?: { first_name?: string; last_name?: string; photo_100?: string };
-    }>(
-      "https://api.vk.com/method/users.get?fields=photo_100&v=5.199",
-      result.accessToken,
-    );
+    }>("https://api.vk.com/method/users.get?fields=photo_100&v=5.199", result.accessToken);
 
     return {
       provider: "vk",
-      name:
-        profile?.response?.first_name
-          ? `${profile.response.first_name} ${profile.response.last_name ?? ""}`.trim()
-          : null,
+      name: profile?.response?.first_name
+        ? `${profile.response.first_name} ${profile.response.last_name ?? ""}`.trim()
+        : null,
       picture: profile?.response?.photo_100 ?? null,
       token: result.accessToken,
       expiresAt: null,
@@ -981,10 +950,9 @@ export const vkProvider: AuthProvider = {
 async function vkFetch<T>(url: string, token: string): Promise<T | null> {
   try {
     const separator = url.includes("?") ? "&" : "?";
-    const res = await fetch(
-      `${url}${separator}access_token=${encodeURIComponent(token)}&v=5.199`,
-      { headers: { Accept: "application/json" } },
-    );
+    const res = await fetch(`${url}${separator}access_token=${encodeURIComponent(token)}&v=5.199`, {
+      headers: { Accept: "application/json" },
+    });
     if (!res.ok) return null;
     return (await res.json()) as T;
   } catch {
@@ -1086,10 +1054,7 @@ export const kickProvider: AuthProvider = {
       ...(options?.prompt === "" ? { prompt: "none" } : {}),
     });
 
-    const result = await runPopupFlow(
-      `https://id.kick.com/oauth/authorize?${params}`,
-      state,
-    );
+    const result = await runPopupFlow(`https://id.kick.com/oauth/authorize?${params}`, state);
     if (!result.code) return null;
 
     const body = new URLSearchParams({
@@ -1163,10 +1128,7 @@ export const kickProvider: AuthProvider = {
   },
 };
 
-async function kickApi<T>(
-  url: string,
-  account: ProviderAccount,
-): Promise<T | null> {
+async function kickApi<T>(url: string, account: ProviderAccount): Promise<T | null> {
   try {
     const res = await fetch(url, {
       headers: {
@@ -1247,17 +1209,19 @@ export const chzzkProvider: AuthProvider = {
     do {
       const json = await chzzkApi<{
         code: number;
-        content?: {
-          channelFollowings?: {
-            channelId?: string;
-            channelName?: string;
-            channelImageUrl?: string;
-          }[];
-        } | {
-          channelId?: string;
-          channelName?: string;
-          channelImageUrl?: string;
-        }[];
+        content?:
+          | {
+              channelFollowings?: {
+                channelId?: string;
+                channelName?: string;
+                channelImageUrl?: string;
+              }[];
+            }
+          | {
+              channelId?: string;
+              channelName?: string;
+              channelImageUrl?: string;
+            }[];
       }>(
         `https://api.chzzk.naver.com/service/v1/channels/followings?page=${page}&size=50&sortType=FOLLOW`,
         account,
@@ -1268,9 +1232,7 @@ export const chzzkProvider: AuthProvider = {
        * The payload is a list of channels, either directly or under a
        * `channelFollowings` key — both shapes are accepted.
        */
-      const content = json.content as
-        | { channelFollowings?: unknown[] }
-        | unknown[];
+      const content = json.content as { channelFollowings?: unknown[] } | unknown[];
       const list = Array.isArray(content)
         ? content
         : ((content?.channelFollowings ?? []) as unknown[]);
@@ -1301,10 +1263,7 @@ export const chzzkProvider: AuthProvider = {
   },
 };
 
-async function chzzkApi<T>(
-  url: string,
-  account: ProviderAccount,
-): Promise<T | null> {
+async function chzzkApi<T>(url: string, account: ProviderAccount): Promise<T | null> {
   try {
     const res = await fetch(url, {
       headers: {
@@ -1396,10 +1355,7 @@ export const niconicoProvider: AuthProvider = {
             icon_url?: string;
           }[];
         };
-      }>(
-        `https://api.nicovideo.jp/api/v2/user/my/follow?limit=50&offset=${offset}`,
-        account,
-      );
+      }>(`https://api.nicovideo.jp/api/v2/user/my/follow?limit=50&offset=${offset}`, account);
       items = json?.data?.items ?? [];
       for (const entry of items) {
         if (!entry.id) continue;
@@ -1422,10 +1378,7 @@ export const niconicoProvider: AuthProvider = {
   },
 };
 
-async function niconicoApi<T>(
-  url: string,
-  account: ProviderAccount,
-): Promise<T | null> {
+async function niconicoApi<T>(url: string, account: ProviderAccount): Promise<T | null> {
   try {
     const res = await fetch(url, {
       headers: {
@@ -1462,5 +1415,3 @@ export const AUTH_PROVIDERS: AuthProvider[] = [
   chzzkProvider,
   kickProvider,
 ];
-
-
