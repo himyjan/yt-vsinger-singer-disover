@@ -147,6 +147,8 @@ export interface InnerTubeLive {
   status: "live" | "upcoming";
   /** The scheduled start, for an upcoming broadcast. */
   scheduledStart: string | null;
+  /** When the broadcast actually began, for a live one. */
+  actualStart?: string | null;
 }
 
 export interface InnerTubeChannelCatalog {
@@ -1065,16 +1067,33 @@ export class InnerTubeSource {
         if (typeof id !== "string" || !id) continue;
         const status = liveStatusOf(item);
         if (!status) continue;
-        const scheduledStart =
-          item?.upcoming instanceof Date
-            ? item.upcoming.toISOString()
-            : null;
+
+        /**
+         * The badge is how the tab *renders* the card; the player response is
+         * what the video *is*. They disagree: a card keeps its "Upcoming"
+         * badge after the stream has aired, and YouTube leaves the badge on a
+         * stream long enough that the Live tab is not evidence on its own.
+         * The player response also carries the start time, which the card
+         * gives only as a localized string in the client's own timezone
+         * ("Scheduled for 10/31/26, 12:00 AM") — unparseable without guessing.
+         *
+         * One extra request per card that is already badged, not per channel:
+         * upcoming and live cards are a small fraction of the catalogue.
+         */
+        const state = await this.streamState(id);
+        if (state) {
+          if (status === "upcoming" && !state.isUpcoming) continue;
+          if (status === "live" && !state.isLive) continue;
+        }
+
         out.push({
           id,
           title: titleOf(item),
           thumbnail: thumbnailOf(item),
           status,
-          scheduledStart: status === "upcoming" ? scheduledStart : null,
+          scheduledStart:
+            status === "upcoming" ? (state?.start ?? null) : null,
+          actualStart: status === "live" ? (state?.start ?? null) : null,
         });
       }
       this.limiter.reward();
@@ -1086,6 +1105,43 @@ export class InnerTubeSource {
       if (/Tab .* not found/i.test(message)) return [];
       if (!isNotRateLimited(message)) this.limiter.penalise();
       this.onLog(`innertube: live lookup failed for ${channelId} — ${message}`);
+      return null;
+    }
+  }
+
+  /**
+   * What a broadcast actually is, from its player response.
+   *
+   * `getBasicInfo()` asks only the player endpoint, measured at 0.13 s — a
+   * fifth of a full `getInfo()`, which would also fetch the watch page. Returns
+   * `null` when the lookup failed, so a caller falls back to the badge rather
+   * than dropping the stream: an unreachable video is not evidence that the
+   * stream ended.
+   */
+  private async streamState(
+    videoId: string,
+  ): Promise<{ isLive: boolean; isUpcoming: boolean; start: string | null } | null> {
+    if (!this.client) return null;
+    try {
+      await this.throttle();
+      const info: any = await withTimeout(
+        this.client.getBasicInfo(videoId),
+        REQUEST_TIMEOUT_MS,
+      );
+      const basic = info?.basic_info;
+      if (!basic) return null;
+      const start = basic.start_timestamp;
+      return {
+        isLive: basic.is_live === true,
+        isUpcoming: basic.is_upcoming === true,
+        start:
+          start instanceof Date
+            ? start.toISOString()
+            : typeof start === "string" && start
+              ? new Date(start).toISOString()
+              : null,
+      };
+    } catch {
       return null;
     }
   }

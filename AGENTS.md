@@ -82,6 +82,14 @@ src/
 new view must funnel its results through those functions. Do not add a
 per-view `kind` check.
 
+`filterChannels()` delegates its predicate to `src/lib/filter-index.ts`, which
+keeps the per-record facets the filter reads — the lowercased name/handle/
+agency haystack, the platform keys, the languages, the tags — computed once
+beside the record instead of once per keystroke. That is where the loop lives,
+and the `kind` check is still inside it; the delegation exists so the cache
+sits next to the code that uses it, not to move the rule out of the data
+layer.
+
 ### 2. The platform is the source of truth for a name
 
 A performer renames. The rosters record the name they saw, which can be
@@ -487,6 +495,17 @@ schedule still leaves the sync room.
 The number is a budget decision, so get the arithmetic right before changing
 it: `runs/day × limit-live` is the daily coverage, and checking every channel
 every two hours would be 63,662 checks in two hours (~7 hours of work).
+
+**A badge is not a status.** The Live tab renders a card, and the card lies
+about two things: it keeps its `Upcoming` badge after the broadcast has aired,
+and it prints the schedule as a localized string in the client's own timezone
+(`Scheduled for 10/31/26, 12:00 AM`), which cannot be parsed without guessing.
+The video's own player response is the fact — `getBasicInfo()` states
+`is_upcoming`, `is_live` and the exact `start_timestamp` in one request
+(~0.13 s, no quota). So a badged card is confirmed before it is stored, the
+start times come from that response rather than from `now`, and an `upcoming`
+item whose start passed more than 12 hours ago is retired offline instead of
+waiting for its channel to come round in the rotation again.
 
 ## Common tasks
 
