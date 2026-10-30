@@ -54,6 +54,8 @@ export class RateLimiter {
   private readonly onChange?: (intervalMs: number) => void;
   private lastRequest = 0;
   private consecutive = 0;
+  /** The queue of waits, so concurrent callers are spaced one by one. */
+  private tail: Promise<void> = Promise.resolve();
 
   constructor(options: RateLimiterOptions) {
     this.minInterval = options.minIntervalMs;
@@ -70,10 +72,25 @@ export class RateLimiter {
 
   /** Waits until the next request may be made. */
   async wait(): Promise<void> {
-    const next = this.lastRequest + this.interval;
-    const delay = next - Date.now();
-    if (delay > 0) await new Promise((r) => setTimeout(r, delay));
-    this.lastRequest = Date.now();
+    /**
+     * Callers are **serialised**, not merely delayed.
+     *
+     * `lastRequest` is one number, so two callers that arrive together compute
+     * the same `next`, sleep the same delay and then fire together — which is a
+     * burst, exactly what the limiter exists to prevent. With one caller that
+     * never showed; with a worker pool it would put N requests on the wire at
+     * the same instant. Chaining the waits keeps the gap between *requests*
+     * rather than the gap between *computations*.
+     */
+    const run = this.tail.then(async () => {
+      const next = this.lastRequest + this.interval;
+      const delay = next - Date.now();
+      if (delay > 0) await new Promise((r) => setTimeout(r, delay));
+      this.lastRequest = Date.now();
+    });
+    /* The chain must survive a rejection, or every later wait hangs. */
+    this.tail = run.catch(() => {});
+    return run;
   }
 
   /**
