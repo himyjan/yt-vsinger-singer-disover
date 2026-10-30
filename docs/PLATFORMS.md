@@ -422,9 +422,8 @@ unless given `--limit-live N`:
 
 - **YouTube** — InnerTube channel Live tab (`liveStreams()`), checked for
   YouTube-keyed records in the run's shard, `maxLiveChannelsPerRun` (default
-  1,000) at a time. The window advances one page per visit to the shard
-  (`--live-page`), so the whole catalogue is covered every ~5 days at the
-  two-hourly schedule.
+  6,000) at a time. The window advances one page per visit to the shard
+  (`--live-page`), so 12 runs a day cover the whole catalogue once.
 - **Twitch** — Twitch GQL profile's `live` field, checked during the details pass
   for channels linked to Twitch.
 - **Bilibili** — `GET /x/web-interface/online/list?rid=160` (VTuber partition
