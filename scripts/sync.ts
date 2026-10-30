@@ -92,6 +92,7 @@ import {
 import { IdentityRegistry } from "./lib/identity";
 import { fetchMusicDataset, indexMusicDataset } from "./lib/music-dataset";
 import { deriveVariant } from "./lib/classify";
+import { refreshLivePass } from "./lib/live-refresh";
 import type {
   PlatformAdapter,
   PlatformChannel,
@@ -103,11 +104,13 @@ import {
   readJson,
   mergeById,
   acquireRunLock,
+  writeJsonIfChanged,
   ROOT,
 } from "./lib/io";
 import {
   layout,
   writeDataset,
+  writeItemShards,
   describeDatasetSize,
   readAllChannelRecords,
 } from "./lib/dataset";
@@ -141,6 +144,14 @@ interface Args {
   /** Skip YouTube Data API calls; InnerTube remains available. */
   offline: boolean;
   /**
+   * Run the live pass and nothing else.
+   *
+   * The live phase is the one whose cost is proportional to the whole
+   * catalogue, so it has its own schedule (`.github/workflows/live.yml`) and
+   * its own entry point: load the dataset, check who is live, write it back.
+   */
+  liveOnly: boolean;
+  /**
    * Rebuild the channel roster from the authoritative public sources
    * (the Taiwan VTuber track list, the curated seeds and the other
    * platforms) before syncing.
@@ -169,6 +180,7 @@ function parseArgs(argv: string[]): Args {
     dryRun: false,
     noSearch: false,
     offline: false,
+    liveOnly: false,
     roster: false,
     budget: 10_000,
     quotaLimit: 10_000,
@@ -185,6 +197,7 @@ function parseArgs(argv: string[]): Args {
     if (a === "--dry-run") args.dryRun = true;
     else if (a === "--no-search") args.noSearch = true;
     else if (a === "--offline") args.offline = true;
+    else if (a === "--live-only" || a === "--liveonly") args.liveOnly = true;
     else if (a === "--roster") args.roster = true;
     else if (a === "--force") args.force = true;
     else if (a === "--budget") args.budget = Number(argv[++i]);
@@ -373,7 +386,8 @@ function log(msg: string): void {
 
 /** Dynamic in-place progress task for the sync pipeline. */
 let progressCount = 0;
-const totalPhases = 22;
+/** Ran phases per run: 22 for the full sync, fewer for `--live-only`. */
+let totalPhases = 22;
 function progress(phase: string, detail?: string): void {
   progressCount++;
   const pct = Math.round((progressCount / totalPhases) * 100);
@@ -761,6 +775,123 @@ function namesEvent(
 /* Main                                                                       */
 /* -------------------------------------------------------------------------- */
 
+/**
+ * The `--live-only` run: load the dataset, ask every platform who is live,
+ * write the result, stop.
+ *
+ * Nothing else is touched. The channel records are written back unchanged (the
+ * writer emits one line per record, so an untouched record produces the same
+ * line), and the items carry the new `live` entries plus the streams retired
+ * to `past`.
+ */
+async function runLiveOnly(opts: {
+  channels: Channel[];
+  items: Item[];
+  adapters: PlatformAdapter[];
+  innertube: InnerTubeSource;
+  now: string;
+  args: Args;
+  budget: QuotaBudget;
+  releaseLock: () => void;
+}): Promise<void> {
+  const { channels, items, adapters, innertube, now, args, budget, releaseLock } =
+    opts;
+
+  // Two phases left: this one and the write.
+  totalPhases = progressCount + 2;
+  progress("live only", `checking live status across platforms`);
+  const itemById = new Map<string, Item>();
+  for (const item of items) itemById.set(item.id, item);
+  const channelById = new Map<string, Channel>();
+  for (const channel of channels) channelById.set(channel.id, channel);
+
+  const result = await refreshLivePass({
+    channels,
+    itemById,
+    channelById,
+    adapters,
+    innertube,
+    now,
+    limitLive: args.limitLive ?? config.maxLiveChannelsPerRun,
+    limitMultiPlatformLive: args.limitMultiPlatformLive ?? 2000,
+    inShard: (id: string) => inShard(id, args),
+    log,
+    buildYouTubeItem: liveStreamToItem,
+    buildPlatformItem: platformUploadToItem,
+  });
+
+  const updated = [...itemById.values()];
+  const manifest = buildManifest(channels, updated, now, budget);
+  progress(
+    "write dataset",
+    `${result.youtubeChecked} YouTube + ${result.multiPlatformChecked} platform ` +
+      `channel(s) checked, ${updated.length} items`,
+  );
+
+  if (args.dryRun) {
+    log("dry run — nothing written");
+    printSummary(manifest, channels, updated);
+    releaseLock();
+    return;
+  }
+
+  /**
+   * Only the item files are written.
+   *
+   * A live check touches no channel record — it changes which streams are
+   * `live` and which are `past` — so rewriting every channel shard (and the
+   * `songs` projection built from them) would spend the run's history on
+   * files that did not change.
+   */
+  writeItemShards(updated, now);
+  writeJsonIfChanged(layout.manifest, manifest);
+  log(
+    `live: ${result.youtubeFound} YouTube + ${result.multiPlatformFound} platform ` +
+      `live/upcoming, ${result.youtubeRetired} retired`,
+  );
+  printSummary(manifest, channels, updated);
+  releaseLock();
+}
+
+/**
+ * The manifest for a channel and item set.
+ *
+ * Every writer that touches `data/` builds it the same way, so the counts,
+ * the region table and the quota block can never describe different runs.
+ */
+function buildManifest(
+  channels: Channel[],
+  items: Item[],
+  now: string,
+  budget: QuotaBudget,
+): Manifest {
+  const regionCounts = new Map<string, { channels: number; items: number }>();
+  for (const c of channels) {
+    const e = regionCounts.get(c.region) ?? { channels: 0, items: 0 };
+    e.channels++;
+    regionCounts.set(c.region, e);
+  }
+  for (const i of items) {
+    const e = regionCounts.get(i.region) ?? { channels: 0, items: 0 };
+    e.items++;
+    regionCounts.set(i.region, e);
+  }
+  return {
+    schemaVersion: SCHEMA_VERSION,
+    generatedAt: now,
+    counts: computeCounts(channels, items),
+    regions: buildRegionMeta(regionCounts as never),
+    quota: {
+      used: budget.used,
+      limit: budget.limit,
+      remaining: budget.remaining,
+    },
+    notes:
+      "Generated by scripts/sync.ts from the YouTube Data API v3. " +
+      "Virtual and real datasets are kept separate — see docs/DATA-SCHEMA.md.",
+  };
+}
+
 async function main(): Promise<void> {
   const args = parseArgs(process.argv.slice(2));
   if (args.shardCount > 1) {
@@ -825,10 +956,35 @@ async function main(): Promise<void> {
     );
   }
 
+  /**
+   * The platform adapters. YouTube and Twitch are handled by their own
+   * clients above; these are the ones that discover channels on their own.
+   *
+   * They are built here rather than beside the discovery pass because the
+   * live-only run needs them and nothing else.
+   */
+  const twitch = TwitchClient.fromEnv(
+    process.env,
+    path.join(CACHE_DIR, "twitch"),
+  );
+  const adapters = createAdapters({
+    youtubeClient: null,
+    twitchClient: twitch,
+    onLog: log,
+  });
+  if (!twitch) {
+    log("twitch: discovery and live checks unavailable; configure TWITCH_CLIENT_ID and TWITCH_CLIENT_SECRET");
+  }
+  if (!adapters.some((adapter) => adapter.id === "ci.me")) {
+    log("ci.me: profile refresh unavailable; configure CI_ME_CLIENT_ID and CI_ME_CLIENT_SECRET");
+  }
+
   const now = nowIso();
 
   /* --- upstream revisions ---------------------------------------------- */
-  progress("upstream revisions", "checking vdb, taiwan-tracker, aislist, music-dataset, youtubei");
+  if (!args.liveOnly) {
+    progress("upstream revisions", "checking vdb, taiwan-tracker, aislist, music-dataset, youtubei");
+  }
   /**
    * Record which revision of each upstream the dataset is built from.
    *
@@ -836,7 +992,7 @@ async function main(): Promise<void> {
    * change in the data can be traced back to the upstream commit that caused
    * it.
    */
-  {
+  if (!args.liveOnly) {
     const upstreamPath = path.join(ROOT, "data", "upstream.json");
     const { file, changed } = await checkUpstreams(upstreamPath, (m) =>
       log(`upstream: ${m}`),
@@ -908,6 +1064,31 @@ async function main(): Promise<void> {
     if (followed) log(`ids: ${followed} item(s) re-pointed at their channel`);
   }
   log(`loaded ${channels.length} channels / ${items.length} items from disk`);
+
+  /* --- live only: check who is streaming, write, stop ------------------- */
+  /**
+   * `--live-only` is the live pass on its own.
+   *
+   * The live phase is the one whose cost is proportional to the whole
+   * catalogue — one InnerTube Live-tab lookup per YouTube channel, 63,000 of
+   * them — so it cannot share a run with the rest of the pipeline: it took
+   * longer than the job was allowed to live and the run was killed before it
+   * wrote anything. Run alone it finishes, on its own schedule, and writes
+   * only the item changes it made.
+   */
+  if (args.liveOnly) {
+    await runLiveOnly({
+      channels,
+      items,
+      adapters,
+      innertube,
+      now,
+      args,
+      budget,
+      releaseLock,
+    });
+    return;
+  }
 
   /* --- resolve seeds --------------------------------------------------- */
   progress("resolve seeds", `${ALL_SEEDS.length} seeds: resolving InnerTube profiles`);
@@ -1746,26 +1927,6 @@ async function main(): Promise<void> {
     for (const pair of result.pairs.slice(0, 5)) {
       log(`  merged ${pair.merged} → ${pair.kept}`);
     }
-  }
-
-  /**
-   * The platform adapters. YouTube and Twitch are handled by their own
-   * clients above; these are the ones that discover channels on their own.
-   */
-  const twitch = TwitchClient.fromEnv(
-    process.env,
-    path.join(CACHE_DIR, "twitch"),
-  );
-  const adapters = createAdapters({
-    youtubeClient: null,
-    twitchClient: twitch,
-    onLog: log,
-  });
-  if (!twitch) {
-    log("twitch: discovery and live checks unavailable; configure TWITCH_CLIENT_ID and TWITCH_CLIENT_SECRET");
-  }
-  if (!adapters.some((adapter) => adapter.id === "ci.me")) {
-    log("ci.me: profile refresh unavailable; configure CI_ME_CLIENT_ID and CI_ME_CLIENT_SECRET");
   }
 
   /* --- platform profile details ----------------------------------------- */
@@ -2885,444 +3046,56 @@ async function main(): Promise<void> {
   /* --- live + upcoming broadcasts -------------------------------------- */
   progress("live + upcoming broadcasts", `checking live status across platforms`);
   /**
-   * InnerTube's channel Live tab is the live source.
+   * The live pass lives in `scripts/lib/live-refresh.ts`.
    *
-   * `liveBroadcasts.list` needs OAuth, and the scheduled pipeline only has an
-   * API key, so it cannot read another channel's broadcasts. The public Live
-   * tab needs no quota and returns the currently live and upcoming entries.
-   *
-   * A check that succeeds but returns nothing is meaningful: the broadcast
-   * that was live on the previous run has ended, so its item is retired to
-   * `past` instead of staying on the Live page forever. A failed check
-   * (`null`) changes nothing.
+   * It is the one phase whose cost is proportional to the whole catalogue —
+   * one InnerTube Live-tab lookup per YouTube channel — so it also runs on its
+   * own (`--live-only`, `.github/workflows/live.yml`). Here it is given the
+   * run's shard and limits, exactly as before.
    */
-  if (config.refreshLiveEveryRun) {
-    const itemsByChannel = new Map<string, Item[]>();
-    for (const item of itemById.values()) {
-      const list = itemsByChannel.get(item.channelId) ?? [];
-      list.push(item);
-      itemsByChannel.set(item.channelId, list);
-    }
-
-    const liveLimit = args.limitLive ?? config.maxLiveChannelsPerRun;
-    const liveTargets = channels
-      /**
-       * The shard rotates with the run number in the scheduled workflow, so
-       * every channel is checked over a handful of runs instead of every run
-       * paying for the whole catalogue. A run without `--shard` still checks
-       * `maxLiveChannelsPerRun` of the least recently checked channels, so the
-       * ordering alone rotates the rest.
-       */
-      .filter((c) => c.id.startsWith("UC") && inShard(c.id, args))
-      .sort((a, b) =>
-        (a.lastItemsFetchedAt ?? "").localeCompare(
-          b.lastItemsFetchedAt ?? "",
-        ),
-      )
-      .slice(0, liveLimit);
-
-    const liveItemIds = new Set<string>();
-    if (liveTargets.length && innertube.isAvailable) {
-      let checked = 0;
-      let found = 0;
-      let retired = 0;
-      for (const channel of liveTargets) {
-        const streams = await innertube.liveStreams(channel.id);
-        if (streams === null) continue;
-        checked++;
-        const current = new Set(streams.map((stream) => stream.id));
-        found += streams.length;
-
-        for (const stream of streams) {
-          const item = liveStreamToItem(
-            {
-              id: stream.id,
-              title: stream.title,
-              platform: "youtube",
-              thumbnail: stream.thumbnail,
-              status: stream.status,
-              scheduledStart: stream.scheduledStart,
-            },
-            channel,
-            now,
-          );
-          if (!item) continue;
-          const prev = itemById.get(item.id);
-          itemById.set(item.id, {
-            ...item,
-            addedAt: prev?.addedAt ?? item.addedAt,
-          });
-          liveItemIds.add(item.id);
-        }
-
-        for (const existing of itemsByChannel.get(channel.id) ?? []) {
-          if (existing.type !== "live") continue;
-          if (existing.status !== "live" && existing.status !== "upcoming") {
-            continue;
-          }
-          if (current.has(existing.id)) continue;
-          const ended = itemById.get(existing.id);
-          if (!ended) continue;
-          ended.status = "past";
-          ended.actualEnd = ended.actualEnd ?? now;
-          ended.publishedAt =
-            ended.publishedAt ?? ended.actualStart ?? ended.scheduledStart ?? now;
-          /**
-           * A live stream has no duration while it is live. When it ends,
-           * compute it from actualStart (or publishedAt) to actualEnd so the
-           * finished stream carries a real length instead of null.
-           */
-          if (
-            ended.duration === null &&
-            ended.actualEnd &&
-            (ended.actualStart || ended.publishedAt)
-          ) {
-            const start = ended.actualStart ?? ended.publishedAt;
-            ended.duration = Math.floor(
-              (Date.parse(ended.actualEnd) - Date.parse(start)) / 1000,
-            );
-          }
-          ended.updatedAt = now;
-          retired++;
-        }
-      }
-      log(
-        `innertube live: checked ${checked}/${liveTargets.length} channel(s), ` +
-          `found ${found}, stored ${liveItemIds.size}, retired ${retired}`,
-      );
-    } else if (liveTargets.length) {
-      log("live: InnerTube unavailable — skipping live refresh");
-    }
-
-    /**
-     * The Data API adds the fields the Live tab does not carry: the exact
-     * scheduled/actual start, the concurrent viewer count and the statistics.
-     * It is optional and bounded to the broadcasts this run discovered.
-     */
-    if (
-      client &&
-      liveItemIds.size &&
-      budget.canAfford(API_COST.videos)
-    ) {
-      const ids = [...liveItemIds].slice(0, 50);
-      try {
-        const details = await fetchVideoDetails(client, ids);
-        let enriched = 0;
-        for (const raw of details) {
-          const channel = channelById.get(raw.snippet?.channelId ?? "");
-          if (!channel) continue;
-          const item = itemFromApi(raw, channel, "api", now);
-          if (!item) continue;
-          const prev = itemById.get(item.id);
-          itemById.set(item.id, {
-            ...item,
-            addedAt: prev?.addedAt ?? item.addedAt,
-          });
-          enriched++;
-        }
-        log(`live details: enriched ${enriched}/${ids.length} broadcast(s)`);
-      } catch (err) {
-        log(`warn: live detail fetch failed: ${(err as Error).message}`);
-      }
-    }
-
-    /**
-     * Multi-platform live stream check — CHZZK, KICK, SOOP and CI.ME (and any
-     * platform with a `live()` adapter). YouTube and Twitch are handled
-     * separately (InnerTube Live tab and Twitch GQL profile).
-     *
-     * Each platform's `live()` adapter returns the currently live streams for
-     * a channel. We iterate through the channels that link to those platforms
-     * and check whether they are live right now.
-     *
-     * A record whose **own** platform is one of them is included even when it
-     * has no YouTube channel — a CI.ME-only or KICK-only performer streams on
-     * that platform, and skipping it because its id is not a `UC…` id meant
-     * their live streams were never checked at all.
-     */
-    const liveAdapterPlatforms = new Set([
-      "chzzk",
-      "kick",
-      "soop",
-      "ci.me",
-      "vk",
-    ]);
-    const adapterById = new Map(adapters.map((a) => [a.id as string, a]));
-
-    const multiPlatformLiveTargets: Array<{
-      channel: Channel;
-      platform: PlatformId;
-      link: PlatformLink;
-    }> = [];
-    for (const channel of channels) {
-      const own = primaryPlatformOf(channel);
-      const native = own ? liveAdapterPlatforms.has(own) : false;
-      if (!channel.id.startsWith("UC") && !native) continue;
-      for (const link of channel.platforms) {
-        if (liveAdapterPlatforms.has(link.platform)) {
-          multiPlatformLiveTargets.push({ channel, platform: link.platform, link });
-        }
-      }
-    }
-
-    // Sort by least recently checked first
-    multiPlatformLiveTargets.sort((a, b) =>
-      (a.link.lastCheckedAt ?? "").localeCompare(b.link.lastCheckedAt ?? ""),
-    );
-
-    const multiLiveLimit = args.limitMultiPlatformLive ?? 2000;
-    const multiLiveItemIds = new Set<string>();
-    if (multiPlatformLiveTargets.length) {
-      let checked = 0;
-      let found = 0;
-      let retired = 0;
-      for (const target of multiPlatformLiveTargets.slice(0, multiLiveLimit)) {
-        const adapter = adapterById.get(target.platform);
-        if (!adapter || !adapter.live) continue;
-
-        try {
-          const liveChannel: PlatformChannel = {
-            platform: target.link.platform,
-            id: target.link.id,
-            handle: target.link.handle,
-            name: target.link.name,
-            url: target.link.url,
-            subscribers: target.link.subscribers,
-            avatar: target.link.avatar,
-            description: null,
-            tags: [],
-          };
-          const streams = await adapter.live(liveChannel);
-          if (!streams || streams.length === 0) {
-            checked++;
-            continue;
-          }
-          checked++;
-          found += streams.length;
-          const current = new Set(streams.map((stream) => stream.id));
-
-          for (const stream of streams) {
-            const item = platformUploadToItem(stream, now, target.channel);
-            if (!item) continue;
-            item.type = "live";
-            item.status = stream.status ?? "live";
-            item.platform = target.platform;
-            const prev = itemById.get(item.id);
-            itemById.set(item.id, {
-              ...item,
-              addedAt: prev?.addedAt ?? item.addedAt,
-            });
-            multiLiveItemIds.add(item.id);
-          }
-
-          // Retire streams that are no longer live
-          for (const existing of itemsByChannel.get(target.channel.id) ?? []) {
-            if (existing.type !== "live") continue;
-            if (existing.platform !== target.platform) continue;
-            if (existing.status !== "live" && existing.status !== "upcoming") continue;
-            if (current.has(existing.id)) continue;
-            const ended = itemById.get(existing.id);
-            if (!ended) continue;
-            ended.status = "past";
-            ended.actualEnd = ended.actualEnd ?? now;
-            ended.publishedAt =
-              ended.publishedAt ?? ended.actualStart ?? ended.scheduledStart ?? now;
-            if (
-              ended.duration === null &&
-              ended.actualEnd &&
-              (ended.actualStart || ended.publishedAt)
-            ) {
-              const start = ended.actualStart ?? ended.publishedAt;
-              ended.duration = Math.floor(
-                (Date.parse(ended.actualEnd) - Date.parse(start)) / 1000,
-              );
-            }
-            ended.updatedAt = now;
-            retired++;
-          }
-        } catch (error) {
-          log(
-            `warn: ${target.platform} live check failed for ${target.link.id}: ${(error as Error).message}`,
-          );
-        }
-        checked++;
-      }
-      log(
-        `multi-platform live: checked ${checked}/${Math.min(
-          multiPlatformLiveTargets.length,
-          multiLiveLimit,
-        )} channel(s) across ${[...liveAdapterPlatforms].join(", ")}, ` +
-          `found ${found}, stored ${multiLiveItemIds.size}, retired ${retired}`,
-      );
-    }
-  }
+  const livePass = config.refreshLiveEveryRun
+    ? await refreshLivePass({
+        channels,
+        itemById,
+        channelById,
+        adapters,
+        innertube,
+        now,
+        limitLive: args.limitLive ?? config.maxLiveChannelsPerRun,
+        limitMultiPlatformLive: args.limitMultiPlatformLive ?? 2000,
+        inShard: (id: string) => inShard(id, args),
+        log,
+        buildYouTubeItem: liveStreamToItem,
+        buildPlatformItem: platformUploadToItem,
+      })
+    : null;
 
   /**
-   * Bilibili live stream check.
-   *
-   * Bilibili's live list is partition-wide (online/list?rid=160), not
-   * per-channel, so it is fetched once via `search()` and filtered against
-   * known VTuber channel ids. `knownMids` is populated earlier in the run
-   * from the shared discovery allowlist and linked Bilibili identities.
+   * The Data API adds the fields the Live tab does not carry: the exact
+   * scheduled/actual start, the concurrent viewer count and the statistics.
+   * It is optional and bounded to the broadcasts this run discovered.
    */
-  const bili = adapters.find((a) => a.id === "bilibili") as
-    | (typeof adapters)[number] & {
-        liveUploads?: PlatformUpload[];
-        knownMids?: Set<string>;
-        search?: (query: string, limit: number) => Promise<PlatformChannel[]>;
-      }
-    | undefined;
-  const biliLiveItemIds = new Set<string>();
-  if (bili?.search && bili.liveUploads !== undefined) {
+  const liveItemIds = livePass?.youtubeLiveItemIds ?? new Set<string>();
+  if (client && liveItemIds.size && budget.canAfford(API_COST.videos)) {
+    const ids = [...liveItemIds].slice(0, 50);
     try {
-      // Populate liveUploads from the VTuber partition live feed
-      await bili.search("", 50);
-      const liveStreams = bili.liveUploads ?? [];
-      let biliChecked = 0;
-      let biliFound = 0;
-      let biliRetired = 0;
-      const currentBiliIds = new Set(liveStreams.map((s) => s.id));
-
-      for (const stream of liveStreams) {
-        const mid = stream.channelId;
-        if (!mid) continue;
-        const channel = channelById.get(mid) ?? channelById.get(`bilibili:${mid}`);
+      const details = await fetchVideoDetails(client, ids);
+      let enriched = 0;
+      for (const raw of details) {
+        const channel = channelById.get(raw.snippet?.channelId ?? "");
         if (!channel) continue;
-        biliChecked++;
-        biliFound++;
-
-        const item = platformUploadToItem(stream, now, channel);
+        const item = itemFromApi(raw, channel, "api", now);
         if (!item) continue;
-        item.type = "live";
-        item.status = stream.status ?? "live";
-        item.platform = "bilibili";
         const prev = itemById.get(item.id);
         itemById.set(item.id, {
           ...item,
           addedAt: prev?.addedAt ?? item.addedAt,
         });
-        biliLiveItemIds.add(item.id);
+        enriched++;
       }
-
-      // Retire streams that are no longer live
-      for (const item of itemById.values()) {
-        if (item.type !== "live" || item.platform !== "bilibili") continue;
-        if (item.status !== "live" && item.status !== "upcoming") continue;
-        if (currentBiliIds.has(item.id)) continue;
-        const ended = itemById.get(item.id);
-        if (!ended) continue;
-        ended.status = "past";
-        ended.actualEnd = ended.actualEnd ?? now;
-        ended.publishedAt =
-          ended.publishedAt ?? ended.actualStart ?? ended.scheduledStart ?? now;
-        if (
-          ended.duration === null &&
-          ended.actualEnd &&
-          (ended.actualStart || ended.publishedAt)
-        ) {
-          const start = ended.actualStart ?? ended.publishedAt;
-          ended.duration = Math.floor(
-            (Date.parse(ended.actualEnd) - Date.parse(start)) / 1000,
-          );
-        }
-        ended.updatedAt = now;
-        biliRetired++;
-      }
-
-      log(
-        `bilibili live: checked ${biliChecked} channel(s), found ${biliFound}, stored ${biliLiveItemIds.size}, retired ${biliRetired}`,
-      );
-    } catch (error) {
-      log(`warn: bilibili live check failed: ${(error as Error).message}`);
-    }
-  }
-
-  /**
-   * Niconico live stream check.
-   *
-   * Niconico's Content Search API v2 returns a global list of live programs,
-   * not per-channel, so it is fetched once via `live()` and matched against
-   * channels the dataset links to Niconico.
-   */
-  const nico = adapters.find((a) => a.id === "niconico") as
-    | (typeof adapters)[number] & {
-        liveUploads?: PlatformUpload[];
-        live: (channel: PlatformChannel) => Promise<PlatformUpload[]>;
-      }
-    | undefined;
-  const nicoLiveItemIds = new Set<string>();
-  if (nico?.live) {
-    try {
-      // Populate liveUploads from the global live list
-      const dummyChannel: PlatformChannel = {
-        platform: "niconico",
-        id: "",
-        handle: null,
-        name: null,
-        url: "https://www.nicovideo.jp/",
-        subscribers: { tag: "hidden" },
-        avatar: null,
-        description: null,
-        tags: [],
-      };
-      const liveStreams = await nico.live(dummyChannel);
-      let nicoChecked = 0;
-      let nicoFound = 0;
-      let nicoRetired = 0;
-      const currentNicoIds = new Set(liveStreams.map((s) => s.id));
-
-      for (const stream of liveStreams) {
-        const userId = stream.channelId;
-        if (!userId) continue;
-        const channel =
-          channelById.get(userId) ?? channelById.get(`niconico:${userId}`);
-        if (!channel) continue;
-        nicoChecked++;
-        nicoFound++;
-
-        const item = platformUploadToItem(stream, now, channel);
-        if (!item) continue;
-        item.type = "live";
-        item.status = stream.status ?? "live";
-        item.platform = "niconico";
-        const prev = itemById.get(item.id);
-        itemById.set(item.id, {
-          ...item,
-          addedAt: prev?.addedAt ?? item.addedAt,
-        });
-        nicoLiveItemIds.add(item.id);
-      }
-
-      // Retire streams that are no longer live
-      for (const item of itemById.values()) {
-        if (item.type !== "live" || item.platform !== "niconico") continue;
-        if (item.status !== "live" && item.status !== "upcoming") continue;
-        if (currentNicoIds.has(item.id)) continue;
-        const ended = itemById.get(item.id);
-        if (!ended) continue;
-        ended.status = "past";
-        ended.actualEnd = ended.actualEnd ?? now;
-        ended.publishedAt =
-          ended.publishedAt ?? ended.actualStart ?? ended.scheduledStart ?? now;
-        if (
-          ended.duration === null &&
-          ended.actualEnd &&
-          (ended.actualStart || ended.publishedAt)
-        ) {
-          const start = ended.actualStart ?? ended.publishedAt;
-          ended.duration = Math.floor(
-            (Date.parse(ended.actualEnd) - Date.parse(start)) / 1000,
-          );
-        }
-        ended.updatedAt = now;
-        nicoRetired++;
-      }
-
-      log(
-        `niconico live: checked ${nicoChecked} channel(s), found ${nicoFound}, stored ${nicoLiveItemIds.size}, retired ${nicoRetired}`,
-      );
-    } catch (error) {
-      log(`warn: niconico live check failed: ${(error as Error).message}`);
+      log(`live details: enriched ${enriched}/${ids.length} broadcast(s)`);
+    } catch (err) {
+      log(`warn: live detail fetch failed: ${(err as Error).message}`);
     }
   }
 
@@ -3631,36 +3404,7 @@ async function main(): Promise<void> {
 
   /* --- write ------------------------------------------------------------ */
   progress("write dataset", `writing ${channels.length} channels and ${items.length} items to shards`);
-  const counts = computeCounts(channels, items);
-  const regionCounts = new Map<
-    string,
-    { channels: number; items: number }
-  >();
-  for (const c of channels) {
-    const e = regionCounts.get(c.region) ?? { channels: 0, items: 0 };
-    e.channels++;
-    regionCounts.set(c.region, e);
-  }
-  for (const i of items) {
-    const e = regionCounts.get(i.region) ?? { channels: 0, items: 0 };
-    e.items++;
-    regionCounts.set(i.region, e);
-  }
-
-  const manifest: Manifest = {
-    schemaVersion: SCHEMA_VERSION,
-    generatedAt: now,
-    counts,
-    regions: buildRegionMeta(regionCounts as never),
-    quota: {
-      used: budget.used,
-      limit: budget.limit,
-      remaining: budget.remaining,
-    },
-    notes:
-      "Generated by scripts/sync.ts from the YouTube Data API v3. " +
-      "Virtual and real datasets are kept separate — see docs/DATA-SCHEMA.md.",
-  };
+  const manifest = buildManifest(channels, items, now, budget);
 
   if (args.dryRun) {
     log("dry run — nothing written");
