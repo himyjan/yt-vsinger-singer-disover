@@ -164,6 +164,22 @@ interface Args {
   limitMultiPlatformLive: number | null;
   /** Which window of the live shard this run owns; `live.yml` passes the run number. */
   livePage: number;
+  /**
+   * How many YouTube live lookups may be in flight at once.
+   *
+   * A check is two round-trips, so the live pass is almost entirely waiting;
+   * overlapping a handful of them is what keeps one volume inside the job that
+   * hosts it. The rate limiter still spaces the requests themselves.
+   */
+  liveConcurrency: number;
+  /**
+   * The gap InnerTube keeps between requests, overriding the config.
+   *
+   * `null` keeps `config.innertubeDelayMs`. The live pass wants it lower than
+   * the full sync does — it is 6,000 lookups of two requests each, not 150
+   * channel profiles.
+   */
+  innertubeDelayMs: number | null;
   keywords: string[];
   force: boolean;
   /**
@@ -190,6 +206,8 @@ function parseArgs(argv: string[]): Args {
     limitLive: null,
     limitMultiPlatformLive: null,
     livePage: 1,
+    liveConcurrency: 4,
+    innertubeDelayMs: null,
     keywords: [],
     force: false,
     shardIndex: 0,
@@ -209,6 +227,10 @@ function parseArgs(argv: string[]): Args {
     else if (a === "--quota") args.quotaLimit = Number(argv[++i]);
     else if (a === "--limit-channels") args.limitChannels = Number(argv[++i]);
     else if (a === "--limit-live") args.limitLive = Number(argv[++i]);
+    else if (a === "--live-concurrency")
+      args.liveConcurrency = Math.max(1, Math.min(16, Number(argv[++i]) || 4));
+    else if (a === "--innertube-delay")
+      args.innertubeDelayMs = Math.max(0, Number(argv[++i]) || 0);
     else if (a === "--limit-multi-platform-live") args.limitMultiPlatformLive = Number(argv[++i]);
     else if (a === "--keyword") args.keywords.push(argv[++i]);
     else if (a === "--shard") {
@@ -828,6 +850,7 @@ async function runLiveOnly(opts: {
     now,
     limitLive: args.limitLive ?? config.maxLiveChannelsPerRun,
     limitMultiPlatformLive: args.limitMultiPlatformLive ?? 2000,
+    concurrency: args.liveConcurrency,
     page: args.livePage,
     inShard: (id: string) => inShard(id, args),
     log,
@@ -941,7 +964,7 @@ async function main(): Promise<void> {
    */
   const innertube = new InnerTubeSource({
     enabled: process.env.YOUTUBE_USE_INNERTUBE !== "0",
-    delayMs: config.innertubeDelayMs,
+    delayMs: args.innertubeDelayMs ?? config.innertubeDelayMs,
     onLog: (m) => log(m),
   });
   await innertube.connect();
@@ -3100,6 +3123,7 @@ async function main(): Promise<void> {
         now,
         limitLive: args.limitLive ?? 0,
         limitMultiPlatformLive: args.limitMultiPlatformLive ?? 0,
+        concurrency: args.liveConcurrency,
         page: args.livePage,
         inShard: (id: string) => inShard(id, args),
         log,

@@ -9,11 +9,20 @@ name: Live status
 # killed at 68% and committed nothing. Here it is the whole run, it fits, and
 # the full sync stays short enough to always reach its write step.
 #
-# The catalogue is split into 10 volumes (`npm run data:volumes -- --count 10`).
-# Each volume (~5,000–7,000 channels) is processed sequentially in one job
-# (~2–4 min each, ~30 min total), well inside the 90-minute ceiling. This gives
-# full catalogue coverage every sweep instead of ~1 day with the old shard
-# rotation.
+# The catalogue is split into 10 volumes (`npm run data:volumes -- --count 10`),
+# ~7,200 channels each, and a run processes **two of them**, rotating by run
+# number — not all ten. The arithmetic is the reason:
+#
+#   one check, sequential     0.78 s  (250 ms throttle + two round-trips)
+#   one volume, sequential    6,433 checks ≈ 78 min
+#   all ten volumes           ≈ 13 h — and a GitHub job cannot exceed 6 h
+#
+# So a run that tries every volume is cancelled before it reaches its commit
+# step and writes nothing. With the pool below one check costs 0.176 s
+# (measured: 108 checks in 19 s), so a volume is ~19 min and two volumes plus
+# the multi-platform pass and the merge/index/validate/commit that follow fit
+# in 75 minutes with room for a source that pushes back. Twelve runs a day
+# still sweep the catalogue every five runs (~10 h).
 #
 # `--live-only` loads `data/`, checks the platforms, and writes back only the
 # item changes: new `live`/`upcoming` entries, and the streams that ended
@@ -56,9 +65,11 @@ jobs:
   live:
     name: Refresh live status
     runs-on: ubuntu-latest
-    # 10 volumes × ~3 min each = ~30 min total, well inside the 90-minute
-    # ceiling with headroom for a slow source.
-    timeout-minutes: 90
+    # 2 volumes × ~19 min = ~38 min, plus the multi-platform pass and the
+    # merge/index/validate/commit that follow (~53 min in all). 75 minutes
+    # leaves room for a slower source without blocking the dataset-writer lane
+    # for hours.
+    timeout-minutes: 75
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -91,12 +102,24 @@ jobs:
           CI_ME_CLIENT_ID: ${{ secrets.CI_ME_CLIENT_ID }}
           CI_ME_CLIENT_SECRET: ${{ secrets.CI_ME_CLIENT_SECRET }}
         run: |
-          ARGS=(--live-only --limit-live 6000 --limit-multi-platform-live 400)
+          # 7,000 is above the largest volume's UC count (6,433 measured), so a
+          # volume is covered whole — the cap must not cut its tail. The pool
+          # and the delay are what make it fit: the limiter spaces the requests,
+          # the workers hide the round-trip behind that spacing.
+          ARGS=(--live-only --limit-live 7000 --limit-multi-platform-live 400)
+          ARGS+=(--live-concurrency 6 --innertube-delay 150)
           if [ "${{ inputs.dry-run }}" = "true" ]; then ARGS+=(--dry-run); fi
 
           VOLUME_COUNT="${{ inputs.volume-count || 10 }}"
-          for v in $(seq 0 $((VOLUME_COUNT - 1))); do
-            echo "=== Processing volume $v / $((VOLUME_COUNT - 1)) ==="
+          VOLUMES_PER_RUN=2
+          # Rendezvous hashing keeps a channel in the same volume between runs,
+          # so "volumes 3,4,5 this run" means the same channels every time.
+          START=$(( ((GITHUB_RUN_NUMBER - 1) * VOLUMES_PER_RUN) % VOLUME_COUNT ))
+          echo "run $GITHUB_RUN_NUMBER → volumes $START,$(( (START + 1) % VOLUME_COUNT )),$(( (START + 2) % VOLUME_COUNT )) of $VOLUME_COUNT"
+
+          for i in $(seq 0 $((VOLUMES_PER_RUN - 1))); do
+            v=$(( (START + i) % VOLUME_COUNT ))
+            echo "=== Processing volume $v ($((i + 1))/$VOLUMES_PER_RUN) ==="
 
             # Copy shared root-level files into this volume's data/ so sync.ts
             # can read them when data/ is symlinked to this volume.

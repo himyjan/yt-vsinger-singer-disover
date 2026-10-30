@@ -477,10 +477,25 @@ opened every Live tab and was killed at 68% with nothing written.
 
 The catalogue is split into **volumes** (`npm run data:volumes -- --count N`).
 `volumeOf(id)` in `scripts/lib/volume.ts` is rendezvous hashing, so a channel
-lives in exactly one volume. The live workflow checks every volume sequentially
-in one job (~5,000–7,000 channels each, ~2–4 min per volume), giving full
-catalogue coverage every sweep instead of ~1 day with the shard rotation. The
-full sync skips the live pass unless `--limit-live N` is given.
+lives in exactly one volume, and the split is balanced to within a few percent
+(10 volumes of 72,698 records held 7,185–7,384 each).
+
+**A run does not check every volume.** One YouTube live check is two
+round-trips — 0.78 s sequential, 0.176 s behind a pool of six (both measured) —
+so the ten volumes are ~13 h of sequential work, and a GitHub job cannot exceed
+6 h. A run that tried them all was cancelled before its commit step and wrote
+nothing. So `live.yml` rotates **two volumes per run** by `GITHUB_RUN_NUMBER`,
+which sweeps the catalogue every five runs (~10 h at twelve runs a day) and
+always reaches its commit.
+
+Two things make two volumes fit in 75 minutes (~19 min each): `--live-concurrency N` overlaps
+the lookups (the `RateLimiter` serialises the requests themselves, so the pool
+hides latency without bursting), and `--innertube-delay MS` lowers the gap for
+a pass that is thousands of two-request checks rather than a few hundred
+profiles. The per-volume cap must stay **above** the largest volume's YouTube
+count (6,433 at ten volumes), or the tail of every volume is skipped forever —
+`page` never advances when the limit covers the whole set. The full sync skips
+the live pass unless `--limit-live N` is given.
 
 The number is a budget decision, so get the arithmetic right before changing
 it: `runs/day × limit-live` is the daily coverage, and checking every channel
@@ -532,7 +547,7 @@ waiting for its channel to come round in the rotation again.
 | Find new VTubers through a singing event | `npm run data:singing-events` reads the 歌枠リレーカレンダー Google Sheet into `lists/singing-events.json` (the current month plus the previous two), and `scripts/harvest-x-singing-tags.py` adds the event hashtags X announces, `npm run data:singing-events-youtube` adds YouTube-discovered hashtags via InnerTube — all merged into one unified file with unique names. `npm run data:sync` queues each event name as a YouTube **video** search (`SearchSpec.eventTag`), matches the event name inside the video's title, and treats the event as both the virtual and the singing half of the discovery gate — so the participant's channel enters `virtual` with `isSinging: true` |
 | A record is missing the performer's Twitch / X / Instagram / TikTok / Bilibili / Niconico account | `npm run data:hololist-import -- --links --apply` fills `externals` from the entry's `#links` section for records the roster knows by handle; nothing already on the record is overwritten |
 | A record is missing its social links, debut or region | `npm run data:bacharu-import -- --links --apply` attaches social accounts from bacharu's `social`/`links` to tracked records; `--hints --apply` fills empty `region`, `debutDate` and `gender` from the roster's country, debut and gender — only where `classifyChannel()` left them unknown |
-| Live/premiere streams across platforms (the scheduled run) | `npm run data:live` — `--live-only`, the `.github/workflows/live.yml` two-hourly job: loads `data/`, splits into volumes (`npm run data:volumes -- --count N`), checks each volume sequentially (~5,000–7,000 channels each), writes only item files back. It is separate from the sync because its cost is proportional to the whole catalogue (one InnerTube Live-tab lookup per YouTube channel) and in the full sync it outlived the job timeout, so the run was killed at 68% with no commit |
+| Live/premiere streams across platforms (the scheduled run) | `npm run data:live` — `--live-only`, the `.github/workflows/live.yml` two-hourly job: loads `data/`, splits into volumes (`npm run data:volumes -- --count N`), then checks **two volumes per run**, rotated by `GITHUB_RUN_NUMBER` (`--live-concurrency` overlaps the lookups, `--innertube-delay` tightens the gap), and writes only the item files back. Ten volumes is ~13 h of checks — more than a job may run — so a full sweep takes five runs (~10 h), not one. It is separate from the sync because its cost is proportional to the whole catalogue (one InnerTube Live-tab lookup per YouTube channel) and in the full sync it outlived the job timeout, so the run was killed at 68% with no commit |
 | Live/premiere streams across platforms | `npm run data:live` (see above) checks YouTube via InnerTube Live tab, Twitch via GQL profile, Bilibili via `online/list?rid=160` VTuber partition feed, Niconico via Content Search API v2 `filters[liveStatus]=onair`, CI.ME via the **public** `GET /api/openapi/v1/{channelId}/live-status`, CHZZK/KICK/SOOP via each platform's `live()` adapter. Ended streams are retired to `past`; non-singing VTubers included. Only the CI.ME **channel profile** needs `CI_ME_CLIENT_ID` and `CI_ME_CLIENT_SECRET`. `npm run data:sync` skips this phase unless it is given `--limit-live N` — the cost is proportional to the whole catalogue, and inside the sync it outlived the job. |
 | Change the search behaviour | `scripts/lib/search.ts`, then `npm run data:index` |
 | Fix a wrong `kind` or `role` across the dataset | `scripts/lib/classify.ts`, then `npm run data:reclassify -- --apply` — it re-derives both from the records on disk, no network, and the roster ids in `.cache/` count as the virtual claim |
@@ -548,6 +563,7 @@ waiting for its channel to come round in the rotation again.
 ```bash
 npm run data:live                     # who is streaming now; writes only the item files
 npm run data:live -- --shard 2/4 --limit-live 1500  # one slice of the live rotation
+npm run data:live -- --limit-live 7000 --live-concurrency 6 --innertube-delay 150  # one whole volume, fast
 npm run data:sync -- --dry-run       # fetch and classify, write nothing
 npm run data:sync -- --budget 500    # cap the spend
 npm run data:sync -- --no-search     # refresh known channels only
