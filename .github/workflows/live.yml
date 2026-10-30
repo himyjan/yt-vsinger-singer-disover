@@ -2,20 +2,21 @@ name: Live status
 
 # Refreshes who is streaming right now, on every platform, and nothing else.
 #
-# The catalogue is split into ten volumes (`npm run data:volumes -- --count 10`),
-# ~7,200 channels each. **Ten jobs run in parallel, one volume each**: a volume
-# is ~19 minutes of checks, and ten in one job would be ~13 h — more than the
-# 6 h a GitHub job may run. Each job writes only its own volumes' item files,
-# which travel back as artifacts; one fan-in job merges, rebuilds the index,
-# validates and commits once.
+# The catalogue is split into twenty volumes (`npm run data:volumes -- --count 20`),
+# 3,546–3,746 channels each (measured). **Twenty jobs run in parallel, one
+# volume each**: a volume is ~10 minutes of checks, and the whole catalogue in
+# one job would be ~13 h — more than the 6 h a GitHub job may run. Each job
+# writes only its own volume's item files, which travel back as artifacts; one
+# fan-in job merges, rebuilds the index, validates and commits once.
 #
-# The split count is fixed at ten because the matrix below is a fixed list.
+# The split count is fixed at twenty because the matrix below is a fixed list.
 # Do not add a `volume-count` input without making the matrix dynamic — the two
 # would disagree, and a job would process a volume that was never created.
 #
-# Ten is also the practical ceiling: splitting a volume across two jobs would
+# Twenty is also the practical ceiling: splitting a volume across two jobs would
 # make both write the same `items/` files, and the second would overwrite the
-# first's findings. A volume is the smallest unit that can be checked alone.
+# first's findings. A volume is the smallest unit that can be checked alone —
+# to go wider, raise the volume count, not the jobs per volume.
 #
 # `--live-only` writes only item files — no channel records change.
 
@@ -43,12 +44,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     strategy:
-      # Ten jobs, one volume each, all at once. `max-parallel` is the cap on
-      # simultaneous jobs; GitHub allows 20 for a public repository, so ten
-      # never queues behind itself.
-      max-parallel: 10
+      # Twenty jobs, one volume each, all at once. `max-parallel` is the cap on
+      # simultaneous jobs, and 20 is GitHub's ceiling for a public repository —
+      # exactly enough for one job per volume.
+      max-parallel: 20
       matrix:
-        volume: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+        volume: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -71,7 +72,7 @@ jobs:
         run: npm ci --no-audit --no-fund
 
       - name: Create volume split
-        run: npm run data:volumes -- --count 10
+        run: npm run data:volumes -- --count 20
 
       - name: Copy shared files into volume dirs
         run: |
@@ -93,9 +94,9 @@ jobs:
           CI_ME_CLIENT_ID: ${{ secrets.CI_ME_CLIENT_ID }}
           CI_ME_CLIENT_SECRET: ${{ secrets.CI_ME_CLIENT_SECRET }}
         run: |
-          # 7,000 is above the largest volume's YouTube count (6,433 measured);
-          # a lower cap silently skips that volume's tail forever, because
-          # `page` never advances when the limit covers the whole set.
+          # The cap must stay above the largest volume's YouTube count (3,283
+          # at twenty volumes); below it, `page` never advances and that
+          # volume's tail is skipped forever. 7,000 leaves room to grow.
           # The pool and the delay are what keep a volume at ~19 min instead of
           # 78: the limiter spaces the requests, the workers hide the latency.
           ARGS=(--live-only --limit-live 7000 --limit-multi-platform-live 400)
@@ -146,7 +147,7 @@ jobs:
         run: npm ci --no-audit --no-fund
 
       - name: Create volume split for merge
-        run: npm run data:volumes -- --count 10
+        run: npm run data:volumes -- --count 20
 
       - name: Download volume artifacts
         uses: actions/download-artifact@v8
@@ -157,7 +158,7 @@ jobs:
 
       - name: Copy downloaded items into volume dirs
         run: |
-          VOLUME_COUNT="10"
+          VOLUME_COUNT="20"
           for v in $(seq 0 $((VOLUME_COUNT - 1))); do
             SRC=".volumes/downloads/vol-$v/data/items"
             DST=".volumes/vol-$v/data/items"
@@ -171,7 +172,7 @@ jobs:
           done
 
       - name: Merge all volumes into data/
-        run: npx tsx scripts/merge-volumes.ts --count 10
+        run: npx tsx scripts/merge-volumes.ts --count 20
 
       - name: Build search index
         run: npm run data:index
