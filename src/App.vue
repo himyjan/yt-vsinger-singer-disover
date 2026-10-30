@@ -487,6 +487,8 @@ const visibleLive = computed(() =>
     ai: state.ai,
     affiliation: state.affiliation,
     language: state.language,
+    role: state.role,
+    vtuberOnly: state.vtuberOnly,
   }), state.sort.live),
 );
 
@@ -500,6 +502,8 @@ const visibleUpcoming = computed(() =>
     affiliation: state.affiliation,
     language: state.language,
     schedule: state.upcomingType,
+    role: state.role,
+    vtuberOnly: state.vtuberOnly,
   }), state.sort.upcoming),
 );
 
@@ -519,6 +523,8 @@ const visibleSongs = computed(() =>
         ai: state.ai,
         affiliation: state.affiliation,
         language: state.language,
+        role: state.role,
+        vtuberOnly: state.vtuberOnly,
       },
     ),
     state.sort.songs,
