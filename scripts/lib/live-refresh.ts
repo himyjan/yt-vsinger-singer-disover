@@ -224,6 +224,7 @@ export async function refreshLivePass(
             thumbnail: stream.thumbnail,
             status: stream.status,
             scheduledStart: stream.scheduledStart,
+            actualStart: stream.actualStart ?? null,
           },
           channel,
           now,
@@ -248,6 +249,36 @@ export async function refreshLivePass(
     );
   } else if (liveTargets.length) {
     log("live: InnerTube unavailable — skipping live refresh");
+  }
+
+  /**
+   * A schedule that has passed is no longer upcoming.
+   *
+   * Retirement above is per channel: it runs only for the channels this run
+   * happened to check. An `upcoming` item whose broadcast aired before its
+   * channel's next visit therefore lingered as "upcoming" for up to a full
+   * sweep — and the catalogue is checked in pages, so a channel can wait a
+   * day. The start time is now recorded, so the claim can be judged offline:
+   * a broad grace period (12 h) covers even an unusually long stream, and
+   * anything still live is re-stored as live by the next check, which
+   * overwrites the status before this rule could touch it.
+   */
+  const UPCOMING_GRACE_MS = 12 * 3_600_000;
+  const nowMs = Date.parse(now);
+  let expiredUpcoming = 0;
+  for (const item of itemById.values()) {
+    if (item.type !== "live" || item.status !== "upcoming") continue;
+    if (!item.scheduledStart) continue;
+    const startMs = Date.parse(item.scheduledStart);
+    if (!Number.isFinite(startMs) || nowMs - startMs < UPCOMING_GRACE_MS) continue;
+    item.status = "past";
+    item.actualEnd = item.actualEnd ?? now;
+    item.publishedAt = item.publishedAt ?? item.scheduledStart;
+    item.updatedAt = now;
+    expiredUpcoming++;
+  }
+  if (expiredUpcoming) {
+    log(`live: retired ${expiredUpcoming} scheduled stream(s) whose start has passed`);
   }
 
   /* --- the platforms with a per-channel live() adapter ------------------- */

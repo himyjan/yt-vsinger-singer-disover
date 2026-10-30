@@ -43,6 +43,25 @@ uploads tab. The tab has two renderers (`LockupView` and `GridVideo`), so the
 state is read from the thumbnail badge and the metadata rows rather than from a
 single field.
 
+The badge decides *whether to ask*, not *what the answer is*. A card keeps its
+`Upcoming` badge after the broadcast has aired, and the only schedule it prints
+is a localized string in the client's timezone (`Scheduled for 10/31/26,
+12:00 AM`) — a timezone and a locale the pipeline would have to guess. Each
+badged card is therefore confirmed against the video's own player response,
+`getBasicInfo()`, which costs one request (~0.13 s, measured) **per badged
+card** rather than per channel, and states `is_upcoming`, `is_live` and the
+exact `start_timestamp`. A card the player disagrees with is dropped; a
+confirmed one is stored with `scheduledStart` (upcoming) or `actualStart`
+(live) taken from that timestamp, so a stream found hours after it began
+records when it began rather than when the run polled it. On a failed
+`getBasicInfo()` the badge stands, because an unreachable video is not evidence
+that a stream ended.
+
+`liveStreams()` returns `null` when the check failed and `[]` when the channel
+was checked and nothing is live. The distinction matters: on an empty successful
+check the previously stored live item is retired to `past`, while a failed check
+changes nothing.
+
 `liveStreams()` returns `null` when the check failed and `[]` when the channel
 was checked and nothing is live. The distinction matters: on an empty successful
 check the previously stored live item is retired to `past`, while a failed check

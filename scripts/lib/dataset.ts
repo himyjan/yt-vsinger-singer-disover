@@ -283,8 +283,22 @@ export function writeItemShards(
     }
   }
 
-  const live = items.filter((i) => i.status === "live");
-  const upcoming = items.filter((i) => i.status === "upcoming");
+  /**
+   * The two aggregate files are written in **id order**, not in the order the
+   * caller happened to hold the items.
+   *
+   * `items` arrives as the reader's order from a sync and as a map's insertion
+   * order from the live-only pass, so the same catalogue serialised from two
+   * entry points produced two different files and git showed every line
+   * changed. An id is immutable, so ordering by it keeps a rewrite to the
+   * items that actually moved. The views sort for display.
+   */
+  const live = items
+    .filter((i) => i.status === "live")
+    .sort((a, b) => a.id.localeCompare(b.id));
+  const upcoming = items
+    .filter((i) => i.status === "upcoming")
+    .sort((a, b) => a.id.localeCompare(b.id));
   writeJsonIfChanged(l.itemsLive, {
     schemaVersion: SCHEMA_VERSION,
     generatedAt: now,
