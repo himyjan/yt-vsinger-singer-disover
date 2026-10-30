@@ -22,9 +22,13 @@ name: Live status
 on:
   schedule:
     # Every two hours, off the hour so the shared GitHub cron pool is happy.
-    # A run holds the dataset-writer group for ~25 minutes, and the group is a
-    # single lane shared with the sync; hourly would leave the sync queueing
-    # behind it for no extra coverage, since one run only checks one slice.
+    #
+    # Two hours × 12 runs × 6,000 channels = 72,000 checks a day against a
+    # 63,662-channel catalogue, so one sweep takes ~0.9 days and every channel
+    # is checked at least once a day. Twelve runs is also exactly the number of
+    # windows the four shards hold at this limit (3 pages each), so the rotation
+    # closes cleanly. At ~40 minutes a run the dataset-writer group — one lane,
+    # shared with the sync — stays about a third busy.
     - cron: "7 */2 * * *"
   workflow_dispatch:
     inputs:
@@ -35,7 +39,7 @@ on:
       limit-live:
         description: "YouTube channels to check this run"
         required: false
-        default: "1000"
+        default: "6000"
       limit-multi-platform-live:
         description: "Per-channel platform links to check this run"
         required: false
@@ -64,9 +68,11 @@ jobs:
   live:
     name: Refresh live status
     runs-on: ubuntu-latest
-    # A run of `limit-live` channels at ~1-2 s each, plus the platform feeds.
-    # 1,000 channels is about 25 minutes; the ceiling is headroom, not a target.
-    timeout-minutes: 60
+    # Measured at ~0.39 s per channel (InnerTube with the 250 ms delay), plus
+    # ~20 s to load the dataset: 6,000 channels is about 40 minutes, so the
+    # ceiling leaves room for a slow source without letting a hung one hold the
+    # dataset-writer lane for the rest of the afternoon.
+    timeout-minutes: 90
 
     steps:
       - name: Checkout
@@ -106,7 +112,7 @@ jobs:
           CI_ME_CLIENT_ID: ${{ secrets.CI_ME_CLIENT_ID }}
           CI_ME_CLIENT_SECRET: ${{ secrets.CI_ME_CLIENT_SECRET }}
           LIVE_SHARD_COUNT: ${{ github.event.inputs.shard-count || '4' }}
-          LIVE_LIMIT: ${{ github.event.inputs.limit-live || '1000' }}
+          LIVE_LIMIT: ${{ github.event.inputs.limit-live || '6000' }}
           LIVE_MULTI_LIMIT: ${{ github.event.inputs.limit-multi-platform-live || '400' }}
         run: |
           ARGS=(--live-only --limit-live "$LIVE_LIMIT" --limit-multi-platform-live "$LIVE_MULTI_LIMIT")
