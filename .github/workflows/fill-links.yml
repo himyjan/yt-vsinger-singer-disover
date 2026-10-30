@@ -1,0 +1,108 @@
+name: Fill external links (weekly)
+
+# Fills missing social links (Twitch, X, Instagram, TikTok, Bilibili, Niconico,
+# CHZZK, CI.ME, SOOP, etc.) from roster sources:
+#
+#   npm run data:hololist-import -- --links --apply
+#   npm run data:bacharu-import -- --links --apply
+#
+# Runs weekly so roster-linked accounts (Twitter, Twitch, Bilibili, etc.) are
+# backfilled without blocking the daily sync. Only fills fields that are empty
+# on the record — nothing already on the record is overwritten.
+
+on:
+  schedule:
+    # Weekly, Monday 03:00 UTC
+    - cron: "0 3 * * 1"
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        description: "Report what would change without writing"
+        required: false
+        default: "false"
+
+concurrency:
+  group: dataset-writer-${{ github.repository }}
+  cancel-in-progress: false
+  queue: max
+
+permissions:
+  contents: write
+
+jobs:
+  fill-links:
+    name: Fill external links from rosters
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          lfs: true
+
+      - name: Install Git LFS
+        run: |
+          git lfs install --skip-repo
+          git lfs pull || true
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "26"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Harvest rosters (hololist + bacharu)
+        run: |
+          npm run data:hololist
+          npm run data:bacharu
+
+      - name: Fill external links from hololist
+        run: |
+          if [ "${{ inputs.dry-run }}" = "true" ]; then
+            echo "Dry run: would run hololist-import --links --apply"
+          else
+            npm run data:hololist-import -- --links --apply
+          fi
+
+      - name: Fill external links from bacharu
+        run: |
+          if [ "${{ inputs.dry-run }}" = "true" ]; then
+            echo "Dry run: would run bacharu-import --links --apply"
+          else
+            npm run data:bacharu-import -- --links --apply
+          fi
+
+      - name: Rebase data changes onto the latest branch
+        env:
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          git fetch origin "$BRANCH"
+          git rebase --autostash "origin/$BRANCH"
+
+      - name: Commit link fills
+        uses: stefanzweifel/git-auto-commit-action@v7
+        with:
+          commit_user_name: github-actions[bot]
+          commit_user_email: github-actions[bot]@users.noreply.github.com
+          commit_message: "data: fill external links from rosters (${{ github.run_number }})"
+          file_pattern: "data/*"
+          branch: ${{ github.ref_name }}
+          skip_fetch: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Summary
+        run: |
+          {
+            echo "### Fill external links (weekly)"
+            echo ""
+            echo "| Metric | Value |"
+            echo "| --- | --- |"
+            echo "| Hololist links | \`npm run data:hololist-import -- --links --apply\` |"
+            echo "| Bacharu links | \`npm run data:bacharu-import -- --links --apply\` |"
+            echo "| Committed | \`data/*\` |"
+          } >> "$GITHUB_STEP_SUMMARY"
