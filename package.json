@@ -13,6 +13,7 @@
     "prepare:public": "tsx scripts/prepare-public.ts",
     "api:build": "tsx scripts/build-api.ts",
     "data:sync": "tsx scripts/sync.ts",
+    "data:live": "tsx scripts/sync.ts --live-only",
     "data:index": "tsx scripts/build-index.ts",
     "data:reclassify": "tsx scripts/reclassify.ts",
     "data:volumes": "tsx scripts/split-volumes.ts",

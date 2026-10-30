@@ -5,6 +5,39 @@
 
 ## The workflows that matter
 
+### `live.yml` — refresh who is streaming
+
+```yaml
+on:
+  schedule:
+    - cron: "7 * * * *" # hourly
+  workflow_dispatch:
+    inputs:
+      shard-count: { default: "4" }
+      limit-live: { default: "1500" }
+      limit-multi-platform-live: { default: "400" }
+      dry-run: { default: "false" }
+```
+
+Runs `npm run data:live` (`--live-only`): it loads `data/`, asks every platform
+who is streaming, retires the streams that ended to `past` with a real
+duration, and writes **only** the item files — a live check changes no channel
+record, so rewriting the channel shards and the `songs` projection would spend
+the run's history on files that did not change. The search index is rebuilt by
+the sync, not here.
+
+It is separate from `sync-data.yml` because the live phase is the one whose
+cost is proportional to the whole catalogue: one InnerTube Live-tab lookup per
+YouTube channel, 63,000 of them, at roughly a second or two each. In the full
+sync it outlived the job's `timeout-minutes` and the run was killed at 68% with
+no commit. Here it is the whole run, so `limit-live` decides how much of the
+rotation it covers and the job finishes.
+
+`live.yml`, `sync-data.yml`, `verify-data.yml` and `data-squash.yml` share the
+`dataset-writer-*` concurrency group, so an hourly live run waits for a sync
+rather than writing the same shards at the same time. GitHub keeps one running
+and one pending job per group; a third arrival drops the pending one.
+
 ### `sync-data.yml` — refresh the dataset
 
 ```yaml

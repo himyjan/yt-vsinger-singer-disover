@@ -498,14 +498,23 @@ same `parseSubscriptionsFile()`, but neither is required for a large account.
 | Workflow | Trigger | Does |
 | --- | --- | --- |
 | `sync-data.yml` | every 6 hours + manual | fetch → qualify discovery candidates → classify → index → validate → rebase → commit `data/`; rotates through the catalogue by shard |
+| `live.yml` | hourly + manual | `--live-only`: check who is streaming on every platform → retire ended streams → validate → rebase → commit `data/`; rotates by shard |
 | `verify-data.yml` | daily + manual | verify uncertain records → re-apply corrections → index → validate → rebase → commit `data/` |
 | `deploy-pages.yml` | push to `main` | validate → build → publish to Pages |
 | `ci.yml` | push + pull request | validate → type-check → build |
 
-The sync and verification workflows share one repository-wide dataset-writer
-concurrency group. Before committing, each fetches and rebases its generated
-data changes onto the latest branch head so intervening commits do not cause a
-non-fast-forward push failure.
+The sync, live and verification workflows share one repository-wide
+dataset-writer concurrency group, so the hourly live run waits for a sync to
+finish rather than writing the same shards at the same time. Before committing,
+each fetches and rebases its generated data changes onto the latest branch head
+so intervening commits do not cause a non-fast-forward push failure.
+
+The live check is a separate workflow because its cost is proportional to the
+whole catalogue — one InnerTube Live-tab lookup per YouTube channel, 63,000 of
+them — while every other phase is a rotation over a slice. Inside the full sync
+it outlived the job's time limit and the run was killed before it wrote
+anything; on its own it fits, and the sync stays short enough to always reach
+its write step.
 
 The quota spent by a sync is cached between workflow runs, so several runs a
 day can never exceed the 10,000-unit daily allowance.

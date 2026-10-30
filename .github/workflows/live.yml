@@ -1,0 +1,146 @@
+name: Live status
+
+# Refreshes who is streaming right now, on every platform, and nothing else.
+#
+# Why this is not part of `sync-data.yml`: the live phase is the one whose cost
+# is proportional to the **whole catalogue** — one InnerTube Live-tab lookup
+# per YouTube channel, 63,000 of them, at roughly a second or two each. Inside
+# the full sync that phase alone outlived the job's time limit, so the run was
+# killed at 68% and committed nothing. Here it is the whole run, it fits, and
+# the full sync stays short enough to always reach its write step.
+#
+# `--live-only` loads `data/`, checks the platforms, and writes back only the
+# item changes: new `live`/`upcoming` entries, and the streams that ended
+# retired to `past` with a real duration.
+#
+# Repository secrets (all optional — a missing one just means that platform's
+# live checks are skipped):
+#   TWITCH_CLIENT_ID / TWITCH_CLIENT_SECRET
+#   VK_ACCESS_TOKEN
+#   CI_ME_CLIENT_ID / CI_ME_CLIENT_SECRET
+
+on:
+  schedule:
+    # Hourly, off the hour so the shared GitHub cron pool is happy.
+    - cron: "7 * * * *"
+  workflow_dispatch:
+    inputs:
+      shard-count:
+        description: "Split the live rotation into N shards (1 disables sharding)"
+        required: false
+        default: "4"
+      limit-live:
+        description: "YouTube channels to check this run"
+        required: false
+        default: "1500"
+      limit-multi-platform-live:
+        description: "Per-channel platform links to check this run"
+        required: false
+        default: "400"
+      dry-run:
+        description: "Check live status but write nothing"
+        required: false
+        default: "false"
+
+# One dataset, one writer: this shares the group with `sync-data.yml`,
+# `verify-data.yml` and `data-squash.yml`, so the hourly live run waits for a
+# sync to finish rather than writing the same shards at the same time.
+concurrency:
+  group: dataset-writer-${{ github.repository }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  live:
+    name: Refresh live status
+    runs-on: ubuntu-latest
+    # A run of `limit-live` channels at ~1-2 s each, plus the platform feeds.
+    # 1,500 channels is about 40 minutes; the ceiling is headroom, not a target.
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          lfs: true
+
+      - name: Install Git LFS
+        run: |
+          git lfs install --skip-repo
+          git lfs pull || true
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "26"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Restore cache
+        uses: actions/cache@v6
+        with:
+          path: .cache
+          key: live-${{ github.run_number }}
+          restore-keys: |
+            live-
+            yt-quota-
+
+      - name: Refresh live status
+        env:
+          TWITCH_CLIENT_ID: ${{ secrets.TWITCH_CLIENT_ID }}
+          TWITCH_CLIENT_SECRET: ${{ secrets.TWITCH_CLIENT_SECRET }}
+          VK_ACCESS_TOKEN: ${{ secrets.VK_ACCESS_TOKEN }}
+          CI_ME_CLIENT_ID: ${{ secrets.CI_ME_CLIENT_ID }}
+          CI_ME_CLIENT_SECRET: ${{ secrets.CI_ME_CLIENT_SECRET }}
+          LIVE_SHARD_COUNT: ${{ github.event.inputs.shard-count || '4' }}
+          LIVE_LIMIT: ${{ github.event.inputs.limit-live || '1500' }}
+          LIVE_MULTI_LIMIT: ${{ github.event.inputs.limit-multi-platform-live || '400' }}
+        run: |
+          ARGS=(--live-only --limit-live "$LIVE_LIMIT" --limit-multi-platform-live "$LIVE_MULTI_LIMIT")
+          if [ "${{ inputs.dry-run }}" = "true" ]; then ARGS+=(--dry-run); fi
+
+          # The shard rotates with the run number, so successive hourly runs
+          # cover different slices of the catalogue deterministically.
+          SHARD_COUNT="$LIVE_SHARD_COUNT"
+          if ! [[ "$SHARD_COUNT" =~ ^[0-9]+$ ]] || [ "$SHARD_COUNT" -lt 1 ]; then
+            SHARD_COUNT=1
+          fi
+          if [ "$SHARD_COUNT" -gt 1 ]; then
+            SHARD_INDEX=$(( (GITHUB_RUN_NUMBER - 1) % SHARD_COUNT + 1 ))
+            ARGS+=(--shard "${SHARD_INDEX}/${SHARD_COUNT}")
+          fi
+
+          npm run data:live -- "${ARGS[@]}"
+
+      # The search index is rebuilt by the full sync, not here: the live run
+      # changes item status, not what is searchable, and rewriting every
+      # `data/search/*.json` once an hour would grow the history for nothing.
+      - name: Validate dataset
+        run: npm run data:validate
+
+      - name: Check the stored repository size
+        run: npm run repo:size -- --max-mb 900 --warn-mb 700
+
+      - name: Rebase data changes onto the latest branch
+        env:
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          git fetch origin "$BRANCH"
+          git rebase --autostash "origin/$BRANCH"
+
+      - name: Commit live status
+        uses: stefanzweifel/git-auto-commit-action@v7
+        with:
+          commit_user_name: github-actions[bot]
+          commit_user_email: github-actions[bot]@users.noreply.github.com
+          commit_message: "data: live status (${{ github.run_number }})"
+          file_pattern: "data/*"
+          branch: ${{ github.ref_name }}
+          skip_fetch: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

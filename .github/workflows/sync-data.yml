@@ -70,11 +70,10 @@ jobs:
     runs-on: ubuntu-latest
     # GitHub-hosted runners allow 360 minutes and mark an overrun as
     # "cancelled" — which is what killed the 2026-10-29 runs at exactly
-    # 45m20s, 68% through the live-check phase, with no commit. A full run
-    # (roster + details + live + write) takes 80-100 minutes against this
-    # catalogue, so the ceiling leaves room for a slow source without letting
-    # a hung one hold the concurrency group for the full three hours.
-    timeout-minutes: 180
+    # 45m20s, 68% through the live-check phase, with no commit. The live pass
+    # now has its own workflow (`live.yml`), so what is left here is bounded
+    # by its own limits; the ceiling is the maximum GitHub will give us.
+    timeout-minutes: 360
 
     steps:
       - name: Checkout
