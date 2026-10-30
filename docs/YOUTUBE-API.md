@@ -271,10 +271,14 @@ quota, but it costs a request and a second or two per channel. The catalogue
 holds ~63,000 YouTube channels, so a full sweep is ~26 hours — longer than any
 job may live. That is why the pass has its own entry point (`--live-only`,
 `live.yml`): the workflow takes a deterministic shard and checks
-`maxLiveChannelsPerRun` (default 1,000) of it per run. 12 runs a day is 12,000
-checks, so the whole catalogue rotates through in ~5.3 days — the trade-off
-the budget forces, not a bug: checking every channel every two hours would be
-63,662 checks in two hours, ~21 hours of work.
+`maxLiveChannelsPerRun` (default 6,000) of it per run. 12 runs a day is 72,000
+checks against 63,662 channels, so every channel is polled once a day. That is
+the trade-off the budget forces, not a bug: checking every channel every two
+hours would be 63,662 checks in a two-hour window, about seven hours of work.
+
+A check costs ~0.39 s (InnerTube plus the 250 ms delay) and the dataset load is
+~20 s, so a 6,000-channel run is ~40 minutes. Raise the limit only with that
+multiplication in hand: runtime scales linearly, quarantine does not.
 
 The window advances by one **page** per visit to the shard (`--live-page`), and
 that page is the count of visits to *that shard*, not the run number: with four

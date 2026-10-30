@@ -477,10 +477,16 @@ to *that shard* (`(GITHUB_RUN_NUMBER - 1) / SHARD_COUNT + 1`), not the run
 number: with four shards a run-number page would stride four windows at a time,
 overlap itself, and stop at a third of the catalogue after covering it once.
 
-At 1,000 channels a run and 12 runs a day that is a full sweep every ~5.3 days.
-Fetching all 63,662 every two hours would be 21 hours of work per two hours, so
-the number is a budget decision — raise `limit-live` (2,000 ≈ 40 min/run ≈ 2.7
-days, 3,000 ≈ 60 min/run ≈ 1.8 days) rather than adding runners.
+At 6,000 channels a run and 12 runs a day that is 72,000 checks against a
+63,662-channel catalogue: one full sweep a day, and 12 runs is exactly the
+number of windows the four shards hold at this limit (3 pages each), so the
+rotation closes cleanly. A check costs ~0.39 s, so a run is ~40 minutes — the
+dataset-writer lane stays about a third busy, which is why the two-hourly
+schedule still leaves the sync room.
+
+The number is a budget decision, so get the arithmetic right before changing
+it: `runs/day × limit-live` is the daily coverage, and checking every channel
+every two hours would be 63,662 checks in two hours (~7 hours of work).
 
 ## Common tasks
 
