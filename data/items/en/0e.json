@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-30T04:35:35.383Z",
+  "generatedAt": "2026-10-30T05:43:58.904Z",
   "items": [
     {
       "id": "07SacdR-lqw",
@@ -1285,6 +1285,52 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "PTWKzP3_MEw",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UChJ5FTsHOu72_5OVx0rvsvQ",
+      "channelName": "Uki Violeta 【NIJISANJI EN】",
+      "channelKind": "virtual",
+      "region": "en",
+      "gender": "female",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "【DON'T STARVE TOGETHER】ooh we're so hungry...👻",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/PTWKzP3_MEw/hq720.jpg",
+      "publishedAt": "2026-10-30T04:35:35.383Z",
+      "scheduledStart": null,
+      "actualStart": "2026-10-30T04:35:35.383Z",
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UChJ5FTsHOu72_5OVx0rvsvQ",
+          "name": "Uki Violeta 【NIJISANJI EN】",
+          "kind": "virtual",
+          "region": "en"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-30T04:35:35.383Z",
+      "updatedAt": "2026-10-30T04:35:35.383Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "OLAK5uy_nwlYvw84zCT0GqWr1pVku3bscruaiGlXA",
       "platform": "youtube",
       "url": "https://www.youtube.com/playlist?list=OLAK5uy_nwlYvw84zCT0GqWr1pVku3bscruaiGlXA",
@@ -1385,98 +1431,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "PTWKzP3_MEw",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UChJ5FTsHOu72_5OVx0rvsvQ",
-      "channelName": "Uki Violeta 【NIJISANJI EN】",
-      "channelKind": "virtual",
-      "region": "en",
-      "gender": "female",
-      "languages": [
-        "en"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "【DON'T STARVE TOGETHER】ooh we're so hungry...👻",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/PTWKzP3_MEw/hq720.jpg",
-      "publishedAt": "2026-10-30T04:35:35.383Z",
-      "scheduledStart": null,
-      "actualStart": "2026-10-30T04:35:35.383Z",
-      "actualEnd": null,
-      "duration": null,
-      "status": "live",
-      "category": "live",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UChJ5FTsHOu72_5OVx0rvsvQ",
-          "name": "Uki Violeta 【NIJISANJI EN】",
-          "kind": "virtual",
-          "region": "en"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-10-30T04:35:35.383Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "SYdcyFeANdY",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UClp5HhAKRA-TcJ1fGW0dJlQ",
-      "channelName": "Evolite",
-      "channelKind": "virtual",
-      "region": "en",
-      "gender": "male",
-      "languages": [
-        "en"
-      ],
-      "isAi": false,
-      "variant": "unknown",
-      "title": "【VALORANT】 5 STACKING WITH A FOX, A DOG, A DUCK, A SHARK, AND A DRAGONSCALE #evolive",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/SYdcyFeANdY/hq720.jpg",
-      "publishedAt": "2026-10-28T12:50:03.253Z",
-      "scheduledStart": null,
-      "actualStart": "2026-10-28T12:50:03.253Z",
-      "actualEnd": "2026-10-30T04:35:35.383Z",
-      "duration": 143132,
-      "status": "past",
-      "category": "live",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": true,
-      "collaborators": [
-        {
-          "channelId": "UClp5HhAKRA-TcJ1fGW0dJlQ",
-          "name": "Evolite",
-          "kind": "virtual",
-          "region": "en"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-28T12:50:03.253Z",
-      "updatedAt": "2026-10-30T04:35:35.383Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "Q5QBJaMxb7E",
       "platform": "youtube",
       "type": "live",
@@ -1564,6 +1518,52 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-30T04:35:35.383Z",
+      "updatedAt": "2026-10-30T04:35:35.383Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "SYdcyFeANdY",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UClp5HhAKRA-TcJ1fGW0dJlQ",
+      "channelName": "Evolite",
+      "channelKind": "virtual",
+      "region": "en",
+      "gender": "male",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "【VALORANT】 5 STACKING WITH A FOX, A DOG, A DUCK, A SHARK, AND A DRAGONSCALE #evolive",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/SYdcyFeANdY/hq720.jpg",
+      "publishedAt": "2026-10-28T12:50:03.253Z",
+      "scheduledStart": null,
+      "actualStart": "2026-10-28T12:50:03.253Z",
+      "actualEnd": "2026-10-30T04:35:35.383Z",
+      "duration": 143132,
+      "status": "past",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": true,
+      "collaborators": [
+        {
+          "channelId": "UClp5HhAKRA-TcJ1fGW0dJlQ",
+          "name": "Evolite",
+          "kind": "virtual",
+          "region": "en"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-28T12:50:03.253Z",
       "updatedAt": "2026-10-30T04:35:35.383Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null

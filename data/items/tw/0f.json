@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-30T04:35:35.383Z",
+  "generatedAt": "2026-10-30T05:43:58.904Z",
   "items": [
     {
       "id": "_jlSfsPq_q0",
@@ -233,52 +233,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "5e9jeB5tvTQ",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCoR5Toej3O1X8H40fDJk2Cg",
-      "channelName": "海霓",
-      "channelKind": "virtual",
-      "region": "tw",
-      "gender": "unknown",
-      "languages": [
-        "zh-Hant"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "【突發】安靜寫論文的時刻♡三點要開會 #降落歡迎 #初見歡迎 #突發",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/5e9jeB5tvTQ/hq720.jpg",
-      "publishedAt": "2026-10-30T04:35:35.383Z",
-      "scheduledStart": null,
-      "actualStart": "2026-10-30T04:35:35.383Z",
-      "actualEnd": null,
-      "duration": null,
-      "status": "live",
-      "category": "live",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCoR5Toej3O1X8H40fDJk2Cg",
-          "name": "海霓",
-          "kind": "virtual",
-          "region": "tw"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-10-30T04:35:35.383Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "4Z1CrXvhWro",
       "platform": "youtube",
       "type": "live",
@@ -309,6 +263,52 @@
         {
           "channelId": "UCRfzLjIYBJAG_Xgvu_8TvuQ",
           "name": "Iliavia",
+          "kind": "virtual",
+          "region": "tw"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-30T04:35:35.383Z",
+      "updatedAt": "2026-10-30T04:35:35.383Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "5e9jeB5tvTQ",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCoR5Toej3O1X8H40fDJk2Cg",
+      "channelName": "海霓",
+      "channelKind": "virtual",
+      "region": "tw",
+      "gender": "unknown",
+      "languages": [
+        "zh-Hant"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "【突發】安靜寫論文的時刻♡三點要開會 #降落歡迎 #初見歡迎 #突發",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/5e9jeB5tvTQ/hq720.jpg",
+      "publishedAt": "2026-10-30T04:35:35.383Z",
+      "scheduledStart": null,
+      "actualStart": "2026-10-30T04:35:35.383Z",
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCoR5Toej3O1X8H40fDJk2Cg",
+          "name": "海霓",
           "kind": "virtual",
           "region": "tw"
         }

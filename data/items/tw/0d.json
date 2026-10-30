@@ -1,7 +1,53 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-30T04:35:35.383Z",
+  "generatedAt": "2026-10-30T05:43:58.904Z",
   "items": [
+    {
+      "id": "bnJtPE1wrzg",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCjBchQA5tJP4HHoxTwM16Qw",
+      "channelName": "羽歆",
+      "channelKind": "virtual",
+      "region": "tw",
+      "gender": "unknown",
+      "languages": [
+        "zh-Hant"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "【週表】10/26-11/1 │羽歆 YuuXin",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/bnJtPE1wrzg/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCjBchQA5tJP4HHoxTwM16Qw",
+          "name": "羽歆",
+          "kind": "virtual",
+          "region": "tw"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-30T04:35:35.383Z",
+      "updatedAt": "2026-10-30T04:35:35.383Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
     {
       "id": "BpekYgYBOUg",
       "platform": "youtube",
@@ -91,52 +137,6 @@
       "source": "api",
       "addedAt": "2026-10-25T11:22:49.894Z",
       "updatedAt": "2026-10-26T10:32:00.415Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "bnJtPE1wrzg",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCjBchQA5tJP4HHoxTwM16Qw",
-      "channelName": "羽歆",
-      "channelKind": "virtual",
-      "region": "tw",
-      "gender": "unknown",
-      "languages": [
-        "zh-Hant"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "【週表】10/26-11/1 │羽歆 YuuXin",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/bnJtPE1wrzg/hq720.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "upcoming",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCjBchQA5tJP4HHoxTwM16Qw",
-          "name": "羽歆",
-          "kind": "virtual",
-          "region": "tw"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-10-30T04:35:35.383Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },

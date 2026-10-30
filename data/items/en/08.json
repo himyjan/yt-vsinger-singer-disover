@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-30T04:35:35.383Z",
+  "generatedAt": "2026-10-30T05:43:58.904Z",
   "items": [
     {
       "id": "-rEMiOIoqbo",
@@ -417,52 +417,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "n5-I6a8RlTA",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCfEic_AkUDdMA8LQIO2wLAA",
-      "channelName": "Akenella",
-      "channelKind": "virtual",
-      "region": "en",
-      "gender": "unknown",
-      "languages": [
-        "en"
-      ],
-      "isAi": false,
-      "variant": "unknown",
-      "title": "Attempting The Nightreign Flawless Challenge",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/n5-I6a8RlTA/hq720.jpg",
-      "publishedAt": "2026-10-28T05:38:36.215Z",
-      "scheduledStart": null,
-      "actualStart": "2026-10-28T05:38:36.215Z",
-      "actualEnd": null,
-      "duration": null,
-      "status": "live",
-      "category": "live",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCfEic_AkUDdMA8LQIO2wLAA",
-          "name": "Akenella",
-          "kind": "virtual",
-          "region": "en"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-28T05:38:36.215Z",
-      "updatedAt": "2026-10-28T05:38:36.215Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "kXQT3ZM5QTY",
       "platform": "youtube",
       "type": "live",
@@ -505,6 +459,52 @@
       "source": "api",
       "addedAt": "2026-10-30T04:35:35.383Z",
       "updatedAt": "2026-10-30T04:35:35.383Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "n5-I6a8RlTA",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCfEic_AkUDdMA8LQIO2wLAA",
+      "channelName": "Akenella",
+      "channelKind": "virtual",
+      "region": "en",
+      "gender": "unknown",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "Attempting The Nightreign Flawless Challenge",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/n5-I6a8RlTA/hq720.jpg",
+      "publishedAt": "2026-10-28T05:38:36.215Z",
+      "scheduledStart": null,
+      "actualStart": "2026-10-28T05:38:36.215Z",
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCfEic_AkUDdMA8LQIO2wLAA",
+          "name": "Akenella",
+          "kind": "virtual",
+          "region": "en"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-28T05:38:36.215Z",
+      "updatedAt": "2026-10-28T05:38:36.215Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
