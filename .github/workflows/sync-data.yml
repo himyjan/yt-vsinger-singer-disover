@@ -48,6 +48,15 @@ on:
         required: false
         default: ""
 
+# One dataset, one writer. `sync`, `verify-data` and `data-squash` all share
+# this group, and `cancel-in-progress: false` means a run that arrives while
+# another is working **waits** instead of killing it mid-write — a half-written
+# shard is the one state the dataset must never be in.
+#
+# GitHub keeps one running job and one pending job per group: a third arrival
+# drops the *pending* one, never the running one. Nothing outside this group
+# (CI, Deploy site, Repository size) can cancel it, because concurrency groups
+# only affect runs inside the same group.
 concurrency:
   group: dataset-writer-${{ github.repository }}
   cancel-in-progress: false
@@ -59,7 +68,13 @@ jobs:
   sync:
     name: Sync and commit dataset
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    # GitHub-hosted runners allow 360 minutes and mark an overrun as
+    # "cancelled" — which is what killed the 2026-10-29 runs at exactly
+    # 45m20s, 68% through the live-check phase, with no commit. A full run
+    # (roster + details + live + write) takes 80-100 minutes against this
+    # catalogue, so the ceiling leaves room for a slow source without letting
+    # a hung one hold the concurrency group for the full three hours.
+    timeout-minutes: 180
 
     steps:
       - name: Checkout
