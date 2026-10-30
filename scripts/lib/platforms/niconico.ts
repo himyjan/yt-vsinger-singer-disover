@@ -18,11 +18,7 @@
 import { classifyItem } from "../classify";
 import { RateLimiter, detectRateLimit } from "../rate-limit";
 import type { CountRef, PlatformId } from "../types";
-import type {
-  PlatformAdapter,
-  PlatformChannel,
-  PlatformUpload,
-} from "../platforms";
+import type { PlatformAdapter, PlatformChannel, PlatformUpload } from "../platforms";
 import { REQUEST_TIMEOUT_MS } from "../io";
 
 const SEARCH = "https://api.search.nicovideo.jp/api/v2";
@@ -161,10 +157,7 @@ export class NiconicoAdapter implements PlatformAdapter {
     };
   }
 
-  async uploads(
-    channel: PlatformChannel,
-    limit: number,
-  ): Promise<PlatformUpload[]> {
+  async uploads(channel: PlatformChannel, limit: number): Promise<PlatformUpload[]> {
     const data = await this.getJson<{ data?: NicoVideo[] }>("video", {
       query: channel.id,
       targets: "userId",
@@ -192,9 +185,7 @@ export class NiconicoAdapter implements PlatformAdapter {
         title: video.title ?? "",
         description: video.description ?? null,
         thumbnail: `https://img1.ssl.nimg.jp/thumb/${video.contentId}`,
-        publishedAt: video.startTime
-          ? new Date(video.startTime * 1000).toISOString()
-          : null,
+        publishedAt: video.startTime ? new Date(video.startTime * 1000).toISOString() : null,
         scheduledStart: null,
         duration: null,
         status: "past",
@@ -219,6 +210,9 @@ export class NiconicoAdapter implements PlatformAdapter {
      */
     if (this.liveUploads.length > 0) return this.liveUploads;
 
+    const uploads: PlatformUpload[] = [];
+
+    /* --- Content Search API v2 ------------------------------------------- */
     const data = await this.getJson<{
       data?: NicoVideo[];
       meta?: { status: number };
@@ -233,7 +227,6 @@ export class NiconicoAdapter implements PlatformAdapter {
     });
 
     const list = data?.data ?? [];
-    const uploads: PlatformUpload[] = [];
 
     for (const video of list) {
       if (!video.contentId || video.liveStatus !== "onair") continue;
@@ -255,9 +248,7 @@ export class NiconicoAdapter implements PlatformAdapter {
         title: video.title ?? "",
         description: null,
         thumbnail: `https://img1.ssl.nimg.jp/thumb/${video.contentId}`,
-        publishedAt: video.startTime
-          ? new Date(video.startTime * 1000).toISOString()
-          : null,
+        publishedAt: video.startTime ? new Date(video.startTime * 1000).toISOString() : null,
         scheduledStart: null,
         duration: null,
         status: "live",
@@ -269,9 +260,110 @@ export class NiconicoAdapter implements PlatformAdapter {
       } satisfies PlatformUpload);
     }
 
+    /* --- live.nicovideo.jp VTuber recent page ----------------------------
+     * The Content Search API returns a global live list that is matched
+     * against known user IDs. The VTuber recent page is VTuber-specific,
+     * so it can surface VTuber live streams even when the user ID is not
+     * yet in the dataset.
+     *
+     * Tries the JSON endpoint first, then falls back to HTML extraction.
+     * Both wrapped in try/catch so a broken endpoint never breaks the run.
+     */
+    const areaLive = await this.fetchNicoAreaLiveStreams();
+    const seenIds = new Set(uploads.map((u) => u.id));
+    for (const stream of areaLive) {
+      if (seenIds.has(stream.id)) continue;
+      uploads.push(stream);
+      seenIds.add(stream.id);
+    }
+
     this.liveUploads = uploads;
     this.onLog?.(`niconico: ${uploads.length} live stream(s) found`);
     return uploads;
+  }
+
+  /**
+   * Fetches VTuber live streams from live.nicovideo.jp's VTuber recent page
+   * (`/recent?tab=vtuber`). This supplements the Content Search API v2
+   * because the API is global and matched against known user IDs; the
+   * area page is VTuber-specific.
+   */
+  private async fetchNicoAreaLiveStreams(): Promise<PlatformUpload[]> {
+    const urls = ["https://live.nicovideo.jp/recent?tab=vtuber"];
+
+    for (const url of urls) {
+      try {
+        const res = await fetch(url, {
+          signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
+          headers: {
+            "User-Agent":
+              "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+            Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            Referer: "https://www.nicovideo.jp/",
+          },
+        });
+        if (!res.ok) continue;
+
+        const text = await res.text();
+        if (!text) continue;
+
+        const streams = this.parseNicoAreaLiveHtml(text);
+        if (streams.length > 0) return streams;
+      } catch {
+        // Try the next URL
+      }
+    }
+
+    return [];
+  }
+
+  /**
+   * Extracts VTuber live streams from the live.nicovideo.jp VTuber recent
+   * page HTML. Niconico's HTML embeds JSON data in `__NEXT_DATA__` or
+   * similar, but a robust regex for watch links is more reliable.
+   */
+  private parseNicoAreaLiveHtml(html: string): PlatformUpload[] {
+    const streams: PlatformUpload[] = [];
+    const seen = new Set<string>();
+
+    // Match /watch/sm9... or /watch/nv9... links
+    const watchRegex = /\/watch\/(sm|nv|so)\d+/g;
+    let match: RegExpExecArray | null;
+    while ((match = watchRegex.exec(html))) {
+      const contentId = match[0].slice(1); // remove leading '/'
+      if (seen.has(contentId)) continue;
+      seen.add(contentId);
+
+      // Try to find a title attribute near this link (within ~800 chars)
+      const start = Math.max(0, match.index - 800);
+      const end = Math.min(html.length, match.index + 800);
+      const window = html.slice(start, end);
+      const titleMatch =
+        window.match(/<h3[^>]*class="[^"]*live[^"]*"[^>]*>([^<]{1,120})<\/h3>/i) ||
+        window.match(/title="([^"]{1,120})"/);
+
+      const title = titleMatch ? titleMatch[1].replace(/<[^>]*>/g, "").trim() : "";
+
+      streams.push({
+        platform: "niconico",
+        id: contentId,
+        channelId: "", // user ID unknown from HTML alone
+        title,
+        description: null,
+        thumbnail: `https://img1.ssl.nimg.jp/thumb/${contentId}`,
+        publishedAt: null,
+        scheduledStart: null,
+        duration: null,
+        status: "live",
+        category: "live",
+        songTitle: null,
+        originalArtist: null,
+        viewCount: null,
+        url: `https://www.nicovideo.jp/watch/${contentId}`,
+      } satisfies PlatformUpload);
+    }
+
+    return streams;
   }
 
   async search(query: string, limit: number): Promise<PlatformChannel[]> {
@@ -296,32 +388,29 @@ export class NiconicoAdapter implements PlatformAdapter {
         durationSeconds: null,
         channelRegion: "jp",
       });
-      return [{
-        platform: "niconico" as const,
-        id: video.contentId,
-        channelId: author,
-        title: video.title ?? "",
-        description: video.description ?? null,
-        thumbnail: `https://img1.ssl.nimg.jp/thumb/${video.contentId}`,
-        publishedAt: video.startTime
-          ? new Date(video.startTime * 1000).toISOString()
-          : null,
-        scheduledStart: null,
-        duration: null,
-        status: "past" as const,
-        category: classified.category,
-        songTitle: classified.songTitle,
-        originalArtist: classified.originalArtist,
-        viewCount: video.viewCounter ?? null,
-        url: `https://www.nicovideo.jp/watch/${video.contentId}`,
-      } satisfies PlatformUpload];
+      return [
+        {
+          platform: "niconico" as const,
+          id: video.contentId,
+          channelId: author,
+          title: video.title ?? "",
+          description: video.description ?? null,
+          thumbnail: `https://img1.ssl.nimg.jp/thumb/${video.contentId}`,
+          publishedAt: video.startTime ? new Date(video.startTime * 1000).toISOString() : null,
+          scheduledStart: null,
+          duration: null,
+          status: "past" as const,
+          category: classified.category,
+          songTitle: classified.songTitle,
+          originalArtist: classified.originalArtist,
+          viewCount: video.viewCounter ?? null,
+          url: `https://www.nicovideo.jp/watch/${video.contentId}`,
+        } satisfies PlatformUpload,
+      ];
     });
     this.discoveredUploads = [
       ...new Map(
-        [...this.discoveredUploads, ...discoveredUploads].map((upload) => [
-          upload.id,
-          upload,
-        ]),
+        [...this.discoveredUploads, ...discoveredUploads].map((upload) => [upload.id, upload]),
       ).values(),
     ];
 
