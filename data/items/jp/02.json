@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-28T22:33:18.686Z",
+  "generatedAt": "2026-10-30T02:52:38.702Z",
   "items": [
     {
       "id": "_BSFDbrGHsg",
@@ -417,6 +417,52 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "D19010Uef3Y",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCO0UOvSRvaRe2XTBQ5pjRYQ",
+      "channelName": "黄白レモ Lemo Ch.【ぶいじだい】",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "female",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "🌟schedule",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/D19010Uef3Y/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCO0UOvSRvaRe2XTBQ5pjRYQ",
+          "name": "黄白レモ Lemo Ch.【ぶいじだい】",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-27T22:11:16.041Z",
+      "updatedAt": "2026-10-27T22:11:16.041Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "dOEzkByNQuQ",
       "platform": "youtube",
       "type": "live",
@@ -458,52 +504,6 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-27T17:58:40.188Z",
-      "updatedAt": "2026-10-27T17:58:40.188Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "fNvmsKdbG2c",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCDQkIK-Md2XDbDWN4nKyzIQ",
-      "channelName": "夢川かなう - Kanau Yumekawa",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vsinger",
-      "title": "🫧4th single「水没▽えすけーぷ」デジタル配信すたーと！⊹ ࣪ ˖ ໒꒱【夢川かなう/リアクト/Vtuber】",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/fNvmsKdbG2c/hq720.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "upcoming",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCDQkIK-Md2XDbDWN4nKyzIQ",
-          "name": "夢川かなう - Kanau Yumekawa",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-24T09:06:25.613Z",
       "updatedAt": "2026-10-27T17:58:40.188Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
@@ -647,22 +647,22 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "D19010Uef3Y",
+      "id": "fNvmsKdbG2c",
       "platform": "youtube",
       "type": "live",
-      "channelId": "UCO0UOvSRvaRe2XTBQ5pjRYQ",
-      "channelName": "黄白レモ Lemo Ch.【ぶいじだい】",
+      "channelId": "UCDQkIK-Md2XDbDWN4nKyzIQ",
+      "channelName": "夢川かなう - Kanau Yumekawa",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "female",
+      "gender": "unknown",
       "languages": [
         "ja"
       ],
       "isAi": false,
-      "variant": "female_vtuber",
-      "title": "🌟schedule",
+      "variant": "vsinger",
+      "title": "🫧4th single「水没▽えすけーぷ」デジタル配信すたーと！⊹ ࣪ ˖ ໒꒱【夢川かなう/リアクト/Vtuber】",
       "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/D19010Uef3Y/hq720.jpg",
+      "thumbnail": "https://i.ytimg.com/vi/fNvmsKdbG2c/hq720.jpg",
       "publishedAt": null,
       "scheduledStart": null,
       "actualStart": null,
@@ -675,8 +675,8 @@
       "isCollab": false,
       "collaborators": [
         {
-          "channelId": "UCO0UOvSRvaRe2XTBQ5pjRYQ",
-          "name": "黄白レモ Lemo Ch.【ぶいじだい】",
+          "channelId": "UCDQkIK-Md2XDbDWN4nKyzIQ",
+          "name": "夢川かなう - Kanau Yumekawa",
           "kind": "virtual",
           "region": "jp"
         }
@@ -687,8 +687,8 @@
       "likeCount": null,
       "concurrentViewers": null,
       "source": "api",
-      "addedAt": "2026-10-27T22:11:16.041Z",
-      "updatedAt": "2026-10-27T22:11:16.041Z",
+      "addedAt": "2026-10-24T09:06:25.613Z",
+      "updatedAt": "2026-10-27T17:58:40.188Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -969,56 +969,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "OLAK5uy_k3Emsl_r5UJKf2yx1Smo7gooyK75bnDCE",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_k3Emsl_r5UJKf2yx1Smo7gooyK75bnDCE",
-      "type": "playlist",
-      "channelId": "UCu2n3qHuOuQIygREMnWeQWg",
-      "channelName": "hololive FLOW GLOW",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "24K GOLD",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/oY-fJ8gO6qc/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCu2n3qHuOuQIygREMnWeQWg",
-          "name": "hololive FLOW GLOW",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "OLAK5uy_kBFEKoBsjc4uluEefCQldv84Qkfka9Nno",
       "platform": "youtube",
       "url": "https://www.youtube.com/playlist?list=OLAK5uy_kBFEKoBsjc4uluEefCQldv84Qkfka9Nno",
@@ -1164,6 +1114,56 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_lJHZYJa1ELfFm6rdvMfHG4aBAylXiX9-A",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_lJHZYJa1ELfFm6rdvMfHG4aBAylXiX9-A",
+      "type": "playlist",
+      "channelId": "UCDQkIK-Md2XDbDWN4nKyzIQ",
+      "channelName": "夢川かなう - Kanau Yumekawa",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vsinger",
+      "title": "Suibotsu Escape",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/9wQBNog3weI/hqdefault.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCDQkIK-Md2XDbDWN4nKyzIQ",
+          "name": "夢川かなう - Kanau Yumekawa",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:36:28.069Z",
       "updatedAt": "2026-10-25T07:43:14.768Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
@@ -1319,202 +1319,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "OLAK5uy_nb9pZ5-SKc9AXVzHpb4xbGlOO0cDpA7R8",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_nb9pZ5-SKc9AXVzHpb4xbGlOO0cDpA7R8",
-      "type": "playlist",
-      "channelId": "UC7A7bGRVdIwo93nqnA3x-OQ",
-      "channelName": "苺咲べりぃ / Maisaki Berry",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "female",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "female_vtuber",
-      "title": "BBB!",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/OahpSgTNGss/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UC7A7bGRVdIwo93nqnA3x-OQ",
-          "name": "苺咲べりぃ / Maisaki Berry",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:36:28.069Z",
-      "updatedAt": "2026-10-26T12:56:51.125Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_neiyxdrs7Gd3kdxkctrvo3R3gM7RCq25U",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_neiyxdrs7Gd3kdxkctrvo3R3gM7RCq25U",
-      "type": "playlist",
-      "channelId": "UC1ucgoC_sGww_Euu5iMqpQw",
-      "channelName": "凛々咲 / Ririsya",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "female",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "female_vtuber",
-      "title": "Alstroemeria",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/ZZLbEbVL7PY/hqdefault.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UC1ucgoC_sGww_Euu5iMqpQw",
-          "name": "凛々咲 / Ririsya",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:36:28.069Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_nqajrobjDFqJ6S7PhvrUZlifU2aDvjy8s",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_nqajrobjDFqJ6S7PhvrUZlifU2aDvjy8s",
-      "type": "playlist",
-      "channelId": "UCo7TRj3cS-f_1D9ZDmuTsjw",
-      "channelName": "町田ちま【にじさんじ】",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "female",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "Namaenonai Kanjou",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/nHXWnNmy0ds/hqdefault.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCo7TRj3cS-f_1D9ZDmuTsjw",
-          "name": "町田ちま【にじさんじ】",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "QHwqLcSOOiE",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCS8w-7krErjLdDXY93yAeLA",
-      "channelName": "【くらまちゃんねる 】御先蔵馬",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "female",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "【 #oncehuman 】ラストわんす🦊🐾#5【#戯れ処】",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/QHwqLcSOOiE/hq720.jpg",
-      "publishedAt": "2026-10-26T12:56:51.125Z",
-      "scheduledStart": null,
-      "actualStart": "2026-10-26T12:56:51.125Z",
-      "actualEnd": "2026-10-27T10:02:58.969Z",
-      "duration": null,
-      "status": "past",
-      "category": "live",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCS8w-7krErjLdDXY93yAeLA",
-          "name": "【くらまちゃんねる 】御先蔵馬",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-26T12:56:51.125Z",
-      "updatedAt": "2026-10-27T10:02:58.969Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "OLAK5uy_muX48kcyp-dR1jGQsKHZqXIYizlhv3UO8",
       "platform": "youtube",
       "url": "https://www.youtube.com/playlist?list=OLAK5uy_muX48kcyp-dR1jGQsKHZqXIYizlhv3UO8",
@@ -1615,6 +1419,106 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "OLAK5uy_nb9pZ5-SKc9AXVzHpb4xbGlOO0cDpA7R8",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_nb9pZ5-SKc9AXVzHpb4xbGlOO0cDpA7R8",
+      "type": "playlist",
+      "channelId": "UC7A7bGRVdIwo93nqnA3x-OQ",
+      "channelName": "苺咲べりぃ / Maisaki Berry",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "female",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "BBB!",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/OahpSgTNGss/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC7A7bGRVdIwo93nqnA3x-OQ",
+          "name": "苺咲べりぃ / Maisaki Berry",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:36:28.069Z",
+      "updatedAt": "2026-10-26T12:56:51.125Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_neiyxdrs7Gd3kdxkctrvo3R3gM7RCq25U",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_neiyxdrs7Gd3kdxkctrvo3R3gM7RCq25U",
+      "type": "playlist",
+      "channelId": "UC1ucgoC_sGww_Euu5iMqpQw",
+      "channelName": "凛々咲 / Ririsya",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "female",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "Alstroemeria",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/ZZLbEbVL7PY/hqdefault.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC1ucgoC_sGww_Euu5iMqpQw",
+          "name": "凛々咲 / Ririsya",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:36:28.069Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "OLAK5uy_npEbcmZmkXhc_2kJGNDi-x7zaG5QkEwRQ",
       "platform": "youtube",
       "url": "https://www.youtube.com/playlist?list=OLAK5uy_npEbcmZmkXhc_2kJGNDi-x7zaG5QkEwRQ",
@@ -1665,23 +1569,23 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "OLAK5uy_nWt2MYryOwC6qDPwIfPIWiWCRGNz-g9Dc",
+      "id": "OLAK5uy_nqajrobjDFqJ6S7PhvrUZlifU2aDvjy8s",
       "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_nWt2MYryOwC6qDPwIfPIWiWCRGNz-g9Dc",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_nqajrobjDFqJ6S7PhvrUZlifU2aDvjy8s",
       "type": "playlist",
-      "channelId": "UCzyhBffWik7EShr6PEMsVSQ",
-      "channelName": "早乙女あずきAzuki Saotome",
+      "channelId": "UCo7TRj3cS-f_1D9ZDmuTsjw",
+      "channelName": "町田ちま【にじさんじ】",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
       "isAi": false,
       "variant": "vtuber",
-      "title": "Luxbloom",
+      "title": "Namaenonai Kanjou",
       "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/eJ4sGfyV1zk/hqdefault.jpg",
+      "thumbnail": "https://i.ytimg.com/vi/nHXWnNmy0ds/hqdefault.jpg",
       "publishedAt": null,
       "scheduledStart": null,
       "actualStart": null,
@@ -1694,8 +1598,8 @@
       "isCollab": false,
       "collaborators": [
         {
-          "channelId": "UCzyhBffWik7EShr6PEMsVSQ",
-          "name": "早乙女あずきAzuki Saotome",
+          "channelId": "UCo7TRj3cS-f_1D9ZDmuTsjw",
+          "name": "町田ちま【にじさんじ】",
           "kind": "virtual",
           "region": "jp"
         }
@@ -1709,100 +1613,8 @@
       "likeCount": null,
       "concurrentViewers": null,
       "source": "api",
-      "addedAt": "2026-10-25T07:36:28.069Z",
+      "addedAt": "2026-10-25T07:43:14.768Z",
       "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OOJ1uwouxh0",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCBY1b_TPZx3rA0F1KJnXkNQ",
-      "channelName": "むずちゃんねる",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "female",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "female_vtuber",
-      "title": "【出演情報】１２月２０日▶▶▶【きゅんきゅん歌枠リレー×パノライブ】",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/OOJ1uwouxh0/hq720.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "upcoming",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCBY1b_TPZx3rA0F1KJnXkNQ",
-          "name": "むずちゃんねる",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-27T05:00:25.991Z",
-      "updatedAt": "2026-10-27T10:02:58.969Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "rmxy-sWrUlU",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCd4M7cpSDzNCI8lDNOhj16Q",
-      "channelName": "大葉さしみ",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "大葉さしみの今週の予定",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/rmxy-sWrUlU/hq720.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "upcoming",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCd4M7cpSDzNCI8lDNOhj16Q",
-          "name": "大葉さしみ",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-24T20:46:02.237Z",
-      "updatedAt": "2026-10-27T10:02:58.969Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -1849,6 +1661,52 @@
       "source": "api",
       "addedAt": "2026-10-26T10:32:00.415Z",
       "updatedAt": "2026-10-27T17:58:40.188Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "QHwqLcSOOiE",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCS8w-7krErjLdDXY93yAeLA",
+      "channelName": "【くらまちゃんねる 】御先蔵馬",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "female",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "【 #oncehuman 】ラストわんす🦊🐾#5【#戯れ処】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/QHwqLcSOOiE/hq720.jpg",
+      "publishedAt": "2026-10-26T12:56:51.125Z",
+      "scheduledStart": null,
+      "actualStart": "2026-10-26T12:56:51.125Z",
+      "actualEnd": "2026-10-27T10:02:58.969Z",
+      "duration": null,
+      "status": "past",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCS8w-7krErjLdDXY93yAeLA",
+          "name": "【くらまちゃんねる 】御先蔵馬",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-26T12:56:51.125Z",
+      "updatedAt": "2026-10-27T10:02:58.969Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -2114,6 +1972,56 @@
         {
           "channelId": "UCQ1U65-CQdIoZ2_NA4Z4F7A",
           "name": "花譜 -KAF-",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_k3Emsl_r5UJKf2yx1Smo7gooyK75bnDCE",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_k3Emsl_r5UJKf2yx1Smo7gooyK75bnDCE",
+      "type": "playlist",
+      "channelId": "UCu2n3qHuOuQIygREMnWeQWg",
+      "channelName": "hololive FLOW GLOW",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "24K GOLD",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/oY-fJ8gO6qc/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCu2n3qHuOuQIygREMnWeQWg",
+          "name": "hololive FLOW GLOW",
           "kind": "virtual",
           "region": "jp"
         }
@@ -2678,56 +2586,6 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_lJHZYJa1ELfFm6rdvMfHG4aBAylXiX9-A",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_lJHZYJa1ELfFm6rdvMfHG4aBAylXiX9-A",
-      "type": "playlist",
-      "channelId": "UCDQkIK-Md2XDbDWN4nKyzIQ",
-      "channelName": "夢川かなう - Kanau Yumekawa",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vsinger",
-      "title": "Suibotsu Escape",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/9wQBNog3weI/hqdefault.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCDQkIK-Md2XDbDWN4nKyzIQ",
-          "name": "夢川かなう - Kanau Yumekawa",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:36:28.069Z",
       "updatedAt": "2026-10-25T07:43:14.768Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
@@ -3483,6 +3341,56 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "OLAK5uy_nWt2MYryOwC6qDPwIfPIWiWCRGNz-g9Dc",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_nWt2MYryOwC6qDPwIfPIWiWCRGNz-g9Dc",
+      "type": "playlist",
+      "channelId": "UCzyhBffWik7EShr6PEMsVSQ",
+      "channelName": "早乙女あずきAzuki Saotome",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "Luxbloom",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/eJ4sGfyV1zk/hqdefault.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCzyhBffWik7EShr6PEMsVSQ",
+          "name": "早乙女あずきAzuki Saotome",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:36:28.069Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "OLAK5uy_nXVisWDCAVlSa-Pk4Pvq_sBc4OwhleQa0",
       "platform": "youtube",
       "url": "https://www.youtube.com/playlist?list=OLAK5uy_nXVisWDCAVlSa-Pk4Pvq_sBc4OwhleQa0",
@@ -3583,6 +3491,52 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "OOJ1uwouxh0",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCBY1b_TPZx3rA0F1KJnXkNQ",
+      "channelName": "むずちゃんねる",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "female",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "【出演情報】１２月２０日▶▶▶【きゅんきゅん歌枠リレー×パノライブ】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/OOJ1uwouxh0/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCBY1b_TPZx3rA0F1KJnXkNQ",
+          "name": "むずちゃんねる",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-27T05:00:25.991Z",
+      "updatedAt": "2026-10-27T10:02:58.969Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "Q88IUaiicaI",
       "platform": "youtube",
       "type": "live",
@@ -3625,6 +3579,52 @@
       "source": "api",
       "addedAt": "2026-10-27T17:58:40.188Z",
       "updatedAt": "2026-10-27T17:58:40.188Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "rmxy-sWrUlU",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCd4M7cpSDzNCI8lDNOhj16Q",
+      "channelName": "大葉さしみ",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "大葉さしみの今週の予定",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/rmxy-sWrUlU/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCd4M7cpSDzNCI8lDNOhj16Q",
+          "name": "大葉さしみ",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-24T20:46:02.237Z",
+      "updatedAt": "2026-10-27T10:02:58.969Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },

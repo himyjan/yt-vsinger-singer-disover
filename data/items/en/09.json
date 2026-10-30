@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-30T02:34:10.268Z",
+  "generatedAt": "2026-10-30T02:52:38.702Z",
   "items": [
     {
       "id": "197OEpjj8RI",
@@ -1193,6 +1193,52 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "V71_kIUKc_k",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UC2RuYp5DwZv-tj7I4rnBb8A",
+      "channelName": "HavocVR",
+      "channelKind": "virtual",
+      "region": "en",
+      "gender": "unknown",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "ARSON",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/V71_kIUKc_k/hqdefault.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC2RuYp5DwZv-tj7I4rnBb8A",
+          "name": "HavocVR",
+          "kind": "virtual",
+          "region": "en"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-30T02:34:10.268Z",
+      "updatedAt": "2026-10-30T02:34:10.268Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "VinyWXJpgWA",
       "platform": "youtube",
       "type": "live",
@@ -1327,52 +1373,6 @@
       "source": "api",
       "addedAt": "2026-10-28T12:50:03.253Z",
       "updatedAt": "2026-10-28T12:50:03.253Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "V71_kIUKc_k",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UC2RuYp5DwZv-tj7I4rnBb8A",
-      "channelName": "HavocVR",
-      "channelKind": "virtual",
-      "region": "en",
-      "gender": "unknown",
-      "languages": [
-        "en"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "ARSON",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/V71_kIUKc_k/hqdefault.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "upcoming",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UC2RuYp5DwZv-tj7I4rnBb8A",
-          "name": "HavocVR",
-          "kind": "virtual",
-          "region": "en"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-30T02:34:10.268Z",
-      "updatedAt": "2026-10-30T02:34:10.268Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
