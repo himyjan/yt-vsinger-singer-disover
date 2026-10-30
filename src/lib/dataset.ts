@@ -731,6 +731,8 @@ export function filterItems(items: Item[], query: ItemQuery): Item[] {
   const affiliation = query.affiliation ?? "all";
   const language = query.language ?? "all";
   const schedule = query.schedule ?? "all";
+  const role = query.role ?? "all";
+  const vtuberOnly = query.vtuberOnly ?? "all";
   const text = query.text?.trim().toLowerCase() ?? "";
 
   const filtered = items.filter((item) => {
@@ -749,6 +751,20 @@ export function filterItems(items: Item[], query: ItemQuery): Item[] {
       const isSchedule = isScheduleTitle(item.title);
       if (schedule === "schedule" && !isSchedule) return false;
       if (schedule === "stream" && isSchedule) return false;
+    }
+    // Items don't carry `role` directly (it's a channel-level field), so
+    // use `channelKind` (virtual / real) as the best available signal:
+    // virtual performers → vsinger / vtuber, real → singer / producer.
+    if (role === "singer" || role === "producer") {
+      if (item.channelKind !== "real") return false;
+    }
+    if (role === "vsinger" || role === "vtuber") {
+      if (item.channelKind !== "virtual") return false;
+    }
+    // vtuberOnly splits virtual performers; items can't distinguish vsinger
+    // from vtuber without role, so both reduce to virtual vs real.
+    if (vtuberOnly === "vsinger" || vtuberOnly === "vtuber") {
+      if (item.channelKind !== "virtual") return false;
     }
     if (text) {
       const haystack = `${item.title} ${item.songTitle ?? ""} ${
