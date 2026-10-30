@@ -497,7 +497,7 @@ same `parseSubscriptionsFile()`, but neither is required for a large account.
 
 | Workflow | Trigger | Does |
 | --- | --- | --- |
-| `sync-data.yml` | every 6 hours + manual | fetch → qualify discovery candidates → classify → index → validate → rebase → commit `data/`; rotates through the catalogue by shard |
+| `sync-data.yml` | every 6 hours + manual | fetch → qualify discovery candidates → classify → index → validate → rebase → commit `data/`; rotates through the catalogue by shard, and skips the live pass (that is `live.yml`) |
 | `live.yml` | every two hours + manual | `--live-only`: check who is streaming on every platform → retire ended streams → validate → rebase → commit `data/`; rotates by shard |
 | `verify-data.yml` | daily + manual | verify uncertain records → re-apply corrections → index → validate → rebase → commit `data/` |
 | `deploy-pages.yml` | push to `main` | validate → build → publish to Pages |

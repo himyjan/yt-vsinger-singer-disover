@@ -35,6 +35,11 @@ sync it outlived the job's `timeout-minutes` and the run was killed at 68% with
 no commit. Here it is the whole run, so `limit-live` decides how much of the
 rotation it covers and the job finishes.
 
+The sync therefore **skips** this phase unless the run asks for it with
+`--limit-live N`; `sync-data.yml` never passes it. That is the fix, not the
+360-minute ceiling: a ceiling only buys a longer run that still dies before the
+write.
+
 `live.yml`, `sync-data.yml`, `verify-data.yml` and `data-squash.yml` share the
 `dataset-writer-*` concurrency group, so a live run waits for a sync rather than
 writing the same shards at the same time. Every workflow in the group sets

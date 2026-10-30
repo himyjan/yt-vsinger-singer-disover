@@ -75,9 +75,14 @@ jobs:
     runs-on: ubuntu-latest
     # GitHub-hosted runners allow 360 minutes and mark an overrun as
     # "cancelled" — which is what killed the 2026-10-29 runs at exactly
-    # 45m20s, 68% through the live-check phase, with no commit. The live pass
-    # now has its own workflow (`live.yml`), so what is left here is bounded
-    # by its own limits; the ceiling is the maximum GitHub will give us.
+    # 45m20s, 68% through the live-check phase, with no commit.
+    #
+    # The cause was `maxLiveChannelsPerRun` (25,000) being larger than the
+    # ~15,900-channel shard this workflow hands the sync, so every run opened
+    # every Live tab. The sync now skips that phase unless `--limit-live N` is
+    # passed, and `live.yml` owns it; a full sync is a rotation over a slice,
+    # so it finishes well inside this ceiling, which is the maximum GitHub
+    # gives us and therefore headroom rather than a target.
     timeout-minutes: 360
 
     steps:
@@ -124,6 +129,9 @@ jobs:
           SYNC_SHARD_COUNT: ${{ github.event.inputs.shard-count || '4' }}
           SYNC_CHANNELS: ${{ github.event.inputs.channels }}
         run: |
+          # No --limit-live here: the live pass is `live.yml`'s job. The sync
+          # skips it unless this run names a bound, which is what keeps the run
+          # short enough to always reach the commit below.
           ARGS=(--budget "${{ inputs.budget || 2500 }}" --roster)
           if [ "${{ inputs.no-search }}" = "true" ]; then ARGS+=(--no-search); fi
           if [ "${{ inputs.dry-run }}" = "true" ]; then ARGS+=(--dry-run); fi
