@@ -4,25 +4,34 @@ name: Live status
 #
 # Why this is not part of `sync-data.yml`: the live phase is the one whose cost
 # is proportional to the **whole catalogue** — one InnerTube Live-tab lookup
-# per YouTube channel, 63,000 of them, at roughly a second or two each. Inside
-# the full sync that phase alone outlived the job's time limit, so the run was
-# killed at 68% and committed nothing. Here it is the whole run, it fits, and
-# the full sync stays short enough to always reach its write step.
+# per YouTube channel, 63,000 of them. Inside the full sync that phase alone
+# outlived the job's time limit, so the run was killed at 68% and committed
+# nothing. Here it is the whole run.
 #
-# The catalogue is split into 10 volumes (`npm run data:volumes -- --count 10`),
-# ~7,200 channels each, and a run processes **two of them**, rotating by run
-# number — not all ten. The arithmetic is the reason:
+# The arithmetic, measured rather than estimated:
 #
-#   one check, sequential     0.78 s  (250 ms throttle + two round-trips)
-#   one volume, sequential    6,433 checks ≈ 78 min
-#   all ten volumes           ≈ 13 h — and a GitHub job cannot exceed 6 h
+#   one check, sequential      0.78 s   (250 ms throttle + two round-trips)
+#   one check, behind a pool   0.176 s  (108 checks in 19 s)
+#   one volume                 6,433 checks ≈ 19 min
+#   all ten volumes            ≈ 3.1 h of pacing, ~13 h if sequential
 #
-# So a run that tries every volume is cancelled before it reaches its commit
-# step and writes nothing. With the pool below one check costs 0.176 s
-# (measured: 108 checks in 19 s), so a volume is ~19 min and two volumes plus
-# the multi-platform pass and the merge/index/validate/commit that follow fit
-# in 75 minutes with room for a source that pushes back. Twelve runs a day
-# still sweep the catalogue every five runs (~10 h).
+# A single job cannot do that: GitHub caps a job at 6 h, and at ~5.7 checks/s
+# per process the ten volumes are 13 h sequentially. So the catalogue is split
+# into volumes (`volumeOf()` is rendezvous hashing, so a channel never moves)
+# and the volumes are checked **in parallel, one group of two per job**. Five
+# jobs at once ≈ 28 requests/s against InnerTube, and a full sweep takes ~40
+# minutes instead of ten hours — which is what a "live now" tab is worth.
+#
+# Parallelism multiplies the *request rate*, not the work: each process paces
+# itself with its own `RateLimiter`, so N jobs means N × 5.7 checks/s. That is
+# why the groups are pairs (five jobs) rather than one volume each (ten jobs,
+# ~57/s, ten independent backoffs the moment the source pushes back).
+#
+# Each job writes only its own volumes, in its own checkout — the `data/`
+# symlink swap below is per-workspace, so nothing is shared. The single writer
+# lock (`acquireRunLock`) still applies inside each job. The volumes travel
+# back as artifacts and a fan-in job merges them, rebuilds the index, validates
+# and commits **once**.
 #
 # `--live-only` loads `data/`, checks the platforms, and writes back only the
 # item changes: new `live`/`upcoming` entries, and the streams that ended
@@ -62,14 +71,56 @@ permissions:
   contents: write
 
 jobs:
-  live:
-    name: Refresh live status
+  # Turns `volume-count` into the list of groups the matrix fans out over.
+  # It is a job rather than an expression because a matrix cannot read an input
+  # that a step computed.
+  plan:
+    name: Plan
     runs-on: ubuntu-latest
-    # 2 volumes × ~19 min = ~38 min, plus the multi-platform pass and the
-    # merge/index/validate/commit that follow (~53 min in all). 75 minutes
-    # leaves room for a slower source without blocking the dataset-writer lane
-    # for hours.
-    timeout-minutes: 75
+    outputs:
+      count: ${{ steps.plan.outputs.count }}
+      groups: ${{ steps.plan.outputs.groups }}
+    steps:
+      - name: Work out the groups
+        id: plan
+        env:
+          # Passed through the environment rather than interpolated: a
+          # `workflow_dispatch` input is user-supplied text, and `${{ }}` puts
+          # it in the script verbatim.
+          COUNT: ${{ inputs.volume-count || 10 }}
+        run: |
+          # Two volumes per job: five jobs at once is ~28 requests/s, which is
+          # the rate this pipeline is willing to ask of a free source.
+          PER_JOB=2
+          # Not `GROUPS`: bash keeps that name for the user's group IDs, and an
+          # assignment to it is silently ignored — `$((GROUPS - 1))` then reads
+          # the array and the matrix gets twenty bogus entries.
+          GROUP_COUNT=$(( (COUNT + PER_JOB - 1) / PER_JOB ))
+          JSON="["
+          SEP=""
+          for g in $(seq 0 $((GROUP_COUNT - 1))); do
+            JSON="$JSON$SEP$g"
+            SEP=","
+          done
+          JSON="$JSON]"
+          echo "count=$COUNT" >> "$GITHUB_OUTPUT"
+          echo "groups=$JSON" >> "$GITHUB_OUTPUT"
+          echo "splitting $COUNT volume(s) into $GROUP_COUNT job(s): $JSON"
+
+  # One job per pair of volumes, all at once.
+  volume:
+    name: Volumes ${{ matrix.group }}
+    needs: plan
+    runs-on: ubuntu-latest
+    # Two volumes × ~19 min, plus the split and the checkout. 60 minutes leaves
+    # room for a source that pushes back.
+    timeout-minutes: 60
+    # A failure must abort the run, not produce a half-refreshed dataset that
+    # the fan-in job would happily merge and commit.
+    strategy:
+      fail-fast: true
+      matrix:
+        group: ${{ fromJSON(needs.plan.outputs.groups) }}
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -91,11 +142,33 @@ jobs:
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
 
-      - name: Create volume split (10 volumes)
-        run: npm run data:volumes -- --count ${{ inputs.volume-count || 10 }}
-
-      - name: Process each volume sequentially
+      - name: Create volume split
         env:
+          COUNT: ${{ needs.plan.outputs.count }}
+        run: npm run data:volumes -- --count "$COUNT"
+
+      - name: Which volumes this job owns
+        id: mine
+        env:
+          COUNT: ${{ needs.plan.outputs.count }}
+          GROUP: ${{ matrix.group }}
+        run: |
+          FIRST=$(( GROUP * 2 ))
+          LIST=""
+          PATHS=""
+          for v in $(seq "$FIRST" $((FIRST + 1))); do
+            if [ "$v" -lt "$COUNT" ]; then
+              LIST="$LIST $v"
+              PATHS="${PATHS}.volumes/vol-$v"$'\n'
+            fi
+          done
+          echo "list=$LIST" >> "$GITHUB_OUTPUT"
+          printf 'paths=%s' "$PATHS" >> "$GITHUB_OUTPUT"
+          echo "job $GROUP owns volumes:$LIST"
+
+      - name: Check live status for this group
+        env:
+          DRY_RUN: ${{ inputs.dry-run }}
           TWITCH_CLIENT_ID: ${{ secrets.TWITCH_CLIENT_ID }}
           TWITCH_CLIENT_SECRET: ${{ secrets.TWITCH_CLIENT_SECRET }}
           VK_ACCESS_TOKEN: ${{ secrets.VK_ACCESS_TOKEN }}
@@ -103,23 +176,14 @@ jobs:
           CI_ME_CLIENT_SECRET: ${{ secrets.CI_ME_CLIENT_SECRET }}
         run: |
           # 7,000 is above the largest volume's UC count (6,433 measured), so a
-          # volume is covered whole — the cap must not cut its tail. The pool
-          # and the delay are what make it fit: the limiter spaces the requests,
-          # the workers hide the round-trip behind that spacing.
+          # volume is covered whole — the cap must not cut its tail, because
+          # `page` never advances when the limit covers the whole set.
           ARGS=(--live-only --limit-live 7000 --limit-multi-platform-live 400)
           ARGS+=(--live-concurrency 6 --innertube-delay 150)
-          if [ "${{ inputs.dry-run }}" = "true" ]; then ARGS+=(--dry-run); fi
+          if [ "${DRY_RUN:-false}" = "true" ]; then ARGS+=(--dry-run); fi
 
-          VOLUME_COUNT="${{ inputs.volume-count || 10 }}"
-          VOLUMES_PER_RUN=2
-          # Rendezvous hashing keeps a channel in the same volume between runs,
-          # so "volumes 3,4,5 this run" means the same channels every time.
-          START=$(( ((GITHUB_RUN_NUMBER - 1) * VOLUMES_PER_RUN) % VOLUME_COUNT ))
-          echo "run $GITHUB_RUN_NUMBER → volumes $START,$(( (START + 1) % VOLUME_COUNT )),$(( (START + 2) % VOLUME_COUNT )) of $VOLUME_COUNT"
-
-          for i in $(seq 0 $((VOLUMES_PER_RUN - 1))); do
-            v=$(( (START + i) % VOLUME_COUNT ))
-            echo "=== Processing volume $v ($((i + 1))/$VOLUMES_PER_RUN) ==="
+          for v in ${{ steps.mine.outputs.list }}; do
+            echo "=== Processing volume $v ==="
 
             # Copy shared root-level files into this volume's data/ so sync.ts
             # can read them when data/ is symlinked to this volume.
@@ -130,9 +194,9 @@ jobs:
               fi
             done
 
-            # Swap root data/ for this volume's slice so sync.ts only sees
-            # this volume's channels. Restore afterwards so the next volume
-            # starts from the full dataset.
+            # Swap root data/ for this volume's slice so sync.ts only sees this
+            # volume's channels. Restore afterwards so the next volume starts
+            # from the full dataset.
             mv data data-full
             ln -s "$VOL_DIR" data
 
@@ -142,8 +206,66 @@ jobs:
             mv data-full data
           done
 
+      - name: Upload the refreshed volumes
+        uses: actions/upload-artifact@v5
+        with:
+          name: volumes-${{ matrix.group }}
+          path: ${{ steps.mine.outputs.paths }}
+          # Only the fan-in job reads these, and it runs in minutes.
+          retention-days: 1
+          if-no-files-found: error
+
+  # Downloads every group's volumes, merges them into one `data/`, and commits
+  # once. This is the only job that writes to the repository.
+  merge:
+    name: Merge and commit
+    needs: [plan, volume]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          lfs: true
+
+      - name: Install Git LFS
+        run: |
+          git lfs install --skip-repo
+          git lfs pull || true
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "26"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Download the refreshed volumes
+        uses: actions/download-artifact@v5
+        with:
+          pattern: volumes-*
+          path: .volumes-raw
+
+      - name: Place them where the merge expects them
+        run: |
+          mkdir -p .volumes
+          for dir in .volumes-raw/volumes-*; do
+            for vol in "$dir"/vol-*; do
+              [ -d "$vol" ] || continue
+              name=$(basename "$vol")
+              rm -rf ".volumes/$name"
+              mv "$vol" ".volumes/$name"
+              echo "restored $name"
+            done
+          done
+
       - name: Merge all volumes into data/
-        run: npx tsx scripts/merge-volumes.ts --count ${{ inputs.volume-count || 10 }}
+        env:
+          COUNT: ${{ needs.plan.outputs.count }}
+        run: npx tsx scripts/merge-volumes.ts --count "$COUNT"
 
       - name: Build search index
         run: npm run data:index
@@ -180,8 +302,9 @@ jobs:
             echo ""
             echo "| Metric | Value |"
             echo "| --- | --- |"
-            echo "| Volumes processed | ${{ inputs.volume-count || 10 }} (sequential in one job) |"
-            echo "| Live pass | `--live-only` per volume, then merged |"
+            echo "| Volumes | ${{ needs.plan.outputs.count }}, checked in parallel |"
+            echo "| Jobs | ${{ needs.plan.outputs.groups }} × 2 volumes |"
+            echo "| Live pass | \`--live-only\` per volume, then merged |"
             echo "| Index | rebuilt after merge |"
             echo "| Committed | \`data/\` |"
           } >> "$GITHUB_STEP_SUMMARY"
