@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-30T07:01:41.522Z",
+  "generatedAt": "2026-10-30T11:03:31.030Z",
   "items": [
     {
       "id": "_4gDAm1wqKc",
@@ -141,52 +141,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "2kNufWeNg_E",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCjoGLVLapRciX38bwgDtttw",
-      "channelName": "羽緒",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "female",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "female_vsinger",
-      "title": "☽.· LIVE info │ 2026.10.31  (Sat.) Osaka VTuber Circuit FES vol.8 #OVCフェス ☽.·",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/2kNufWeNg_E/hq720.jpg",
-      "publishedAt": null,
-      "scheduledStart": "2026-10-31T14:45:00.000Z",
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "upcoming",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCjoGLVLapRciX38bwgDtttw",
-          "name": "羽緒",
-          "kind": "real",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-27T17:58:40.188Z",
-      "updatedAt": "2026-10-30T07:01:41.522Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "49D5ha7EDR4",
       "platform": "youtube",
       "type": "live",
@@ -274,6 +228,98 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-25T20:48:43.621Z",
+      "updatedAt": "2026-10-30T07:01:41.522Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "l2kTvvLCW9Y",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UC_WOBIopwUih0rytRnr_1Ag",
+      "channelName": "瀬島るい / Rui Channel 【ななしいんく】",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "female",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "【 えかきうた大合戦 】爆烈夜会で話題の絵描き歌ゲームやっちゃおー♪🎃【 西園寺メアリ┋茜音カンナ┋羽流鷲りりり┋瀬島るい┋ななしいんく】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/l2kTvvLCW9Y/hq720.jpg",
+      "publishedAt": "2026-10-28T10:00:02.000Z",
+      "scheduledStart": null,
+      "actualStart": "2026-10-28T10:00:02.000Z",
+      "actualEnd": "2026-10-28T11:05:19.000Z",
+      "duration": 3917,
+      "status": "past",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC_WOBIopwUih0rytRnr_1Ag",
+          "name": "瀬島るい / Rui Channel 【ななしいんく】",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-27T17:58:40.188Z",
+      "updatedAt": "2026-10-30T07:01:41.522Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "2kNufWeNg_E",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCjoGLVLapRciX38bwgDtttw",
+      "channelName": "羽緒",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "female",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "female_vsinger",
+      "title": "☽.· LIVE info │ 2026.10.31  (Sat.) Osaka VTuber Circuit FES vol.8 #OVCフェス ☽.·",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/2kNufWeNg_E/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2026-10-31T14:45:00.000Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCjoGLVLapRciX38bwgDtttw",
+          "name": "羽緒",
+          "kind": "real",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-27T17:58:40.188Z",
       "updatedAt": "2026-10-30T07:01:41.522Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
@@ -509,52 +555,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "bCJKPjeFNyA",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCRSfZ02Y8I6lMBlJQVkxhAg",
-      "channelName": "みすきすみ",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "unknown",
-      "title": "✦ SUBSCRIBER ✦",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/bCJKPjeFNyA/hq720.jpg",
-      "publishedAt": null,
-      "scheduledStart": "2028-01-01T14:45:00.000Z",
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "upcoming",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCRSfZ02Y8I6lMBlJQVkxhAg",
-          "name": "みすきすみ",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-10-30T07:01:41.522Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "BuOVzWVYwd8",
       "platform": "youtube",
       "type": "live",
@@ -596,52 +596,6 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-25T16:14:08.234Z",
-      "updatedAt": "2026-10-30T07:01:41.522Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "CCQbPzATJTM",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCjKPgy9YPt16z8AFMi-TLeA",
-      "channelName": "ゆらぎゆら / YuragiYura🌙🫧",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "female",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "female_vtuber",
-      "title": "ふりーちゃっと",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/CCQbPzATJTM/hq720.jpg",
-      "publishedAt": null,
-      "scheduledStart": "2028-04-30T14:59:00.000Z",
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "upcoming",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCjKPgy9YPt16z8AFMi-TLeA",
-          "name": "ゆらぎゆら / YuragiYura🌙🫧",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-30T04:35:35.383Z",
       "updatedAt": "2026-10-30T07:01:41.522Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
@@ -693,6 +647,52 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "eDmbfGaVDBM",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCZlj_hp57CuyacF5d7K0VMg",
+      "channelName": "NEPHLA",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "announce📢メジャーデビュー記念リリースParty先行チケット販売中✧ #NEPHLA",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/eDmbfGaVDBM/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2028-09-29T15:00:00.000Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCZlj_hp57CuyacF5d7K0VMg",
+          "name": "NEPHLA",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T11:22:49.894Z",
+      "updatedAt": "2026-10-30T07:01:41.522Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "ee1YyJl9Et8",
       "platform": "youtube",
       "type": "live",
@@ -734,52 +734,6 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-27T22:11:16.041Z",
-      "updatedAt": "2026-10-30T07:01:41.522Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "l2kTvvLCW9Y",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UC_WOBIopwUih0rytRnr_1Ag",
-      "channelName": "瀬島るい / Rui Channel 【ななしいんく】",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "female",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "female_vtuber",
-      "title": "【 えかきうた大合戦 】爆烈夜会で話題の絵描き歌ゲームやっちゃおー♪🎃【 西園寺メアリ┋茜音カンナ┋羽流鷲りりり┋瀬島るい┋ななしいんく】",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/l2kTvvLCW9Y/hq720.jpg",
-      "publishedAt": "2026-10-28T10:00:02.000Z",
-      "scheduledStart": null,
-      "actualStart": "2026-10-28T10:00:02.000Z",
-      "actualEnd": "2026-10-28T11:05:19.000Z",
-      "duration": 3917,
-      "status": "past",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UC_WOBIopwUih0rytRnr_1Ag",
-          "name": "瀬島るい / Rui Channel 【ななしいんく】",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-27T17:58:40.188Z",
       "updatedAt": "2026-10-30T07:01:41.522Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
@@ -831,6 +785,52 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "bCJKPjeFNyA",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCRSfZ02Y8I6lMBlJQVkxhAg",
+      "channelName": "みすきすみ",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "✦ SUBSCRIBER ✦",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/bCJKPjeFNyA/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2028-01-01T14:45:00.000Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCRSfZ02Y8I6lMBlJQVkxhAg",
+          "name": "みすきすみ",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-30T04:35:35.383Z",
+      "updatedAt": "2026-10-30T07:01:41.522Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "bxAY8e11r-M",
       "platform": "youtube",
       "type": "live",
@@ -877,6 +877,52 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "CCQbPzATJTM",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCjKPgy9YPt16z8AFMi-TLeA",
+      "channelName": "ゆらぎゆら / YuragiYura🌙🫧",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "female",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "ふりーちゃっと",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/CCQbPzATJTM/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2028-04-30T14:59:00.000Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCjKPgy9YPt16z8AFMi-TLeA",
+          "name": "ゆらぎゆら / YuragiYura🌙🫧",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-30T04:35:35.383Z",
+      "updatedAt": "2026-10-30T07:01:41.522Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "EEg920CeuX0",
       "platform": "youtube",
       "type": "live",
@@ -918,6 +964,52 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-25T11:22:49.894Z",
+      "updatedAt": "2026-10-30T07:01:41.522Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "ef2n23E8S8s",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCWCc8tO-uUl_7SJXIKJACMw",
+      "channelName": "神楽めあ / KaguraMea",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "ふりーちゃっと",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/ef2n23E8S8s/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2027-01-01T13:25:00.000Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCWCc8tO-uUl_7SJXIKJACMw",
+          "name": "神楽めあ / KaguraMea",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-24T15:54:59.721Z",
       "updatedAt": "2026-10-30T07:01:41.522Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
@@ -1441,6 +1533,56 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "OLAK5uy_kUOwlf8ioY5Gs7pJJWBZFF6j2oNm9yRKw",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_kUOwlf8ioY5Gs7pJJWBZFF6j2oNm9yRKw",
+      "type": "playlist",
+      "channelId": "UCWCc8tO-uUl_7SJXIKJACMw",
+      "channelName": "神楽めあ / KaguraMea",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "Sakuyamimei",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/pARPUqXJvns/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCWCc8tO-uUl_7SJXIKJACMw",
+          "name": "神楽めあ / KaguraMea",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "OLAK5uy_lGw4pbzn6jbgnhXyiD6Jm1EtrkGIN059w",
       "platform": "youtube",
       "url": "https://www.youtube.com/playlist?list=OLAK5uy_lGw4pbzn6jbgnhXyiD6Jm1EtrkGIN059w",
@@ -1487,56 +1629,6 @@
       "source": "api",
       "addedAt": "2026-10-25T07:36:28.069Z",
       "updatedAt": "2026-10-26T12:56:51.125Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_lK3vYQuMzo3A6i4TXjim4gU6Mk-bNml3k",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_lK3vYQuMzo3A6i4TXjim4gU6Mk-bNml3k",
-      "type": "playlist",
-      "channelId": "UCt5-0i4AVHXaWJrL8Wql3mw",
-      "channelName": "緑仙 / Ryushen",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "female",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "The First Supper",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/dcR5BgTgWe4/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCt5-0i4AVHXaWJrL8Wql3mw",
-          "name": "緑仙 / Ryushen",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -1722,56 +1814,6 @@
         {
           "channelId": "UCo7TRj3cS-f_1D9ZDmuTsjw",
           "name": "町田ちま【にじさんじ】",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_mT59rI-VW4UGawD5xbXckM64GvapHZNGI",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_mT59rI-VW4UGawD5xbXckM64GvapHZNGI",
-      "type": "playlist",
-      "channelId": "UCCzUftO8KOVkV4wQG1vkUvg",
-      "channelName": "Marine Ch. 宝鐘マリン hololive3期生",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "ROMAN HIKOU",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/-pCWlZzQPwY/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCCzUftO8KOVkV4wQG1vkUvg",
-          "name": "Marine Ch. 宝鐘マリン hololive3期生",
           "kind": "virtual",
           "region": "jp"
         }
@@ -2187,52 +2229,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "PCi4pW1T_YE",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCHnbtVLZYGuKkGh6iFxxTpw",
-      "channelName": "杏夜 くもり - Anya Kumori -",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "female",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "female_vtuber",
-      "title": "📢꙳⟡ 𝙉𝙀𝙒𝙎 ⟡.* 🎈メンバー限定10月壁紙配布中❕【広報担当あんや】",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/PCi4pW1T_YE/hq720.jpg",
-      "publishedAt": null,
-      "scheduledStart": "2027-11-03T15:00:00.000Z",
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "upcoming",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCHnbtVLZYGuKkGh6iFxxTpw",
-          "name": "杏夜 くもり - Anya Kumori -",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-10-30T07:01:41.522Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "PLNphBYlloE",
       "platform": "youtube",
       "type": "live",
@@ -2279,36 +2275,36 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "PnwY8e6jb-E",
+      "id": "RiXsfl5ImwA",
       "platform": "youtube",
       "type": "live",
-      "channelId": "UCt5-0i4AVHXaWJrL8Wql3mw",
-      "channelName": "緑仙 / Ryushen",
+      "channelId": "UC6bD0BolIyRtVCXL0SKn8Yw",
+      "channelName": "天晴ほかる-Amanohare Hokaru-【ユニプロ】",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "female",
+      "gender": "male",
       "languages": [
         "ja"
       ],
       "isAi": false,
-      "variant": "vtuber",
-      "title": "🐼💭 緑仙ってどんな人？",
+      "variant": "male_vtuber",
+      "title": "【雑談/talk】メン限🔆お手元見せながら新衣装グッズにサイン書き！色々おしゃべりも🍑【#天晴ほかる/ユニプロ】",
       "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/PnwY8e6jb-E/hq720.jpg",
-      "publishedAt": null,
-      "scheduledStart": "2028-10-30T15:00:00.000Z",
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "upcoming",
+      "thumbnail": "https://i.ytimg.com/vi/RiXsfl5ImwA/hq720.jpg",
+      "publishedAt": "2026-10-29T12:30:06.000Z",
+      "scheduledStart": null,
+      "actualStart": "2026-10-29T12:30:06.000Z",
+      "actualEnd": "2026-10-29T14:56:11.000Z",
+      "duration": 8765,
+      "status": "past",
       "category": "premiere",
       "songTitle": null,
       "originalArtist": null,
       "isCollab": false,
       "collaborators": [
         {
-          "channelId": "UCt5-0i4AVHXaWJrL8Wql3mw",
-          "name": "緑仙 / Ryushen",
+          "channelId": "UC6bD0BolIyRtVCXL0SKn8Yw",
+          "name": "天晴ほかる-Amanohare Hokaru-【ユニプロ】",
           "kind": "virtual",
           "region": "jp"
         }
@@ -2319,7 +2315,7 @@
       "likeCount": null,
       "concurrentViewers": null,
       "source": "api",
-      "addedAt": "2026-10-24T20:46:02.237Z",
+      "addedAt": "2026-10-27T22:11:16.041Z",
       "updatedAt": "2026-10-30T07:01:41.522Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
@@ -2463,98 +2459,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "R9h8tE3e5kg",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCk6NyCw8qg_i28uLKcmc_Ag",
-      "channelName": "あずき Azuki Ch",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "female",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "unknown",
-      "title": "🎉待望のPS5日本語版販売開始😮砂漠のサバイバルMMOが最高にハマる#デューンアウェイクニング #Dune #日本語 🐣#デューン #ad #lurkit 🥳DUNE: Awakening",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/R9h8tE3e5kg/hq720.jpg",
-      "publishedAt": null,
-      "scheduledStart": "2026-10-31T04:00:00.000Z",
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "upcoming",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCk6NyCw8qg_i28uLKcmc_Ag",
-          "name": "あずき Azuki Ch",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-10-30T07:01:41.522Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "RiXsfl5ImwA",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UC6bD0BolIyRtVCXL0SKn8Yw",
-      "channelName": "天晴ほかる-Amanohare Hokaru-【ユニプロ】",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "male",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "male_vtuber",
-      "title": "【雑談/talk】メン限🔆お手元見せながら新衣装グッズにサイン書き！色々おしゃべりも🍑【#天晴ほかる/ユニプロ】",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/RiXsfl5ImwA/hq720.jpg",
-      "publishedAt": "2026-10-29T12:30:06.000Z",
-      "scheduledStart": null,
-      "actualStart": "2026-10-29T12:30:06.000Z",
-      "actualEnd": "2026-10-29T14:56:11.000Z",
-      "duration": 8765,
-      "status": "past",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UC6bD0BolIyRtVCXL0SKn8Yw",
-          "name": "天晴ほかる-Amanohare Hokaru-【ユニプロ】",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-27T22:11:16.041Z",
-      "updatedAt": "2026-10-30T07:01:41.522Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "TGklVCk7beg",
       "platform": "youtube",
       "type": "live",
@@ -2596,6 +2500,98 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-27T10:02:58.969Z",
+      "updatedAt": "2026-10-30T07:01:41.522Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "PCi4pW1T_YE",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCHnbtVLZYGuKkGh6iFxxTpw",
+      "channelName": "杏夜 くもり - Anya Kumori -",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "female",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "📢꙳⟡ 𝙉𝙀𝙒𝙎 ⟡.* 🎈メンバー限定10月壁紙配布中❕【広報担当あんや】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/PCi4pW1T_YE/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2027-11-03T15:00:00.000Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCHnbtVLZYGuKkGh6iFxxTpw",
+          "name": "杏夜 くもり - Anya Kumori -",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-30T04:35:35.383Z",
+      "updatedAt": "2026-10-30T07:01:41.522Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "R9h8tE3e5kg",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCk6NyCw8qg_i28uLKcmc_Ag",
+      "channelName": "あずき Azuki Ch",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "female",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "🎉待望のPS5日本語版販売開始😮砂漠のサバイバルMMOが最高にハマる#デューンアウェイクニング #Dune #日本語 🐣#デューン #ad #lurkit 🥳DUNE: Awakening",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/R9h8tE3e5kg/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2026-10-31T04:00:00.000Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCk6NyCw8qg_i28uLKcmc_Ag",
+          "name": "あずき Azuki Ch",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-30T04:35:35.383Z",
       "updatedAt": "2026-10-30T07:01:41.522Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
@@ -2785,24 +2781,24 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "eDmbfGaVDBM",
+      "id": "Km-vXBfQnJU",
       "platform": "youtube",
       "type": "live",
-      "channelId": "UCZlj_hp57CuyacF5d7K0VMg",
-      "channelName": "NEPHLA",
+      "channelId": "UC9qEMAQQes2PNcBXYSF-X7g",
+      "channelName": "黄金マアジ",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
       "isAi": false,
-      "variant": "unknown",
-      "title": "announce📢メジャーデビュー記念リリースParty先行チケット販売中✧ #NEPHLA",
+      "variant": "female_vtuber",
+      "title": "メンバーシップ紹介🐟アジっ子プラン🐟",
       "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/eDmbfGaVDBM/hq720.jpg",
+      "thumbnail": "https://i.ytimg.com/vi/Km-vXBfQnJU/hq720.jpg",
       "publishedAt": null,
-      "scheduledStart": "2028-09-29T15:00:00.000Z",
+      "scheduledStart": "2028-01-30T16:50:00.000Z",
       "actualStart": null,
       "actualEnd": null,
       "duration": null,
@@ -2813,8 +2809,8 @@
       "isCollab": false,
       "collaborators": [
         {
-          "channelId": "UCZlj_hp57CuyacF5d7K0VMg",
-          "name": "NEPHLA",
+          "channelId": "UC9qEMAQQes2PNcBXYSF-X7g",
+          "name": "黄金マアジ",
           "kind": "virtual",
           "region": "jp"
         }
@@ -2825,17 +2821,17 @@
       "likeCount": null,
       "concurrentViewers": null,
       "source": "api",
-      "addedAt": "2026-10-25T11:22:49.894Z",
+      "addedAt": "2026-10-27T17:58:40.188Z",
       "updatedAt": "2026-10-30T07:01:41.522Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "ef2n23E8S8s",
+      "id": "TzlVqDQUdb8",
       "platform": "youtube",
       "type": "live",
-      "channelId": "UCWCc8tO-uUl_7SJXIKJACMw",
-      "channelName": "神楽めあ / KaguraMea",
+      "channelId": "UC2hc-00y-MSR6eYA4eQ4tjQ",
+      "channelName": "龍ヶ崎リン / Rene Ryugasaki【ななしいんく】",
       "channelKind": "virtual",
       "region": "jp",
       "gender": "unknown",
@@ -2844,23 +2840,23 @@
       ],
       "isAi": false,
       "variant": "vtuber",
-      "title": "ふりーちゃっと",
+      "title": "【ゼンゼロ】PV同時視聴&Ver.3.3シーズン3第4章「もう一度、空へと飛び立って」初見実況プレイ【龍ヶ崎リン / ななしいんく】",
       "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/ef2n23E8S8s/hq720.jpg",
-      "publishedAt": null,
-      "scheduledStart": "2027-01-01T13:25:00.000Z",
-      "actualStart": null,
-      "actualEnd": null,
+      "thumbnail": "https://i.ytimg.com/vi/TzlVqDQUdb8/hq720.jpg",
+      "publishedAt": "2026-10-27T10:02:58.969Z",
+      "scheduledStart": null,
+      "actualStart": "2026-10-27T10:02:58.969Z",
+      "actualEnd": "2026-10-27T12:07:34.435Z",
       "duration": null,
-      "status": "upcoming",
-      "category": "premiere",
+      "status": "past",
+      "category": "mv",
       "songTitle": null,
       "originalArtist": null,
       "isCollab": false,
       "collaborators": [
         {
-          "channelId": "UCWCc8tO-uUl_7SJXIKJACMw",
-          "name": "神楽めあ / KaguraMea",
+          "channelId": "UC2hc-00y-MSR6eYA4eQ4tjQ",
+          "name": "龍ヶ崎リン / Rene Ryugasaki【ななしいんく】",
           "kind": "virtual",
           "region": "jp"
         }
@@ -2871,8 +2867,8 @@
       "likeCount": null,
       "concurrentViewers": null,
       "source": "api",
-      "addedAt": "2026-10-24T15:54:59.721Z",
-      "updatedAt": "2026-10-30T07:01:41.522Z",
+      "addedAt": "2026-10-27T10:02:58.969Z",
+      "updatedAt": "2026-10-27T12:07:34.435Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3015,24 +3011,24 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "Km-vXBfQnJU",
+      "id": "M8ioIqkqXAM",
       "platform": "youtube",
       "type": "live",
-      "channelId": "UC9qEMAQQes2PNcBXYSF-X7g",
-      "channelName": "黄金マアジ",
+      "channelId": "UCqDN60QQx3GGmfagx1eyIEg",
+      "channelName": "彷徨 鈴【Samayoi Suzu】",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "female",
+      "gender": "unknown",
       "languages": [
         "ja"
       ],
       "isAi": false,
-      "variant": "female_vtuber",
-      "title": "メンバーシップ紹介🐟アジっ子プラン🐟",
+      "variant": "vsinger",
+      "title": "Free Chat＆Information👻💜",
       "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/Km-vXBfQnJU/hq720.jpg",
+      "thumbnail": "https://i.ytimg.com/vi/M8ioIqkqXAM/hq720.jpg",
       "publishedAt": null,
-      "scheduledStart": "2028-01-30T16:50:00.000Z",
+      "scheduledStart": "2028-02-28T15:00:00.000Z",
       "actualStart": null,
       "actualEnd": null,
       "duration": null,
@@ -3043,8 +3039,8 @@
       "isCollab": false,
       "collaborators": [
         {
-          "channelId": "UC9qEMAQQes2PNcBXYSF-X7g",
-          "name": "黄金マアジ",
+          "channelId": "UCqDN60QQx3GGmfagx1eyIEg",
+          "name": "彷徨 鈴【Samayoi Suzu】",
           "kind": "virtual",
           "region": "jp"
         }
@@ -3055,7 +3051,7 @@
       "likeCount": null,
       "concurrentViewers": null,
       "source": "api",
-      "addedAt": "2026-10-27T17:58:40.188Z",
+      "addedAt": "2026-10-25T11:22:49.894Z",
       "updatedAt": "2026-10-30T07:01:41.522Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
@@ -3102,6 +3098,52 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-30T04:35:35.383Z",
+      "updatedAt": "2026-10-30T07:01:41.522Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "Nj0SazfuAXk",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCt8JrunDR7gUhYesn0jHtLg",
+      "channelName": "Tefu Ch. うましかてふ",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "female",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "【 #雑談 】浮気はどこから？恋愛裁判がしたいの巻【 #馬鹿蝶┊#星めぐり学園 】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/Nj0SazfuAXk/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2026-11-05T12:00:00.000Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCt8JrunDR7gUhYesn0jHtLg",
+          "name": "Tefu Ch. うましかてふ",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-27T22:11:16.041Z",
       "updatedAt": "2026-10-30T07:01:41.522Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
@@ -3245,194 +3287,6 @@
       "source": "api",
       "addedAt": "2026-10-25T07:43:14.768Z",
       "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_kUOwlf8ioY5Gs7pJJWBZFF6j2oNm9yRKw",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_kUOwlf8ioY5Gs7pJJWBZFF6j2oNm9yRKw",
-      "type": "playlist",
-      "channelId": "UCWCc8tO-uUl_7SJXIKJACMw",
-      "channelName": "神楽めあ / KaguraMea",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "Sakuyamimei",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/pARPUqXJvns/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCWCc8tO-uUl_7SJXIKJACMw",
-          "name": "神楽めあ / KaguraMea",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "TzlVqDQUdb8",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UC2hc-00y-MSR6eYA4eQ4tjQ",
-      "channelName": "龍ヶ崎リン / Rene Ryugasaki【ななしいんく】",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "【ゼンゼロ】PV同時視聴&Ver.3.3シーズン3第4章「もう一度、空へと飛び立って」初見実況プレイ【龍ヶ崎リン / ななしいんく】",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/TzlVqDQUdb8/hq720.jpg",
-      "publishedAt": "2026-10-27T10:02:58.969Z",
-      "scheduledStart": null,
-      "actualStart": "2026-10-27T10:02:58.969Z",
-      "actualEnd": "2026-10-27T12:07:34.435Z",
-      "duration": null,
-      "status": "past",
-      "category": "mv",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UC2hc-00y-MSR6eYA4eQ4tjQ",
-          "name": "龍ヶ崎リン / Rene Ryugasaki【ななしいんく】",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-27T10:02:58.969Z",
-      "updatedAt": "2026-10-27T12:07:34.435Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "M8ioIqkqXAM",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCqDN60QQx3GGmfagx1eyIEg",
-      "channelName": "彷徨 鈴【Samayoi Suzu】",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vsinger",
-      "title": "Free Chat＆Information👻💜",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/M8ioIqkqXAM/hq720.jpg",
-      "publishedAt": null,
-      "scheduledStart": "2028-02-28T15:00:00.000Z",
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "upcoming",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCqDN60QQx3GGmfagx1eyIEg",
-          "name": "彷徨 鈴【Samayoi Suzu】",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T11:22:49.894Z",
-      "updatedAt": "2026-10-30T07:01:41.522Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "Nj0SazfuAXk",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCt8JrunDR7gUhYesn0jHtLg",
-      "channelName": "Tefu Ch. うましかてふ",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "female",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "female_vtuber",
-      "title": "【 #雑談 】浮気はどこから？恋愛裁判がしたいの巻【 #馬鹿蝶┊#星めぐり学園 】",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/Nj0SazfuAXk/hq720.jpg",
-      "publishedAt": null,
-      "scheduledStart": "2026-11-05T12:00:00.000Z",
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "upcoming",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCt8JrunDR7gUhYesn0jHtLg",
-          "name": "Tefu Ch. うましかてふ",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-27T22:11:16.041Z",
-      "updatedAt": "2026-10-30T07:01:41.522Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3868,6 +3722,56 @@
         {
           "channelId": "UCfBkUgaJ6eqYA9_TX2cmq9A",
           "name": "理芽 -RIM-",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_lK3vYQuMzo3A6i4TXjim4gU6Mk-bNml3k",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_lK3vYQuMzo3A6i4TXjim4gU6Mk-bNml3k",
+      "type": "playlist",
+      "channelId": "UCt5-0i4AVHXaWJrL8Wql3mw",
+      "channelName": "緑仙 / Ryushen",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "female",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "The First Supper",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/dcR5BgTgWe4/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCt5-0i4AVHXaWJrL8Wql3mw",
+          "name": "緑仙 / Ryushen",
           "kind": "virtual",
           "region": "jp"
         }
@@ -4433,6 +4337,56 @@
       "source": "api",
       "addedAt": "2026-10-25T07:43:14.768Z",
       "updatedAt": "2026-10-26T12:56:51.125Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_mT59rI-VW4UGawD5xbXckM64GvapHZNGI",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_mT59rI-VW4UGawD5xbXckM64GvapHZNGI",
+      "type": "playlist",
+      "channelId": "UCCzUftO8KOVkV4wQG1vkUvg",
+      "channelName": "Marine Ch. 宝鐘マリン hololive3期生",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "ROMAN HIKOU",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/-pCWlZzQPwY/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCCzUftO8KOVkV4wQG1vkUvg",
+          "name": "Marine Ch. 宝鐘マリン hololive3期生",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5237,6 +5191,52 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "va12k6yA61U",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCIqSCv4NZ6PWXkpEmoi2-Fw",
+      "channelName": "crystal rein Ch. クリスタル レイン",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "【ゆる雑】深夜枠が難しいのでこの時間！起きれるかな？？？【＃雀魂 /#vtuber 】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/va12k6yA61U/hq720.jpg",
+      "publishedAt": "2026-10-30T05:04:12.000Z",
+      "scheduledStart": null,
+      "actualStart": "2026-10-30T05:04:12.000Z",
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCIqSCv4NZ6PWXkpEmoi2-Fw",
+          "name": "crystal rein Ch. クリスタル レイン",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-30T04:35:35.383Z",
+      "updatedAt": "2026-10-30T07:01:41.522Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "oprLj4HJTKU",
       "platform": "youtube",
       "type": "live",
@@ -5324,6 +5324,52 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
+      "updatedAt": "2026-10-30T07:01:41.522Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "PnwY8e6jb-E",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCt5-0i4AVHXaWJrL8Wql3mw",
+      "channelName": "緑仙 / Ryushen",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "female",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "🐼💭 緑仙ってどんな人？",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/PnwY8e6jb-E/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2028-10-30T15:00:00.000Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCt5-0i4AVHXaWJrL8Wql3mw",
+          "name": "緑仙 / Ryushen",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-24T20:46:02.237Z",
       "updatedAt": "2026-10-30T07:01:41.522Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
@@ -5451,52 +5497,6 @@
         {
           "channelId": "UCovLYDGpaKHqdSDIl_1xjWg",
           "name": "EtoKurou ch.黒烏エト",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-10-30T07:01:41.522Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "va12k6yA61U",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCIqSCv4NZ6PWXkpEmoi2-Fw",
-      "channelName": "crystal rein Ch. クリスタル レイン",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "【ゆる雑】深夜枠が難しいのでこの時間！起きれるかな？？？【＃雀魂 /#vtuber 】",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/va12k6yA61U/hq720.jpg",
-      "publishedAt": "2026-10-30T05:04:12.000Z",
-      "scheduledStart": null,
-      "actualStart": "2026-10-30T05:04:12.000Z",
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCIqSCv4NZ6PWXkpEmoi2-Fw",
-          "name": "crystal rein Ch. クリスタル レイン",
           "kind": "virtual",
           "region": "jp"
         }

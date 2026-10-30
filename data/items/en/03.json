@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-30T07:01:41.522Z",
+  "generatedAt": "2026-10-30T11:03:31.030Z",
   "items": [
     {
       "id": "-2rky6Hfz2A",
@@ -1841,6 +1841,52 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "wtDXazhDzKk",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCKajmKUZ7age8zlTp-GvO2Q",
+      "channelName": "Xin Asuwa",
+      "channelKind": "virtual",
+      "region": "en",
+      "gender": "female",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "Singing Bri-ish Songs Innit",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/wtDXazhDzKk/hq720.jpg",
+      "publishedAt": "2026-10-27T19:20:14.000Z",
+      "scheduledStart": null,
+      "actualStart": "2026-10-27T19:20:14.000Z",
+      "actualEnd": "2026-10-27T21:47:06.000Z",
+      "duration": 8812,
+      "status": "past",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCKajmKUZ7age8zlTp-GvO2Q",
+          "name": "Xin Asuwa",
+          "kind": "virtual",
+          "region": "en"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-27T17:58:40.188Z",
+      "updatedAt": "2026-10-30T07:01:41.522Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "v-KxLNg8gIs",
       "platform": "youtube",
       "type": "live",
@@ -1928,52 +1974,6 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-10-30T07:01:41.522Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "wtDXazhDzKk",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCKajmKUZ7age8zlTp-GvO2Q",
-      "channelName": "Xin Asuwa",
-      "channelKind": "virtual",
-      "region": "en",
-      "gender": "female",
-      "languages": [
-        "en"
-      ],
-      "isAi": false,
-      "variant": "female_vtuber",
-      "title": "Singing Bri-ish Songs Innit",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/wtDXazhDzKk/hq720.jpg",
-      "publishedAt": "2026-10-27T19:20:14.000Z",
-      "scheduledStart": null,
-      "actualStart": "2026-10-27T19:20:14.000Z",
-      "actualEnd": "2026-10-27T21:47:06.000Z",
-      "duration": 8812,
-      "status": "past",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCKajmKUZ7age8zlTp-GvO2Q",
-          "name": "Xin Asuwa",
-          "kind": "virtual",
-          "region": "en"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-27T17:58:40.188Z",
       "updatedAt": "2026-10-30T07:01:41.522Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null

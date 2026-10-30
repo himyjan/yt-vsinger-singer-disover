@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-30T07:01:41.522Z",
+  "generatedAt": "2026-10-30T11:03:31.030Z",
   "items": [
     {
       "id": "1374bVUvaog",
@@ -739,6 +739,52 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "qRhXRK4zu1s",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UC8rcEBzJSleTkf_-agPM20g",
+      "channelName": "IRyS Ch. hololive",
+      "channelKind": "virtual",
+      "region": "en",
+      "gender": "unknown",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "vsinger",
+      "title": "【Watchalong / 同時視聴】IRyS 1st Concert 「HOPE ||: Beyond the Stars」配信チケット11/6まで発売中！",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/qRhXRK4zu1s/hq720.jpg",
+      "publishedAt": "2026-10-29T04:02:15.000Z",
+      "scheduledStart": null,
+      "actualStart": "2026-10-29T04:02:15.000Z",
+      "actualEnd": "2026-10-29T08:00:22.000Z",
+      "duration": 14287,
+      "status": "past",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC8rcEBzJSleTkf_-agPM20g",
+          "name": "IRyS Ch. hololive",
+          "kind": "virtual",
+          "region": "en"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-28T22:33:18.686Z",
+      "updatedAt": "2026-10-30T07:01:41.522Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "KhYWV5I_LHE",
       "platform": "youtube",
       "type": "live",
@@ -1265,56 +1311,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "OLAK5uy_nmfZhjN2n5acQLAReibZcbWu0keIK5exc",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_nmfZhjN2n5acQLAReibZcbWu0keIK5exc",
-      "type": "playlist",
-      "channelId": "UCraSj5QVRNO9UNwtGQ5mP9Q",
-      "channelName": "Wakakusa Kiyoka ch.",
-      "channelKind": "virtual",
-      "region": "en",
-      "gender": "unknown",
-      "languages": [
-        "en"
-      ],
-      "isAi": false,
-      "variant": "vsinger",
-      "title": "TailwindforDream",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/V-1xt1zo-Ug/hqdefault.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCraSj5QVRNO9UNwtGQ5mP9Q",
-          "name": "Wakakusa Kiyoka ch.",
-          "kind": "virtual",
-          "region": "en"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:36:28.069Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "W-vlo12SL-I",
       "platform": "youtube",
       "type": "live",
@@ -1407,11 +1403,12 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "qRhXRK4zu1s",
+      "id": "OLAK5uy_nmfZhjN2n5acQLAReibZcbWu0keIK5exc",
       "platform": "youtube",
-      "type": "live",
-      "channelId": "UC8rcEBzJSleTkf_-agPM20g",
-      "channelName": "IRyS Ch. hololive",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_nmfZhjN2n5acQLAReibZcbWu0keIK5exc",
+      "type": "playlist",
+      "channelId": "UCraSj5QVRNO9UNwtGQ5mP9Q",
+      "channelName": "Wakakusa Kiyoka ch.",
       "channelKind": "virtual",
       "region": "en",
       "gender": "unknown",
@@ -1420,35 +1417,38 @@
       ],
       "isAi": false,
       "variant": "vsinger",
-      "title": "【Watchalong / 同時視聴】IRyS 1st Concert 「HOPE ||: Beyond the Stars」配信チケット11/6まで発売中！",
+      "title": "TailwindforDream",
       "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/qRhXRK4zu1s/hq720.jpg",
-      "publishedAt": "2026-10-29T04:02:15.000Z",
+      "thumbnail": "https://i.ytimg.com/vi/V-1xt1zo-Ug/hqdefault.jpg",
+      "publishedAt": null,
       "scheduledStart": null,
-      "actualStart": "2026-10-29T04:02:15.000Z",
-      "actualEnd": "2026-10-29T08:00:22.000Z",
-      "duration": 14287,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
       "status": "past",
-      "category": "premiere",
+      "category": "other",
       "songTitle": null,
       "originalArtist": null,
       "isCollab": false,
       "collaborators": [
         {
-          "channelId": "UC8rcEBzJSleTkf_-agPM20g",
-          "name": "IRyS Ch. hololive",
+          "channelId": "UCraSj5QVRNO9UNwtGQ5mP9Q",
+          "name": "Wakakusa Kiyoka ch.",
           "kind": "virtual",
           "region": "en"
         }
       ],
       "isAcoustic": false,
-      "tags": [],
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
       "viewCount": null,
       "likeCount": null,
       "concurrentViewers": null,
       "source": "api",
-      "addedAt": "2026-10-28T22:33:18.686Z",
-      "updatedAt": "2026-10-30T07:01:41.522Z",
+      "addedAt": "2026-10-25T07:36:28.069Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
