@@ -47,6 +47,14 @@ export interface LiveRefreshContext {
   now: string;
   /** How many YouTube channels this run may check. */
   limitLive: number;
+  /**
+   * Which window of the shard this run owns, 1-based.
+   *
+   * The shard is fixed by the id hash and `--shard N/M`; the page moves the
+   * window inside it, so successive runs walk the shard instead of re-checking
+   * the same channels. The scheduled workflow passes `GITHUB_RUN_NUMBER`.
+   */
+  page: number;
   /** How many per-channel platform links this run may check. */
   limitMultiPlatformLive: number;
   /** The shard predicate the run was started with. */
@@ -172,12 +180,32 @@ export async function refreshLivePass(
    * that was live on the previous run has ended. A failed check (`null`)
    * changes nothing.
    */
-  const liveTargets = channels
+  /**
+   * A rotating window over the run's shard.
+   *
+   * Ordering by `lastItemsFetchedAt` looked like a rotation and was not one:
+   * the live pass writes only the item files, so it never refreshes that field,
+   * and every run on a shard picked the same channels — 4,000 distinct out of
+   * 63,662 in a day, with 59,662 never checked at all. The ids are stable, so
+   * the id order is, and the page is what advances: `page` × `limit` steps
+   * through the shard and wraps, which covers it in `ceil(total / limit)`
+   * visits with no cursor file to keep.
+   */
+  const candidates = channels
     .filter((c) => c.id.startsWith("UC") && ctx.inShard(c.id))
-    .sort((a, b) =>
-      (a.lastItemsFetchedAt ?? "").localeCompare(b.lastItemsFetchedAt ?? ""),
-    )
-    .slice(0, ctx.limitLive);
+    .sort((a, b) => a.id.localeCompare(b.id));
+
+  const total = candidates.length;
+  const limit = Math.max(0, ctx.limitLive);
+  const start =
+    total > limit ? ((Math.max(1, ctx.page) - 1) * limit) % total : 0;
+  const liveTargets =
+    start === 0
+      ? candidates.slice(0, limit)
+      : [
+          ...candidates.slice(start, start + limit),
+          ...candidates.slice(0, Math.max(0, start + limit - total)),
+        ];
 
   if (liveTargets.length && innertube.isAvailable) {
     for (const channel of liveTargets) {
