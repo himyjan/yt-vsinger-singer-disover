@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-30T02:30:31.937Z",
+  "generatedAt": "2026-10-30T02:34:10.268Z",
   "regions": [
     {
       "code": "jp",
@@ -79,10 +79,9 @@
       "label": "Korea",
       "badge": "🇰🇷",
       "buckets": [
-        "00",
         "04"
       ],
-      "items": 2
+      "items": 1
     },
     {
       "code": "en",
@@ -106,7 +105,7 @@
         "0e",
         "0f"
       ],
-      "items": 365
+      "items": 368
     },
     {
       "code": "id",
@@ -172,12 +171,12 @@
         "0e",
         "0f"
       ],
-      "items": 26
+      "items": 27
     }
   ],
   "counts": {
-    "total": 1885,
-    "live": 56,
-    "upcoming": 728
+    "total": 1888,
+    "live": 58,
+    "upcoming": 729
   }
 }
