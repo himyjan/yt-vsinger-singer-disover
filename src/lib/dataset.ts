@@ -34,12 +34,7 @@ import { toSummary } from "@shared/lib/summary";
 import { isScheduleTitle } from "@shared/lib/classify";
 
 import { filterChannelList } from "./filter-index";
-import {
-  fetchUrl,
-  loadOrigins,
-  resetOrigins,
-  type DatasetOrigin,
-} from "./origins";
+import { fetchUrl, loadOrigins, resetOrigins, type DatasetOrigin } from "./origins";
 
 /* -------------------------------------------------------------------------- */
 /* Fetching                                                                   */
@@ -225,10 +220,7 @@ export async function loadSummaries(
 ): Promise<ChannelSummary[]> {
   if (regions === "all" && cache.summaries) return cache.summaries;
 
-  const targets =
-    regions === "all"
-      ? (await loadChannelManifest()).map((r) => r.code)
-      : regions;
+  const targets = regions === "all" ? (await loadChannelManifest()).map((r) => r.code) : regions;
 
   const results = await Promise.all(
     targets.map(async (region) => {
@@ -298,9 +290,7 @@ export async function loadChannelManifest(): Promise<ChannelRegionMeta[]> {
 }
 
 /** One origin's own shard map, exactly as that volume wrote it. */
-async function loadOriginChannelManifest(
-  origin: DatasetOrigin,
-): Promise<ChannelRegionMeta[]> {
+async function loadOriginChannelManifest(origin: DatasetOrigin): Promise<ChannelRegionMeta[]> {
   const cached = cache.channelManifestByOrigin.get(origin.index);
   if (cached) return cached;
   const parsed = await fetchJson<{ regions?: ChannelRegionMeta[] }>(
@@ -354,14 +344,9 @@ export async function loadChannels(
   kind: "virtual" | "real",
   regions: RegionCode[] | "all" = "all",
 ): Promise<Channel[]> {
-  const targets =
-    regions === "all"
-      ? (await loadChannelManifest()).map((r) => r.code)
-      : regions;
+  const targets = regions === "all" ? (await loadChannelManifest()).map((r) => r.code) : regions;
 
-  const results = await Promise.all(
-    targets.map((region) => loadKind(kind, region)),
-  );
+  const results = await Promise.all(targets.map((region) => loadKind(kind, region)));
 
   const all = results.flat();
   if (kind === "virtual") cache.virtual = all;
@@ -430,10 +415,7 @@ function expandChannel(raw: Channel): Channel {
  * merged manifest is not used here — it answers "who has this region", not
  * "which of them has bucket 07".
  */
-async function loadKind(
-  kind: "virtual" | "real",
-  region: RegionCode,
-): Promise<Channel[]> {
+async function loadKind(kind: "virtual" | "real", region: RegionCode): Promise<Channel[]> {
   const key = `${kind}:${region}`;
   const cached = cache.channelsByKind.get(key);
   if (cached) return cached;
@@ -446,8 +428,7 @@ async function loadKind(
     const lists = await Promise.all(
       origins.map(async (origin) => {
         const manifest = await loadOriginChannelManifest(origin);
-        const buckets =
-          manifest.find((entry) => entry.code === region)?.[kind]?.buckets ?? [];
+        const buckets = manifest.find((entry) => entry.code === region)?.[kind]?.buckets ?? [];
         const shards = await Promise.all(
           buckets.map((bucket) =>
             fetchJson<{ channels?: Channel[] }>(
@@ -476,9 +457,7 @@ async function loadKind(
 }
 
 /** Every channel record, both kinds. */
-export async function loadAllChannels(
-  regions: RegionCode[] | "all" = "all",
-): Promise<Channel[]> {
+export async function loadAllChannels(regions: RegionCode[] | "all" = "all"): Promise<Channel[]> {
   const [virtual, real] = await Promise.all([
     loadChannels("virtual", regions),
     loadChannels("real", regions),
@@ -502,9 +481,7 @@ export async function loadUpcoming(): Promise<Item[]> {
   if (cache.upcoming) return cache.upcoming;
   const origins = await loadOrigins();
   const pages = await Promise.all(
-    origins.map((origin) =>
-      fetchJson<{ items?: Item[] }>(origin, "data/items/upcoming.json"),
-    ),
+    origins.map((origin) => fetchJson<{ items?: Item[] }>(origin, "data/items/upcoming.json")),
   );
   cache.upcoming = uniqueById(pages.flatMap((page) => page?.items ?? [])).map(immutable);
   return cache.upcoming;
@@ -529,13 +506,9 @@ async function loadOriginItemsManifest(
  * Loads every item for the given regions.
  * `region: "all"` loads every region that the items manifest knows about.
  */
-export async function loadItems(
-  regions: RegionCode[] | "all",
-): Promise<Item[]> {
+export async function loadItems(regions: RegionCode[] | "all"): Promise<Item[]> {
   const origins = await loadOrigins();
-  const manifests = await Promise.all(
-    origins.map((origin) => loadOriginItemsManifest(origin)),
-  );
+  const manifests = await Promise.all(origins.map((origin) => loadOriginItemsManifest(origin)));
 
   const targets =
     regions === "all"
@@ -549,8 +522,7 @@ export async function loadItems(
 
       const perOrigin = await Promise.all(
         origins.map(async (origin, position) => {
-          const buckets =
-            manifests[position].find((entry) => entry.code === region)?.buckets ?? [];
+          const buckets = manifests[position].find((entry) => entry.code === region)?.buckets ?? [];
           const shards = await Promise.all(
             buckets.map((bucket) =>
               fetchJson<{ items?: Item[] }>(origin, `data/items/${region}/${bucket}.json`),
@@ -613,9 +585,7 @@ export async function loadSearchPack(region: RegionCode): Promise<SearchPack[]> 
   const perOrigin = await Promise.all(
     origins.map(async (origin) => {
       const files = await loadOriginSearchPacks(origin);
-      const shards = files
-        .filter((file) => file.region === region)
-        .map((file) => file.shard);
+      const shards = files.filter((file) => file.region === region).map((file) => file.shard);
       const packs = await Promise.all(
         shards.map((shard) => fetchJson<SearchPack>(origin, packFile(region, shard))),
       );
@@ -639,9 +609,7 @@ export async function loadSearchPacks(
      * volumes' manifests — a region may live in one volume and not another.
      */
     const origins = await loadOrigins();
-    const perOrigin = await Promise.all(
-      origins.map((origin) => loadOriginSearchPacks(origin)),
-    );
+    const perOrigin = await Promise.all(origins.map((origin) => loadOriginSearchPacks(origin)));
     const wanted = [
       ...new Set(
         perOrigin
@@ -775,12 +743,11 @@ export function filterItems(items: Item[], query: ItemQuery): Item[] {
     return true;
   });
 
-  const filteredSorted = filtered
-    .sort((a, b) => {
-      const at = Date.parse(a.scheduledStart ?? a.publishedAt ?? "") || 0;
-      const bt = Date.parse(b.scheduledStart ?? b.publishedAt ?? "") || 0;
-      return bt - at;
-    });
+  const filteredSorted = filtered.sort((a, b) => {
+    const at = Date.parse(a.scheduledStart ?? a.publishedAt ?? "") || 0;
+    const bt = Date.parse(b.scheduledStart ?? b.publishedAt ?? "") || 0;
+    return bt - at;
+  });
   return query.limit === undefined ? filteredSorted : filteredSorted.slice(0, query.limit);
 }
 
@@ -799,10 +766,7 @@ export function filterItems(items: Item[], query: ItemQuery): Item[] {
  * of the user's chosen order — the wrong page. The view sorts first and then
  * mounts a page; see `visibleChannels` in `App.vue`.
  */
-export function filterChannels(
-  channels: ChannelSummary[],
-  query: ItemQuery,
-): ChannelSummary[] {
+export function filterChannels(channels: ChannelSummary[], query: ItemQuery): ChannelSummary[] {
   return filterChannelList(channels, query);
 }
 
@@ -841,10 +805,7 @@ export async function search(
  * has been running, the songs tab by when the cover was published — and the
  * user can override it.
  */
-export function sortItems(
-  items: Item[],
-  order: string,
-): Item[] {
+export function sortItems(items: Item[], order: string): Item[] {
   const byTime = (a: Item, b: Item) =>
     (b.scheduledStart ?? b.publishedAt ?? "").localeCompare(
       a.scheduledStart ?? a.publishedAt ?? "",
@@ -861,9 +822,7 @@ export function sortItems(
     case "duration":
       return sorted.sort((a, b) => (b.duration ?? 0) - (a.duration ?? 0));
     case "viewers":
-      return sorted.sort(
-        (a, b) => (b.concurrentViewers ?? 0) - (a.concurrentViewers ?? 0),
-      );
+      return sorted.sort((a, b) => (b.concurrentViewers ?? 0) - (a.concurrentViewers ?? 0));
     case "subscribers":
       // The item does not carry the channel's subscriber count, so this
       // falls back to the item's own view count.
@@ -881,18 +840,13 @@ export function sortItems(
 /**
  * Sorts the channels for a view.
  */
-export function sortChannels(
-  channels: ChannelSummary[],
-  order: string,
-): ChannelSummary[] {
+export function sortChannels(channels: ChannelSummary[], order: string): ChannelSummary[] {
   const sorted = [...channels];
   switch (order) {
     case "name":
       return sorted.sort((a, b) => a.name.localeCompare(b.name));
     case "recent":
-      return sorted.sort((a, b) =>
-        (b.addedAt ?? "").localeCompare(a.addedAt ?? ""),
-      );
+      return sorted.sort((a, b) => (b.addedAt ?? "").localeCompare(a.addedAt ?? ""));
     case "region":
       return sorted.sort(
         (a, b) => a.region.localeCompare(b.region) || a.name.localeCompare(b.name),
