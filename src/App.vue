@@ -2418,24 +2418,24 @@ onMounted(async () => {
             </span>
           </button>
         </nav>
-
-        <!-- The sort control, for the current tab -->
-        <div v-if="state.view !== 'analytics'" class="flex items-center justify-end gap-2 pb-2">
-          <label class="flex items-center gap-1.5 text-[11px] font-semibold text-neutral-500">
-            <span class="hidden sm:inline">Sort</span>
-            <select :value="state.sort[state.view]" class="rounded-full border border-black/10 bg-white px-2.5 py-1 text-[11px] font-semibold outline-none dark:border-white/12 dark:bg-neutral-900" :aria-label="`Sort the ${state.view} view`" @change="setSort(state.view, ($event.target as HTMLSelectElement).value)">
-              <option v-for="option in SORTS[state.view]" :key="option.id" :value="option.id">
-                {{ option.label }}
-              </option>
-            </select>
-          </label>
-        </div>
       </div>
     </header>
 
     <!-- ───────────────────────── Filters ───────────────────────── -->
     <div class="sticky top-[104px] z-30 border-b border-black/6 bg-[#f6f5f1]/95 backdrop-blur-xl dark:border-white/8 dark:bg-neutral-950/95 sm:top-[112px]">
       <div class="mx-auto flex max-w-[1600px] items-center gap-2 overflow-x-auto px-3 py-2 sm:px-5">
+        <!-- Sort -->
+        <div v-if="state.view !== 'analytics'" class="shrink-0 flex items-center gap-1.5">
+          <label class="flex items-center gap-1 text-[10px] font-semibold text-neutral-500">
+            <span class="hidden sm:inline">Sort</span>
+            <select :value="state.sort[state.view]" class="rounded-full border border-black/10 bg-white px-3 py-1.5 text-xs font-semibold outline-none dark:border-white/12 dark:bg-neutral-900" :aria-label="`Sort the ${state.view} view`" @change="setSort(state.view, ($event.target as HTMLSelectElement).value)">
+              <option v-for="option in SORTS[state.view]" :key="option.id" :value="option.id">
+                {{ option.label }}
+              </option>
+            </select>
+          </label>
+        </div>
+
         <!-- Region -->
         <label class="shrink-0">
           <span class="sr-only">Region</span>
