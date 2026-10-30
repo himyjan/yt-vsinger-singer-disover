@@ -10,11 +10,11 @@
 ```yaml
 on:
   schedule:
-    - cron: "7 * * * *" # hourly
+    - cron: "7 */2 * * *" # every two hours
   workflow_dispatch:
     inputs:
       shard-count: { default: "4" }
-      limit-live: { default: "1500" }
+      limit-live: { default: "1000" }
       limit-multi-platform-live: { default: "400" }
       dry-run: { default: "false" }
 ```
@@ -24,7 +24,9 @@ who is streaming, retires the streams that ended to `past` with a real
 duration, and writes **only** the item files — a live check changes no channel
 record, so rewriting the channel shards and the `songs` projection would spend
 the run's history on files that did not change. The search index is rebuilt by
-the sync, not here.
+the sync, not here: a broadcast the live run discovers is searchable after the
+next six-hourly sync, not immediately, which is why `validate` reports the
+index drift as a warning rather than an error.
 
 It is separate from `sync-data.yml` because the live phase is the one whose
 cost is proportional to the whole catalogue: one InnerTube Live-tab lookup per
@@ -34,9 +36,23 @@ no commit. Here it is the whole run, so `limit-live` decides how much of the
 rotation it covers and the job finishes.
 
 `live.yml`, `sync-data.yml`, `verify-data.yml` and `data-squash.yml` share the
-`dataset-writer-*` concurrency group, so an hourly live run waits for a sync
-rather than writing the same shards at the same time. GitHub keeps one running
-and one pending job per group; a third arrival drops the pending one.
+`dataset-writer-*` concurrency group, so a live run waits for a sync rather than
+writing the same shards at the same time. Every workflow in the group sets
+`cancel-in-progress: false` **and `queue: max`**:
+
+```yaml
+concurrency:
+  group: dataset-writer-${{ github.repository }}
+  cancel-in-progress: false
+  queue: max
+```
+
+Without `queue: max` a group holds one running and one pending run, and a new
+arrival cancels the *pending* one. That is how a scheduled sync disappears
+behind another run while looking like it was merely queued. With
+`queue: max` up to 100 runs wait for the group in FIFO order and a waiting sync
+is never replaced. It is rejected by workflow validation when combined with
+`cancel-in-progress: true`.
 
 ### `sync-data.yml` — refresh the dataset
 

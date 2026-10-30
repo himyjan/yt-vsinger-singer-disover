@@ -42,6 +42,7 @@ on:
 concurrency:
   group: dataset-writer-${{ github.repository }}
   cancel-in-progress: false
+  queue: max
 
 permissions:
   contents: write

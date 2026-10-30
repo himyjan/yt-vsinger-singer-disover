@@ -443,11 +443,20 @@ the Live tab: it requires OAuth, and the scheduled pipeline only has an API
 key.
 
 The sync, live and verification GitHub workflows all write `data/`. Keep them
-in the same repository-wide concurrency group and rebase generated changes onto
-the latest branch before committing, so concurrent dataset writers do not
-create non-fast-forward push failures.
+in the same repository-wide concurrency group, with `cancel-in-progress: false`
+**and `queue: max`**, and rebase generated changes onto the latest branch before
+committing, so concurrent dataset writers do not create non-fast-forward push
+failures.
 
-The live check is its own workflow (`live.yml`, hourly) for the same reason it
+`queue: max` is not decoration. Without it a concurrency group holds one
+running and one pending run, and a new arrival **cancels the pending one** — so
+a scheduled sync that is already waiting is dropped the moment another workflow
+enters the group, which is a silent way to lose a run that looked merely
+delayed. With `queue: max` up to 100 runs wait and are processed FIFO, and a
+sync that is waiting is never replaced. It cannot be combined with
+`cancel-in-progress: true`.
+
+The live check is its own workflow (`live.yml`, every two hours) for the same reason it
 is its own flag: it is the only phase whose cost is proportional to the whole
 catalogue rather than to a rotation, so sharing a run with the rest killed the
 run before it wrote anything. `--live-only` writes **only** the item files —
@@ -488,7 +497,7 @@ a live check changes no channel record.
 | Find new VTubers through a singing event | `npm run data:singing-events` reads the 歌枠リレーカレンダー Google Sheet into `lists/singing-events.json` (the current month plus the previous two), and `scripts/harvest-x-singing-tags.py` adds the event hashtags X announces, `npm run data:singing-events-youtube` adds YouTube-discovered hashtags via InnerTube — all merged into one unified file with unique names. `npm run data:sync` queues each event name as a YouTube **video** search (`SearchSpec.eventTag`), matches the event name inside the video's title, and treats the event as both the virtual and the singing half of the discovery gate — so the participant's channel enters `virtual` with `isSinging: true` |
 | A record is missing the performer's Twitch / X / Instagram / TikTok / Bilibili / Niconico account | `npm run data:hololist-import -- --links --apply` fills `externals` from the entry's `#links` section for records the roster knows by handle; nothing already on the record is overwritten |
 | A record is missing its social links, debut or region | `npm run data:bacharu-import -- --links --apply` attaches social accounts from bacharu's `social`/`links` to tracked records; `--hints --apply` fills empty `region`, `debutDate` and `gender` from the roster's country, debut and gender — only where `classifyChannel()` left them unknown |
-| Live/premiere streams across platforms (the scheduled run) | `npm run data:live` — `--live-only`, the `.github/workflows/live.yml` hourly job: load the dataset, check every platform, write the item files back. It is separate from the sync because its cost is proportional to the whole catalogue (one InnerTube Live-tab lookup per YouTube channel, 63,000 of them) and in the full sync it outlived the job timeout, so the run was killed at 68% with no commit |
+| Live/premiere streams across platforms (the scheduled run) | `npm run data:live` — `--live-only`, the `.github/workflows/live.yml` two-hourly job: load the dataset, check every platform, write the item files back. It is separate from the sync because its cost is proportional to the whole catalogue (one InnerTube Live-tab lookup per YouTube channel, 63,000 of them) and in the full sync it outlived the job timeout, so the run was killed at 68% with no commit |
 | Live/premiere streams across platforms | `npm run data:sync` checks YouTube via InnerTube Live tab (all channels, 50k limit), Twitch via GQL profile, Bilibili via `online/list?rid=160` VTuber partition feed, Niconico via Content Search API v2 `filters[liveStatus]=onair`, CI.ME via the **public** `GET /api/openapi/v1/{channelId}/live-status`, CHZZK/KICK/SOOP via each platform's `live()` adapter. Ended streams are retired to `past`; non-singing VTubers included. Only the CI.ME **channel profile** needs `CI_ME_CLIENT_ID` and `CI_ME_CLIENT_SECRET`. |
 | Change the search behaviour | `scripts/lib/search.ts`, then `npm run data:index` |
 | Fix a wrong `kind` or `role` across the dataset | `scripts/lib/classify.ts`, then `npm run data:reclassify -- --apply` — it re-derives both from the records on disk, no network, and the roster ids in `.cache/` count as the virtual claim |
