@@ -422,6 +422,7 @@ stable or complete search API:
 | [CI.ME Open API](https://developers.ci.me/docs/api-channels) | **Open API** (`Client-Id` / `Client-Secret`) | **the public live-status endpoint** | channel profile and follower count (batched, 20 ids per request); per-channel live status via `GET /api/openapi/v1/{channelId}/live-status`, which needs no credentials |
 | X / Twitter | — (no free read API) | [**FxTwitter**](https://github.com/FixTweet/FxTwitter) (`api.fxtwitter.com/<handle>`) | the bio, the website field and the location — where a Bilibili-only performer usually writes their YouTube link |
 | Niconico | — | **the public API** | search, uploads, live programs via Content Search API v2 |
+| [Chuysan Thai VTuber Ranking](https://chuymaster.github.io/thaivtuberranking-docs/) | — | **public JSON API** (`storage.googleapis.com/thaivtuberranking.appspot.com`) | channel ids, names, descriptions, subscriber counts, publish dates — read via `v2/channel_data/simple_list.json`; wired as `scripts/lib/debut-sources/chuysan.ts`, a discovery source for Thai VTubers |
 
 **InnerTube** (`scripts/lib/youtubei.ts`) — the channel's *description* is the
 richest field in the project: it is where a performer states their own
@@ -847,6 +848,28 @@ Read from the site on 2026-10-28, one entry at a time, against the dataset.
 2. **Dead-YouTube keying** — the Twitch-keying pass: rows whose `UC…` id YouTube no longer has (or never had) but who carry a Twitch login become records keyed by `twitch:<login>`, with the GQL profile supplying name, avatar and follower count.
 3. **Links and hints** -- `--links --apply` fills `externals` on tracked records; `--hints --apply` fills empty `region`, `debutDate` and `gender`.
 4. **The two missing UI fields** — `birthday` and `modelType` on `Channel`, then views over them.
+
+### Chuysan — the Thai VTuber directory
+
+**Chuysan** (`vtuber.chuysan.com`) publishes its roster as a public JSON API hosted on Google Cloud Storage:
+
+`https://storage.googleapis.com/thaivtuberranking.appspot.com/v2/channel_data/simple_list.json`
+
+returns every VTuber channel registered in their database — channel id (`UC…`), name, description, thumbnail, subscriber count, publish date, update timestamp, and the uploads playlist id. It needs no key and is quotefree, and `scripts/lib/debut-sources/chuysan.ts` reads it as a discovery source:
+
+```bash
+npm run data:discover -- --source chuysan
+```
+
+Each row carries a `channel_id`, so it is admitted to the identity registry as a `chuysan`-keyed candidate and then promoted through the same virtual-and-singing gate as vTubie and vdb rows. The directory is Thai-centred, so candidates arrive with `region: "sea"` by default.
+
+#### What Chuysan has that this project does not
+
+| Chuysan | What it publishes | This project today | Plan |
+| --- | --- | --- | --- |
+| **~10,000 Thai VTuber channels** | channel id, name, description, thumbnail, subscriber count, publish/update dates, uploads playlist id | nothing | import ids the gate admits (`data:discover --source chuysan --promote`) |
+| **channel descriptions** | free text with Thai-language social links | `externals` from `data:links` | not yet — `data:links` only searches YouTube names |
+| **channel links** | YouTube channel id only | `platforms.youtube` | done — the id is the `channel_id` field |
 
 ### Rate limiting
 
