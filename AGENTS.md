@@ -484,20 +484,23 @@ lives in exactly one volume, and the split is balanced to within a few percent
 YouTube live check is two round-trips — 0.78 s sequential, 0.176 s behind a
 pool of six (both measured) — so the ten volumes are ~13 h of sequential work
 and a GitHub job may not exceed 6 h. A run that tried them all was cancelled
-before its commit step and wrote nothing. `live.yml` therefore fans out over
-**ten jobs, one volume each**, which sweeps everything in ~25 minutes instead
-of ten hours.
+before its commit step and wrote nothing. `live.yml` therefore splits the
+catalogue into **twenty volumes** (3,546–3,746 channels each, measured) and
+fans out over **twenty jobs, one volume each**, which sweeps everything in
+~20 minutes instead of ten hours.
 
 Parallelism multiplies the **request rate**, not the work: each process paces
-itself with its own `RateLimiter`, so N jobs means N × 5.7 checks/s. Ten jobs
-is ~57/s, twice what two-volume pairs asked. If InnerTube starts pushing back
-the volume jobs slow down together and the run misses its timeout — the lever
-is `--innertube-delay`, not the job count, and the next step down is pairs.
+itself with its own `RateLimiter`, so N jobs means N × 5.7 checks/s. Twenty
+jobs is ~114/s — four times what five jobs of two volumes asked. If InnerTube
+starts pushing back the volume jobs slow down together and the run misses its
+timeout; the levers are `--innertube-delay` (raise it) and the volume count
+(lower it), not the job count.
 
 **A volume is the smallest unit that can be checked alone.** Splitting one
 across two jobs would have both write the same `items/` files, and whichever
 finished last would overwrite the other's findings — the item set is per
-volume, not per page.
+volume, not per page. To go wider, raise the volume count, not the jobs per
+volume; twenty is also GitHub's cap on concurrent jobs for a public repo.
 
 Each job writes only its own volumes, in its own checkout: the `data/` symlink
 swap is per-workspace, so the jobs share nothing and `acquireRunLock()` still
@@ -564,7 +567,7 @@ waiting for its channel to come round in the rotation again.
 | Find new VTubers through a singing event | `npm run data:singing-events` reads the 歌枠リレーカレンダー Google Sheet into `lists/singing-events.json` (the current month plus the previous two), and `scripts/harvest-x-singing-tags.py` adds the event hashtags X announces, `npm run data:singing-events-youtube` adds YouTube-discovered hashtags via InnerTube — all merged into one unified file with unique names. `npm run data:sync` queues each event name as a YouTube **video** search (`SearchSpec.eventTag`), matches the event name inside the video's title, and treats the event as both the virtual and the singing half of the discovery gate — so the participant's channel enters `virtual` with `isSinging: true` |
 | A record is missing the performer's Twitch / X / Instagram / TikTok / Bilibili / Niconico account | `npm run data:hololist-import -- --links --apply` fills `externals` from the entry's `#links` section for records the roster knows by handle; nothing already on the record is overwritten |
 | A record is missing its social links, debut or region | `npm run data:bacharu-import -- --links --apply` attaches social accounts from bacharu's `social`/`links` to tracked records; `--hints --apply` fills empty `region`, `debutDate` and `gender` from the roster's country, debut and gender — only where `classifyChannel()` left them unknown |
-| Live/premiere streams across platforms (the scheduled run) | `npm run data:live` — `--live-only`, the `.github/workflows/live.yml` two-hourly run: splits `data/` into volumes (`npm run data:volumes -- --count N`), checks **one volume per job across ten parallel jobs** (`--live-concurrency` overlaps the lookups, `--innertube-delay` tightens the gap), uploads each pair as an artifact, and one fan-in job merges, re-indexes and commits once. Ten volumes is ~13 h of sequential checks — more than a job may run — so the fan-out is what makes a full sweep ~25 minutes instead of ten hours. It is separate from the sync because its cost is proportional to the whole catalogue (one InnerTube Live-tab lookup per YouTube channel) and in the full sync it outlived the job timeout, so the run was killed at 68% with no commit |
+| Live/premiere streams across platforms (the scheduled run) | `npm run data:live` — `--live-only`, the `.github/workflows/live.yml` two-hourly run: splits `data/` into volumes (`npm run data:volumes -- --count N`), checks **one volume per job across twenty parallel jobs** (`--live-concurrency` overlaps the lookups, `--innertube-delay` tightens the gap), uploads each volume's item files as an artifact, and one fan-in job merges, re-indexes and commits once. The whole catalogue is ~13 h of sequential checks — more than a job may run — so the fan-out is what makes a full sweep ~20 minutes instead of ten hours. It is separate from the sync because its cost is proportional to the whole catalogue (one InnerTube Live-tab lookup per YouTube channel) and in the full sync it outlived the job timeout, so the run was killed at 68% with no commit |
 | Live/premiere streams across platforms | `npm run data:live` (see above) checks YouTube via InnerTube Live tab, Twitch via GQL profile, Bilibili via `online/list?rid=160` VTuber partition feed, Niconico via Content Search API v2 `filters[liveStatus]=onair`, CI.ME via the **public** `GET /api/openapi/v1/{channelId}/live-status`, CHZZK/KICK/SOOP via each platform's `live()` adapter. Ended streams are retired to `past`; non-singing VTubers included. Only the CI.ME **channel profile** needs `CI_ME_CLIENT_ID` and `CI_ME_CLIENT_SECRET`. `npm run data:sync` skips this phase unless it is given `--limit-live N` — the cost is proportional to the whole catalogue, and inside the sync it outlived the job. |
 | Change the search behaviour | `scripts/lib/search.ts`, then `npm run data:index` |
 | Fix a wrong `kind` or `role` across the dataset | `scripts/lib/classify.ts`, then `npm run data:reclassify -- --apply` — it re-derives both from the records on disk, no network, and the roster ids in `.cache/` count as the virtual claim |
