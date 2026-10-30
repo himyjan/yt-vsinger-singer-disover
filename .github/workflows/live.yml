@@ -3,16 +3,19 @@ name: Live status
 # Refreshes who is streaming right now, on every platform, and nothing else.
 #
 # The catalogue is split into ten volumes (`npm run data:volumes -- --count 10`),
-# ~7,200 channels each. Five jobs run in parallel, two volumes each: one volume
+# ~7,200 channels each. **Ten jobs run in parallel, one volume each**: a volume
 # is ~19 minutes of checks, and ten in one job would be ~13 h — more than the
 # 6 h a GitHub job may run. Each job writes only its own volumes' item files,
 # which travel back as artifacts; one fan-in job merges, rebuilds the index,
 # validates and commits once.
 #
-# The split count is fixed at ten because the matrix below is a fixed list of
-# pairs. Do not add a `volume-count` input without making the matrix dynamic —
-# the two would disagree, and a job would process a volume that was never
-# created.
+# The split count is fixed at ten because the matrix below is a fixed list.
+# Do not add a `volume-count` input without making the matrix dynamic — the two
+# would disagree, and a job would process a volume that was never created.
+#
+# Ten is also the practical ceiling: splitting a volume across two jobs would
+# make both write the same `items/` files, and the second would overwrite the
+# first's findings. A volume is the smallest unit that can be checked alone.
 #
 # `--live-only` writes only item files — no channel records change.
 
@@ -36,13 +39,16 @@ permissions:
 
 jobs:
   process-volumes:
-    name: Process live status for volume pair ${{ matrix.volume_pair[0] }}, ${{ matrix.volume_pair[1] }}
+    name: Process live status for volume ${{ matrix.volume }}
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 60
     strategy:
-      max-parallel: 5
+      # Ten jobs, one volume each, all at once. `max-parallel` is the cap on
+      # simultaneous jobs; GitHub allows 20 for a public repository, so ten
+      # never queues behind itself.
+      max-parallel: 10
       matrix:
-        volume_pair: [[0,1], [2,3], [4,5], [6,7], [8,9]]
+        volume: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -69,7 +75,7 @@ jobs:
 
       - name: Copy shared files into volume dirs
         run: |
-          for v in ${{ matrix.volume_pair[0] }} ${{ matrix.volume_pair[1] }}; do
+          for v in ${{ matrix.volume }}; do
             VOL_DIR=".volumes/vol-$v/data"
             for f in overrides.json seed-catalog.json suggestions.json upstream.json manifest.json; do
               if [ -f "data/$f" ]; then
@@ -78,7 +84,7 @@ jobs:
             done
           done
 
-      - name: Process volume ${{ matrix.volume_pair[0] }}
+      - name: Process volume ${{ matrix.volume }}
         env:
           DRY_RUN: ${{ inputs.dry-run }}
           TWITCH_CLIENT_ID: ${{ secrets.TWITCH_CLIENT_ID }}
@@ -95,31 +101,7 @@ jobs:
           ARGS=(--live-only --limit-live 7000 --limit-multi-platform-live 400)
           ARGS+=(--live-concurrency 6 --innertube-delay 150)
           if [ "${DRY_RUN:-false}" = "true" ]; then ARGS+=(--dry-run); fi
-          VOL_DIR=".volumes/vol-${{ matrix.volume_pair[0] }}/data"
-          mv data data-full
-          ln -s "$VOL_DIR" data
-          npx tsx scripts/sync.ts -- "${ARGS[@]}"
-          rm -f data
-          mv data-full data
-
-      - name: Process volume ${{ matrix.volume_pair[1] }}
-        env:
-          DRY_RUN: ${{ inputs.dry-run }}
-          TWITCH_CLIENT_ID: ${{ secrets.TWITCH_CLIENT_ID }}
-          TWITCH_CLIENT_SECRET: ${{ secrets.TWITCH_CLIENT_SECRET }}
-          VK_ACCESS_TOKEN: ${{ secrets.VK_ACCESS_TOKEN }}
-          CI_ME_CLIENT_ID: ${{ secrets.CI_ME_CLIENT_ID }}
-          CI_ME_CLIENT_SECRET: ${{ secrets.CI_ME_CLIENT_SECRET }}
-        run: |
-          # 7,000 is above the largest volume's YouTube count (6,433 measured);
-          # a lower cap silently skips that volume's tail forever, because
-          # `page` never advances when the limit covers the whole set.
-          # The pool and the delay are what keep a volume at ~19 min instead of
-          # 78: the limiter spaces the requests, the workers hide the latency.
-          ARGS=(--live-only --limit-live 7000 --limit-multi-platform-live 400)
-          ARGS+=(--live-concurrency 6 --innertube-delay 150)
-          if [ "${DRY_RUN:-false}" = "true" ]; then ARGS+=(--dry-run); fi
-          VOL_DIR=".volumes/vol-${{ matrix.volume_pair[1] }}/data"
+          VOL_DIR=".volumes/vol-${{ matrix.volume }}/data"
           mv data data-full
           ln -s "$VOL_DIR" data
           npx tsx scripts/sync.ts -- "${ARGS[@]}"
@@ -129,10 +111,8 @@ jobs:
       - name: Upload volume artifacts
         uses: actions/upload-artifact@v7
         with:
-          name: vol-${{ matrix.volume_pair[0] }}-${{ matrix.volume_pair[1] }}
-          path: |
-            .volumes/vol-${{ matrix.volume_pair[0] }}/data/items/
-            .volumes/vol-${{ matrix.volume_pair[1] }}/data/items/
+          name: vol-${{ matrix.volume }}
+          path: .volumes/vol-${{ matrix.volume }}/data/items/
           retention-days: 1
 
   merge-and-commit:
