@@ -299,7 +299,10 @@ export async function refreshLivePass(
   for (const channel of channels) {
     const own = primaryPlatformOf(channel);
     const native = own ? PER_CHANNEL_LIVE_PLATFORMS.has(own) : false;
-    if (!channel.id.startsWith("UC") && !native) continue;
+    const hasLiveLinks = channel.platforms.some((link) =>
+      PER_CHANNEL_LIVE_PLATFORMS.has(link.platform),
+    );
+    if (!channel.id.startsWith("UC") && !native && !hasLiveLinks) continue;
     for (const link of channel.platforms) {
       if (!PER_CHANNEL_LIVE_PLATFORMS.has(link.platform)) continue;
       multiTargets.push({ channel, platform: link.platform, link });
