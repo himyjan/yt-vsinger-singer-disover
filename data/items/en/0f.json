@@ -1,38 +1,38 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-30T13:31:48.259Z",
+  "generatedAt": "2026-10-30T18:10:16.522Z",
   "items": [
     {
-      "id": "0iV9iAER9ww",
+      "id": "-Vg7rSNxcq0",
       "platform": "youtube",
       "type": "live",
-      "channelId": "UCjLEmnpCNeisMxy134KPwWw",
-      "channelName": "Kobo Kanaeru Ch. hololive",
+      "channelId": "UCkmEMPhvqNqhc1amyo9PR2Q",
+      "channelName": "doomy",
       "channelKind": "virtual",
       "region": "en",
-      "gender": "male",
+      "gender": "female",
       "languages": [
         "en"
       ],
       "isAi": false,
-      "variant": "male_vtuber",
-      "title": "【Jump King】WATASHI WA UTAU NO GA SUKI",
+      "variant": "unknown",
+      "title": "more nightmare nightmare nightmare",
       "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/0iV9iAER9ww/hq720.jpg",
-      "publishedAt": null,
-      "scheduledStart": "2026-10-30T10:00:00.000Z",
-      "actualStart": null,
+      "thumbnail": "https://i.ytimg.com/vi/-Vg7rSNxcq0/hq720.jpg",
+      "publishedAt": "2026-10-30T04:35:35.383Z",
+      "scheduledStart": null,
+      "actualStart": "2026-10-30T04:35:35.383Z",
       "actualEnd": null,
       "duration": null,
-      "status": "upcoming",
-      "category": "premiere",
+      "status": "live",
+      "category": "live",
       "songTitle": null,
       "originalArtist": null,
       "isCollab": false,
       "collaborators": [
         {
-          "channelId": "UCjLEmnpCNeisMxy134KPwWw",
-          "name": "Kobo Kanaeru Ch. hololive",
+          "channelId": "UCkmEMPhvqNqhc1amyo9PR2Q",
+          "name": "doomy",
           "kind": "virtual",
           "region": "en"
         }
@@ -44,7 +44,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-10-30T07:01:41.522Z",
+      "updatedAt": "2026-10-30T04:35:35.383Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -79,52 +79,6 @@
         {
           "channelId": "UCi2CQXOtwoMwUDXYi3WpX8A",
           "name": "TheAntiYuu",
-          "kind": "virtual",
-          "region": "en"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-10-30T04:35:35.383Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "-Vg7rSNxcq0",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCkmEMPhvqNqhc1amyo9PR2Q",
-      "channelName": "doomy",
-      "channelKind": "virtual",
-      "region": "en",
-      "gender": "female",
-      "languages": [
-        "en"
-      ],
-      "isAi": false,
-      "variant": "unknown",
-      "title": "more nightmare nightmare nightmare",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/-Vg7rSNxcq0/hq720.jpg",
-      "publishedAt": "2026-10-30T04:35:35.383Z",
-      "scheduledStart": null,
-      "actualStart": "2026-10-30T04:35:35.383Z",
-      "actualEnd": null,
-      "duration": null,
-      "status": "live",
-      "category": "live",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCkmEMPhvqNqhc1amyo9PR2Q",
-          "name": "doomy",
           "kind": "virtual",
           "region": "en"
         }
@@ -187,6 +141,52 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "G9npJ5QZbMQ",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UChdVLXA-Afxgtyg2ya0R2zQ",
+      "channelName": "TheAspieVT",
+      "channelKind": "virtual",
+      "region": "en",
+      "gender": "unknown",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "(1213/1461) Mmmmmmm sushi [Ghost of Tsushima]",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/G9npJ5QZbMQ/hq720.jpg",
+      "publishedAt": "2026-10-28T22:33:18.686Z",
+      "scheduledStart": null,
+      "actualStart": "2026-10-28T22:33:18.686Z",
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UChdVLXA-Afxgtyg2ya0R2zQ",
+          "name": "TheAspieVT",
+          "kind": "virtual",
+          "region": "en"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-28T22:33:18.686Z",
+      "updatedAt": "2026-10-28T22:33:18.686Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "1tJ8sc8I4z0",
       "platform": "youtube",
       "type": "live",
@@ -229,6 +229,98 @@
       "source": "api",
       "addedAt": "2026-10-28T05:38:36.215Z",
       "updatedAt": "2026-10-28T05:38:36.215Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "XYpisfESewU",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCpbuPkkJ0BeJTGm3oq0njWg",
+      "channelName": "Huntress",
+      "channelKind": "virtual",
+      "region": "en",
+      "gender": "unknown",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "🐸『2XKO FINAL PATCH』 🐸 sorry i just got home AHHHHHH | !card cᴏʟʟᴇᴄᴛ ᴇᴍ ᴀʟʟ",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/XYpisfESewU/hq720.jpg",
+      "publishedAt": "2026-10-28T05:38:36.215Z",
+      "scheduledStart": null,
+      "actualStart": "2026-10-28T05:38:36.215Z",
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCpbuPkkJ0BeJTGm3oq0njWg",
+          "name": "Huntress",
+          "kind": "virtual",
+          "region": "en"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-28T05:38:36.215Z",
+      "updatedAt": "2026-10-28T05:38:36.215Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "ta1wkvR6LaM",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCFVXw8NMPp-LLiJxG81Lmdw",
+      "channelName": "Shiomi Seaslug",
+      "channelKind": "virtual",
+      "region": "en",
+      "gender": "female",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "[Handcam] Building a LEGO EEVEE!!! (Donothon Reward - Pokemon)",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/ta1wkvR6LaM/hq720.jpg",
+      "publishedAt": "2026-10-28T00:31:21.000Z",
+      "scheduledStart": null,
+      "actualStart": "2026-10-28T00:31:21.000Z",
+      "actualEnd": "2026-10-28T04:02:43.000Z",
+      "duration": 12682,
+      "status": "past",
+      "category": "premiere",
+      "songTitle": "[Handcam] Building a LEGO EEVEE!!! (Donothon Reward",
+      "originalArtist": "Pokemon)",
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCFVXw8NMPp-LLiJxG81Lmdw",
+          "name": "Shiomi Seaslug",
+          "kind": "virtual",
+          "region": "en"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-27T22:11:16.041Z",
+      "updatedAt": "2026-10-30T07:01:41.522Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -309,6 +401,52 @@
         {
           "channelId": "UCgOnqZqdaOX4Sxw4mubxzEw",
           "name": "Kashu Ch.【Zero Idol Project】",
+          "kind": "virtual",
+          "region": "en"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-30T04:35:35.383Z",
+      "updatedAt": "2026-10-30T07:01:41.522Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "0iV9iAER9ww",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCjLEmnpCNeisMxy134KPwWw",
+      "channelName": "Kobo Kanaeru Ch. hololive",
+      "channelKind": "virtual",
+      "region": "en",
+      "gender": "male",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "male_vtuber",
+      "title": "【Jump King】WATASHI WA UTAU NO GA SUKI",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/0iV9iAER9ww/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2026-10-30T10:00:00.000Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCjLEmnpCNeisMxy134KPwWw",
+          "name": "Kobo Kanaeru Ch. hololive",
           "kind": "virtual",
           "region": "en"
         }
@@ -505,52 +643,6 @@
       "source": "api",
       "addedAt": "2026-10-30T04:35:35.383Z",
       "updatedAt": "2026-10-30T07:01:41.522Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "G9npJ5QZbMQ",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UChdVLXA-Afxgtyg2ya0R2zQ",
-      "channelName": "TheAspieVT",
-      "channelKind": "virtual",
-      "region": "en",
-      "gender": "unknown",
-      "languages": [
-        "en"
-      ],
-      "isAi": false,
-      "variant": "unknown",
-      "title": "(1213/1461) Mmmmmmm sushi [Ghost of Tsushima]",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/G9npJ5QZbMQ/hq720.jpg",
-      "publishedAt": "2026-10-28T22:33:18.686Z",
-      "scheduledStart": null,
-      "actualStart": "2026-10-28T22:33:18.686Z",
-      "actualEnd": null,
-      "duration": null,
-      "status": "live",
-      "category": "live",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UChdVLXA-Afxgtyg2ya0R2zQ",
-          "name": "TheAspieVT",
-          "kind": "virtual",
-          "region": "en"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-28T22:33:18.686Z",
-      "updatedAt": "2026-10-28T22:33:18.686Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -1949,52 +2041,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "ta1wkvR6LaM",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCFVXw8NMPp-LLiJxG81Lmdw",
-      "channelName": "Shiomi Seaslug",
-      "channelKind": "virtual",
-      "region": "en",
-      "gender": "female",
-      "languages": [
-        "en"
-      ],
-      "isAi": false,
-      "variant": "unknown",
-      "title": "[Handcam] Building a LEGO EEVEE!!! (Donothon Reward - Pokemon)",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/ta1wkvR6LaM/hq720.jpg",
-      "publishedAt": "2026-10-28T00:31:21.000Z",
-      "scheduledStart": null,
-      "actualStart": "2026-10-28T00:31:21.000Z",
-      "actualEnd": "2026-10-28T04:02:43.000Z",
-      "duration": 12682,
-      "status": "past",
-      "category": "premiere",
-      "songTitle": "[Handcam] Building a LEGO EEVEE!!! (Donothon Reward",
-      "originalArtist": "Pokemon)",
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCFVXw8NMPp-LLiJxG81Lmdw",
-          "name": "Shiomi Seaslug",
-          "kind": "virtual",
-          "region": "en"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-27T22:11:16.041Z",
-      "updatedAt": "2026-10-30T07:01:41.522Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "UrkVM8DAQxI",
       "platform": "youtube",
       "type": "live",
@@ -2129,52 +2175,6 @@
       "source": "api",
       "addedAt": "2026-10-27T22:11:16.041Z",
       "updatedAt": "2026-10-27T22:11:16.041Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "XYpisfESewU",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCpbuPkkJ0BeJTGm3oq0njWg",
-      "channelName": "Huntress",
-      "channelKind": "virtual",
-      "region": "en",
-      "gender": "unknown",
-      "languages": [
-        "en"
-      ],
-      "isAi": false,
-      "variant": "unknown",
-      "title": "🐸『2XKO FINAL PATCH』 🐸 sorry i just got home AHHHHHH | !card cᴏʟʟᴇᴄᴛ ᴇᴍ ᴀʟʟ",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/XYpisfESewU/hq720.jpg",
-      "publishedAt": "2026-10-28T05:38:36.215Z",
-      "scheduledStart": null,
-      "actualStart": "2026-10-28T05:38:36.215Z",
-      "actualEnd": null,
-      "duration": null,
-      "status": "live",
-      "category": "live",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCpbuPkkJ0BeJTGm3oq0njWg",
-          "name": "Huntress",
-          "kind": "virtual",
-          "region": "en"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-28T05:38:36.215Z",
-      "updatedAt": "2026-10-28T05:38:36.215Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },

@@ -1,53 +1,7 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-30T13:31:48.259Z",
+  "generatedAt": "2026-10-30T18:10:16.522Z",
   "items": [
-    {
-      "id": "GdKn33DYMlg",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCKmvqlodrjzY6hDc_yI27IA",
-      "channelName": "米婭 • 弗拉梅爾",
-      "channelKind": "virtual",
-      "region": "tw",
-      "gender": "unknown",
-      "languages": [
-        "zh-Hant"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "營業日 ✦ 10/26 ~ 11/01 ✦ 米婭",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/GdKn33DYMlg/hq720.jpg",
-      "publishedAt": null,
-      "scheduledStart": "2027-06-11T14:00:00.000Z",
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "upcoming",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCKmvqlodrjzY6hDc_yI27IA",
-          "name": "米婭 • 弗拉梅爾",
-          "kind": "virtual",
-          "region": "tw"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-10-30T07:01:41.522Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
     {
       "id": "opU4yxHe77s",
       "platform": "youtube",
@@ -125,6 +79,52 @@
         {
           "channelId": "UCr0xKYKDzBa6w-AINmbDrHA",
           "name": "花咲くれは",
+          "kind": "virtual",
+          "region": "tw"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-30T04:35:35.383Z",
+      "updatedAt": "2026-10-30T07:01:41.522Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "GdKn33DYMlg",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCKmvqlodrjzY6hDc_yI27IA",
+      "channelName": "米婭 • 弗拉梅爾",
+      "channelKind": "virtual",
+      "region": "tw",
+      "gender": "unknown",
+      "languages": [
+        "zh-Hant"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "營業日 ✦ 10/26 ~ 11/01 ✦ 米婭",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/GdKn33DYMlg/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2027-06-11T14:00:00.000Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCKmvqlodrjzY6hDc_yI27IA",
+          "name": "米婭 • 弗拉梅爾",
           "kind": "virtual",
           "region": "tw"
         }

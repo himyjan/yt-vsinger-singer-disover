@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-30T07:01:41.522Z",
+  "generatedAt": "2026-10-30T18:10:16.522Z",
   "items": [
     {
       "id": "1tK04FJayDk",
@@ -45,6 +45,52 @@
       "source": "api",
       "addedAt": "2026-10-30T04:35:35.383Z",
       "updatedAt": "2026-10-30T04:35:35.383Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "ryd3WoefizM",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCCDduWG0N4VDnRlMAUnnLZg",
+      "channelName": "走走錄 x 小麥調音",
+      "channelKind": "virtual",
+      "region": "tw",
+      "gender": "unknown",
+      "languages": [
+        "zh-Hant"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "好久不見，我回來了！ 小麥2.0見面會",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/ryd3WoefizM/hq720.jpg",
+      "publishedAt": "2026-10-29T13:02:52.000Z",
+      "scheduledStart": null,
+      "actualStart": "2026-10-29T13:02:52.000Z",
+      "actualEnd": "2026-10-29T15:03:34.000Z",
+      "duration": 7242,
+      "status": "past",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCCDduWG0N4VDnRlMAUnnLZg",
+          "name": "走走錄 x 小麥調音",
+          "kind": "virtual",
+          "region": "tw"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-24T09:06:25.613Z",
+      "updatedAt": "2026-10-30T07:01:41.522Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -278,52 +324,6 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-10-30T07:01:41.522Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "ryd3WoefizM",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCCDduWG0N4VDnRlMAUnnLZg",
-      "channelName": "走走錄 x 小麥調音",
-      "channelKind": "virtual",
-      "region": "tw",
-      "gender": "unknown",
-      "languages": [
-        "zh-Hant"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "好久不見，我回來了！ 小麥2.0見面會",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/ryd3WoefizM/hq720.jpg",
-      "publishedAt": "2026-10-29T13:02:52.000Z",
-      "scheduledStart": null,
-      "actualStart": "2026-10-29T13:02:52.000Z",
-      "actualEnd": "2026-10-29T15:03:34.000Z",
-      "duration": 7242,
-      "status": "past",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCCDduWG0N4VDnRlMAUnnLZg",
-          "name": "走走錄 x 小麥調音",
-          "kind": "virtual",
-          "region": "tw"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-24T09:06:25.613Z",
       "updatedAt": "2026-10-30T07:01:41.522Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null

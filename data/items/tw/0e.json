@@ -1,53 +1,7 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-30T13:31:48.259Z",
+  "generatedAt": "2026-10-30T18:10:16.522Z",
   "items": [
-    {
-      "id": "eGbcZHzANxY",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCqRiI_ZMqUXwE5gJGf_ocXg",
-      "channelName": "柴豆古琳",
-      "channelKind": "virtual",
-      "region": "tw",
-      "gender": "unknown",
-      "languages": [
-        "zh-Hant"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "【周表待機室】2026周表【柴豆古琳】",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/eGbcZHzANxY/hq720.jpg",
-      "publishedAt": null,
-      "scheduledStart": "2028-01-19T13:00:00.000Z",
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "upcoming",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCqRiI_ZMqUXwE5gJGf_ocXg",
-          "name": "柴豆古琳",
-          "kind": "virtual",
-          "region": "tw"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-10-30T07:01:41.522Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
     {
       "id": "MIISBJlqzec",
       "platform": "youtube",
@@ -171,6 +125,52 @@
         {
           "channelId": "UCJSBNjYCB1pu_t0FajsY17g",
           "name": "Aoi Hinamori",
+          "kind": "virtual",
+          "region": "tw"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-30T04:35:35.383Z",
+      "updatedAt": "2026-10-30T07:01:41.522Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "eGbcZHzANxY",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCqRiI_ZMqUXwE5gJGf_ocXg",
+      "channelName": "柴豆古琳",
+      "channelKind": "virtual",
+      "region": "tw",
+      "gender": "unknown",
+      "languages": [
+        "zh-Hant"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "【周表待機室】2026周表【柴豆古琳】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/eGbcZHzANxY/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2028-01-19T13:00:00.000Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCqRiI_ZMqUXwE5gJGf_ocXg",
+          "name": "柴豆古琳",
           "kind": "virtual",
           "region": "tw"
         }
