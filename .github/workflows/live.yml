@@ -207,7 +207,7 @@ jobs:
           done
 
       - name: Upload the refreshed volumes
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v7
         with:
           name: volumes-${{ matrix.group }}
           path: ${{ steps.mine.outputs.paths }}
@@ -244,7 +244,7 @@ jobs:
         run: npm ci --no-audit --no-fund
 
       - name: Download the refreshed volumes
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v8
         with:
           pattern: volumes-*
           path: .volumes-raw
