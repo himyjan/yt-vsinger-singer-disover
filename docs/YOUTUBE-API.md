@@ -267,10 +267,13 @@ bounded local run.
 
 The live pass reads each channel's Live tab through InnerTube, so
 `maxLiveChannelsPerRun` is a bound on **run time**, not on spend: it costs no
-quota. It is set above the singing-channel pool — the channels flagged
-`isSinging` with a `UC…` id, 614 of the 14,329 records at the time of writing —
-so one run checks all of them. A channel that is not flagged `isSinging` is
-never polled, which is what really bounds the upcoming/premiere list.
+quota, but it costs a request and a second or two per channel. The catalogue
+holds ~63,000 YouTube channels, so a full sweep is ~26 hours — longer than any
+job may live. That is why the pass has its own entry point (`--live-only`,
+`live.yml`): the workflow takes a deterministic shard and checks
+`maxLiveChannelsPerRun` (default 1,000) of it per run, least recently checked
+first, so the whole catalogue rotates through in about two days. The sync skips
+the pass entirely unless it is given `--limit-live N`.
 
 ## Troubleshooting
 

@@ -416,10 +416,13 @@ project does not offer CI.ME account linking or subscription import.
 
 ### Multi-platform live streaming
 
-The sync checks live/upcoming status across platforms on every run:
+`npm run data:live` (`--live-only`, the two-hourly `live.yml`) checks
+live/upcoming status across platforms, and `npm run data:sync` skips the pass
+unless given `--limit-live N`:
 
-- **YouTube** — InnerTube channel Live tab (`liveStreams()`), checked for all
-  YouTube-keyed records (`maxLiveChannelsPerRun` default 50,000, not shard-limited).
+- **YouTube** — InnerTube channel Live tab (`liveStreams()`), checked for
+  YouTube-keyed records in the run's shard, up to `maxLiveChannelsPerRun`
+  (default 1,000). Least recently checked first, so the shard is covered.
 - **Twitch** — Twitch GQL profile's `live` field, checked during the details pass
   for channels linked to Twitch.
 - **Bilibili** — `GET /x/web-interface/online/list?rid=160` (VTuber partition

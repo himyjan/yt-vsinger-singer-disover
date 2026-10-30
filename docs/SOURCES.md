@@ -463,13 +463,19 @@ Two things about it are easy to miss, and both were wrong for a long time:
   opened. Tracked cards use the committed dataset instead. The route is
   unauthenticated, local-only, and limited to two requests in flight.
 
-**Multi-platform live streaming.** The sync checks live/upcoming status for
-YouTube channels via the InnerTube Live tab, and for channels linked to
-CHZZK, KICK, SOOP and Bilibili via each platform's adapter. Non-singing VTubers
-are included — a VTuber who also streams on Twitch or goes live on CHZZK is
-caught regardless of `isSinging`. The live check covers all YouTube-keyed
-records in the catalogue (`maxLiveChannelsPerRun` default 50,000), not just
-the current shard, because live status is time-sensitive.
+**Multi-platform live streaming.** `npm run data:live` (`--live-only`, the
+two-hourly `live.yml`) checks live/upcoming status for YouTube channels via the
+InnerTube Live tab, and for channels linked to CHZZK, KICK, SOOP, CI.ME, VK and
+Bilibili via each platform's adapter. Non-singing VTubers are included — a
+VTuber who also streams on Twitch or goes live on CHZZK is caught regardless of
+`isSinging`.
+
+The check splits the catalogue across runs rather than sweeping it: one
+InnerTube Live-tab lookup per YouTube channel over 63,000 channels is ~26 hours,
+which is why it is not part of the sync (it was killed there at 68% with nothing
+written). `live.yml` takes a deterministic shard and `maxLiveChannelsPerRun`
+(default 1,000) of it per run, so each channel's status is at most a couple of
+days old; `npm run data:sync` skips the pass unless given `--limit-live N`.
 
 - **Bilibili** live streams come from `online/list?rid=160` (VTuber partition),
   fetched once per run via `search()` and filtered against known VTuber channel ids.
