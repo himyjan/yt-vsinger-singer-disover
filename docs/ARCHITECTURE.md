@@ -131,6 +131,7 @@ scripts/
 ├── verify.ts                verifies classifications with search grounding
 ├── build-index.ts           builds the inverted search index (`--root` for a volume)
 ├── split-volumes.ts         plans, writes and verifies the split into volumes
+├── merge-volumes.ts         merges volume shards back into data/
 ├── validate.ts              CI gate: structure, consistency, size budgets
 ├── prepare-public.ts        copies data/ into public/ for the build
 ├── harvest-bacharu.ts       bacharu's roster → .cache/ (resumable, JSON API)

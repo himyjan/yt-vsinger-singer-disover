@@ -83,13 +83,18 @@ cache → sync → append daily analytics to the separate archive (when configur
 → build the search index → validate → rebase generated data onto the latest
 branch → commit `data/`.
 
-The catalogue is larger than one run can refresh, so the refresh and live
-rotation is sharded deterministically by channel id. The scheduled workflow
-computes `SHARD_INDEX = (GITHUB_RUN_NUMBER - 1) % SHARD_COUNT + 1` with a
-default of four shards and passes `--shard N/4`, so successive runs cover the
-whole catalogue without a persisted cursor. The manual `shard-count` input
-changes the number of shards (`1` disables sharding) and `channels` caps the
-number of channels refreshed in the run.
+The catalogue is larger than one run can refresh, so the refresh rotation is
+sharded deterministically by channel id (`--shard N/M`), and the live
+rotation checks the catalogue volume-by-volume (`npm run data:volumes -- --count N`).
+`volumeOf(id)` is rendezvous hashing, so a channel lives in exactly one volume
+and adding a volume moves about `1/(N+1)` of the catalogue.
+
+The scheduled live workflow computes the volume count from its `volume-count`
+input (default 10) and checks every volume sequentially in one job (~5,000–7,000
+channels each, ~2–4 min per volume), giving full catalogue coverage every sweep
+instead of ~1 day with the shard rotation. The manual `shard-count` input on
+sync changes the number of shards (`1` disables sharding) and `channels` caps
+the number of channels refreshed in the run.
 
 The manual `keyword` input replaces the configured discovery terms for
 platforms that support keyword search. The `no-search` input skips discovery
