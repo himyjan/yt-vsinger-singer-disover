@@ -9,7 +9,7 @@
  */
 import { computed, ref, watch } from "vue";
 import type { Item } from "@shared/lib/types";
-import { formatCount, formatDuration, formatRelative } from "@/lib/dataset";
+import { formatCount, formatDuration, formatRelative, formatUntil } from "@/lib/dataset";
 import { imageUrl } from "@/lib/image";
 import { channelLinks, itemUrl, platformMeta } from "@/lib/links";
 import type { ChannelSummary } from "@shared/lib/types";
@@ -53,6 +53,7 @@ const elapsed = computed(() => {
   const start = props.item.actualStart ?? props.item.scheduledStart;
   if (!start) return null;
   const seconds = Math.max(0, (Date.now() - Date.parse(start)) / 1000);
+  if (props.item.status === "upcoming") return formatUntil(start);
   return formatDuration(seconds);
 });
 
@@ -142,7 +143,11 @@ const kindLabel = computed(() =>
         <div class="flex justify-between gap-2">
           <dt>Started</dt>
           <dd class="font-medium text-neutral-700 dark:text-neutral-200">
-            {{ formatRelative(item.actualStart ?? item.publishedAt) }}
+            {{
+              item.status === "upcoming"
+                ? formatUntil(item.scheduledStart)
+                : formatRelative(item.actualStart ?? item.publishedAt)
+            }}
           </dd>
         </div>
         <div v-if="item.duration" class="flex justify-between gap-2">
