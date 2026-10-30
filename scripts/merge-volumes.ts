@@ -5,13 +5,18 @@
 import fs from "node:fs";
 import path from "node:path";
 
-const count = Number((process.argv.find((a) => a.startsWith("--count=")) ?? "").split("=")[1]) || 10;
+const count =
+  Number((process.argv.find((a) => a.startsWith("--count=")) ?? "").split("=")[1]) || 10;
 const root = process.cwd();
 const volRoot = path.join(root, ".volumes");
 const dataRoot = path.join(root, "data");
 
 function readJson<T>(file: string): T | null {
-  try { return JSON.parse(fs.readFileSync(file, "utf8")) as T; } catch { return null; }
+  try {
+    return JSON.parse(fs.readFileSync(file, "utf8")) as T;
+  } catch {
+    return null;
+  }
 }
 function writeJson<T>(file: string, data: T): void {
   fs.mkdirSync(path.dirname(file), { recursive: true });
@@ -28,7 +33,10 @@ function main(): void {
     const d = path.join(volRoot, "vol-" + i, "data");
     if (fs.existsSync(d)) volDirs.push(d);
   }
-  if (volDirs.length === 0) { console.error("No volumes found"); process.exit(1); }
+  if (volDirs.length === 0) {
+    console.error("No volumes found");
+    process.exit(1);
+  }
   console.log("Merging", volDirs.length, "volumes");
 
   // Shared files from vol-0
@@ -80,8 +88,12 @@ function main(): void {
     }
   }
   // Write merged live.json and upcoming.json (preserve compact format from vol-0)
-  const vol0Live = readJson<{ schemaVersion?: number }>(path.join(volDirs[0], "items", "live.json"));
-  const vol0Upcoming = readJson<{ schemaVersion?: number }>(path.join(volDirs[0], "items", "upcoming.json"));
+  const vol0Live = readJson<{ schemaVersion?: number }>(
+    path.join(volDirs[0], "items", "live.json"),
+  );
+  const vol0Upcoming = readJson<{ schemaVersion?: number }>(
+    path.join(volDirs[0], "items", "upcoming.json"),
+  );
   writeJson(path.join(dataRoot, "items", "live.json"), {
     schemaVersion: vol0Live?.schemaVersion ?? 1,
     generatedAt: new Date().toISOString(),
