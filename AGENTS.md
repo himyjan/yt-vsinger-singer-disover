@@ -456,11 +456,15 @@ delayed. With `queue: max` up to 100 runs wait and are processed FIFO, and a
 sync that is waiting is never replaced. It cannot be combined with
 `cancel-in-progress: true`.
 
-The live check is its own workflow (`live.yml`, every two hours) for the same reason it
-is its own flag: it is the only phase whose cost is proportional to the whole
-catalogue rather than to a rotation, so sharing a run with the rest killed the
-run before it wrote anything. `--live-only` writes **only** the item files —
-a live check changes no channel record.
+The live check is its own workflow (`live.yml`, every two hours) for the same
+reason it is its own flag: it is the only phase whose cost is proportional to
+the whole catalogue rather than to a rotation, so sharing a run with the rest
+killed the run before it wrote anything. `--live-only` writes **only** the item
+files — a live check changes no channel record — and the full sync **skips** it
+unless the run names a bound (`--limit-live N`). That opt-in is what makes
+`sync-data.yml` short enough to always reach its commit: the old default read
+`maxLiveChannelsPerRun` (25,000) against a ~15,900-channel shard, so every run
+opened every Live tab and was killed at 68% with nothing written.
 
 ## Common tasks
 
@@ -498,7 +502,7 @@ a live check changes no channel record.
 | A record is missing the performer's Twitch / X / Instagram / TikTok / Bilibili / Niconico account | `npm run data:hololist-import -- --links --apply` fills `externals` from the entry's `#links` section for records the roster knows by handle; nothing already on the record is overwritten |
 | A record is missing its social links, debut or region | `npm run data:bacharu-import -- --links --apply` attaches social accounts from bacharu's `social`/`links` to tracked records; `--hints --apply` fills empty `region`, `debutDate` and `gender` from the roster's country, debut and gender — only where `classifyChannel()` left them unknown |
 | Live/premiere streams across platforms (the scheduled run) | `npm run data:live` — `--live-only`, the `.github/workflows/live.yml` two-hourly job: load the dataset, check every platform, write the item files back. It is separate from the sync because its cost is proportional to the whole catalogue (one InnerTube Live-tab lookup per YouTube channel, 63,000 of them) and in the full sync it outlived the job timeout, so the run was killed at 68% with no commit |
-| Live/premiere streams across platforms | `npm run data:sync` checks YouTube via InnerTube Live tab (all channels, 50k limit), Twitch via GQL profile, Bilibili via `online/list?rid=160` VTuber partition feed, Niconico via Content Search API v2 `filters[liveStatus]=onair`, CI.ME via the **public** `GET /api/openapi/v1/{channelId}/live-status`, CHZZK/KICK/SOOP via each platform's `live()` adapter. Ended streams are retired to `past`; non-singing VTubers included. Only the CI.ME **channel profile** needs `CI_ME_CLIENT_ID` and `CI_ME_CLIENT_SECRET`. |
+| Live/premiere streams across platforms | `npm run data:live` (see above) checks YouTube via InnerTube Live tab, Twitch via GQL profile, Bilibili via `online/list?rid=160` VTuber partition feed, Niconico via Content Search API v2 `filters[liveStatus]=onair`, CI.ME via the **public** `GET /api/openapi/v1/{channelId}/live-status`, CHZZK/KICK/SOOP via each platform's `live()` adapter. Ended streams are retired to `past`; non-singing VTubers included. Only the CI.ME **channel profile** needs `CI_ME_CLIENT_ID` and `CI_ME_CLIENT_SECRET`. `npm run data:sync` skips this phase unless it is given `--limit-live N` — the cost is proportional to the whole catalogue, and inside the sync it outlived the job. |
 | Change the search behaviour | `scripts/lib/search.ts`, then `npm run data:index` |
 | Fix a wrong `kind` or `role` across the dataset | `scripts/lib/classify.ts`, then `npm run data:reclassify -- --apply` — it re-derives both from the records on disk, no network, and the roster ids in `.cache/` count as the virtual claim |
 | Add a UI filter | `src/lib/dataset.ts` (`filterItems`) + `src/App.vue` |
