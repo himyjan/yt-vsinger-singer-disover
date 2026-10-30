@@ -1,0 +1,30 @@
+name: RSS probe
+
+# Throwaway: does the YouTube channel RSS feed answer from a GitHub runner?
+# Datacenter egress is filtered differently from a residential browser, and
+# that is the only environment this pipeline runs in.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Probe the feed endpoint
+        run: |
+          UA="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0 Safari/537.36"
+          for ID in UCX6OQ3DkcsbYNE6H8uQQuVA UC-hM6YJuNYVAmUWxeIr9FeA; do
+            echo "== $ID"
+            for attempt in 1 2 3; do
+              code=$(curl -s -A "$UA" -o /tmp/f.xml -w '%{http_code}' \
+                "https://www.youtube.com/feeds/videos.xml?channel_id=$ID")
+              entries=$(grep -c "<entry>" /tmp/f.xml || true)
+              echo "  attempt $attempt: http=$code entries=$entries bytes=$(wc -c < /tmp/f.xml)"
+              sleep 2
+            done
+          done
+          echo "== same endpoint from a runner's own IP, no UA override"
+          curl -s -o /tmp/g.xml -w 'http=%{http_code} bytes=%{size_download}\n' \
+            "https://www.youtube.com/feeds/videos.xml?channel_id=UCX6OQ3DkcsbYNE6H8uQQuVA"
