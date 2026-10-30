@@ -18,7 +18,7 @@
 
 import path from "node:path";
 import fs from "node:fs";
-import consola from "consola";
+import { logLine, progressBar, type ProgressBar } from "./lib/progress";
 import {
   YouTubeClient,
   QuotaBudget,
@@ -386,24 +386,33 @@ function itemUrlForAnalytics(item: Item): string {
 
 
 function log(msg: string): void {
-  console.log(`[sync] ${msg}`);
+  /* Clears the bar, prints, repaints — see `lib/progress.ts`. */
+  logLine(`[sync] ${msg}`);
 }
 
-/** Dynamic in-place progress task for the sync pipeline. */
+/**
+ * The pipeline's progress bar.
+ *
+ * A phase, not an item: the sync's work is a fixed list of passes and each one
+ * is minutes long, so the bar answers "which pass, and how far along the run"
+ * rather than "how many channels" — the per-channel counting belongs to
+ * `data:details`, which is where the thousands of requests happen.
+ */
+let pipelineBar: ProgressBar | null = null;
 let progressCount = 0;
 /** Ran phases per run: 22 for the full sync, fewer for `--live-only`. */
 let totalPhases = 22;
+
 function progress(phase: string, detail?: string): void {
   progressCount++;
-  const pct = Math.round((progressCount / totalPhases) * 100);
-  const filled = Math.floor(pct / 5);
-  const bar = "█".repeat(filled) + "░".repeat(20 - filled);
-  process.stdout.write(
-    `\r[sync pipeline] ${bar} ${pct}% ${phase}${detail ? ` — ${detail}` : ""}`,
-  );
+  pipelineBar ??= progressBar("sync pipeline", totalPhases, { unit: "phases" });
+  pipelineBar.setTotal(totalPhases);
+  pipelineBar.update(progressCount, detail ? `${phase} — ${detail}` : phase);
 }
+
 function stopProgress(): void {
-  process.stdout.write("\n");
+  pipelineBar?.done(`${progressCount} phase(s)`);
+  pipelineBar = null;
 }
 
 function toNumber(v: unknown): number | null {
