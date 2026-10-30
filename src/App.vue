@@ -501,7 +501,7 @@ const visibleUpcoming = computed(() =>
     affiliation: state.affiliation,
     language: state.language,
     schedule: state.upcomingType,
-    limit: 300,
+    limit: 1000,
   }), state.sort.upcoming),
 );
 
