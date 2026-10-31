@@ -72,6 +72,16 @@ interface Options {
    * a single-site deployment use; separate repositories pass their own host.
    */
   baseUrl: string;
+  /**
+   * Write **one** volume and nothing else.
+   *
+   * A parallel workflow gives each job a volume and a fresh checkout, and
+   * writing all twenty in every job means each one spends minutes producing
+   * nineteen directories it will throw away — 2.6 GB per job, twenty times.
+   * `--only 7` writes `vol-7` alone; the fan-in job still needs the whole set
+   * and calls this without the flag.
+   */
+  only: number | null;
 }
 
 function parseOptions(argv: string[]): Options {
@@ -90,6 +100,12 @@ function parseOptions(argv: string[]): Options {
     index: argv.includes("--index"),
     items: !argv.includes("--no-items"),
     baseUrl: value("--base-url") ?? "{name}/",
+    only: (() => {
+      const raw = value("--only");
+      if (raw === undefined) return null;
+      const parsed = Number(raw);
+      return Number.isInteger(parsed) && parsed >= 0 ? parsed : null;
+    })(),
   };
 }
 
@@ -179,6 +195,7 @@ function writeVolumesDescriptor(
   totals: { channels: number; items: number }[],
   template: string,
   now: string,
+  only: number | null = null,
 ): void {
   const file = {
     schemaVersion: SCHEMA_VERSION,
@@ -198,6 +215,12 @@ function writeVolumesDescriptor(
     })),
   };
   for (let index = 0; index < count; index++) {
+    /**
+     * `--only` writes the descriptor into the one volume requested. The other
+     * directories are not created at all — the point of the flag is that a
+     * parallel job writes nothing it will not use.
+     */
+    if (only !== null && index !== only) continue;
     writeJson(path.join(volumeSite(out, index), "data", "volumes.json"), file);
   }
 }
@@ -292,15 +315,39 @@ function split(options: Options): void {
     return;
   }
 
-  fs.rmSync(options.out, { recursive: true, force: true });
-  fs.mkdirSync(options.out, { recursive: true });
+  if (options.only !== null) {
+    /**
+     * One volume, written into a fresh directory for it.
+     *
+     * The whole of `.volumes/` is **not** removed: a job that was given
+     * `--only 7` must not delete the volumes beside it, and a re-run in the
+     * same checkout has to be idempotent.
+     */
+    if (options.only >= count) {
+      console.error(
+        `  --only ${options.only} is outside the ${count} volume(s) requested`,
+      );
+      process.exitCode = 1;
+      return;
+    }
+    fs.rmSync(volumeSite(options.out, options.only), {
+      recursive: true,
+      force: true,
+    });
+    fs.mkdirSync(options.out, { recursive: true });
+  } else {
+    fs.rmSync(options.out, { recursive: true, force: true });
+    fs.mkdirSync(options.out, { recursive: true });
+  }
 
   const totals: { channels: number; items: number }[] = [];
   for (const slice of slices) {
-    const root = path.join(volumeSite(options.out, slice.index), "data");
-    fs.mkdirSync(root, { recursive: true });
     const sliceItems = itemSlices[slice.index].records;
     totals.push({ channels: slice.records.length, items: sliceItems.length });
+    if (options.only !== null && slice.index !== options.only) continue;
+
+    const root = path.join(volumeSite(options.out, slice.index), "data");
+    fs.mkdirSync(root, { recursive: true });
 
     writeChannelShards(slice.records, now, root);
     rebuildChannelsManifest(slice.records, now, root);
@@ -319,7 +366,14 @@ function split(options: Options): void {
     );
   }
 
-  writeVolumesDescriptor(options.out, count, totals, options.baseUrl, now);
+  writeVolumesDescriptor(
+    options.out,
+    count,
+    totals,
+    options.baseUrl,
+    now,
+    options.only,
+  );
 
   const problems = checkPartition(
     channels.map((c) => c.id),
