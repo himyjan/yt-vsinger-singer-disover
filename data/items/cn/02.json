@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-30T07:01:41.522Z",
+  "generatedAt": "2026-10-31T03:33:17.357Z",
   "items": [
     {
       "id": "0ueX0qTPH1Y",
@@ -44,7 +44,53 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-27T17:58:40.188Z",
-      "updatedAt": "2026-10-30T07:01:41.522Z",
+      "updatedAt": "2026-10-31T03:16:25.456Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "A6m56-riMjQ",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCnzKoy4Lgvxpz8Vlks9dXvg",
+      "channelName": "Zuri Fuyuki Ch.【V2V】",
+      "channelKind": "virtual",
+      "region": "cn",
+      "gender": "female",
+      "languages": [
+        "zh-Hans"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "【Weekly Schedule 🐚🫧】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/A6m56-riMjQ/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2027-07-14T11:00:00.000Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCnzKoy4Lgvxpz8Vlks9dXvg",
+          "name": "Zuri Fuyuki Ch.【V2V】",
+          "kind": "virtual",
+          "region": "cn"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-31T03:16:20.180Z",
+      "updatedAt": "2026-10-31T03:16:20.180Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

@@ -1,7 +1,53 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-30T07:01:41.522Z",
+  "generatedAt": "2026-10-31T03:33:17.357Z",
   "items": [
+    {
+      "id": "913ZKnn-pbs",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCzybSipQeZnDViCiJgbztUw",
+      "channelName": "bearifiedchloe",
+      "channelKind": "virtual",
+      "region": "my",
+      "gender": "female",
+      "languages": [
+        "ms"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "WEEKLY SCHEDULE ─ .✦ ʕ｡- ˕ -｡ʔ",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/913ZKnn-pbs/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2028-06-29T06:15:00.000Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCzybSipQeZnDViCiJgbztUw",
+          "name": "bearifiedchloe",
+          "kind": "virtual",
+          "region": "my"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-31T03:16:25.456Z",
+      "updatedAt": "2026-10-31T03:16:25.456Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
     {
       "id": "K2CN4rFyjzA",
       "platform": "youtube",
@@ -44,7 +90,53 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-10-30T07:01:41.522Z",
+      "updatedAt": "2026-10-31T03:16:33.129Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OgUkM9tIG-A",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCDVE5wD1AU2RMcarC3i7h3A",
+      "channelName": "Eiten Dylus Ch.",
+      "channelKind": "virtual",
+      "region": "my",
+      "gender": "male",
+      "languages": [
+        "ms"
+      ],
+      "isAi": false,
+      "variant": "male_vtuber",
+      "title": "MERCENARY'S STREAM SCHEDULE! (19/10- 23/10)",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/OgUkM9tIG-A/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2027-04-27T16:00:00.000Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCDVE5wD1AU2RMcarC3i7h3A",
+          "name": "Eiten Dylus Ch.",
+          "kind": "virtual",
+          "region": "my"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-31T03:16:17.489Z",
+      "updatedAt": "2026-10-31T03:16:17.489Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

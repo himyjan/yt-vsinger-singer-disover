@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-30T07:01:41.522Z",
+  "generatedAt": "2026-10-31T03:33:17.357Z",
   "items": [
     {
       "id": "GEw-ODKXVdA",
@@ -44,7 +44,99 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-10-30T07:01:41.522Z",
+      "updatedAt": "2026-10-31T03:16:26.922Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "o1RHHXSxFL0",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UC78q8LU7V9EOD8lSb1_bkiQ",
+      "channelName": "七音",
+      "channelKind": "virtual",
+      "region": "my",
+      "gender": "unknown",
+      "languages": [
+        "ms"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "【#時間表】10/5/2026 - 10/1/2029 ｜七音 #雜談 #直播 #馬來西亞vtuber #vtuber",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/o1RHHXSxFL0/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2027-06-17T03:40:00.000Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": "【#時間表】10/5/2026",
+      "originalArtist": "10/1/2029 ｜七音 #雜談 #直播 #馬來西亞vtuber #vtuber",
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC78q8LU7V9EOD8lSb1_bkiQ",
+          "name": "七音",
+          "kind": "virtual",
+          "region": "my"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-31T03:16:33.129Z",
+      "updatedAt": "2026-10-31T03:16:33.129Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "yU-qEzQQAm4",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCYPJKyflH1e8nG3HfQTr6ew",
+      "channelName": "摩西子Moseko",
+      "channelKind": "virtual",
+      "region": "my",
+      "gender": "unknown",
+      "languages": [
+        "ms"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "【 周表 】此直播顯示僅用於聊天與更新周表",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/yU-qEzQQAm4/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2027-02-20T09:00:00.000Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCYPJKyflH1e8nG3HfQTr6ew",
+          "name": "摩西子Moseko",
+          "kind": "virtual",
+          "region": "my"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-31T03:16:16.423Z",
+      "updatedAt": "2026-10-31T03:16:16.423Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

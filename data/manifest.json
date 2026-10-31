@@ -1,18 +1,18 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-31T03:14:53.218Z",
+  "generatedAt": "2026-10-31T03:33:17.357Z",
   "counts": {
     "channels": 72699,
     "channelsVirtual": 72659,
     "channelsReal": 40,
     "channelsSinging": 9240,
-    "items": 2581,
-    "itemsLive": 111,
-    "itemsUpcoming": 1195,
+    "items": 8241,
+    "itemsLive": 14,
+    "itemsUpcoming": 6666,
     "itemsVideo": 0,
     "itemsPlaylist": 922,
     "itemsCover": 0,
-    "itemsMv": 5,
+    "itemsMv": 6,
     "itemsOriginal": 1
   },
   "regions": [
@@ -21,70 +21,70 @@
       "label": "Japan",
       "badge": "🇯🇵",
       "channels": 9941,
-      "items": 1717
+      "items": 4288
     },
     {
       "code": "cn",
       "label": "China",
       "badge": "🇨🇳",
       "channels": 8772,
-      "items": 6
+      "items": 8
     },
     {
       "code": "tw",
       "label": "Taiwan",
       "badge": "🇹🇼",
       "channels": 4241,
-      "items": 149
+      "items": 1229
     },
     {
       "code": "hk",
       "label": "Hong Kong",
       "badge": "🇭🇰",
       "channels": 710,
-      "items": 19
+      "items": 203
     },
     {
       "code": "kr",
       "label": "Korea",
       "badge": "🇰🇷",
       "channels": 373,
-      "items": 3
+      "items": 15
     },
     {
       "code": "en",
       "label": "English",
       "badge": "🌐",
       "channels": 39097,
-      "items": 585
+      "items": 1923
     },
     {
       "code": "id",
       "label": "Indonesia",
       "badge": "🇮🇩",
       "channels": 1127,
-      "items": 34
+      "items": 165
     },
     {
       "code": "my",
       "label": "Malaysia",
       "badge": "🇲🇾",
       "channels": 619,
-      "items": 7
+      "items": 56
     },
     {
       "code": "sea",
       "label": "SEA",
       "badge": "🌏",
       "channels": 1341,
-      "items": 26
+      "items": 174
     },
     {
       "code": "unknown",
       "label": "Unknown",
       "badge": "❔",
       "channels": 6478,
-      "items": 35
+      "items": 180
     }
   ],
   "quota": {
