@@ -1,53 +1,7 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-31T05:42:45.280Z",
+  "generatedAt": "2026-10-31T03:48:44.353Z",
   "items": [
-    {
-      "id": "zaqooRU7Bxk",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCiaPTh3s_FTC8e-HOAnvMNg",
-      "channelName": "MaNameBin",
-      "channelKind": "virtual",
-      "region": "my",
-      "gender": "male",
-      "languages": [
-        "ms"
-      ],
-      "isAi": false,
-      "variant": "male_vtuber",
-      "title": "🌧️ WE'RE DOING SOMETHING EARLY???",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/zaqooRU7Bxk/hq720.jpg",
-      "publishedAt": "2026-10-31T05:00:00.000Z",
-      "scheduledStart": "2026-10-31T05:00:00.000Z",
-      "actualStart": null,
-      "actualEnd": "2026-10-31T05:32:06.389Z",
-      "duration": 1926,
-      "status": "past",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCiaPTh3s_FTC8e-HOAnvMNg",
-          "name": "MaNameBin",
-          "kind": "virtual",
-          "region": "my"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-31T03:16:25.456Z",
-      "updatedAt": "2026-10-31T05:32:06.389Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
     {
       "id": "6Hdi_r4XVq4",
       "platform": "youtube",
@@ -90,7 +44,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:17.489Z",
-      "updatedAt": "2026-10-31T05:32:11.322Z",
+      "updatedAt": "2026-10-31T03:38:03.717Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -136,7 +90,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:25.311Z",
-      "updatedAt": "2026-10-31T05:32:01.692Z",
+      "updatedAt": "2026-10-31T03:38:02.385Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -182,7 +136,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.283Z",
-      "updatedAt": "2026-10-31T05:32:00.921Z",
+      "updatedAt": "2026-10-31T03:38:27.378Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -228,7 +182,53 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.180Z",
-      "updatedAt": "2026-10-31T05:31:59.926Z",
+      "updatedAt": "2026-10-31T03:37:59.059Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "zaqooRU7Bxk",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCiaPTh3s_FTC8e-HOAnvMNg",
+      "channelName": "MaNameBin",
+      "channelKind": "virtual",
+      "region": "my",
+      "gender": "male",
+      "languages": [
+        "ms"
+      ],
+      "isAi": false,
+      "variant": "male_vtuber",
+      "title": "🌧️ WE'RE DOING SOMETHING EARLY???",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/zaqooRU7Bxk/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2026-10-31T05:00:00.000Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCiaPTh3s_FTC8e-HOAnvMNg",
+          "name": "MaNameBin",
+          "kind": "virtual",
+          "region": "my"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-31T03:16:25.456Z",
+      "updatedAt": "2026-10-31T03:37:59.987Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

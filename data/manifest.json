@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-31T05:42:45.280Z",
+  "generatedAt": "2026-10-31T05:44:13.805Z",
   "counts": {
     "channels": 72699,
     "channelsVirtual": 72659,
     "channelsReal": 40,
-    "channelsSinging": 9240,
-    "items": 8438,
-    "itemsLive": 7,
-    "itemsUpcoming": 6684,
+    "channelsSinging": 10064,
+    "items": 8277,
+    "itemsLive": 13,
+    "itemsUpcoming": 6677,
     "itemsVideo": 0,
     "itemsPlaylist": 922,
     "itemsCover": 0,
@@ -20,14 +20,14 @@
       "code": "jp",
       "label": "Japan",
       "badge": "🇯🇵",
-      "channels": 9941,
-      "items": 4385
+      "channels": 9944,
+      "items": 4306
     },
     {
       "code": "cn",
       "label": "China",
       "badge": "🇨🇳",
-      "channels": 8772,
+      "channels": 8770,
       "items": 8
     },
     {
@@ -35,14 +35,14 @@
       "label": "Taiwan",
       "badge": "🇹🇼",
       "channels": 4241,
-      "items": 1251
+      "items": 1232
     },
     {
       "code": "hk",
       "label": "Hong Kong",
       "badge": "🇭🇰",
       "channels": 710,
-      "items": 205
+      "items": 204
     },
     {
       "code": "kr",
@@ -56,35 +56,35 @@
       "label": "English",
       "badge": "🌐",
       "channels": 39097,
-      "items": 1976
+      "items": 1935
     },
     {
       "code": "id",
       "label": "Indonesia",
       "badge": "🇮🇩",
       "channels": 1127,
-      "items": 173
+      "items": 165
     },
     {
       "code": "my",
       "label": "Malaysia",
       "badge": "🇲🇾",
       "channels": 619,
-      "items": 58
+      "items": 56
     },
     {
       "code": "sea",
       "label": "SEA",
       "badge": "🌏",
       "channels": 1341,
-      "items": 178
+      "items": 175
     },
     {
       "code": "unknown",
       "label": "Unknown",
       "badge": "❔",
-      "channels": 6478,
-      "items": 187
+      "channels": 6477,
+      "items": 179
     }
   ],
   "quota": {

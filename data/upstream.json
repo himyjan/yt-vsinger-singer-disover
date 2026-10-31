@@ -1,22 +1,22 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-30T12:52:02.986Z",
+  "generatedAt": "2026-10-31T05:44:13.810Z",
   "sources": [
     {
       "id": "vdb",
       "label": "vdb — the Virtual YouTuber Name List Database",
-      "sha": "a80ccd053e4df27158ebc7006c573dcb43cc3ed7",
-      "committedAt": "2026-10-22T02:01:44Z",
-      "message": "Merge pull request #26766 from dd-center/submit-26765",
-      "checkedAt": "2026-10-30T12:52:02.986Z"
+      "sha": "ed204d14b68bc8d73afd6c7fb72b42805e65bf0f",
+      "committedAt": "2026-10-31T03:19:31Z",
+      "message": "Merge pull request #26788 from dd-center/submit-26787",
+      "checkedAt": "2026-10-31T05:44:13.810Z"
     },
     {
       "id": "taiwan-tracker",
       "label": "Taiwan VTuber Tracking Data",
-      "sha": "6304750ddc497d6f9b128d4d8643ebbf3565ce22",
-      "committedAt": "2026-10-30T12:49:54Z",
-      "message": "Automatic update at 2026/10/30 20:49",
-      "checkedAt": "2026-10-30T12:52:02.986Z"
+      "sha": "66538ed0f2864cc3c8b54868efbf19f870362690",
+      "committedAt": "2026-10-31T05:25:18Z",
+      "message": "Automatic update at 2026/10/31 13:25",
+      "checkedAt": "2026-10-31T05:44:13.810Z"
     },
     {
       "id": "music-dataset",
@@ -24,7 +24,7 @@
       "sha": "8fa1ef8c1ab54cfd0ef858b3942ac8acee5863b1",
       "committedAt": "2022-06-23T16:05:50Z",
       "message": "Merge pull request #2 from meihei3/dependabot/pip/httplib2-0.19.0",
-      "checkedAt": "2026-10-30T12:52:02.986Z"
+      "checkedAt": "2026-10-31T05:44:13.810Z"
     }
   ]
 }
