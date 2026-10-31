@@ -32,7 +32,8 @@ npm run data:sync           # InnerTube + optional Data API + platform adapters
 npm run data:index          # rebuild the search index
 npm run data:validate       # check structure and size budgets
 npm run data:links          # find the missing cross-platform accounts
-npm run data:discover       # new performers from vTubie (--source all: + the wiki)
+npm run data:discover       # new performers from directory sources (vTubie, chuysan)
+npm run data:discover -- --source chuysan   # only the Chuysan Thai VTuber directory
 npm run data:bacharu        # the bacharu roster (109,828 rows) → .cache/
 npm run data:vtuberhk       # the Hong Kong directory → .cache/
 npm run data:hololist       # the HoloList directory (9,359 entries) → .cache/

@@ -90,11 +90,11 @@ rotation checks the catalogue volume-by-volume (`npm run data:volumes -- --count
 and adding a volume moves about `1/(N+1)` of the catalogue.
 
 The scheduled live workflow computes the volume count from its `volume-count`
-input (default 10) and checks every volume sequentially in one job (~5,000–7,000
-channels each, ~2–4 min per volume), giving full catalogue coverage every sweep
-instead of ~1 day with the shard rotation. The manual `shard-count` input on
-sync changes the number of shards (`1` disables sharding) and `channels` caps
-the number of channels refreshed in the run.
+input (default 20) and runs one job per volume, all in parallel. Each volume
+holds ~3,546–3,746 channels and takes ~2–4 minutes to check, so twenty parallel
+jobs complete the full catalogue sweep in ~20 minutes. The manual `shard-count`
+input on sync changes the number of shards (`1` disables sharding) and `channels`
+caps the number of channels refreshed in the run.
 
 The manual `keyword` input replaces the configured discovery terms for
 platforms that support keyword search. The `no-search` input skips discovery
@@ -418,8 +418,8 @@ actually racing.
 
 So the gate is 900 MB and the volume trigger is 700 MB, not 7.5 GB. A 7.5 GB
 *catalogue* is a reasonable target; a 7.5 GB *repository* is not, because it
-could only be published as a site ten times the ceiling. The way to own 7.5 GB
-is ten volumes of ~750 MB, each with its own site, which is what the ladder's
+could only be published as a site twenty times the ceiling. The way to own 7.5 GB
+is twenty volumes of ~375 MB, each with its own site, which is what the ladder's
 third rung does — and then the gate is checked **per volume**, not for the
 catalogue as a whole.
 
