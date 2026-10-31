@@ -76,10 +76,11 @@ jobs:
         # builds the whole 2.6 GB split and throws nineteen twentieths away —
         # twenty times over, on the same runner minutes it needs for the checks.
         #
-        # `split-volumes` copies `data/overrides.json` beside every volume, and
-        # a `--live-only` pass reads nothing else from the dataset root, so
-        # nothing has to be copied in afterwards. A `--only N` also leaves the
-        # other volumes alone, so a re-run in the same checkout is idempotent.
+        # The shared inputs the pass opens — `overrides.json`,
+        # `seed-catalog.json` (read at **import** time), `upstream.json`,
+        # `suggestions.json` — are copied in by the split itself, so nothing
+        # has to be copied in afterwards. A `--only N` also leaves the other
+        # volumes alone, so a re-run in the same checkout is idempotent.
         run: npm run data:volumes -- --count 20 --only ${{ matrix.volume }}
 
       - name: Process volume ${{ matrix.volume }}
