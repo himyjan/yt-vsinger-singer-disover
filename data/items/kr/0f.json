@@ -1,7 +1,53 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-31T10:23:52.721Z",
+  "generatedAt": "2026-10-31T18:39:26.966Z",
   "items": [
+    {
+      "id": "7wAM6Jg2_gw",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCGCmslw7AN6Rnt6gpOliMEg",
+      "channelName": "Sakura Himawari",
+      "channelKind": "virtual",
+      "region": "kr",
+      "gender": "female",
+      "languages": [
+        "ko"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "[R.E.P.O.W/FRIENDS] Trick or treat? MONEY! [SAKURA HIMAWARI]",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/7wAM6Jg2_gw/hq720.jpg",
+      "publishedAt": "2026-10-31T14:00:00.000Z",
+      "scheduledStart": "2026-10-31T14:00:00.000Z",
+      "actualStart": null,
+      "actualEnd": "2026-10-31T18:28:48.263Z",
+      "duration": 16128,
+      "status": "past",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": true,
+      "collaborators": [
+        {
+          "channelId": "UCGCmslw7AN6Rnt6gpOliMEg",
+          "name": "Sakura Himawari",
+          "kind": "virtual",
+          "region": "kr"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-31T10:13:03.981Z",
+      "updatedAt": "2026-10-31T18:28:48.263Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
     {
       "id": "1KBx-ioit_A",
       "platform": "youtube",
@@ -44,29 +90,29 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:21.011Z",
-      "updatedAt": "2026-10-31T10:13:03.981Z",
+      "updatedAt": "2026-10-31T18:28:48.263Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "7wAM6Jg2_gw",
+      "id": "JFapdg9UJMk",
       "platform": "youtube",
       "type": "live",
-      "channelId": "UCGCmslw7AN6Rnt6gpOliMEg",
-      "channelName": "Sakura Himawari",
+      "channelId": "UCog2Ct-LHsXuy9AQ4l-o9HA",
+      "channelName": "니노 선데이",
       "channelKind": "virtual",
       "region": "kr",
-      "gender": "female",
+      "gender": "male",
       "languages": [
         "ko"
       ],
       "isAi": false,
-      "variant": "female_vtuber",
-      "title": "[R.E.P.O.W/FRIENDS] Trick or treat? MONEY! [SAKURA HIMAWARI]",
+      "variant": "male_vtuber",
+      "title": "【LIVE】덩실덩실 엉구소【261101】",
       "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/7wAM6Jg2_gw/hq720.jpg",
+      "thumbnail": "https://i.ytimg.com/vi/JFapdg9UJMk/hq720.jpg",
       "publishedAt": null,
-      "scheduledStart": "2026-10-31T14:00:00.000Z",
+      "scheduledStart": "2026-11-01T13:00:00.000Z",
       "actualStart": null,
       "actualEnd": null,
       "duration": null,
@@ -74,11 +120,11 @@
       "category": "premiere",
       "songTitle": null,
       "originalArtist": null,
-      "isCollab": true,
+      "isCollab": false,
       "collaborators": [
         {
-          "channelId": "UCGCmslw7AN6Rnt6gpOliMEg",
-          "name": "Sakura Himawari",
+          "channelId": "UCog2Ct-LHsXuy9AQ4l-o9HA",
+          "name": "니노 선데이",
           "kind": "virtual",
           "region": "kr"
         }
@@ -89,8 +135,8 @@
       "likeCount": null,
       "concurrentViewers": null,
       "source": "api",
-      "addedAt": "2026-10-31T10:13:03.981Z",
-      "updatedAt": "2026-10-31T10:13:03.981Z",
+      "addedAt": "2026-10-31T18:28:47.504Z",
+      "updatedAt": "2026-10-31T18:28:47.504Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }
