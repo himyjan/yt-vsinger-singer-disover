@@ -71,19 +71,16 @@ jobs:
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
 
-      - name: Create volume split
-        run: npm run data:volumes -- --count 20
-
-      - name: Copy shared files into volume dirs
-        run: |
-          for v in ${{ matrix.volume }}; do
-            VOL_DIR=".volumes/vol-$v/data"
-            for f in overrides.json seed-catalog.json suggestions.json upstream.json manifest.json; do
-              if [ -f "data/$f" ]; then
-                cp "data/$f" "$VOL_DIR/$f"
-              fi
-            done
-          done
+      - name: Create this volume only
+        # `--only` writes one volume and nothing else. Without it every job
+        # builds the whole 2.6 GB split and throws nineteen twentieths away —
+        # twenty times over, on the same runner minutes it needs for the checks.
+        #
+        # `split-volumes` copies `data/overrides.json` beside every volume, and
+        # a `--live-only` pass reads nothing else from the dataset root, so
+        # nothing has to be copied in afterwards. A `--only N` also leaves the
+        # other volumes alone, so a re-run in the same checkout is idempotent.
+        run: npm run data:volumes -- --count 20 --only ${{ matrix.volume }}
 
       - name: Process volume ${{ matrix.volume }}
         env:

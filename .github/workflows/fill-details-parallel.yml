@@ -93,16 +93,12 @@ jobs:
       - name: Create this volume only
         # `--only` writes one volume and nothing else: a full split is ~2.6 GB
         # per job, and nineteen twentieths of it would be thrown away.
+        #
+        # Nothing has to be copied in afterwards: `split-volumes` already
+        # copies `data/overrides.json` beside every volume, and a detail pass
+        # reads nothing else from the dataset root — the overrides are the only
+        # curated file it consults.
         run: npm run data:volumes -- --count 20 --only ${{ matrix.volume }}
-
-      - name: Copy shared files into the volume dir
-        run: |
-          VOL_DIR=".volumes/vol-${{ matrix.volume }}/data"
-          for f in overrides.json seed-catalog.json suggestions.json upstream.json manifest.json; do
-            if [ -f "data/$f" ]; then
-              cp "data/$f" "$VOL_DIR/$f"
-            fi
-          done
 
       - name: Fill details for volume ${{ matrix.volume }}
         env:
