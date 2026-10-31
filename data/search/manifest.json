@@ -1,18 +1,18 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-31T03:33:30.613Z",
+  "generatedAt": "2026-10-31T03:48:48.635Z",
   "regions": [
     {
       "code": "jp",
       "shard": 0,
-      "entries": 7115,
-      "bytes": 4030257
+      "entries": 7125,
+      "bytes": 4036039
     },
     {
       "code": "jp",
       "shard": 1,
-      "entries": 7114,
-      "bytes": 5747070
+      "entries": 7124,
+      "bytes": 5769632
     },
     {
       "code": "cn",
@@ -23,44 +23,44 @@
     {
       "code": "tw",
       "shard": 0,
-      "entries": 5470,
-      "bytes": 3655139
+      "entries": 5474,
+      "bytes": 3697979
     },
     {
       "code": "hk",
       "shard": 0,
-      "entries": 913,
-      "bytes": 639441
+      "entries": 914,
+      "bytes": 647095
     },
     {
       "code": "kr",
       "shard": 0,
-      "entries": 388,
-      "bytes": 214027
+      "entries": 389,
+      "bytes": 215246
     },
     {
       "code": "en",
       "shard": 0,
-      "entries": 10255,
-      "bytes": 4446421
+      "entries": 10258,
+      "bytes": 4458734
     },
     {
       "code": "en",
       "shard": 1,
-      "entries": 10255,
-      "bytes": 4436634
+      "entries": 10258,
+      "bytes": 4448951
     },
     {
       "code": "en",
       "shard": 2,
-      "entries": 10255,
-      "bytes": 4445618
+      "entries": 10258,
+      "bytes": 4458005
     },
     {
       "code": "en",
       "shard": 3,
-      "entries": 10255,
-      "bytes": 5008648
+      "entries": 10258,
+      "bytes": 5023780
     },
     {
       "code": "id",
@@ -72,20 +72,20 @@
       "code": "my",
       "shard": 0,
       "entries": 675,
-      "bytes": 376522
+      "bytes": 377149
     },
     {
       "code": "sea",
       "shard": 0,
-      "entries": 1515,
-      "bytes": 751752
+      "entries": 1516,
+      "bytes": 752659
     },
     {
       "code": "unknown",
       "shard": 0,
-      "entries": 6658,
-      "bytes": 3003653
+      "entries": 6660,
+      "bytes": 3005346
     }
   ],
-  "total": 80940
+  "total": 80981
 }

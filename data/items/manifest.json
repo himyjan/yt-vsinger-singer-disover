@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-31T03:33:17.357Z",
+  "generatedAt": "2026-10-31T03:48:44.353Z",
   "regions": [
     {
       "code": "jp",
@@ -24,7 +24,7 @@
         "0e",
         "0f"
       ],
-      "items": 4288
+      "items": 4308
     },
     {
       "code": "cn",
@@ -62,7 +62,7 @@
         "0e",
         "0f"
       ],
-      "items": 1229
+      "items": 1233
     },
     {
       "code": "hk",
@@ -86,13 +86,14 @@
         "0e",
         "0f"
       ],
-      "items": 203
+      "items": 204
     },
     {
       "code": "kr",
       "label": "Korea",
       "badge": "🇰🇷",
       "buckets": [
+        "00",
         "01",
         "02",
         "03",
@@ -105,7 +106,7 @@
         "0e",
         "0f"
       ],
-      "items": 15
+      "items": 16
     },
     {
       "code": "en",
@@ -129,7 +130,7 @@
         "0e",
         "0f"
       ],
-      "items": 1923
+      "items": 1935
     },
     {
       "code": "id",
@@ -201,7 +202,7 @@
         "0e",
         "0f"
       ],
-      "items": 174
+      "items": 175
     },
     {
       "code": "unknown",
@@ -225,13 +226,13 @@
         "0e",
         "0f"
       ],
-      "items": 180
+      "items": 182
     }
   ],
   "counts": {
-    "total": 8241,
-    "live": 14,
-    "upcoming": 6666
+    "total": 8282,
+    "live": 13,
+    "upcoming": 6681
   },
   "liveParts": [
     "live.json"
