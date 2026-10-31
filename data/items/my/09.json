@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-31T03:48:44.353Z",
+  "generatedAt": "2026-10-31T10:23:52.721Z",
   "items": [
     {
       "id": "BtEspcz1psA",
@@ -19,12 +19,12 @@
       "title": "【FF X/X-II HD Remaster】玩了這麽久游戲進度原來還在中期嗎？",
       "description": null,
       "thumbnail": "https://i.ytimg.com/vi/BtEspcz1psA/hq720.jpg",
-      "publishedAt": null,
+      "publishedAt": "2026-10-31T07:00:00.000Z",
       "scheduledStart": "2026-10-31T07:00:00.000Z",
       "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "upcoming",
+      "actualEnd": "2026-10-31T10:13:08.637Z",
+      "duration": 11588,
+      "status": "past",
       "category": "premiere",
       "songTitle": null,
       "originalArtist": null,
@@ -44,7 +44,53 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:27.340Z",
-      "updatedAt": "2026-10-31T03:38:13.488Z",
+      "updatedAt": "2026-10-31T10:13:08.637Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "DPUQ43CaZxk",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCNXFNIRSlZhKVqGBKdpyzAg",
+      "channelName": "幽燼 Yujin ch.",
+      "channelKind": "virtual",
+      "region": "my",
+      "gender": "unknown",
+      "languages": [
+        "ms"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "【黎明死綫 | 怨靈】通過聽力測試才能玩的殺手... | 游戲實況 ✧ 幽燼Yujin",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/DPUQ43CaZxk/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2026-11-01T10:00:00.000Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCNXFNIRSlZhKVqGBKdpyzAg",
+          "name": "幽燼 Yujin ch.",
+          "kind": "virtual",
+          "region": "my"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-31T10:12:53.882Z",
+      "updatedAt": "2026-10-31T10:12:53.882Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-27T17:58:40.188Z",
+  "generatedAt": "2026-10-31T10:23:52.721Z",
   "items": [
     {
       "id": "OLAK5uy_ktUMmjq7koMisgbbK2YyUEUw0a0VbP-MI",
@@ -99,6 +99,52 @@
       "source": "api",
       "addedAt": "2026-10-27T17:58:40.188Z",
       "updatedAt": "2026-10-27T17:58:40.188Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "xMW3C_LbtZc",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCnzKoy4Lgvxpz8Vlks9dXvg",
+      "channelName": "Zuri Fuyuki Ch.【V2V】",
+      "channelKind": "virtual",
+      "region": "cn",
+      "gender": "female",
+      "languages": [
+        "zh-Hans"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "【MEMBER WATCHALONG】Obssesion with Zuri? NAUR",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/xMW3C_LbtZc/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2026-11-01T07:00:00.000Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": true,
+      "collaborators": [
+        {
+          "channelId": "UCnzKoy4Lgvxpz8Vlks9dXvg",
+          "name": "Zuri Fuyuki Ch.【V2V】",
+          "kind": "virtual",
+          "region": "cn"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-31T10:12:53.267Z",
+      "updatedAt": "2026-10-31T10:12:53.267Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

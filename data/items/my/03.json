@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-31T03:48:44.353Z",
+  "generatedAt": "2026-10-31T10:23:52.721Z",
   "items": [
     {
       "id": "pTfZ8NgJwYc",
@@ -90,7 +90,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:25.456Z",
-      "updatedAt": "2026-10-31T03:37:59.987Z",
+      "updatedAt": "2026-10-31T10:12:57.779Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -136,7 +136,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:33.129Z",
-      "updatedAt": "2026-10-31T03:38:09.314Z",
+      "updatedAt": "2026-10-31T10:13:01.692Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -182,7 +182,53 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:19.448Z",
-      "updatedAt": "2026-10-31T03:38:01.088Z",
+      "updatedAt": "2026-10-31T10:13:03.003Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "QborfsMiYYQ",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCScPEeFKiyLuBevhnro34sQ",
+      "channelName": "cass_kuns",
+      "channelKind": "virtual",
+      "region": "my",
+      "gender": "male",
+      "languages": [
+        "ms"
+      ],
+      "isAi": false,
+      "variant": "male_vtuber",
+      "title": "Sekai Saturday (58)",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/QborfsMiYYQ/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2026-10-31T14:00:00.000Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCScPEeFKiyLuBevhnro34sQ",
+          "name": "cass_kuns",
+          "kind": "virtual",
+          "region": "my"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-31T10:13:07.617Z",
+      "updatedAt": "2026-10-31T10:13:07.617Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -228,7 +274,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:22.173Z",
-      "updatedAt": "2026-10-31T03:37:57.509Z",
+      "updatedAt": "2026-10-31T10:13:02.913Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-31T05:44:13.805Z",
+  "generatedAt": "2026-10-31T10:23:52.721Z",
   "regions": [
     {
       "code": "jp",
@@ -24,7 +24,7 @@
         "0e",
         "0f"
       ],
-      "items": 4306
+      "items": 4654
     },
     {
       "code": "cn",
@@ -38,7 +38,7 @@
         "07",
         "0d"
       ],
-      "items": 8
+      "items": 9
     },
     {
       "code": "tw",
@@ -62,7 +62,7 @@
         "0e",
         "0f"
       ],
-      "items": 1232
+      "items": 1304
     },
     {
       "code": "hk",
@@ -86,7 +86,7 @@
         "0e",
         "0f"
       ],
-      "items": 204
+      "items": 213
     },
     {
       "code": "kr",
@@ -130,7 +130,7 @@
         "0e",
         "0f"
       ],
-      "items": 1935
+      "items": 2049
     },
     {
       "code": "id",
@@ -154,7 +154,7 @@
         "0e",
         "0f"
       ],
-      "items": 165
+      "items": 183
     },
     {
       "code": "my",
@@ -178,7 +178,7 @@
         "0e",
         "0f"
       ],
-      "items": 56
+      "items": 63
     },
     {
       "code": "sea",
@@ -202,7 +202,7 @@
         "0e",
         "0f"
       ],
-      "items": 175
+      "items": 195
     },
     {
       "code": "unknown",
@@ -226,13 +226,13 @@
         "0e",
         "0f"
       ],
-      "items": 179
+      "items": 192
     }
   ],
   "counts": {
-    "total": 8277,
-    "live": 13,
-    "upcoming": 6677
+    "total": 8879,
+    "live": 21,
+    "upcoming": 6878
   },
   "liveParts": [
     "live.json"
