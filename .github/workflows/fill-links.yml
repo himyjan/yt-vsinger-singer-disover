@@ -91,7 +91,7 @@ jobs:
           commit_message: "data: fill external links from rosters (${{ github.run_number }})"
           file_pattern: "data/*"
           branch: ${{ github.ref_name }}
-          skip_fetch: true
+          skip_fetch: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
