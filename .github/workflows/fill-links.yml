@@ -1,14 +1,32 @@
 name: Fill external links (weekly)
 
 # Fills missing social links (Twitch, X, Instagram, TikTok, Bilibili, Niconico,
-# CHZZK, CI.ME, SOOP, etc.) from roster sources:
+# CHZZK, CI.ME, SOOP, etc.) from two rosters:
 #
 #   npm run data:hololist-import -- --links --apply
 #   npm run data:bacharu-import -- --links --apply
 #
-# Runs weekly so roster-linked accounts (Twitter, Twitch, Bilibili, etc.) are
-# backfilled without blocking the daily sync. Only fills fields that are empty
-# on the record — nothing already on the record is overwritten.
+# **The two harvests run at the same time.** Measured on run 41069686777, one
+# job did them in sequence: HoloList read 9,379 entries in 42m 45s and bacharu
+# the whole roster afterwards, 82 minutes of a 90-minute job. They share
+# nothing — two different sites, two different snapshots — so they are two
+# jobs, and the wall clock is the slower of the two instead of the sum.
+#
+# **The import is not split.** It writes `data/`, and two jobs writing the same
+# shards would overwrite each other: whichever finished last would win and the
+# other roster's links would be lost. So the harvests upload their snapshots as
+# artifacts and one fan-in job applies both, rebuilds the index, validates and
+# commits once — the same shape `live.yml` uses for volumes, for the same
+# reason.
+#
+# A volume split is deliberately *not* used here. `live` and `details` fan out
+# because their cost is proportional to the catalogue; this cost is two crawls
+# of two directories, and twenty jobs would each fetch the same pages (each
+# with its own empty `.cache`) instead of a twentieth of them.
+#
+# Both harvests are resumable through `.cache/` — HoloList keeps one page per
+# entry plus a `<lastmod>` state, bacharu one file per roster page — so each
+# job restores its own cache and re-fetches only what changed.
 
 on:
   schedule:
@@ -30,10 +48,11 @@ permissions:
   contents: write
 
 jobs:
-  fill-links:
-    name: Fill external links from rosters
+  harvest-hololist:
+    name: Harvest HoloList
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    # 42m45s for a cold pass; the cache makes an incremental one minutes.
+    timeout-minutes: 75
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -55,35 +74,142 @@ jobs:
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
 
-      # Both harvests are resumable through `.cache/` — HoloList keeps one page
-      # per entry plus a `<lastmod>` state, bacharu one page per roster page —
-      # and neither cache existed here, so every weekly run started from zero:
-      # 9,359 entries and the whole bacharu roster, inside a 90-minute job.
-      # The key is unique per run and `restore-keys` picks the newest previous
-      # harvest, which is the standard rolling-cache pattern: a run resumes the
-      # last one and its own cache becomes the next run's starting point.
-      - name: Restore harvest caches
+      # A rolling key per source: `restore-keys` picks the newest previous
+      # harvest, so this job resumes the last pass and re-fetches only the
+      # entries whose `<lastmod>` moved.
+      - name: Restore HoloList cache
         uses: actions/cache@v6
         with:
           path: |
             .cache/hololist
             .cache/hololist.json
+          key: hololist-harvest-${{ github.run_number }}
+          restore-keys: |
+            hololist-harvest-
+
+      - name: Harvest HoloList
+        run: npm run data:hololist
+
+      - name: Upload HoloList snapshot
+        uses: actions/upload-artifact@v7
+        with:
+          name: hololist-snapshot
+          # Rooted at the file, so the fan-in downloads `.cache/hololist.json`
+          # exactly where the importer looks for it.
+          path: .cache/hololist.json
+          retention-days: 3
+
+  harvest-bacharu:
+    name: Harvest bacharu
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          lfs: true
+
+      - name: Install Git LFS
+        run: |
+          git lfs install --skip-repo
+          git lfs pull || true
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "26"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Restore bacharu cache
+        uses: actions/cache@v6
+        with:
+          path: |
             .cache/bacharu
             .cache/bacharu-state.json
             .cache/bacharu-vtubers.json
-          key: roster-harvest-${{ github.run_number }}
+          key: bacharu-harvest-${{ github.run_number }}
           restore-keys: |
-            roster-harvest-
+            bacharu-harvest-
 
-      - name: Harvest rosters (hololist + bacharu)
+      - name: Harvest bacharu
+        run: npm run data:bacharu
+
+      - name: Upload bacharu snapshot
+        uses: actions/upload-artifact@v7
+        with:
+          name: bacharu-snapshot
+          path: .cache/bacharu-vtubers.json
+          retention-days: 3
+
+  apply-links:
+    name: Apply the links and commit
+    needs: [harvest-hololist, harvest-bacharu]
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          lfs: true
+
+      - name: Install Git LFS
         run: |
-          npm run data:hololist
-          npm run data:bacharu
+          git lfs install --skip-repo
+          git lfs pull || true
 
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "26"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Download both snapshots
+        uses: actions/download-artifact@v8
+        with:
+          path: .cache
+          pattern: "*-snapshot"
+          # Each artifact holds one file, so a merge would be fine — but the
+          # names are unique anyway and `false` keeps the layout obvious.
+          merge-multiple: false
+
+      - name: Place the snapshots where the importers look
+        run: |
+          # `download-artifact` gives each artifact its own directory named
+          # after it: `.cache/hololist-snapshot/hololist.json`. The importers
+          # read `.cache/hololist.json` and `.cache/bacharu-vtubers.json`.
+          missing=0
+          for pair in "hololist-snapshot:hololist.json" "bacharu-snapshot:bacharu-vtubers.json"; do
+            name="${pair%%:*}"
+            file="${pair##*:}"
+            if [ ! -f ".cache/$name/$file" ]; then
+              echo "::error::artifact $name did not contain $file"
+              missing=$((missing + 1))
+              continue
+            fi
+            mv ".cache/$name/$file" ".cache/$file"
+          done
+          if [ "$missing" -gt 0 ]; then
+            echo "::error::$missing harvest artifact(s) unusable — refusing to apply a partial harvest"
+            exit 1
+          fi
+          ls -lh .cache/*.json
+
+      # `import-hololist` prefers the per-entry page files when they are on
+      # disk and falls back to the snapshot when they are not — which is this
+      # case: the fan-in has the snapshot only, so the import reads it.
       - name: Fill external links from hololist
         run: |
           if [ "${{ inputs.dry-run }}" = "true" ]; then
             echo "Dry run: would run hololist-import --links --apply"
+            npm run data:hololist-import -- --links
           else
             npm run data:hololist-import -- --links --apply
           fi
@@ -92,6 +218,7 @@ jobs:
         run: |
           if [ "${{ inputs.dry-run }}" = "true" ]; then
             echo "Dry run: would run bacharu-import --links --apply"
+            npm run data:bacharu-import -- --links
           else
             npm run data:bacharu-import -- --links --apply
           fi
@@ -129,9 +256,10 @@ jobs:
           {
             echo "### Fill external links (weekly)"
             echo ""
-            echo "| Metric | Value |"
+            echo "| | |"
             echo "| --- | --- |"
-            echo "| Hololist links | \`npm run data:hololist-import -- --links --apply\` |"
-            echo "| Bacharu links | \`npm run data:bacharu-import -- --links --apply\` |"
-            echo "| Committed | \`data/*\` |"
+            echo "| HoloList | harvested in parallel · \`data:hololist-import --links --apply\` |"
+            echo "| bacharu | harvested in parallel · \`data:bacharu-import --links --apply\` |"
+            echo "| Dry run | ${{ inputs.dry-run }} |"
+            echo "| Committed | \`data/\` |"
           } >> "$GITHUB_STEP_SUMMARY"
