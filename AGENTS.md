@@ -341,8 +341,8 @@ The gate and the volume trigger are sized by the **published site**, not by
 the repository ceiling: GitHub Pages refuses a site over 1 GB, and the site is
 one snapshot of a dataset that grows every day, while the 10 GB repository
 limit is ten snapshots away from ever binding. `prepare:public` checks the
-site and fails the build above the ceiling. A 7.5 GB catalogue is ten volumes
-of ~750 MB, not one repository of 7.5 GB — see `docs/DEPLOY.md` →
+site and fails the build above the ceiling. A 7.5 GB catalogue is twenty volumes
+of ~375 MB each, not one repository of 7.5 GB — see `docs/DEPLOY.md` →
 *What actually binds*.
 
 The split itself is not a rewrite: `volumeOf(id)` in `scripts/lib/volume.ts` is
@@ -486,11 +486,10 @@ opened every Live tab and was killed at 68% with nothing written.
 The catalogue is split into **volumes** (`npm run data:volumes -- --count N`).
 `volumeOf(id)` in `scripts/lib/volume.ts` is rendezvous hashing, so a channel
 lives in exactly one volume, and the split is balanced to within a few percent
-(10 volumes of 72,698 records held 7,185–7,384 each).
+(20 volumes of 72,698 records held ~3,546–3,746 each).
 
 **One job cannot check the catalogue, so the volumes run in parallel.** A
-YouTube live check is two round-trips — 0.78 s sequential, 0.176 s behind a
-pool of six (both measured) — so the ten volumes are ~13 h of sequential work
+YouTube live check is twenty jobs — so the twenty volumes are sequential work
 and a GitHub job may not exceed 6 h. A run that tried them all was cancelled
 before its commit step and wrote nothing. `live.yml` therefore splits the
 catalogue into **twenty volumes** (3,546–3,746 channels each, measured) and
@@ -520,8 +519,8 @@ Two flags make a volume fit in ~19 minutes: `--live-concurrency N` overlaps the
 lookups (the limiter serialises the requests themselves, so the pool hides
 latency without bursting), and `--innertube-delay MS` lowers the gap for a pass
 that is thousands of two-request checks rather than a few hundred profiles. The
-per-volume cap must stay **above** the largest volume's YouTube count (6,433 at
-ten volumes), or the tail of every volume is skipped forever — `page` never
+per-volume cap must stay **above** the largest volume's YouTube count (3,546 at
+twenty volumes), or the tail of every volume is skipped forever — `page` never
 advances when the limit covers the whole set. The full sync skips the live pass
 unless `--limit-live N` is given.
 

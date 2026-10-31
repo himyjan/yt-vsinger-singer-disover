@@ -166,6 +166,7 @@ scripts/
     ├── search.ts            tokenizer + inverted index + query engine
     ├── aislist.ts           AI-channel list
     ├── vdb.ts               the Virtual YouTuber Name List Database
+    ├── chuysan.ts           Chuysan Thai VTuber directory: public JSON API
     ├── hololist.ts          the HoloList directory: entry and sitemap parsers
     ├── taiwan-vtuber-data.ts  the Taiwan VTuber track list
     ├── chinese-scripts.ts   simplified vs. traditional character sets
