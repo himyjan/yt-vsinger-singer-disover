@@ -230,11 +230,30 @@ function writeVolumesDescriptor(
  * it" or "this record is really Japanese" — a volume that did not receive it
  * would show the mistake the override exists to fix. The file is small, and a
  * copy per volume keeps every volume correct on its own.
+ *
+ * The same is true of the small inputs a reader opens before it touches a
+ * record: `seed-catalog.ts` reads `seed-catalog.json` at **import** time, so a
+ * volume without it cannot run a `--live-only` pass at all — it throws ENOENT
+ * before the first request. The workflows used to copy these in by hand, which
+ * meant every new reader added another file each of them had to remember.
+ * They are 250 KB together; a volume carries its own copy.
+ *
+ * `manifest.json` is deliberately not copied: each volume writes its own, and
+ * a copy of the whole catalogue's counts would be a lie about that volume.
  */
-function copyOverrides(root: string): void {
-  const source = path.join(DATA_DIR, "overrides.json");
-  if (!fs.existsSync(source)) return;
-  fs.copyFileSync(source, path.join(root, "overrides.json"));
+const SHARED_FILES = [
+  "overrides.json",
+  "seed-catalog.json",
+  "upstream.json",
+  "suggestions.json",
+] as const;
+
+function copySharedFiles(root: string): void {
+  for (const name of SHARED_FILES) {
+    const source = path.join(DATA_DIR, name);
+    if (!fs.existsSync(source)) continue;
+    fs.copyFileSync(source, path.join(root, name));
+  }
 }
 
 /* -------------------------------------------------------------------------- */
@@ -353,7 +372,7 @@ function split(options: Options): void {
     rebuildChannelsManifest(slice.records, now, root);
     if (options.items) writeItemShards(sliceItems, now, root);
     writeVolumeManifest(root, slice.records, sliceItems, slice.index, count, now);
-    copyOverrides(root);
+    copySharedFiles(root);
     if (options.index) buildSearchIndex(root);
 
     const bytes = slice.records.reduce(
