@@ -489,12 +489,13 @@ lives in exactly one volume, and the split is balanced to within a few percent
 (20 volumes of 72,698 records held ~3,546–3,746 each).
 
 **One job cannot check the catalogue, so the volumes run in parallel.** A
-YouTube live check is twenty jobs — so the twenty volumes are sequential work
-and a GitHub job may not exceed 6 h. A run that tried them all was cancelled
-before its commit step and wrote nothing. `live.yml` therefore splits the
-catalogue into **twenty volumes** (3,546–3,746 channels each, measured) and
-fans out over **twenty jobs, one volume each**, which sweeps everything in
-~20 minutes instead of ten hours.
+YouTube live check is two round-trips — 0.78 s sequential, 0.176 s behind a
+pool of six (both measured) — so the twenty volumes are ~13 h of sequential
+work and a GitHub job may not exceed 6 h. A run that tried them all was
+cancelled before its commit step and wrote nothing. `live.yml` therefore
+splits the catalogue into **twenty volumes** (3,546–3,746 channels each,
+measured) and fans out over **twenty jobs, one volume each**, which sweeps
+everything in ~20 minutes instead of ten hours.
 
 Parallelism multiplies the **request rate**, not the work: each process paces
 itself with its own `RateLimiter`, so N jobs means N × 5.7 checks/s. Twenty
