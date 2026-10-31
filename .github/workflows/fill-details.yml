@@ -34,6 +34,10 @@ on:
         description: "Platform to fill (bilibili, kick, ci.me, soop, etc.)"
         required: false
         default: ""
+      id:
+        description: "Fill these channel ids only, comma-separated (e.g. UC…,UC…)"
+        required: false
+        default: ""
 
 concurrency:
   group: dataset-writer-${{ github.repository }}
@@ -84,6 +88,14 @@ jobs:
 
           if [ -n "${{ inputs.platform }}" ]; then
             ARGS+=(--platform "${{ inputs.platform }}")
+          fi
+
+          # One record, filled now, whatever its state: the backlog is ordered
+          # by what is missing, so a channel that lacks only its links can sit
+          # behind thousands with no avatar and never be reached by a bounded
+          # run. Comma-separated, so several ids fit in one dispatch.
+          if [ -n "${{ inputs.id }}" ]; then
+            ARGS+=(--id "${{ inputs.id }}")
           fi
 
           npm run data:details -- "${ARGS[@]}"
