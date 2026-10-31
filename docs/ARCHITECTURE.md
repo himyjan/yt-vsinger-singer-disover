@@ -85,8 +85,9 @@ browser anyway. So the dataset is split:
 | `data/channels/virtual/<r>/<b>.json` | full records, virtual performers | ~150 KB each |
 | `data/channels/real/<r>/<b>.json` | full records, real artists | small |
 | `data/items/<region>/<bucket>.json` | items, sharded by region + id bucket | ~50 KB each |
-| `data/items/live.json` | currently live | small |
-| `data/items/upcoming.json` | scheduled streams and premieres | small |
+| `data/items/live.json` | currently live — part 0 | small |
+| `data/items/upcoming.json` | scheduled streams and premieres — part 0 | up to 4 MB |
+| `data/items/{live,upcoming}.<n>.json` | further parts, listed in `items/manifest.json` | up to 4 MB |
 | `data/songs/<region>.json` | the music-centric projection | ~200 KB |
 | `data/songs/categories/<c>.json` | one file per song category | ~100 KB |
 | `data/search/<region>.json` | inverted index for one region — shard 0 | 1–5 MB |

@@ -19,8 +19,10 @@ data/
 ├── items/
 │   ├── manifest.json           shard map and counts
 │   ├── <region>/<bucket>.json  Item[] — sharded by region, then id bucket
-│   ├── live.json               Item[] — live right now
-│   └── upcoming.json           Item[] — scheduled streams and premieres
+│   ├── live.json               Item[] — live right now (part 0)
+│   ├── live.<n>.json           Item[] — further parts, if it outgrew the budget
+│   ├── upcoming.json           Item[] — scheduled streams (part 0)
+│   └── upcoming.<n>.json       Item[] — further parts, if it outgrew the budget
 ├── songs/
 │   ├── manifest.json           totals by category and region
 │   ├── index.json              SongRecord[] — the music-centric projection

@@ -101,7 +101,14 @@ const cache = {
   channelManifestPending: null as Promise<ChannelRegionMeta[]> | null,
   /** Each volume's own shard map — a merged map cannot say who has what. */
   channelManifestByOrigin: new Map<number, ChannelRegionMeta[]>(),
-  itemsManifestByOrigin: new Map<number, { code: RegionCode; buckets: string[] }[]>(),
+  itemsManifestByOrigin: new Map<
+    number,
+    {
+      regions: { code: RegionCode; buckets: string[] }[];
+      liveParts: string[];
+      upcomingParts: string[];
+    }
+  >(),
   summaries: null as ChannelSummary[] | null,
   summariesByRegion: new Map<RegionCode, ChannelSummary[]>(),
   /** Regions whose summary is being built right now. */
@@ -468,38 +475,70 @@ export async function loadAllChannels(regions: RegionCode[] | "all" = "all"): Pr
 /** Currently live streams, from every volume. */
 export async function loadLive(): Promise<Item[]> {
   if (cache.live) return cache.live;
-  const origins = await loadOrigins();
-  const pages = await Promise.all(
-    origins.map((origin) => fetchJson<{ items?: Item[] }>(origin, "data/items/live.json")),
-  );
-  cache.live = uniqueById(pages.flatMap((page) => page?.items ?? [])).map(immutable);
+  cache.live = await loadProjection("live");
   return cache.live;
 }
 
 /** Scheduled streams and premieres, from every volume. */
 export async function loadUpcoming(): Promise<Item[]> {
   if (cache.upcoming) return cache.upcoming;
-  const origins = await loadOrigins();
-  const pages = await Promise.all(
-    origins.map((origin) => fetchJson<{ items?: Item[] }>(origin, "data/items/upcoming.json")),
-  );
-  cache.upcoming = uniqueById(pages.flatMap((page) => page?.items ?? [])).map(immutable);
+  cache.upcoming = await loadProjection("upcoming");
   return cache.upcoming;
 }
 
-/** One origin's items shard map. */
+/** One origin's items shard map, and the parts its projections are in. */
 async function loadOriginItemsManifest(
   origin: DatasetOrigin,
-): Promise<{ code: RegionCode; buckets: string[] }[]> {
+): Promise<{
+  regions: { code: RegionCode; buckets: string[] }[];
+  liveParts: string[];
+  upcomingParts: string[];
+}> {
   const cached = cache.itemsManifestByOrigin.get(origin.index);
   if (cached) return cached;
-  const parsed = await fetchJson<{ regions?: { code: RegionCode; buckets: string[] }[] }>(
-    origin,
-    "data/items/manifest.json",
+  const parsed = await fetchJson<{
+    regions?: { code: RegionCode; buckets: string[] }[];
+    liveParts?: string[];
+    upcomingParts?: string[];
+  }>(origin, "data/items/manifest.json");
+  const resolved = {
+    regions: parsed?.regions ?? [],
+    /**
+     * A projection is one file until it outgrows the per-file budget, so the
+     * manifest names the parts. A manifest written before the split has no
+     * list, and the historical single file is what such a dataset holds.
+     */
+    liveParts: parsed?.liveParts ?? ["live.json"],
+    upcomingParts: parsed?.upcomingParts ?? ["upcoming.json"],
+  };
+  cache.itemsManifestByOrigin.set(origin.index, resolved);
+  return resolved;
+}
+
+/**
+ * Downloads a live/upcoming projection from every origin.
+ *
+ * The parts are per origin, so a multi-volume deployment fetches each volume's
+ * own parts and the result is deduplicated by id — the same rule the region
+ * shards follow.
+ */
+async function loadProjection(kind: "live" | "upcoming"): Promise<Item[]> {
+  const origins = await loadOrigins();
+  const manifests = await Promise.all(origins.map((origin) => loadOriginItemsManifest(origin)));
+
+  const pages = await Promise.all(
+    origins.map(async (origin, position) => {
+      const parts = kind === "live" ? manifests[position].liveParts : manifests[position].upcomingParts;
+      const files = await Promise.all(
+        parts.map((part) =>
+          fetchJson<{ items?: Item[] }>(origin, `data/items/${part}`),
+        ),
+      );
+      return files.flatMap((parsed) => parsed?.items ?? []);
+    }),
   );
-  const regions = parsed?.regions ?? [];
-  cache.itemsManifestByOrigin.set(origin.index, regions);
-  return regions;
+
+  return uniqueById(pages.flat()).map(immutable);
 }
 
 /**
@@ -512,7 +551,7 @@ export async function loadItems(regions: RegionCode[] | "all"): Promise<Item[]> 
 
   const targets =
     regions === "all"
-      ? [...new Set(manifests.flatMap((regions) => regions.map((r) => r.code)))]
+      ? [...new Set(manifests.flatMap((m) => m.regions.map((r) => r.code)))]
       : regions;
 
   const results = await Promise.all(
@@ -522,7 +561,8 @@ export async function loadItems(regions: RegionCode[] | "all"): Promise<Item[]> 
 
       const perOrigin = await Promise.all(
         origins.map(async (origin, position) => {
-          const buckets = manifests[position].find((entry) => entry.code === region)?.buckets ?? [];
+          const buckets =
+            manifests[position].regions.find((entry) => entry.code === region)?.buckets ?? [];
           const shards = await Promise.all(
             buckets.map((bucket) =>
               fetchJson<{ items?: Item[] }>(origin, `data/items/${region}/${bucket}.json`),

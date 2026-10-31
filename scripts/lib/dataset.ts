@@ -63,6 +63,16 @@ import type {
 /** Number of shards per region. 16 keeps each shard comfortably small. */
 export const SHARD_COUNT = 16;
 
+/**
+ * How large one part of a live/upcoming projection may get.
+ *
+ * `io.ts` refuses a file over 8 MB and the catalogue is expected to grow, so
+ * half the ceiling leaves room for one part to grow between runs without
+ * tripping it — the point of splitting is that a single extra stream never
+ * turns a scheduled run red.
+ */
+const PROJECTION_BUDGET_BYTES = 4 * 1024 * 1024;
+
 /* -------------------------------------------------------------------------- */
 /* Paths                                                                      */
 /* -------------------------------------------------------------------------- */
@@ -188,6 +198,19 @@ export interface ItemsManifest {
     live: number;
     upcoming: number;
   };
+  /**
+   * The files each projection is written as, first part first.
+   *
+   * A projection is one file until it outgrows the per-file budget:
+   * `upcoming.json` reached 8.6 MB on 6,666 scheduled streams, past the 8 MB
+   * ceiling `writeJson()` enforces, and the live fan-in refused to merge. The
+   * count is real — a full sweep finds every premiere on the catalogue — so
+   * the file is split rather than the budget raised: `upcoming.json` stays the
+   * first part (an older reader still finds it) and `upcoming.1.json`,
+   * `upcoming.2.json` follow. Absent means the single historical file.
+   */
+  liveParts?: string[];
+  upcomingParts?: string[];
 }
 
 export interface SearchManifest {
@@ -311,16 +334,65 @@ export function writeItemShards(
   const upcoming = items
     .filter((i) => i.status === "upcoming")
     .sort((a, b) => a.id.localeCompare(b.id));
-  writeJsonIfChanged(l.itemsLive, {
-    schemaVersion: SCHEMA_VERSION,
-    generatedAt: now,
-    items: live,
-  } satisfies ItemFile);
-  writeJsonIfChanged(l.itemsUpcoming, {
-    schemaVersion: SCHEMA_VERSION,
-    generatedAt: now,
-    items: upcoming,
-  } satisfies ItemFile);
+
+  /**
+   * A projection is a file, and a file has a ceiling. `upcoming.json` reached
+   * 8.6 MB on 6,666 scheduled streams and the merge refused to write it, so a
+   * projection is written as as many parts as the budget needs — the first
+   * one keeping the historical name so an older reader still finds it, the
+   * rest numbered the way the search packs are (`upcoming.1.json`). The parts
+   * are listed in the items manifest, which is what the browser reads.
+   */
+  const writeProjection = (file: string, list: Item[]): string[] => {
+    const dir = path.dirname(file);
+    const stem = path.basename(file, ".json");
+    const budget = PROJECTION_BUDGET_BYTES;
+
+    const chunks: Item[][] = [];
+    let current: Item[] = [];
+    let bytes = 32;
+    for (const item of list) {
+      /**
+       * Measured as the bytes that will actually be **written**, not the
+       * compact form: `writeJson()` indents by two, and a budget measured on
+       * the compact form produced a 5.5 MB part from a 4 MB estimate.
+       */
+      const size = Buffer.byteLength(JSON.stringify(item, null, 2), "utf8") + 1;
+      if (current.length && bytes + size > budget) {
+        chunks.push(current);
+        current = [];
+        bytes = 32;
+      }
+      current.push(item);
+      bytes += size;
+    }
+    chunks.push(current);
+
+    const parts: string[] = [];
+    for (let index = 0; index < chunks.length; index++) {
+      const name = index === 0 ? `${stem}.json` : `${stem}.${index}.json`;
+      writeJsonIfChanged(path.join(dir, name), {
+        schemaVersion: SCHEMA_VERSION,
+        generatedAt: now,
+        items: chunks[index],
+      } satisfies ItemFile);
+      parts.push(name);
+    }
+
+    // A projection that shrank must not leave yesterday's tail behind: the
+    // browser would keep showing streams that have long since ended.
+    const keep = new Set(parts);
+    for (const name of fs.readdirSync(dir)) {
+      if (!name.startsWith(`${stem}.`) || !name.endsWith(".json")) continue;
+      if (keep.has(name)) continue;
+      fs.rmSync(path.join(dir, name), { force: true });
+    }
+
+    return parts;
+  };
+
+  const liveParts = writeProjection(l.itemsLive, live);
+  const upcomingParts = writeProjection(l.itemsUpcoming, upcoming);
 
   writeJson(l.itemsManifest, {
     schemaVersion: SCHEMA_VERSION,
@@ -331,6 +403,8 @@ export function writeItemShards(
       live: live.length,
       upcoming: upcoming.length,
     },
+    liveParts,
+    upcomingParts,
   } satisfies ItemsManifest);
 
   return { removed };
