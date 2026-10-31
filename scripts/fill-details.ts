@@ -166,6 +166,18 @@ interface Options {
    * platform publishes the number.
    */
   countsOnly: boolean;
+  /**
+   * Fill these records and nothing else.
+   *
+   * The backlog is ordered by what is missing, so a record that is merely
+   * missing its links can sit behind thousands of records with no avatar and
+   * never be reached by a bounded run. Naming an id is how one record is
+   * filled *now* — after a report, say — without spending the whole budget
+   * or waiting for the weekly pass to come round to it.
+   *
+   * The freshness window does not apply: an id was asked for explicitly.
+   */
+  ids: string[] | null;
 }
 
 /**
@@ -193,12 +205,23 @@ function parseArgs(argv: string[]): Options {
     normalizeIds: false,
     weakRegion: false,
     countsOnly: false,
+    ids: null,
   };
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i];
     if (arg === "--limit") options.limit = Number(argv[++i] ?? options.limit);
     else if (arg === "--platform") {
       options.platform = (argv[++i] ?? "") as PlatformId;
+    } else if (arg === "--id" || arg === "--ids" || arg === "--channel") {
+      /**
+       * Repeatable, and comma-separated too: `--id UC… --id UC…` reads the
+       * same as `--id UC…,UC…`.
+       */
+      const value = argv[++i] ?? "";
+      options.ids = [
+        ...(options.ids ?? []),
+        ...value.split(",").map((id) => id.trim()).filter(Boolean),
+      ];
     } else if (arg === "--interval") {
       options.intervalMs = Number(argv[++i] ?? options.intervalMs);
     } else if (arg === "--dry-run") options.dryRun = true;
@@ -944,6 +967,11 @@ async function main(): Promise<void> {
    */
   const pending = all
     .filter((c) => {
+      /**
+       * `--id` is the whole selection: the named records are fetched
+       * whatever their state, and nothing else is.
+       */
+      if (options.ids) return options.ids.includes(c.id);
       if (options.platform && primaryPlatformOf(c) !== options.platform) {
         return false;
       }
@@ -991,7 +1019,23 @@ async function main(): Promise<void> {
            */
           const needsVideos =
             c.videoCount === null && reportsVideoCount(primaryPlatformOf(c));
-          if (c.avatar && !needsCount && !needsVideos) return false;
+          /**
+           * A record with no links has a detail missing.
+           *
+           * The "all links" block on the card is built from `externals`, and
+           * the platform's **about page** is where most channels publish
+           * them — the microformat carries none at all on the current layout
+           * (measured: fourteen channels with no `externals`, the header
+           * supplied zero links and the about page supplied them for ten).
+           * A record with an avatar, an audience and an upload total was
+           * therefore considered finished and never asked, which is how
+           * 「もかん ch / Mokan」 kept an empty `externals` while its own
+           * about page listed two accounts.
+           */
+          const needsExternals = !Object.keys(c.externals ?? {}).length;
+          if (c.avatar && !needsCount && !needsVideos && !needsExternals) {
+            return false;
+          }
         }
         /**
          * Do not ask the same channel every run.
@@ -1016,6 +1060,15 @@ async function main(): Promise<void> {
             !c.avatar ||
             c.subscribers.tag === "hidden" ||
             (c.videoCount === null && reportsVideoCount(primaryPlatformOf(c)));
+          /**
+           * A missing `externals` is deliberately **not** in that list.
+           *
+           * Plenty of performers publish no links at all, so treating an
+           * empty block as "incomplete" would re-fetch those records every
+           * six hours forever. They are retried once a week like any other
+           * finished record — enough to pick up a channel that adds links
+           * later, without spending a request on it every rotation.
+           */
           const window = incomplete
             ? 6 * 60 * 60 * 1000
             : 7 * 24 * 60 * 60 * 1000;
@@ -1044,6 +1097,7 @@ async function main(): Promise<void> {
         (c.subscribers.tag === "has" ? 0 : 2) +
         (c.videoCount === null && reportsVideoCount(primaryPlatformOf(c)) ? 1 : 0) +
         (c.description ? 0 : 1) +
+        (!Object.keys(c.externals ?? {}).length ? 1 : 0) +
         (c.lastDetailsFetchedAt ? 0 : 2);
       return score(b) - score(a);
     })

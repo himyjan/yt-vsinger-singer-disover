@@ -218,7 +218,7 @@ jobs:
             echo ""
             echo "| Metric | Value |"
             echo "| --- | --- |"
-            echo "| Volumes processed | 10 (5 parallel jobs × 2 volumes) |"
+            echo "| Volumes processed | 20 (20 parallel jobs × 1 volume each) |"
             echo "| Live pass | `--live-only` per volume, then merged |"
             echo "| Index | rebuilt after merge |"
             echo "| Committed | \`data/\` |"
