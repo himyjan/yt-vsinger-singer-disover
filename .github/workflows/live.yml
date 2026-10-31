@@ -154,15 +154,29 @@ jobs:
         with:
           path: .volumes/downloads
           pattern: vol-*
-          merge-multiple: true
+          # `false`, not `true`. An artifact is rooted at the **contents** of
+          # the directory that was uploaded — vol-0 holds `hk/06.json`,
+          # `live.json`, `upcoming.json`, not `data/items/hk/06.json` — so
+          # merging twenty of them into one directory makes every region's
+          # `00.json` collide. With `true` the per-volume directories the copy
+          # below looks for never existed, every iteration was skipped by its
+          # `[ -d ] || continue`, the step printed no `restored` line at all,
+          # and the merge re-merged the split: the live status the run had just
+          # fetched was thrown away and the commit only changed timestamps.
+          merge-multiple: false
 
       - name: Copy downloaded items into volume dirs
         run: |
-          VOLUME_COUNT="20"
+          VOLUME_COUNT=20
+          missing=0
           for v in $(seq 0 $((VOLUME_COUNT - 1))); do
-            SRC=".volumes/downloads/vol-$v/data/items"
+            SRC=".volumes/downloads/vol-$v"
             DST=".volumes/vol-$v/data/items"
-            [ -d "$SRC" ] || continue
+            if [ ! -d "$SRC" ]; then
+              echo "::error::artifact vol-$v is missing"
+              missing=$((missing + 1))
+              continue
+            fi
             mkdir -p "$DST"
             # `items/` holds region subdirectories (`en/00.json`, `jp/00.json`),
             # so the tree has to be copied as a tree. Flattening it with
@@ -170,6 +184,13 @@ jobs:
             cp -R "$SRC"/. "$DST"/
             echo "restored items for vol-$v"
           done
+          # A volume that produced no artifact means the sweep is partial; the
+          # merge would then write the *old* data for that volume and look
+          # like a successful run.
+          if [ "$missing" -gt 0 ]; then
+            echo "::error::$missing volume artifact(s) missing — refusing to merge a partial sweep"
+            exit 1
+          fi
 
       - name: Merge all volumes into data/
         run: npx oxnode scripts/merge-volumes.ts --count 20
