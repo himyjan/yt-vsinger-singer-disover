@@ -93,8 +93,14 @@ one. Nothing deployed today is split.
 | `/data/channels/{kind}/{region}/{bucket}.json` | One shard of channel records |
 | `/data/items/manifest.json` | The media shards and their counts |
 | `/data/items/{region}/{bucket}.json` | One shard of media items |
-| `/data/items/live.json` | What is live now |
-| `/data/items/upcoming.json` | Scheduled streams and premieres |
+| `/data/items/live.json` | What is live now — part 0 |
+| `/data/items/upcoming.json` | Scheduled streams and premieres — part 0 |
+| `/data/items/{live,upcoming}.<n>.json` | Further parts of a projection too big for one file |
+
+A projection is written as as many parts as the 8 MB per-file budget needs;
+`items/manifest.json` lists them as `liveParts` and `upcomingParts`. The first
+part keeps the historical name, so a reader that ignores the list still gets
+the beginning of it — but a correct reader fetches every part it names.
 | `/data/songs/manifest.json` | Song totals, by category and by region |
 | `/data/songs/index.json` | Every song record |
 | `/data/songs/{region}.json` | The songs of one region |
