@@ -2147,8 +2147,29 @@ async function main(): Promise<void> {
          * Japanese channel ends up looking like an English one
          * (`AGENTS.md` rule 2).
          */
+        /**
+         * The **about page** is where a channel keeps its links.
+         *
+         * `profile()` without `about: true` reads the links out of the
+         * microformat, and the current layout does not carry any: measured
+         * over fourteen channels with no `externals`, the header supplied
+         * `0` links every time while the about page supplied them for ten of
+         * them — the two for 「もかん ch / Mokan」
+         * (`twitter.com/mokan_mikan`, `mokan.fanbox.cc`) included. The
+         * harvester below was therefore reading an always-empty list, which
+         * is why a record could sit in the rotation for a week and still have
+         * no links.
+         *
+         * It is a **second** request, so it is asked for only when the record
+         * can be improved by it: no links yet, or no upload total. A record
+         * that already has both keeps the single request.
+         */
+        const wantsAbout =
+          !Object.keys(channel.externals ?? {}).length ||
+          channel.videoCount === null;
         const profile = await innertube.profile(channel.id, {
           lang: profileLanguage(channel.region, toLanguageList(channel.languages)),
+          ...(wantsAbout ? { about: true } : {}),
         });
         if (profile) {
           if (profile.title) {
