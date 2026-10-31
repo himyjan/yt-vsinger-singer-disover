@@ -1,21 +1,31 @@
-name: Fill channel details (weekly)
+name: Fill channel details (targeted)
 
-# Fills missing avatars, names, follower counts, and other per-channel details
-# that the sync doesn't cover:
+# Fills the detail of **specific** records — one id, a name pass, a counts
+# pass, a single platform. The everyday bulk fill is a separate workflow:
 #
-#   npm run data:details -- --limit 2000         # fill missing avatars
-#   npm run data:details -- --counts-only --limit 500   # fill hidden counts
+#   fill-details-parallel.yml — twenty jobs, one volume each, daily
+#
+# This one is for the cases that do not fan out. It used to carry the weekly
+# bulk pass, and that is exactly why it could not keep up: a bounded run is
+# ordered worst-first, so a record whose only gap was its links sat behind
+# thousands with no avatar and was never reached. 「もかん ch / Mokan」 kept an
+# empty `externals` block through every run because of it.
+#
+# YouTube keeps a channel's links on its **about page**, not in the
+# microformat — fourteen channels with no `externals` sampled, the header
+# supplied zero links and the about page supplied them for ten — so this pass
+# asks for `about: true`, which is what fills the "all links" block.
+#
+#   npm run data:details -- --id UC…              # one record, now
+#   npm run data:details -- --limit 2000          # a bounded slice
+#   npm run data:details -- --counts-only --limit 500   # hidden follower counts
 #   npm run data:details -- --name-only          # correct names and aliases
 #   npm run data:details -- --platform <name>    # platform-specific fills
 #
 # Only fills what is empty on the record — nothing already present is
-# overwritten. Runs weekly so the dataset gradually fills in without bloating
-# the daily sync.
+# overwritten.
 
 on:
-  schedule:
-    # Weekly, Sunday 04:00 UTC
-    - cron: "0 4 * * 0"
   workflow_dispatch:
     inputs:
       name-only:
