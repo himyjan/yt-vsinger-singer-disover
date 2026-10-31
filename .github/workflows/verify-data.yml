@@ -118,6 +118,6 @@ jobs:
           branch: ${{ github.ref_name }}
           # The explicit rebase above is the only branch update. A second
           # fetch/rebase inside this action can conflict with generated shards.
-          skip_fetch: true
+          skip_fetch: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
