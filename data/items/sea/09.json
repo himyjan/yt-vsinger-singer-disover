@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-31T18:39:26.966Z",
+  "generatedAt": "2026-10-31T23:29:18.172Z",
   "items": [
     {
       "id": "aIVEM83PDa0",
@@ -114,9 +114,9 @@
       "publishedAt": "2026-10-31T12:37:47.000Z",
       "scheduledStart": null,
       "actualStart": "2026-10-31T12:37:47.000Z",
-      "actualEnd": null,
-      "duration": null,
-      "status": "live",
+      "actualEnd": "2026-10-31T23:18:50.140Z",
+      "duration": 38463,
+      "status": "past",
       "category": "live",
       "songTitle": null,
       "originalArtist": null,
@@ -136,7 +136,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T18:28:52.210Z",
-      "updatedAt": "2026-10-31T18:28:52.210Z",
+      "updatedAt": "2026-10-31T23:18:50.140Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -274,7 +274,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:25.456Z",
-      "updatedAt": "2026-10-31T18:28:43.086Z",
+      "updatedAt": "2026-10-31T23:18:49.761Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -320,7 +320,53 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T18:28:52.210Z",
-      "updatedAt": "2026-10-31T18:28:52.210Z",
+      "updatedAt": "2026-10-31T23:18:50.140Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "BZs4gQq1eQA",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCPuPQb_U261l7DZQyN2qHww",
+      "channelName": "iLkiD_Vtuber",
+      "channelKind": "virtual",
+      "region": "sea",
+      "gender": "unknown",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "[[Limbus Company]]",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/BZs4gQq1eQA/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2026-11-01T13:00:00.000Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCPuPQb_U261l7DZQyN2qHww",
+          "name": "iLkiD_Vtuber",
+          "kind": "virtual",
+          "region": "sea"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-31T23:18:43.843Z",
+      "updatedAt": "2026-10-31T23:18:43.843Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -366,7 +412,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:33.129Z",
-      "updatedAt": "2026-10-31T18:28:45.359Z",
+      "updatedAt": "2026-10-31T23:18:54.211Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -412,7 +458,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:22.912Z",
-      "updatedAt": "2026-10-31T18:28:48.849Z",
+      "updatedAt": "2026-10-31T23:18:50.433Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -458,7 +504,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:26.922Z",
-      "updatedAt": "2026-10-31T18:28:52.210Z",
+      "updatedAt": "2026-10-31T23:18:50.140Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -504,7 +550,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-27T17:58:40.188Z",
-      "updatedAt": "2026-10-31T18:28:45.359Z",
+      "updatedAt": "2026-10-31T23:18:54.211Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -550,7 +596,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:25.311Z",
-      "updatedAt": "2026-10-31T18:28:58.720Z",
+      "updatedAt": "2026-10-31T23:18:50.611Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }
