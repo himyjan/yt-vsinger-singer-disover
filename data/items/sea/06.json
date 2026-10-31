@@ -1,99 +1,7 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-31T12:25:43.628Z",
+  "generatedAt": "2026-10-31T10:23:52.721Z",
   "items": [
-    {
-      "id": "_6Sv5Lgn-Wo",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UC7fUoa2tr1iDCWhwjHFYgJg",
-      "channelName": "ElecIsLive",
-      "channelKind": "virtual",
-      "region": "sea",
-      "gender": "unknown",
-      "languages": [
-        "en"
-      ],
-      "isAi": false,
-      "variant": "unknown",
-      "title": "A New Challenge Awaits! | Phantom Blade Zero – First Playthrough #phantombladezero #vtuber",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/_6Sv5Lgn-Wo/hq720.jpg",
-      "publishedAt": "2026-10-31T12:00:00.000Z",
-      "scheduledStart": "2026-10-31T12:00:00.000Z",
-      "actualStart": null,
-      "actualEnd": "2026-10-31T12:14:59.902Z",
-      "duration": 899,
-      "status": "past",
-      "category": "premiere",
-      "songTitle": "A New Challenge Awaits! | Phantom Blade Zero",
-      "originalArtist": "First Playthrough #phantombladezero #vtuber",
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UC7fUoa2tr1iDCWhwjHFYgJg",
-          "name": "ElecIsLive",
-          "kind": "virtual",
-          "region": "sea"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-31T03:16:16.423Z",
-      "updatedAt": "2026-10-31T12:14:59.902Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "guJCmj3QQoc",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCwIwDOZlhJRDPvVwUmcHPOQ",
-      "channelName": "Rina Lucsper Ch.",
-      "channelKind": "virtual",
-      "region": "sea",
-      "gender": "female",
-      "languages": [
-        "en"
-      ],
-      "isAi": false,
-      "variant": "female_vtuber",
-      "title": "【Halloween Potion Making】i'm going to be your personal witch~! .˚⊹.🎃₊˚𖦹⋆",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/guJCmj3QQoc/hq720.jpg",
-      "publishedAt": "2026-10-31T12:00:00.000Z",
-      "scheduledStart": "2026-10-31T12:00:00.000Z",
-      "actualStart": null,
-      "actualEnd": "2026-10-31T12:15:10.476Z",
-      "duration": 910,
-      "status": "past",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCwIwDOZlhJRDPvVwUmcHPOQ",
-          "name": "Rina Lucsper Ch.",
-          "kind": "virtual",
-          "region": "sea"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-31T03:16:20.256Z",
-      "updatedAt": "2026-10-31T12:15:10.476Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
     {
       "id": "aHimN9Tw1G4",
       "platform": "youtube",
@@ -187,6 +95,52 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "_6Sv5Lgn-Wo",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UC7fUoa2tr1iDCWhwjHFYgJg",
+      "channelName": "ElecIsLive",
+      "channelKind": "virtual",
+      "region": "sea",
+      "gender": "unknown",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "A New Challenge Awaits! | Phantom Blade Zero – First Playthrough #phantombladezero #vtuber",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/_6Sv5Lgn-Wo/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2026-10-31T12:00:00.000Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": "A New Challenge Awaits! | Phantom Blade Zero",
+      "originalArtist": "First Playthrough #phantombladezero #vtuber",
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC7fUoa2tr1iDCWhwjHFYgJg",
+          "name": "ElecIsLive",
+          "kind": "virtual",
+          "region": "sea"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-31T03:16:16.423Z",
+      "updatedAt": "2026-10-31T10:13:02.769Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "Bdhsk2r7UfI",
       "platform": "youtube",
       "type": "live",
@@ -228,7 +182,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:25.311Z",
-      "updatedAt": "2026-10-31T12:15:10.048Z",
+      "updatedAt": "2026-10-31T10:12:53.882Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -274,7 +228,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:27.340Z",
-      "updatedAt": "2026-10-31T12:14:58.786Z",
+      "updatedAt": "2026-10-31T10:13:08.637Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -320,7 +274,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.117Z",
-      "updatedAt": "2026-10-31T12:15:06.292Z",
+      "updatedAt": "2026-10-31T10:13:11.968Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -366,7 +320,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.567Z",
-      "updatedAt": "2026-10-31T12:15:08.798Z",
+      "updatedAt": "2026-10-31T10:12:54.412Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -412,7 +366,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:24.029Z",
-      "updatedAt": "2026-10-31T12:15:05.648Z",
+      "updatedAt": "2026-10-31T10:12:57.891Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -458,7 +412,53 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-10-31T12:15:08.427Z",
+      "updatedAt": "2026-10-31T10:13:03.706Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "guJCmj3QQoc",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCwIwDOZlhJRDPvVwUmcHPOQ",
+      "channelName": "Rina Lucsper Ch.",
+      "channelKind": "virtual",
+      "region": "sea",
+      "gender": "female",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "【Halloween Potion Making】i'm going to be your personal witch~! .˚⊹.🎃₊˚𖦹⋆",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/guJCmj3QQoc/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2026-10-31T12:00:00.000Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCwIwDOZlhJRDPvVwUmcHPOQ",
+          "name": "Rina Lucsper Ch.",
+          "kind": "virtual",
+          "region": "sea"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-31T03:16:20.256Z",
+      "updatedAt": "2026-10-31T10:13:08.982Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -504,7 +504,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:27.340Z",
-      "updatedAt": "2026-10-31T12:14:58.786Z",
+      "updatedAt": "2026-10-31T10:13:08.637Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -550,7 +550,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.228Z",
-      "updatedAt": "2026-10-31T12:15:19.548Z",
+      "updatedAt": "2026-10-31T10:12:54.366Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -596,7 +596,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-10-31T12:15:19.548Z",
+      "updatedAt": "2026-10-31T10:12:54.366Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -642,7 +642,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:16.423Z",
-      "updatedAt": "2026-10-31T12:14:59.902Z",
+      "updatedAt": "2026-10-31T10:13:02.769Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -688,7 +688,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.256Z",
-      "updatedAt": "2026-10-31T12:15:10.476Z",
+      "updatedAt": "2026-10-31T10:13:08.982Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -734,7 +734,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:26.922Z",
-      "updatedAt": "2026-10-31T12:14:57.771Z",
+      "updatedAt": "2026-10-31T10:13:07.617Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }
