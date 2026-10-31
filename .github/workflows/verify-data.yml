@@ -101,23 +101,21 @@ jobs:
           npm run data:index
           npm run data:validate
 
-      - name: Rebase data changes onto the latest branch
+      # See `sync-data.yml` for why this is a `reset --mixed` rather than a
+      # rebase: two whole-catalogue rebuilds cannot be merged, and the action's
+      # own fetch/rebase is what made this step fail after the work was done.
+      - name: Commit corrections
         env:
           BRANCH: ${{ github.ref_name }}
         run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
           git fetch origin "$BRANCH"
-          git rebase --autostash "origin/$BRANCH"
-
-      - name: Commit corrections
-        uses: stefanzweifel/git-auto-commit-action@v7
-        with:
-          commit_user_name: github-actions[bot]
-          commit_user_email: github-actions[bot]@users.noreply.github.com
-          commit_message: "data: verify classifications (${{ github.run_number }})"
-          file_pattern: "data/*"
-          branch: ${{ github.ref_name }}
-          # The explicit rebase above is the only branch update. A second
-          # fetch/rebase inside this action can conflict with generated shards.
-          skip_fetch: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          git reset --mixed "origin/$BRANCH"
+          git add data/
+          if git diff --cached --quiet; then
+            echo "corrections unchanged — nothing to commit"
+            exit 0
+          fi
+          git commit -m "data: verify classifications (${{ github.run_number }})"
+          git push origin "HEAD:$BRANCH"

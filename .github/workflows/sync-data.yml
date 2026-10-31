@@ -201,19 +201,32 @@ jobs:
       - name: Check the stored repository size
         run: npm run repo:size -- --max-mb 900 --warn-mb 700
 
+      # The commit is a `reset --mixed`, not a rebase, and it is deliberately
+      # hand-rolled. `git-auto-commit-action` fetches and rebases, and a rebase
+      # here tries to *merge* two independently rebuilt datasets: both sides are
+      # whole-catalogue regenerations, so every derived file (`manifest.json`,
+      # `search/*`, the shards) conflicts by construction. `fill-details.yml`
+      # and `verify-data.yml` did exactly that and their commit step failed.
+      #
+      # `--mixed` moves HEAD and the index to the branch while leaving the
+      # working tree alone, so the `data/` this run produced survives. Only
+      # `data/` is staged, so a script or doc commit that landed while the run
+      # was working is not reverted by it.
       - name: Commit dataset
-        uses: stefanzweifel/git-auto-commit-action@v7
-        with:
-          commit_user_name: github-actions[bot]
-          commit_user_email: github-actions[bot]@users.noreply.github.com
-          commit_message: "data: sync global cross-platform roster (${{ github.run_number }})"
-          file_pattern: "data/*"
-          branch: ${{ github.ref_name }}
-          # fetch+rebase+commit happen atomically inside the action, so there's
-          # no window for another workflow to push between rebase and commit.
-          skip_fetch: false
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch origin "$BRANCH"
+          git reset --mixed "origin/$BRANCH"
+          git add data/
+          if git diff --cached --quiet; then
+            echo "dataset unchanged — nothing to commit"
+            exit 0
+          fi
+          git commit -m "data: sync global cross-platform roster (${{ github.run_number }})"
+          git push origin "HEAD:$BRANCH"
 
       - name: Summary
         run: |

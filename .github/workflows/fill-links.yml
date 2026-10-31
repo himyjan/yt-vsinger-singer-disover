@@ -55,6 +55,26 @@ jobs:
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
 
+      # Both harvests are resumable through `.cache/` — HoloList keeps one page
+      # per entry plus a `<lastmod>` state, bacharu one page per roster page —
+      # and neither cache existed here, so every weekly run started from zero:
+      # 9,359 entries and the whole bacharu roster, inside a 90-minute job.
+      # The key is unique per run and `restore-keys` picks the newest previous
+      # harvest, which is the standard rolling-cache pattern: a run resumes the
+      # last one and its own cache becomes the next run's starting point.
+      - name: Restore harvest caches
+        uses: actions/cache@v6
+        with:
+          path: |
+            .cache/hololist
+            .cache/hololist.json
+            .cache/bacharu
+            .cache/bacharu-state.json
+            .cache/bacharu-vtubers.json
+          key: roster-harvest-${{ github.run_number }}
+          restore-keys: |
+            roster-harvest-
+
       - name: Harvest rosters (hololist + bacharu)
         run: |
           npm run data:hololist
@@ -76,24 +96,33 @@ jobs:
             npm run data:bacharu-import -- --links --apply
           fi
 
-      - name: Rebase data changes onto the latest branch
+      # The importers only fill empty fields, but they still rewrite the shards
+      # they touch, and the search index is built from those shards.
+      - name: Build search index
+        run: npm run data:index
+
+      - name: Validate dataset
+        run: npm run data:validate
+
+      - name: Commit link fills
         env:
           BRANCH: ${{ github.ref_name }}
         run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
           git fetch origin "$BRANCH"
-          git rebase --autostash "origin/$BRANCH"
-
-      - name: Commit link fills
-        uses: stefanzweifel/git-auto-commit-action@v7
-        with:
-          commit_user_name: github-actions[bot]
-          commit_user_email: github-actions[bot]@users.noreply.github.com
-          commit_message: "data: fill external links from rosters (${{ github.run_number }})"
-          file_pattern: "data/*"
-          branch: ${{ github.ref_name }}
-          skip_fetch: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # `reset --mixed`, not `rebase`: the roster harvest rewrites whole
+          # shards, and rebasing that onto a dataset another run also rewrote
+          # conflicts on every derived file. The index follows the branch, the
+          # worktree keeps what this run produced, and only `data/` is staged.
+          git reset --mixed "origin/$BRANCH"
+          git add data/
+          if git diff --cached --quiet; then
+            echo "external links unchanged — nothing to commit"
+            exit 0
+          fi
+          git commit -m "data: fill external links from rosters (${{ github.run_number }})"
+          git push origin "HEAD:$BRANCH"
 
       - name: Summary
         run: |

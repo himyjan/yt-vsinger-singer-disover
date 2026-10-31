@@ -110,29 +110,40 @@ jobs:
 
           npm run data:details -- "${ARGS[@]}"
 
-      - name: Rebase data changes onto the latest branch
+      # A detail pass renames channels and extends their alias lists, and the
+      # aliases are what the search index holds — so committing without this
+      # leaves a renamed channel unfindable under its new name until the next
+      # run rebuilds the index. `data:index` is local and takes seconds.
+      - name: Build search index
+        run: npm run data:index
+
+      - name: Validate dataset
+        run: npm run data:validate
+
+      - name: Commit detail fills
         env:
           BRANCH: ${{ github.ref_name }}
         run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
           git fetch origin "$BRANCH"
-          git rebase --autostash "origin/$BRANCH"
-
-      - name: Commit detail fills
-        uses: stefanzweifel/git-auto-commit-action@v7
-        with:
-          commit_user_name: github-actions[bot]
-          commit_user_email: github-actions[bot]@users.noreply.github.com
-          commit_message: "data: fill missing details (${{ github.run_number }})"
-          file_pattern: "data/*"
-          branch: ${{ github.ref_name }}
-          skip_fetch: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # `reset --mixed`, not `rebase`: a detail pass rewrites shards, and
+          # rebasing that onto a dataset another run also rewrote conflicts on
+          # every derived file. The index follows the branch, the worktree
+          # keeps what this run produced, and only `data/` is staged.
+          git reset --mixed "origin/$BRANCH"
+          git add data/
+          if git diff --cached --quiet; then
+            echo "details unchanged — nothing to commit"
+            exit 0
+          fi
+          git commit -m "data: fill missing details (${{ github.run_number }})"
+          git push origin "HEAD:$BRANCH"
 
       - name: Summary
         run: |
           {
-            echo "### Fill channel details (weekly)"
+            echo "### Fill channel details (targeted)"
             echo ""
             echo "| Metric | Value |"
             echo "| --- | --- |"
@@ -140,5 +151,7 @@ jobs:
             echo "| Name-only | ${{ inputs.name-only }} |"
             echo "| Counts-only | ${{ inputs.counts-only }} |"
             echo "| Platform | ${{ inputs.platform || 'all' }} |"
-            echo "| Committed | \`data/*\` |"
+            echo "| Ids | ${{ inputs.id || '(none — worst-first backlog)' }} |"
+            echo "| Bulk daily fill | \`fill-details-parallel.yml\` (20 jobs) |"
+            echo "| Committed | \`data/\` |"
           } >> "$GITHUB_STEP_SUMMARY"
