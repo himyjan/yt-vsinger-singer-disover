@@ -5,9 +5,37 @@ name: Deploy site
 # The dataset in `data/` is committed to the repository and copied into the
 # build output by `scripts/prepare-public.ts`, so Pages serves both the app
 # and the data from the same origin — no CORS configuration needed.
+#
+# **A `push` alone is not enough to publish a dataset update.** Every workflow
+# that writes `data/` commits with the repository `GITHUB_TOKEN`, and GitHub
+# deliberately does not start workflows from events that token creates — the
+# anti-recursion rule. So the bot's commits triggered no `push` at all: the
+# site kept serving whatever a human had last pushed. Measured on
+# 2026-10-31, the live run committed `data: live status (25)` at 03:48 and
+# this workflow never ran, while a hand push four minutes earlier deployed
+# normally.
+#
+# `workflow_run` is not subject to that rule, which is why every writer is
+# listed below: the deploy runs when the writer finishes, checks out the
+# default branch — where the data commit now is — and publishes it.
+#
+# A burst of writers collapses into one deployment by the `pages` concurrency
+# group, so listing six workflows does not mean six deploys.
 
 on:
   push:
+    branches: [main]
+  workflow_run:
+    # Exact `name:` of each workflow that commits to `data/`.
+    workflows:
+      - Live status
+      - Sync dataset
+      - Fill channel details (parallel)
+      - Fill channel details (targeted)
+      - Fill external links (weekly)
+      - Verify dataset
+      - Squash the data history
+    types: [completed]
     branches: [main]
   workflow_dispatch:
 
@@ -23,6 +51,11 @@ concurrency:
 jobs:
   build:
     name: Build
+    # A writer that failed still may have committed (the live fan-in commits
+    # after its merge), so a failure is not a reason to skip: the build
+    # validates the dataset either way and a broken one fails here rather than
+    # being published.
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion != 'cancelled'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
