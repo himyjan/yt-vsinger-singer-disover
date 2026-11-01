@@ -226,9 +226,12 @@ jobs:
                 echo "::error::mode=platform needs the platform input"
                 exit 1
               fi
-              ARGS+=(--platform "$PLATFORM")
               ;;
           esac
+          # `--platform`, `--force` and `--id` combine with any mode, exactly as
+          # the flags did on the command line: `mode=names` + `platform=kick`
+          # renames only the KICK records, and `id` narrows it to those ids.
+          if [ -n "$PLATFORM" ]; then ARGS+=(--platform "$PLATFORM"); fi
           if [ "$FORCE" = "true" ]; then ARGS+=(--force); fi
           if [ "$DRY_RUN" = "true" ]; then ARGS+=(--dry-run); fi
           if [ -n "$IDS" ]; then ARGS+=(--id "$IDS"); fi
