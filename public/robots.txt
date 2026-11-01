@@ -1,0 +1,24 @@
+# VSinger &amp; Singer Tracker — robots.txt
+# Allow crawling of the main app and the public dataset API.
+
+User-agent: *
+Allow: /
+
+# The dataset JSON is large and changes frequently — crawlers may fetch it,
+# but it is not meant for HTML indexing.
+Disallow: /data/channels/
+Disallow: /data/items/
+Disallow: /data/songs/
+Disallow: /data/search/
+
+# Allow the API index and manifest for discovery.
+Allow: /data/api/
+Allow: /data/manifest.json
+Allow: /data/upstream.json
+Allow: /data/overrides.json
+Allow: /data/seed-catalog.json
+Allow: /data/suggestions.json
+
+# Do not crawl internal caches or dev artifacts.
+Disallow: /.cache/
+Disallow: /.volumes/
