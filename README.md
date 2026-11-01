@@ -37,6 +37,16 @@ npm run data:discover -- --source chuysan   # only the Chuysan Thai VTuber direc
 npm run data:bacharu        # the bacharu roster (109,828 rows) → .cache/
 npm run data:vtuberhk       # the Hong Kong directory → .cache/
 npm run data:hololist       # the HoloList directory (9,359 entries) → .cache/
+npm run data:v-sai          # Vietnamese VTuber directory → .cache/
+npm run data:vtuber-db      # VtuberDB Cargo tables → .cache/
+npm run data:vtuberdex      # VTuberDex → .cache/
+npm run data:virtualhumans  # VirtualHumans → .cache/
+npm run data:vtpedia        # VTuberpedia → .cache/
+npm run data:vtubers.tw     # VTubers.tw → .cache/
+npm run data:ci-me          # ci.me directory → .cache/
+npm run data:vt4chan        # 4chan /vt/ → .cache/
+npm run data:virtuallife    # Virtuallife → .cache/
+npm run data:fandom         # Virtual YouTuber Wiki (Fandom) → .cache/
 npm run data:import-suggestions  # import YouTube UC… ids from data/suggestions.json
 ```
 
