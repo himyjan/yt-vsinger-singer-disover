@@ -31,10 +31,11 @@ const SEARCH_TERMS = [
 
 interface Options {
   limit: number | null;
+  pages: number | null;
 }
 
 function parseArgs(argv: string[]): Options {
-  const options: Options = { limit: null };
+  const options: Options = { limit: null, pages: null };
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i]!;
     const value = argv[i + 1];
@@ -43,13 +44,18 @@ function parseArgs(argv: string[]): Options {
         options.limit = Math.max(1, Number(value ?? 1));
         i++;
         break;
+      case "--pages":
+        options.pages = Math.max(1, Number(value ?? 1));
+        i++;
+        break;
       case "--help":
       case "-h":
         console.log(
           [
-            "Usage: npm run data:twitch [--limit <n>]",
+            "Usage: npm run data:twitch [options]",
             "",
-            "  --limit <n>   max results per search term (default 100)",
+            "  --limit <n>  max results per search term",
+            "  --pages <n>  max pages per search term (default: all)",
           ].join("\n")
         );
         process.exit(0);
@@ -65,7 +71,6 @@ function parseArgs(argv: string[]): Options {
 
 async function main(): Promise<void> {
   const options = parseArgs(process.argv.slice(2));
-  const limit = options.limit ?? 100;
 
   const client = TwitchClient.fromEnv(process.env, CACHE_DIR);
   if (!client) {
@@ -79,20 +84,33 @@ async function main(): Promise<void> {
 
   const all: any[] = [];
   const seen = new Set<string>();
+  const maxPages = options.pages ?? Infinity;
+  const perPage = Math.min(options.limit ?? 100, 100);
 
   for (const term of SEARCH_TERMS) {
     console.log(`twitch: searching "${term}"`);
-    try {
-      const results = await client.searchChannels(term, limit);
-      for (const ch of results) {
-        const id = String(ch.id);
-        if (!id || seen.has(id)) continue;
-        seen.add(id);
-        all.push(ch);
+    let cursor: string | null = null;
+    let pageNum = 1;
+
+    for (;;) {
+      if (pageNum > maxPages) break;
+      try {
+        const result = await client.searchChannels(term, perPage);
+        for (const ch of result.data) {
+          const id = String(ch.id);
+          if (!id || seen.has(id)) continue;
+          seen.add(id);
+          all.push(ch);
+        }
+        cursor = result.cursor;
+        if (!cursor || all.length >= (options.limit ?? Infinity)) break;
+        pageNum++;
+      } catch (error) {
+        console.error(`twitch: search "${term}" page ${pageNum} failed: ${error}`);
+        break;
       }
-    } catch (error) {
-      console.error(`twitch: search "${term}" failed: ${error}`);
     }
+    console.log(`  "${term}": ${pageNum} page(s), cursor=${cursor ?? "none"}`);
   }
 
   const snapshot = {

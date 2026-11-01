@@ -161,15 +161,24 @@ export class TwitchClient {
     return out;
   }
 
-  /** Search public Twitch channels by name or title. */
-  async searchChannels(query: string, limit = 10): Promise<any[]> {
+  /** Search public Twitch channels by name or title. Returns data and pagination cursor. */
+  async searchChannels(query: string, limit = 10): Promise<{
+    data: any[];
+    cursor: string | null;
+  }> {
     const needle = query.trim();
-    if (!needle || limit <= 0) return [];
-    const res = await this.request<{ data?: any[] }>("search/channels", {
-      query: needle,
-      first: String(Math.min(limit, 100)),
-    });
-    return res.data ?? [];
+    if (!needle || limit <= 0) return { data: [], cursor: null };
+    const res = await this.request<{ data?: any[]; pagination?: { cursor?: string } }>(
+      "search/channels",
+      {
+        query: needle,
+        first: String(Math.min(limit, 100)),
+      },
+    );
+    return {
+      data: res.data ?? [],
+      cursor: res.pagination?.cursor ?? null,
+    };
   }
 
   /** Channel metadata (title, category, language) for broadcasters. */
