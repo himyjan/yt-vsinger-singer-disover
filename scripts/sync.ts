@@ -91,6 +91,13 @@ import {
 } from "./lib/dedupe";
 import { IdentityRegistry } from "./lib/identity";
 import { fetchMusicDataset, indexMusicDataset } from "./lib/music-dataset";
+import {
+  fetchMusicdexDataset,
+  MUSICDEX_CATEGORY_MAP,
+  OVERWRITABLE_ITEM_CATEGORIES,
+  musicdexApiKey,
+  type MusicdexSongEntry,
+} from "./lib/musicdex";
 import { deriveVariant } from "./lib/classify";
 import { refreshLivePass } from "./lib/live-refresh";
 import type {
@@ -3319,6 +3326,64 @@ async function main(): Promise<void> {
     );
   } else {
     log("music dataset: unavailable — using heuristic song extraction");
+  }
+
+  /* --- curated song metadata (Musicdex) ---------------------------------- */
+  progress("curated song metadata (musicdex)", `matching songs to ${items.length} items`);
+  const musicdexKey = musicdexApiKey();
+  if (musicdexKey) {
+    try {
+      const musicdexEntries = await fetchMusicdexDataset(musicdexKey);
+      if (musicdexEntries?.length) {
+        const index = new Map<string, MusicdexSongEntry>();
+        for (const entry of musicdexEntries) index.set(entry.id, entry);
+        let enriched = 0;
+        for (const item of items) {
+          const entry = index.get(item.id);
+          if (!entry) continue;
+          // Musicdex fills gaps the VTuber Music Dataset left — it never
+          // overwrites a confirmed song title or original artist.
+          if (entry.song && (!item.songTitle || item.category === "other")) {
+            item.songTitle = entry.song;
+          }
+          if (entry.originalArtist && !item.originalArtist) {
+            item.originalArtist = entry.originalArtist;
+          }
+          if (
+            entry.category &&
+            OVERWRITABLE_ITEM_CATEGORIES.has(item.category) &&
+            MUSICDEX_CATEGORY_MAP[entry.category]
+          ) {
+            item.category = MUSICDEX_CATEGORY_MAP[entry.category];
+          }
+          if (entry.publishedAt && !item.publishedAt) {
+            item.publishedAt = entry.publishedAt;
+          }
+          if (entry.duration && !item.duration) {
+            item.duration = entry.duration;
+          }
+          if (entry.viewCount && !item.viewCount) {
+            item.viewCount = entry.viewCount;
+          }
+          if (entry.thumbnail && !item.thumbnail) {
+            item.thumbnail = entry.thumbnail;
+          }
+          if (entry.isCollab && !item.isCollab) {
+            item.isCollab = true;
+          }
+          enriched++;
+        }
+        log(
+          `musicdex: ${musicdexEntries.length} entries, ${enriched} item(s) enriched`,
+        );
+      } else {
+        log("musicdex: no entries returned");
+      }
+    } catch (err) {
+      log(`warn: musicdex enrichment failed: ${(err as Error).message}`);
+    }
+  } else {
+    log("musicdex: no API key — skipping");
   }
 
   /* --- activity status, now that we know the newest upload ------------- */

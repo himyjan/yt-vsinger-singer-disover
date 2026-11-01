@@ -273,9 +273,9 @@ export const SOURCES: SourceInfo[] = [
     provides:
       "Songs and set lists tagged out of singing streams, with playlists by performer and organisation",
     access: "api",
-    used: false,
+    used: true,
     usedFor:
-      "A comparison reference for song-level tagging, which this project classifies but does not tag; the song and original-artist metadata is read from the VTuber Music Dataset and VocaDB instead",
+      "Song-level tagging (song title, original artist, category) for YouTube videos. Requires MUSICDEX_API_KEY or HOLODEX_API_KEY; without a key the harvest is skipped and heuristic extraction plus the VTuber Music Dataset are used instead",
   },
   {
     id: "chzzk",

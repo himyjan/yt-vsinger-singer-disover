@@ -1,0 +1,122 @@
+name: Import Musicdex songs
+
+# Harvests song metadata from Musicdex (music.holodex.net) and enriches
+# dataset items with curated song title, original artist, and category.
+# The harvest writes `.cache/musicdex/musicdex.json`, and the importer
+# reads it, matches each song to a dataset item by YouTube video id, and
+# writes enriched items back to data/items/<region>/<bucket>.json.
+#
+#   npm run data:musicdex              # harvest song metadata from Musicdex
+#   npm run data:musicdex-import       # report what would be enriched
+#   npm run data:musicdex-import -- --apply  # write the enriched items
+#
+# Musicdex needs MUSICDEX_API_KEY or HOLODEX_API_KEY. Without a key the
+# harvest writes nothing, so there is nothing to import.
+
+on:
+  schedule:
+    # Weekly, Tuesday 04:00 UTC (after the sync's song enrichment pass)
+    - cron: "0 4 * * 2"
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        description: "Report what would change without writing"
+        required: false
+        default: "false"
+
+concurrency:
+  group: dataset-writer-${{ github.repository }}
+  cancel-in-progress: false
+  queue: max
+
+permissions:
+  contents: write
+
+jobs:
+  harvest-and-import:
+    name: Harvest and import Musicdex songs
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          ref: ${{ github.ref_name }}
+          lfs: true
+
+      - name: Install Git LFS
+        run: |
+          git lfs install --skip-repo
+          git lfs pull || true
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "26"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Restore musicdex cache
+        uses: actions/cache@v6
+        with:
+          path: |
+            .cache/musicdex
+          key: musicdex-harvest-${{ github.run_number }}
+          restore-keys: |
+            musicdex-harvest-
+
+      - name: Harvest Musicdex songs
+        env:
+          MUSICDEX_API_KEY: ${{ secrets.MUSICDEX_API_KEY }}
+          HOLODEX_API_KEY: ${{ secrets.HOLODEX_API_KEY }}
+        run: npm run data:musicdex
+
+      - name: Import Musicdex songs
+        env:
+          DRY_RUN: ${{ inputs.dry-run }}
+        run: |
+          if [ "$DRY_RUN" = "true" ]; then
+            echo "Dry run: would enrich musicdex songs"
+            npm run data:musicdex-import
+          else
+            npm run data:musicdex-import -- --apply
+          fi
+
+      - name: Build search index
+        run: npm run data:index
+
+      - name: Validate dataset
+        run: npm run data:validate
+
+      - name: Commit musicdex imports
+        env:
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch origin "$BRANCH"
+          git reset --mixed "origin/$BRANCH"
+          git add data/items data/search data/manifest.json
+          if git diff --cached --quiet; then
+            echo "Musicdex imports unchanged — nothing to commit"
+            exit 0
+          fi
+          git commit -m "data: import musicdex song metadata (${{ github.run_number }})"
+          git push origin "HEAD:$BRANCH"
+
+      - name: Summary
+        run: |
+          {
+            echo "### Import Musicdex songs"
+            echo ""
+            echo "| | |"
+            echo "| --- | --- |"
+            echo "| Source | Musicdex (music.holodex.net) |"
+            echo "| Credentials | MUSICDEX_API_KEY / HOLODEX_API_KEY |"
+            echo "| Step | harvest → match by video id → enrich items → index → validate → commit |"
+            echo "| Dry run | ${{ inputs.dry-run }} |"
+            echo "| Committed | \`data/items\`, \`data/search\`, \`data/manifest.json\` |"
+          } >> "$GITHUB_STEP_SUMMARY"
