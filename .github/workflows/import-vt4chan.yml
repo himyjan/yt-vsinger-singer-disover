@@ -10,7 +10,7 @@ name: Import 4chan /vt/ VTubers
 # Fan accounts, clip channels, and re-uploads are common. This importer
 # applies detectClipAccount() and isFanAccountName() filters, and only accepts
 # YouTube channel URLs (not video URLs). Results should be treated as
- * candidates requiring manual review.
+# * candidates requiring manual review.
 #
 #   npm run data:vt4chan              # harvest VTuber candidates from 4chan /vt/
 #   npm run data:vt4chan-import       # report what would be imported
