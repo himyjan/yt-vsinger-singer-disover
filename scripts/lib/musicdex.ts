@@ -5,9 +5,11 @@
  * extracted from VTuber singing streams. Each entry is keyed by a YouTube
  * video id.
  *
- * The API requires an API key (MUSICDEX_API_KEY or HOLODEX_API_KEY).
- * Without a key, `fetchMusicdexDataset()` returns null and the caller
- * falls back to heuristic extraction or the VTuber Music Dataset.
+ * Musicdex is a client-side SPA — its HTML pages contain no song data. All
+ * data comes from the API at https://music.holodex.net/api/v1/songs, which
+ * requires MUSICDEX_API_KEY or HOLODEX_API_KEY. Without a key,
+ * `fetchMusicdexDataset()` returns an empty array and the caller writes an
+ * empty snapshot so the import step can proceed cleanly.
  */
 
 export interface MusicdexSongEntry {
@@ -103,13 +105,14 @@ async function fetchMusicdexPage(
 /**
  * Fetches all songs from the Musicdex API.
  *
- * Returns `null` when no API key is configured or the source is unreachable.
+ * Returns an empty array when no API key is configured or the source
+ * returns no songs.
  */
 export async function fetchMusicdexDataset(
   key?: string | null,
-): Promise<MusicdexSongEntry[] | null> {
+): Promise<MusicdexSongEntry[]> {
   const apiKey = key ?? musicdexApiKey();
-  if (!apiKey) return null;
+  if (!apiKey) return [];
 
   const PAGE_SIZE = 100;
   let offset = 0;
@@ -135,5 +138,5 @@ export async function fetchMusicdexDataset(
     await new Promise(resolve => setTimeout(resolve, 100));
   }
 
-  return allSongs.length ? allSongs : null;
+  return allSongs.length ? allSongs : [];
 }
