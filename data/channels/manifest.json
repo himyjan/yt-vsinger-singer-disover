@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-01T09:49:43.832Z",
-  "total": 72752,
+  "generatedAt": "2026-11-01T10:10:16.910Z",
+  "total": 72788,
   "regions": [
     {
       "code": "jp",
-      "channels": 9927,
+      "channels": 9929,
       "virtual": {
-        "channels": 9908,
+        "channels": 9910,
         "buckets": [
           "00",
           "01",
@@ -80,9 +80,9 @@
     },
     {
       "code": "tw",
-      "channels": 4241,
+      "channels": 4274,
       "virtual": {
-        "channels": 4241,
+        "channels": 4274,
         "buckets": [
           "00",
           "01",
@@ -109,9 +109,9 @@
     },
     {
       "code": "hk",
-      "channels": 709,
+      "channels": 710,
       "virtual": {
-        "channels": 709,
+        "channels": 710,
         "buckets": [
           "00",
           "01",
