@@ -204,7 +204,7 @@ class TwitchAdapter implements PlatformAdapter {
 
   async search(query: string, limit: number): Promise<PlatformChannel[]> {
     const results = await this.client.searchChannels(query, limit);
-    return results.map((result: any) => ({
+    return results.data.map((result: any) => ({
       platform: "twitch",
       id: String(result.id),
       handle: result.broadcaster_login ?? null,
