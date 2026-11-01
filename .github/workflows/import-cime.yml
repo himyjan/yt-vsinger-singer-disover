@@ -1,0 +1,116 @@
+name: Import CI.ME VTubers
+
+# Harvests ci.me and imports the new channels the gate admits into
+# data/channels/. The harvest writes `.cache/ci-me/ci-me.json`, and the
+# importer reads it, matches each row against the dataset by CI.ME channel id,
+# classifies through classifyChannel(), and adds the survivors.
+#
+#   npm run data:ci-me           # harvest the snapshot
+#   npm run data:ci-me-import    # report what would be imported
+#   npm run data:ci-me-import -- --apply  # write the new channels
+
+on:
+  schedule:
+    # Weekly, Monday 04:00 UTC (after the sync's roster pass)
+    - cron: "0 4 * * 1"
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        description: "Report what would change without writing"
+        required: false
+        default: "false"
+
+concurrency:
+  group: dataset-writer-${{ github.repository }}
+  cancel-in-progress: false
+  queue: max
+
+permissions:
+  contents: write
+
+jobs:
+  harvest-and-import:
+    name: Harvest and import ci.me
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          ref: ${{ github.ref_name }}
+          lfs: true
+
+      - name: Install Git LFS
+        run: |
+          git lfs install --skip-repo
+          git lfs pull || true
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "26"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Restore ci.me cache
+        uses: actions/cache@v6
+        with:
+          path: |
+            .cache/ci-me
+          key: ci-me-harvest-${{ github.run_number }}
+          restore-keys: |
+            ci-me-harvest-
+
+      - name: Harvest ci.me
+        run: npm run data:ci-me
+
+      - name: Import ci.me channels
+        env:
+          DRY_RUN: ${{ inputs.dry-run }}
+          CI_ME_CLIENT_ID: ${{ secrets.CI_ME_CLIENT_ID }}
+          CI_ME_CLIENT_SECRET: ${{ secrets.CI_ME_CLIENT_SECRET }}
+        run: |
+          if [ "$DRY_RUN" = "true" ]; then
+            echo "Dry run: would import ci.me channels"
+            npm run data:ci-me-import
+          else
+            npm run data:ci-me-import -- --apply
+          fi
+
+      - name: Build search index
+        run: npm run data:index
+
+      - name: Validate dataset
+        run: npm run data:validate
+
+      - name: Commit ci.me imports
+        env:
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch origin "$BRANCH"
+          git reset --mixed "origin/$BRANCH"
+          git add data/channels data/search data/manifest.json
+          if git diff --cached --quiet; then
+            echo "ci.me imports unchanged — nothing to commit"
+            exit 0
+          fi
+          git commit -m "data: import ci.me VTubers (${{ github.run_number }})"
+          git push origin "HEAD:$BRANCH"
+
+      - name: Summary
+        run: |
+          {
+            echo "### Import ci.me VTubers"
+            echo ""
+            echo "| | |"
+            echo "| --- | --- |"
+            echo "| Source | ci.me |"
+            echo "| Step | harvest → import → index → validate → commit |"
+            echo "| Dry run | ${{ inputs.dry-run }} |"
+            echo "| Committed | \`data/channels\`, \`data/search\`, \`data/manifest.json\` |"
+          } >> "$GITHUB_STEP_SUMMARY"

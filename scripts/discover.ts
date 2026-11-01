@@ -36,11 +36,26 @@ import type { Candidate } from "./lib/identity";
 import { promoteCandidates } from "./lib/promote-candidates";
 import { FandomSource } from "./lib/debut-sources/fandom";
 import { VtubieSource } from "./lib/debut-sources/vtubie";
-import { ChuysanSource } from "./lib/debut-sources/chuysan";
+import { BilibiliSource } from "./lib/debut-sources/bilibili";
+import { ChzzkSource } from "./lib/debut-sources/chzzk";
+import { ChuYsanSource } from "./lib/debut-sources/chuysan";
+import { KickSource } from "./lib/debut-sources/kick";
+import { NiconicoSource } from "./lib/debut-sources/niconico";
+import { SoopSource } from "./lib/debut-sources/soop";
+import { TwitchSource } from "./lib/debut-sources/twitch";
+import { YoutubeSource } from "./lib/debut-sources/youtube";
+import { VdbSource } from "./lib/debut-sources/vdb";
+import { VtuberdexSource } from "./lib/debut-sources/vtuberdex";
+import { VtpediaSource } from "./lib/debut-sources/vtpedia";
+import { VtubersTwSource } from "./lib/debut-sources/vtubers.tw";
+import { VSaiSource } from "./lib/debut-sources/v-sai";
+import { VirtualHumansSource } from "./lib/debut-sources/virtualhumans";
 import type { DebutSource } from "./lib/debut-sources/types";
 
 interface Options {
-  /** `vtubie`, `fandom`, or `all`. */
+  /** `vtubie`, `fandom`, `chuysan`, `ci-me`, `kick`, `niconico`, `soop`,
+   * `youtube`, `vdb`, `vtuberdex`, `vtpedia`, `vtubers.tw`, `v-sai`,
+   * `virtualhumans`, or `all`. */
   source: string;
   /** Directory pages to read (vTubie). */
   pages: number;
@@ -103,7 +118,7 @@ function parseArgs(argv: string[]): Options {
           [
             "Usage: npm run data:discover -- [options]",
             "",
-            "  --source <vtubie|fandom|chuysan|all>  which sources to run (default vtubie)",
+            "  --source <vtubie|fandom|chuysan|ci-me|kick|niconico|soop|youtube|vdb|vtuberdex|vtpedia|vtubers.tw|v-sai|virtualhumans|all>  which sources to run (default vtubie)",
             "  --pages <n>                   directory pages to read (default 20)",
             "  --since <ISO date>            only candidates first seen after this date",
             "  --limit <n>                   stop after n candidates",
@@ -111,7 +126,7 @@ function parseArgs(argv: string[]): Options {
             "                                virtual + singing gate to data/channels",
             "  --promote-limit <n>           how many names to resolve (default 25)",
             "  --dry-run                     read and report, write nothing",
-          ].join("\n"),
+          ].join("\n")
         );
         process.exit(0);
       default:
@@ -145,12 +160,51 @@ function sourcesFor(options: Options): DebutSource[] {
   if (wantAll || options.source === "fandom") {
     sources.push(new FandomSource());
   }
+  if (wantAll || options.source === "bilibili") {
+    sources.push(new BilibiliSource());
+  }
+  if (wantAll || options.source === "chzzk") {
+    sources.push(new ChzzkSource());
+  }
   if (wantAll || options.source === "chuysan") {
-    sources.push(new ChuysanSource());
+    sources.push(new ChuYsanSource());
+  }
+  if (wantAll || options.source === "kick") {
+    sources.push(new KickSource());
+  }
+  if (wantAll || options.source === "niconico") {
+    sources.push(new NiconicoSource());
+  }
+  if (wantAll || options.source === "soop") {
+    sources.push(new SoopSource());
+  }
+  if (wantAll || options.source === "twitch") {
+    sources.push(new TwitchSource());
+  }
+  if (wantAll || options.source === "youtube") {
+    sources.push(new YoutubeSource());
+  }
+  if (wantAll || options.source === "vdb") {
+    sources.push(new VdbSource());
+  }
+  if (wantAll || options.source === "vtuberdex") {
+    sources.push(new VtuberdexSource());
+  }
+  if (wantAll || options.source === "vtpedia") {
+    sources.push(new VtpediaSource());
+  }
+  if (wantAll || options.source === "vtubers.tw") {
+    sources.push(new VtubersTwSource());
+  }
+  if (wantAll || options.source === "v-sai") {
+    sources.push(new VSaiSource());
+  }
+  if (wantAll || options.source === "virtualhumans") {
+    sources.push(new VirtualHumansSource());
   }
   if (!sources.length) {
     console.error(
-      `unknown source: ${options.source} (expected vtubie, fandom, chuysan, or all)`,
+      `unknown source: ${options.source} (expected vtubie, fandom, bilibili, chuysan, ci-me, kick, niconico, soop, twitch, youtube, vdb, vtuberdex, vtpedia, vtubers.tw, v-sai, virtualhumans, or all)`,
     );
     process.exit(1);
   }
