@@ -40,17 +40,19 @@ import { InnerTubeSource } from "../scripts/lib/youtubei";
 import type { Channel } from "../scripts/lib/types";
 
 interface VSaiChannel {
-  channel_id?: string;
-  name?: string;
+  id: string;
+  userId: string;
+  displayName: string;
+  furigana?: string;
+  image?: string;
+  bannerImage?: string;
+  socialMediaLinks?: {
+    twitter?: string;
+    youtube?: string;
+  };
   description?: string;
-  thumbnail?: string | null;
-  subscribers?: number;
-  views?: number;
-  published_at?: string;
-  region?: string | null;
-  gender?: string | null;
-  languages?: string[];
-  handle?: string | null;
+  username?: string;
+  isPublished?: boolean;
 }
 
 const SNAPSHOT = ".cache/v-sai/v-sai.json";
@@ -73,7 +75,7 @@ function writeResolved(cache: ResolvedCache): void {
 }
 
 interface Row {
-  entry: any;
+  entry: VSaiChannel;
   id: string | null;
   record: Channel | null | undefined;
   verdict: "tracked" | "new" | "rejected";
@@ -119,6 +121,14 @@ function parseArgs(argv: string[]): Options {
   return options;
 }
 
+/** Extracts a YouTube handle from a v-sai social link like
+ *  https://youtube.com/@handle or https://www.youtube.com/@handle. */
+function extractYtHandle(url: string | null | undefined): string | null {
+  if (!url) return null;
+  const m = url.match(/youtube\.com\/@([A-Za-z0-9_.-]+)/i);
+  return m ? m[1] : null;
+}
+
 async function main(): Promise<void> {
   const options = parseArgs(process.argv.slice(2));
   if (!fs.existsSync(SNAPSHOT)) {
@@ -147,13 +157,12 @@ async function main(): Promise<void> {
 
   const rows: Row[] = [];
   for (const entry of entries) {
-    if (!entry.channel_id) continue;
+    const ytHandle = extractYtHandle(entry.socialMediaLinks?.youtube);
+    const id = ytHandle ? `youtube:@${ytHandle}` : null;
+    let record: Channel | null | undefined = id ? byId.get(id) : undefined;
 
-    const id = `youtube:${entry.channel_id}`;
-    let record: Channel | null | undefined = byId.get(id);
-
-    if (!record && entry.handle) {
-      record = byHandle.get(foldHandle(entry.handle)) ?? null;
+    if (!record && ytHandle) {
+      record = byHandle.get(ytHandle.toLowerCase()) ?? undefined;
     }
 
     rows.push({
@@ -193,7 +202,7 @@ async function main(): Promise<void> {
             .slice(0, 20)
             .map(
               (row) =>
-                `  ${row.id}  ${row.entry.name}`
+                `  ${row.id}  ${row.entry.displayName}`
             )
             .join("\n")
         : ""),
@@ -212,16 +221,23 @@ async function main(): Promise<void> {
   let failed = 0;
 
   for (const row of newRows) {
-    const result = await importYouTubeChannels([row.id!], {
+    const ytHandle = row.id!.replace(/^youtube:@/, "");
+    const resolvedId = await client.resolveHandle(ytHandle);
+    if (!resolvedId) {
+      console.error(`v-sai: could not resolve @${ytHandle} to a YouTube channel id`);
+      failed++;
+      continue;
+    }
+    const result = await importYouTubeChannels([resolvedId], {
       limit: 1,
       rosterHint: {
-        agency: row.id ? { [row.id!]: row.entry.affiliation ?? "" } : undefined,
-        debut: row.id ? { [row.id!]: row.entry.published_at ?? "" } : undefined,
+        agency: row.id ? { [row.id!]: row.entry.socialMediaLinks?.twitter ?? "" } : undefined,
+        debut: row.id ? { [row.id!]: "" } : undefined,
         gender: row.id ? { [row.id!]: "unknown" } : undefined,
       },
     });
-    if (result.added.length > 0) {
-      added += result.added.length;
+    if ((result.added as unknown[]).length > 0) {
+      added += (result.added as unknown[]).length;
     } else {
       existing += result.existing;
       failed += result.failed.length;

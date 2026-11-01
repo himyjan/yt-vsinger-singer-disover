@@ -3,29 +3,53 @@
  * Harvest VTuber channels from V-SLive (v-sai.com/vtuber).
  *
  * v-sai.com/vtuber is a Vietnamese VTuber directory that publishes channel
- * data via a public JSON API.
+ * data via a ConnectRPC (gRPC-web) JSON API at
+ * `https://api.v-sai.com/api.vtubers.v1.VtuberProfilesService/GetAllVtuberProfiles`.
  *
  * No authentication required.
+ *
+ *   npm run data:v-sai              # harvest VTuber candidates from V-SLive
+ *   npm run data:v-sai -- --limit 100   # max entries per page
+ *
+ * Nothing here writes `data/` — adding the channels is a separate step
+ * through `npm run data:v-sai-import`.
  */
 
-import { fetchJson } from "../scripts/lib/io";
 import fs from "node:fs";
 import path from "node:path";
 
-const API_BASE = "https://www.v-sai.com";
+const API_BASE = "https://api.v-sai.com";
 const CACHE_DIR = ".cache/v-sai";
 const OUT_PATH = path.join(CACHE_DIR, "v-sai.json");
 
-interface VSaiChannel {
-  channel_id?: string;
-  name?: string;
+interface VtuberProfile {
+  id: string;
+  userId: string;
+  displayName: string;
+  furigana?: string;
+  image?: string;
+  bannerImage?: string;
+  socialMediaLinks?: {
+    twitter?: string;
+    youtube?: string;
+  };
   description?: string;
-  thumbnail?: string | null;
-  subscribers?: number;
-  published_at?: string;
-  region?: string | null;
-  gender?: string | null;
-  languages?: string[];
+  username?: string;
+  isPublished?: boolean;
+}
+
+interface PaginationDetails {
+  totalItems: number;
+  totalPages: number;
+  currentPage: number;
+  pageSize: number;
+  nextPage: number;
+  prevPage: number;
+}
+
+interface VtuberApiResponse {
+  data: VtuberProfile[];
+  paginationDetails: PaginationDetails;
 }
 
 interface Options {
@@ -46,9 +70,9 @@ function parseArgs(argv: string[]): Options {
       case "-h":
         console.log(
           [
-            "Usage: npm run data:v-sai -- [options]",
+            "Usage: npm run data:v-sai [--limit <n>]",
             "",
-            "  --limit <n>  stop after n channels in this pass",
+            "  --limit <n>  page size for the ConnectRPC listing API",
           ].join("\n")
         );
         process.exit(0);
@@ -62,28 +86,68 @@ function parseArgs(argv: string[]): Options {
   return options;
 }
 
+async function fetchPage(offset: number, size: number): Promise<VtuberApiResponse | null> {
+  try {
+    const res = await fetch(
+      "https://api.v-sai.com/api.vtubers.v1.VtuberProfilesService/GetAllVtuberProfiles",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({ offset, size }),
+      },
+    );
+    if (!res.ok) return null;
+    return (await res.json()) as VtuberApiResponse;
+  } catch {
+    return null;
+  }
+}
+
 async function main(): Promise<void> {
   const options = parseArgs(process.argv.slice(2));
+  const pageSize = options.limit ?? 100;
+
   fs.mkdirSync(CACHE_DIR, { recursive: true });
 
-  const res = await fetchJson<{ data?: VSaiChannel[] }>(
-    `${API_BASE}/vtuber?size=9999999`
-  );
-  if (!res?.data) {
-    // A source that is unreachable must not fail the run — leave the
-    // previous cache in place and exit cleanly so the workflow continues.
-    console.error("V-SLive feed unavailable — leaving previous cache untouched");
-    process.exit(0);
+  const allProfiles: VtuberProfile[] = [];
+  let offset = 0;
+
+  for (;;) {
+    const page = await fetchPage(offset, pageSize);
+    if (!page?.data) {
+      console.error("V-SLive feed unavailable — leaving previous cache untouched");
+      process.exit(0);
+    }
+
+    allProfiles.push(...page.data);
+
+    const { paginationDetails } = page;
+    if (!paginationDetails || offset + pageSize >= paginationDetails.totalItems) break;
+
+    offset += pageSize;
+    if (allProfiles.length >= (options.limit ?? Infinity)) break;
   }
+
+  // Filter to profiles that have a YouTube link (the dataset keys VTubers by YouTube id)
+  const withYoutube = allProfiles.filter(
+    (p) => p.socialMediaLinks?.youtube,
+  );
 
   const snapshot = {
     generatedAt: new Date().toISOString(),
     source: "v-sai.com",
-    count: res.data.length,
-    data: res.data,
+    count: allProfiles.length,
+    youtubeCount: withYoutube.length,
+    data: allProfiles,
   };
+
   fs.writeFileSync(OUT_PATH, JSON.stringify(snapshot, null, 2));
-  console.log(`${res.data.length} channel(s) harvested → ${OUT_PATH}`);
+  console.log(
+    `v-sai: ${allProfiles.length} profile(s) harvested (${withYoutube.length} with YouTube links) → ${OUT_PATH}`,
+  );
 }
 
 main().catch((error: unknown) => {
