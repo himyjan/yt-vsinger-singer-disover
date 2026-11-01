@@ -124,7 +124,10 @@ async function main(): Promise<void> {
     });
     added += result.added.length;
     existing += result.existing;
-    failed += result.failed.length;
+    for (const f of result.failed) {
+        console.error(`suggestions: ${f.id} failed — ${f.reason}`);
+        failed++;
+      }
     remaining += result.remaining;
     for (const f of result.failed) failedIds.add(f.id);
   }

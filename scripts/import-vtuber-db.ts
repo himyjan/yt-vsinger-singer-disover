@@ -348,7 +348,10 @@ async function main(): Promise<void> {
     });
     added += result.added.length;
     existing += result.existing;
-    failed += result.failed.length;
+    for (const f of result.failed) {
+        console.error(`vtuber-db: ${f.id} failed — ${f.reason}`);
+        failed++;
+      }
     console.log(
       "import: " +
         Math.min(offset + options.batchSize, ids.length) +
