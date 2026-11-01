@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-01T06:02:49.749Z",
+  "generatedAt": "2026-11-01T07:06:55.240Z",
   "items": [
     {
       "id": "FQEtgsxd39w",
@@ -45,6 +45,52 @@
       "source": "api",
       "addedAt": "2026-10-31T03:16:25.456Z",
       "updatedAt": "2026-11-01T04:35:27.120Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "g3IQQU6bNZo",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCuLeScJPrKN6X2yCMKcP2DA",
+      "channelName": "Yui Ch.華宮結",
+      "channelKind": "virtual",
+      "region": "my",
+      "gender": "female",
+      "languages": [
+        "ms"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "【收集安安】來收集40個安安！！！我可以立刻達標嘛？！#初見歡迎 #降落歡迎 #馬來西亞vtuber",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/g3IQQU6bNZo/hq720.jpg",
+      "publishedAt": "2026-11-01T06:00:00.000Z",
+      "scheduledStart": "2026-11-01T06:00:00.000Z",
+      "actualStart": null,
+      "actualEnd": "2026-11-01T06:56:27.042Z",
+      "duration": 3387,
+      "status": "past",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCuLeScJPrKN6X2yCMKcP2DA",
+          "name": "Yui Ch.華宮結",
+          "kind": "virtual",
+          "region": "my"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-01T04:35:27.031Z",
+      "updatedAt": "2026-11-01T06:56:27.042Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -141,52 +187,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "g3IQQU6bNZo",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCuLeScJPrKN6X2yCMKcP2DA",
-      "channelName": "Yui Ch.華宮結",
-      "channelKind": "virtual",
-      "region": "my",
-      "gender": "female",
-      "languages": [
-        "ms"
-      ],
-      "isAi": false,
-      "variant": "female_vtuber",
-      "title": "【收集安安】來收集40個安安！！！我可以立刻達標嘛？！#初見歡迎 #降落歡迎 #馬來西亞vtuber",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/g3IQQU6bNZo/hq720.jpg",
-      "publishedAt": null,
-      "scheduledStart": "2026-11-01T06:00:00.000Z",
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "upcoming",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCuLeScJPrKN6X2yCMKcP2DA",
-          "name": "Yui Ch.華宮結",
-          "kind": "virtual",
-          "region": "my"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-11-01T04:35:27.031Z",
-      "updatedAt": "2026-11-01T05:52:25.665Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "LWY5htIEMpY",
       "platform": "youtube",
       "type": "live",
@@ -206,6 +206,7 @@
       "publishedAt": null,
       "scheduledStart": "2027-03-31T15:45:00.000Z",
       "actualStart": null,
+      "isMember": false,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -228,7 +229,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-11-01T05:52:27.847Z",
+      "updatedAt": "2026-11-01T06:56:26.157Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -252,6 +253,7 @@
       "publishedAt": null,
       "scheduledStart": "2026-11-01T10:00:00.000Z",
       "actualStart": null,
+      "isMember": false,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -274,7 +276,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-01T04:35:30.574Z",
-      "updatedAt": "2026-11-01T05:52:24.928Z",
+      "updatedAt": "2026-11-01T06:56:25.714Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

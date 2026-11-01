@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-01T06:02:49.749Z",
+  "generatedAt": "2026-11-01T07:06:55.240Z",
   "items": [
     {
       "id": "pTU_KneBwn0",
@@ -161,6 +161,7 @@
       "publishedAt": null,
       "scheduledStart": "2027-01-01T15:55:00.000Z",
       "actualStart": null,
+      "isMember": false,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -183,7 +184,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-27T17:58:40.188Z",
-      "updatedAt": "2026-11-01T05:52:29.974Z",
+      "updatedAt": "2026-11-01T06:56:23.736Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -207,6 +208,7 @@
       "publishedAt": null,
       "scheduledStart": "2027-03-30T16:00:00.000Z",
       "actualStart": null,
+      "isMember": false,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -229,7 +231,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:22.912Z",
-      "updatedAt": "2026-11-01T05:52:30.876Z",
+      "updatedAt": "2026-11-01T06:56:20.506Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -253,6 +255,7 @@
       "publishedAt": null,
       "scheduledStart": "2026-12-25T12:00:00.000Z",
       "actualStart": null,
+      "isMember": false,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -275,7 +278,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:16.423Z",
-      "updatedAt": "2026-11-01T05:52:27.762Z",
+      "updatedAt": "2026-11-01T06:56:29.046Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -299,6 +302,7 @@
       "publishedAt": null,
       "scheduledStart": "2026-11-01T12:00:00.000Z",
       "actualStart": null,
+      "isMember": false,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -321,7 +325,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.180Z",
-      "updatedAt": "2026-11-01T05:52:24.837Z",
+      "updatedAt": "2026-11-01T06:56:20.839Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -345,6 +349,7 @@
       "publishedAt": null,
       "scheduledStart": "2028-05-31T12:30:00.000Z",
       "actualStart": null,
+      "isMember": false,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -367,7 +372,54 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:27.693Z",
-      "updatedAt": "2026-11-01T05:52:27.847Z",
+      "updatedAt": "2026-11-01T06:56:26.157Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "VUbSVXfM2Mw",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCGadY3YPH2Gckihm_uCWeoQ",
+      "channelName": "Aoi Maena Ch.【𝗗𝗘𝗟𝗔𝗩𝗢𝗟𝗦】",
+      "channelKind": "virtual",
+      "region": "my",
+      "gender": "unknown",
+      "languages": [
+        "ms"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "just a little talk before Monday blues..",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/VUbSVXfM2Mw/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2026-11-01T14:00:00.000Z",
+      "actualStart": null,
+      "isMember": false,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCGadY3YPH2Gckihm_uCWeoQ",
+          "name": "Aoi Maena Ch.【𝗗𝗘𝗟𝗔𝗩𝗢𝗟𝗦】",
+          "kind": "virtual",
+          "region": "my"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-01T06:56:22.319Z",
+      "updatedAt": "2026-11-01T06:56:22.319Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }
