@@ -37,11 +37,10 @@ interface VirtualHumansEntry {
 
 interface Options {
   limit: number | null;
-  pages: number | null;
 }
 
 function parseArgs(argv: string[]): Options {
-  const options: Options = { limit: null, pages: null };
+  const options: Options = { limit: null };
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i]!;
     const value = argv[i + 1];
@@ -50,18 +49,13 @@ function parseArgs(argv: string[]): Options {
         options.limit = Math.max(1, Number(value ?? 1));
         i++;
         break;
-      case "--pages":
-        options.pages = Math.max(1, Number(value ?? 1));
-        i++;
-        break;
       case "--help":
       case "-h":
         console.log(
           [
-            "Usage: npm run data:virtualhumans [options]",
+            "Usage: npm run data:virtualhumans -- [options]",
             "",
             "  --limit <n>  max entries to harvest",
-            "  --pages <n>  max listing pages to read (default: all)",
           ].join("\n")
         );
         process.exit(0);
@@ -132,59 +126,33 @@ async function main(): Promise<void> {
   const options = parseArgs(process.argv.slice(2));
   fs.mkdirSync(CACHE_DIR, { recursive: true });
 
-  const allCards: Array<{ name: string; handle: string; slug: string }> = [];
-  let page = 1;
-
-  for (;;) {
-    if (options.pages !== null && page > options.pages) break;
-
-    const url = page === 1 ? `${SOURCE_URL}/vtubers` : `${SOURCE_URL}/vtubers?page=${page}`;
-    console.log(`virtualhumans: fetching listing page ${url}`);
-    let html: string;
-    try {
-      const res = await fetch(url, {
-        headers: { Accept: "text/html" },
-        signal: AbortSignal.timeout(30_000),
-      });
-      if (!res.ok) {
-        console.error(
-          `virtualhumans: HTTP ${res.status} on page ${page} — stopping`,
-        );
-        break;
-      }
-      html = await res.text();
-    } catch {
-      console.error(
-        `virtualhumans: listing fetch failed on page ${page} — stopping`,
-      );
-      break;
+  console.log(`virtualhumans: fetching listing page ${SOURCE_URL}/vtubers`);
+  let html: string;
+  try {
+    const res = await fetch(`${SOURCE_URL}/vtubers`, {
+      headers: { Accept: "text/html" },
+      signal: AbortSignal.timeout(30_000),
+    });
+    if (!res.ok) {
+      console.error(`virtualhumans: HTTP ${res.status} — leaving previous cache untouched`);
+      process.exit(0);
     }
-
-    const cards = parseListingCards(html);
-    if (cards.length === 0) {
-      console.log(`virtualhumans: no VTuber cards on page ${page} — stopping`);
-      break;
-    }
-
-    allCards.push(...cards);
-    console.log(`  page ${page}: ${cards.length} cards`);
-
-    page++;
-    if (options.limit && allCards.length >= options.limit) {
-      allCards.length = options.limit;
-      break;
-    }
+    html = await res.text();
+  } catch {
+    console.error("virtualhumans: listing fetch failed — leaving previous cache untouched");
+    process.exit(0);
   }
 
-  if (!allCards.length) {
+  const cards = parseListingCards(html);
+  if (!cards.length) {
     console.error("virtualhumans: no VTuber cards found — leaving previous cache untouched");
     process.exit(0);
   }
 
-  console.log(`virtualhumans: ${allCards.length} VTuber cards found across ${page - 1} page(s)`);
+  console.log(`virtualhumans: ${cards.length} VTuber cards found on listing page`);
 
-  let limited = allCards;
-  if (options.limit) limited = allCards.slice(0, options.limit);
+  let limited = cards;
+  if (options.limit) limited = cards.slice(0, options.limit);
 
   // Fetch each individual page to get YouTube ID and social links
   const entries: VirtualHumansEntry[] = [];
@@ -217,7 +185,7 @@ async function main(): Promise<void> {
   fs.writeFileSync(OUT_PATH, JSON.stringify(snapshot, null, 2));
   const withYt = entries.filter(e => e.youtubeId).length;
   console.log(
-    `virtualhumans: ${entries.length} entr(y/ies) harvested (${withYt} with YouTube IDs) from ${page - 1} page(s) → ${OUT_PATH}`,
+    `virtualhumans: ${entries.length} entr(y/ies) harvested (${withYt} with YouTube IDs) → ${OUT_PATH}`,
   );
 }
 
