@@ -3645,7 +3645,7 @@ export function liveStreamToItem(
   if (!live?.id) return null;
   const status = live.status ?? "live";
   const actualStart =
-    status === "upcoming" ? null : (live.actualStart ?? now);
+    status === "upcoming" ? null : live.actualStart ?? null;
   const classification = classifyItem({
     title: live.title,
     description: null,
