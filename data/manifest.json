@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-01T11:20:56.418Z",
+  "generatedAt": "2026-11-01T11:31:32.867Z",
   "counts": {
     "channels": 72819,
     "channelsVirtual": 72779,
     "channelsReal": 40,
-    "channelsSinging": 10498,
+    "channelsSinging": 10502,
     "items": 10372,
     "itemsLive": 6,
     "itemsUpcoming": 6148,
@@ -21,14 +21,14 @@
       "label": "Japan",
       "badge": "🇯🇵",
       "channels": 9930,
-      "items": 5360
+      "items": 5290
     },
     {
       "code": "cn",
       "label": "China",
       "badge": "🇨🇳",
       "channels": 8824,
-      "items": 16
+      "items": 87
     },
     {
       "code": "tw",
@@ -49,7 +49,7 @@
       "label": "Korea",
       "badge": "🇰🇷",
       "channels": 371,
-      "items": 20
+      "items": 21
     },
     {
       "code": "en",
@@ -84,7 +84,7 @@
       "label": "Unknown",
       "badge": "❔",
       "channels": 6488,
-      "items": 238
+      "items": 236
     }
   ],
   "quota": {

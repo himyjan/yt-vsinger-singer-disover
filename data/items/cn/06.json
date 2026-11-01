@@ -1,7 +1,53 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-27T17:58:40.188Z",
+  "generatedAt": "2026-11-01T11:31:32.867Z",
   "items": [
+    {
+      "id": "ml_EsJhgkdE",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCiw0IHf0T1XWNDgTOA57CbQ",
+      "channelName": "ゆいまるちゃん",
+      "channelKind": "virtual",
+      "region": "cn",
+      "gender": "female",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "【 #記念日 】お誕生日カウントダウン配信！みんなで一緒にお祝いしよ～～！！！✨【 Vtuber ゆいまるちゃん 】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/ml_EsJhgkdE/hq720.jpg",
+      "publishedAt": "2026-10-30T13:00:00.000Z",
+      "scheduledStart": "2026-10-30T13:00:00.000Z",
+      "actualStart": null,
+      "actualEnd": "2026-10-31T03:16:17.489Z",
+      "duration": 51377,
+      "status": "past",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCiw0IHf0T1XWNDgTOA57CbQ",
+          "name": "ゆいまるちゃん",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-27T10:02:58.969Z",
+      "updatedAt": "2026-10-31T03:16:17.489Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
     {
       "id": "OLAK5uy_kpMluMfCzzzWUcnOesXbbQkEutIYioesM",
       "platform": "youtube",
@@ -49,6 +95,106 @@
       "source": "api",
       "addedAt": "2026-10-27T17:58:40.188Z",
       "updatedAt": "2026-10-27T17:58:40.188Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_lBYgG6ULvJrUOGQ7wKsZfq-kqygv4jzAM",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_lBYgG6ULvJrUOGQ7wKsZfq-kqygv4jzAM",
+      "type": "playlist",
+      "channelId": "UCfBkUgaJ6eqYA9_TX2cmq9A",
+      "channelName": "理芽 -RIM-",
+      "channelKind": "virtual",
+      "region": "cn",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "How Many?",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/A0iW2hCcwaE/hqdefault.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCfBkUgaJ6eqYA9_TX2cmq9A",
+          "name": "理芽 -RIM-",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_lxEqxiSB3XCD4N1G-Zov8Lx5t8xrdqpd8",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_lxEqxiSB3XCD4N1G-Zov8Lx5t8xrdqpd8",
+      "type": "playlist",
+      "channelId": "UCfBkUgaJ6eqYA9_TX2cmq9A",
+      "channelName": "理芽 -RIM-",
+      "channelKind": "virtual",
+      "region": "cn",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "NEW ROMANCER",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/8rHkc3pzzLs/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCfBkUgaJ6eqYA9_TX2cmq9A",
+          "name": "理芽 -RIM-",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-25T07:43:14.768Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

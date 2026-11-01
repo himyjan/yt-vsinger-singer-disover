@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-01T09:11:38.158Z",
+  "generatedAt": "2026-11-01T11:31:32.867Z",
   "items": [
     {
       "id": "n2jy8j7c2ws",
@@ -552,52 +552,6 @@
       "source": "api",
       "addedAt": "2026-10-31T23:18:49.761Z",
       "updatedAt": "2026-11-01T04:35:27.120Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "I6cWmwv1txU",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCnYhIk9aGEx_bIgheVjs53w",
-      "channelName": "Luto Araka / 新火ると",
-      "channelKind": "virtual",
-      "region": "en",
-      "gender": "female",
-      "languages": [
-        "en"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "I Am Back And Reunited With Cats!!!! 😈",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/I6cWmwv1txU/hq720.jpg",
-      "publishedAt": "2026-11-01T01:00:00.000Z",
-      "scheduledStart": "2026-11-01T01:00:00.000Z",
-      "actualStart": null,
-      "actualEnd": "2026-11-01T04:35:30.574Z",
-      "duration": 12930,
-      "status": "past",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": true,
-      "collaborators": [
-        {
-          "channelId": "UCnYhIk9aGEx_bIgheVjs53w",
-          "name": "Luto Araka / 新火ると",
-          "kind": "virtual",
-          "region": "en"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-31T10:13:11.968Z",
-      "updatedAt": "2026-11-01T04:35:30.574Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -2449,7 +2403,7 @@
       "channelName": "Petra Gurin【NIJISANJI EN】",
       "channelKind": "virtual",
       "region": "en",
-      "gender": "female",
+      "gender": "unknown",
       "languages": [
         "en"
       ],

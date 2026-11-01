@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-01T09:11:38.158Z",
+  "generatedAt": "2026-11-01T11:31:32.867Z",
   "items": [
     {
       "id": "2jRNKvu5ctw",
@@ -430,7 +430,7 @@
       "channelName": "Tamaki Ch. 犬山たまき / 佃煮のりお",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "male",
+      "gender": "unknown",
       "languages": [
         "ja"
       ],
@@ -3008,7 +3008,7 @@
       "channelName": "西園チグサ / Nishizono Chigusa",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "female",
+      "gender": "unknown",
       "languages": [
         "ja"
       ],
@@ -3146,7 +3146,7 @@
       "channelName": "樋口楓【にじさんじ所属】",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "female",
+      "gender": "unknown",
       "languages": [
         "ja"
       ],
@@ -3790,7 +3790,7 @@
       "channelName": "小花衣 ももみ / Momomi Kohanai",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "female",
+      "gender": "unknown",
       "languages": [
         "ja"
       ],
@@ -4296,7 +4296,7 @@
       "channelName": "Chieri Kakyoin",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "male",
+      "gender": "unknown",
       "languages": [
         "ja"
       ],
@@ -4791,52 +4791,6 @@
       "source": "api",
       "addedAt": "2026-10-25T16:14:08.234Z",
       "updatedAt": "2026-10-26T10:32:00.415Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "0NUf6arS2aU",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCSUOEmvQLKPdiRnUgmHYX2g",
-      "channelName": "Aria Ch. 黒桐アリア",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "female",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "✵┊ 雑談 ┊ 初見さんも大歓迎☀あさぎママの個展&推し活について話したい…！！【#黒桐アリア┊#Vtuber】",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/0NUf6arS2aU/hq720.jpg",
-      "publishedAt": "2026-10-25T20:48:43.621Z",
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": "2026-10-25T20:48:43.621Z",
-      "duration": null,
-      "status": "past",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCSUOEmvQLKPdiRnUgmHYX2g",
-          "name": "Aria Ch. 黒桐アリア",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-24T20:46:02.237Z",
-      "updatedAt": "2026-10-25T20:48:43.621Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -10057,56 +10011,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "OLAK5uy_kAY2xfQ9_lKL4PvrYist9HMZpyg1in-dw",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_kAY2xfQ9_lKL4PvrYist9HMZpyg1in-dw",
-      "type": "playlist",
-      "channelId": "UCEjysNG2a2UgCBIpJxBqn3w",
-      "channelName": "Tacitly Channel",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "male",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "Just You and I",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/z_25ABH7WvE/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCEjysNG2a2UgCBIpJxBqn3w",
-          "name": "Tacitly Channel",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "OLAK5uy_kc3J8GCAy2HcpzrttO3tTMgMSwAelLH98",
       "platform": "youtube",
       "url": "https://www.youtube.com/playlist?list=OLAK5uy_kc3J8GCAy2HcpzrttO3tTMgMSwAelLH98",
@@ -10253,56 +10157,6 @@
       "source": "api",
       "addedAt": "2026-10-25T07:36:28.069Z",
       "updatedAt": "2026-10-25T11:22:49.894Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "OLAK5uy_kFf5lbmmrwnRV1Upc9sDjz0IberBuvYCk",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_kFf5lbmmrwnRV1Upc9sDjz0IberBuvYCk",
-      "type": "playlist",
-      "channelId": "UCE7gtjLeZKNXLp5YURzYYeg",
-      "channelName": "春猿火 -Harusaruhi-",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "female",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "SPICE OF LIFE",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/xb_2WQX1FlM/default.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCE7gtjLeZKNXLp5YURzYYeg",
-          "name": "春猿火 -Harusaruhi-",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -10515,7 +10369,7 @@
       "channelName": "Mari Channelかしこまり",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "female",
+      "gender": "unknown",
       "languages": [
         "ja"
       ],
@@ -10665,7 +10519,7 @@
       "channelName": "戌亥とこ -Inui Toko-",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "female",
+      "gender": "unknown",
       "languages": [
         "ja"
       ],
@@ -10907,56 +10761,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "OLAK5uy_lbQjRkJOL6jxvGUTz-uONijMmJdQT1EYU",
-      "platform": "youtube",
-      "url": "https://www.youtube.com/playlist?list=OLAK5uy_lbQjRkJOL6jxvGUTz-uONijMmJdQT1EYU",
-      "type": "playlist",
-      "channelId": "UCfBkUgaJ6eqYA9_TX2cmq9A",
-      "channelName": "理芽 -RIM-",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "female",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "No Money",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/gXmRfl0V3es/hqdefault.jpg",
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "past",
-      "category": "other",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCfBkUgaJ6eqYA9_TX2cmq9A",
-          "name": "理芽 -RIM-",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [
-        "youtube-music",
-        "release"
-      ],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-25T07:43:14.768Z",
-      "updatedAt": "2026-10-25T07:43:14.768Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "OLAK5uy_lfi1Oj1NusTdMSDeeyViR-4ig2bWoimRk",
       "platform": "youtube",
       "url": "https://www.youtube.com/playlist?list=OLAK5uy_lfi1Oj1NusTdMSDeeyViR-4ig2bWoimRk",
@@ -11015,7 +10819,7 @@
       "channelName": "Towa Ch.Tokoyami Towa",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "male",
+      "gender": "unknown",
       "languages": [
         "ja"
       ],
@@ -11365,7 +11169,7 @@
       "channelName": "町田ちま【にじさんじ】",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "female",
+      "gender": "unknown",
       "languages": [
         "ja"
       ],
@@ -11465,7 +11269,7 @@
       "channelName": "町田ちま【にじさんじ】",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "female",
+      "gender": "unknown",
       "languages": [
         "ja"
       ],
@@ -11615,7 +11419,7 @@
       "channelName": "Mari Channelかしこまり",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "female",
+      "gender": "unknown",
       "languages": [
         "ja"
       ],
@@ -11665,7 +11469,7 @@
       "channelName": "響かさね / Hibiki Kasane",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "male",
+      "gender": "unknown",
       "languages": [
         "ja"
       ],
@@ -11765,7 +11569,7 @@
       "channelName": "緑仙 / Ryushen",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "female",
+      "gender": "unknown",
       "languages": [
         "ja"
       ],
@@ -11815,7 +11619,7 @@
       "channelName": "Mari Channelかしこまり",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "female",
+      "gender": "unknown",
       "languages": [
         "ja"
       ],
@@ -12115,7 +11919,7 @@
       "channelName": "AZKi Channel",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "female",
+      "gender": "unknown",
       "languages": [
         "ja"
       ],
@@ -12215,7 +12019,7 @@
       "channelName": "響かさね / Hibiki Kasane",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "male",
+      "gender": "unknown",
       "languages": [
         "ja"
       ],
@@ -12265,7 +12069,7 @@
       "channelName": "戌亥とこ -Inui Toko-",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "female",
+      "gender": "unknown",
       "languages": [
         "ja"
       ],
