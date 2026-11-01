@@ -154,8 +154,16 @@ other rather than writing the same shards at once.
 | Workflow | Schedule | Writes | Covers |
 | --- | --- | --- | --- |
 | `fill-links.yml` | Mon 03:00 | channels | `externals` from the **HoloList and bacharu rosters** — only records those rosters carry |
-| `fill-details-parallel.yml` | daily 05:17 | channels | avatars, names, follower counts, upload totals and links, worst-first, 20 jobs × 600 records |
+| `fill-details-parallel.yml` | daily 05:17 | channels | every details mode, worst-first by default, 20 jobs × 600 records |
 | `fill-externals.yml` | daily 06:17 | channels | `externals` for the records that have **nothing beyond `youtube`**, oldest-asked first, 20 jobs × 600 records |
+
+**`fill-details-parallel.yml` runs every mode**, chosen with its `mode` input:
+`all` (the default backlog), `names`, `counts`, `externals`, `platform`,
+`normalize-ids` and `weak-region`. A targeted run is the same workflow with the
+`id` input: a `plan` job resolves each id to its volume with
+`scripts/volume-of.ts`, so only the volumes that hold those records start — a
+record lives in exactly one volume, and starting twenty jobs for one id would
+be nineteen checkouts and installs for nothing.
 
 **Why `fill-externals.yml` exists beside the other two.** A roster only knows
 its own members, so a real artist with no roster entry (Taylor Swift) is never
