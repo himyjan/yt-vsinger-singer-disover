@@ -1,8 +1,12 @@
 /**
  * VTuber.pedia discovery source.
  *
- * vtpedia.com is a VTuber directory with information about VTubers
- * including their YouTube channels, social media, and debut information.
+ * vtpedia.com publishes VTuber channel data as static JSON:
+ *   https://vtpedia.com/data/vtubers.json
+ *
+ * Each entry carries a YouTube channel id and an internal UUID.
+ * Entries are keyed by `vtpedia:<uuid>` and also carry `youtube:<UC…>` as an
+ * external so they can be matched against the dataset.
  *
  * No authentication required.
  */
@@ -12,23 +16,36 @@ import type { Candidate } from "../identity";
 import type { DebutSource } from "./types";
 import type { RegionCode } from "../types";
 
-const API_BASE = "https://vtpedia.com";
+const SOURCE_URL = "https://vtpedia.com/data/vtubers.json";
 
-interface VtpediaChannel {
-  channel_id?: string;
-  name?: string;
-  description?: string;
-  thumbnail?: string | null;
-  subscribers?: number;
-  published_at?: string;
-  region?: string | null;
-  gender?: string | null;
-  languages?: string[];
+interface VtpediaVTuber {
+  id: string;
+  activity: string;
+  name: string;
+  imgUrl?: string;
+  YouTube?: {
+    subscriber: { tag: string; count: number };
+    id: string;
+  } | null;
+  Twitch?: {
+    follower: { tag: string; count: number };
+    id: string;
+  } | null;
+  popularVideo?: {
+    type: string;
+    id: string;
+  };
+  nationality?: string;
+  debutDate?: string;
+}
+
+interface VtpediaApiResponse {
+  VTubers: VtpediaVTuber[];
 }
 
 export class VtpediaSource implements DebutSource {
   readonly id = "vtpedia";
-  readonly label = "VTuberPedia";
+  readonly label = "VTuberpedia";
 
   constructor(private readonly limit = 200) {}
 
@@ -41,45 +58,37 @@ export class VtpediaSource implements DebutSource {
   }
 
   async fetch(_since: string | null): Promise<Candidate[]> {
-    const res = await this.fetchJson<{ data?: VtpediaChannel[] }>(
-      `${API_BASE}/api/channels?limit=${this.limit}`
-    );
-    if (!res?.data) return [];
-
-    const candidates: Candidate[] = [];
-    for (const ch of res.data) {
-      if (!ch.channel_id) continue;
-
-      candidates.push({
-        id: `youtube:${ch.channel_id}`,
-        name: ch.name ?? null,
-        handle: null,
-        region: (ch.region ?? null) as RegionCode | null | undefined,
-        affiliation: null,
-        debutDate: ch.published_at ?? null,
-        graduateDate: null,
-        externals: { youtube: [ch.channel_id] },
-        wikiPage: null,
-        source: this.id,
-      });
-    }
-
-    return candidates;
-  }
-
-  private async fetchJson<T>(url: string): Promise<T | null> {
     try {
-      const res = await fetch(url, {
-        signal: AbortSignal.timeout(30_000),
-        headers: {
-          "User-Agent": "yt-vsinger-singer-tracker/1.0 (dataset builder)",
-          Accept: "application/json",
-        },
-      });
-      if (!res.ok) return null;
-      return (await res.json()) as T;
+      const res = await fetchJson<VtpediaApiResponse>(SOURCE_URL);
+      if (!res?.VTubers) return [];
+
+      const vtubers = res.VTubers.slice(0, this.limit);
+
+      const candidates: Candidate[] = [];
+      for (const ch of vtubers) {
+        candidates.push({
+          id: `vtpedia:${ch.id}`,
+          name: ch.name || null,
+          handle: ch.YouTube?.id ?? null,
+          region: (ch.nationality ?? null) as RegionCode | null | undefined,
+          affiliation: null,
+          debutDate: ch.debutDate ?? null,
+          graduateDate:
+            ch.activity?.includes("畢業") || ch.activity?.includes("graduated")
+              ? ch.debutDate ?? null
+              : null,
+          externals: {
+            ...(ch.YouTube?.id ? { youtube: [ch.YouTube.id] } : {}),
+            ...(ch.Twitch?.id ? { twitch: [ch.Twitch.id] } : {}),
+          },
+          wikiPage: null,
+          source: this.id,
+        });
+      }
+
+      return candidates;
     } catch {
-      return null;
+      return [];
     }
   }
 }
