@@ -1,18 +1,17 @@
 #!/usr/bin/env tsx
 /**
- * Compares a virtualhumans.org harvest with the dataset and imports
- * new channels.
+ * Compares a VirtualHumans harvest with the dataset and imports new channels.
  *
- * `scripts/harvest-virtualhumans.ts` produces a snapshot in `.cache/`;
- * this script reads that snapshot, classifies each candidate through
- * `classifyChannel()`, and imports the ones that pass the virtual-and-singing
- * gate into `data/channels/`.
+ * `scripts/harvest-virtualhumans.ts` produces a snapshot in `.cache/virtualhumans/virtualhumans.json`;
+ * this script reads that snapshot, matches each row against the dataset by
+ * YouTube channel id, classifies through classifyChannel(), and imports the
+ * ones that pass the virtual-and-singing gate into `data/channels/`.
  *
  *   npm run data:virtualhumans-import                     # report only
  *   npm run data:virtualhumans-import -- --apply          # import the new channels
  *
- * virtualhumans.org/vtubers publishes a YouTube channel id for each entry,
- * so matching against the dataset is direct (no search required).
+ * virtualhumans.org publishes a YouTube channel id for each entry, so matching
+ * against the dataset is direct (no search required).
  *
  * Each row carries a YouTube channel id, so it is admitted as a
  * virtual claim (`reincarnationOf`-eligible).  What a roster still must
@@ -39,20 +38,6 @@ import { readAllChannelRecords } from "../scripts/lib/dataset";
 import { InnerTubeSource } from "../scripts/lib/youtubei";
 import type { Channel } from "../scripts/lib/types";
 
-interface VirtualHumansChannel {
-  channel_id?: string;
-  title?: string;
-  description?: string;
-  thumbnail?: string | null;
-  subscribers?: number;
-  views?: number;
-  published_at?: string;
-  region?: string | null;
-  gender?: string | null;
-  languages?: string[];
-  handle?: string | null;
-}
-
 const SNAPSHOT = ".cache/virtualhumans/virtualhumans.json";
 const RESOLVED = ".cache/virtualhumans/virtualhumans-resolved.json";
 
@@ -72,12 +57,24 @@ function writeResolved(cache: ResolvedCache): void {
   fs.writeFileSync(RESOLVED, JSON.stringify(cache, null, 0));
 }
 
+interface VirtualHumansEntry {
+  name: string;
+  handle?: string;
+  slug: string;
+  youtubeId?: string;
+  twitter?: string;
+  instagram?: string;
+  tiktok?: string;
+  debutDate?: string;
+}
+
 interface Row {
-  entry: any;
+  entry: VirtualHumansEntry;
   id: string | null;
   record: Channel | null | undefined;
   verdict: "tracked" | "new" | "rejected";
   reason?: string;
+  candidates: string[];
 }
 
 interface Options {
@@ -123,12 +120,12 @@ async function main(): Promise<void> {
   const options = parseArgs(process.argv.slice(2));
   if (!fs.existsSync(SNAPSHOT)) {
     console.error(
-      `no snapshot at ${SNAPSHOT} — run npm run data:virtualhumans first`
+      `no snapshot at ${SNAPSHOT} — run npm run data:virtualhumans first`,
     );
     process.exit(1);
   }
 
-  const snapshot: { data?: VirtualHumansChannel[]; generatedAt: string } = JSON.parse(
+  const snapshot: { data?: VirtualHumansEntry[]; generatedAt: string } = JSON.parse(
     fs.readFileSync(SNAPSHOT, "utf8")
   );
   const entries = snapshot.data || [];
@@ -147,13 +144,11 @@ async function main(): Promise<void> {
 
   const rows: Row[] = [];
   for (const entry of entries) {
-    if (!entry.channel_id) continue;
-
-    const id = `youtube:${entry.channel_id}`;
-    let record: Channel | null | undefined = byId.get(id);
+    const id = entry.youtubeId ? `youtube:${entry.youtubeId}` : null;
+    let record: Channel | null | undefined = id ? byId.get(id) : undefined;
 
     if (!record && entry.handle) {
-      record = byHandle.get(foldHandle(entry.handle)) ?? null;
+      record = byHandle.get(entry.handle.toLowerCase()) ?? undefined;
     }
 
     rows.push({
@@ -161,11 +156,12 @@ async function main(): Promise<void> {
       id,
       record,
       verdict: record ? "tracked" : "new",
+      candidates: [],
     });
   }
 
   console.log(
-    `snapshot ${snapshot.generatedAt} · ${entries.length} entr(y/ies) · ${dataset.length} record(s) tracked`
+    `snapshot ${snapshot.generatedAt} · ${entries.length} entr(y/ies) · ${dataset.length} record(s) tracked`,
   );
 
   const counts = new Map<string, number>();
@@ -196,7 +192,7 @@ async function main(): Promise<void> {
                 `  ${row.id}  ${row.entry.name}`
             )
             .join("\n")
-        : ""),
+        : "")
   );
 
   if (!options.apply) {
@@ -204,44 +200,100 @@ async function main(): Promise<void> {
     return;
   }
 
-  const source = await new InnerTubeSource({ delayMs: 100 }).connect();
-  const client = (source as any).client;
+  const source = new InnerTubeSource({ delayMs: 100 });
+  await source.connect();
 
   let added = 0;
   let existing = 0;
   let failed = 0;
 
+  /** Externals edits to apply after import: id → { platform: handle }. */
+  const externalsEdits: Array<{ id: string; platform: string; handle: string }> =
+    [];
+
   for (const row of newRows) {
-    const result = await importYouTubeChannels([row.id!], {
+    if (!row.id) continue;
+    const resolvedId = row.id.startsWith("youtube:")
+      ? row.id.slice("youtube:".length)
+      : null;
+    if (!resolvedId) {
+      console.error(
+        `virtualhumans: ${row.entry.name} has no YouTube id to import`,
+      );
+      failed++;
+      continue;
+    }
+    const result = await importYouTubeChannels([resolvedId], {
       limit: 1,
       rosterHint: {
-        agency: row.id ? { [row.id!]: row.entry.affiliation ?? "" } : undefined,
-        debut: row.id ? { [row.id!]: row.entry.published_at ?? "" } : undefined,
+        agency: row.id ? { [row.id!]: "" } : undefined,
+        debut: row.id ? { [row.id!]: row.entry.debutDate ?? "" } : undefined,
         gender: row.id ? { [row.id!]: "unknown" } : undefined,
       },
     });
-    if (result.added.length > 0) {
-      added += result.added.length;
+    if ((result.added as unknown[]).length > 0) {
+      added += (result.added as unknown[]).length;
     } else {
       existing += result.existing;
       failed += result.failed.length;
     }
+
+    // Collect profile links as externals (never overwrite existing ones).
+    const entry = row.entry;
+    if (entry.youtubeId) {
+      externalsEdits.push({
+        id: resolvedId,
+        platform: "youtube",
+        handle: entry.youtubeId,
+      });
+    }
+    if (entry.twitter) {
+      externalsEdits.push({
+        id: resolvedId,
+        platform: "twitter",
+        handle: entry.twitter,
+      });
+    }
+    if (entry.instagram) {
+      externalsEdits.push({
+        id: resolvedId,
+        platform: "instagram",
+        handle: entry.instagram,
+      });
+    }
+    if (entry.tiktok) {
+      externalsEdits.push({
+        id: resolvedId,
+        platform: "tiktok",
+        handle: entry.tiktok,
+      });
+    }
+  }
+
+  const now = new Date().toISOString();
+
+  // Apply externals to imported/tracked records.
+  const externalsWritten = applyChannelEdits(
+    externalsEdits.map((e) => ({
+      id: e.id,
+      update: (channel: Channel) => {
+        channel.externals ??= {};
+        if (channel.externals[e.platform]) return false;
+        channel.externals[e.platform] = e.handle;
+        return true;
+      },
+    })),
+    "virtualhumans",
+    now,
+  );
+  if (externalsWritten) {
+    console.log(`${externalsWritten} record(s) had externals filled from virtualhumans`);
   }
 
   console.log(
-    `\n${added} channel(s) written · ${existing} already tracked · ${failed} failed`
+    `\n${added} channel(s) written · ${existing} already tracked · ${failed} failed`,
   );
   if (added > 0) console.log("Run npm run data:index next.");
-}
-
-function foldHandle(handle: string): string {
-  return handle
-    .trim()
-    .replace(/^@+/, "")
-    .replace(/^https?:\/\/(?:www\.)?(?:youtube\.com\/)?/i, "")
-    .replace(/^(?:channel|user|c)\//i, "")
-    .replace(/[/?#].*$/, "")
-    .toLowerCase();
 }
 
 main().catch((error: unknown) => {
