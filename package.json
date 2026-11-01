@@ -82,6 +82,8 @@
     "data:vdb-html-import": "oxnode scripts/import-vdb-html.ts",
     "data:vt4chan": "oxnode scripts/harvest-vt4chan.ts",
     "data:vt4chan-import": "oxnode scripts/import-vt4chan.ts",
+    "data:usada": "oxnode scripts/harvest-usada.ts",
+    "data:usada-import": "oxnode scripts/import-usada.ts",
     "data:chuysan": "oxnode scripts/harvest-chuysan.ts",
     "data:chuysan-import": "oxnode scripts/import-chuysan.ts",
     "data:ci-me": "oxnode scripts/harvest-cime.ts",
