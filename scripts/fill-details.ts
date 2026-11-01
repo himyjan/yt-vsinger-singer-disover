@@ -158,6 +158,17 @@ interface Options {
    */
   weakRegion: boolean;
   /**
+   * Only the records whose `externals` has no link beyond YouTube.
+   *
+   * The default backlog is ordered by what is missing, and a record that
+   * merely lacks its links scores lowest — so a well-known artist with an
+   * avatar, an audience and an upload total (Taylor Swift, say) sits behind
+   * tens of thousands of records with no picture and is never reached by a
+   * bounded run. This mode selects exactly those records and orders them by
+   * how long ago they were last asked, so a sweep advances.
+   */
+  externalsOnly: boolean;
+  /**
    * Only the records whose follower count is still hidden.
    *
    * The default pass sorts a missing avatar first, so the ~2,000 records a
@@ -205,6 +216,7 @@ function parseArgs(argv: string[]): Options {
     normalizeIds: false,
     weakRegion: false,
     countsOnly: false,
+    externalsOnly: false,
     ids: null,
   };
   for (let i = 0; i < argv.length; i++) {
@@ -238,6 +250,12 @@ function parseArgs(argv: string[]): Options {
       arg === "--regions"
     ) {
       options.weakRegion = true;
+    } else if (
+      arg === "--externals-only" ||
+      arg === "--links-only" ||
+      arg === "--externals"
+    ) {
+      options.externalsOnly = true;
     } else if (
       arg === "--counts-only" ||
       arg === "--counts" ||
@@ -995,7 +1013,17 @@ async function main(): Promise<void> {
       // In name-only mode every channel is a candidate: the point is to
       // correct the name, whether or not the avatar is already there.
       if (!options.nameOnly) {
-        if (options.countsOnly) {
+        if (options.externalsOnly) {
+          /**
+           * A YouTube link is the record's own account, not a discovery: the
+           * block this pass fills is the *other* platforms the performer
+           * publishes on. Anything beyond `youtube` means it is already done.
+           */
+          const links = Object.keys(c.externals ?? {}).filter(
+            (key) => key !== "youtube",
+          );
+          if (links.length) return false;
+        } else if (options.countsOnly) {
           if (c.subscribers.tag !== "hidden") return false;
         } else {
           /**
@@ -1092,6 +1120,17 @@ async function main(): Promise<void> {
       return c.platforms.length > 0;
     })
     .sort((a, b) => {
+      /**
+       * `--externals-only` is a rotation, not a priority list: every record
+       * that qualifies is equally worth a request, so the one asked longest
+       * ago goes first and a sweep reaches the whole set instead of the same
+       * head of it.
+       */
+      if (options.externalsOnly) {
+        const at = a.lastDetailsFetchedAt ? Date.parse(a.lastDetailsFetchedAt) : 0;
+        const bt = b.lastDetailsFetchedAt ? Date.parse(b.lastDetailsFetchedAt) : 0;
+        return at - bt;
+      }
       const score = (c: Channel) =>
         (c.avatar ? 0 : 4) +
         (c.subscribers.tag === "has" ? 0 : 2) +
@@ -1112,7 +1151,9 @@ async function main(): Promise<void> {
           ? `${pending.length} channel(s) need a follower count`
           : options.nameOnly
             ? `${pending.length} channel(s) to rename`
-            : `${pending.length} channel(s) need details`,
+            : options.externalsOnly
+              ? `${pending.length} channel(s) have no links beyond YouTube`
+              : `${pending.length} channel(s) need details`,
   );
 
   const innertube = new InnerTubeSource({
