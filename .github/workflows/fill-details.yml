@@ -1,40 +1,47 @@
-name: Fill channel details (parallel)
+name: Fill channel details
 
 # Fills the per-record details a sync does not: avatars, names, follower
 # counts, the upload total and the `externals` links.
 #
-# **Every mode fans out over the catalogue, so there is one workflow for all of
-# them.** The catalogue is split into twenty volumes (`volumeOf(id)`, 3,546–3,746
-# channels each) and each job owns one volume:
-#
-#   mode=all            the default worst-first backlog (avatar, count, uploads, links)
-#   mode=names          `--name-only`: correct the name and the aliases
-#   mode=counts         `--counts-only`: the hidden follower counts
-#   mode=externals      `--externals-only`: records with nothing but a YouTube link
-#   mode=platform       `--platform <name>`: one platform only
-#   mode=normalize-ids  `--normalize-ids` (`data:ids`): re-key handle ids to `UC…`
-#   mode=weak-region    `--weak-region`: re-derive a region that is only a guess
-#
-# **`--id` is the one thing that does not fan out**, because a record lives in
-# exactly one volume. The `plan` job resolves the ids with `scripts/volume-of.ts`
-# and hands the matrix only the volumes that hold them — otherwise a targeted
-# run would start twenty jobs and nineteen would find nothing.
-#
-# **Why the volumes exist.** A bounded run is ordered worst-first, so a record
-# whose only gap is its links sat behind thousands with no avatar and was never
+# **One run, every mode, twenty volumes in parallel.** The old single-job pass
+# covered 2,000 records a run and was ordered worst-first, so a record whose
+# only gap was its links sat behind thousands with no avatar and was never
 # reached — 「もかん ch / Mokan」 kept an empty `externals` block through every
-# weekly run. Twenty jobs at `--limit 600` fill 12,000 records a day, one volume
-# each, and the fan-in job commits once.
+# weekly run. The catalogue is split into twenty volumes (`volumeOf(id)`,
+# 3,546–3,746 channels each) and each job owns one volume: at `--limit 600`
+# that is 12,000 records a day, worst-first **within each volume**, and the
+# fan-in job commits once.
+#
+# Modes (the `mode` input; `all` is the scheduled one):
+#
+#   all            the default worst-first backlog (avatar, count, uploads, links)
+#   names          `--name-only`: correct the name and the aliases
+#   counts         `--counts-only`: the hidden follower counts
+#   externals      `--externals-only`: records with nothing but a YouTube link
+#   platform       `--platform <name>`: one platform only
+#   normalize-ids  `--normalize-ids` (`data:ids`): re-key handle ids to `UC…`
+#   weak-region    `--weak-region`: re-derive a region that is only a guess
+#
+# `platform`, `force` and `id` combine with any mode, exactly as the flags do
+# on the command line. `--id` is the one thing that does not fan out — a record
+# lives in exactly one volume — so the `plan` job resolves each id with
+# `scripts/volume-of.ts` and hands the matrix only the volumes that hold them.
+#
+# **The links pass runs weekly, inside the same daily run.** Every Monday
+# (UTC) each volume job runs the default pass and then `--externals-only`, so
+# the 11,110 records that carry nothing but a YouTube link are swept once a
+# week by the same 12,000-record budget. `mode=externals` forces it any day.
 #
 # A volume is the smallest unit that can be written alone. Splitting one across
-# two jobs would make both write the same channel shards, and whichever finished
-# last would overwrite the other's corrections. To go wider, raise the volume
-# count, not the jobs per volume.
+# two jobs would make both write the same channel shards, and whichever
+# finished last would overwrite the other's corrections. To go wider, raise the
+# volume count, not the jobs per volume.
 
 on:
   schedule:
     # Daily at 05:17 UTC: after the 04:00 roster jobs, off the hour so the
-    # shared GitHub cron pool is not the bottleneck.
+    # shared GitHub cron pool is not the bottleneck. One schedule — the links
+    # pass is chosen by the weekday inside the run, not by a second cron.
     - cron: "17 5 * * *"
   workflow_dispatch:
     inputs:
@@ -52,7 +59,7 @@ on:
           - normalize-ids
           - weak-region
       platform:
-        description: "Platform for mode=platform (bilibili, kick, ci.me, soop, …)"
+        description: "Platform filter (bilibili, kick, ci.me, soop, …)"
         required: false
         default: ""
       id:
@@ -73,39 +80,6 @@ on:
         default: "false"
       dry-run:
         description: "Fetch profiles but write nothing"
-        required: false
-        default: "false"
-  # `fill-externals.yml` calls this workflow with `mode: externals` instead of
-  # carrying a second copy of the volume fan-out, the artifact hand-off and the
-  # scoped commit — one implementation, two schedules.
-  workflow_call:
-    inputs:
-      mode:
-        type: string
-        required: false
-        default: all
-      platform:
-        type: string
-        required: false
-        default: ""
-      id:
-        type: string
-        required: false
-        default: ""
-      limit:
-        type: string
-        required: false
-        default: "600"
-      interval:
-        type: string
-        required: false
-        default: "200"
-      force:
-        type: string
-        required: false
-        default: "false"
-      dry-run:
-        type: string
         required: false
         default: "false"
 
@@ -229,7 +203,7 @@ jobs:
               ;;
           esac
           # `--platform`, `--force` and `--id` combine with any mode, exactly as
-          # the flags did on the command line: `mode=names` + `platform=kick`
+          # the flags do on the command line: `mode=names` + `platform=kick`
           # renames only the KICK records, and `id` narrows it to those ids.
           if [ -n "$PLATFORM" ]; then ARGS+=(--platform "$PLATFORM"); fi
           if [ "$FORCE" = "true" ]; then ARGS+=(--force); fi
@@ -243,7 +217,22 @@ jobs:
           VOL_DIR=".volumes/vol-${{ matrix.volume }}/data"
           mv data data-full
           ln -s "$VOL_DIR" data
+
           npm run data:details -- "${ARGS[@]}"
+
+          # Monday: the links pass, on the same volume, after the main one.
+          # The default backlog reaches a record that merely lacks its links
+          # only after every record with no avatar, so the block would stay
+          # empty forever; `--externals-only` selects those records directly
+          # and orders them oldest-asked-first. One sweep a week covers the
+          # 11,110 that qualify at this budget.
+          if [ "$MODE" = "all" ] && [ -z "$IDS" ] && [ "$(date -u +%u)" = "1" ]; then
+            echo "Monday — also filling the records with no links beyond YouTube"
+            EXT=(--externals-only --limit "$LIMIT" --interval "$INTERVAL")
+            if [ "$DRY_RUN" = "true" ]; then EXT+=(--dry-run); fi
+            npm run data:details -- "${EXT[@]}"
+          fi
+
           rm -f data
           mv data-full data
 
@@ -393,6 +382,7 @@ jobs:
             echo "| | |"
             echo "| --- | --- |"
             echo "| mode | \`${{ inputs.mode || 'all' }}\` |"
+            echo "| links pass | $([ "$(date -u +%u)" = "1" ] && echo 'ran (Monday)' || echo 'not today — Mondays only') |"
             echo "| volumes | ${{ needs.plan.outputs.volumes }} |"
             echo "| per volume | ${{ inputs.limit || 600 }} records |"
             echo "| interval | ${{ inputs.interval || 200 }} ms |"
