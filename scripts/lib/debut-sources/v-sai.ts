@@ -2,7 +2,8 @@
  * V-SLive discovery source.
  *
  * v-sai.com/vtuber is a Vietnamese VTuber directory that lists VTubers
- * with their YouTube channel information.
+ * with their YouTube channel information via a ConnectRPC JSON API at
+ * `https://api.v-sai.com/api.vtubers.v1.VtuberProfilesService/GetAllVtuberProfiles`.
  *
  * No authentication required.
  */
@@ -12,25 +13,29 @@ import type { Candidate } from "../identity";
 import type { DebutSource } from "./types";
 import type { RegionCode } from "../types";
 
-const API_BASE = "https://www.v-sai.com";
+const API_BASE = "https://api.v-sai.com";
 
-interface VSaiChannel {
-  channel_id?: string;
-  name?: string;
+interface VtuberProfile {
+  id: string;
+  userId: string;
+  displayName: string;
+  furigana?: string;
+  image?: string;
+  bannerImage?: string;
+  socialMediaLinks?: {
+    twitter?: string;
+    youtube?: string;
+  };
   description?: string;
-  thumbnail?: string | null;
-  subscribers?: number;
-  published_at?: string;
-  region?: string | null;
-  gender?: string | null;
-  languages?: string[];
+  username?: string;
+  isPublished?: boolean;
 }
 
 export class VSaiSource implements DebutSource {
   readonly id = "v-sai";
   readonly label = "V-SLive VTuber";
 
-  constructor(private readonly limit = 200) {}
+  constructor(private readonly limit = 100) {}
 
   isConfigured(): boolean {
     return true;
@@ -41,45 +46,48 @@ export class VSaiSource implements DebutSource {
   }
 
   async fetch(_since: string | null): Promise<Candidate[]> {
-    const res = await this.fetchJson<{ data?: VSaiChannel[] }>(
-      `${API_BASE}/vtuber?size=9999999`
-    );
-    if (!res?.data) return [];
-
-    const candidates: Candidate[] = [];
-    for (const ch of res.data) {
-      if (!ch.channel_id) continue;
-
-      candidates.push({
-        id: `youtube:${ch.channel_id}`,
-        name: ch.name || null,
-        handle: null,
-        region: (ch.region ?? null) as RegionCode | null | undefined,
-        affiliation: null,
-        debutDate: ch.published_at ?? null,
-        graduateDate: null,
-        externals: { youtube: [ch.channel_id] },
-        wikiPage: null,
-        source: this.id,
-      });
-    }
-
-    return candidates;
-  }
-
-  private async fetchJson<T>(url: string): Promise<T | null> {
     try {
-      const res = await fetch(url, {
-        signal: AbortSignal.timeout(30_000),
-        headers: {
-          "User-Agent": "yt-vsinger-singer-tracker/1.0 (dataset builder)",
-          Accept: "application/json",
+      const res = await fetch(
+        `${API_BASE}/api.vtubers.v1.VtuberProfilesService/GetAllVtuberProfiles`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({ offset: 0, size: this.limit }),
         },
-      });
-      if (!res.ok) return null;
-      return (await res.json()) as T;
+      );
+      if (!res.ok) return [];
+      const data = (await res.json()) as { data?: VtuberProfile[] };
+      const profiles = data?.data ?? [];
+
+      const candidates: Candidate[] = [];
+      for (const ch of profiles) {
+        const ytUrl = ch.socialMediaLinks?.youtube;
+        if (!ytUrl) continue;
+
+        // Extract YouTube handle from URL like https://youtube.com/@handle
+        const m = ytUrl.match(/youtube\.com\/@([A-Za-z0-9_.-]+)/i);
+        if (!m) continue;
+
+        candidates.push({
+          id: `youtube:@${m[1]}`,
+          name: ch.displayName || null,
+          handle: m[1],
+          region: null,
+          affiliation: null,
+          debutDate: null,
+          graduateDate: null,
+          externals: { youtube: [m[1]] },
+          wikiPage: null,
+          source: this.id,
+        });
+      }
+
+      return candidates;
     } catch {
-      return null;
+      return [];
     }
   }
 }
