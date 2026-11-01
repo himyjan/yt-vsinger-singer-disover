@@ -293,13 +293,17 @@ async function main(): Promise<void> {
     : (JSON.parse(fs.readFileSync(SNAPSHOT, "utf8")) as HoloListSnapshot);
   const dataset = readAllChannelRecords();
   const byId = new Map(dataset.map((channel) => [channel.id, channel]));
-
-  /** Every handle the dataset already answers to, and the record behind it. */
   const byHandle = new Map<string, Channel>();
+  const byYoutubeId = new Map<string, Channel>();
   for (const channel of dataset) {
     const { handles } = handlesOf(channel);
     for (const handle of handles) {
       if (!byHandle.has(handle)) byHandle.set(handle, channel);
+    }
+    for (const platform of channel.platforms) {
+      if (platform.platform === "youtube" && platform.id) {
+        if (!byYoutubeId.has(platform.id)) byYoutubeId.set(platform.id, channel);
+      }
     }
   }
 
@@ -321,7 +325,11 @@ async function main(): Promise<void> {
     }
 
     let record: Channel | null = null;
-    if (identity.channelId) record = byId.get(identity.channelId) ?? null;
+    if (identity.channelId) {
+      record = byId.get(identity.channelId) ?? null;
+      // Fall back to matching by raw YouTube UC id on the platform link
+      if (!record) record = byYoutubeId.get(identity.channelId) ?? null;
+    }
     for (const handle of identity.handles) {
       record ??= byHandle.get(foldHandle(handle)) ?? null;
     }

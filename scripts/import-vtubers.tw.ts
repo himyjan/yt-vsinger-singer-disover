@@ -128,11 +128,15 @@ async function main(): Promise<void> {
   const dataset = readAllChannelRecords();
   const byId = new Map(dataset.map((c) => [c.id, c]));
   const byHandle = new Map<string, Channel>();
+  const byYoutubeId = new Map<string, Channel>();
   for (const channel of dataset) {
     for (const platform of channel.platforms) {
       if (platform.platform === "youtube" && platform.handle) {
         const h = platform.handle.replace(/^@+/, "").toLowerCase();
         if (!byHandle.has(h)) byHandle.set(h, channel);
+      }
+      if (platform.platform === "youtube" && platform.id) {
+        if (!byYoutubeId.has(platform.id)) byYoutubeId.set(platform.id, channel);
       }
     }
   }
@@ -142,6 +146,8 @@ async function main(): Promise<void> {
     // VTubers.tw entries are keyed by YouTube channel id directly
     const id = `youtube:${entry.id}`;
     let record: Channel | null | undefined = byId.get(id);
+    // Fall back to matching by raw YouTube UC id on the platform link
+    if (!record) record = byYoutubeId.get(entry.id) ?? undefined;
 
     // Also try matching by handle
     const ytHandle = extractYtHandle(entry.customUrl);
