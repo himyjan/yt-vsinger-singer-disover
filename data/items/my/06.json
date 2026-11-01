@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-01T09:11:38.158Z",
+  "generatedAt": "2026-11-01T13:23:37.437Z",
   "items": [
     {
       "id": "VUbSVXfM2Mw",
@@ -46,6 +46,53 @@
       "source": "api",
       "addedAt": "2026-11-01T06:56:22.319Z",
       "updatedAt": "2026-11-01T09:00:45.472Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "fnlvBMdg7UY",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCVjjP8jORY13H5pgZ44F8ig",
+      "channelName": "HanaMaru@花丸",
+      "channelKind": "virtual",
+      "region": "my",
+      "gender": "female",
+      "languages": [
+        "ms"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "2027 丸玩盃・爭鋒系列賽Maru Cup SHOWDOWN 賽事線上說明會",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/fnlvBMdg7UY/hq720.jpg",
+      "publishedAt": "2026-11-01T12:00:00.000Z",
+      "scheduledStart": "2026-11-01T12:00:00.000Z",
+      "actualStart": null,
+      "isMember": false,
+      "actualEnd": "2026-11-01T13:12:45.279Z",
+      "duration": 4365,
+      "status": "past",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCVjjP8jORY13H5pgZ44F8ig",
+          "name": "HanaMaru@花丸",
+          "kind": "virtual",
+          "region": "my"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-31T03:16:20.180Z",
+      "updatedAt": "2026-11-01T13:12:45.279Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -231,7 +278,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-27T17:58:40.188Z",
-      "updatedAt": "2026-11-01T09:00:46.230Z",
+      "updatedAt": "2026-11-01T13:12:32.054Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -278,7 +325,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:22.912Z",
-      "updatedAt": "2026-11-01T09:00:48.558Z",
+      "updatedAt": "2026-11-01T13:12:34.736Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -325,54 +372,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:16.423Z",
-      "updatedAt": "2026-11-01T09:00:51.413Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "fnlvBMdg7UY",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCVjjP8jORY13H5pgZ44F8ig",
-      "channelName": "HanaMaru@花丸",
-      "channelKind": "virtual",
-      "region": "my",
-      "gender": "female",
-      "languages": [
-        "ms"
-      ],
-      "isAi": false,
-      "variant": "female_vtuber",
-      "title": "2027 丸玩盃・爭鋒系列賽Maru Cup SHOWDOWN 賽事線上說明會",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/fnlvBMdg7UY/hq720.jpg",
-      "publishedAt": null,
-      "scheduledStart": "2026-11-01T12:00:00.000Z",
-      "actualStart": null,
-      "isMember": false,
-      "actualEnd": null,
-      "duration": null,
-      "status": "upcoming",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCVjjP8jORY13H5pgZ44F8ig",
-          "name": "HanaMaru@花丸",
-          "kind": "virtual",
-          "region": "my"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-31T03:16:20.180Z",
-      "updatedAt": "2026-11-01T09:00:51.703Z",
+      "updatedAt": "2026-11-01T13:12:35.843Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -419,7 +419,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:27.693Z",
-      "updatedAt": "2026-11-01T09:00:54.033Z",
+      "updatedAt": "2026-11-01T13:13:10.663Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

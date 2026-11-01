@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-01T09:11:38.158Z",
+  "generatedAt": "2026-11-01T13:23:37.437Z",
   "items": [
     {
       "id": "FQEtgsxd39w",
@@ -45,6 +45,53 @@
       "source": "api",
       "addedAt": "2026-10-31T03:16:25.456Z",
       "updatedAt": "2026-11-01T04:35:27.120Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "NAvXSdIuOwM",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCcYxUF_Wev7U7H9F9cSn_TA",
+      "channelName": "閻_En ch.",
+      "channelKind": "virtual",
+      "region": "my",
+      "gender": "unknown",
+      "languages": [
+        "ms"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "【7周年】與你們相遇的7周年，感謝有你們🌱💕 | 马来西亚V |",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/NAvXSdIuOwM/hq720.jpg",
+      "publishedAt": "2026-11-01T10:00:00.000Z",
+      "scheduledStart": "2026-11-01T10:00:00.000Z",
+      "actualStart": null,
+      "isMember": false,
+      "actualEnd": "2026-11-01T13:12:49.284Z",
+      "duration": 11569,
+      "status": "past",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCcYxUF_Wev7U7H9F9cSn_TA",
+          "name": "閻_En ch.",
+          "kind": "virtual",
+          "region": "my"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-01T04:35:30.574Z",
+      "updatedAt": "2026-11-01T13:12:49.284Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -229,54 +276,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-11-01T09:00:54.033Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "NAvXSdIuOwM",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCcYxUF_Wev7U7H9F9cSn_TA",
-      "channelName": "閻_En ch.",
-      "channelKind": "virtual",
-      "region": "my",
-      "gender": "unknown",
-      "languages": [
-        "ms"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "【7周年】與你們相遇的7周年，感謝有你們🌱💕 | 马来西亚V |",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/NAvXSdIuOwM/hq720.jpg",
-      "publishedAt": null,
-      "scheduledStart": "2026-11-01T10:00:00.000Z",
-      "actualStart": null,
-      "isMember": false,
-      "actualEnd": null,
-      "duration": null,
-      "status": "upcoming",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCcYxUF_Wev7U7H9F9cSn_TA",
-          "name": "閻_En ch.",
-          "kind": "virtual",
-          "region": "my"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-11-01T04:35:30.574Z",
-      "updatedAt": "2026-11-01T09:00:52.233Z",
+      "updatedAt": "2026-11-01T13:13:10.663Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

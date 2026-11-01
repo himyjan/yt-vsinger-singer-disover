@@ -1,7 +1,54 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-01T09:11:38.158Z",
+  "generatedAt": "2026-11-01T13:23:37.437Z",
   "items": [
+    {
+      "id": "JFapdg9UJMk",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCog2Ct-LHsXuy9AQ4l-o9HA",
+      "channelName": "니노 선데이",
+      "channelKind": "virtual",
+      "region": "kr",
+      "gender": "male",
+      "languages": [
+        "ko"
+      ],
+      "isAi": false,
+      "variant": "male_vtuber",
+      "title": "【LIVE】덩실덩실 엉구소【261101】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/JFapdg9UJMk/hq720.jpg",
+      "publishedAt": "2026-11-01T13:00:00.000Z",
+      "scheduledStart": "2026-11-01T13:00:00.000Z",
+      "actualStart": null,
+      "isMember": false,
+      "actualEnd": "2026-11-01T13:12:40.975Z",
+      "duration": 760,
+      "status": "past",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCog2Ct-LHsXuy9AQ4l-o9HA",
+          "name": "니노 선데이",
+          "kind": "virtual",
+          "region": "kr"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-31T18:28:47.504Z",
+      "updatedAt": "2026-11-01T13:12:40.975Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
     {
       "id": "7wAM6Jg2_gw",
       "platform": "youtube",
@@ -91,54 +138,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:21.011Z",
-      "updatedAt": "2026-11-01T09:00:54.399Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "JFapdg9UJMk",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCog2Ct-LHsXuy9AQ4l-o9HA",
-      "channelName": "니노 선데이",
-      "channelKind": "virtual",
-      "region": "kr",
-      "gender": "male",
-      "languages": [
-        "ko"
-      ],
-      "isAi": false,
-      "variant": "male_vtuber",
-      "title": "【LIVE】덩실덩실 엉구소【261101】",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/JFapdg9UJMk/hq720.jpg",
-      "publishedAt": null,
-      "scheduledStart": "2026-11-01T13:00:00.000Z",
-      "actualStart": null,
-      "isMember": false,
-      "actualEnd": null,
-      "duration": null,
-      "status": "upcoming",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCog2Ct-LHsXuy9AQ4l-o9HA",
-          "name": "니노 선데이",
-          "kind": "virtual",
-          "region": "kr"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-31T18:28:47.504Z",
-      "updatedAt": "2026-11-01T09:01:01.020Z",
+      "updatedAt": "2026-11-01T13:12:44.735Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

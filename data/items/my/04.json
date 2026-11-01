@@ -1,7 +1,54 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-01T09:11:38.158Z",
+  "generatedAt": "2026-11-01T13:23:37.437Z",
   "items": [
+    {
+      "id": "9CdELtkV5v4",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UC1gQ61ZoRMlvcTComwgP1xA",
+      "channelName": "Yunasaki",
+      "channelKind": "virtual",
+      "region": "my",
+      "gender": "male",
+      "languages": [
+        "ms"
+      ],
+      "isAi": false,
+      "variant": "male_vtuber",
+      "title": "Do you love Yunyun too? ? ʚ💜Yunyun Syndrome!? Rhythm Psychosis ɞ",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/9CdELtkV5v4/hq720.jpg",
+      "publishedAt": "2026-11-01T13:00:00.000Z",
+      "scheduledStart": "2026-11-01T13:00:00.000Z",
+      "actualStart": null,
+      "isMember": false,
+      "actualEnd": "2026-11-01T13:12:36.260Z",
+      "duration": 756,
+      "status": "past",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC1gQ61ZoRMlvcTComwgP1xA",
+          "name": "Yunasaki",
+          "kind": "virtual",
+          "region": "my"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-31T18:28:42.047Z",
+      "updatedAt": "2026-11-01T13:12:36.260Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
     {
       "id": "D7wpD7f7rRY",
       "platform": "youtube",
@@ -187,53 +234,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "9CdELtkV5v4",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UC1gQ61ZoRMlvcTComwgP1xA",
-      "channelName": "Yunasaki",
-      "channelKind": "virtual",
-      "region": "my",
-      "gender": "male",
-      "languages": [
-        "ms"
-      ],
-      "isAi": false,
-      "variant": "male_vtuber",
-      "title": "Do you love Yunyun too? ? ʚ💜Yunyun Syndrome!? Rhythm Psychosis ɞ",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/9CdELtkV5v4/hq720.jpg",
-      "publishedAt": null,
-      "scheduledStart": "2026-11-01T13:00:00.000Z",
-      "actualStart": null,
-      "isMember": false,
-      "actualEnd": null,
-      "duration": null,
-      "status": "upcoming",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UC1gQ61ZoRMlvcTComwgP1xA",
-          "name": "Yunasaki",
-          "kind": "virtual",
-          "region": "my"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-31T18:28:42.047Z",
-      "updatedAt": "2026-11-01T09:00:46.778Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "D-9IjSX594I",
       "platform": "youtube",
       "type": "live",
@@ -276,7 +276,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:25.311Z",
-      "updatedAt": "2026-11-01T09:01:02.006Z",
+      "updatedAt": "2026-11-01T13:12:40.252Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -323,7 +323,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:26.922Z",
-      "updatedAt": "2026-11-01T09:00:53.790Z",
+      "updatedAt": "2026-11-01T13:12:43.907Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -370,7 +370,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T18:28:47.453Z",
-      "updatedAt": "2026-11-01T09:00:46.230Z",
+      "updatedAt": "2026-11-01T13:12:32.054Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -417,7 +417,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.180Z",
-      "updatedAt": "2026-11-01T09:00:51.703Z",
+      "updatedAt": "2026-11-01T13:12:45.279Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -464,7 +464,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.180Z",
-      "updatedAt": "2026-11-01T09:00:51.703Z",
+      "updatedAt": "2026-11-01T13:12:45.279Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }
