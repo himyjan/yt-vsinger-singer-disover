@@ -1,18 +1,18 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-01T09:11:39.100Z",
+  "generatedAt": "2026-11-01T09:50:05.609Z",
   "regions": [
     {
       "code": "jp",
       "shard": 0,
-      "entries": 7643,
-      "bytes": 4252169
+      "entries": 7644,
+      "bytes": 4253399
     },
     {
       "code": "jp",
       "shard": 1,
-      "entries": 7642,
-      "bytes": 6594455
+      "entries": 7643,
+      "bytes": 6594670
     },
     {
       "code": "cn",
@@ -87,5 +87,5 @@
       "bytes": 3047773
     }
   ],
-  "total": 83122
+  "total": 83124
 }
