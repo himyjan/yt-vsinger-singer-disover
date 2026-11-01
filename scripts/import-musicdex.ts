@@ -150,6 +150,7 @@ async function main(): Promise<void> {
   let matched = 0;
   let enriched = 0;
   let skipped = 0;
+  let oacCount = 0;
   for (const song of songs) {
     const item = byItemId.get(song.id);
     if (!item) {
@@ -159,6 +160,7 @@ async function main(): Promise<void> {
     matched++;
     const channel = byChannelId.get(item.channelId);
     const isOac = channel?.isOfficialArtist === true;
+    if (isOac) oacCount++;
     songItems.push({ song, item, isOac });
   }
 
@@ -241,7 +243,7 @@ async function main(): Promise<void> {
   }
 
   console.log(
-    `matched ${matched} item(s), enriched ${enriched}, skipped ${skipped} (not in dataset)`,
+    `matched ${matched} item(s) (${oacCount} OAC), enriched ${enriched}, skipped ${skipped} (not in dataset)`,
   );
 
   if (!options.apply) {
