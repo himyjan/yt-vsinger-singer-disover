@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-01T07:06:55.240Z",
+  "generatedAt": "2026-11-01T09:11:38.158Z",
   "items": [
     {
       "id": "arbL44yuez0",
@@ -325,6 +325,53 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "-0US8xnAs0o",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCMFKcOp9bA1rHPEPwP_KSiQ",
+      "channelName": "Ube",
+      "channelKind": "virtual",
+      "region": "sea",
+      "gender": "male",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "male_vtuber",
+      "title": "【AO ONI】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/-0US8xnAs0o/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2026-11-01T13:00:00.000Z",
+      "actualStart": null,
+      "isMember": false,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCMFKcOp9bA1rHPEPwP_KSiQ",
+          "name": "Ube",
+          "kind": "virtual",
+          "region": "sea"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-01T09:01:02.006Z",
+      "updatedAt": "2026-11-01T09:01:02.006Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "1AhRpFlP16U",
       "platform": "youtube",
       "type": "live",
@@ -367,7 +414,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-01T04:35:30.565Z",
-      "updatedAt": "2026-11-01T06:56:35.341Z",
+      "updatedAt": "2026-11-01T09:01:02.006Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -414,7 +461,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:17.489Z",
-      "updatedAt": "2026-11-01T06:56:22.889Z",
+      "updatedAt": "2026-11-01T09:00:55.243Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -461,7 +508,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-11-01T06:56:26.157Z",
+      "updatedAt": "2026-11-01T09:00:54.033Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

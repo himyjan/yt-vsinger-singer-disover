@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-01T07:06:55.240Z",
+  "generatedAt": "2026-11-01T09:11:38.158Z",
   "items": [
     {
       "id": "913ZKnn-pbs",
@@ -45,7 +45,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:25.456Z",
-      "updatedAt": "2026-11-01T06:56:39.807Z",
+      "updatedAt": "2026-11-01T09:00:51.855Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -92,7 +92,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-11-01T06:56:27.042Z",
+      "updatedAt": "2026-11-01T09:00:51.653Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -139,7 +139,54 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:17.489Z",
-      "updatedAt": "2026-11-01T06:56:22.889Z",
+      "updatedAt": "2026-11-01T09:00:55.243Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "yFri7f86tu4",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UC34Ay0E1hxif4fWYMqhuQxA",
+      "channelName": "Endou Kowawa Ch. 【PRISON MOON】",
+      "channelKind": "virtual",
+      "region": "my",
+      "gender": "unknown",
+      "languages": [
+        "ms"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "LOST INSIDE A GIANT DINOSAUR CAVE...【TERRIBLE LIZARDS】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/yFri7f86tu4/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2026-11-01T13:00:00.000Z",
+      "actualStart": null,
+      "isMember": false,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC34Ay0E1hxif4fWYMqhuQxA",
+          "name": "Endou Kowawa Ch. 【PRISON MOON】",
+          "kind": "virtual",
+          "region": "my"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-01T09:00:48.558Z",
+      "updatedAt": "2026-11-01T09:00:48.558Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }
