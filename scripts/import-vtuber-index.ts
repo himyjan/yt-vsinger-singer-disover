@@ -14,6 +14,11 @@
  * vtuber-index.com publishes a YouTube channel id for each entry, so matching
  * against the dataset is direct (no search required).
  *
+ * Entries without a YouTube channel id are still added as new records,
+ * keyed by `vtuber-index:<id>`. When a YouTube channel is later discovered
+ * for the same performer, `canonicalizeChannelIds()` re-keys the record to
+ * the `UC…` id and merges duplicates.
+ *
  * vtuber-index.com is a VTuber directory — every entry is a virtual claim
  * (`reincarnationOf`-eligible).  What a roster still must not buy is a fan:
  * `detectClipAccount()` and `isFanAccountName()` must both be false.
@@ -148,18 +153,9 @@ async function main(): Promise<void> {
         const h = platform.handle.replace(/^@+/, "").toLowerCase();
         if (!byHandle.has(h)) byHandle.set(h, channel);
       }
-      /**
-       * vtuber-index entries carry a raw YouTube channel id (UC…). A record
-       * may be stored under `youtube:<handle>` instead of `youtube:<UC id>`,
-       * so also index by the platform link's raw id.
-       */
       if (platform.platform === "youtube" && platform.id) {
         if (!byYoutubeId.has(platform.id)) byYoutubeId.set(platform.id, channel);
       }
-      if (/^UC[\w-]{20,}$/.test(channel.id)) {
-        if (!byUcId.has(channel.id)) byUcId.set(channel.id, channel);
-      }
-      // Some records use the UC… id as their own id (not just as a link id).
       if (/^UC[\w-]{20,}$/.test(channel.id)) {
         if (!byUcId.has(channel.id)) byUcId.set(channel.id, channel);
       }
@@ -168,22 +164,53 @@ async function main(): Promise<void> {
 
   const rows: Row[] = [];
   for (const entry of entries) {
-    // vtuber-index entries are keyed by YouTube channel id directly
-    const id = `youtube:${entry.channel_id}`;
-    let record: Channel | null | undefined = byId.get(id);
-    // Fall back to matching by raw YouTube UC id on the platform link
-    if (!record) record = byYoutubeId.get(entry.channel_id) ?? undefined;
-    if (!record) record = byUcId.get(entry.channel_id) ?? undefined;
-    // Fall back to matching by the record's own UC… id
-    if (!record) record = byUcId.get(entry.channel_id) ?? undefined;
+    // Skip fan / clip accounts before anything else.
+    if (
+      detectClipAccount(entry.name ?? "", entry.group ?? "") ||
+      isFanAccountName(entry.name ?? "")
+    ) {
+      rows.push({
+        entry,
+        id: null,
+        record: null,
+        verdict: "rejected",
+        reason: "a clip or fan account",
+        candidates: [],
+      });
+      continue;
+    }
 
-    rows.push({
-      entry,
-      id,
-      record,
-      verdict: record ? "tracked" : "new",
-      candidates: [],
-    });
+    if (entry.channel_id) {
+      // vtuber-index entries are keyed by YouTube channel id directly
+      const id = `youtube:${entry.channel_id}`;
+      let record: Channel | null | undefined = byId.get(id);
+      // Fall back to matching by raw YouTube UC id on the platform link
+      if (!record) record = byYoutubeId.get(entry.channel_id) ?? undefined;
+      // Fall back to matching by the record's own UC… id
+      if (!record) record = byUcId.get(entry.channel_id) ?? undefined;
+
+      rows.push({
+        entry,
+        id,
+        record,
+        verdict: record ? "tracked" : "new",
+        candidates: [],
+      });
+    } else {
+      // No YouTube channel — add as a new record keyed by the vtuber-index id.
+      // When a YouTube channel is later discovered, canonicalizeChannelIds()
+      // re-keys the record to the UC… id and merges duplicates.
+      const id = `vtuber-index:${entry.id}`;
+      let record: Channel | null | undefined = byId.get(id);
+
+      rows.push({
+        entry,
+        id,
+        record,
+        verdict: record ? "tracked" : "new",
+        candidates: [],
+      });
+    }
   }
 
   console.log(
@@ -232,6 +259,7 @@ async function main(): Promise<void> {
   let added = 0;
   let existing = 0;
   let failed = 0;
+  let youtubeAdded = 0;
 
   /** Externals edits to apply after import: id → { platform: handle }. */
   const externalsEdits: Array<{ id: string; platform: string; handle: string }> =
@@ -239,39 +267,118 @@ async function main(): Promise<void> {
 
   for (const row of newRows) {
     if (!row.id) continue;
-    const resolvedId = row.id!.startsWith("youtube:")
-      ? row.id!.slice("youtube:".length)
-      : null;
-    if (!resolvedId) {
-      console.error(
-        `vtuber-index: ${row.entry.name} has no YouTube channel id to import`,
-      );
-      failed++;
-      continue;
-    }
-    const result = await importYouTubeChannels([resolvedId], {
-      limit: 1,
-      rosterHint: {
-        agency: resolvedId ? { [resolvedId]: "" } : undefined,
-        debut: resolvedId ? { [resolvedId]: "" } : undefined,
-        gender: resolvedId ? { [resolvedId]: "unknown" } : undefined,
-      },
-    });
-    if ((result.added as unknown[]).length > 0) {
-      added += (result.added as unknown[]).length;
-    } else {
-      existing += result.existing;
-      failed += result.failed.length;
-    }
 
-    // Collect platform links as externals (never overwrite existing ones).
-    const entry = row.entry;
-    if (entry.channel_id) {
-      externalsEdits.push({
-        id: resolvedId,
-        platform: "youtube",
-        handle: entry.channel_id,
+    // YouTube entries: fetch profile via importYouTubeChannels.
+    if (row.id.startsWith("youtube:")) {
+      const resolvedId = row.id.slice("youtube:".length);
+      const result = await importYouTubeChannels([resolvedId], {
+        limit: 1,
+        rosterHint: {
+          agency: resolvedId ? { [resolvedId]: "" } : undefined,
+          debut: resolvedId ? { [resolvedId]: "" } : undefined,
+          gender: resolvedId ? { [resolvedId]: "unknown" } : undefined,
+        },
       });
+      if ((result.added as unknown[]).length > 0) {
+        added += (result.added as unknown[]).length;
+        youtubeAdded += (result.added as unknown[]).length;
+      } else {
+        existing += result.existing;
+        failed += result.failed.length;
+      }
+
+      // Collect platform links as externals (never overwrite existing ones).
+      const entry = row.entry;
+      if (entry.channel_id) {
+        externalsEdits.push({
+          id: resolvedId,
+          platform: "youtube",
+          handle: entry.channel_id,
+        });
+      }
+    } else {
+      // Non-YouTube entry (e.g. vtuber-index:<id>): build the Channel record
+      // directly without calling importYouTubeChannels().
+      const entry = row.entry;
+      const classification = classifyChannel({
+        name: entry.name,
+        description: entry.group ?? null,
+        tags: [],
+        country: entry.country ?? null,
+        platform: "vtuber-index",
+        virtualClaim: "roster",
+        hasAvatar: false,
+      });
+
+      const aliases: string[] = [];
+      if (entry.group && entry.group !== entry.name) {
+        aliases.push(entry.group);
+      }
+
+      const channel: Channel = {
+        id: row.id,
+        name: entry.name,
+        nameSource: "roster",
+        aliases: aliases.slice(0, 12),
+        handle: null,
+        kind: classification.kind,
+        role: classification.role,
+        region: classification.region,
+        regionSource: "roster",
+        languages: classification.languages,
+        statedLanguages: classification.statedLanguages,
+        agency: classification.agency ?? null,
+        affiliation: entry.group
+          ? entry.group.toLowerCase().includes("independent")
+            ? "independent"
+            : "group"
+          : "unknown",
+        avatar: null,
+        banner: null,
+        description: entry.group ?? null,
+        subscribers: { tag: "hidden" },
+        videoCount: null,
+        viewCount: null,
+        uploadsPlaylistId: null,
+        country: null,
+        tags: [],
+        isSinging: classification.isSinging,
+        gender: classification.gender,
+        isAi: classification.isAi,
+        isOfficialArtist: false,
+        officialArtistCheckedAt: null,
+        variant: classification.variant,
+        verification: null,
+        source: "api",
+        addedAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        lastItemsFetchedAt: null,
+        lastDetailsFetchedAt: null,
+        activity: entry.retirement_date ? "graduated" : "unknown",
+        debutDate: entry.first_video_date ?? null,
+        graduateDate: entry.retirement_date ?? null,
+        platforms: [],
+        externals: {},
+        popularVideoId: null,
+      };
+
+      const now = new Date().toISOString();
+      const written = applyChannelEdits(
+        [
+          {
+            id: channel.id,
+            update: () => true, // always write new records
+          },
+        ],
+        "vtuber-index",
+        now,
+      );
+
+      if (written) {
+        added++;
+      } else {
+        existing++;
+      }
     }
   }
 
@@ -298,7 +405,7 @@ async function main(): Promise<void> {
   }
 
   console.log(
-    `\n${added} channel(s) written · ${existing} already tracked · ${failed} failed`,
+    `\n${added} channel(s) written · ${existing} already tracked · ${failed} failed · ${youtubeAdded} via YouTube`,
   );
   if (added > 0) console.log("Run npm run data:index next.");
 }
