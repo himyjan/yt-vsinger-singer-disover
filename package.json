@@ -72,6 +72,8 @@
     "data:virtualhumans-import": "oxnode scripts/import-virtualhumans.ts",
     "data:virtuallife": "oxnode scripts/harvest-virtuallife.ts",
     "data:virtuallife-import": "oxnode scripts/import-virtuallife.ts",
+    "data:vlistsheet": "oxnode scripts/harvest-vlistsheet.ts",
+    "data:vlistsheet-import": "oxnode scripts/import-vlistsheet.ts",
     "data:vt4chan": "oxnode scripts/harvest-vt4chan.ts",
     "data:vt4chan-import": "oxnode scripts/import-vt4chan.ts",
     "data:chuysan": "oxnode scripts/harvest-chuysan.ts",
