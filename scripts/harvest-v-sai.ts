@@ -12,7 +12,7 @@ import { fetchJson } from "../scripts/lib/io";
 import fs from "node:fs";
 import path from "node:path";
 
-const API_BASE = "https://www.v-sai.com/api";
+const API_BASE = "https://www.v-sai.com";
 const CACHE_DIR = ".cache/v-sai";
 const OUT_PATH = path.join(CACHE_DIR, "v-sai.json");
 
@@ -67,7 +67,7 @@ async function main(): Promise<void> {
   fs.mkdirSync(CACHE_DIR, { recursive: true });
 
   const res = await fetchJson<{ data?: VSaiChannel[] }>(
-    `${API_BASE}/channels?limit=${options.limit ?? 200}`
+    `${API_BASE}/vtuber?size=9999999`
   );
   if (!res?.data) {
     // A source that is unreachable must not fail the run — leave the
@@ -80,7 +80,7 @@ async function main(): Promise<void> {
     generatedAt: new Date().toISOString(),
     source: "v-sai.com",
     count: res.data.length,
-    items: res.data,
+    data: res.data,
   };
   fs.writeFileSync(OUT_PATH, JSON.stringify(snapshot, null, 2));
   console.log(`${res.data.length} channel(s) harvested → ${OUT_PATH}`);
