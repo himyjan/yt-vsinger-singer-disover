@@ -52,6 +52,7 @@ import { VSaiSource } from "./lib/debut-sources/v-sai";
 import { VirtualHumansSource } from "./lib/debut-sources/virtualhumans";
 import { VirtuallifeSource } from "./lib/debut-sources/virtuallife";
 import { Vt4chanSource } from "./lib/debut-sources/vt4chan";
+import { VtuberIndexSource } from "./lib/debut-sources/vtuber-index";
 import type { DebutSource } from "./lib/debut-sources/types";
 
 interface Options {
@@ -206,6 +207,9 @@ function sourcesFor(options: Options): DebutSource[] {
   }
   if (wantAll || options.source === "virtuallife") {
     sources.push(new VirtuallifeSource());
+  }
+  if (wantAll || options.source === "vtuber-index") {
+    sources.push(new VtuberIndexSource());
   }
   if (wantAll || options.source === "vt4chan") {
     sources.push(new Vt4chanSource());
