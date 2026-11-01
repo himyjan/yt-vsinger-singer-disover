@@ -46,8 +46,8 @@ export class TwitchSource implements DebutSource {
 
     for (const term of SEARCH_TERMS) {
       try {
-        const results = await client.searchChannels(term, this.limit);
-        for (const ch of results) {
+        const result = await client.searchChannels(term, this.limit);
+        for (const ch of result.data) {
           const id = String(ch.id);
           if (!id || seen.has(id)) continue;
           seen.add(id);
