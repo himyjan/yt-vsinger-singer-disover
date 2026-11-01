@@ -74,6 +74,7 @@ jobs:
         uses: actions/checkout@v7
         with:
           fetch-depth: 0
+          ref: ${{ github.ref_name }}
           lfs: true
 
       - name: Install Git LFS
@@ -148,6 +149,7 @@ jobs:
         uses: actions/checkout@v7
         with:
           fetch-depth: 0
+          ref: ${{ github.ref_name }}
           lfs: true
 
       - name: Install Git LFS
@@ -204,7 +206,12 @@ jobs:
           fi
 
       - name: Merge all volumes into data/
-        run: npx oxnode scripts/merge-volumes.ts --count 20
+        # `--channels-only`: the details pass writes channel records and
+        # nothing else, and the volumes were split from the checkout this job
+        # started with. Merging their item shards would rewrite every item to
+        # that snapshot — which would revert a `data: live status` commit that
+        # landed while this ran.
+        run: npx oxnode scripts/merge-volumes.ts --count 20 --channels-only
 
       - name: Build search index
         run: npm run data:index
@@ -227,10 +234,24 @@ jobs:
           # `data/` in the working tree. A rebase would try to *merge* two
           # independently rebuilt datasets, and every derived file (manifest,
           # search index, shards) conflicts by construction. `--mixed` leaves
-          # the worktree alone, and only `data/` is staged, so a commit that
-          # landed while this ran for a script or a doc is not reverted.
+          # the worktree alone.
           git reset --mixed "origin/$BRANCH"
-          git add data/
+
+          # Stage **only what this run wrote**. `git add data/` staged the whole
+          # tree, and every file the details pass never touched was the stale
+          # checkout the job started from — so a `data: live status` commit that
+          # landed while this ran was reverted to that snapshot. The details
+          # pass writes channel shards, the rebuilt index and the manifest; the
+          # items, songs, overrides and rosters come from the branch.
+          git checkout -- \
+            data/items \
+            data/songs \
+            data/overrides.json \
+            data/seed-catalog.json \
+            data/suggestions.json \
+            data/upstream.json \
+            data/volumes.json 2>/dev/null || true
+          git add data/channels data/search data/manifest.json
           if git diff --cached --quiet; then
             echo "details unchanged — nothing to commit"
             exit 0
