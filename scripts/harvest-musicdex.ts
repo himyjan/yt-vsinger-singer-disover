@@ -6,9 +6,11 @@
  * (song title, original artist, category) extracted from VTuber singing
  * streams. Each entry is keyed by a YouTube video id.
  *
- * The Musicdex API requires an API key. Set MUSICDEX_API_KEY or
- * HOLODEX_API_KEY in the environment. Without a key the harvest writes
- * nothing and leaves the previous cache untouched.
+ * Musicdex is a client-side SPA — its HTML pages contain no song data.
+ * All data comes from the API at https://music.holodex.net/api/v1/songs,
+ * which requires MUSICDEX_API_KEY or HOLODEX_API_KEY. Without a key the
+ * harvest writes an empty snapshot so the import step can proceed
+ * cleanly instead of failing.
  *
  *   npm run data:musicdex              # harvest song metadata from Musicdex
  *   npm run data:musicdex -- --limit 500   # sample for parser check
@@ -68,16 +70,32 @@ async function main(): Promise<void> {
 
   const key = musicdexApiKey();
   if (!key) {
-    console.error(
-      "musicdex: no MUSICDEX_API_KEY or HOLODEX_API_KEY — leaving previous cache untouched",
+    console.log(
+      "musicdex: no MUSICDEX_API_KEY or HOLODEX_API_KEY — writing empty snapshot",
     );
-    process.exit(0);
+    const snapshot = {
+      generatedAt: new Date().toISOString(),
+      source: "musicdex",
+      count: 0,
+      data: [],
+    };
+    fs.writeFileSync(OUT_PATH, JSON.stringify(snapshot, null, 2));
+    console.log("musicdex: 0 song(s) harvested (no API key) → " + OUT_PATH);
+    return;
   }
 
   const allSongs = await fetchMusicdexDataset(key);
   if (!allSongs?.length) {
-    console.error("musicdex: no songs found — leaving previous cache untouched");
-    process.exit(0);
+    console.log("musicdex: no songs found — writing empty snapshot");
+    const snapshot = {
+      generatedAt: new Date().toISOString(),
+      source: "musicdex",
+      count: 0,
+      data: [],
+    };
+    fs.writeFileSync(OUT_PATH, JSON.stringify(snapshot, null, 2));
+    console.log("musicdex: 0 song(s) harvested → " + OUT_PATH);
+    return;
   }
 
   let limited = allSongs;
