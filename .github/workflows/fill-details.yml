@@ -67,6 +67,7 @@ jobs:
         uses: actions/checkout@v7
         with:
           fetch-depth: 0
+          ref: ${{ github.ref_name }}
           lfs: true
 
       - name: Install Git LFS
@@ -129,10 +130,25 @@ jobs:
           git fetch origin "$BRANCH"
           # `reset --mixed`, not `rebase`: a detail pass rewrites shards, and
           # rebasing that onto a dataset another run also rewrote conflicts on
-          # every derived file. The index follows the branch, the worktree
-          # keeps what this run produced, and only `data/` is staged.
+          # every derived file. The index follows the branch and the worktree
+          # keeps what this run produced.
           git reset --mixed "origin/$BRANCH"
-          git add data/
+
+          # Stage **only what this run wrote**. `git add data/` staged the whole
+          # tree, and every file the detail pass never touched was the checkout
+          # it started from — so a `data: live status` commit that landed while
+          # this ran was reverted to that snapshot. This pass writes channel
+          # records and the rebuilt index; items, songs and the rosters come
+          # from the branch.
+          git checkout -- \
+            data/items \
+            data/songs \
+            data/overrides.json \
+            data/seed-catalog.json \
+            data/suggestions.json \
+            data/upstream.json \
+            data/volumes.json 2>/dev/null || true
+          git add data/channels data/search data/manifest.json
           if git diff --cached --quiet; then
             echo "details unchanged — nothing to commit"
             exit 0
