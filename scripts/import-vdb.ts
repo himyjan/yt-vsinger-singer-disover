@@ -275,7 +275,10 @@ async function main(): Promise<void> {
         added += result.added.length;
       } else {
         existing += result.existing;
-        failed += result.failed.length;
+        for (const f of result.failed) {
+        console.error(`vdb: ${f.id} failed — ${f.reason}`);
+        failed++;
+      }
       }
     } else {
       // Non-YouTube entry: build the Channel record directly.

@@ -253,7 +253,10 @@ async function main(): Promise<void> {
       added += (result.added as unknown[]).length;
     } else {
       existing += result.existing;
-      failed += result.failed.length;
+      for (const f of result.failed) {
+        console.error(`virtuallife: ${f.id} failed — ${f.reason}`);
+        failed++;
+      }
     }
 
     // Collect profile links as externals (never overwrite existing ones).
