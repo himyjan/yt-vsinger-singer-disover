@@ -220,6 +220,10 @@ async function main(): Promise<void> {
   let existing = 0;
   let failed = 0;
 
+  /** Externals edits to apply after import: id → { platform: handle }. */
+  const externalsEdits: Array<{ id: string; platform: string; handle: string }> =
+    [];
+
   for (const row of newRows) {
     const ytHandle = row.id!.replace(/^youtube:@/, "");
     const resolvedId = await source.resolveHandle(ytHandle);
@@ -242,6 +246,46 @@ async function main(): Promise<void> {
       existing += result.existing;
       failed += result.failed.length;
     }
+
+    // Collect profile links as externals (never overwrite existing ones).
+    const entry = row.entry;
+    if (entry.socialMediaLinks?.twitter) {
+      const twitterHandle = entry.socialMediaLinks.twitter
+        .replace(/^https?:\/\/(www\.)?(twitter|x)\.com\//, "")
+        .replace(/^@/, "");
+      externalsEdits.push({
+        id: resolvedId,
+        platform: "twitter",
+        handle: twitterHandle,
+      });
+    }
+    if (entry.socialMediaLinks?.youtube) {
+      externalsEdits.push({
+        id: resolvedId,
+        platform: "youtube",
+        handle: entry.socialMediaLinks.youtube,
+      });
+    }
+  }
+
+  const now = new Date().toISOString();
+
+  // Apply externals to imported/tracked records.
+  const externalsWritten = applyChannelEdits(
+    externalsEdits.map((e) => ({
+      id: e.id,
+      update: (channel: Channel) => {
+        channel.externals ??= {};
+        if (channel.externals[e.platform]) return false;
+        channel.externals[e.platform] = e.handle;
+        return true;
+      },
+    })),
+    "v-sai",
+    now,
+  );
+  if (externalsWritten) {
+    console.log(`${externalsWritten} record(s) had externals filled from v-sai`);
   }
 
   console.log(
