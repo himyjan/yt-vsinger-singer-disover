@@ -4,18 +4,15 @@ name: Sync dataset
 # catalogs, then enriches channel profiles and media. InnerTube is the default
 # YouTube source; configured APIs add discovery and specialized metadata.
 #
-# The YouTube Data API free tier allows 10,000 units per day. Each run spends
-# at most `--budget` units and the remaining balance is cached between runs,
-# so several runs a day can never exceed the daily allowance.
+# The catalogue is split into twenty volumes (`volumeOf(id)`, ~3,546–3,746
+# channels each) and each job owns one volume: every channel is refreshed in
+# every run, no budget cap, no shard rotation, no per-run slice. Twenty jobs
+# run in parallel (~GitHub's ceiling for a public repo) and one fan-in job
+# merges, re-indexes, validates and commits once — the same shape
+# `fill-details.yml` uses for the same reason.
 #
-# Repository secrets:
-#   YOUTUBE_API_KEY       — YouTube Data API v3 key (optional)
-#   TWITCH_CLIENT_ID      — Twitch application client id     (optional)
-#   TWITCH_CLIENT_SECRET  — Twitch application client secret (optional)
-#   VK_ACCESS_TOKEN       — VK service token                 (optional)
-#   CI_ME_CLIENT_ID       — CI.ME Open API client id          (optional)
-#   CI_ME_CLIENT_SECRET   — CI.ME Open API client secret      (optional)
-#   ANALYTICS_REPO_TOKEN  — write access to the public analytics archive (optional)
+# No `--budget`, no `--limit-channels`, no `--shard`: every volume covers its
+# channels in full, so the whole catalogue is swept every run.
 
 on:
   schedule:
@@ -23,10 +20,6 @@ on:
     - cron: "17 */6 * * *"
   workflow_dispatch:
     inputs:
-      budget:
-        description: "Quota units this run may spend (max 10000)"
-        required: false
-        default: "2500"
       no-search:
         description: "Skip discovery searches (refresh known channels only)"
         required: false
@@ -39,14 +32,6 @@ on:
         description: "Fetch and classify but do not write anything"
         required: false
         default: "false"
-      shard-count:
-        description: "Split the refresh rotation into N shards (1 disables sharding)"
-        required: false
-        default: "4"
-      channels:
-        description: "Maximum channels to refresh this run (blank = config value)"
-        required: false
-        default: ""
 
 # One dataset, one writer. `sync`, `live`, `verify-data` and `data-squash` all
 # share this group, and `cancel-in-progress: false` means a run that arrives
@@ -70,21 +55,50 @@ permissions:
   contents: write
 
 jobs:
-  sync:
-    name: Sync and commit dataset
+  plan:
+    name: Choose the volumes
     runs-on: ubuntu-latest
-    # GitHub-hosted runners allow 360 minutes and mark an overrun as
-    # "cancelled" — which is what killed the 2026-10-29 runs at exactly
-    # 45m20s, 68% through the live-check phase, with no commit.
-    #
-    # The cause was `maxLiveChannelsPerRun` (25,000) being larger than the
-    # ~15,900-channel shard this workflow hands the sync, so every run opened
-    # every Live tab. The sync now skips that phase unless `--limit-live N` is
-    # passed, and `live.yml` owns it; a full sync is a rotation over a slice,
-    # so it finishes well inside this ceiling, which is the maximum GitHub
-    # gives us and therefore headroom rather than a target.
-    timeout-minutes: 360
+    timeout-minutes: 10
+    outputs:
+      # A JSON array — `[0,1,…,19]` for a full sync.
+      volumes: ${{ steps.pick.outputs.volumes }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 1
+          ref: ${{ github.ref_name }}
 
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "26"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Resolve the volumes this run touches
+        id: pick
+        run: |
+          # Every volume, every run — no rotation, no slice, nothing skipped.
+          VOLUMES=$(node -e 'console.log(JSON.stringify(Array.from({length:20},(_,i)=>i)))')
+          echo "volumes=$VOLUMES" >> "$GITHUB_OUTPUT"
+          echo "plan: volumes=$VOLUMES"
+
+  sync:
+    name: Sync volume ${{ matrix.volume }}
+    needs: plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    # Twenty jobs, one volume each, all at once — GitHub's ceiling for a
+    # public repository. A volume that fails must not cancel the other
+    # nineteen: their artifacts are still useful if the run is retried.
+    strategy:
+      max-parallel: 20
+      fail-fast: false
+      matrix:
+        volume: ${{ fromJSON(needs.plan.outputs.volumes) }}
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -111,14 +125,22 @@ jobs:
         uses: actions/cache@v6
         with:
           path: .cache
-          key: yt-quota-${{ github.run_number }}
+          key: yt-quota-${{ github.run_number }}-${{ matrix.volume }}
           restore-keys: |
-            yt-quota-
+            yt-quota-${{ github.run_number }}-
 
       - name: Clear stale analytics export
         run: rm -f .cache/analytics-pending.json
 
-      - name: Sync dataset
+      - name: Create this volume only
+        # `--only` writes one volume and nothing else: a full split is ~2.6 GB
+        # per job, and nineteen twentieths of it would be thrown away. The
+        # split puts each volume's own copies of `overrides.json`,
+        # `seed-catalog.json`, `upstream.json` and `suggestions.json` beside
+        # it, so a job sees a dataset root that is complete on its own.
+        run: npm run data:volumes -- --count 20 --only ${{ matrix.volume }}
+
+      - name: Sync volume ${{ matrix.volume }}
         env:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
           TWITCH_CLIENT_ID: ${{ secrets.TWITCH_CLIENT_ID }}
@@ -127,67 +149,119 @@ jobs:
           CI_ME_CLIENT_ID: ${{ secrets.CI_ME_CLIENT_ID }}
           CI_ME_CLIENT_SECRET: ${{ secrets.CI_ME_CLIENT_SECRET }}
           SYNC_KEYWORD: ${{ inputs.keyword }}
-          SYNC_SHARD_COUNT: ${{ github.event.inputs.shard-count || '4' }}
-          SYNC_CHANNELS: ${{ github.event.inputs.channels }}
+          SYNC_DRY_RUN: ${{ inputs.dry-run }}
+          SYNC_NO_SEARCH: ${{ inputs.no-search }}
         run: |
-          # No --limit-live here: the live pass is `live.yml`'s job. The sync
-          # skips it unless this run names a bound, which is what keeps the run
-          # short enough to always reach the commit below.
-          ARGS=(--budget "${{ inputs.budget || 2500 }}" --roster)
-          if [ "${{ inputs.no-search }}" = "true" ]; then ARGS+=(--no-search); fi
-          if [ "${{ inputs.dry-run }}" = "true" ]; then ARGS+=(--dry-run); fi
-          if [ -n "$SYNC_KEYWORD" ]; then ARGS+=(--keyword "$SYNC_KEYWORD"); fi
-          if [ -n "$SYNC_CHANNELS" ]; then ARGS+=(--limit-channels "$SYNC_CHANNELS"); fi
+          ARGS=(--roster)
+          if [ "${SYNC_NO_SEARCH}" = "true" ]; then ARGS+=(--no-search); fi
+          if [ "${SYNC_DRY_RUN}" = "true" ]; then ARGS+=(--dry-run); fi
+          if [ -n "${SYNC_KEYWORD}" ]; then ARGS+=(--keyword "${SYNC_KEYWORD}"); fi
 
-          # Rotate through the catalogue: run N owns shard N of SYNC_SHARD_COUNT.
-          # The shard is a deterministic hash of the channel id, so successive
-          # runs cover every channel without a persisted cursor.
-          SHARD_COUNT="$SYNC_SHARD_COUNT"
-          if ! [[ "$SHARD_COUNT" =~ ^[0-9]+$ ]] || [ "$SHARD_COUNT" -lt 1 ]; then
-            SHARD_COUNT=1
-          fi
-          if [ "$SHARD_COUNT" -gt 1 ]; then
-            SHARD_INDEX=$(( (GITHUB_RUN_NUMBER - 1) % SHARD_COUNT + 1 ))
-            ARGS+=(--shard "${SHARD_INDEX}/${SHARD_COUNT}")
-          fi
+          # The scripts read `data/` through the working directory, so the
+          # volume is swapped in as a symlink and swapped back — the same
+          # trick `fill-details.yml` and `live.yml` use, and the reason a job
+          # only ever sees its own records.
+          VOL_DIR=".volumes/vol-${{ matrix.volume }}/data"
+          mv data data-full
+          ln -s "$VOL_DIR" data
 
-          npm run data:sync -- "${ARGS[@]}"
+          # Each job owns one volume's channels (`--shard volume/20`) and
+          # refreshes them in full: no budget cap, no channel limit, no
+          # rotation. Every channel in the volume is touched every run.
+          npm run data:sync -- --shard "${{ matrix.volume }}/20" "${ARGS[@]}"
 
-      - name: Check analytics archive credentials
-        id: analytics-auth
-        env:
-          ANALYTICS_REPO_TOKEN: ${{ secrets.ANALYTICS_REPO_TOKEN }}
-        run: |
-          if [ -n "$ANALYTICS_REPO_TOKEN" ]; then
-            echo "enabled=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "enabled=false" >> "$GITHUB_OUTPUT"
-            echo "::warning::ANALYTICS_REPO_TOKEN is missing; daily analytics will not be archived."
-          fi
+          rm -f data
+          mv data-full data
 
-      - name: Checkout analytics archive
-        if: steps.analytics-auth.outputs.enabled == 'true'
+      - name: Upload volume artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: vol-${{ matrix.volume }}
+          # The artifact is rooted at the **contents** of this directory
+          # (`virtual/jp/00.json`, `manifest.json`), which is why the fan-in
+          # downloads with `merge-multiple: false` and addresses each volume
+          # by its artifact name.
+          path: .volumes/vol-${{ matrix.volume }}/data/channels
+          retention-days: 1
+
+  merge-and-commit:
+    name: Merge volumes and commit dataset
+    needs: [plan, sync]
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    # No job-level `concurrency`: re-declaring the workflow's own group makes
+    # the job wait for a lock its own run holds, and GitHub cancels it as a
+    # deadlock before the first step. The run-level block serialises writers.
+    steps:
+      - name: Checkout
         uses: actions/checkout@v7
         with:
-          repository: himyjan/yt-vsinger-singer-disover-analytics
-          token: ${{ secrets.ANALYTICS_REPO_TOKEN }}
-          path: analytics-archive
+          fetch-depth: 0
+          ref: ${{ github.ref_name }}
+          lfs: true
 
-      - name: Append platform analytics
-        if: steps.analytics-auth.outputs.enabled == 'true' && inputs.dry-run != 'true'
-        run: npm run data:analytics:append -- analytics-archive
-
-      - name: Commit platform analytics
-        if: steps.analytics-auth.outputs.enabled == 'true'
-        working-directory: analytics-archive
+      - name: Install Git LFS
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/
-          if ! git diff --cached --quiet; then
-            git commit -m "data: append daily platform analytics"
-            git push
+          git lfs install --skip-repo
+          git lfs pull || true
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "26"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Create volume split for merge
+        run: npm run data:volumes -- --count 20
+
+      - name: Download volume artifacts
+        uses: actions/download-artifact@v8
+        with:
+          path: .volumes/downloads
+          pattern: vol-*
+          # `false`, not `true`: an artifact is rooted at the contents of the
+          # directory that was uploaded, so twenty of them merged into one
+          # directory would collide shard-for-shard and the per-volume copy
+          # below would find nothing to copy.
+          merge-multiple: false
+
+      - name: Replace each volume's channel records
+        env:
+          # Only the volumes this run planned — always all twenty for sync.
+          VOLUMES: ${{ needs.plan.outputs.volumes }}
+        run: |
+          missing=0
+          for v in $(echo "$VOLUMES" | tr -d '[]' | tr ',' ' '); do
+            SRC=".volumes/downloads/vol-$v"
+            DST=".volumes/vol-$v/data/channels"
+            if [ ! -d "$SRC" ]; then
+              echo "::error::artifact vol-$v is missing"
+              missing=$((missing + 1))
+              continue
+            fi
+            # Replace, do not merge. A record re-keyed to its `UC…` id has
+            # moved to another shard, so copying over the split would leave
+            # the old row behind beside the new one — the same performer
+            # twice, under two ids.
+            rm -rf "$DST"
+            cp -R "$SRC" "$DST"
+            echo "restored channels for vol-$v"
+          done
+          if [ "$missing" -gt 0 ]; then
+            echo "::error::$missing volume artifact(s) missing — refusing to merge a partial sweep"
+            exit 1
           fi
+
+      - name: Merge all volumes into data/
+        # `--channels-only`: the sync pass writes channel records and
+        # nothing else, and the volumes were split from the checkout this job
+        # started with. Merging their item shards would rewrite every item to
+        # that snapshot — which would revert a `data: live status` commit that
+        # landed while this ran.
+        run: npx oxnode scripts/merge-volumes.ts --count 20 --channels-only
 
       - name: Build search index
         run: npm run data:index
@@ -195,23 +269,9 @@ jobs:
       - name: Validate dataset
         run: npm run data:validate
 
-      # The dataset is committed, so the repository grows by every shard this
-      # run rewrote. Nothing can shrink it from here — `git gc` in a run only
-      # cleans the throwaway clone — so stop *before* the push that would take
-      # it over the line, and leave the decision to a human with room to act.
       - name: Check the stored repository size
         run: npm run repo:size -- --max-mb 900 --warn-mb 700
 
-      # The commit is a `reset --mixed`, not a rebase, and it is deliberately
-      # hand-rolled. `git-auto-commit-action` fetches and rebases, and a rebase
-      # here tries to *merge* two independently rebuilt datasets: both sides are
-      # whole-catalogue regenerations, so every derived file (`manifest.json`,
-      # `search/*`, the shards) conflicts by construction.
-      #
-      # `--mixed` moves HEAD and the index to the branch while leaving the
-      # working tree alone, so the `data/` this run produced survives. Only
-      # `data/` is staged, so a script or doc commit that landed while the run
-      # was working is not reverted by it.
       - name: Commit dataset
         env:
           BRANCH: ${{ github.ref_name }}
@@ -219,8 +279,29 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git fetch origin "$BRANCH"
+
+          # Move HEAD and the index to the latest branch, keeping the generated
+          # `data/` in the working tree. A rebase would try to *merge* two
+          # independently rebuilt datasets, and every derived file (manifest,
+          # search index, shards) conflicts by construction. `--mixed` leaves
+          # the worktree alone.
           git reset --mixed "origin/$BRANCH"
-          git add data/
+
+          # Stage **only what this run wrote**. `git add data/` staged the whole
+          # tree, and every file the sync pass never touched was the stale
+          # checkout the job started from — so a `data: live status` commit that
+          # landed while this ran was reverted to that snapshot. The sync
+          # pass writes channel shards, the rebuilt index and the manifest; the
+          # items, songs, overrides and rosters come from the branch.
+          git checkout -- \
+            data/items \
+            data/songs \
+            data/overrides.json \
+            data/seed-catalog.json \
+            data/suggestions.json \
+            data/upstream.json \
+            data/volumes.json 2>/dev/null || true
+          git add data/channels data/search data/manifest.json
           if git diff --cached --quiet; then
             echo "dataset unchanged — nothing to commit"
             exit 0
@@ -233,11 +314,12 @@ jobs:
           {
             echo "### Dataset sync"
             echo ""
-            echo "| Metric | Value |"
+            echo "| | |"
             echo "| --- | --- |"
-            echo "| Roster and music catalogs | vdb, Taiwan VTuber Tracking Data, VocaDB, VTuber Music Dataset |"
-            echo "| Platform discovery | YouTube InnerTube channel/video search, uploads and Live tab; Data API when configured; Bilibili, Niconico, CHZZK, SOOP live feed; Twitch/VK require credentials; KICK/CI.ME known IDs only |"
-            echo "| Refresh rotation | deterministic shard of the catalogue, rotated each run |"
-            echo "| Quota used | ${{ steps.quota.outputs.used || 'n/a' }} |"
-            echo "| Committed | \`data/\` |"
+            echo "| Volumes | 20 (one per job, parallel) |"
+            echo "| Per volume | full refresh, no budget, no limit, no rotation |"
+            echo "| Channels | ~3,546–3,746 per volume, ~72,000 total |"
+            echo "| Dry run | ${{ inputs.dry-run }} |"
+            echo "| No search | ${{ inputs.no-search }} |"
+            echo "| Committed | \`data/channels\`, \`data/search\`, \`data/manifest.json\` |"
           } >> "$GITHUB_STEP_SUMMARY"
