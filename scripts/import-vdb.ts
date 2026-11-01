@@ -14,6 +14,11 @@
  * The vtuber-database.wikiru.jp publishes a YouTube channel id for each
  * entry, so matching against the dataset is direct (no search required).
  *
+ * Entries without a YouTube channel id are still added as new records,
+ * keyed by `vdb:<uuid>`. When a YouTube channel is later discovered,
+ * canonicalizeChannelIds() re-keys the record to the UC… id and merges
+ * duplicates.
+ *
  * Each row carries a YouTube channel id, so it is admitted as a
  * virtual claim (`reincarnationOf`-eligible).  What a roster still must
  * not buy is a fan: `detectClipAccount()` and `isFanAccountName()` must
@@ -154,25 +159,54 @@ async function main(): Promise<void> {
 
   const rows: Row[] = [];
   for (const entry of entries) {
-    if (!entry.channel_id) continue;
-
-    const id = `youtube:${entry.channel_id}`;
-    let record: Channel | null | undefined = byId.get(id);
-    // Fall back to matching by raw YouTube UC id on the platform link
-    if (!record) record = byYoutubeId.get(entry.channel_id) ?? undefined;
-    // Fall back to matching by the record's own UC… id
-    if (!record) record = byUcId.get(entry.channel_id) ?? undefined;
-
-    if (!record && entry.handle) {
-      record = byHandle.get(foldHandle(entry.handle)) ?? null;
+    // Skip fan / clip accounts before anything else.
+    if (
+      detectClipAccount(entry.title ?? "", entry.description ?? "") ||
+      isFanAccountName(entry.title ?? "")
+    ) {
+      rows.push({
+        entry,
+        id: null,
+        record: null,
+        verdict: "rejected",
+        reason: "a clip or fan account",
+      });
+      continue;
     }
 
-    rows.push({
-      entry,
-      id,
-      record,
-      verdict: record ? "tracked" : "new",
-    });
+    if (entry.channel_id) {
+      // vtuber-db entries are keyed by YouTube channel id directly
+      const id = `youtube:${entry.channel_id}`;
+      let record: Channel | null | undefined = byId.get(id);
+      // Fall back to matching by raw YouTube UC id on the platform link
+      if (!record) record = byYoutubeId.get(entry.channel_id) ?? undefined;
+      // Fall back to matching by the record's own UC… id
+      if (!record) record = byUcId.get(entry.channel_id) ?? undefined;
+
+      if (!record && entry.handle) {
+        record = byHandle.get(foldHandle(entry.handle)) ?? null;
+      }
+
+      rows.push({
+        entry,
+        id,
+        record,
+        verdict: record ? "tracked" : "new",
+      });
+    } else {
+      // No YouTube channel — add as a new record keyed by vdb:<row index>.
+      // When a YouTube channel is later discovered, canonicalizeChannelIds()
+      // re-keys the record to the UC… id and merges duplicates.
+      const id = `vdb:${entry.title ?? entry.description ?? "unknown"}`;
+      let record: Channel | null | undefined = byId.get(id);
+
+      rows.push({
+        entry,
+        id,
+        record,
+        verdict: record ? "tracked" : "new",
+      });
+    }
   }
 
   console.log(
@@ -204,7 +238,7 @@ async function main(): Promise<void> {
             .slice(0, 20)
             .map(
               (row) =>
-                `  ${row.id}  ${row.entry.name}`
+                `  ${row.id}  ${row.entry.title ?? row.entry.description ?? ""}`
             )
             .join("\n")
         : ""),
@@ -223,24 +257,105 @@ async function main(): Promise<void> {
   let failed = 0;
 
   for (const row of newRows) {
-    const result = await importYouTubeChannels([row.id!], {
-      limit: 1,
-      rosterHint: {
-        agency: row.id ? { [row.id!]: row.entry.affiliation ?? "" } : undefined,
-        debut: row.id ? { [row.id!]: row.entry.published_at ?? "" } : undefined,
-        gender: row.id ? { [row.id!]: "unknown" } : undefined,
-      },
-    });
-    if (result.added.length > 0) {
-      added += result.added.length;
+    const entry = row.entry;
+    const rowId = row.id;
+    if (!rowId) continue;
+
+    // YouTube entries: fetch profile via importYouTubeChannels.
+    if (rowId.startsWith("youtube:")) {
+      const result = await importYouTubeChannels([rowId.slice("youtube:".length)], {
+        limit: 1,
+        rosterHint: {
+          agency: rowId ? { [rowId]: entry.affiliation ?? "" } : undefined,
+          debut: rowId ? { [rowId]: entry.published_at ?? "" } : undefined,
+          gender: rowId ? { [rowId]: "unknown" } : undefined,
+        },
+      });
+      if (result.added.length > 0) {
+        added += result.added.length;
+      } else {
+        existing += result.existing;
+        failed += result.failed.length;
+      }
     } else {
-      existing += result.existing;
-      failed += result.failed.length;
+      // Non-YouTube entry: build the Channel record directly.
+      const classification = classifyChannel({
+        name: entry.title ?? "",
+        description: entry.description ?? null,
+        tags: [],
+        country: entry.region ?? null,
+        platform: "vdb",
+        virtualClaim: "roster",
+        hasAvatar: false,
+      });
+
+      const aliases: string[] = [];
+      if (entry.handle && entry.handle !== entry.title) {
+        aliases.push(entry.handle);
+      }
+
+      const channel: Channel = {
+        id: rowId,
+        name: entry.title ?? "Unknown",
+        nameSource: "roster",
+        aliases: aliases.slice(0, 12),
+        handle: null,
+        kind: classification.kind,
+        role: classification.role,
+        region: classification.region,
+        regionSource: "roster",
+        languages: classification.languages,
+        statedLanguages: classification.statedLanguages,
+        agency: classification.agency ?? null,
+        affiliation: "unknown",
+        avatar: null,
+        banner: null,
+        description: entry.description ?? null,
+        subscribers: { tag: "hidden" },
+        videoCount: null,
+        viewCount: null,
+        uploadsPlaylistId: null,
+        country: null,
+        tags: [],
+        isSinging: classification.isSinging,
+        gender: classification.gender,
+        isAi: classification.isAi,
+        isOfficialArtist: false,
+        officialArtistCheckedAt: null,
+        variant: classification.variant,
+        verification: null,
+        source: "api",
+        addedAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        lastItemsFetchedAt: null,
+        lastDetailsFetchedAt: null,
+        activity: "unknown",
+        debutDate: entry.published_at ?? null,
+        graduateDate: null,
+        platforms: [],
+        externals: {},
+        popularVideoId: null,
+      };
+
+      const now = new Date().toISOString();
+      const written = applyChannelEdits(
+        [{ id: channel.id, update: () => true }],
+        "vdb",
+        now,
+      );
+
+      if (written) {
+        added++;
+      } else {
+        existing++;
+      }
     }
   }
 
+  const now = new Date().toISOString();
+
   console.log(
-    `\n${added} channel(s) written · ${existing} already tracked · ${failed} failed`
+    `\n${added} channel(s) written · ${existing} already tracked · ${failed} failed`,
   );
   if (added > 0) console.log("Run npm run data:index next.");
 }
