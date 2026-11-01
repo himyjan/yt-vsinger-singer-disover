@@ -1,66 +1,66 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-01T13:23:38.530Z",
+  "generatedAt": "2026-11-01T14:00:09.976Z",
   "regions": [
     {
       "code": "jp",
       "shard": 0,
-      "entries": 7708,
-      "bytes": 4342901
+      "entries": 7704,
+      "bytes": 4287540
     },
     {
       "code": "jp",
       "shard": 1,
-      "entries": 7707,
-      "bytes": 6741992
+      "entries": 7704,
+      "bytes": 6724936
     },
     {
       "code": "cn",
       "shard": 0,
-      "entries": 8857,
-      "bytes": 3859942
+      "entries": 8903,
+      "bytes": 3904704
     },
     {
       "code": "tw",
       "shard": 0,
       "entries": 5801,
-      "bytes": 4042582
+      "bytes": 4038876
     },
     {
       "code": "hk",
       "shard": 0,
-      "entries": 980,
-      "bytes": 733026
+      "entries": 979,
+      "bytes": 728883
     },
     {
       "code": "kr",
       "shard": 0,
-      "entries": 395,
-      "bytes": 222779
+      "entries": 393,
+      "bytes": 221385
     },
     {
       "code": "en",
       "shard": 0,
-      "entries": 10419,
-      "bytes": 4528664
+      "entries": 10421,
+      "bytes": 4516249
     },
     {
       "code": "en",
       "shard": 1,
-      "entries": 10419,
-      "bytes": 4519597
+      "entries": 10421,
+      "bytes": 4506020
     },
     {
       "code": "en",
       "shard": 2,
-      "entries": 10419,
-      "bytes": 4529440
+      "entries": 10421,
+      "bytes": 4516559
     },
     {
       "code": "en",
       "shard": 3,
-      "entries": 10416,
-      "bytes": 5270372
+      "entries": 10421,
+      "bytes": 5258702
     },
     {
       "code": "id",
@@ -72,13 +72,13 @@
       "code": "my",
       "shard": 0,
       "entries": 706,
-      "bytes": 407188
+      "bytes": 407136
     },
     {
       "code": "sea",
       "shard": 0,
-      "entries": 1581,
-      "bytes": 802389
+      "entries": 1582,
+      "bytes": 802694
     },
     {
       "code": "unknown",
@@ -87,5 +87,5 @@
       "bytes": 3056924
     }
   ],
-  "total": 83506
+  "total": 83554
 }
