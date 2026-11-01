@@ -136,12 +136,20 @@ async function main(): Promise<void> {
 
   const byItemId = new Map(items.map((i) => [i.id, i]));
 
+  // Build a channel map: channelId -> channel, for OAC badge lookup.
+  const byChannelId = new Map<string, Channel>();
+  for (const channel of channels) {
+    byChannelId.set(channel.id, channel);
+  }
+
+  // Pair each song with its dataset item, then sort so OAC (Official Artist
+  // Channel) badge holders are enriched first. OAC channels are verified
+  // artists on YouTube — their song metadata is the most authoritative, so
+  // when the --limit budget runs out, OAC items get priority.
+  const songItems: Array<{ song: MusicdexSong; item: Item; isOac: boolean }> = [];
   let matched = 0;
   let enriched = 0;
   let skipped = 0;
-
-  const now = new Date().toISOString();
-
   for (const song of songs) {
     const item = byItemId.get(song.id);
     if (!item) {
@@ -149,7 +157,20 @@ async function main(): Promise<void> {
       continue;
     }
     matched++;
+    const channel = byChannelId.get(item.channelId);
+    const isOac = channel?.isOfficialArtist === true;
+    songItems.push({ song, item, isOac });
+  }
 
+  // Sort: OAC first, then by song id for determinism.
+  songItems.sort((a, b) => {
+    if (b.isOac && !a.isOac) return 1;
+    if (a.isOac && !b.isOac) return -1;
+    return a.song.id.localeCompare(b.song.id);
+  });
+  const now = new Date().toISOString();
+
+  for (const { song, item } of songItems) {
     let changed = false;
 
     // Enrich song title — only when null or item is unclassified.
