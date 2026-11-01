@@ -16,7 +16,7 @@
 
 import fs from "node:fs";
 import path from "node:path";
-import { harvestVtuberDb } from "./lib/vtuber-db";
+import { harvestVtuberDb, type VtuberDbEntry } from "./lib/vtuber-db";
 
 const CACHE_DIR = ".cache/vtuber-db";
 const OUT_PATH = path.join(CACHE_DIR, "vtuber-db.json");
@@ -59,7 +59,15 @@ async function main(): Promise<void> {
   const options = parseArgs(process.argv.slice(2));
   fs.mkdirSync(CACHE_DIR, { recursive: true });
 
-  const entries = await harvestVtuberDb(options.limit ?? 10_000);
+  let entries: VtuberDbEntry[];
+  try {
+    entries = await harvestVtuberDb(options.limit ?? 10_000);
+  } catch {
+    // A source that is unreachable must not fail the run — leave the
+    // previous cache in place and exit cleanly so the workflow continues.
+    console.error("VtuberDB feed unavailable — leaving previous cache untouched");
+    process.exit(0);
+  }
   const snapshot = {
     generatedAt: new Date().toISOString(),
     source: "vtuberdb.com",
