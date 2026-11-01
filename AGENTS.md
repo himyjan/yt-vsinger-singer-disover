@@ -626,7 +626,8 @@ npm run data:volumes -- --count 4    # write .volumes/vol-0 … vol-3 (git-ignor
 npm run data:volumes -- --count 4 --base-url "/volumes/{name}/"  # + where each is served
 npm run data:volumes -- --verify .volumes  # prove the partition holds
 npm run data:volumes -- --self-test  # check volumeOf() is stable and balanced
-npm run data:details -- --limit 2000 # fill the missing avatars
+npm run data:details -- --limit 2000 # fill the missing avatars (bounded)
+npm run data:details                 # fill every pending record — 20 volumes × all channels, parallel
 npm run data:details -- --id UC…      # fill one record now, whatever its state
 npm run data:details -- --externals-only # fill the links of every record that has none beyond YouTube
 npm run data:details -- --counts-only --limit 500 # fill the hidden follower counts
