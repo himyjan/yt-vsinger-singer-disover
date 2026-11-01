@@ -3402,17 +3402,29 @@ async function main(): Promise<void> {
   channels = mergeById(existingChannels, channels);
 
   /**
-   * Real artists keep their own platform link (YouTube) but nothing else:
-   * their Twitter / Instagram / TikTok / Linktree etc. are not part of this
-   * tracker's cross-platform identity graph. Drop them so a roster or a
-   * refresh cannot re-add someone else's handle to a real record.
+   * Real artists keep their own platform link. For their externals, existing
+   * links are preserved and only genuinely new ones are added — nothing is
+   * ever overridden or dropped. `mergeById` already lets incoming fields win,
+   * so an incoming `externals: {}` would wipe a record's links; this pass
+   * restores the previous externals and only folds in keys that are new.
    *
-   * Taylor Swift's record previously kept `externals` harvested long ago;
-   * the sync now drops them on every run, so they do not creep back in.
+   * Taylor Swift (real/en/0a.json) keeps twitter/instagram/tiktok/web:1;
+   * a description harvest that finds a new link adds it without touching the
+   * ones already recorded.
    */
   for (const channel of channels) {
-    if (channel.kind === "real" && channel.externals) {
-      channel.externals = {};
+    if (channel.kind !== "real") continue;
+    const prev = existingChannels.find((c) => c.id === channel.id);
+    if (!prev) continue;
+    const merged = { ...(prev.externals ?? {}) };
+    let touched = false;
+    for (const [key, handle] of Object.entries(channel.externals ?? {})) {
+      if (!handle || merged[key]) continue;
+      merged[key] = handle;
+      touched = true;
+    }
+    if (touched || !channel.externals || Object.keys(channel.externals).length === 0) {
+      channel.externals = merged;
     }
   }
 
