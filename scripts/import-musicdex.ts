@@ -20,7 +20,7 @@
  *   npm run data:musicdex-import -- --apply          # write enriched items
  *
  * Musicdex needs MUSICDEX_API_KEY or HOLODEX_API_KEY to harvest. Without
- * a key the harvest writes nothing, so there is nothing to import.
+ * a key the harvest writes an empty snapshot, so there is nothing to import.
  */
 
 import fs from "node:fs";
