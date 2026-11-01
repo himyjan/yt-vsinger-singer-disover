@@ -99,31 +99,46 @@ function parseXHandle(socialMedia: string | null): string | null {
 }
 
 /**
- * One MediaWiki API call.
+ * One MediaWiki API call with retries.
  */
 async function wikiApi(
   params: Record<string, string>,
+  retries = 3,
 ): Promise<WikiResponse | null> {
   const url = new URL(`https://${API_HOST}/api.php`);
   for (const [k, v] of Object.entries(params)) url.searchParams.set(k, v);
-  try {
-    const res = await fetch(url.toString(), {
-      headers: { "User-Agent": USER_AGENT, Accept: "application/json" },
-      signal: AbortSignal.timeout(30_000),
-    });
-    if (!res.ok) return null;
-    return (await res.json()) as WikiResponse;
-  } catch {
-    return null;
+  for (let attempt = 0; attempt < retries; attempt++) {
+    try {
+      const res = await fetch(url.toString(), {
+        headers: { "User-Agent": USER_AGENT, Accept: "application/json" },
+        signal: AbortSignal.timeout(30_000),
+      });
+      if (!res.ok) {
+        if (attempt < retries - 1) {
+          await new Promise((r) => setTimeout(r, 1000 * (attempt + 1)));
+          continue;
+        }
+        return null;
+      }
+      return (await res.json()) as WikiResponse;
+    } catch {
+      if (attempt < retries - 1) {
+        await new Promise((r) => setTimeout(r, 1000 * (attempt + 1)));
+        continue;
+      }
+      return null;
+    }
   }
+  return null;
 }
 
 /**
- * Lists every page in the wiki main namespace.
+ * Lists every page in the wiki main namespace, paginating with `apcontinue`.
  */
 export async function listFandomPages(maxPages: number): Promise<WikiPage[]> {
   const out: WikiPage[] = [];
   let apcontinue: string | undefined;
+  let fetched = 0;
 
   do {
     const res = await wikiApi({
@@ -137,7 +152,11 @@ export async function listFandomPages(maxPages: number): Promise<WikiPage[]> {
     });
     const pages = res?.query?.allpages ?? [];
     out.push(...pages);
+    fetched += pages.length;
     apcontinue = res?.query?.continue?.apcontinue;
+    console.log(
+      `fandom: allpages fetched ${pages.length} (total ${fetched}), continue=${apcontinue ?? "none"}`,
+    );
     if (pages.length < 100) break;
     if (out.length >= maxPages) break;
   } while (apcontinue);
@@ -162,10 +181,17 @@ export async function fetchFandomWikitext(
       titles: chunk.join("|"),
       format: "json",
     });
+    let fetched = 0;
     for (const page of Object.values(res?.query?.pages ?? {})) {
       const text = page.revisions?.[0]?.slots?.main?.["*"];
-      if (text) out.set(page.title, text);
+      if (text) {
+        out.set(page.title, text);
+        fetched++;
+      }
     }
+    console.log(
+      `fandom: wikitext chunk ${i / 50 + 1}: ${fetched}/${chunk.length} pages`,
+    );
   }
   return out;
 }
@@ -178,17 +204,21 @@ export async function fetchFandomWikitext(
  */
 export async function harvestFandom(maxPages: number): Promise<FandomVtuber[]> {
   const pages = await listFandomPages(maxPages);
+  console.log(`fandom: ${pages.length} wiki page(s) listed`);
   if (pages.length === 0) return [];
 
   const wikitext = await fetchFandomWikitext(
     pages.map((p) => p.title),
   );
+  console.log(`fandom: ${wikitext.size} page(s) with wikitext`);
   const pageById = new Map(pages.map((p) => [p.pageid, p]));
 
   const vtubers: FandomVtuber[] = [];
+  let withInfobox = 0;
   for (const [title, text] of wikitext) {
     const infobox = parseCharacterInfobox(text);
     if (!infobox) continue;
+    withInfobox++;
 
     const name = infobox.title ?? infobox.nickName ?? title;
     if (!name || isPlaceholderName(name)) continue;
@@ -219,6 +249,7 @@ export async function harvestFandom(maxPages: number): Promise<FandomVtuber[]> {
     });
   }
 
+  console.log(`fandom: ${withInfobox} page(s) with Character infobox, ${vtubers.length} with name`);
   return vtubers;
 }
 

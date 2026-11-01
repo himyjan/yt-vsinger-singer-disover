@@ -30,10 +30,11 @@ interface VtuberdexEntry {
 
 interface Options {
   limit: number | null;
+  pages: number | null;
 }
 
 function parseArgs(argv: string[]): Options {
-  const options: Options = { limit: null };
+  const options: Options = { limit: null, pages: null };
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i]!;
     const value = argv[i + 1];
@@ -42,13 +43,18 @@ function parseArgs(argv: string[]): Options {
         options.limit = Math.max(1, Number(value ?? 1));
         i++;
         break;
+      case "--pages":
+        options.pages = Math.max(1, Number(value ?? 1));
+        i++;
+        break;
       case "--help":
       case "-h":
         console.log(
           [
-            "Usage: npm run data:vtuberdex [--limit <n>]",
+            "Usage: npm run data:vtuberdex [options]",
             "",
             "  --limit <n>  max entries to harvest",
+            "  --pages <n>  max directory pages to read (default: all)",
           ].join("\n")
         );
         process.exit(0);
@@ -88,37 +94,52 @@ async function main(): Promise<void> {
   const options = parseArgs(process.argv.slice(2));
   fs.mkdirSync(CACHE_DIR, { recursive: true });
 
-  console.log(`vtuberdex: fetching ${SOURCE_URL}`);
-  let html: string;
-  try {
-    const res = await fetch(SOURCE_URL, {
-      headers: { Accept: "text/html" },
-      signal: AbortSignal.timeout(30_000),
-    });
-    if (!res.ok) {
+  const allEntries: VtuberdexEntry[] = [];
+  let page = 1;
+
+  for (;;) {
+    if (options.pages !== null && page > options.pages) break;
+
+    const url = page === 1 ? SOURCE_URL : `${SOURCE_URL}?page=${page}`;
+    console.log(`vtuberdex: fetching ${url}`);
+    let html: string;
+    try {
+      const res = await fetch(url, {
+        headers: { Accept: "text/html" },
+        signal: AbortSignal.timeout(30_000),
+      });
+      if (!res.ok) {
+        console.error(
+          `vtuberdex: HTTP ${res.status} on page ${page} — stopping`,
+        );
+        break;
+      }
+      html = await res.text();
+    } catch {
       console.error(
-        `vtuberdex: HTTP ${res.status} — leaving previous cache untouched`,
+        `vtuberdex: fetch failed on page ${page} — stopping`,
       );
-      process.exit(0);
+      break;
     }
-    html = await res.text();
-  } catch {
-    console.error(
-      "vtuberdex: fetch failed — leaving previous cache untouched",
-    );
-    process.exit(0);
+
+    const entries = parseVtuberdexHtml(html);
+    if (entries.length === 0) {
+      console.log(`vtuberdex: no entries on page ${page} — stopping`);
+      break;
+    }
+
+    allEntries.push(...entries);
+    console.log(`  page ${page}: ${entries.length} entries`);
+
+    page++;
+    if (options.limit && allEntries.length >= options.limit) {
+      allEntries.length = options.limit;
+      break;
+    }
   }
 
-  const entries = parseVtuberdexHtml(html);
-  if (!entries.length) {
-    console.error(
-      "vtuberdex: no entries found in HTML — leaving previous cache untouched",
-    );
-    process.exit(0);
-  }
-
-  let limited = entries;
-  if (options.limit) limited = entries.slice(0, options.limit);
+  let limited = allEntries;
+  if (options.limit) limited = allEntries.slice(0, options.limit);
 
   const snapshot = {
     generatedAt: new Date().toISOString(),
@@ -129,7 +150,7 @@ async function main(): Promise<void> {
 
   fs.writeFileSync(OUT_PATH, JSON.stringify(snapshot, null, 2));
   console.log(
-    `vtuberdex: ${limited.length} entr(y/ies) harvested → ${OUT_PATH}`,
+    `vtuberdex: ${limited.length} entr(y/ies) harvested from ${page - 1} page(s) → ${OUT_PATH}`,
   );
 }
 
