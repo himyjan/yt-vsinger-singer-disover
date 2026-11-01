@@ -1,9 +1,17 @@
 #!/usr/bin/env tsx
 /**
- * Compares a vtubers.tw harvest with the dataset and imports new channels.
+ * Compares a VTubers.tw harvest with the dataset and imports new channels.
+ *
+ * `scripts/harvest-vtubers.tw.ts` produces a snapshot in `.cache/vtubers.tw/vtubers.tw.json`;
+ * this script reads that snapshot, matches each row against the dataset by
+ * YouTube channel id, classifies through classifyChannel(), and imports the
+ * ones that pass the virtual-and-singing gate into `data/channels/`.
  *
  *   npm run data:vtubers.tw-import                     # report only
  *   npm run data:vtubers.tw-import -- --apply          # import the new channels
+ *
+ * VTubers.tw publishes a YouTube channel id for each entry, so matching
+ * against the dataset is direct (no search required).
  */
 
 import fs from "node:fs";
@@ -41,8 +49,17 @@ function writeResolved(cache: ResolvedCache): void {
   fs.writeFileSync(RESOLVED, JSON.stringify(cache, null, 0));
 }
 
+interface VtubersTwEntry {
+  id: string;
+  title: string;
+  subscribers: string;
+  status: number;
+  customUrl?: string;
+  country?: string;
+}
+
 interface Row {
-  entry: any;
+  entry: VtubersTwEntry;
   id: string | null;
   record: Channel | null | undefined;
   verdict: "tracked" | "new" | "rejected";
@@ -87,19 +104,26 @@ function parseArgs(argv: string[]): Options {
   return options;
 }
 
+/** Extracts a YouTube handle from a VTubers.tw customUrl like @handle. */
+function extractYtHandle(customUrl: string | undefined): string | null {
+  if (!customUrl) return null;
+  const m = customUrl.match(/^@([A-Za-z0-9_.-]+)$/);
+  return m ? m[1] : null;
+}
+
 async function main(): Promise<void> {
   const options = parseArgs(process.argv.slice(2));
   if (!fs.existsSync(SNAPSHOT)) {
     console.error(
-      `no snapshot at ${SNAPSHOT} — run npm run data:vtubers.tw first`
+      `no snapshot at ${SNAPSHOT} — run npm run data:vtubers.tw first`,
     );
     process.exit(1);
   }
 
-  const snapshot: { items: any[]; generatedAt: string } = JSON.parse(
+  const snapshot: { data?: VtubersTwEntry[]; generatedAt: string } = JSON.parse(
     fs.readFileSync(SNAPSHOT, "utf8")
   );
-  const entries = snapshot.items;
+  const entries = snapshot.data || [];
 
   const dataset = readAllChannelRecords();
   const byId = new Map(dataset.map((c) => [c.id, c]));
@@ -115,13 +139,14 @@ async function main(): Promise<void> {
 
   const rows: Row[] = [];
   for (const entry of entries) {
-    if (!entry.channel_id) continue;
-
-    const id = `youtube:${entry.channel_id}`;
+    // VTubers.tw entries are keyed by YouTube channel id directly
+    const id = `youtube:${entry.id}`;
     let record: Channel | null | undefined = byId.get(id);
 
-    if (!record && entry.handle) {
-      record = byHandle.get(foldHandle(entry.handle)) ?? null;
+    // Also try matching by handle
+    const ytHandle = extractYtHandle(entry.customUrl);
+    if (!record && ytHandle) {
+      record = byHandle.get(ytHandle.toLowerCase()) ?? undefined;
     }
 
     rows.push({
@@ -133,7 +158,7 @@ async function main(): Promise<void> {
   }
 
   console.log(
-    `snapshot ${snapshot.generatedAt} · ${entries.length} entr(y/ies) · ${dataset.length} record(s) tracked`
+    `snapshot ${snapshot.generatedAt} · ${entries.length} entr(y/ies) · ${dataset.length} record(s) tracked`,
   );
 
   const counts = new Map<string, number>();
@@ -161,7 +186,7 @@ async function main(): Promise<void> {
             .slice(0, 20)
             .map(
               (row) =>
-                `  ${row.id}  ${row.entry.name}`
+                `  ${row.id}  ${row.entry.title}`
             )
             .join("\n")
         : ""),
@@ -172,18 +197,36 @@ async function main(): Promise<void> {
     return;
   }
 
-  const source = await new InnerTubeSource({ delayMs: 100 }).connect();
+  const source = new InnerTubeSource({ delayMs: 100 });
+  await source.connect();
 
   let added = 0;
   let existing = 0;
   let failed = 0;
 
+  /** Externals edits to apply after import: id → { platform: handle }. */
+  const externalsEdits: Array<{ id: string; platform: string; handle: string }> =
+    [];
+
   for (const row of newRows) {
-    const result = await importYouTubeChannels([row.id!], {
+    const ytHandle = extractYtHandle(row.entry.customUrl);
+    const resolvedId =
+      row.id!.startsWith("youtube:UC")
+        ? row.id!.slice("youtube:".length)
+        : await source.resolveHandle(ytHandle!);
+
+    if (!resolvedId) {
+      console.error(
+        `vtubers.tw: could not resolve ${row.id} to a YouTube channel id`,
+      );
+      failed++;
+      continue;
+    }
+    const result = await importYouTubeChannels([resolvedId], {
       limit: 1,
       rosterHint: {
-        agency: row.id ? { [row.id!]: row.entry.affiliation ?? "" } : undefined,
-        debut: row.id ? { [row.id!]: row.entry.published_at ?? "" } : undefined,
+        agency: row.id ? { [row.id!]: "" } : undefined,
+        debut: row.id ? { [row.id!]: "" } : undefined,
         gender: row.id ? { [row.id!]: "unknown" } : undefined,
       },
     });
@@ -193,22 +236,41 @@ async function main(): Promise<void> {
       existing += result.existing;
       failed += result.failed.length;
     }
+
+    // Collect profile links as externals (never overwrite existing ones).
+    if (ytHandle) {
+      externalsEdits.push({
+        id: resolvedId,
+        platform: "youtube",
+        handle: `@${ytHandle}`,
+      });
+    }
+  }
+
+  const now = new Date().toISOString();
+
+  // Apply externals to imported/tracked records.
+  const externalsWritten = applyChannelEdits(
+    externalsEdits.map((e) => ({
+      id: e.id,
+      update: (channel: Channel) => {
+        channel.externals ??= {};
+        if (channel.externals[e.platform]) return false;
+        channel.externals[e.platform] = e.handle;
+        return true;
+      },
+    })),
+    "vtubers.tw",
+    now,
+  );
+  if (externalsWritten) {
+    console.log(`${externalsWritten} record(s) had externals filled from vtubers.tw`);
   }
 
   console.log(
-    `\n${added} channel(s) written · ${existing} already tracked · ${failed} failed`
+    `\n${added} channel(s) written · ${existing} already tracked · ${failed} failed`,
   );
   if (added > 0) console.log("Run npm run data:index next.");
-}
-
-function foldHandle(handle: string): string {
-  return handle
-    .trim()
-    .replace(/^@+/, "")
-    .replace(/^https?:\/\/(?:www\.)?(?:youtube\.com\/)?/i, "")
-    .replace(/^(?:channel|user|c)\//i, "")
-    .replace(/[/?#].*$/, "")
-    .toLowerCase();
 }
 
 main().catch((error: unknown) => {
