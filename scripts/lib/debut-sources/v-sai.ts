@@ -12,7 +12,7 @@ import type { Candidate } from "../identity";
 import type { DebutSource } from "./types";
 import type { RegionCode } from "../types";
 
-const API_BASE = "https://www.v-sai.com/api";
+const API_BASE = "https://www.v-sai.com";
 
 interface VSaiChannel {
   channel_id?: string;
@@ -42,7 +42,7 @@ export class VSaiSource implements DebutSource {
 
   async fetch(_since: string | null): Promise<Candidate[]> {
     const res = await this.fetchJson<{ data?: VSaiChannel[] }>(
-      `${API_BASE}/channels?limit=${this.limit}`
+      `${API_BASE}/vtuber?size=9999999`
     );
     if (!res?.data) return [];
 
