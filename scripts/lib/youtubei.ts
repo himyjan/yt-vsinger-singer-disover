@@ -1086,16 +1086,19 @@ export class InnerTubeSource {
          */
         const state = await this.streamState(id);
         if (state) {
-          if (status === "upcoming" && !state.isUpcoming) continue;
-          if (status === "live" && !state.isLive) continue;
-          /**
-           * The badge is how the tab renders, the player response is what the
-           * video is. A card keeps its "Upcoming" badge after the broadcast
-           * has aired, so when the player says the stream is live, it is live
-           * — even if the card still says "Scheduled".
-           */
-          if (state.isLive) status = "live";
-          else if (state.isUpcoming) status = "upcoming";
+          // Skip only if the stream has ended — neither live nor upcoming.
+          // A badge/player disagreement (card says upcoming, player says live,
+          // or vice versa) is resolved below, not skipped.
+          if (!state.isLive && !state.isUpcoming) continue;
+          if (status === "upcoming" && !state.isUpcoming && state.isLive) {
+            status = "live";
+          } else if (status === "live" && !state.isLive && state.isUpcoming) {
+            status = "upcoming";
+          } else if (state.isLive) {
+            status = "live";
+          } else if (state.isUpcoming) {
+            status = "upcoming";
+          }
         }
 
         out.push({
