@@ -138,7 +138,7 @@ async function main(): Promise<void> {
   for (;;) {
     if (options.pages !== null && page > options.pages) break;
 
-    const url = page === 1 ? `${SOURCE_URL}/vtubers` : `${SOURCE_URL}/vtubers?p=${page}`;
+    const url = page === 1 ? `${SOURCE_URL}/vtubers` : `${SOURCE_URL}/vtubers?page=${page}`;
     console.log(`virtualhumans: fetching listing page ${url}`);
     let html: string;
     try {
