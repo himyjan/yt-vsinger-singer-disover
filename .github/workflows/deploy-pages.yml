@@ -30,9 +30,8 @@ on:
     workflows:
       - Live status
       - Sync dataset
-      - Fill channel details (parallel)
-      - Fill external links (parallel)
-      - Fill external links (weekly)
+      - Fill channel details
+      - Fill external links
       - Verify dataset
       - Squash the data history
     types: [completed]
