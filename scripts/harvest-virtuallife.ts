@@ -149,6 +149,7 @@ async function main(): Promise<void> {
   fs.mkdirSync(CACHE_DIR, { recursive: true });
 
   const allCards: Array<{ name: string; id: string }> = [];
+  const seenIds = new Set<string>();
   let page = 1;
 
   for (;;) {
@@ -179,13 +180,18 @@ async function main(): Promise<void> {
     }
 
     const cards = parseListingCards(html);
-    if (cards.length === 0) {
-      console.log(`virtuallife: no VTuber cards on page ${page} — stopping`);
+    const newCards = cards.filter((c) => !seenIds.has(c.id));
+    for (const c of newCards) seenIds.add(c.id);
+
+    if (newCards.length === 0) {
+      console.log(
+        `virtuallife: no new VTuber cards on page ${page} — stopping`,
+      );
       break;
     }
 
-    allCards.push(...cards);
-    console.log(`  page ${page}: ${cards.length} cards`);
+    allCards.push(...newCards);
+    console.log(`  page ${page}: ${newCards.length} new cards`);
 
     page++;
     if (options.limit && allCards.length >= options.limit) {
