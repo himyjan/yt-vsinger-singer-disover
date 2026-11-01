@@ -1,23 +1,21 @@
 #!/usr/bin/env tsx
 /**
- * Compares a vtuberdex.pages.dev harvest with the dataset and imports
- * new channels.
+ * Compares a VTuberDex harvest with the dataset and imports new channels.
  *
- * `scripts/harvest-vtuberdex.ts` produces a snapshot in `.cache/`;
- * this script reads that snapshot, classifies each candidate through
- * `classifyChannel()`, and imports the ones that pass the virtual-and-singing
- * gate into `data/channels/`.
+ * `scripts/harvest-vtuberdex.ts` produces a snapshot in `.cache/vtuberdex/vtuberdex.json`;
+ * this script reads that snapshot, resolves each name to a YouTube channel
+ * through InnerTube channel search, confirms the hit against the record's
+ * own display name, gates on the two-video rule (virtual + singing evidence),
+ * and imports the survivors into `data/channels/`.
  *
  *   npm run data:vtuberdex-import                     # report only
- *   npm run data:vtuber-db-import -- --apply          # import the new channels
+ *   npm run data:vtuberdex-import -- --apply          # import the new channels
  *
- * vtuberdex.pages.dev publishes a YouTube channel id for each entry, so
- * matching against the dataset is direct (no search required).
- *
- * Each row carries a YouTube channel id, so it is admitted as a
- * virtual claim (`reincarnationOf`-eligible).  What a roster still must
- * not buy is a fan: `detectClipAccount()` and `isFanAccountName()` must
- * both be false.
+ * VTuberDex publishes VTuber names but no YouTube channel ids, so each name
+ * is resolved through YouTube channel search and confirmed before import.
+ * Each admitted channel is a virtual claim (`reincarnationOf`-eligible).
+ * What a roster still must not buy is a fan: the discover-evidence gate
+ * excludes clip and fan accounts.
  *
  *   npm run data:vtuberdex-import                     # report only
  *   npm run data:vtuberdex-import -- --apply          # import the new channels
@@ -25,33 +23,8 @@
 
 import fs from "node:fs";
 import path from "node:path";
-import {
-  detectClipAccount,
-  isFanAccountName,
-  classifyChannel,
-} from "../scripts/lib/classify";
-import { applyChannelEdits } from "../scripts/lib/roster-fill";
-import {
-  importYouTubeChannels,
-  type RosterHint,
-} from "../scripts/lib/import-channels";
-import { readAllChannelRecords } from "../scripts/lib/dataset";
-import { InnerTubeSource } from "../scripts/lib/youtubei";
-import type { Channel } from "../scripts/lib/types";
-
-interface VtuberdexChannel {
-  channel_id?: string;
-  title?: string;
-  description?: string;
-  thumbnail?: string | null;
-  subscribers?: number;
-  views?: number;
-  published_at?: string;
-  region?: string | null;
-  gender?: string | null;
-  languages?: string[];
-  handle?: string | null;
-}
+import { promoteCandidates } from "../scripts/lib/promote-candidates";
+import type { PromotionCandidate } from "../scripts/lib/promote-candidates";
 
 const SNAPSHOT = ".cache/vtuberdex/vtuberdex.json";
 const RESOLVED = ".cache/vtuberdex/vtuberdex-resolved.json";
@@ -72,12 +45,10 @@ function writeResolved(cache: ResolvedCache): void {
   fs.writeFileSync(RESOLVED, JSON.stringify(cache, null, 0));
 }
 
-interface Row {
-  entry: any;
-  id: string | null;
-  record: Channel | null | undefined;
-  verdict: "tracked" | "new" | "rejected";
-  reason?: string;
+interface VtuberdexEntry {
+  name: string;
+  country?: string;
+  group?: string;
 }
 
 interface Options {
@@ -123,125 +94,47 @@ async function main(): Promise<void> {
   const options = parseArgs(process.argv.slice(2));
   if (!fs.existsSync(SNAPSHOT)) {
     console.error(
-      `no snapshot at ${SNAPSHOT} — run npm run data:vtuberdex first`
+      `no snapshot at ${SNAPSHOT} — run npm run data:vtuberdex first`,
     );
     process.exit(1);
   }
 
-  const snapshot: { data?: VtuberdexChannel[]; generatedAt: string } = JSON.parse(
+  const snapshot: { data?: VtuberdexEntry[]; generatedAt: string } = JSON.parse(
     fs.readFileSync(SNAPSHOT, "utf8")
   );
   const entries = snapshot.data || [];
 
-  const dataset = readAllChannelRecords();
-  const byId = new Map(dataset.map((c) => [c.id, c]));
-  const byHandle = new Map<string, Channel>();
-  for (const channel of dataset) {
-    for (const platform of channel.platforms) {
-      if (platform.platform === "youtube" && platform.handle) {
-        const h = platform.handle.replace(/^@+/, "").toLowerCase();
-        if (!byHandle.has(h)) byHandle.set(h, channel);
-      }
-    }
-  }
-
-  const rows: Row[] = [];
-  for (const entry of entries) {
-    if (!entry.channel_id) continue;
-
-    const id = `youtube:${entry.channel_id}`;
-    let record: Channel | null | undefined = byId.get(id);
-
-    if (!record && entry.handle) {
-      record = byHandle.get(foldHandle(entry.handle)) ?? null;
-    }
-
-    rows.push({
-      entry,
-      id,
-      record,
-      verdict: record ? "tracked" : "new",
-    });
-  }
-
   console.log(
-    `snapshot ${snapshot.generatedAt} · ${entries.length} entr(y/ies) · ${dataset.length} record(s) tracked`
-  );
-
-  const counts = new Map<string, number>();
-  for (const row of rows) {
-    counts.set(row.verdict, (counts.get(row.verdict) ?? 0) + 1);
-  }
-  for (const verdict of ["tracked", "new", "rejected"] as const) {
-    const count = counts.get(verdict) ?? 0;
-    if (count) console.log(`  ${verdict.padEnd(12)} ${count}`);
-  }
-
-  const fresh = rows.filter((row) => row.verdict === "new" && row.id);
-  const deduped = new Map<string, Row>();
-  for (const row of fresh) {
-    if (!deduped.has(row.id!)) deduped.set(row.id!, row);
-  }
-  const newRows = [...deduped.values()];
-
-  console.log(
-    newRows.length +
-      " channel(s) would be imported" +
-      (newRows.length
-        ? ":\n" +
-          newRows
-            .slice(0, 20)
-            .map(
-              (row) =>
-                `  ${row.id}  ${row.entry.name}`
-            )
-            .join("\n")
-        : ""),
+    `snapshot ${snapshot.generatedAt} · ${entries.length} entr(y/ies)`,
   );
 
   if (!options.apply) {
-    console.log("Nothing was written. Re-run with --apply.");
+    console.log(
+      `Nothing was written. Re-run with --apply to resolve ${entries.length} name(s) through YouTube search.`
+    );
     return;
   }
 
-  const source = await new InnerTubeSource({ delayMs: 100 }).connect();
-  const client = (source as any).client;
+  const candidates: PromotionCandidate[] = entries.map((entry) => ({
+    name: entry.name,
+    source: "vtuberdex",
+  }));
 
-  let added = 0;
-  let existing = 0;
-  let failed = 0;
-
-  for (const row of newRows) {
-    const result = await importYouTubeChannels([row.id!], {
-      limit: 1,
-      rosterHint: {
-        agency: row.id ? { [row.id!]: row.entry.affiliation ?? "" } : undefined,
-        debut: row.id ? { [row.id!]: row.entry.published_at ?? "" } : undefined,
-        gender: row.id ? { [row.id!]: "unknown" } : undefined,
-      },
-    });
-    if (result.added.length > 0) {
-      added += result.added.length;
-    } else {
-      existing += result.existing;
-      failed += result.failed.length;
-    }
-  }
+  const outcome = await promoteCandidates(candidates, {
+    limit: options.limit ?? 25,
+    onLog: (message) => console.log(`  ${message}`),
+  });
 
   console.log(
-    `\n${added} channel(s) written · ${existing} already tracked · ${failed} failed`
+    `\n${outcome.added.length} channel(s) written · ${outcome.existing} already tracked · ${outcome.rejected.length} rejected · ${outcome.failed.length} failed`,
   );
-  if (added > 0) console.log("Run npm run data:index next.");
-}
-
-function foldHandle(handle: string): string {
-  return handle
-    .trim()
-    .replace(/^@+/, "")
-    .replace(/^https?:\/\/(?:www\.)?(?:youtube\.com\/)?/i, "")
-    .replace(/^(?:channel|user|c)\//i, "")
-    .replace(/[/?#].*$/, "")
-    .toLowerCase();
+  for (const rejected of outcome.rejected.slice(0, 10)) {
+    console.log(`  rejected ${rejected.name}: ${rejected.reason}`);
+  }
+  for (const failed of outcome.failed.slice(0, 10)) {
+    console.log(`  failed ${failed.name}: ${failed.reason}`);
+  }
+  if (outcome.added.length > 0) console.log("Run npm run data:index next.");
 }
 
 main().catch((error: unknown) => {

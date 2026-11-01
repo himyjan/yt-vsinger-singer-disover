@@ -1,8 +1,11 @@
 /**
- * VTuberdex discovery source.
+ * VTuberDex discovery source.
  *
- * vtuberdex.pages.dev is a VTuber discovery site that lists VTubers
- * with their YouTube channel information.
+ * vtuberdex.pages.dev is a static HTML directory of VTubers. It has no JSON
+ * API, so this source parses the HTML page to extract VTuber names, countries
+ * and groups from the card elements. Each candidate is keyed by
+ * `vtuberdex:<name>` and carries no YouTube id — the promote step resolves
+ * names to YouTube channels through a name search.
  *
  * No authentication required.
  */
@@ -12,23 +15,17 @@ import type { Candidate } from "../identity";
 import type { DebutSource } from "./types";
 import type { RegionCode } from "../types";
 
-const API_BASE = "https://vtuberdex.pages.dev";
+const SOURCE_URL = "https://vtuberdex.pages.dev";
 
-interface VtuberdexChannel {
-  channel_id?: string;
-  name?: string;
-  description?: string;
-  thumbnail?: string | null;
-  subscribers?: number;
-  published_at?: string;
-  region?: string | null;
-  gender?: string | null;
-  languages?: string[];
+interface VtuberdexEntry {
+  name: string;
+  country?: string;
+  group?: string;
 }
 
 export class VtuberdexSource implements DebutSource {
   readonly id = "vtuberdex";
-  readonly label = "VTuberdex";
+  readonly label = "VTuberDex";
 
   constructor(private readonly limit = 200) {}
 
@@ -41,45 +38,59 @@ export class VtuberdexSource implements DebutSource {
   }
 
   async fetch(_since: string | null): Promise<Candidate[]> {
-    const res = await this.fetchJson<{ data?: VtuberdexChannel[] }>(
-      `${API_BASE}/api/channels?limit=${this.limit}`
-    );
-    if (!res?.data) return [];
-
-    const candidates: Candidate[] = [];
-    for (const ch of res.data) {
-      if (!ch.channel_id) continue;
-
-      candidates.push({
-        id: `youtube:${ch.channel_id}`,
-        name: ch.name ?? null,
-        handle: null,
-        region: (ch.region ?? null) as RegionCode | null | undefined,
-        affiliation: null,
-        debutDate: ch.published_at ?? null,
-        graduateDate: null,
-        externals: { youtube: [ch.channel_id] },
-        wikiPage: null,
-        source: this.id,
-      });
-    }
-
-    return candidates;
-  }
-
-  private async fetchJson<T>(url: string): Promise<T | null> {
     try {
-      const res = await fetch(url, {
+      const res = await fetch(SOURCE_URL, {
         signal: AbortSignal.timeout(30_000),
         headers: {
           "User-Agent": "yt-vsinger-singer-tracker/1.0 (dataset builder)",
-          Accept: "application/json",
+          Accept: "text/html",
         },
       });
-      if (!res.ok) return null;
-      return (await res.json()) as T;
+      if (!res.ok) return [];
+      const html = await res.text();
+      const entries = parseVtuberdexHtml(html);
+
+      const candidates: Candidate[] = [];
+      for (const ch of entries.slice(0, this.limit)) {
+        candidates.push({
+          id: `vtuberdex:${ch.name}`,
+          name: ch.name,
+          handle: null,
+          region: (ch.country ?? null) as RegionCode | null | undefined,
+          affiliation: ch.group ?? null,
+          debutDate: null,
+          graduateDate: null,
+          externals: {},
+          wikiPage: null,
+          source: this.id,
+        });
+      }
+
+      return candidates;
     } catch {
-      return null;
+      return [];
     }
   }
+}
+
+/** Parses VTuberDex HTML cards to extract name, country, and group. */
+function parseVtuberdexHtml(html: string): VtuberdexEntry[] {
+  const entries: VtuberdexEntry[] = [];
+  const seen = new Set<string>();
+
+  // Match vtuber-card divs: <div class="vtuber-card cardN" data-pais="..." data-group="...">
+  const cardRegex = /<div class="vtuber-card[^"]*"[^>]*data-pais="([^"]*)"[^>]*data-group="([^"]*)"[^>]*>[\s\S]*?<h2>([^<]+)<\/h2>/g;
+  let match: RegExpExecArray | null;
+  while ((match = cardRegex.exec(html)) !== null) {
+    const country = match[1] || undefined;
+    const group = match[2] || undefined;
+    const name = match[3].trim();
+
+    if (!name || seen.has(name)) continue;
+    seen.add(name);
+
+    entries.push({ name, country, group });
+  }
+
+  return entries;
 }
