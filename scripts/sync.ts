@@ -3400,6 +3400,22 @@ async function main(): Promise<void> {
   }
 
   channels = mergeById(existingChannels, channels);
+
+  /**
+   * Real artists keep their own platform link (YouTube) but nothing else:
+   * their Twitter / Instagram / TikTok / Linktree etc. are not part of this
+   * tracker's cross-platform identity graph. Drop them so a roster or a
+   * refresh cannot re-add someone else's handle to a real record.
+   *
+   * Taylor Swift's record previously kept `externals` harvested long ago;
+   * the sync now drops them on every run, so they do not creep back in.
+   */
+  for (const channel of channels) {
+    if (channel.kind === "real" && channel.externals) {
+      channel.externals = {};
+    }
+  }
+
   items = mergeById(existingItems, items).map((item) => ({
     ...item,
     thumbnail: item.thumbnail ?? existingThumbnailById.get(item.id) ?? null,
