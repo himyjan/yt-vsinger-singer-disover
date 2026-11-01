@@ -72,6 +72,7 @@ interface Row {
   id: string | null;
   record: Channel | null | undefined;
   verdict: "tracked" | "new" | "rejected";
+  reason?: string;
   candidates: string[];
 }
 
@@ -131,30 +132,72 @@ async function main(): Promise<void> {
   const dataset = readAllChannelRecords();
   const byId = new Map(dataset.map((c) => [c.id, c]));
   const byHandle = new Map<string, Channel>();
+  const byYoutubeId = new Map<string, Channel>();
+  const byUcId = new Map<string, Channel>();
   for (const channel of dataset) {
     for (const platform of channel.platforms) {
       if (platform.platform === "youtube" && platform.handle) {
         const h = platform.handle.replace(/^@+/, "").toLowerCase();
         if (!byHandle.has(h)) byHandle.set(h, channel);
       }
+      if (platform.platform === "youtube" && platform.id) {
+        if (!byYoutubeId.has(platform.id)) byYoutubeId.set(platform.id, channel);
+      }
+      if (/^UC[\w-]{20,}$/.test(channel.id)) {
+        if (!byUcId.has(channel.id)) byUcId.set(channel.id, channel);
+      }
     }
   }
 
   const rows: Row[] = [];
   for (const entry of entries) {
-    // Only entries with a YouTube channel id can be imported.
-    if (!entry.youtubeId) continue;
+    // Skip fan / clip accounts before anything else.
+    if (
+      detectClipAccount(entry.name ?? "", entry.twitterUrl ?? "") ||
+      isFanAccountName(entry.name ?? "")
+    ) {
+      rows.push({
+        entry,
+        id: null,
+        record: null,
+        verdict: "rejected",
+        reason: "a clip or fan account",
+        candidates: [],
+      });
+      continue;
+    }
 
-    const id = `youtube:${entry.youtubeId}`;
-    let record: Channel | null | undefined = byId.get(id);
+    if (entry.youtubeId) {
+      // USADA entries are keyed by YouTube channel id directly
+      const id = `youtube:${entry.youtubeId}`;
+      let record: Channel | null | undefined = byId.get(id);
+      // Fall back to matching by raw YouTube UC id on the platform link
+      if (!record) record = byYoutubeId.get(entry.youtubeId) ?? undefined;
+      // Fall back to matching by the record's own UC… id
+      if (!record) record = byUcId.get(entry.youtubeId) ?? undefined;
 
-    rows.push({
-      entry,
-      id,
-      record,
-      verdict: record ? "tracked" : "new",
-      candidates: [],
-    });
+      rows.push({
+        entry,
+        id,
+        record,
+        verdict: record ? "tracked" : "new",
+        candidates: [],
+      });
+    } else {
+      // No YouTube channel — add as a new record keyed by usada:<id>.
+      // When a YouTube channel is later discovered, canonicalizeChannelIds()
+      // re-keys the record to the UC… id and merges duplicates.
+      const id = `usada:${entry.id}`;
+      let record: Channel | null | undefined = byId.get(id);
+
+      rows.push({
+        entry,
+        id,
+        record,
+        verdict: record ? "tracked" : "new",
+        candidates: [],
+      });
+    }
   }
 
   console.log(
@@ -207,34 +250,106 @@ async function main(): Promise<void> {
 
   for (const row of newRows) {
     const entry = row.entry;
-    const id = row.id!;
-    // id is always "youtube:<channelId>" since we filtered entries without one.
-    const resolvedId = id.slice("youtube:".length);
-    const result = await importYouTubeChannels([resolvedId], {
-      limit: 1,
-      rosterHint: {
-        agency: { [resolvedId]: "" },
-        debut: { [resolvedId]: "" },
-        gender: { [resolvedId]: "unknown" },
-      },
-    });
-    if ((result.added as unknown[]).length > 0) {
-      added += (result.added as unknown[]).length;
-    } else {
-      existing += result.existing;
-      for (const f of result.failed) {
-        console.error(`usada: ${f.id} failed — ${f.reason}`);
-        failed++;
-      }
-    }
+    const rowId = row.id!;
 
-    // Collect profile links as externals (never overwrite existing ones).
-    if (entry.youtubeId) {
-      externalsEdits.push({
-        id: resolvedId,
-        platform: "youtube",
-        handle: entry.youtubeId,
+    // YouTube entries: fetch profile via importYouTubeChannels.
+    if (rowId.startsWith("youtube:")) {
+      const resolvedId = rowId.slice("youtube:".length);
+      const result = await importYouTubeChannels([resolvedId], {
+        limit: 1,
+        rosterHint: {
+          agency: { [resolvedId]: "" },
+          debut: { [resolvedId]: "" },
+          gender: { [resolvedId]: "unknown" },
+        },
       });
+      if ((result.added as unknown[]).length > 0) {
+        added += (result.added as unknown[]).length;
+      } else {
+        existing += result.existing;
+        for (const f of result.failed) {
+          console.error(`usada: ${f.id} failed — ${f.reason}`);
+          failed++;
+        }
+      }
+
+      // Collect profile links as externals (never overwrite existing ones).
+      if (entry.youtubeId) {
+        externalsEdits.push({
+          id: resolvedId,
+          platform: "youtube",
+          handle: entry.youtubeId,
+        });
+      }
+    } else {
+      // Non-YouTube entry: build the Channel record directly.
+      const classification = classifyChannel({
+        name: entry.name,
+        description: null,
+        tags: [],
+        country: entry.region ?? null,
+        platform: "usada",
+        virtualClaim: "roster",
+        hasAvatar: false,
+      });
+
+      const aliases: string[] = [];
+
+      const channel: Channel = {
+        id: rowId,
+        name: entry.name,
+        nameSource: "roster",
+        aliases: aliases.slice(0, 12),
+        handle: null,
+        kind: classification.kind,
+        role: classification.role,
+        region: classification.region,
+        regionSource: "roster",
+        languages: classification.languages,
+        statedLanguages: classification.statedLanguages,
+        agency: classification.agency ?? null,
+        affiliation: "unknown",
+        avatar: null,
+        banner: null,
+        description: null,
+        subscribers: { tag: "hidden" },
+        videoCount: null,
+        viewCount: null,
+        uploadsPlaylistId: null,
+        country: null,
+        tags: [],
+        isSinging: classification.isSinging,
+        gender: classification.gender,
+        isAi: classification.isAi,
+        isOfficialArtist: false,
+        officialArtistCheckedAt: null,
+        variant: classification.variant,
+        verification: null,
+        source: "api",
+        addedAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        lastItemsFetchedAt: null,
+        lastDetailsFetchedAt: null,
+        activity: "unknown",
+        debutDate: null,
+        graduateDate: null,
+        platforms: [],
+        externals: {},
+        popularVideoId: null,
+      };
+
+      const now2 = new Date().toISOString();
+      const written = applyChannelEdits(
+        [{ id: channel.id, update: () => true }],
+        "usada",
+        now2,
+      );
+
+      if (written) {
+        added++;
+      } else {
+        existing++;
+      }
     }
   }
 
