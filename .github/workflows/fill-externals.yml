@@ -1,31 +1,25 @@
 name: Fill external links (parallel)
 
-# Fills the `externals` block for records the rosters never carry.
+# `externals` for the records that have **nothing beyond `youtube`** — a real
+# artist no roster carries (Taylor Swift is the example this exists for).
 #
 # `fill-links.yml` only knows what HoloList and bacharu publish, which is a
-# VTuber roster — a real artist with no roster entry is never reached by it.
-# The platform's own **about page** is where every channel publishes its
-# other accounts, and `fill-details` already reads it: sampled over fourteen
-# channels with an empty `externals`, the microformat supplied zero links
-# while the about page supplied them for ten.
+# VTuber roster. The platform's own **about page** is where every channel
+# publishes its other accounts, and `fill-details` already reads it — sampled
+# over fourteen channels with an empty `externals`, the microformat supplied
+# zero links while the about page supplied them for ten.
 #
-# **Why a mode of its own.** The default details backlog is ordered worst
+# **Why a pass of its own.** The default details backlog is ordered worst
 # first, and a record that merely lacks its links scores lowest, so a
-# well-known artist with an avatar, an audience and an upload total (Taylor
-# Swift is the example this exists for) sits behind tens of thousands of
-# records with no picture and is never reached by a bounded run.
-# `--externals-only` selects exactly the 11,110 records whose `externals`
+# well-known artist with an avatar, an audience and an upload total sits
+# behind tens of thousands with no picture and is never reached by a bounded
+# run. `--externals-only` selects exactly the 11,110 records whose `externals`
 # holds nothing but `youtube`, and orders them oldest-asked-first so a sweep
 # advances instead of re-reading the same head.
 #
-# **Twenty jobs, one volume each** (`npm run data:volumes -- --count 20`).
-# At `--limit 600` that is 12,000 records a day against 11,110 — one full
-# sweep a day, and the fan-in job commits once.
-#
-# A volume is the smallest unit that can be written alone: two jobs on one
-# volume would both write the same channel shards and the slower one would
-# overwrite the other. To go wider, raise the volume count, not the jobs per
-# volume.
+# This file is only the schedule and the inputs: the volume fan-out, the
+# artifact hand-off and the scoped commit live in `fill-details-parallel.yml`,
+# which this calls with `mode: externals`. One implementation, two schedules.
 
 on:
   schedule:
@@ -48,6 +42,7 @@ on:
         required: false
         default: "false"
 
+# The called workflow writes `data/`, so this run has to hold the same group.
 concurrency:
   group: dataset-writer-${{ github.repository }}
   cancel-in-progress: false
@@ -58,201 +53,12 @@ permissions:
 
 jobs:
   fill-externals:
-    name: Fill links for volume ${{ matrix.volume }}
-    runs-on: ubuntu-latest
-    timeout-minutes: 120
-    strategy:
-      # Twenty jobs, one volume each — GitHub's ceiling for a public
-      # repository. A volume that fails must not cancel the other nineteen.
-      max-parallel: 20
-      fail-fast: false
-      matrix:
-        volume: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v7
-        with:
-          fetch-depth: 0
-          ref: ${{ github.ref_name }}
-          lfs: true
-
-      - name: Install Git LFS
-        run: |
-          git lfs install --skip-repo
-          git lfs pull || true
-
-      - name: Set up Node
-        uses: actions/setup-node@v7
-        with:
-          node-version: "26"
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci --no-audit --no-fund
-
-      - name: Create this volume only
-        # `--only` writes one volume and nothing else: a full split is ~2.6 GB
-        # per job, and nineteen twentieths of it would be thrown away. The
-        # split also puts each volume's own `overrides.json`, `seed-catalog.json`
-        # and `upstream.json` beside it, so the volume is a complete root.
-        run: npm run data:volumes -- --count 20 --only ${{ matrix.volume }}
-
-      - name: Fill links for volume ${{ matrix.volume }}
-        env:
-          DRY_RUN: ${{ inputs.dry-run }}
-          TWITCH_CLIENT_ID: ${{ secrets.TWITCH_CLIENT_ID }}
-          TWITCH_CLIENT_SECRET: ${{ secrets.TWITCH_CLIENT_SECRET }}
-          VK_ACCESS_TOKEN: ${{ secrets.VK_ACCESS_TOKEN }}
-          CI_ME_CLIENT_ID: ${{ secrets.CI_ME_CLIENT_ID }}
-          CI_ME_CLIENT_SECRET: ${{ secrets.CI_ME_CLIENT_SECRET }}
-        run: |
-          ARGS=(--externals-only --limit "${{ inputs.limit || 600 }}")
-          ARGS+=(--interval "${{ inputs.interval || 200 }}")
-          if [ "${DRY_RUN:-false}" = "true" ]; then ARGS+=(--dry-run); fi
-
-          # The scripts read `data/` through the working directory, so the
-          # volume is swapped in as a symlink and swapped back — the same
-          # trick `live.yml` and `fill-details-parallel.yml` use.
-          VOL_DIR=".volumes/vol-${{ matrix.volume }}/data"
-          mv data data-full
-          ln -s "$VOL_DIR" data
-          npm run data:details -- "${ARGS[@]}"
-          rm -f data
-          mv data-full data
-
-      - name: Upload volume artifacts
-        uses: actions/upload-artifact@v7
-        with:
-          name: links-vol-${{ matrix.volume }}
-          # Rooted at the **contents** of this directory (`virtual/jp/00.json`,
-          # `manifest.json`), which is why the fan-in downloads with
-          # `merge-multiple: false` and addresses each volume by name.
-          path: .volumes/vol-${{ matrix.volume }}/data/channels
-          retention-days: 1
-
-  merge-and-commit:
-    name: Merge volumes and commit dataset
-    needs: fill-externals
-    runs-on: ubuntu-latest
-    timeout-minutes: 90
-    # No job-level `concurrency`: re-declaring the workflow's own group makes
-    # the job wait for a lock its own run holds. The run-level block
-    # serialises every dataset writer.
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v7
-        with:
-          fetch-depth: 0
-          ref: ${{ github.ref_name }}
-          lfs: true
-
-      - name: Install Git LFS
-        run: |
-          git lfs install --skip-repo
-          git lfs pull || true
-
-      - name: Set up Node
-        uses: actions/setup-node@v7
-        with:
-          node-version: "26"
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci --no-audit --no-fund
-
-      - name: Create volume split for merge
-        run: npm run data:volumes -- --count 20
-
-      - name: Download volume artifacts
-        uses: actions/download-artifact@v8
-        with:
-          path: .volumes/downloads
-          pattern: links-vol-*
-          # `false`: an artifact is rooted at the contents of the directory
-          # that was uploaded, so twenty merged into one directory would
-          # collide shard-for-shard and the per-volume copy would find nothing.
-          merge-multiple: false
-
-      - name: Replace each volume's channel records
-        run: |
-          missing=0
-          for v in $(seq 0 19); do
-            SRC=".volumes/downloads/links-vol-$v"
-            DST=".volumes/vol-$v/data/channels"
-            if [ ! -d "$SRC" ]; then
-              echo "::error::artifact links-vol-$v is missing"
-              missing=$((missing + 1))
-              continue
-            fi
-            # Replace, do not merge: a record re-keyed to its `UC…` id has
-            # moved to another shard, and copying over the split would leave
-            # the old row behind beside the new one.
-            rm -rf "$DST"
-            cp -R "$SRC" "$DST"
-            echo "restored channels for vol-$v"
-          done
-          if [ "$missing" -gt 0 ]; then
-            echo "::error::$missing volume artifact(s) missing — refusing to merge a partial sweep"
-            exit 1
-          fi
-
-      - name: Merge all volumes into data/
-        # `--channels-only`: this pass writes channel records and nothing
-        # else, and the volumes were split from the checkout this job started
-        # with. Merging their item shards would rewrite every item to that
-        # snapshot and revert a `data: live status` commit.
-        run: npx oxnode scripts/merge-volumes.ts --count 20 --channels-only
-
-      - name: Build search index
-        run: npm run data:index
-
-      - name: Validate dataset
-        run: npm run data:validate
-
-      - name: Check the stored repository size
-        run: npm run repo:size -- --max-mb 900 --warn-mb 700
-
-      - name: Commit link fills
-        env:
-          BRANCH: ${{ github.ref_name }}
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git fetch origin "$BRANCH"
-          git reset --mixed "origin/$BRANCH"
-
-          # Stage **only what this run wrote**. `git add data/` staged the
-          # whole tree, and every file this pass never touched was the
-          # checkout it started from — which is how a `data: live status`
-          # commit got reverted. This pass writes channel shards and the
-          # rebuilt index; items, songs and the rosters come from the branch.
-          git checkout -- \
-            data/items \
-            data/songs \
-            data/overrides.json \
-            data/seed-catalog.json \
-            data/suggestions.json \
-            data/upstream.json \
-            data/volumes.json 2>/dev/null || true
-          git add data/channels data/search data/manifest.json
-          if git diff --cached --quiet; then
-            echo "external links unchanged — nothing to commit"
-            exit 0
-          fi
-          git commit -m "data: fill external links (${{ github.run_number }})"
-          git push origin "HEAD:$BRANCH"
-
-      - name: Summary
-        run: |
-          {
-            echo "### External links"
-            echo ""
-            echo "| | |"
-            echo "| --- | --- |"
-            echo "| mode | \`data:details --externals-only\` |"
-            echo "| volumes | 20, one job each |"
-            echo "| per volume | ${{ inputs.limit || 600 }} records |"
-            echo "| interval | ${{ inputs.interval || 200 }} ms |"
-            echo ""
-            git show --stat --oneline HEAD | head -5
-          } >> "$GITHUB_STEP_SUMMARY"
+    # A called workflow may not be granted more than the caller has, so the
+    # `contents: write` above is what lets the commit step push.
+    uses: ./.github/workflows/fill-details-parallel.yml
+    with:
+      mode: externals
+      limit: ${{ inputs.limit || '600' }}
+      interval: ${{ inputs.interval || '200' }}
+      dry-run: ${{ inputs.dry-run || 'false' }}
+    secrets: inherit

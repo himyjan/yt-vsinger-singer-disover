@@ -206,8 +206,7 @@ jobs:
       # hand-rolled. `git-auto-commit-action` fetches and rebases, and a rebase
       # here tries to *merge* two independently rebuilt datasets: both sides are
       # whole-catalogue regenerations, so every derived file (`manifest.json`,
-      # `search/*`, the shards) conflicts by construction. `fill-details.yml`
-      # and `verify-data.yml` did exactly that and their commit step failed.
+      # `search/*`, the shards) conflicts by construction.
       #
       # `--mixed` moves HEAD and the index to the branch while leaving the
       # working tree alone, so the `data/` this run produced survives. Only

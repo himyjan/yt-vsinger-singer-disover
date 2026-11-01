@@ -1,31 +1,35 @@
 name: Fill channel details (parallel)
 
 # Fills the per-record details a sync does not: avatars, names, follower
-# counts, the upload total and — the reason this exists — the `externals`
-# links.
+# counts, the upload total and the `externals` links.
 #
-# **YouTube keeps a channel's links on its about page, not in the
-# microformat.** Sampled over fourteen channels with an empty `externals`, the
-# header supplied zero links every time while the about page supplied them for
-# ten — 「もかん ch / Mokan」's two (`twitter.com/mokan_mikan`,
-# `mokan.fanbox.cc`) among them. `fill-details` asks for that page, so this is
-# the pass that fills the block.
+# **Every mode fans out over the catalogue, so there is one workflow for all of
+# them.** The catalogue is split into twenty volumes (`volumeOf(id)`, 3,546–3,746
+# channels each) and each job owns one volume:
 #
-# **Twenty jobs, one volume each** (`npm run data:volumes -- --count 20`,
-# 3,546–3,746 channels a volume). A single job is bounded by its `--limit` and
-# ordered worst-first, so a record whose only gap is its links sits behind
-# thousands with no avatar and is never reached: that is exactly how Mokan kept
-# an empty block through every weekly run. Twenty jobs at `--limit 600` fill
-# 12,000 records a day, one volume each, and the fan-in job commits once.
+#   mode=all            the default worst-first backlog (avatar, count, uploads, links)
+#   mode=names          `--name-only`: correct the name and the aliases
+#   mode=counts         `--counts-only`: the hidden follower counts
+#   mode=externals      `--externals-only`: records with nothing but a YouTube link
+#   mode=platform       `--platform <name>`: one platform only
+#   mode=normalize-ids  `--normalize-ids` (`data:ids`): re-key handle ids to `UC…`
+#   mode=weak-region    `--weak-region`: re-derive a region that is only a guess
+#
+# **`--id` is the one thing that does not fan out**, because a record lives in
+# exactly one volume. The `plan` job resolves the ids with `scripts/volume-of.ts`
+# and hands the matrix only the volumes that hold them — otherwise a targeted
+# run would start twenty jobs and nineteen would find nothing.
+#
+# **Why the volumes exist.** A bounded run is ordered worst-first, so a record
+# whose only gap is its links sat behind thousands with no avatar and was never
+# reached — 「もかん ch / Mokan」 kept an empty `externals` block through every
+# weekly run. Twenty jobs at `--limit 600` fill 12,000 records a day, one volume
+# each, and the fan-in job commits once.
 #
 # A volume is the smallest unit that can be written alone. Splitting one across
-# two jobs would make both write the same channel shards, and whichever
-# finished last would overwrite the other's corrections. To go wider, raise the
-# volume count, not the jobs per volume — and the matrix below is a fixed list,
-# so the two must be changed together.
-#
-# `fill-details.yml` still exists for targeted runs — one record by id, a name
-# pass, a counts pass, a single platform — which do not fan out.
+# two jobs would make both write the same channel shards, and whichever finished
+# last would overwrite the other's corrections. To go wider, raise the volume
+# count, not the jobs per volume.
 
 on:
   schedule:
@@ -34,6 +38,27 @@ on:
     - cron: "17 5 * * *"
   workflow_dispatch:
     inputs:
+      mode:
+        description: "Which pass to run"
+        type: choice
+        required: false
+        default: all
+        options:
+          - all
+          - names
+          - counts
+          - externals
+          - platform
+          - normalize-ids
+          - weak-region
+      platform:
+        description: "Platform for mode=platform (bilibili, kick, ci.me, soop, …)"
+        required: false
+        default: ""
+      id:
+        description: "Fill these channel ids only, comma-separated (e.g. UC…,UC…)"
+        required: false
+        default: ""
       limit:
         description: "Max channels per volume this run"
         required: false
@@ -42,8 +67,45 @@ on:
         description: "Milliseconds between requests inside one job"
         required: false
         default: "200"
+      force:
+        description: "Ignore the freshness window"
+        required: false
+        default: "false"
       dry-run:
         description: "Fetch profiles but write nothing"
+        required: false
+        default: "false"
+  # `fill-externals.yml` calls this workflow with `mode: externals` instead of
+  # carrying a second copy of the volume fan-out, the artifact hand-off and the
+  # scoped commit — one implementation, two schedules.
+  workflow_call:
+    inputs:
+      mode:
+        type: string
+        required: false
+        default: all
+      platform:
+        type: string
+        required: false
+        default: ""
+      id:
+        type: string
+        required: false
+        default: ""
+      limit:
+        type: string
+        required: false
+        default: "600"
+      interval:
+        type: string
+        required: false
+        default: "200"
+      force:
+        type: string
+        required: false
+        default: "false"
+      dry-run:
+        type: string
         required: false
         default: "false"
 
@@ -56,19 +118,57 @@ permissions:
   contents: write
 
 jobs:
+  plan:
+    name: Choose the volumes
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      # A JSON array — `[0,1,…]` for a bulk pass, `[9]` for a targeted one.
+      volumes: ${{ steps.pick.outputs.volumes }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 1
+          ref: ${{ github.ref_name }}
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "26"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Resolve the volumes this run touches
+        id: pick
+        env:
+          IDS: ${{ inputs.id }}
+        run: |
+          if [ -z "$IDS" ]; then
+            VOLUMES=$(node -e 'console.log(JSON.stringify(Array.from({length:20},(_,i)=>i)))')
+          else
+            # One record lives in exactly one volume, so a targeted run only
+            # has work to do in the volumes that hold the named ids.
+            VOLUMES=$(npx oxnode scripts/volume-of.ts 20 "$IDS")
+          fi
+          echo "volumes=$VOLUMES" >> "$GITHUB_OUTPUT"
+          echo "plan: volumes=$VOLUMES"
+
   fill-details:
     name: Fill details for volume ${{ matrix.volume }}
+    needs: plan
     runs-on: ubuntu-latest
     timeout-minutes: 120
     strategy:
       # Twenty jobs, one volume each, all at once — GitHub's ceiling for a
-      # public repository, and exactly enough for one job per volume. A volume
-      # that fails must not cancel the other nineteen: their artifacts are
-      # still useful if the run is retried with `--failed`.
+      # public repository. A volume that fails must not cancel the other
+      # nineteen: their artifacts are still useful if the run is retried.
       max-parallel: 20
       fail-fast: false
       matrix:
-        volume: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+        volume: ${{ fromJSON(needs.plan.outputs.volumes) }}
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -93,16 +193,20 @@ jobs:
 
       - name: Create this volume only
         # `--only` writes one volume and nothing else: a full split is ~2.6 GB
-        # per job, and nineteen twentieths of it would be thrown away.
-        #
-        # Nothing has to be copied in afterwards: `split-volumes` puts each
-        # volume's own copies of `overrides.json`, `seed-catalog.json`,
-        # `upstream.json` and `suggestions.json` beside it, so a job sees a
-        # dataset root that is complete on its own.
+        # per job, and nineteen twentieths of it would be thrown away. The
+        # split puts each volume's own copies of `overrides.json`,
+        # `seed-catalog.json`, `upstream.json` and `suggestions.json` beside
+        # it, so a job sees a dataset root that is complete on its own.
         run: npm run data:volumes -- --count 20 --only ${{ matrix.volume }}
 
       - name: Fill details for volume ${{ matrix.volume }}
         env:
+          MODE: ${{ inputs.mode || 'all' }}
+          PLATFORM: ${{ inputs.platform }}
+          IDS: ${{ inputs.id }}
+          LIMIT: ${{ inputs.limit || 600 }}
+          INTERVAL: ${{ inputs.interval || 200 }}
+          FORCE: ${{ inputs.force }}
           DRY_RUN: ${{ inputs.dry-run }}
           TWITCH_CLIENT_ID: ${{ secrets.TWITCH_CLIENT_ID }}
           TWITCH_CLIENT_SECRET: ${{ secrets.TWITCH_CLIENT_SECRET }}
@@ -110,13 +214,28 @@ jobs:
           CI_ME_CLIENT_ID: ${{ secrets.CI_ME_CLIENT_ID }}
           CI_ME_CLIENT_SECRET: ${{ secrets.CI_ME_CLIENT_SECRET }}
         run: |
-          ARGS=(--limit "${{ inputs.limit || 600 }}")
-          ARGS+=(--interval "${{ inputs.interval || 200 }}")
-          if [ "${DRY_RUN:-false}" = "true" ]; then ARGS+=(--dry-run); fi
+          ARGS=(--limit "$LIMIT" --interval "$INTERVAL")
+          case "$MODE" in
+            names)         ARGS+=(--name-only) ;;
+            counts)        ARGS+=(--counts-only) ;;
+            externals)     ARGS+=(--externals-only) ;;
+            normalize-ids) ARGS+=(--normalize-ids) ;;
+            weak-region)   ARGS+=(--weak-region) ;;
+            platform)
+              if [ -z "$PLATFORM" ]; then
+                echo "::error::mode=platform needs the platform input"
+                exit 1
+              fi
+              ARGS+=(--platform "$PLATFORM")
+              ;;
+          esac
+          if [ "$FORCE" = "true" ]; then ARGS+=(--force); fi
+          if [ "$DRY_RUN" = "true" ]; then ARGS+=(--dry-run); fi
+          if [ -n "$IDS" ]; then ARGS+=(--id "$IDS"); fi
 
           # The scripts read `data/` through the working directory, so the
-          # volume is swapped in as a symlink and swapped back — the same trick
-          # `live.yml` uses, and the reason a job only ever sees its own
+          # volume is swapped in as a symlink and swapped back — the same
+          # trick `live.yml` uses, and the reason a job only ever sees its own
           # records.
           VOL_DIR=".volumes/vol-${{ matrix.volume }}/data"
           mv data data-full
@@ -138,7 +257,7 @@ jobs:
 
   merge-and-commit:
     name: Merge volumes and commit dataset
-    needs: fill-details
+    needs: [plan, fill-details]
     runs-on: ubuntu-latest
     timeout-minutes: 90
     # No job-level `concurrency`: re-declaring the workflow's own group makes
@@ -177,14 +296,17 @@ jobs:
           # `false`, not `true`: an artifact is rooted at the contents of the
           # directory that was uploaded, so twenty of them merged into one
           # directory would collide shard-for-shard and the per-volume copy
-          # below would find nothing to copy. `live.yml` did exactly that and
-          # silently discarded every sweep it ran.
+          # below would find nothing to copy.
           merge-multiple: false
 
       - name: Replace each volume's channel records
+        env:
+          # Only the volumes this run planned — a targeted run has one, and
+          # demanding the other nineteen would fail a run that succeeded.
+          VOLUMES: ${{ needs.plan.outputs.volumes }}
         run: |
           missing=0
-          for v in $(seq 0 19); do
+          for v in $(echo "$VOLUMES" | tr -d '[]' | tr ',' ' '); do
             SRC=".volumes/downloads/vol-$v"
             DST=".volumes/vol-$v/data/channels"
             if [ ! -d "$SRC" ]; then
@@ -225,6 +347,7 @@ jobs:
       - name: Commit detail fills
         env:
           BRANCH: ${{ github.ref_name }}
+          MODE: ${{ inputs.mode || 'all' }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -256,7 +379,7 @@ jobs:
             echo "details unchanged — nothing to commit"
             exit 0
           fi
-          git commit -m "data: fill channel details (${{ github.run_number }})"
+          git commit -m "data: fill channel details ($MODE) (${{ github.run_number }})"
           git push origin "HEAD:$BRANCH"
 
       - name: Summary
@@ -266,9 +389,11 @@ jobs:
             echo ""
             echo "| | |"
             echo "| --- | --- |"
-            echo "| volumes | 20, one job each |"
+            echo "| mode | \`${{ inputs.mode || 'all' }}\` |"
+            echo "| volumes | ${{ needs.plan.outputs.volumes }} |"
             echo "| per volume | ${{ inputs.limit || 600 }} records |"
             echo "| interval | ${{ inputs.interval || 200 }} ms |"
+            echo "| ids | ${{ inputs.id || '(none — the whole backlog)' }} |"
             echo ""
             git show --stat --oneline HEAD | head -5
           } >> "$GITHUB_STEP_SUMMARY"
