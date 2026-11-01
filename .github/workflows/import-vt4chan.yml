@@ -1,0 +1,123 @@
+name: Import 4chan /vt/ VTubers
+
+# Harvests 4chan /vt/ (Virtual YouTubers board) and imports the new channels
+# the gate admits into data/channels/. The harvest writes
+# `.cache/vt4chan/vt4chan.json`, and the importer reads it, extracts YouTube
+# channel links from thread comments, resolves handles to UC ids via InnerTube,
+# classifies through classifyChannel(), and adds the survivors.
+#
+# WARNING: 4chan is an anonymous imageboard. Any user can post any link.
+# Fan accounts, clip channels, and re-uploads are common. This importer
+# applies detectClipAccount() and isFanAccountName() filters, and only accepts
+# YouTube channel URLs (not video URLs). Results should be treated as
+ * candidates requiring manual review.
+#
+#   npm run data:vt4chan              # harvest VTuber candidates from 4chan /vt/
+#   npm run data:vt4chan-import       # report what would be imported
+#   npm run data:vt4chan-import -- --apply  # write the new channels
+
+on:
+  schedule:
+    # Weekly, Monday 08:00 UTC (after the sync's roster pass)
+    - cron: "0 8 * * 1"
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        description: "Report what would change without writing"
+        required: false
+        default: "false"
+
+concurrency:
+  group: dataset-writer-${{ github.repository }}
+  cancel-in-progress: false
+  queue: max
+
+permissions:
+  contents: write
+
+jobs:
+  harvest-and-import:
+    name: Harvest and import 4chan /vt/
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          ref: ${{ github.ref_name }}
+          lfs: true
+
+      - name: Install Git LFS
+        run: |
+          git lfs install --skip-repo
+          git lfs pull || true
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "26"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Restore vt4chan cache
+        uses: actions/cache@v6
+        with:
+          path: |
+            .cache/vt4chan
+          key: vt4chan-harvest-${{ github.run_number }}
+          restore-keys: |
+            vt4chan-harvest-
+
+      - name: Harvest vt4chan
+        run: npm run data:vt4chan
+
+      - name: Import vt4chan channels
+        env:
+          DRY_RUN: ${{ inputs.dry-run }}
+        run: |
+          if [ "$DRY_RUN" = "true" ]; then
+            echo "Dry run: would import vt4chan channels"
+            npm run data:vt4chan-import
+          else
+            npm run data:vt4chan-import -- --apply
+          fi
+
+      - name: Build search index
+        run: npm run data:index
+
+      - name: Validate dataset
+        run: npm run data:validate
+
+      - name: Commit vt4chan imports
+        env:
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch origin "$BRANCH"
+          git reset --mixed "origin/$BRANCH"
+          git add data/channels data/search data/manifest.json
+          if git diff --cached --quiet; then
+            echo "vt4chan imports unchanged — nothing to commit"
+            exit 0
+          fi
+          git commit -m "data: import vt4chan VTubers (${{ github.run_number }})"
+          git push origin "HEAD:$BRANCH"
+
+      - name: Summary
+        run: |
+          {
+            echo "### Import 4chan /vt/ VTubers"
+            echo ""
+            echo "| | |"
+            echo "| --- | --- |"
+            echo "| Source | 4chan /vt/ (boards.4chan.org/vt) |"
+            echo "| Credentials | none (public JSON API) |"
+            echo "| Step | harvest → resolve via YouTube search → gate → import → index → validate → commit |"
+            echo "| Fan/clip filter | detectClipAccount() + isFanAccountName() applied |"
+            echo "| Dry run | ${{ inputs.dry-run }} |"
+            echo "| Committed | \`data/channels\`, \`data/search\`, \`data/manifest.json\` |"
+          } >> "$GITHUB_STEP_SUMMARY"
