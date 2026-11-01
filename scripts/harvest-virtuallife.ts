@@ -37,10 +37,11 @@ interface VirtuallifeEntry {
 
 interface Options {
   limit: number | null;
+  pages: number | null;
 }
 
 function parseArgs(argv: string[]): Options {
-  const options: Options = { limit: null };
+  const options: Options = { limit: null, pages: null };
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i]!;
     const value = argv[i + 1];
@@ -49,13 +50,18 @@ function parseArgs(argv: string[]): Options {
         options.limit = Math.max(1, Number(value ?? 1));
         i++;
         break;
+      case "--pages":
+        options.pages = Math.max(1, Number(value ?? 1));
+        i++;
+        break;
       case "--help":
       case "-h":
         console.log(
           [
-            "Usage: npm run data:virtuallife -- [options]",
+            "Usage: npm run data:virtuallife [options]",
             "",
             "  --limit <n>  max entries to harvest",
+            "  --pages <n>  max listing pages to read (default: all)",
           ].join("\n")
         );
         process.exit(0);
@@ -142,39 +148,61 @@ async function main(): Promise<void> {
   const options = parseArgs(process.argv.slice(2));
   fs.mkdirSync(CACHE_DIR, { recursive: true });
 
-  console.log(`virtuallife: fetching listing page ${SOURCE_URL}/?site=vtuber`);
-  let html: string;
-  try {
-    const res = await fetch(`${SOURCE_URL}/?site=vtuber`, {
-      headers: { Accept: "text/html" },
-      signal: AbortSignal.timeout(30_000),
-    });
-    if (!res.ok) {
+  const allCards: Array<{ name: string; id: string }> = [];
+  let page = 1;
+
+  for (;;) {
+    if (options.pages !== null && page > options.pages) break;
+
+    const url = page === 1
+      ? `${SOURCE_URL}/?site=vtuber`
+      : `${SOURCE_URL}/?site=vtuber&page=${page}`;
+    console.log(`virtuallife: fetching listing page ${url}`);
+    let html: string;
+    try {
+      const res = await fetch(url, {
+        headers: { Accept: "text/html" },
+        signal: AbortSignal.timeout(30_000),
+      });
+      if (!res.ok) {
+        console.error(
+          `virtuallife: HTTP ${res.status} on page ${page} — stopping`,
+        );
+        break;
+      }
+      html = await res.text();
+    } catch {
       console.error(
-        `virtuallife: HTTP ${res.status} — leaving previous cache untouched`,
+        `virtuallife: listing fetch failed on page ${page} — stopping`,
       );
-      process.exit(0);
+      break;
     }
-    html = await res.text();
-  } catch {
-    console.error(
-      "virtuallife: listing fetch failed — leaving previous cache untouched",
-    );
+
+    const cards = parseListingCards(html);
+    if (cards.length === 0) {
+      console.log(`virtuallife: no VTuber cards on page ${page} — stopping`);
+      break;
+    }
+
+    allCards.push(...cards);
+    console.log(`  page ${page}: ${cards.length} cards`);
+
+    page++;
+    if (options.limit && allCards.length >= options.limit) {
+      allCards.length = options.limit;
+      break;
+    }
+  }
+
+  if (!allCards.length) {
+    console.error("virtuallife: no VTuber cards found — leaving previous cache untouched");
     process.exit(0);
   }
 
-  const cards = parseListingCards(html);
-  if (!cards.length) {
-    console.error(
-      "virtuallife: no VTuber cards found — leaving previous cache untouched",
-    );
-    process.exit(0);
-  }
+  console.log(`virtuallife: ${allCards.length} VTuber cards found across ${page - 1} page(s)`);
 
-  console.log(`virtuallife: ${cards.length} VTuber cards found on listing page`);
-
-  let limited = cards;
-  if (options.limit) limited = cards.slice(0, options.limit);
+  let limited = allCards;
+  if (options.limit) limited = allCards.slice(0, options.limit);
 
   // Fetch each individual profile page to get YouTube ID and social links
   const entries: VirtuallifeEntry[] = [];
@@ -216,7 +244,7 @@ async function main(): Promise<void> {
   fs.writeFileSync(OUT_PATH, JSON.stringify(snapshot, null, 2));
   const withYt = entries.filter(e => e.youtubeId).length;
   console.log(
-    `virtuallife: ${entries.length} entr(y/ies) harvested (${withYt} with YouTube IDs) → ${OUT_PATH}`,
+    `virtuallife: ${entries.length} entr(y/ies) harvested (${withYt} with YouTube IDs) from ${page - 1} page(s) → ${OUT_PATH}`,
   );
 }
 
