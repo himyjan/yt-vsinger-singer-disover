@@ -78,6 +78,10 @@ jobs:
         env:
           DRY_RUN: ${{ inputs.dry-run }}
         run: |
+          if [ ! -f .cache/musicdex/musicdex.json ]; then
+            echo "No musicdex snapshot found — nothing to import (harvest may have found no data or no API key)."
+            exit 0
+          fi
           if [ "$DRY_RUN" = "true" ]; then
             echo "Dry run: would enrich musicdex songs"
             npm run data:musicdex-import
