@@ -114,20 +114,37 @@ async function main(): Promise<void> {
 
   const allProfiles: VtuberProfile[] = [];
   let offset = 0;
+  let pageNum = 1;
 
   for (;;) {
     const page = await fetchPage(offset, pageSize);
     if (!page?.data) {
-      console.error("V-SLive feed unavailable — leaving previous cache untouched");
-      process.exit(0);
+      console.error(
+        `v-sai: API unavailable at offset ${offset} — stopping`,
+      );
+      break;
     }
 
     allProfiles.push(...page.data);
+    console.log(
+      `v-sai: page ${pageNum} offset ${offset}: ${page.data.length} profiles`,
+    );
 
     const { paginationDetails } = page;
-    if (!paginationDetails || offset + pageSize >= paginationDetails.totalItems) break;
+    if (!paginationDetails) {
+      console.log("v-sai: no pagination details — assuming single page");
+      break;
+    }
+    const { totalItems, totalPages } = paginationDetails;
+    console.log(
+      `v-sai: totalItems=${totalItems} totalPages=${totalPages} currentPage=${paginationDetails.currentPage}`,
+    );
+    if (offset + pageSize >= totalItems) break;
+    if (paginationDetails.totalPages && pageNum >= paginationDetails.totalPages)
+      break;
 
     offset += pageSize;
+    pageNum++;
     if (allProfiles.length >= (options.limit ?? Infinity)) break;
   }
 
