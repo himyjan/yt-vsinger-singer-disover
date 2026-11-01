@@ -415,6 +415,7 @@ stable or complete search API:
 | --- | --- | --- | --- |
 | YouTube | Data API v3 | **InnerTube** (`youtubei.js`) | channel and video search, description, avatar, subscribers, uploads, releases, live/upcoming |
 | Twitch | Helix (client id **and** secret) | **GQL** (`gql.twitch.tv`) for browser account features | description, avatar, followers, live; sync keyword discovery uses Helix |
+| [Twitch VTuber search](https://dev.twitch.tv/docs/api/reference#search-channels) | **Helix** (`Client-Id` / `Client-Secret`) | **`search/channels`** | broadcaster id, login, display name, title, thumbnail — wired as `scripts/lib/debut-sources/twitch.ts`, a discovery source for VTuber/VSinger searches |
 | Bilibili | — | **WBI-signed public API** | description, avatar, followers, uploads, live (via `online/list?rid=160` VTuber partition) |
 | CHZZK | — | **the public API** | channel search, profile, followers, live |
 | KICK | — | **the public API** | profile and live data for known channels; no usable public keyword search |
@@ -423,6 +424,18 @@ stable or complete search API:
 | X / Twitter | — (no free read API) | [**FxTwitter**](https://github.com/FixTweet/FxTwitter) (`api.fxtwitter.com/<handle>`) | the bio, the website field and the location — where a Bilibili-only performer usually writes their YouTube link |
 | Niconico | — | **the public API** | search, uploads, live programs via Content Search API v2 |
 | [Chuysan Thai VTuber Ranking](https://chuymaster.github.io/thaivtuberranking-docs/) | — | **public JSON API** (`storage.googleapis.com/thaivtuberranking.appspot.com`) | channel ids, names, descriptions, subscriber counts, publish dates — read via `v2/channel_data/simple_list.json`; wired as `scripts/lib/debut-sources/chuysan.ts`, a discovery source for Thai VTubers |
+| [Bilibili VTuber ranking](https://github.com/SocialSisterYi/bilibili-API-collect) | — | **public API** (`api.bilibili.com/x/web-interface/ranking/v2?rid=160`) | mid, uname, face, sign — wired as `scripts/lib/debut-sources/bilibili.ts`, a discovery source for Chinese VTubers |
+| [CHZZK channel listings](https://chzzk.naver.com) | — | **public API** (`api.chzzk.naver.com/service/v1.0/channels`) | channel id, name, follower count — wired as `scripts/lib/debut-sources/chzzk.ts`, a discovery source for Korean VTubers |
+| [KICK channel directory](https://kick.com/api/v2/channels) | — | **public API** (`kick.com/api/v2/channels`) | channel id, username, title, viewer count — wired as `scripts/lib/debut-sources/kick.ts`, a discovery source |
+| [Niconico Content Search API v2](https://search.nicovideo.jp) | — | **public API** (`api.search.nicovideo.jp/api/v2/search`) | content id, title, user id, nickname — wired as `scripts/lib/debut-sources/niconico.ts`, a discovery source |
+| [SOOP live broadcast list](https://live.sooplive.co.kr/api/main_broad_list_api.php) | — | **public API** (`live.sooplive.co.kr/api/main_broad_list_api.php`) | channel id, broadcaster name, title, viewer count — wired as `scripts/lib/debut-sources/soop.ts`, a discovery source |
+| [v-sai.com/vtuber](https://www.v-sai.com/api) | — | **public JSON API** (`https://www.v-sai.com/api`) | channel ids, names, descriptions, publish dates — wired as `scripts/lib/debut-sources/v-sai.ts`, a discovery source for Vietnamese VTubers |
+| [vtuber-database.wikiru.jp (VtuberDB)](https://vtuber-database.wikiru.jp) | — | **Cargo tables via public JSON API** | channel ids, names, kana, affiliations, debut dates — wired as `scripts/lib/debut-sources/vdb.ts`, a discovery source for Japanese VTubers |
+| [vtuberdex.pages.dev](https://vtuberdex.pages.dev) | — | **public JSON API** (`https://vtuberdex.pages.dev`) | channel ids, names, descriptions, publish dates — wired as `scripts/lib/debut-sources/vtuberdex.ts`, a discovery source |
+| [virtualhumans.org](https://virtualhumans.org) | — | **public JSON API** (`https://virtualhumans.org`) | channel ids, names, descriptions, publish dates — wired as `scripts/lib/debut-sources/virtualhumans.ts`, a discovery source |
+| [vtpedia](https://vtpedia.org) | — | **public JSON API** | channel ids, names, descriptions, publish dates — wired as `scripts/lib/debut-sources/vtpedia.ts`, a discovery source |
+| [vtubers.tw](https://vtubers.tw) | — | **public JSON API** | channel ids, names, descriptions, publish dates — wired as `scripts/lib/debut-sources/vtubers.tw.ts`, a discovery source for Taiwanese VTubers |
+| [ci.me](https://ci.me) | **Open API** (`Client-Id` / `Client-Secret`) | **the public live-status endpoint** | CI.ME channel ids, names, follower counts — wired as `scripts/lib/debut-sources/ci-me.ts`, a discovery source for CI.ME VTubers |
 
 **InnerTube** (`scripts/lib/youtubei.ts`) — the channel's *description* is the
 richest field in the project: it is where a performer states their own

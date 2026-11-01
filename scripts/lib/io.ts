@@ -111,6 +111,26 @@ export function readJson<T>(file: string, fallback: T): T {
   }
 }
 
+/**
+ * Fetch JSON from a URL with a timeout.
+ */
+export async function fetchJson<T>(url: string): Promise<T | null> {
+  try {
+    const res = await fetch(url, {
+      signal: AbortSignal.timeout(30_000),
+      headers: {
+        Accept: "application/json",
+        "User-Agent": "yt-vsinger-singer-tracker/1.0 (dataset builder)",
+      },
+    });
+    if (!res.ok) return null;
+    return (await res.json()) as T;
+  } catch {
+    return null;
+  }
+}
+
+/**/
 /** Writes JSON with a trailing newline and 2-space indentation. */
 export function writeJson(file: string, value: unknown): void {
   ensureDir(path.dirname(file));

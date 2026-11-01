@@ -167,7 +167,22 @@ scripts/
     ├── search.ts            tokenizer + inverted index + query engine
     ├── aislist.ts           AI-channel list
     ├── vdb.ts               the Virtual YouTuber Name List Database
+    ├── bilibili.ts          Bilibili VTuber ranking (rid=160): public API
+    ├── chzzk.ts             CHZZK channel listings: public API
     ├── chuysan.ts           Chuysan Thai VTuber directory: public JSON API
+    ├── ci-me.ts             ci.me VTuber directory: public JSON API
+    ├── kick.ts              KICK channel directory: public API
+    ├── niconico.ts          Niconico Content Search API v2: public API
+    ├── soop.ts              SOOP live broadcast list: public API
+    ├── twitch.ts            Twitch VTuber/VSinger search: Helix search/channels
+    ├── ci-me.ts             ci.me VTuber directory: public JSON API
+    ├── twitch.ts            Twitch VTuber/VSinger search: Helix search/channels
+    ├── v-sai.ts             v-sai.com/vtuber: public JSON API
+    ├── vdb.ts               vtuber-database.wikiru.jp: Cargo tables
+    ├── vtuberdex.ts         vtuberdex.pages.dev: public JSON API
+    ├── virtualhumans.ts     virtualhumans.org: public JSON API
+    ├── vtpedia.ts           vtpedia: public JSON API
+    ├── vtubers.tw.ts        vtubers.tw: public JSON API
     ├── hololist.ts          the HoloList directory: entry and sitemap parsers
     ├── taiwan-vtuber-data.ts  the Taiwan VTuber track list
     ├── chinese-scripts.ts   simplified vs. traditional character sets
