@@ -8,9 +8,10 @@ name: Fill channel details
 # only gap was its links sat behind thousands with no avatar and was never
 # reached — 「もかん ch / Mokan」 kept an empty `externals` block through every
 # weekly run. The catalogue is split into twenty volumes (`volumeOf(id)`,
-# 3,546–3,746 channels each) and each job owns one volume: at `--limit 600`
-# that is 12,000 records a day, worst-first **within each volume**, and the
-# fan-in job commits once.
+# 3,546–3,746 channels each) and each job owns one volume: with no `--limit`
+# each volume sweep processes every pending channel in it, so a full run
+# covers the whole catalogue across twenty parallel jobs, and the fan-in job
+# commits once.
 #
 # Modes (the `mode` input; `all` is the scheduled one):
 #
@@ -67,9 +68,9 @@ on:
         required: false
         default: ""
       limit:
-        description: "Max channels per volume this run"
+        description: "Max channels per volume this run (empty = all of them)"
         required: false
-        default: "600"
+        default: ""
       interval:
         description: "Milliseconds between requests inside one job"
         required: false
@@ -188,7 +189,8 @@ jobs:
           CI_ME_CLIENT_ID: ${{ secrets.CI_ME_CLIENT_ID }}
           CI_ME_CLIENT_SECRET: ${{ secrets.CI_ME_CLIENT_SECRET }}
         run: |
-          ARGS=(--limit "$LIMIT" --interval "$INTERVAL")
+          ARGS=(--interval "$INTERVAL")
+          if [ -n "$LIMIT" ]; then ARGS+=(--limit "$LIMIT"); fi
           case "$MODE" in
             names)         ARGS+=(--name-only) ;;
             counts)        ARGS+=(--counts-only) ;;
@@ -228,7 +230,8 @@ jobs:
           # 11,110 that qualify at this budget.
           if [ "$MODE" = "all" ] && [ -z "$IDS" ] && [ "$(date -u +%u)" = "1" ]; then
             echo "Monday — also filling the records with no links beyond YouTube"
-            EXT=(--externals-only --limit "$LIMIT" --interval "$INTERVAL")
+            EXT=(--externals-only --interval "$INTERVAL")
+            if [ -n "$LIMIT" ]; then EXT+=(--limit "$LIMIT"); fi
             if [ "$DRY_RUN" = "true" ]; then EXT+=(--dry-run); fi
             npm run data:details -- "${EXT[@]}"
           fi
@@ -384,7 +387,7 @@ jobs:
             echo "| mode | \`${{ inputs.mode || 'all' }}\` |"
             echo "| links pass | $([ "$(date -u +%u)" = "1" ] && echo 'ran (Monday)' || echo 'not today — Mondays only') |"
             echo "| volumes | ${{ needs.plan.outputs.volumes }} |"
-            echo "| per volume | ${{ inputs.limit || 600 }} records |"
+            echo "| per volume | ${{ inputs.limit || 'all' }} records |"
             echo "| interval | ${{ inputs.interval || 200 }} ms |"
             echo "| ids | ${{ inputs.id || '(none — the whole backlog)' }} |"
             echo ""

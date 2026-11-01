@@ -207,7 +207,7 @@ const NAME_ONLY_FLAGS = new Set([
 
 function parseArgs(argv: string[]): Options {
   const options: Options = {
-    limit: 500,
+    limit: Infinity,
     platform: null,
     dryRun: false,
     intervalMs: 450,
@@ -272,7 +272,7 @@ function parseArgs(argv: string[]): Options {
       }
     }
   }
-  if (!Number.isFinite(options.limit) || options.limit <= 0) options.limit = 500;
+  if (!Number.isFinite(options.limit) || options.limit <= 0) options.limit = Infinity;
   return options;
 }
 
