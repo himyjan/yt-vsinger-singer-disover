@@ -1,7 +1,53 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-31T23:29:18.172Z",
+  "generatedAt": "2026-11-01T04:45:47.099Z",
   "items": [
+    {
+      "id": "LvPN5I34rko",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCp4CfVSBTpkbahaCRu39cug",
+      "channelName": "MaidYuukiVT",
+      "channelKind": "virtual",
+      "region": "kr",
+      "gender": "female",
+      "languages": [
+        "ko"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "୨୧【 Happy Halloween 】 ┊ Let's yap, drink, & watch spoopy videos to celebrate a spoopy night~┊ ୨୧",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/LvPN5I34rko/hq720.jpg",
+      "publishedAt": "2026-11-01T00:00:00.000Z",
+      "scheduledStart": "2026-11-01T00:00:00.000Z",
+      "actualStart": null,
+      "actualEnd": "2026-11-01T04:35:30.081Z",
+      "duration": 16530,
+      "status": "past",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCp4CfVSBTpkbahaCRu39cug",
+          "name": "MaidYuukiVT",
+          "kind": "virtual",
+          "region": "kr"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-31T03:16:23.042Z",
+      "updatedAt": "2026-11-01T04:35:30.081Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
     {
       "id": "Y-c9pgeESi0",
       "platform": "youtube",
@@ -45,52 +91,6 @@
       "source": "api",
       "addedAt": "2026-10-30T04:35:35.383Z",
       "updatedAt": "2026-10-31T03:16:26.922Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "LvPN5I34rko",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCp4CfVSBTpkbahaCRu39cug",
-      "channelName": "MaidYuukiVT",
-      "channelKind": "virtual",
-      "region": "kr",
-      "gender": "female",
-      "languages": [
-        "ko"
-      ],
-      "isAi": false,
-      "variant": "female_vtuber",
-      "title": "୨୧【 Happy Halloween 】 ┊ Let's yap, drink, & watch spoopy videos to celebrate a spoopy night~┊ ୨୧",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/LvPN5I34rko/hq720.jpg",
-      "publishedAt": null,
-      "scheduledStart": "2026-11-01T00:00:00.000Z",
-      "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "upcoming",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCp4CfVSBTpkbahaCRu39cug",
-          "name": "MaidYuukiVT",
-          "kind": "virtual",
-          "region": "kr"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-31T03:16:23.042Z",
-      "updatedAt": "2026-10-31T23:18:42.160Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }
