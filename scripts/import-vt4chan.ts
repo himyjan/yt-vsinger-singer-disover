@@ -1,24 +1,20 @@
 #!/usr/bin/env tsx
 /**
- * Compares a 4chan /vt/ harvest with the dataset and imports new channels.
+ * Import VTuber channels from 4chan /vt/ harvest into the dataset.
  *
- * `scripts/harvest-vt4chan.ts` produces a snapshot in `.cache/vt4chan/vt4chan.json`;
- * this script reads that snapshot, extracts YouTube channel links from thread
- * comments, resolves handles to UC ids via InnerTube channel search, confirms
- * the match against the channel's own display name, runs the virtual-and-singing
- * gate, and imports survivors into `data/channels/`.
+ * Reads `.cache/vt4chan/vt4chan.json`, matches each entry against the dataset
+ * by YouTube channel id, classifies through classifyChannel(), and imports
+ * the ones that pass the virtual-and-singing gate into `data/channels/`.
  *
  *   npm run data:vt4chan-import                     # report only
  *   npm run data:vt4chan-import -- --apply          # import the new channels
  *
- * WARNING: 4chan is an anonymous imageboard. Any user can post any link.
- * Fan accounts, clip channels, and re-uploads are common. This importer
- * applies detectClipAccount() and isFanAccountName() filters, and only accepts
- * YouTube channel URLs (not video URLs). Results should be treated as
- * candidates requiring manual review.
+ * Entries without a YouTube link are still added as new records keyed by
+ * `vt4chan:<thread_no>`. When a YouTube channel is later discovered,
+ * canonicalizeChannelIds() re-keys the record to the UC… id and merges
+ * duplicates.
  *
- *   npm run data:vt4chan-import                     # report only
- *   npm run data:vt4chan-import -- --apply          # import the new channels
+ * WARNING: 4chan is an anonymous imageboard. Results require manual review.
  */
 
 import fs from "node:fs";
@@ -38,23 +34,6 @@ import { InnerTubeSource } from "../scripts/lib/youtubei";
 import type { Channel } from "../scripts/lib/types";
 
 const SNAPSHOT = ".cache/vt4chan/vt4chan.json";
-const RESOLVED = ".cache/vt4chan/vt4chan-resolved.json";
-
-interface ResolvedCache {
-  [handle: string]: { id: string | null; at: string };
-}
-
-function readResolved(): ResolvedCache {
-  try {
-    return JSON.parse(fs.readFileSync(RESOLVED, "utf8")) as ResolvedCache;
-  } catch {
-    return {};
-  }
-}
-
-function writeResolved(cache: ResolvedCache): void {
-  fs.writeFileSync(RESOLVED, JSON.stringify(cache, null, 0));
-}
 
 interface Vt4chanEntry {
   no: number;
@@ -111,13 +90,11 @@ function parseArgs(argv: string[]): Options {
   return options;
 }
 
-/** Extracts a YouTube handle from @handle format. */
 function extractHandle(url: string): string | null {
   const m = url.match(/^youtube\.com\/@([A-Za-z0-9_.-]+)$/);
   return m ? m[1] : null;
 }
 
-/** Extracts a UC channel id from channel URL. */
 function extractChannelId(url: string): string | null {
   const m = url.match(/^youtube\.com\/channel\/(UC[\w-]{22})$/);
   return m ? m[1] : null;
@@ -137,9 +114,7 @@ async function main(): Promise<void> {
   );
   const entries = snapshot.data || [];
 
-  console.log(
-    `snapshot ${snapshot.generatedAt} · ${entries.length} entr(y/ies)`,
-  );
+  console.log(`vt4chan: snapshot ${snapshot.generatedAt} · ${entries.length} entr(y/ies)`);
 
   const dataset = readAllChannelRecords();
   const byId = new Map(dataset.map((c) => [c.id, c]));
@@ -197,13 +172,18 @@ async function main(): Promise<void> {
           id = fullId;
           break;
         }
-        // Also try by handle in byHandle map
         record = byHandle.get(h.toLowerCase());
         if (record) {
           id = `youtube:@${h}`;
           break;
         }
       }
+    }
+
+    if (!id && channelIds.length === 0 && handles.length === 0) {
+      // No YouTube link — add as a new record keyed by thread number
+      id = `vt4chan:${entry.no}`;
+      record = byId.get(id);
     }
 
     rows.push({
@@ -216,7 +196,7 @@ async function main(): Promise<void> {
   }
 
   console.log(
-    `snapshot ${snapshot.generatedAt} · ${entries.length} entr(y/ies) · ${dataset.length} record(s) tracked`,
+    `vt4chan: ${entries.length} entr(y/ies) · ${dataset.length} record(s) tracked`,
   );
 
   const counts = new Map<string, number>();
@@ -242,12 +222,9 @@ async function main(): Promise<void> {
         ? ":\n" +
           newRows
             .slice(0, 20)
-            .map(
-              (row) =>
-                `  ${row.id}  ${row.entry.sub || row.entry.no}`
-            )
+            .map((row) => `  ${row.id}  ${row.entry.sub ?? row.entry.no}`)
             .join("\n")
-        : "")
+        : ""),
   );
 
   if (!options.apply) {
@@ -261,112 +238,149 @@ async function main(): Promise<void> {
   let added = 0;
   let existing = 0;
   let failed = 0;
-  let rejectedByGate = 0;
-  let rejectedByFan = 0;
 
   /** Externals edits to apply after import: id → { platform: handle }. */
-  const externalsEdits: Array<{
-    id: string;
-    platform: string;
-    handle: string;
-  }> = [];
+  const externalsEdits: Array<{ id: string; platform: string; handle: string }> =
+    [];
 
   for (const row of newRows) {
     if (!row.id) continue;
 
-    // Extract YouTube handle from the entry's links for handle resolution
     const entry = row.entry;
-    const ytHandle = entry.youtubeLinks
-      .map((l) => extractHandle(l))
-      .find((h) => h !== null);
 
-    let resolvedId: string | null = null;
-    if (row.id.startsWith("youtube:UC")) {
-      resolvedId = row.id.slice("youtube:".length);
-    } else if (row.id.startsWith("youtube:@")) {
-      const h = row.id.slice("youtube:@".length);
-      resolvedId = await source.resolveHandle(h);
-      if (!resolvedId) {
-        console.error(
-          `vt4chan: could not resolve @${h} to a YouTube channel id`,
-        );
-        failed++;
-        continue;
+    // YouTube entries: fetch profile via importYouTubeChannels.
+    if (row.id.startsWith("youtube:")) {
+      const resolvedId = row.id.startsWith("youtube:UC")
+        ? row.id.slice("youtube:".length)
+        : null;
+
+      if (resolvedId) {
+        const result = await importYouTubeChannels([resolvedId], {
+          limit: 1,
+          rosterHint: {
+            agency: resolvedId ? { [resolvedId]: "" } : undefined,
+            debut: resolvedId ? { [resolvedId]: "" } : undefined,
+            gender: resolvedId ? { [resolvedId]: "unknown" } : undefined,
+          },
+        });
+        if ((result.added as unknown[]).length > 0) {
+          added += (result.added as unknown[]).length;
+        } else {
+          existing += result.existing;
+          failed += result.failed.length;
+        }
+
+        if (entry.youtubeLinks.length > 0) {
+          externalsEdits.push({
+            id: resolvedId,
+            platform: "youtube",
+            handle: entry.youtubeLinks[0],
+          });
+        }
+      } else if (row.id.startsWith("youtube:@")) {
+        const h = row.id.slice("youtube:@".length);
+        const resolved = await source.resolveHandle(h);
+        if (!resolved) {
+          console.error(
+            `vt4chan: could not resolve @${h} to a YouTube channel id`,
+          );
+          failed++;
+          continue;
+        }
+        const result = await importYouTubeChannels([resolved], {
+          limit: 1,
+          rosterHint: {
+            agency: resolved ? { [resolved]: "" } : undefined,
+            debut: resolved ? { [resolved]: "" } : undefined,
+            gender: resolved ? { [resolved]: "unknown" } : undefined,
+          },
+        });
+        if ((result.added as unknown[]).length > 0) {
+          added += (result.added as unknown[]).length;
+        } else {
+          existing += result.existing;
+          failed += result.failed.length;
+        }
+
+        if (entry.youtubeLinks.length > 0) {
+          externalsEdits.push({
+            id: resolved,
+            platform: "youtube",
+            handle: entry.youtubeLinks[0],
+          });
+        }
       }
-    }
-
-    // Run classifyChannel gate
-    const signals = {
-      name: entry.sub || `4chan /vt/ #${entry.no}`,
-      description: entry.com ?? null,
-      tags: [],
-      channelKind: "virtual",
-      status: "past",
-      isShort: false,
-      durationSeconds: null,
-      channelRegion: "unknown",
-      country: null,
-    };
-    const classification = classifyChannel(signals);
-
-    // Check clip/fan account tests
-    const nameToCheck = entry.sub || resolvedId;
-    if (detectClipAccount(nameToCheck, entry.com ?? null) || isFanAccountName(nameToCheck)) {
-      rejectedByFan++;
-      continue;
-    }
-
-    // Check virtual + singing gate
-    if (!classification.isSinging || classification.kind !== "virtual") {
-      rejectedByGate++;
-      continue;
-    }
-
-    const channelId = row.id;
-
-    const rosterHint: RosterHint = {};
-    if (channelId) {
-      rosterHint.agency = { [channelId]: "" };
-      rosterHint.debut = { [channelId]: "" };
-      rosterHint.gender = { [channelId]: "unknown" };
-    }
-
-    if (!resolvedId) {
-      console.error(`vt4chan: ${row.entry.sub || row.id} has no YouTube channel id to import`);
-      failed++;
-      continue;
-    }
-
-    const result = await importYouTubeChannels([resolvedId], {
-      limit: 1,
-      rosterHint,
-    });
-    if ((result.added as unknown[]).length > 0) {
-      added += (result.added as unknown[]).length;
     } else {
-      existing += result.existing;
-      failed += result.failed.length;
-    }
+      // Non-YouTube entry (vt4chan:<thread_no>): build the Channel record directly
+      const classification = classifyChannel({
+        name: entry.sub ?? `4chan /vt/ #${entry.no}`,
+        description: entry.com ?? null,
+        tags: [],
+        country: null,
+        platform: "vt4chan",
+        virtualClaim: "roster",
+        hasAvatar: false,
+      });
 
-    // Collect profile links as externals (never overwrite existing ones).
-    if (entry.youtubeLinks) {
-      for (const link of entry.youtubeLinks) {
-        const h = extractHandle(link);
-        if (h) {
-          externalsEdits.push({
-            id: resolvedId!,
-            platform: "youtube",
-            handle: `@${h}`,
-          });
-        }
-        const c = extractChannelId(link);
-        if (c) {
-          externalsEdits.push({
-            id: resolvedId!,
-            platform: "youtube",
-            handle: c,
-          });
-        }
+      const aliases: string[] = [];
+      if (entry.sub && entry.sub !== `4chan /vt/ #${entry.no}`) {
+        aliases.push(entry.sub);
+      }
+
+      const channel: Channel = {
+        id: row.id,
+        name: entry.sub ?? `4chan /vt/ #${entry.no}`,
+        nameSource: "roster",
+        aliases: aliases.slice(0, 12),
+        handle: null,
+        kind: classification.kind,
+        role: classification.role,
+        region: classification.region,
+        regionSource: "roster",
+        languages: classification.languages,
+        statedLanguages: classification.statedLanguages,
+        agency: classification.agency ?? null,
+        affiliation: "unknown",
+        avatar: null,
+        banner: null,
+        description: entry.com ?? null,
+        subscribers: { tag: "hidden" },
+        videoCount: null,
+        viewCount: null,
+        uploadsPlaylistId: null,
+        country: null,
+        tags: [],
+        isSinging: classification.isSinging,
+        gender: classification.gender,
+        isAi: classification.isAi,
+        isOfficialArtist: false,
+        officialArtistCheckedAt: null,
+        variant: classification.variant,
+        verification: null,
+        source: "api",
+        addedAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        lastItemsFetchedAt: null,
+        lastDetailsFetchedAt: null,
+        activity: "unknown",
+        debutDate: null,
+        graduateDate: null,
+        platforms: [],
+        externals: {},
+        popularVideoId: null,
+      };
+
+      const now = new Date().toISOString();
+      const written = applyChannelEdits(
+        [{ id: channel.id, update: () => true }],
+        "vt4chan",
+        now,
+      );
+
+      if (written) {
+        added++;
+      } else {
+        existing++;
       }
     }
   }
@@ -389,12 +403,12 @@ async function main(): Promise<void> {
   );
   if (externalsWritten) {
     console.log(
-      `${externalsWritten} record(s) had externals filled from virtuallife`,
+      `${externalsWritten} record(s) had externals filled from vt4chan`,
     );
   }
 
   console.log(
-    `\n${added} channel(s) written · ${existing} already tracked · ${failed} failed · ${rejectedByGate} rejected by gate · ${rejectedByFan} rejected by fan/clip test`,
+    `\n${added} channel(s) written · ${existing} already tracked · ${failed} failed`,
   );
   if (added > 0) console.log("Run npm run data:index next.");
 }
