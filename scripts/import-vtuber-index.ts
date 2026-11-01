@@ -141,6 +141,7 @@ async function main(): Promise<void> {
   const byId = new Map(dataset.map((c) => [c.id, c]));
   const byHandle = new Map<string, Channel>();
   const byYoutubeId = new Map<string, Channel>();
+  const byUcId = new Map<string, Channel>();
   for (const channel of dataset) {
     for (const platform of channel.platforms) {
       if (platform.platform === "youtube" && platform.handle) {
@@ -155,6 +156,13 @@ async function main(): Promise<void> {
       if (platform.platform === "youtube" && platform.id) {
         if (!byYoutubeId.has(platform.id)) byYoutubeId.set(platform.id, channel);
       }
+      if (/^UC[\w-]{20,}$/.test(channel.id)) {
+        if (!byUcId.has(channel.id)) byUcId.set(channel.id, channel);
+      }
+      // Some records use the UC… id as their own id (not just as a link id).
+      if (/^UC[\w-]{20,}$/.test(channel.id)) {
+        if (!byUcId.has(channel.id)) byUcId.set(channel.id, channel);
+      }
     }
   }
 
@@ -163,8 +171,11 @@ async function main(): Promise<void> {
     // vtuber-index entries are keyed by YouTube channel id directly
     const id = `youtube:${entry.channel_id}`;
     let record: Channel | null | undefined = byId.get(id);
-    // Fall back to matching by the raw UC… id on the platform link
+    // Fall back to matching by raw YouTube UC id on the platform link
     if (!record) record = byYoutubeId.get(entry.channel_id) ?? undefined;
+    if (!record) record = byUcId.get(entry.channel_id) ?? undefined;
+    // Fall back to matching by the record's own UC… id
+    if (!record) record = byUcId.get(entry.channel_id) ?? undefined;
 
     rows.push({
       entry,

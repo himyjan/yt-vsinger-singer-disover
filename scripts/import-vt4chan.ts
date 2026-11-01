@@ -145,6 +145,7 @@ async function main(): Promise<void> {
   const byId = new Map(dataset.map((c) => [c.id, c]));
   const byHandle = new Map<string, Channel>();
   const byYoutubeId = new Map<string, Channel>();
+  const byUcId = new Map<string, Channel>();
   for (const channel of dataset) {
     for (const platform of channel.platforms) {
       if (platform.platform === "youtube" && platform.handle) {
@@ -153,6 +154,9 @@ async function main(): Promise<void> {
       }
       if (platform.platform === "youtube" && platform.id) {
         if (!byYoutubeId.has(platform.id)) byYoutubeId.set(platform.id, channel);
+      }
+      if (/^UC[\w-]{20,}$/.test(channel.id)) {
+        if (!byUcId.has(channel.id)) byUcId.set(channel.id, channel);
       }
     }
   }
@@ -177,6 +181,7 @@ async function main(): Promise<void> {
       const fullId = `youtube:${cId}`;
       record = byId.get(fullId);
       if (!record) record = byYoutubeId.get(cId) ?? undefined;
+      if (!record) record = byUcId.get(cId) ?? undefined;
       if (record) {
         id = fullId;
         break;
