@@ -1,0 +1,115 @@
+name: Import CHZZK VTubers
+
+# Harvests CHZZK and imports the new channels the gate admits into
+# data/channels/. The harvest writes `.cache/chzzk/chzzk.json`, and the
+# importer reads it, matches each row against the dataset by CHZZK channel id,
+# classifies through classifyChannel(), and adds the survivors.
+#
+#   npm run data:chzzk              # harvest CHZZK channel listings
+#   npm run data:chzzk-import       # report what would be imported
+#   npm run data:chzzk-import -- --apply  # write the new channels
+
+on:
+  schedule:
+    # Weekly, Monday 06:30 UTC (after the sync's roster pass)
+    - cron: "30 6 * * 1"
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        description: "Report what would change without writing"
+        required: false
+        default: "false"
+
+concurrency:
+  group: dataset-writer-${{ github.repository }}
+  cancel-in-progress: false
+  queue: max
+
+permissions:
+  contents: write
+
+jobs:
+  harvest-and-import:
+    name: Harvest and import CHZZK
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          ref: ${{ github.ref_name }}
+          lfs: true
+
+      - name: Install Git LFS
+        run: |
+          git lfs install --skip-repo
+          git lfs pull || true
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "26"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Restore CHZZK cache
+        uses: actions/cache@v6
+        with:
+          path: |
+            .cache/chzzk
+          key: chzzk-harvest-${{ github.run_number }}
+          restore-keys: |
+            chzzk-harvest-
+
+      - name: Harvest CHZZK
+        run: npm run data:chzzk
+
+      - name: Import CHZZK channels
+        env:
+          DRY_RUN: ${{ inputs.dry-run }}
+        run: |
+          if [ "$DRY_RUN" = "true" ]; then
+            echo "Dry run: would import CHZZK channels"
+            npm run data:chzzk-import
+          else
+            npm run data:chzzk-import -- --apply
+          fi
+
+      - name: Build search index
+        run: npm run data:index
+
+      - name: Validate dataset
+        run: npm run data:validate
+
+      - name: Commit CHZZK imports
+        env:
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch origin "$BRANCH"
+          git reset --mixed "origin/$BRANCH"
+          git add data/channels data/search data/manifest.json
+          if git diff --cached --quiet; then
+            echo "CHZZK imports unchanged — nothing to commit"
+            exit 0
+          fi
+          git commit -m "data: import CHZZK VTubers (${{ github.run_number }})"
+          git push origin "HEAD:$BRANCH"
+
+      - name: Summary
+        run: |
+          {
+            echo "### Import CHZZK VTubers"
+            echo ""
+            echo "| | |"
+            echo "| --- | --- |"
+            echo "| Source | CHZZK channel listings |"
+            echo "| Credentials | none (public API) |"
+            echo "| Step | harvest → import → index → validate → commit |"
+            echo "| Dry run | ${{ inputs.dry-run }} |"
+            echo "| Committed | \`data/channels\`, \`data/search\`, \`data/manifest.json\` |"
+          } >> "$GITHUB_STEP_SUMMARY"

@@ -1,0 +1,115 @@
+name: Import Niconico VTubers
+
+# Harvests Niconico and imports the new channels the gate admits into
+# data/channels/. The harvest writes `.cache/niconico/niconico.json`, and the
+# importer reads it, matches each row against the dataset by Niconico content
+# id, classifies through classifyChannel(), and adds the survivors.
+#
+#   npm run data:niconico              # harvest Niconico on-air videos
+#   npm run data:niconico-import       # report what would be imported
+#   npm run data:niconico-import -- --apply  # write the new channels
+
+on:
+  schedule:
+    # Weekly, Monday 06:00 UTC (after the sync's roster pass)
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        description: "Report what would change without writing"
+        required: false
+        default: "false"
+
+concurrency:
+  group: dataset-writer-${{ github.repository }}
+  cancel-in-progress: false
+  queue: max
+
+permissions:
+  contents: write
+
+jobs:
+  harvest-and-import:
+    name: Harvest and import Niconico
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          ref: ${{ github.ref_name }}
+          lfs: true
+
+      - name: Install Git LFS
+        run: |
+          git lfs install --skip-repo
+          git lfs pull || true
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "26"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Restore Niconico cache
+        uses: actions/cache@v6
+        with:
+          path: |
+            .cache/niconico
+          key: niconico-harvest-${{ github.run_number }}
+          restore-keys: |
+            niconico-harvest-
+
+      - name: Harvest Niconico
+        run: npm run data:niconico
+
+      - name: Import Niconico channels
+        env:
+          DRY_RUN: ${{ inputs.dry-run }}
+        run: |
+          if [ "$DRY_RUN" = "true" ]; then
+            echo "Dry run: would import Niconico channels"
+            npm run data:niconico-import
+          else
+            npm run data:niconico-import -- --apply
+          fi
+
+      - name: Build search index
+        run: npm run data:index
+
+      - name: Validate dataset
+        run: npm run data:validate
+
+      - name: Commit Niconico imports
+        env:
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch origin "$BRANCH"
+          git reset --mixed "origin/$BRANCH"
+          git add data/channels data/search data/manifest.json
+          if git diff --cached --quiet; then
+            echo "Niconico imports unchanged — nothing to commit"
+            exit 0
+          fi
+          git commit -m "data: import Niconico VTubers (${{ github.run_number }})"
+          git push origin "HEAD:$BRANCH"
+
+      - name: Summary
+        run: |
+          {
+            echo "### Import Niconico VTubers"
+            echo ""
+            echo "| | |"
+            echo "| --- | --- |"
+            echo "| Source | Niconico Content Search API v2 |"
+            echo "| Credentials | none (public API) |"
+            echo "| Step | harvest → import → index → validate → commit |"
+            echo "| Dry run | ${{ inputs.dry-run }} |"
+            echo "| Committed | \`data/channels\`, \`data/search\`, \`data/manifest.json\` |"
+          } >> "$GITHUB_STEP_SUMMARY"

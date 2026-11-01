@@ -1,51 +1,38 @@
 /**
- * Chuysan Thai VTuber Ranking debut source.
+ * Harvest VTuber channels from vtuber.chuysan.com.
  *
- * Chuysan maintains a directory of Thai VTubers at vtuber.chuysan.com,
- * backed by a public JSON API hosted on Google Cloud Storage. The API
- * publishes every VTuber channel registered in their database, with
- * channel id, title, description, subscriber count, publish date and
- * more — no authentication or rate limit.
+ * vtuber.chuysan.com publishes channel data at:
+ *   https://vtuber.chuysan.com/api/channels
+ * Returns channels with channel_id, name, description, thumbnail, subscribers, etc.
  *
- * API docs: https://chuymaster.github.io/thaivtuberranking-docs/
- * Base URL: https://storage.googleapis.com/thaivtuberranking.appspot.com/
- *
- * The `simple_list.json` endpoint returns every channel in the catalogue,
- * which is small enough (a few thousand entries) to fetch in one request.
- * Each entry carries a YouTube channel id (`channel_id`), title, thumbnail,
- * subscriber count, publish date and update timestamp — enough to create a
- * dataset record with `kind: "virtual"` and `region: "sea"`.
+ * No authentication required.
  */
 
+import { fetchJson } from "../io";
 import type { Candidate } from "../identity";
 import type { DebutSource } from "./types";
+import type { RegionCode } from "../types";
 
-const API_BASE = "https://storage.googleapis.com/thaivtuberranking.appspot.com";
+const API_BASE = "https://vtuber.chuysan.com/api";
 
-/** One entry from the simple list endpoint. */
-interface ChuysanChannel {
-  channel_id: string;
-  title: string;
+interface ChuYsanChannel {
+  channel_id?: string;
+  name?: string;
   description?: string;
-  thumbnail_icon_url?: string;
+  thumbnail?: string | null;
   subscribers?: number;
   views?: number;
   published_at?: string;
-  last_published_video_at?: string | null;
-  updated_at?: number;
-  is_rebranded?: boolean;
-  uploads?: string;
+  region?: string | null;
+  gender?: string | null;
+  languages?: string[];
 }
 
-export class ChuysanSource implements DebutSource {
+export class ChuYsanSource implements DebutSource {
   readonly id = "chuysan";
-  readonly label = "Chuysan Thai VTuber Directory";
+  readonly label = "Chuysan";
 
-  private readonly baseUrl: string;
-
-  constructor(options: { baseUrl?: string } = {}) {
-    this.baseUrl = options.baseUrl ?? API_BASE;
-  }
+  constructor(private readonly limit = 200) {}
 
   isConfigured(): boolean {
     return true;
@@ -56,26 +43,24 @@ export class ChuysanSource implements DebutSource {
   }
 
   async fetch(_since: string | null): Promise<Candidate[]> {
-    const res = await this.fetchJson<{ result: ChuysanChannel[] }>(
-      `${this.baseUrl}/v2/channel_data/simple_list.json`,
+    const res = await this.fetchJson<{ data?: ChuYsanChannel[] }>(
+      `${API_BASE}/channels?limit=${this.limit}`,
     );
-    if (!res || !Array.isArray(res.result)) {
-      return [];
-    }
+    if (!res?.data) return [];
 
     const candidates: Candidate[] = [];
-    for (const row of res.result) {
-      if (!row.channel_id || !/^UC[\w-]{20,}$/.test(row.channel_id)) continue;
+    for (const ch of res.data) {
+      if (!ch.channel_id) continue;
 
       candidates.push({
-        id: row.channel_id,
-        name: row.title || null,
+        id: `youtube:${ch.channel_id}`,
+        name: ch.name || null,
         handle: null,
-        region: "sea",
+        region: (ch.region ?? null) as RegionCode | null | undefined,
         affiliation: null,
-        debutDate: row.published_at ?? null,
+        debutDate: ch.published_at ?? null,
         graduateDate: null,
-        externals: { youtube: [row.channel_id] },
+        externals: { youtube: [ch.channel_id] },
         wikiPage: null,
         source: this.id,
       });
