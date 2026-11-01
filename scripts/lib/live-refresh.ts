@@ -82,6 +82,7 @@ export interface LiveRefreshContext {
       status?: "live" | "upcoming";
       scheduledStart?: string | null;
       actualStart?: string | null;
+      isMember?: boolean | null;
     },
     channel: Channel,
     now: string,
@@ -262,6 +263,7 @@ export async function refreshLivePass(
             status: stream.status,
             scheduledStart: stream.scheduledStart,
             actualStart: stream.actualStart ?? null,
+            isMember: stream.isMember ?? null,
           },
           channel,
           now,

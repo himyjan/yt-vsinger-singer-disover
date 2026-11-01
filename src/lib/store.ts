@@ -236,6 +236,8 @@ export const state = reactive({
    * schedule tables that only announce them (日程 / 週表 / timetable).
    */
   upcomingType: "all" as "all" | "stream" | "schedule",
+  /** Membership filter: everything, only members-only streams, or only public streams. */
+  member: "all" as "all" | "member" | "public",
   /** Active view. */
   view: initialView(),
   /** Current search query. */

@@ -149,6 +149,8 @@ export interface InnerTubeLive {
   scheduledStart: string | null;
   /** When the broadcast actually began, for a live one. */
   actualStart?: string | null;
+  /** True when the stream is members-only (channel membership required to watch). */
+  isMember: boolean | null;
 }
 
 export interface InnerTubeChannelCatalog {
@@ -361,6 +363,9 @@ function titleOf(item: any): string {
  * Finished broadcasts are ignored here: they are already in the uploads tab.
  */
 function liveStatusOf(item: any): "live" | "upcoming" | null {
+  // A stream that is already broadcasting outranks its scheduled badge:
+  // YouTube keeps the "Upcoming" label on a card after it has started.
+  if (item?.is_live === true) return "live";
   if (item?.is_upcoming === true) return "upcoming";
   if (
     item?.upcoming instanceof Date &&
@@ -368,7 +373,6 @@ function liveStatusOf(item: any): "live" | "upcoming" | null {
   ) {
     return "upcoming";
   }
-  if (item?.is_live === true) return "live";
 
   const badges = lockupBadges(item);
   if (
@@ -1065,7 +1069,7 @@ export class InnerTubeSource {
       for (const item of list.slice(0, 30)) {
         const id = item?.video_id ?? item?.content_id ?? item?.id;
         if (typeof id !== "string" || !id) continue;
-        const status = liveStatusOf(item);
+        let status = liveStatusOf(item);
         if (!status) continue;
 
         /**
@@ -1084,6 +1088,14 @@ export class InnerTubeSource {
         if (state) {
           if (status === "upcoming" && !state.isUpcoming) continue;
           if (status === "live" && !state.isLive) continue;
+          /**
+           * The badge is how the tab renders, the player response is what the
+           * video is. A card keeps its "Upcoming" badge after the broadcast
+           * has aired, so when the player says the stream is live, it is live
+           * — even if the card still says "Scheduled".
+           */
+          if (state.isLive) status = "live";
+          else if (state.isUpcoming) status = "upcoming";
         }
 
         out.push({
@@ -1091,9 +1103,9 @@ export class InnerTubeSource {
           title: titleOf(item),
           thumbnail: thumbnailOf(item),
           status,
-          scheduledStart:
-            status === "upcoming" ? (state?.start ?? null) : null,
+          scheduledStart: status === "upcoming" ? (state?.start ?? null) : null,
           actualStart: status === "live" ? (state?.start ?? null) : null,
+          isMember: state?.isMember ?? null,
         });
       }
       this.limiter.reward();
@@ -1120,7 +1132,12 @@ export class InnerTubeSource {
    */
   private async streamState(
     videoId: string,
-  ): Promise<{ isLive: boolean; isUpcoming: boolean; start: string | null } | null> {
+  ): Promise<{
+    isLive: boolean;
+    isUpcoming: boolean;
+    start: string | null;
+    isMember: boolean | null;
+  } | null> {
     if (!this.client) return null;
     try {
       await this.throttle();
@@ -1131,6 +1148,19 @@ export class InnerTubeSource {
       const basic = info?.basic_info;
       if (!basic) return null;
       const start = basic.start_timestamp;
+      const playability = basic?.playabilityStatus ?? {};
+      const reason = String(playability?.reason ?? "").toLowerCase();
+      const status = String(playability?.status ?? "").toUpperCase();
+      const isMember =
+        basic?.isMember === true ||
+        basic?.videoDetails?.isMember === true ||
+        /member/.test(reason) ||
+        status === "MEMBERSHIP_REQUIRED" ||
+        status === "MEMBERS_ONLY"
+          ? true
+          : status === "OK" || playability?.status === undefined
+            ? false
+            : null;
       return {
         isLive: basic.is_live === true,
         isUpcoming: basic.is_upcoming === true,
@@ -1140,6 +1170,7 @@ export class InnerTubeSource {
             : typeof start === "string" && start
               ? new Date(start).toISOString()
               : null,
+        isMember,
       };
     } catch {
       return null;
