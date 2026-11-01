@@ -181,6 +181,7 @@ scripts/
     ├── vdb.ts               vtuber-database.wikiru.jp: Cargo tables
     ├── vtuberdex.ts         vtuberdex.pages.dev: public JSON API
     ├── virtualhumans.ts     virtualhumans.org: public JSON API
+    ├── virtuallife.ts       virtuallife.tv VTuber directory: HTML parsing
     ├── vtpedia.ts           vtpedia: public JSON API
     ├── vtubers.tw.ts        vtubers.tw: public JSON API
     ├── hololist.ts          the HoloList directory: entry and sitemap parsers

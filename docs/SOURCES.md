@@ -435,6 +435,7 @@ stable or complete search API:
 | [virtualhumans.org](https://virtualhumans.org) | — | **public JSON API** (`https://virtualhumans.org`) | channel ids, names, descriptions, publish dates — wired as `scripts/lib/debut-sources/virtualhumans.ts`, a discovery source |
 | [vtpedia](https://vtpedia.org) | — | **public JSON API** | channel ids, names, descriptions, publish dates — wired as `scripts/lib/debut-sources/vtpedia.ts`, a discovery source |
 | [vtubers.tw](https://vtubers.tw) | — | **public JSON API** | channel ids, names, descriptions, publish dates — wired as `scripts/lib/debut-sources/vtubers.tw.ts`, a discovery source for Taiwanese VTubers |
+| [Virtuallife](https://virtuallife.tv/?site=vtuber) | — | **HTML directory** (`virtuallife.tv/?site=vtuber`) | VTuber names, YouTube channel ids, Twitter/Instagram/TikTok handles — wired as `scripts/lib/debut-sources/virtuallife.ts`, a discovery source for German VTubers |
 | [ci.me](https://ci.me) | **Open API** (`Client-Id` / `Client-Secret`) | **the public live-status endpoint** | CI.ME channel ids, names, follower counts — wired as `scripts/lib/debut-sources/ci-me.ts`, a discovery source for CI.ME VTubers |
 
 **InnerTube** (`scripts/lib/youtubei.ts`) — the channel's *description* is the
