@@ -16,6 +16,11 @@
  * the item's category is "other"/"live" — it never overwrites a confirmed
  * song title or original artist from a stronger source.
  *
+ * OAC (Official Artist Channel) channels are enriched first: before touching
+ * Musicdex data, InnerTube profiles are fetched in parallel for every owning
+ * channel, and OAC channels are sorted to the front so their items get
+ * enriched first when the --limit budget runs out.
+ *
  *   npm run data:musicdex-import                     # report only
  *   npm run data:musicdex-import -- --apply          # write enriched items
  *
@@ -34,6 +39,7 @@ import {
   OVERWRITABLE_ITEM_CATEGORIES,
   type MusicdexSongEntry,
 } from "../scripts/lib/musicdex";
+import { InnerTubeSource } from "../scripts/lib/youtubei";
 import type { Channel, Item } from "../scripts/lib/types";
 
 const SNAPSHOT = ".cache/musicdex/musicdex.json";
@@ -79,6 +85,79 @@ function parseArgs(argv: string[]): Options {
   return options;
 }
 
+/**
+ * Enriches one item from a Musicdex song, mutating the item in place.
+ * Returns true when any field changed.
+ */
+function enrichItem(
+  item: Item,
+  song: MusicdexSong,
+): boolean {
+  let changed = false;
+
+  // Enrich song title — only when null or item is unclassified.
+  if (song.song && (!item.songTitle || item.category === "other")) {
+    item.songTitle = song.song;
+    changed = true;
+  }
+
+  // Enrich original artist — only when null or item is unclassified.
+  if (song.originalArtist && !item.originalArtist) {
+    item.originalArtist = song.originalArtist;
+    changed = true;
+  }
+
+  // Enrich category — only when item is "other" or "live".
+  if (
+    song.category &&
+    MUSICDEX_CATEGORY_MAP[song.category] &&
+    OVERWRITABLE_ITEM_CATEGORIES.has(item.category)
+  ) {
+    item.category = MUSICDEX_CATEGORY_MAP[song.category]!;
+    changed = true;
+  }
+
+  // Enrich publishedAt — only when null.
+  if (song.publishedAt && !item.publishedAt) {
+    item.publishedAt = song.publishedAt;
+    changed = true;
+  }
+
+  // Enrich duration — only when null.
+  if (
+    song.duration !== undefined &&
+    song.duration !== null &&
+    !item.duration
+  ) {
+    item.duration = song.duration;
+    changed = true;
+  }
+
+  // Enrich viewCount — only when null.
+  if (
+    song.viewCount !== undefined &&
+    song.viewCount !== null &&
+    !item.viewCount
+  ) {
+    item.viewCount = song.viewCount;
+    changed = true;
+  }
+
+  // Enrich thumbnail — only when null.
+  if (song.thumbnail && !item.thumbnail) {
+    item.thumbnail = song.thumbnail;
+    changed = true;
+  }
+
+  // Mark as collaboration.
+  if (song.isCollab && !item.isCollab) {
+    item.isCollab = true;
+    changed = true;
+  }
+
+  return changed;
+}
+
 async function main(): Promise<void> {
   const options = parseArgs(process.argv.slice(2));
   if (!fs.existsSync(SNAPSHOT)) {
@@ -89,7 +168,7 @@ async function main(): Promise<void> {
   }
 
   const snapshot: {
-    data?: MusicdexSong[];
+    data?: MusicdexSongEntry[];
     generatedAt: string;
     count: number;
   } = JSON.parse(fs.readFileSync(SNAPSHOT, "utf8"));
@@ -136,21 +215,10 @@ async function main(): Promise<void> {
 
   const byItemId = new Map(items.map((i) => [i.id, i]));
 
-  // Build a channel map: channelId -> channel, for OAC badge lookup.
-  const byChannelId = new Map<string, Channel>();
-  for (const channel of channels) {
-    byChannelId.set(channel.id, channel);
-  }
-
-  // Pair each song with its dataset item, then sort so OAC (Official Artist
-  // Channel) badge holders are enriched first. OAC channels are verified
-  // artists on YouTube — their song metadata is the most authoritative, so
-  // when the --limit budget runs out, OAC items get priority.
-  const songItems: Array<{ song: MusicdexSong; item: Item; isOac: boolean }> = [];
+  // Pair each song with its dataset item.
+  const songItems: Array<{ song: MusicdexSong; item: Item }> = [];
   let matched = 0;
-  let enriched = 0;
   let skipped = 0;
-  let oacCount = 0;
   for (const song of songs) {
     const item = byItemId.get(song.id);
     if (!item) {
@@ -158,84 +226,66 @@ async function main(): Promise<void> {
       continue;
     }
     matched++;
-    const channel = byChannelId.get(item.channelId);
-    const isOac = channel?.isOfficialArtist === true;
-    if (isOac) oacCount++;
-    songItems.push({ song, item, isOac });
+    songItems.push({ song, item });
   }
 
-  // Sort: OAC first, then by song id for determinism.
+  // ------------------------------------------------------------------
+  // OAC-first ordering: fetch InnerTube profiles for every owning channel
+  // in parallel, identify OAC channels, and sort items so OAC-owned items
+  // are enriched first.
+  // ------------------------------------------------------------------
+  const source = new InnerTubeSource({ delayMs: 150 });
+  const ready = await source.connect();
+
+  const channelIds = new Set<string>();
+  for (const { item } of songItems) {
+    channelIds.add(item.channelId);
+  }
+
+  const oacChannelIds = new Set<string>();
+  if (ready && source.isAvailable) {
+    const concurrency = 6;
+    const channelIdList = Array.from(channelIds);
+    let idx = 0;
+
+    async function worker() {
+      while (idx < channelIdList.length) {
+        const channelId = channelIdList[idx++];
+        try {
+          const profile = await source.profile(channelId);
+          if (profile?.officialArtist) {
+            oacChannelIds.add(channelId);
+          }
+        } catch {
+          // profile failed — not OAC, skip
+        }
+      }
+    }
+
+    const workers = Array.from({ length: concurrency }, () => worker());
+    await Promise.all(workers);
+
+    console.log(
+      `innertube: checked ${channelIdList.length} channel(s), ${oacChannelIds.size} OAC`,
+    );
+  } else {
+    console.log("innertube: unavailable — skipping OAC pre-check");
+  }
+
+  // Sort: OAC-owned items first, then by song id for determinism.
   songItems.sort((a, b) => {
-    if (b.isOac && !a.isOac) return 1;
-    if (a.isOac && !b.isOac) return -1;
+    const aOac = oacChannelIds.has(a.item.channelId);
+    const bOac = oacChannelIds.has(b.item.channelId);
+    if (bOac && !aOac) return 1;
+    if (aOac && !bOac) return -1;
     return a.song.id.localeCompare(b.song.id);
   });
+
+  let enriched = 0;
   const now = new Date().toISOString();
 
   for (const { song, item } of songItems) {
-    let changed = false;
-
-    // Enrich song title — only when null or item is unclassified.
-    if (song.song && (!item.songTitle || item.category === "other")) {
-      item.songTitle = song.song;
-      changed = true;
-    }
-
-    // Enrich original artist — only when null or item is unclassified.
-    if (song.originalArtist && !item.originalArtist) {
-      item.originalArtist = song.originalArtist;
-      changed = true;
-    }
-
-    // Enrich category — only when item is "other" or "live".
-    if (
-      song.category &&
-      MUSICDEX_CATEGORY_MAP[song.category] &&
-      OVERWRITABLE_ITEM_CATEGORIES.has(item.category)
-    ) {
-      item.category = MUSICDEX_CATEGORY_MAP[song.category]!;
-      changed = true;
-    }
-
-    // Enrich publishedAt — only when null.
-    if (song.publishedAt && !item.publishedAt) {
-      item.publishedAt = song.publishedAt;
-      changed = true;
-    }
-
-    // Enrich duration — only when null.
-    if (
-      song.duration !== undefined &&
-      song.duration !== null &&
-      !item.duration
-    ) {
-      item.duration = song.duration;
-      changed = true;
-    }
-
-    // Enrich viewCount — only when null.
-    if (
-      song.viewCount !== undefined &&
-      song.viewCount !== null &&
-      !item.viewCount
-    ) {
-      item.viewCount = song.viewCount;
-      changed = true;
-    }
-
-    // Enrich thumbnail — only when null.
-    if (song.thumbnail && !item.thumbnail) {
-      item.thumbnail = song.thumbnail;
-      changed = true;
-    }
-
-    // Mark as collaboration.
-    if (song.isCollab && !item.isCollab) {
-      item.isCollab = true;
-      changed = true;
-    }
-
-    if (changed) {
+    if (enrichItem(item, song)) {
       enriched++;
     }
 
@@ -243,7 +293,7 @@ async function main(): Promise<void> {
   }
 
   console.log(
-    `matched ${matched} item(s) (${oacCount} OAC), enriched ${enriched}, skipped ${skipped} (not in dataset)`,
+    `matched ${matched} item(s) (${oacChannelIds.size} OAC channel(s)), enriched ${enriched}, skipped ${skipped} (not in dataset)`,
   );
 
   if (!options.apply) {
