@@ -70,6 +70,8 @@
     "data:v-sai-import": "oxnode scripts/import-v-sai.ts",
     "data:virtualhumans": "oxnode scripts/harvest-virtualhumans.ts",
     "data:virtualhumans-import": "oxnode scripts/import-virtualhumans.ts",
+    "data:virtuallife": "oxnode scripts/harvest-virtuallife.ts",
+    "data:virtuallife-import": "oxnode scripts/import-virtuallife.ts",
     "data:chuysan": "oxnode scripts/harvest-chuysan.ts",
     "data:chuysan-import": "oxnode scripts/import-chuysan.ts",
     "data:ci-me": "oxnode scripts/harvest-cime.ts",

@@ -1,0 +1,117 @@
+name: Import Virtuallife VTubers
+
+# Harvests virtuallife.tv and imports the new channels the gate admits into
+# data/channels/. The harvest writes `.cache/virtuallife/virtuallife.json`,
+# and the importer reads it, matches each row against the dataset by YouTube
+# channel id, classifies through classifyChannel(), and adds the survivors.
+#
+# No authentication required.
+#
+#   npm run data:virtuallife              # harvest VTuber candidates from virtuallife.tv
+#   npm run data:virtuallife-import       # report what would be imported
+#   npm run data:virtuallife-import -- --apply  # write the new channels
+
+on:
+  schedule:
+    # Weekly, Monday 07:00 UTC (after the sync's roster pass)
+    - cron: "0 7 * * 1"
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        description: "Report what would change without writing"
+        required: false
+        default: "false"
+
+concurrency:
+  group: dataset-writer-${{ github.repository }}
+  cancel-in-progress: false
+  queue: max
+
+permissions:
+  contents: write
+
+jobs:
+  harvest-and-import:
+    name: Harvest and import Virtuallife
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          ref: ${{ github.ref_name }}
+          lfs: true
+
+      - name: Install Git LFS
+        run: |
+          git lfs install --skip-repo
+          git lfs pull || true
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "26"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Restore Virtuallife cache
+        uses: actions/cache@v6
+        with:
+          path: |
+            .cache/virtuallife
+          key: virtuallife-harvest-${{ github.run_number }}
+          restore-keys: |
+            virtuallife-harvest-
+
+      - name: Harvest Virtuallife
+        run: npm run data:virtuallife
+
+      - name: Import Virtuallife channels
+        env:
+          DRY_RUN: ${{ inputs.dry-run }}
+        run: |
+          if [ "$DRY_RUN" = "true" ]; then
+            echo "Dry run: would import Virtuallife channels"
+            npm run data:virtuallife-import
+          else
+            npm run data:virtuallife-import -- --apply
+          fi
+
+      - name: Build search index
+        run: npm run data:index
+
+      - name: Validate dataset
+        run: npm run data:validate
+
+      - name: Commit Virtuallife imports
+        env:
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch origin "$BRANCH"
+          git reset --mixed "origin/$BRANCH"
+          git add data/channels data/search data/manifest.json
+          if git diff --cached --quiet; then
+            echo "Virtuallife imports unchanged — nothing to commit"
+            exit 0
+          fi
+          git commit -m "data: import Virtuallife VTubers (${{ github.run_number }})"
+          git push origin "HEAD:$BRANCH"
+
+      - name: Summary
+        run: |
+          {
+            echo "### Import Virtuallife VTubers"
+            echo ""
+            echo "| | |"
+            echo "| --- | --- |"
+            echo "| Source | virtuallife.tv (German VTuber directory) |"
+            echo "| Credentials | none (public HTML) |"
+            echo "| Step | harvest → import → index → validate → commit |"
+            echo "| Dry run | ${{ inputs.dry-run }} |"
+            echo "| Committed | \`data/channels\`, \`data/search\`, \`data/manifest.json\` |"
+          } >> "$GITHUB_STEP_SUMMARY"
