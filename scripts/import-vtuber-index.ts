@@ -284,7 +284,10 @@ async function main(): Promise<void> {
         youtubeAdded += (result.added as unknown[]).length;
       } else {
         existing += result.existing;
-        failed += result.failed.length;
+        for (const f of result.failed) {
+        console.error(`vtuber-index: ${f.id} failed — ${f.reason}`);
+        failed++;
+      }
       }
 
       // Collect platform links as externals (never overwrite existing ones).

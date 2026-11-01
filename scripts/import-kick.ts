@@ -196,7 +196,10 @@ async function main(): Promise<void> {
       added += (result.added as unknown[]).length;
     } else {
       existing += result.existing;
-      failed += result.failed.length;
+      for (const f of result.failed) {
+        console.error(`kick: ${f.id} failed — ${f.reason}`);
+        failed++;
+      }
     }
   }
 
