@@ -213,8 +213,8 @@ async function main(): Promise<void> {
     return;
   }
 
-  const source = await new InnerTubeSource({ delayMs: 100 }).connect();
-  const client = (source as any).client;
+  const source = new InnerTubeSource({ delayMs: 100 });
+  await source.connect();
 
   let added = 0;
   let existing = 0;
@@ -222,7 +222,7 @@ async function main(): Promise<void> {
 
   for (const row of newRows) {
     const ytHandle = row.id!.replace(/^youtube:@/, "");
-    const resolvedId = await client.resolveHandle(ytHandle);
+    const resolvedId = await source.resolveHandle(ytHandle);
     if (!resolvedId) {
       console.error(`v-sai: could not resolve @${ytHandle} to a YouTube channel id`);
       failed++;
