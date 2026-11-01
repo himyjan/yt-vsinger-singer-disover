@@ -70,8 +70,10 @@ async function main(): Promise<void> {
     `${API_BASE}/channels?limit=${options.limit ?? 200}`
   );
   if (!res?.data) {
-    console.error("V-SLive feed unavailable");
-    process.exit(1);
+    // A source that is unreachable must not fail the run — leave the
+    // previous cache in place and exit cleanly so the workflow continues.
+    console.error("V-SLive feed unavailable — leaving previous cache untouched");
+    process.exit(0);
   }
 
   const snapshot = {
