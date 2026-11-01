@@ -436,6 +436,7 @@ stable or complete search API:
 | [vtpedia](https://vtpedia.org) | — | **public JSON API** | channel ids, names, descriptions, publish dates — wired as `scripts/lib/debut-sources/vtpedia.ts`, a discovery source |
 | [vtubers.tw](https://vtubers.tw) | — | **public JSON API** | channel ids, names, descriptions, publish dates — wired as `scripts/lib/debut-sources/vtubers.tw.ts`, a discovery source for Taiwanese VTubers |
 | [Virtuallife](https://virtuallife.tv/?site=vtuber) | — | **HTML directory** (`virtuallife.tv/?site=vtuber`) | VTuber names, YouTube channel ids, Twitter/Instagram/TikTok handles — wired as `scripts/lib/debut-sources/virtuallife.ts`, a discovery source for German VTubers |
+| [4chan /vt/](https://boards.4chan.org/vt/) | — | **JSON API** (`a.4cdn.org/vt/catalog.json`) | Thread comments with YouTube channel links — wired as `scripts/lib/debut-sources/vt4chan.ts`, a discovery source. Anonymous imageboard — fan accounts excluded via detectClipAccount() and isFanAccountName(). |
 | [ci.me](https://ci.me) | **Open API** (`Client-Id` / `Client-Secret`) | **the public live-status endpoint** | CI.ME channel ids, names, follower counts — wired as `scripts/lib/debut-sources/ci-me.ts`, a discovery source for CI.ME VTubers |
 
 **InnerTube** (`scripts/lib/youtubei.ts`) — the channel's *description* is the
