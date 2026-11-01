@@ -146,6 +146,32 @@ It runs with `--web`, the optional search-grounded fallback, which needs
 `GEMINI_API_KEY`; without the secret the deterministic sources (the
 performer's own text, their X bio through FxTwitter, Wikidata) still run.
 
+### The three fill workflows
+
+They share the `dataset-writer-*` group, so they queue behind the sync and each
+other rather than writing the same shards at once.
+
+| Workflow | Schedule | Writes | Covers |
+| --- | --- | --- | --- |
+| `fill-links.yml` | Mon 03:00 | channels | `externals` from the **HoloList and bacharu rosters** — only records those rosters carry |
+| `fill-details-parallel.yml` | daily 05:17 | channels | avatars, names, follower counts, upload totals and links, worst-first, 20 jobs × 600 records |
+| `fill-externals.yml` | daily 06:17 | channels | `externals` for the records that have **nothing beyond `youtube`**, oldest-asked first, 20 jobs × 600 records |
+
+**Why `fill-externals.yml` exists beside the other two.** A roster only knows
+its own members, so a real artist with no roster entry (Taylor Swift) is never
+touched by `fill-links.yml`. The details pass *does* read the about page — that
+is where a channel publishes its other accounts — but its backlog is ordered
+worst-first, and a record that merely lacks its links scores lowest, so it sits
+behind tens of thousands with no avatar. `data:details --externals-only`
+selects exactly the 11,110 records whose `externals` holds nothing but
+`youtube` and orders them oldest-asked-first, so a sweep advances.
+
+All three split the catalogue into **twenty volumes, one job each** and a
+fan-in job merges with `--channels-only`, rebuilds the index, validates and
+commits once. The commit stages only `data/channels`, `data/search` and
+`data/manifest.json`; everything else is restored from the branch, so a
+`data: live status` commit that landed during the run is never reverted.
+
 ### `deploy-pages.yml` — publish the site
 
 Runs on every push to `main`: checkout → install → validate → build → upload
