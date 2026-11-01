@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-01T13:23:37.437Z",
+  "generatedAt": "2026-11-01T19:04:35.774Z",
   "items": [
     {
       "id": "ycFFq_dGuTw",
@@ -46,6 +46,53 @@
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.283Z",
       "updatedAt": "2026-11-01T13:12:40.115Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "vTpBfAZq4VQ",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UC2ZWggon1NOT2TGaVUMzY7A",
+      "channelName": "庫洛姆•Kuromu",
+      "channelKind": "virtual",
+      "region": "tw",
+      "gender": "female",
+      "languages": [
+        "zh-Hant"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "【庫庫杯第二彈 】貓草願望一次滿足🤩居然有肚肚⋯？雙通道杯來ㄌ(/ω＼)！ #台灣Vtuber #庫洛姆",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/vTpBfAZq4VQ/hq720.jpg",
+      "publishedAt": "2026-11-01T14:00:00.000Z",
+      "scheduledStart": "2026-11-01T14:00:00.000Z",
+      "actualStart": null,
+      "isMember": false,
+      "actualEnd": "2026-11-01T18:53:45.800Z",
+      "duration": 17625,
+      "status": "past",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC2ZWggon1NOT2TGaVUMzY7A",
+          "name": "庫洛姆•Kuromu",
+          "kind": "virtual",
+          "region": "tw"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-01T13:12:40.115Z",
+      "updatedAt": "2026-11-01T18:53:45.800Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -1944,6 +1991,100 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "0A4ign_ryuI",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UC6gtNz5Jn7H1Hxo8IpiJhRQ",
+      "channelName": "水鏡華",
+      "channelKind": "virtual",
+      "region": "tw",
+      "gender": "female",
+      "languages": [
+        "zh-Hant"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "【Nientum - Op. ZERO】挑戰音樂遊戲裡自己的歌！【遊戲實況】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/0A4ign_ryuI/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2026-11-07T12:00:00.000Z",
+      "actualStart": null,
+      "isMember": false,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": "【Nientum",
+      "originalArtist": "Op. ZERO】挑戰音樂遊戲裡自己的歌！【遊戲實況】",
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC6gtNz5Jn7H1Hxo8IpiJhRQ",
+          "name": "水鏡華",
+          "kind": "virtual",
+          "region": "tw"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-01T18:53:45.800Z",
+      "updatedAt": "2026-11-01T18:53:45.800Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "1vD0TzCm3S4",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCaaaRyNQEACU09Ocw3EIh-w",
+      "channelName": "希珥 Shir Ch",
+      "channelKind": "virtual",
+      "region": "tw",
+      "gender": "unknown",
+      "languages": [
+        "zh-Hant"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "【活俠傳】把天命點都給南宮深 ❤｜希珥 Shir",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/1vD0TzCm3S4/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2026-11-02T06:00:00.000Z",
+      "actualStart": null,
+      "isMember": false,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCaaaRyNQEACU09Ocw3EIh-w",
+          "name": "希珥 Shir Ch",
+          "kind": "virtual",
+          "region": "tw"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-01T18:53:35.345Z",
+      "updatedAt": "2026-11-01T18:53:35.345Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "2AgRJmVAuj8",
       "platform": "youtube",
       "type": "live",
@@ -1986,7 +2127,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-11-01T13:12:49.284Z",
+      "updatedAt": "2026-11-01T18:53:45.931Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -2033,7 +2174,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.180Z",
-      "updatedAt": "2026-11-01T13:12:45.279Z",
+      "updatedAt": "2026-11-01T18:53:34.963Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -2080,7 +2221,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-01T04:35:30.081Z",
-      "updatedAt": "2026-11-01T13:12:49.469Z",
+      "updatedAt": "2026-11-01T18:53:42.137Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -2127,7 +2268,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.180Z",
-      "updatedAt": "2026-11-01T13:12:45.279Z",
+      "updatedAt": "2026-11-01T18:53:34.963Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -2174,7 +2315,54 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:24.029Z",
-      "updatedAt": "2026-11-01T13:12:43.908Z",
+      "updatedAt": "2026-11-01T18:53:44.725Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "4Ung8foZy0Q",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCbaJ23sx7adHYYk29VIYe0Q",
+      "channelName": "千夜津月 Tsuzuki Ch.",
+      "channelKind": "virtual",
+      "region": "tw",
+      "gender": "female",
+      "languages": [
+        "zh-Hant"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "【夜月相伴#7】雜談！晚上來聊聊天吧♡【HKVTuber】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/4Ung8foZy0Q/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2026-11-06T12:00:00.000Z",
+      "actualStart": null,
+      "isMember": false,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCbaJ23sx7adHYYk29VIYe0Q",
+          "name": "千夜津月 Tsuzuki Ch.",
+          "kind": "virtual",
+          "region": "tw"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-01T18:53:34.963Z",
+      "updatedAt": "2026-11-01T18:53:34.963Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -2221,7 +2409,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-01T13:12:35.843Z",
-      "updatedAt": "2026-11-01T13:12:35.843Z",
+      "updatedAt": "2026-11-01T18:53:56.706Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -2268,7 +2456,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:22.912Z",
-      "updatedAt": "2026-11-01T13:12:34.736Z",
+      "updatedAt": "2026-11-01T18:53:42.254Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -2315,7 +2503,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T05:10:16.208Z",
-      "updatedAt": "2026-11-01T13:12:40.115Z",
+      "updatedAt": "2026-11-01T18:53:45.800Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -2362,7 +2550,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.567Z",
-      "updatedAt": "2026-11-01T13:12:36.260Z",
+      "updatedAt": "2026-11-01T18:53:36.512Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -2409,7 +2597,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:24.029Z",
-      "updatedAt": "2026-11-01T13:12:43.908Z",
+      "updatedAt": "2026-11-01T18:53:44.725Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -2456,7 +2644,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:24.029Z",
-      "updatedAt": "2026-11-01T13:12:43.908Z",
+      "updatedAt": "2026-11-01T18:53:44.725Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -2478,7 +2666,7 @@
       "description": null,
       "thumbnail": "https://i.ytimg.com/vi/b19ed3TfKGA/hq720.jpg",
       "publishedAt": null,
-      "scheduledStart": "2026-11-03T12:00:00.000Z",
+      "scheduledStart": "2026-11-10T12:00:00.000Z",
       "actualStart": null,
       "isMember": false,
       "actualEnd": null,
@@ -2503,7 +2691,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.283Z",
-      "updatedAt": "2026-11-01T13:12:40.115Z",
+      "updatedAt": "2026-11-01T18:53:45.800Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -2550,7 +2738,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-11-01T13:12:43.618Z",
+      "updatedAt": "2026-11-01T18:53:35.345Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -2597,7 +2785,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.567Z",
-      "updatedAt": "2026-11-01T13:12:36.260Z",
+      "updatedAt": "2026-11-01T18:53:36.512Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -2644,7 +2832,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:19.448Z",
-      "updatedAt": "2026-11-01T13:12:39.067Z",
+      "updatedAt": "2026-11-01T18:53:45.032Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -2691,7 +2879,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:25.311Z",
-      "updatedAt": "2026-11-01T13:12:40.252Z",
+      "updatedAt": "2026-11-01T18:53:42.958Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -2738,7 +2926,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.567Z",
-      "updatedAt": "2026-11-01T13:12:36.260Z",
+      "updatedAt": "2026-11-01T18:53:36.512Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -2785,7 +2973,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.180Z",
-      "updatedAt": "2026-11-01T13:12:45.279Z",
+      "updatedAt": "2026-11-01T18:53:34.963Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -2832,7 +3020,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:17.489Z",
-      "updatedAt": "2026-11-01T13:12:40.437Z",
+      "updatedAt": "2026-11-01T18:53:51.457Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -2879,7 +3067,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:33.129Z",
-      "updatedAt": "2026-11-01T13:12:33.506Z",
+      "updatedAt": "2026-11-01T18:53:50.861Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -2926,7 +3114,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-11-01T13:12:34.736Z",
+      "updatedAt": "2026-11-01T18:53:42.254Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -2973,7 +3161,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T18:28:48.849Z",
-      "updatedAt": "2026-11-01T13:12:34.736Z",
+      "updatedAt": "2026-11-01T18:53:42.254Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3020,7 +3208,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-01T09:00:55.243Z",
-      "updatedAt": "2026-11-01T13:12:40.437Z",
+      "updatedAt": "2026-11-01T18:53:51.457Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3067,7 +3255,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.567Z",
-      "updatedAt": "2026-11-01T13:12:36.260Z",
+      "updatedAt": "2026-11-01T18:53:36.512Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3114,7 +3302,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:21.011Z",
-      "updatedAt": "2026-11-01T13:12:44.735Z",
+      "updatedAt": "2026-11-01T18:53:34.616Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3161,7 +3349,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:22.173Z",
-      "updatedAt": "2026-11-01T13:12:33.624Z",
+      "updatedAt": "2026-11-01T18:53:42.930Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3208,7 +3396,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.042Z",
-      "updatedAt": "2026-11-01T13:12:49.469Z",
+      "updatedAt": "2026-11-01T18:53:42.137Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3255,7 +3443,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T18:28:42.047Z",
-      "updatedAt": "2026-11-01T13:12:36.260Z",
+      "updatedAt": "2026-11-01T18:53:36.512Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3302,7 +3490,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.567Z",
-      "updatedAt": "2026-11-01T13:12:36.260Z",
+      "updatedAt": "2026-11-01T18:53:36.512Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3349,7 +3537,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:27.693Z",
-      "updatedAt": "2026-11-01T13:13:10.663Z",
+      "updatedAt": "2026-11-01T18:53:41.353Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3396,7 +3584,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:16.423Z",
-      "updatedAt": "2026-11-01T13:12:35.843Z",
+      "updatedAt": "2026-11-01T18:53:56.706Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3443,7 +3631,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:17.489Z",
-      "updatedAt": "2026-11-01T13:12:40.437Z",
+      "updatedAt": "2026-11-01T18:53:51.457Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3490,7 +3678,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.180Z",
-      "updatedAt": "2026-11-01T13:12:45.279Z",
+      "updatedAt": "2026-11-01T18:53:34.963Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3537,7 +3725,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.117Z",
-      "updatedAt": "2026-11-01T13:12:49.284Z",
+      "updatedAt": "2026-11-01T18:53:45.931Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3584,7 +3772,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:17.489Z",
-      "updatedAt": "2026-11-01T13:12:40.437Z",
+      "updatedAt": "2026-11-01T18:53:51.457Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3631,7 +3819,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.567Z",
-      "updatedAt": "2026-11-01T13:12:36.260Z",
+      "updatedAt": "2026-11-01T18:53:36.512Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3678,7 +3866,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:25.311Z",
-      "updatedAt": "2026-11-01T13:12:40.252Z",
+      "updatedAt": "2026-11-01T18:53:42.958Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3725,7 +3913,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-01T13:12:36.260Z",
-      "updatedAt": "2026-11-01T13:12:36.260Z",
+      "updatedAt": "2026-11-01T18:53:36.512Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3772,7 +3960,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-01T13:12:32.054Z",
-      "updatedAt": "2026-11-01T13:12:32.054Z",
+      "updatedAt": "2026-11-01T18:53:48.254Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3819,7 +4007,54 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-01T04:35:30.574Z",
-      "updatedAt": "2026-11-01T13:12:49.284Z",
+      "updatedAt": "2026-11-01T18:53:45.931Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "MNKqnRle-Gw",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCbekFvyr5cAWHKr3XFvPqTA",
+      "channelName": "Hyakuichi ch. 貓屋敷百壹",
+      "channelKind": "virtual",
+      "region": "tw",
+      "gender": "unknown",
+      "languages": [
+        "zh-Hant"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "【主題雜談】免費!簽到集點贈送禮物活動登場✨【貓屋敷百壹／芥川組】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/MNKqnRle-Gw/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2026-11-02T11:00:00.000Z",
+      "actualStart": null,
+      "isMember": false,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCbekFvyr5cAWHKr3XFvPqTA",
+          "name": "Hyakuichi ch. 貓屋敷百壹",
+          "kind": "virtual",
+          "region": "tw"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-01T18:53:42.254Z",
+      "updatedAt": "2026-11-01T18:53:42.254Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3866,7 +4101,54 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.256Z",
-      "updatedAt": "2026-11-01T13:12:40.975Z",
+      "updatedAt": "2026-11-01T18:53:42.184Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "myyKlzpbvRA",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCKmvqlodrjzY6hDc_yI27IA",
+      "channelName": "米婭 Mia Flamel Ch.",
+      "channelKind": "virtual",
+      "region": "tw",
+      "gender": "unknown",
+      "languages": [
+        "zh-Hant"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "艾爾登法環 🎮 自己打拉達岡 DAY 2 △ 米婭",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/myyKlzpbvRA/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2026-11-04T01:30:00.000Z",
+      "actualStart": null,
+      "isMember": false,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCKmvqlodrjzY6hDc_yI27IA",
+          "name": "米婭 Mia Flamel Ch.",
+          "kind": "virtual",
+          "region": "tw"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-01T18:53:51.457Z",
+      "updatedAt": "2026-11-01T18:53:51.457Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3913,7 +4195,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.180Z",
-      "updatedAt": "2026-11-01T13:12:45.279Z",
+      "updatedAt": "2026-11-01T18:53:34.963Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3960,7 +4242,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:25.311Z",
-      "updatedAt": "2026-11-01T13:12:40.252Z",
+      "updatedAt": "2026-11-01T18:53:42.958Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4057,7 +4339,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:25.311Z",
-      "updatedAt": "2026-11-01T13:12:40.252Z",
+      "updatedAt": "2026-11-01T18:53:42.958Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4104,7 +4386,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:33.129Z",
-      "updatedAt": "2026-11-01T13:12:33.506Z",
+      "updatedAt": "2026-11-01T18:53:50.861Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4151,7 +4433,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T18:28:47.006Z",
-      "updatedAt": "2026-11-01T13:12:40.437Z",
+      "updatedAt": "2026-11-01T18:53:51.457Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4198,7 +4480,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.283Z",
-      "updatedAt": "2026-11-01T13:12:40.115Z",
+      "updatedAt": "2026-11-01T18:53:45.800Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4245,7 +4527,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:22.173Z",
-      "updatedAt": "2026-11-01T13:12:33.624Z",
+      "updatedAt": "2026-11-01T18:53:42.930Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4292,7 +4574,54 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T10:13:01.692Z",
-      "updatedAt": "2026-11-01T13:12:33.506Z",
+      "updatedAt": "2026-11-01T18:53:50.861Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "rJbbJDeTR3w",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCl5wbgiHC210jNLoToqhYzw",
+      "channelName": "神山鈴音Channel",
+      "channelKind": "virtual",
+      "region": "tw",
+      "gender": "unknown",
+      "languages": [
+        "zh-Hant"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "「缺氧」水生行星_夢境合成儀完工、來發展核電吧",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/rJbbJDeTR3w/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2026-11-05T11:00:00.000Z",
+      "actualStart": null,
+      "isMember": false,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCl5wbgiHC210jNLoToqhYzw",
+          "name": "神山鈴音Channel",
+          "kind": "virtual",
+          "region": "tw"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-01T18:53:34.963Z",
+      "updatedAt": "2026-11-01T18:53:34.963Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4339,7 +4668,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:17.489Z",
-      "updatedAt": "2026-11-01T13:12:40.437Z",
+      "updatedAt": "2026-11-01T18:53:51.457Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4386,7 +4715,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.567Z",
-      "updatedAt": "2026-11-01T13:12:36.260Z",
+      "updatedAt": "2026-11-01T18:53:36.512Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4433,7 +4762,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:22.173Z",
-      "updatedAt": "2026-11-01T13:12:33.624Z",
+      "updatedAt": "2026-11-01T18:53:42.930Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4480,7 +4809,54 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:33.129Z",
-      "updatedAt": "2026-11-01T13:12:33.506Z",
+      "updatedAt": "2026-11-01T18:53:50.861Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "sZIaFIiOZ2M",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UC1U9HTVBDeQC2-Gihrcuj0g",
+      "channelName": "Baigei Ch. 白給",
+      "channelKind": "virtual",
+      "region": "tw",
+      "gender": "unknown",
+      "languages": [
+        "zh-Hant"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "【連動】魔骰遊戲｜希望別再頭痛w【白給☆】#魔骰遊戲 #invokyr #初見歡迎",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/sZIaFIiOZ2M/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2026-11-05T13:00:00.000Z",
+      "actualStart": null,
+      "isMember": false,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC1U9HTVBDeQC2-Gihrcuj0g",
+          "name": "Baigei Ch. 白給",
+          "kind": "virtual",
+          "region": "tw"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-01T18:53:34.616Z",
+      "updatedAt": "2026-11-01T18:53:34.616Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4527,7 +4903,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.117Z",
-      "updatedAt": "2026-11-01T13:12:49.284Z",
+      "updatedAt": "2026-11-01T18:53:45.931Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4574,7 +4950,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-01T13:12:40.437Z",
-      "updatedAt": "2026-11-01T13:12:40.437Z",
+      "updatedAt": "2026-11-01T18:53:51.457Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4621,7 +4997,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.228Z",
-      "updatedAt": "2026-11-01T13:12:32.054Z",
+      "updatedAt": "2026-11-01T18:53:48.254Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4668,7 +5044,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:24.029Z",
-      "updatedAt": "2026-11-01T13:12:43.908Z",
+      "updatedAt": "2026-11-01T18:53:44.725Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4715,7 +5091,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:25.311Z",
-      "updatedAt": "2026-11-01T13:12:40.252Z",
+      "updatedAt": "2026-11-01T18:53:42.958Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4762,7 +5138,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-11-01T13:12:33.624Z",
+      "updatedAt": "2026-11-01T18:53:42.930Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4809,7 +5185,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:26.922Z",
-      "updatedAt": "2026-11-01T13:12:43.907Z",
+      "updatedAt": "2026-11-01T18:53:37.143Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4856,7 +5232,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:27.340Z",
-      "updatedAt": "2026-11-01T13:12:46.975Z",
+      "updatedAt": "2026-11-01T18:53:45.191Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4903,54 +5279,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:27.693Z",
-      "updatedAt": "2026-11-01T13:13:10.663Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "vTpBfAZq4VQ",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UC2ZWggon1NOT2TGaVUMzY7A",
-      "channelName": "庫洛姆•Kuromu",
-      "channelKind": "virtual",
-      "region": "tw",
-      "gender": "female",
-      "languages": [
-        "zh-Hant"
-      ],
-      "isAi": false,
-      "variant": "female_vtuber",
-      "title": "【庫庫杯第二彈 】貓草願望一次滿足🤩居然有肚肚⋯？雙通道杯來ㄌ(/ω＼)！ #台灣Vtuber #庫洛姆",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/vTpBfAZq4VQ/hq720.jpg",
-      "publishedAt": null,
-      "scheduledStart": "2026-11-01T14:00:00.000Z",
-      "actualStart": null,
-      "isMember": false,
-      "actualEnd": null,
-      "duration": null,
-      "status": "upcoming",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UC2ZWggon1NOT2TGaVUMzY7A",
-          "name": "庫洛姆•Kuromu",
-          "kind": "virtual",
-          "region": "tw"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-11-01T13:12:40.115Z",
-      "updatedAt": "2026-11-01T13:12:40.115Z",
+      "updatedAt": "2026-11-01T18:53:41.353Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4968,7 +5297,7 @@
       ],
       "isAi": false,
       "variant": "vtuber",
-      "title": "【10/26-11/1】神社參拜日程表 #八上菟比 #TubiShow",
+      "title": "【11/2-11/8】神社參拜日程表 #八上菟比 #TubiShow",
       "description": null,
       "thumbnail": "https://i.ytimg.com/vi/wZ4r0r7eQY0/hq720.jpg",
       "publishedAt": null,
@@ -4997,7 +5326,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:25.311Z",
-      "updatedAt": "2026-11-01T13:12:40.252Z",
+      "updatedAt": "2026-11-01T18:53:42.958Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5044,7 +5373,54 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:25.311Z",
-      "updatedAt": "2026-11-01T13:12:40.252Z",
+      "updatedAt": "2026-11-01T18:53:42.958Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "X8860JRqyHo",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCEky8OgUsk5zYwFlkMpC6ig",
+      "channelName": "宅宅軍團長 VTuber Ch.",
+      "channelKind": "virtual",
+      "region": "tw",
+      "gender": "male",
+      "languages": [
+        "zh-Hant"
+      ],
+      "isAi": false,
+      "variant": "male_vtuber",
+      "title": "劇場行事曆｜這是一個介紹當月演出的節目！ft. 歐妲 @OldaMonstar",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/X8860JRqyHo/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2026-11-02T09:30:00.000Z",
+      "actualStart": null,
+      "isMember": false,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCEky8OgUsk5zYwFlkMpC6ig",
+          "name": "宅宅軍團長 VTuber Ch.",
+          "kind": "virtual",
+          "region": "tw"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-01T18:53:34.616Z",
+      "updatedAt": "2026-11-01T18:53:34.616Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5091,7 +5467,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:33.129Z",
-      "updatedAt": "2026-11-01T13:12:33.506Z",
+      "updatedAt": "2026-11-01T18:53:50.861Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5138,7 +5514,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T18:28:47.006Z",
-      "updatedAt": "2026-11-01T13:12:40.437Z",
+      "updatedAt": "2026-11-01T18:53:51.457Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5156,7 +5532,7 @@
       ],
       "isAi": false,
       "variant": "female_vtuber",
-      "title": "「10/26～11/01週表」悠悠久違的準備企劃了！#個人勢",
+      "title": "「11/02～11/08週表」希望11月氣溫可以降低一些！#個人勢",
       "description": null,
       "thumbnail": "https://i.ytimg.com/vi/zcz2o_LviDA/hq720.jpg",
       "publishedAt": null,
@@ -5185,7 +5561,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.117Z",
-      "updatedAt": "2026-11-01T13:12:49.284Z",
+      "updatedAt": "2026-11-01T18:53:45.931Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

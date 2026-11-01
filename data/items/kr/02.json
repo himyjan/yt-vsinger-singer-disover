@@ -1,7 +1,54 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-01T13:23:37.437Z",
+  "generatedAt": "2026-11-01T19:04:35.774Z",
   "items": [
+    {
+      "id": "lF8chzkk8Ys",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UC-s5vxXTaXyFLw8CZtzl_Fw",
+      "channelName": "유초린 Yuchorin",
+      "channelKind": "virtual",
+      "region": "kr",
+      "gender": "female",
+      "languages": [
+        "ko"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "하루 늦은 할로윈",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/lF8chzkk8Ys/hq720.jpg",
+      "publishedAt": "2026-11-01T14:00:00.000Z",
+      "scheduledStart": "2026-11-01T14:00:00.000Z",
+      "actualStart": null,
+      "isMember": false,
+      "actualEnd": "2026-11-01T18:53:36.512Z",
+      "duration": 17616,
+      "status": "past",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC-s5vxXTaXyFLw8CZtzl_Fw",
+          "name": "유초린 Yuchorin",
+          "kind": "virtual",
+          "region": "kr"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-01T13:12:36.260Z",
+      "updatedAt": "2026-11-01T18:53:36.512Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
     {
       "id": "oFU9fPEaLWU",
       "platform": "youtube",
@@ -45,53 +92,6 @@
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.228Z",
       "updatedAt": "2026-10-31T10:12:54.366Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "lF8chzkk8Ys",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UC-s5vxXTaXyFLw8CZtzl_Fw",
-      "channelName": "유초린 Yuchorin",
-      "channelKind": "virtual",
-      "region": "kr",
-      "gender": "female",
-      "languages": [
-        "ko"
-      ],
-      "isAi": false,
-      "variant": "female_vtuber",
-      "title": "하루 늦은 할로윈",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/lF8chzkk8Ys/hq720.jpg",
-      "publishedAt": null,
-      "scheduledStart": "2026-11-01T14:00:00.000Z",
-      "actualStart": null,
-      "isMember": false,
-      "actualEnd": null,
-      "duration": null,
-      "status": "upcoming",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UC-s5vxXTaXyFLw8CZtzl_Fw",
-          "name": "유초린 Yuchorin",
-          "kind": "virtual",
-          "region": "kr"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-11-01T13:12:36.260Z",
-      "updatedAt": "2026-11-01T13:12:36.260Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

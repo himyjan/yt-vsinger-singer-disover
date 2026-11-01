@@ -1,91 +1,91 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-01T17:58:42.125Z",
+  "generatedAt": "2026-11-01T19:04:37.025Z",
   "regions": [
     {
       "code": "jp",
       "shard": 0,
-      "entries": 7706,
-      "bytes": 4291783
+      "entries": 7835,
+      "bytes": 4357692
     },
     {
       "code": "jp",
       "shard": 1,
-      "entries": 7705,
-      "bytes": 6726634
+      "entries": 7835,
+      "bytes": 6930365
     },
     {
       "code": "cn",
       "shard": 0,
-      "entries": 8902,
-      "bytes": 3963208
+      "entries": 8908,
+      "bytes": 3969238
     },
     {
       "code": "tw",
       "shard": 0,
-      "entries": 5801,
-      "bytes": 4038922
+      "entries": 5906,
+      "bytes": 4161736
     },
     {
       "code": "hk",
       "shard": 0,
-      "entries": 979,
-      "bytes": 729045
+      "entries": 1006,
+      "bytes": 764653
     },
     {
       "code": "kr",
       "shard": 0,
-      "entries": 393,
-      "bytes": 221385
+      "entries": 392,
+      "bytes": 218526
     },
     {
       "code": "en",
       "shard": 0,
-      "entries": 10421,
-      "bytes": 4516254
+      "entries": 10467,
+      "bytes": 4546838
     },
     {
       "code": "en",
       "shard": 1,
-      "entries": 10421,
-      "bytes": 4506179
+      "entries": 10467,
+      "bytes": 4536683
     },
     {
       "code": "en",
       "shard": 2,
-      "entries": 10421,
-      "bytes": 4516386
+      "entries": 10467,
+      "bytes": 4547483
     },
     {
       "code": "en",
       "shard": 3,
-      "entries": 10420,
-      "bytes": 5270772
+      "entries": 10464,
+      "bytes": 5318027
     },
     {
       "code": "id",
       "shard": 0,
-      "entries": 1366,
-      "bytes": 738902
+      "entries": 1371,
+      "bytes": 741259
     },
     {
       "code": "my",
       "shard": 0,
-      "entries": 706,
-      "bytes": 407136
+      "entries": 713,
+      "bytes": 415162
     },
     {
       "code": "sea",
       "shard": 0,
-      "entries": 1582,
-      "bytes": 802694
+      "entries": 1595,
+      "bytes": 812397
     },
     {
       "code": "unknown",
       "shard": 0,
-      "entries": 6732,
-      "bytes": 3056924
+      "entries": 6747,
+      "bytes": 3071522
     }
   ],
-  "total": 83555
+  "total": 84173
 }
