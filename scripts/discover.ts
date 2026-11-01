@@ -51,6 +51,7 @@ import { VtubersTwSource } from "./lib/debut-sources/vtubers.tw";
 import { VSaiSource } from "./lib/debut-sources/v-sai";
 import { VirtualHumansSource } from "./lib/debut-sources/virtualhumans";
 import { VirtuallifeSource } from "./lib/debut-sources/virtuallife";
+import { Vt4chanSource } from "./lib/debut-sources/vt4chan";
 import type { DebutSource } from "./lib/debut-sources/types";
 
 interface Options {
@@ -206,9 +207,12 @@ function sourcesFor(options: Options): DebutSource[] {
   if (wantAll || options.source === "virtuallife") {
     sources.push(new VirtuallifeSource());
   }
+  if (wantAll || options.source === "vt4chan") {
+    sources.push(new Vt4chanSource());
+  }
   if (!sources.length) {
     console.error(
-      `unknown source: ${options.source} (expected vtubie, fandom, bilibili, chuysan, ci-me, kick, niconico, soop, twitch, youtube, vdb, vtuberdex, vtpedia, vtubers.tw, v-sai, virtualhumans, virtuallife, or all)`,
+      `unknown source: ${options.source} (expected vtubie, fandom, bilibili, chuysan, ci-me, kick, niconico, soop, twitch, youtube, vdb, vtuberdex, vtpedia, vtubers.tw, v-sai, virtualhumans, virtuallife, vt4chan, or all)`,
     );
     process.exit(1);
   }
