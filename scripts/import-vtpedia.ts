@@ -3,21 +3,21 @@
  * Compares a vtpedia.harvest snapshot with the dataset and imports new
  * channels.
  *
- * `scripts/harvest-vtpedia.ts` produces a snapshot in `.cache/`;
- * this script reads that snapshot, classifies each candidate through
- * `classifyChannel()`, and imports the ones that pass the virtual-and-singing
- * gate into `data/channels/`.
+ * `scripts/harvest-vtpedia.ts` produces a snapshot in `.cache/vtpedia/vtpedia.json`;
+ * this script reads that snapshot, matches each row against the dataset by
+ * YouTube channel id, classifies through classifyChannel(), and imports the
+ * ones that pass the virtual-and-singing gate into `data/channels/`.
  *
  *   npm run data:vtpedia-import                     # report only
  *   npm run data:vtpedia-import -- --apply          # import the new channels
  *
- * The vtpedia directory publishes a YouTube channel id for each entry, so
- * matching against the dataset is direct (no search required).
+ * vtpedia.com publishes a YouTube channel id for each entry, so matching
+ * against the dataset is direct (no search required).
  *
- * The vtpedia directory publishes a YouTube channel id for each entry,
- * so each row is a **virtual claim** (`reincarnationOf`-eligible).  What a
- * roster still must not buy is a fan: `detectClipAccount()` and
- * `isFanAccountName()` must both be false.
+ * Each row carries a YouTube channel id, so it is admitted as a
+ * virtual claim (`reincarnationOf`-eligible).  What a roster still must
+ * not buy is a fan: `detectClipAccount()` and `isFanAccountName()` must
+ * both be false.
  *
  *   npm run data:vtpedia-import                     # report only
  *   npm run data:vtpedia-import -- --apply          # import the new channels
@@ -35,7 +35,6 @@ import {
   importYouTubeChannels,
   type RosterHint,
 } from "../scripts/lib/import-channels";
-import { canonicalAgency } from "../scripts/lib/regions";
 import { readAllChannelRecords } from "../scripts/lib/dataset";
 import { InnerTubeSource } from "../scripts/lib/youtubei";
 import type { Channel } from "../scripts/lib/types";
@@ -57,6 +56,36 @@ function readResolved(): ResolvedCache {
 
 function writeResolved(cache: ResolvedCache): void {
   fs.writeFileSync(RESOLVED, JSON.stringify(cache, null, 0));
+}
+
+interface VtpediaVTuber {
+  id: string;
+  activity: string;
+  name: string;
+  imgUrl?: string;
+  YouTube?: {
+    subscriber: { tag: string; count: number };
+    id: string;
+  } | null;
+  Twitch?: {
+    follower: { tag: string; count: number };
+    id: string;
+  } | null;
+  popularVideo?: {
+    type: string;
+    id: string;
+  };
+  nationality?: string;
+  debutDate?: string;
+}
+
+interface Row {
+  entry: VtpediaVTuber;
+  id: string | null;
+  record: Channel | null | undefined;
+  verdict: "tracked" | "new" | "rejected";
+  reason?: string;
+  candidates: string[];
 }
 
 interface Options {
@@ -98,28 +127,19 @@ function parseArgs(argv: string[]): Options {
   return options;
 }
 
-interface Row {
-  entry: any;
-  id: string | null;
-  record: Channel | null | undefined;
-  verdict: "tracked" | "new" | "rejected";
-  reason?: string;
-  candidates: string[];
-}
-
 async function main(): Promise<void> {
   const options = parseArgs(process.argv.slice(2));
   if (!fs.existsSync(SNAPSHOT)) {
     console.error(
-      `no snapshot at ${SNAPSHOT} — run npm run data:vtpedia first`
+      `no snapshot at ${SNAPSHOT} — run npm run data:vtpedia first`,
     );
     process.exit(1);
   }
 
-  const snapshot: { items: any[]; generatedAt: string } = JSON.parse(
+  const snapshot: { data?: VtpediaVTuber[]; generatedAt: string } = JSON.parse(
     fs.readFileSync(SNAPSHOT, "utf8")
   );
-  const entries = snapshot.items;
+  const entries = snapshot.data || [];
 
   const dataset = readAllChannelRecords();
   const byId = new Map(dataset.map((c) => [c.id, c]));
@@ -130,18 +150,20 @@ async function main(): Promise<void> {
         const h = platform.handle.replace(/^@+/, "").toLowerCase();
         if (!byHandle.has(h)) byHandle.set(h, channel);
       }
+      if (platform.platform === "twitch" && platform.handle) {
+        const h = platform.handle.replace(/^@+/, "").toLowerCase();
+        if (!byHandle.has(h)) byHandle.set(h, channel);
+      }
     }
   }
 
   const rows: Row[] = [];
   for (const entry of entries) {
-    if (!entry.channel_id) continue;
+    const id = entry.YouTube?.id ? `youtube:${entry.YouTube.id}` : null;
+    let record: Channel | null | undefined = id ? byId.get(id) : undefined;
 
-    const id = `youtube:${entry.channel_id}`;
-    let record: Channel | null | undefined = byId.get(id);
-
-    if (!record && entry.handle) {
-      record = byHandle.get(foldHandle(entry.handle)) ?? null;
+    if (!record && entry.Twitch?.id) {
+      record = byHandle.get(entry.Twitch.id.toLowerCase()) ?? undefined;
     }
 
     rows.push({
@@ -154,7 +176,7 @@ async function main(): Promise<void> {
   }
 
   console.log(
-    `snapshot ${snapshot.generatedAt} · ${entries.length} entr(y/ies) · ${dataset.length} record(s) tracked`
+    `snapshot ${snapshot.generatedAt} · ${entries.length} entr(y/ies) · ${dataset.length} record(s) tracked`,
   );
 
   const counts = new Map<string, number>();
@@ -193,44 +215,88 @@ async function main(): Promise<void> {
     return;
   }
 
-  const source = await new InnerTubeSource({ delayMs: 100 }).connect();
-  const client = (source as any).client;
+  const source = new InnerTubeSource({ delayMs: 100 });
+  await source.connect();
 
   let added = 0;
   let existing = 0;
   let failed = 0;
 
+  /** Externals edits to apply after import: id → { platform: handle }. */
+  const externalsEdits: Array<{ id: string; platform: string; handle: string }> =
+    [];
+
   for (const row of newRows) {
-    const result = await importYouTubeChannels([row.id!], {
+    if (!row.id) continue;
+    const resolvedId = row.id.startsWith("youtube:")
+      ? row.id.slice("youtube:".length)
+      : null;
+    if (!resolvedId) {
+      console.error(
+        `vtpedia: ${row.entry.name} has no YouTube id to import`,
+      );
+      failed++;
+      continue;
+    }
+    const result = await importYouTubeChannels([resolvedId], {
       limit: 1,
       rosterHint: {
-        agency: row.id ? { [row.id!]: row.entry.affiliation ?? "" } : undefined,
+        agency: row.id
+          ? { [row.id!]: row.entry.nationality ?? "" }
+          : undefined,
         debut: row.id ? { [row.id!]: row.entry.debutDate ?? "" } : undefined,
         gender: row.id ? { [row.id!]: "unknown" } : undefined,
       },
     });
-    if (result.added.length > 0) {
-      added += result.added.length;
+    if ((result.added as unknown[]).length > 0) {
+      added += (result.added as unknown[]).length;
     } else {
       existing += result.existing;
       failed += result.failed.length;
     }
+
+    // Collect profile links as externals (never overwrite existing ones).
+    const entry = row.entry;
+    if (entry.YouTube?.id) {
+      externalsEdits.push({
+        id: resolvedId,
+        platform: "youtube",
+        handle: entry.YouTube.id,
+      });
+    }
+    if (entry.Twitch?.id) {
+      externalsEdits.push({
+        id: resolvedId,
+        platform: "twitch",
+        handle: entry.Twitch.id,
+      });
+    }
+  }
+
+  const now = new Date().toISOString();
+
+  // Apply externals to imported/tracked records.
+  const externalsWritten = applyChannelEdits(
+    externalsEdits.map((e) => ({
+      id: e.id,
+      update: (channel: Channel) => {
+        channel.externals ??= {};
+        if (channel.externals[e.platform]) return false;
+        channel.externals[e.platform] = e.handle;
+        return true;
+      },
+    })),
+    "vtpedia",
+    now,
+  );
+  if (externalsWritten) {
+    console.log(`${externalsWritten} record(s) had externals filled from vtpedia`);
   }
 
   console.log(
-    `\n${added} channel(s) written · ${existing} already tracked · ${failed} failed`
+    `\n${added} channel(s) written · ${existing} already tracked · ${failed} failed`,
   );
   if (added > 0) console.log("Run npm run data:index next.");
-}
-
-function foldHandle(handle: string): string {
-  return handle
-    .trim()
-    .replace(/^@+/, "")
-    .replace(/^https?:\/\/(?:www\.)?(?:youtube\.com\/)?/i, "")
-    .replace(/^(?:channel|user|c)\//i, "")
-    .replace(/[/?#].*$/, "")
-    .toLowerCase();
 }
 
 main().catch((error: unknown) => {
