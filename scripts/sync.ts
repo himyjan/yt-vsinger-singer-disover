@@ -3609,6 +3609,7 @@ export function liveStreamToItem(
     status?: "live" | "upcoming";
     scheduledStart?: string | null;
     actualStart?: string | null;
+    isMember?: boolean | null;
   },
   channel: Channel,
   now: string,
@@ -3645,6 +3646,7 @@ export function liveStreamToItem(
     publishedAt: status === "upcoming" ? null : actualStart,
     scheduledStart: live.scheduledStart ?? null,
     actualStart,
+    isMember: live.isMember ?? null,
     actualEnd: null,
     duration: null,
     status,
