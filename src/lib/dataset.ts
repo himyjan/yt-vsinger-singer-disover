@@ -707,6 +707,8 @@ export interface ItemQuery {
    * announcement (`schedule`) — 日程 / 週表 / スケジュール / timetable.
    */
   schedule?: "all" | "stream" | "schedule";
+  /** `member` shows only members-only streams; `public` hides them. */
+  member?: "all" | "member" | "public";
   /** Free-text filter over title / song / channel. */
   text?: string;
   limit?: number;
@@ -739,6 +741,7 @@ export function filterItems(items: Item[], query: ItemQuery): Item[] {
   const affiliation = query.affiliation ?? "all";
   const language = query.language ?? "all";
   const schedule = query.schedule ?? "all";
+  const member = query.member ?? "all";
   const role = query.role ?? "all";
   const vtuberOnly = query.vtuberOnly ?? "all";
   const text = query.text?.trim().toLowerCase() ?? "";
@@ -760,6 +763,8 @@ export function filterItems(items: Item[], query: ItemQuery): Item[] {
       if (schedule === "schedule" && !isSchedule) return false;
       if (schedule === "stream" && isSchedule) return false;
     }
+    if (member === "member" && item.isMember !== true) return false;
+    if (member === "public" && item.isMember === true) return false;
     // Items don't carry `role` directly (it's a channel-level field), so
     // use `channelKind` (virtual / real) as the best available signal:
     // virtual performers → vsinger / vtuber, real → singer / producer.

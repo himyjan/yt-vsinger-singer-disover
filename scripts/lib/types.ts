@@ -744,6 +744,8 @@ export interface Item {
   likeCount: number | null;
   /** Concurrent viewers while the stream was live. */
   concurrentViewers: number | null;
+  /** True when the stream is members-only (channel membership required to watch). */
+  isMember?: boolean | null;
   /** Provenance of the record. */
   source: RecordSource;
   /** ISO timestamp of first sighting. */

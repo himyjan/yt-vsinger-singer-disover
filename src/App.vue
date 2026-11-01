@@ -347,6 +347,12 @@ const UPCOMING_FILTERS = [
   },
 ] as const;
 
+const MEMBER_FILTERS = [
+  { id: "all", label: "All", title: "Every live stream" },
+  { id: "member", label: "🔒 Member only", title: "Only members-only streams" },
+  { id: "public", label: "🆓 Public", title: "Only streams anyone can watch" },
+] as const;
+
 const LANGUAGES = [
   { id: "all", label: "Any language", title: "Every performer" },
   { id: "ja", label: "🇯🇵 日本語", title: "Performers who stream in Japanese" },
@@ -479,6 +485,7 @@ const visibleLive = computed(() =>
       language: state.language,
       role: state.role,
       vtuberOnly: state.vtuberOnly,
+      member: state.member,
     }),
     state.sort.live,
   ),
@@ -497,6 +504,7 @@ const visibleUpcoming = computed(() =>
       schedule: state.upcomingType,
       role: state.role,
       vtuberOnly: state.vtuberOnly,
+      member: state.member,
     }),
     state.sort.upcoming,
   ),
@@ -541,6 +549,7 @@ const hasAnyFilter = computed(
     state.affiliation !== "all" ||
     state.oac !== "all" ||
     state.upcomingType !== "all" ||
+    state.member !== "all" ||
     state.channelSubs !== "all" ||
     state.subsTracked !== "all",
 );
@@ -1050,6 +1059,7 @@ function clearAllFilters(): void {
   state.affiliation = "all";
   state.oac = "all";
   state.upcomingType = "all";
+  state.member = "all";
   state.channelSubs = "all";
   state.subsTracked = "all";
 }
@@ -2910,6 +2920,24 @@ onMounted(async () => {
               {{ visibleLive.length }}
             </span>
           </h2>
+          <div class="flex shrink-0 items-center rounded-full border border-black/10 bg-white p-0.5 dark:border-white/12 dark:bg-neutral-900" role="group" aria-label="Membership filter">
+            <button
+              v-for="option in MEMBER_FILTERS"
+              :key="option.id"
+              type="button"
+              class="rounded-full px-2.5 py-1 text-[11px] font-semibold whitespace-nowrap transition"
+              :class="
+                state.member === option.id
+                  ? 'bg-amber-500 text-white'
+                  : 'text-neutral-500 hover:text-neutral-800 dark:hover:text-neutral-100'
+              "
+              :title="option.title"
+              :aria-pressed="state.member === option.id"
+              @click="state.member = option.id"
+            >
+              {{ option.label }}
+            </button>
+          </div>
           <span class="text-xs text-neutral-500">refreshes every 6 hours</span>
         </div>
         <div
