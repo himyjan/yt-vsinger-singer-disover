@@ -122,7 +122,7 @@ async function main(): Promise<void> {
   const options = parseArgs(process.argv.slice(2));
   if (!fs.existsSync(SNAPSHOT)) {
     console.error(
-      `no snapshot at ${SNAPSHOT} — run npm run data:vtuber-db first`
+      `no snapshot at ${SNAPSHOT} — run npm run data:vtuber-db first`,
     );
     process.exit(1);
   }
@@ -135,11 +135,19 @@ async function main(): Promise<void> {
   const dataset = readAllChannelRecords();
   const byId = new Map(dataset.map((c) => [c.id, c]));
   const byHandle = new Map<string, Channel>();
+  const byYoutubeId = new Map<string, Channel>();
+  const byUcId = new Map<string, Channel>();
   for (const channel of dataset) {
     for (const platform of channel.platforms) {
       if (platform.platform === "youtube" && platform.handle) {
         const h = platform.handle.replace(/^@+/, "").toLowerCase();
         if (!byHandle.has(h)) byHandle.set(h, channel);
+      }
+      if (platform.platform === "youtube" && platform.id) {
+        if (!byYoutubeId.has(platform.id)) byYoutubeId.set(platform.id, channel);
+      }
+      if (/^UC[\w-]{20,}$/.test(channel.id)) {
+        if (!byUcId.has(channel.id)) byUcId.set(channel.id, channel);
       }
     }
   }
@@ -150,6 +158,10 @@ async function main(): Promise<void> {
 
     const id = `youtube:${entry.channel_id}`;
     let record: Channel | null | undefined = byId.get(id);
+    // Fall back to matching by raw YouTube UC id on the platform link
+    if (!record) record = byYoutubeId.get(entry.channel_id) ?? undefined;
+    // Fall back to matching by the record's own UC… id
+    if (!record) record = byUcId.get(entry.channel_id) ?? undefined;
 
     if (!record && entry.handle) {
       record = byHandle.get(foldHandle(entry.handle)) ?? null;
