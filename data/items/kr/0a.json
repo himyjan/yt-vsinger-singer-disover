@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-31T18:39:26.966Z",
+  "generatedAt": "2026-11-02T06:05:42.365Z",
   "items": [
     {
       "id": "hr8W9TozJaE",
@@ -45,6 +45,53 @@
       "source": "api",
       "addedAt": "2026-10-31T03:16:22.173Z",
       "updatedAt": "2026-10-31T18:28:52.690Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "a-YhUkrvVyI",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCzCXb9UDkMc2kwnw_9xkImA",
+      "channelName": "Lye Alkaline",
+      "channelKind": "virtual",
+      "region": "kr",
+      "gender": "unknown",
+      "languages": [
+        "ko"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "Sleepy farmer Lye",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/a-YhUkrvVyI/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2026-11-08T21:00:00.000Z",
+      "actualStart": null,
+      "isMember": false,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCzCXb9UDkMc2kwnw_9xkImA",
+          "name": "Lye Alkaline",
+          "kind": "virtual",
+          "region": "kr"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-02T05:53:02.220Z",
+      "updatedAt": "2026-11-02T05:53:02.220Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

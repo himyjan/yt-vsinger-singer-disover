@@ -1,51 +1,7 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-02T00:13:40.040Z",
+  "generatedAt": "2026-11-02T06:05:42.365Z",
   "items": [
-    {
-      "id": "6hx1HdPmVG4",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCksrVhse9dfWpts0OwaqjoQ",
-      "channelName": "Ramzarify",
-      "channelKind": "virtual",
-      "region": "unknown",
-      "gender": "male",
-      "isAi": false,
-      "variant": "male_vtuber",
-      "title": "Então isso é o Halloween 🦇 🧟 ☠️ [Resident Evil 2 #01]",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/6hx1HdPmVG4/hq720.jpg",
-      "publishedAt": "2026-11-01T23:32:28.869Z",
-      "scheduledStart": null,
-      "actualStart": null,
-      "isMember": false,
-      "actualEnd": "2026-11-01T23:32:28.869Z",
-      "duration": 0,
-      "status": "past",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCksrVhse9dfWpts0OwaqjoQ",
-          "name": "Ramzarify",
-          "kind": "virtual",
-          "region": "unknown"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-31T03:16:25.311Z",
-      "updatedAt": "2026-11-01T23:32:28.869Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
     {
       "id": "v1ow9WRsXtE",
       "platform": "youtube",
@@ -351,6 +307,50 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "6hx1HdPmVG4",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCksrVhse9dfWpts0OwaqjoQ",
+      "channelName": "Ramzarify",
+      "channelKind": "virtual",
+      "region": "unknown",
+      "gender": "male",
+      "isAi": false,
+      "variant": "male_vtuber",
+      "title": "Então isso é o Halloween (atrasado) 🦇 🧟 ☠️ [Resident Evil 2 #01]",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/6hx1HdPmVG4/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2026-11-02T22:40:00.000Z",
+      "actualStart": null,
+      "isMember": false,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCksrVhse9dfWpts0OwaqjoQ",
+          "name": "Ramzarify",
+          "kind": "virtual",
+          "region": "unknown"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-31T03:16:25.311Z",
+      "updatedAt": "2026-11-02T05:53:05.405Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "gAeaphsFxB8",
       "platform": "youtube",
       "type": "live",
@@ -390,7 +390,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:25.311Z",
-      "updatedAt": "2026-11-01T23:32:28.869Z",
+      "updatedAt": "2026-11-02T05:53:05.405Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -434,7 +434,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:21.011Z",
-      "updatedAt": "2026-11-01T23:32:25.445Z",
+      "updatedAt": "2026-11-02T05:53:02.220Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -478,7 +478,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.117Z",
-      "updatedAt": "2026-11-01T23:32:16.338Z",
+      "updatedAt": "2026-11-02T05:52:52.654Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -522,7 +522,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.256Z",
-      "updatedAt": "2026-11-01T23:32:24.193Z",
+      "updatedAt": "2026-11-02T05:53:10.454Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }
