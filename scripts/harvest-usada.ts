@@ -28,7 +28,6 @@ interface UsadaEntry {
   name: string;
   gender: string | null;
   affiliation: string | null;
-  group: string | null;
   activity: string | null;
   debutDate: string | null;
   country: string | null;
