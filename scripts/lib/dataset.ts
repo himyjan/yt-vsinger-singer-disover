@@ -273,31 +273,46 @@ export function writeItemShards(
     const keepFiles = new Set<string>();
     let regionCount = 0;
     const buckets = [...byBucket.keys()].sort();
+    const extraParts: string[] = [];
     for (const bucket of buckets) {
-      /**
-       * Newest first, and **ties broken by id**.
-       *
-       * The comparison used to fall back to `a.id.localeCompare(b.id)` only
-       * when `b.publishedAt` was absent, so two items sharing a timestamp —
-       * every live stream found in one pass — compared equal and kept
-       * whatever order they arrived in. The order then depended on which
-       * writer produced the file: the sync inserts in load order, the volume
-       * merge iterates volumes, so the two disagreed and every run rewrote
-       * every item shard (measured: 71,225 lines changed for one live
-       * update). A total order makes the file a function of its contents.
-       */
       const list = (byBucket.get(bucket) ?? []).sort((a, b) => {
         const byDate = (b.publishedAt ?? "").localeCompare(a.publishedAt ?? "");
         return byDate !== 0 ? byDate : a.id.localeCompare(b.id);
       });
-      keepFiles.add(`${bucket}.json`);
-      writeJsonIfChanged(l.itemsRegion(region, bucket), {
-        schemaVersion: SCHEMA_VERSION,
-        generatedAt: now,
-        items: list,
-      } satisfies ItemFile);
+
+      // Split oversized buckets into chunk files, like the live/upcoming
+      // projections do — writeJson() throws above 8 MB per file. The first
+      // chunk keeps the bucket name (`00.json`), later ones are numbered
+      // (`00.1.json`, `00.2.json`, …), and every part is listed in the
+      // manifest so the browser loads them all.
+      const chunks: Item[][] = [];
+      let current: Item[] = [];
+      let bytes = 32;
+      for (const item of list) {
+        const size = Buffer.byteLength(JSON.stringify(item, null, 2), "utf8") + 1;
+        if (current.length && bytes + size > SIZE_BUDGET.maxFileBytes) {
+          chunks.push(current);
+          current = [];
+          bytes = 32;
+        }
+        current.push(item);
+        bytes += size;
+      }
+      chunks.push(current);
+
+      for (let index = 0; index < chunks.length; index++) {
+        const name = index === 0 ? bucket : `${bucket}.${index}`;
+        writeJsonIfChanged(l.itemsRegion(region, `${name}.json`), {
+          schemaVersion: SCHEMA_VERSION,
+          generatedAt: now,
+          items: chunks[index],
+        } satisfies ItemFile);
+        keepFiles.add(`${name}.json`);
+        if (index > 0) extraParts.push(name);
+      }
       regionCount += list.length;
     }
+    buckets.push(...extraParts);
     removed.push(...pruneStale(dir, keepFiles));
     regionMeta.push({
       code: region,
