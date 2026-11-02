@@ -15,7 +15,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { classifyItem, type ItemSignals } from "../scripts/lib/classify";
-import { writeItemShards } from "../scripts/lib/dataset";
+import { readAllChannelRecords, readAllItems, writeItemShards } from "../scripts/lib/dataset";
 import {
   SCHEMA_VERSION,
   type Item,
@@ -93,8 +93,10 @@ function parseArgs(argv: string[]): Options {
 function snapshotFiles(): string[] {
   try {
     return fs
-      .readdirSync(CACHE_DIR)
-      .filter((f) => f.startsWith("innertube-music-") && f.endsWith(".json"))
+      .readdirSync(CACHE_DIR, { recursive: true, encoding: "utf8" })
+      .filter(
+        (f) => f.startsWith("innertube-music-") && f.endsWith(".json"),
+      )
       .sort();
   } catch {
     return [];
@@ -303,6 +305,11 @@ async function main(): Promise<void> {
   // Sort by id for stable output (same as the sync's total order).
   items.sort((a, b) => a.id.localeCompare(b.id));
 
+  if (items.length === 0) {
+    console.log("innertube-music-import: no new items to import — nothing written");
+    return;
+  }
+
   // Write item shards into .volumes/vol-N/data/ — one file per volume job.
   // writeItemShards takes a root dir and writes items/{region}/{bucket}.json.
   // We pass a per-volume root so each job writes its own slice.
@@ -315,17 +322,39 @@ async function main(): Promise<void> {
       `vol-${volIndex}`,
       "data",
     );
+
+    // Read existing items from this volume so we don't delete items in
+    // buckets/regions this shard doesn't touch. Items are sharded by item-id
+    // hash, not by channel shard, so two volume jobs can write items into the
+    // same region/bucket file. We merge new items with existing ones before
+    // writing, preserving everything already in the volume.
+    const existingItems = readAllItems(volRoot);
+    const merged = new Map<string, Item>();
+    for (const item of existingItems) merged.set(item.id, item);
+    for (const item of items) merged.set(item.id, item);
+    const allItems = [...merged.values()];
+    allItems.sort((a, b) => a.id.localeCompare(b.id));
+
     ensureDir(volRoot);
-    writeItemShards(items, now, volRoot);
+    writeItemShards(allItems, now, volRoot);
     console.log(
-      `innertube-music-import: wrote ${items.length} item(s) into .volumes/vol-${volIndex}/data/items/`,
+      `innertube-music-import: wrote ${allItems.length} item(s) (${items.length} new) into .volumes/vol-${volIndex}/data/items/`,
     );
   } else {
     // No shard: write into data/ directly.
     const volRoot = path.join(process.cwd(), "data");
-    writeItemShards(items, now, volRoot);
+
+    // Read existing items and merge with new ones, same as the sharded path.
+    const existingItems = readAllItems(volRoot);
+    const merged = new Map<string, Item>();
+    for (const item of existingItems) merged.set(item.id, item);
+    for (const item of items) merged.set(item.id, item);
+    const allItems = [...merged.values()];
+    allItems.sort((a, b) => a.id.localeCompare(b.id));
+
+    writeItemShards(allItems, now, volRoot);
     console.log(
-      `innertube-music-import: wrote ${items.length} item(s) into data/items/`,
+      `innertube-music-import: wrote ${allItems.length} item(s) (${items.length} new) into data/items/`,
     );
   }
 }
