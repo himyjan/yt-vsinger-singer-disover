@@ -18,7 +18,8 @@
 
 import fs from "node:fs";
 import path from "node:path";
-import { parseShard } from "../scripts/lib/shard";
+import { inShard, parseShard } from "../scripts/lib/shard";
+import { extractLinksFromHtml, PLATFORM_HOSTS } from "../scripts/lib/link-extract";
 
 const SOURCE_URL = "https://usadanews.com";
 const CACHE_DIR = ".cache/usada";
@@ -41,6 +42,8 @@ interface UsadaEntry {
   reincarnationOf: string[] | null;
   roleTags: string[] | null;
   statusData: string | null;
+  /** All links extracted from the profile page, including platforms beyond the five USADA historically captured. */
+  links: { platform: string; handle: string; url: string }[] | null;
 }
 
 interface Options {
@@ -48,10 +51,17 @@ interface Options {
   pages: number | null;
   shard: string | null;
   listingsOnly: boolean;
+  profile: boolean;
 }
 
 function parseArgs(argv: string[]): Options {
-  const options: Options = { limit: null, pages: null, shard: null, listingsOnly: false };
+  const options: Options = {
+    limit: null,
+    pages: null,
+    shard: null,
+    listingsOnly: false,
+    profile: false,
+  };
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i]!;
     const value = argv[i + 1];
@@ -71,22 +81,21 @@ function parseArgs(argv: string[]): Options {
       case "--listings-only":
         options.listingsOnly = true;
         break;
-      case "--shard":
-        options.shard = value ?? null;
-        i++;
-        break;
-      case "--shard":
-        options.shard = value ?? null;
-        i++;
+      case "--profile":
+        options.profile = true;
         break;
       case "--help":
       case "-h":
         console.log(
           [
-            "Usage: npm run data:usada [--limit <n>] [--pages <n>]",
+            "Usage: npm run data:usada [--limit <n>] [--pages <n>] [--shard N/M]",
             "",
-            "  --limit <n>  stop after n entries in this pass",
-            "  --pages <n>  harvest this many listing pages",
+            "  (no flags)        harvest listings + profiles",
+            "  --listings-only   harvest listing pages only (names + slugs, no profiles)",
+            "  --profile         read listings snapshot and fetch missing profile pages",
+            "  --limit <n>       stop after n entries in this pass",
+            "  --pages <n>       harvest this many listing pages",
+            "  --shard N/M       only this shard (1-based)",
           ].join("\n")
         );
         process.exit(0);
@@ -98,6 +107,64 @@ function parseArgs(argv: string[]): Options {
     }
   }
   return options;
+}
+
+/** Output path for the snapshot, consistent across listings/profile phases. */
+function snapshotPath(shard: string | null): string {
+  return path.join(CACHE_DIR, `usada-${shard?.replace("/", "-") ?? "all"}.json`);
+}
+
+/** Read an existing snapshot from disk, or return an empty one. */
+function readSnapshot(shard: string | null): { data: UsadaEntry[]; generatedAt?: string } {
+  try {
+    const raw = fs.readFileSync(snapshotPath(shard), "utf8");
+    const parsed = JSON.parse(raw) as { data?: UsadaEntry[]; generatedAt?: string };
+    return { data: parsed.data ?? [], generatedAt: parsed.generatedAt };
+  } catch {
+    return { data: [] };
+  }
+}
+
+/** True when an entry still needs profile data fetched. */
+function needsProfile(entry: UsadaEntry): boolean {
+  return (
+    entry.youtubeId === null &&
+    entry.youtubeHandle === null &&
+    entry.youtubeUrl === null &&
+    entry.twitterUrl === null &&
+    entry.twitchUrl === null &&
+    entry.instagramUrl === null &&
+    entry.tiktokUrl === null
+  );
+}
+
+/** Merge freshly fetched profile fields onto an existing entry. */
+function mergeProfile(
+  entry: UsadaEntry,
+  profile: Awaited<ReturnType<typeof fetchUsadaPage>>,
+): UsadaEntry {
+  return {
+    ...entry,
+    youtubeUrl: entry.youtubeUrl ?? profile.youtubeUrl,
+    youtubeId: entry.youtubeId ?? profile.youtubeId,
+    youtubeHandle: entry.youtubeHandle ?? profile.youtubeHandle,
+    twitterUrl:
+      entry.twitterUrl ?? (profile.twitterUrl ? `https://twitter.com/${profile.twitterUrl}` : null),
+    twitchUrl:
+      entry.twitchUrl ?? (profile.twitchUrl ? `https://twitch.tv/${profile.twitchUrl}` : null),
+    instagramUrl:
+      entry.instagramUrl ?? (profile.instagramUrl ? `https://instagram.com/${profile.instagramUrl}` : null),
+    tiktokUrl:
+      entry.tiktokUrl ?? (profile.tiktokUrl ? `https://tiktok.com/@${profile.tiktokUrl}` : null),
+    activity: entry.activity ?? profile.activity,
+    debutDate: entry.debutDate ?? profile.debutDate,
+    country: entry.country ?? profile.country,
+    affiliation: entry.affiliation ?? profile.affiliation,
+    reincarnationOf: entry.reincarnationOf ?? profile.reincarnationOf,
+    roleTags: entry.roleTags ?? profile.roleTags,
+    statusData: entry.statusData ?? profile.statusData,
+    links: entry.links ?? profile.links ?? null,
+  };
 }
 
 /** Extracts the ItemList JSON-LD from HTML and returns its entries. */
@@ -217,10 +284,10 @@ async function fetchUsadaPage(slug: string): Promise<{
   youtubeUrl: string | null;
   youtubeId: string | null;
   youtubeHandle: string | null;
-  twitter: string | null;
-  twitch: string | null;
-  instagram: string | null;
-  tiktok: string | null;
+  twitterUrl: string | null;
+  twitchUrl: string | null;
+  instagramUrl: string | null;
+  tiktokUrl: string | null;
   activity: string | null;
   debutDate: string | null;
   country: string | null;
@@ -228,6 +295,7 @@ async function fetchUsadaPage(slug: string): Promise<{
   reincarnationOf: string[] | null;
   roleTags: string[] | null;
   statusData: string | null;
+  links: { platform: string; handle: string; url: string }[] | null;
 }> {
   try {
     const res = await fetch(`${SOURCE_URL}/vtuber/${encodeURIComponent(slug)}`, {
@@ -240,27 +308,42 @@ async function fetchUsadaPage(slug: string): Promise<{
     if (!res.ok) {
       return {
         youtubeUrl: null, youtubeId: null, youtubeHandle: null,
-        twitter: null, twitch: null, instagram: null, tiktok: null,
+        twitterUrl: null, twitchUrl: null, instagramUrl: null, tiktokUrl: null,
         activity: null, debutDate: null, country: null, affiliation: null,
         reincarnationOf: null, roleTags: null, statusData: null,
+        links: null,
       };
     }
     const html = await res.text();
 
-    // YouTube links - prefer channel/UC id over @handle
-    const youtubeChannelMatch = html.match(/youtube\.com\/channel\/(UC[\w-]{22})/);
-    const youtubeHandleMatch = html.match(/youtube\.com\/@([A-Za-z0-9_.-]+)/);
-    const youtubeUrl = youtubeChannelMatch
-      ? `https://www.youtube.com/channel/${youtubeChannelMatch[1]}`
-      : youtubeHandleMatch
-        ? `https://www.youtube.com/@${youtubeHandleMatch[1]}`
-        : null;
+    // Extract all platform/social links generically, skipping usadanews.com itself.
+    const links = extractLinksFromHtml(html, {
+      sourceHost: "usadanews.com",
+    });
 
-    const twitterMatch = html.match(/twitter\.com\/([A-Za-z0-9_]+)/i);
-    const xMatch = html.match(/x\.com\/([A-Za-z0-9_]+)/i);
-    const twitchMatch = html.match(/twitch\.tv\/([A-Za-z0-9_]+)/i);
-    const instagramMatch = html.match(/instagram\.com\/([A-Za-z0-9_.]+)/i);
-    const tiktokMatch = html.match(/tiktok\.com\/@([A-Za-z0-9_.]+)/i);
+    // Map extracted links to the entry's typed fields (first link per platform wins).
+    const byPlatform = new Map<string, { handle: string; url: string }>();
+    for (const link of links) {
+      if (!byPlatform.has(link.platform)) byPlatform.set(link.platform, link);
+    }
+
+    const get = (platform: string): string | null => {
+      const link = byPlatform.get(platform);
+      return link ? link.handle : null;
+    };
+    const getUrl = (platform: string): string | null => {
+      const link = byPlatform.get(platform);
+      return link ? link.url : null;
+    };
+
+    const ytLink = byPlatform.get("youtube");
+    const ytHandle = ytLink ? ytLink.handle : null;
+    // YouTube channel id (UC…) vs handle (@name or plain name).
+    const youtubeId = ytHandle && ytHandle.startsWith("UC") ? ytHandle : null;
+    const youtubeHandle = ytHandle && !ytHandle.startsWith("UC")
+      ? ytHandle.startsWith("@") ? ytHandle.slice(1) : ytHandle
+      : null;
+    const youtubeUrl = getUrl("youtube");
 
     // Profile info cards
     const infoCards = parseInfoCards(html);
@@ -276,12 +359,12 @@ async function fetchUsadaPage(slug: string): Promise<{
 
     return {
       youtubeUrl,
-      youtubeId: youtubeChannelMatch ? youtubeChannelMatch[1] : null,
-      youtubeHandle: youtubeHandleMatch ? youtubeHandleMatch[1] : null,
-      twitter: twitterMatch ? twitterMatch[1] : xMatch ? xMatch[1] : null,
-      twitch: twitchMatch ? twitchMatch[1] : null,
-      instagram: instagramMatch ? instagramMatch[1] : null,
-      tiktok: tiktokMatch ? tiktokMatch[1] : null,
+      youtubeId,
+      youtubeHandle,
+      twitterUrl: get("twitter") ? `https://twitter.com/${get("twitter")}` : null,
+      twitchUrl: get("twitch") ? `https://twitch.tv/${get("twitch")}` : null,
+      instagramUrl: get("instagram") ? `https://instagram.com/${get("instagram")}` : null,
+      tiktokUrl: get("tiktok") ? `https://tiktok.com/@${get("tiktok")}` : null,
       activity: infoCards["活動狀態"] ?? statusData ?? null,
       debutDate: infoCards["出道日期"] ?? null,
       country: infoCards["國家 / 地區"] ?? null,
@@ -289,22 +372,114 @@ async function fetchUsadaPage(slug: string): Promise<{
       reincarnationOf: reincarnationOf.length > 0 ? reincarnationOf : null,
       roleTags: roleTags.length > 0 ? roleTags : null,
       statusData,
+      links: links.map((l) => ({ platform: l.platform, handle: l.handle, url: l.url })),
     };
   } catch {
     return {
       youtubeUrl: null, youtubeId: null, youtubeHandle: null,
-      twitter: null, twitch: null, instagram: null, tiktok: null,
+      twitterUrl: null, twitchUrl: null, instagramUrl: null, tiktokUrl: null,
       activity: null, debutDate: null, country: null, affiliation: null,
       reincarnationOf: null, roleTags: null, statusData: null,
+      links: null,
     };
   }
 }
 
 async function main(): Promise<void> {
   const options = parseArgs(process.argv.slice(2));
-  const OUT_PATH = path.join(CACHE_DIR, `usada-${options.shard?.replace("/", "-") ?? "all"}.json`);
+  const OUT_PATH = snapshotPath(options.shard);
   fs.mkdirSync(CACHE_DIR, { recursive: true });
 
+  // ── Profile phase: read the listings snapshot, fill in missing profiles ──
+  if (options.profile) {
+    // Source is always the full listings snapshot (usada-all.json).
+    // Sharding only decides which subset of entries this job fetches.
+    const allSnapshot = readSnapshot(null);
+    let entries = allSnapshot.data;
+    if (entries.length === 0) {
+      console.error(
+        `usada: no snapshot at ${snapshotPath(null)} — run npm run data:usada-listings first`,
+      );
+      process.exit(1);
+    }
+
+    // If sharded, only process entries whose id lands in this shard.
+    if (options.shard) {
+      const shard = parseShard(options.shard);
+      entries = entries.filter((e) => inShard(e.id, shard.index, shard.count));
+      console.log(
+        `usada: profile phase shard ${options.shard} — ${entries.length} of ${allSnapshot.data.length} entries`,
+      );
+    }
+
+    const toFetch = entries.filter(needsProfile);
+    const alreadyHave = entries.length - toFetch.length;
+
+    // Apply limit to the profile phase
+    let limitedToFetch = toFetch;
+    if (options.limit) limitedToFetch = toFetch.slice(0, options.limit);
+
+    console.log(
+      `usada: profile phase — ${alreadyHave} already have profile data, ${limitedToFetch.length} of ${toFetch.length} need fetching`,
+    );
+
+    if (limitedToFetch.length === 0) {
+      // Still write an (empty or unchanged) shard snapshot so downstream
+      // import knows this shard completed.
+      const shardSnapshot = {
+        generatedAt: new Date().toISOString(),
+        source: "usadanews.com",
+        count: entries.length,
+        data: entries,
+      };
+      fs.writeFileSync(OUT_PATH, JSON.stringify(shardSnapshot, null, 2));
+      console.log(`usada: all entries already have profile data → ${OUT_PATH}`);
+      return;
+    }
+
+    const concurrency = 8;
+    let processed = 0;
+
+    for (let i = 0; i < limitedToFetch.length; i += concurrency) {
+      const batch = limitedToFetch.slice(i, i + concurrency);
+      const results = await Promise.all(
+        batch.map(async (ch) => {
+          processed++;
+          console.log(`  [${processed}/${limitedToFetch.length}] ${ch.name}`);
+          try {
+            const profile = await fetchUsadaPage(ch.id);
+            return mergeProfile(ch, profile);
+          } catch (err) {
+            const msg = err instanceof Error ? err.message : String(err);
+            console.error(`    failed ${ch.name}: ${msg}`);
+            return ch;
+          }
+        })
+      );
+      // Splice results back into entries
+      for (const r of results) {
+        const idx = entries.findIndex((e) => e.id === r.id);
+        if (idx !== -1) entries[idx] = r;
+      }
+    }
+
+    const snapshotOut = {
+      generatedAt: new Date().toISOString(),
+      source: "usadanews.com",
+      count: entries.length,
+      data: entries,
+    };
+    fs.writeFileSync(OUT_PATH, JSON.stringify(snapshotOut, null, 2));
+    const withYt = entries.filter(
+      (e) => e.youtubeId !== null || e.youtubeHandle !== null,
+    ).length;
+    console.log(
+      `usada: ${entries.length} entr(y/ies) (${withYt} with YouTube) → ${OUT_PATH}`,
+    );
+    return;
+  }
+
+  // ── Listing phase (and default full harvest) ──
   const allCards: Array<{ name: string; slug: string }> = [];
   const seen = new Set<string>();
   let page = 1;
@@ -376,7 +551,44 @@ async function main(): Promise<void> {
 
   console.log(`usada: ${limited.length} VTuber cards to process`);
 
-  // Fetch each individual page to get YouTube ID and social links
+  // If listings-only, write entries with null profile fields and stop.
+  if (options.listingsOnly) {
+    const entries: UsadaEntry[] = limited.map((ch) => ({
+      id: ch.slug,
+      name: ch.name,
+      gender: null,
+      affiliation: null,
+      group: null,
+      activity: null,
+      debutDate: null,
+      country: null,
+      youtubeUrl: null,
+      youtubeId: null,
+      youtubeHandle: null,
+      twitterUrl: null,
+      twitchUrl: null,
+      instagramUrl: null,
+      tiktokUrl: null,
+      reincarnationOf: null,
+      roleTags: null,
+      statusData: null,
+      links: null,
+    }));
+
+    const snapshot = {
+      generatedAt: new Date().toISOString(),
+      source: "usadanews.com",
+      count: entries.length,
+      data: entries,
+    };
+    fs.writeFileSync(OUT_PATH, JSON.stringify(snapshot, null, 2));
+    console.log(
+      `usada: ${entries.length} entr(y/ies) (listings only) → ${OUT_PATH}`,
+    );
+    return;
+  }
+
+  // Default: fetch each individual page to get YouTube ID and social links
   // Run in parallel batches to speed up harvesting, with concurrency limit
   const entries: UsadaEntry[] = [];
   const concurrency = 8; // Concurrent profile fetches
@@ -384,59 +596,59 @@ async function main(): Promise<void> {
 
   for (let i = 0; i < limited.length; i += concurrency) {
     const batch = limited.slice(i, i + concurrency);
-    if (!options.listingsOnly) {
-      const results = await Promise.all(
-        batch.map(async (ch) => {
-          processed++;
-          console.log(`  [${processed}/${limited.length}] ${ch.name}`);
-          try {
-            const profile = await fetchUsadaPage(ch.slug);
-            return {
-              id: ch.slug,
-              name: ch.name,
-              gender: null,
-              affiliation: profile.affiliation,
-              activity: profile.activity,
-              debutDate: profile.debutDate,
-              country: profile.country,
-              youtubeUrl: profile.youtubeUrl,
-              youtubeId: profile.youtubeId,
-              youtubeHandle: profile.youtubeHandle,
-              twitterUrl: profile.twitter ? `https://twitter.com/${profile.twitter}` : null,
-              twitchUrl: profile.twitch ? `https://twitch.tv/${profile.twitch}` : null,
-              instagramUrl: profile.instagram ? `https://instagram.com/${profile.instagram}` : null,
-              tiktokUrl: profile.tiktok ? `https://tiktok.com/@${profile.tiktok}` : null,
-              reincarnationOf: profile.reincarnationOf,
-              roleTags: profile.roleTags,
-              statusData: profile.statusData,
-            };
-          } catch (err) {
-            const msg = err instanceof Error ? err.message : String(err);
-            console.error(`    failed ${ch.name}: ${msg}`);
-            return {
-              id: ch.slug,
-              name: ch.name,
-              gender: null,
-              affiliation: null,
-              activity: null,
-              debutDate: null,
-              country: null,
-              youtubeUrl: null,
-              youtubeId: null,
-              youtubeHandle: null,
-              twitterUrl: null,
-              twitchUrl: null,
-              instagramUrl: null,
-              tiktokUrl: null,
-              reincarnationOf: null,
-              roleTags: null,
-              statusData: null,
-            };
-          }
-        })
-      );
-      entries.push(...results);
-    }
+    const results = await Promise.all(
+      batch.map(async (ch) => {
+        processed++;
+        console.log(`  [${processed}/${limited.length}] ${ch.name}`);
+        try {
+          const profile = await fetchUsadaPage(ch.slug);
+          return {
+            id: ch.slug,
+            name: ch.name,
+            gender: null,
+            affiliation: profile.affiliation,
+            activity: profile.activity,
+            debutDate: profile.debutDate,
+            country: profile.country,
+            youtubeUrl: profile.youtubeUrl,
+            youtubeId: profile.youtubeId,
+            youtubeHandle: profile.youtubeHandle,
+            twitterUrl: profile.twitterUrl ? `https://twitter.com/${profile.twitterUrl}` : null,
+            twitchUrl: profile.twitchUrl ? `https://twitch.tv/${profile.twitchUrl}` : null,
+            instagramUrl: profile.instagramUrl ? `https://instagram.com/${profile.instagramUrl}` : null,
+            tiktokUrl: profile.tiktokUrl ? `https://tiktok.com/@${profile.tiktokUrl}` : null,
+            reincarnationOf: profile.reincarnationOf,
+            roleTags: profile.roleTags,
+            statusData: profile.statusData,
+            links: profile.links ?? null,
+          };
+        } catch (err) {
+          const msg = err instanceof Error ? err.message : String(err);
+          console.error(`    failed ${ch.name}: ${msg}`);
+          return {
+            id: ch.slug,
+            name: ch.name,
+            gender: null,
+            affiliation: null,
+            activity: null,
+            debutDate: null,
+            country: null,
+            youtubeUrl: null,
+            youtubeId: null,
+            youtubeHandle: null,
+            twitterUrl: null,
+            twitchUrl: null,
+            instagramUrl: null,
+            tiktokUrl: null,
+            reincarnationOf: null,
+            roleTags: null,
+            statusData: null,
+            links: null,
+          };
+        }
+      })
+    );
+    entries.push(...results);
   }
 
   const snapshot = {

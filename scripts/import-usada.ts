@@ -36,7 +36,7 @@ import { InnerTubeSource } from "../scripts/lib/youtubei";
 import { inShard, parseShard } from "../scripts/lib/shard";
 import type { Affiliation, Channel } from "../scripts/lib/types";
 
-const SNAPSHOT = ".cache/usada/usada.json";
+const SNAPSHOT_DIR = ".cache/usada";
 const RESOLVED = ".cache/usada/usada-resolved.json";
 
 interface ResolvedCache {
@@ -74,6 +74,7 @@ interface UsadaEntry {
   reincarnationOf: string[] | null;
   roleTags: string[] | null;
   statusData: string | null;
+  links: { platform: string; handle: string; url: string }[] | null;
 }
 
 interface Row {
@@ -144,42 +145,39 @@ function mapActivity(status: string | null): "active" | "preparing" | "graduated
 
 async function main(): Promise<void> {
   const options = parseArgs(process.argv.slice(2));
-  if (!fs.existsSync(SNAPSHOT)) {
+  const snapshotFiles = fs
+    .readdirSync(SNAPSHOT_DIR)
+    .filter((f) => f.startsWith("usada-") && f.endsWith(".json"))
+    .sort((a, b) => {
+      // `usada-all.json` first so shard files can overwrite its entries.
+      if (a === "usada-all.json") return -1;
+      if (b === "usada-all.json") return 1;
+      return a < b ? -1 : a > b ? 1 : 0;
+    });
+  if (snapshotFiles.length === 0) {
     console.error(
-      `no snapshot at ${SNAPSHOT} — run npm run data:usada first`,
+      `no snapshot at ${SNAPSHOT_DIR}/usada-*.json — run npm run data:usada-listings first`,
     );
     process.exit(1);
   }
 
-  // Read ALL snapshot files from .cache/usada/usada-snapshot-vol-*.json
-  // and merge them together
-  const snapshotDir = path.dirname(SNAPSHOT);
-  const snapshotFiles = fs
-    .readdirSync(snapshotDir)
-    .filter((f) => f.startsWith("usada-snapshot-vol-") && f.endsWith(".json"))
-    .sort();
-
-  const allEntries: UsadaEntry[] = [];
-  const seenIds = new Set<string>();
+  const snapshotById = new Map<string, UsadaEntry>();
 
   for (const file of snapshotFiles) {
-    const filePath = path.join(snapshotDir, file);
+    const filePath = path.join(SNAPSHOT_DIR, file);
     try {
-      const snapshot: { data?: UsadaEntry[]; generatedAt: string } = JSON.parse(
+      const snapshot: { data?: UsadaEntry[]; generatedAt?: string } = JSON.parse(
         fs.readFileSync(filePath, "utf8")
       );
       for (const entry of snapshot.data || []) {
-        if (!seenIds.has(entry.id)) {
-          seenIds.add(entry.id);
-          allEntries.push(entry);
-        }
+        snapshotById.set(entry.id, entry);
       }
     } catch (err) {
       console.error(`Failed to read ${filePath}: ${(err as Error).message}`);
     }
   }
 
-  const entries = allEntries;
+  const entries = [...snapshotById.values()];
 
   const dataset = readAllChannelRecords();
   const byId = new Map(dataset.map((c) => [c.id, c]));
@@ -356,57 +354,16 @@ async function main(): Promise<void> {
       }
 
       // Collect profile links as externals (never overwrite existing ones).
-      if (entry.youtubeId) {
-        externalsEdits.push({
-          id: resolvedId,
-          platform: "youtube",
-          handle: entry.youtubeId,
-        });
-      }
-      if (entry.youtubeHandle) {
-        externalsEdits.push({
-          id: resolvedId,
-          platform: "youtube",
-          handle: `@${entry.youtubeHandle}`,
-        });
-      }
-      if (entry.twitchUrl) {
-        const m = entry.twitchUrl.match(/twitch\.tv\/([A-Za-z0-9_]+)/i);
-        if (m) {
+      // Covers every platform the generic extractor found — YouTube, Twitch,
+      // X, Instagram, TikTok, Bilibili, Niconico, VK, plus any unknown host
+      // landed in a `web:<n>` slot — not just the five USADA historically
+      // captured.
+      if (entry.links) {
+        for (const link of entry.links) {
           externalsEdits.push({
             id: resolvedId,
-            platform: "twitch",
-            handle: m[1],
-          });
-        }
-      }
-      if (entry.twitterUrl) {
-        const m = entry.twitterUrl.match(/(?:twitter|x)\.com\/([A-Za-z0-9_]+)/i);
-        if (m) {
-          externalsEdits.push({
-            id: resolvedId,
-            platform: "x",
-            handle: m[1],
-          });
-        }
-      }
-      if (entry.instagramUrl) {
-        const m = entry.instagramUrl.match(/instagram\.com\/([A-Za-z0-9_.]+)/i);
-        if (m) {
-          externalsEdits.push({
-            id: resolvedId,
-            platform: "instagram",
-            handle: m[1],
-          });
-        }
-      }
-      if (entry.tiktokUrl) {
-        const m = entry.tiktokUrl.match(/tiktok\.com\/@([A-Za-z0-9_.]+)/i);
-        if (m) {
-          externalsEdits.push({
-            id: resolvedId,
-            platform: "tiktok",
-            handle: `@${m[1]}`,
+            platform: link.platform,
+            handle: link.handle,
           });
         }
       }
