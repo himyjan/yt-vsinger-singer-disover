@@ -153,7 +153,11 @@ function main(): void {
     rebuildChannelsManifest(channelList, now, dataRoot);
   }
   if (mergeItems) {
-    writeItemShards(itemList, now, dataRoot);
+    if (itemList.length === 0) {
+      console.log("merge-volumes: no items to merge — leaving existing items untouched");
+    } else {
+      writeItemShards(itemList, now, dataRoot);
+    }
   }
 
   /* --- the root manifest: counts and the region table --- */
