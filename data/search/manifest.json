@@ -1,42 +1,42 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-02T06:05:43.156Z",
+  "generatedAt": "2026-11-02T06:21:30.384Z",
   "regions": [
     {
       "code": "jp",
       "shard": 0,
-      "entries": 6113,
-      "bytes": 3464857
+      "entries": 6106,
+      "bytes": 3471214
     },
     {
       "code": "jp",
       "shard": 1,
-      "entries": 6113,
-      "bytes": 3946292
+      "entries": 6106,
+      "bytes": 3952334
     },
     {
       "code": "jp",
       "shard": 2,
-      "entries": 6112,
-      "bytes": 6281192
+      "entries": 6105,
+      "bytes": 6270639
     },
     {
       "code": "cn",
       "shard": 0,
-      "entries": 8888,
-      "bytes": 3987080
+      "entries": 8903,
+      "bytes": 4020496
     },
     {
       "code": "tw",
       "shard": 0,
       "entries": 5999,
-      "bytes": 4273995
+      "bytes": 4274279
     },
     {
       "code": "hk",
       "shard": 0,
-      "entries": 1040,
-      "bytes": 810944
+      "entries": 1039,
+      "bytes": 810324
     },
     {
       "code": "kr",
@@ -47,32 +47,32 @@
     {
       "code": "en",
       "shard": 0,
-      "entries": 10578,
-      "bytes": 4595400
+      "entries": 10579,
+      "bytes": 4584018
     },
     {
       "code": "en",
       "shard": 1,
-      "entries": 10578,
-      "bytes": 4585063
+      "entries": 10579,
+      "bytes": 4573699
     },
     {
       "code": "en",
       "shard": 2,
-      "entries": 10578,
-      "bytes": 4596273
+      "entries": 10579,
+      "bytes": 4584401
     },
     {
       "code": "en",
       "shard": 3,
-      "entries": 10576,
-      "bytes": 5505886
+      "entries": 10577,
+      "bytes": 5506262
     },
     {
       "code": "id",
       "shard": 0,
-      "entries": 1376,
-      "bytes": 747531
+      "entries": 1377,
+      "bytes": 749461
     },
     {
       "code": "my",
@@ -89,8 +89,8 @@
     {
       "code": "unknown",
       "shard": 0,
-      "entries": 6788,
-      "bytes": 3101293
+      "entries": 6790,
+      "bytes": 3102354
     }
   ],
   "total": 87465
