@@ -41,6 +41,36 @@ permissions:
   contents: write
 
 jobs:
+  harvest:
+    name: Harvest USADA directory
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          ref: ${{ github.ref_name }}
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "26"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Harvest USADA
+        run: npm run data:usada
+
+      - name: Upload harvest artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: usada-snapshot
+          path: .cache/usada/usada.json
+          retention-days: 1
+
   plan:
     name: Choose the volume shards
     runs-on: ubuntu-latest
@@ -74,7 +104,7 @@ jobs:
 
   import:
     name: Import volume ${{ matrix.volume }}
-    needs: plan
+    needs: [harvest, plan]
     runs-on: ubuntu-latest
     timeout-minutes: 60
     # Twenty jobs, one volume each, all at once — GitHub's ceiling for a
@@ -107,17 +137,11 @@ jobs:
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
 
-      - name: Restore usada cache
-        uses: actions/cache@v6
+      - name: Download harvest artifact
+        uses: actions/download-artifact@v8
         with:
-          path: |
-            .cache/usada
-          key: usada-harvest-${{ github.run_number }}
-          restore-keys: |
-            usada-harvest-
-
-      - name: Harvest USADA
-        run: npm run data:usada
+          name: usada-snapshot
+          path: .cache/usada
 
       - name: Create this volume only
         # `--only` writes one volume and nothing else: a full split is ~2.6 GB
