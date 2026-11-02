@@ -40,6 +40,36 @@ permissions:
   contents: write
 
 jobs:
+  harvest:
+    name: Harvest vtuber-index directory
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          ref: ${{ github.ref_name }}
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "26"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Harvest vtuber-index
+        run: npm run data:vtuber-index
+
+      - name: Upload harvest artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: vtuber-index-snapshot
+          path: .cache/vtuber-index/vtuber-index.json
+          retention-days: 1
+
   plan:
     name: Choose the volume shards
     runs-on: ubuntu-latest
@@ -73,7 +103,7 @@ jobs:
 
   import:
     name: Import volume ${{ matrix.volume }}
-    needs: plan
+    needs: [harvest, plan]
     runs-on: ubuntu-latest
     timeout-minutes: 60
     # Twenty jobs, one volume each, all at once — GitHub's ceiling for a
@@ -106,17 +136,11 @@ jobs:
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
 
-      - name: Restore vtuber-index cache
-        uses: actions/cache@v6
+      - name: Download harvest artifact
+        uses: actions/download-artifact@v8
         with:
-          path: |
-            .cache/vtuber-index
-          key: vtuber-index-harvest-${{ github.run_number }}
-          restore-keys: |
-            vtuber-index-harvest-
-
-      - name: Harvest vtuber-index
-        run: npm run data:vtuber-index
+          name: vtuber-index-snapshot
+          path: .cache/vtuber-index
 
       - name: Create this volume only
         # `--only` writes one volume and nothing else: a full split is ~2.6 GB
