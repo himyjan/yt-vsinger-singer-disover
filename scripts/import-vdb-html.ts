@@ -154,11 +154,19 @@ async function main(): Promise<void> {
   const dataset = readAllChannelRecords();
   const byId = new Map(dataset.map((c) => [c.id, c]));
   const byHandle = new Map<string, Channel>();
+  const byYoutubeId = new Map<string, Channel>();
+  const byUcId = new Map<string, Channel>();
   for (const channel of dataset) {
     for (const platform of channel.platforms) {
       if (platform.platform === "youtube" && platform.handle) {
         const h = platform.handle.replace(/^@+/, "").toLowerCase();
         if (!byHandle.has(h)) byHandle.set(h, channel);
+      }
+      if (platform.platform === "youtube" && platform.id) {
+        if (!byYoutubeId.has(platform.id)) byYoutubeId.set(platform.id, channel);
+      }
+      if (/^UC[\w-]{20,}$/.test(channel.id)) {
+        if (!byUcId.has(channel.id)) byUcId.set(channel.id, channel);
       }
     }
   }
@@ -168,6 +176,8 @@ async function main(): Promise<void> {
     const channelId = extractChannelId(entry.youtubeUrl);
     let id = channelId ? `youtube:${channelId}` : null;
     let record: Channel | null | undefined = id ? byId.get(id) : undefined;
+    if (!record && channelId) record = byYoutubeId.get(channelId) ?? undefined;
+    if (!record && channelId) record = byUcId.get(channelId) ?? undefined;
 
     if (!id && entry.youtubeUrl) {
       const h = extractHandle(entry.youtubeUrl);
@@ -175,6 +185,12 @@ async function main(): Promise<void> {
         record = byHandle.get(h.toLowerCase()) ?? undefined;
         if (record) id = `youtube:@${h}`;
       }
+    }
+
+    if (!id && entry.youtubeUrl) {
+      // No YouTube channel — add as a new record keyed by vdb-html:<url-hash>
+      id = `vdb-html:${entry.youtubeUrl}`;
+      record = byId.get(id);
     }
 
     rows.push({
