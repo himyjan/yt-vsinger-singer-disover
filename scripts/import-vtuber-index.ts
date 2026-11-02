@@ -41,6 +41,7 @@ import {
 } from "../scripts/lib/import-channels";
 import { readAllChannelRecords } from "../scripts/lib/dataset";
 import { InnerTubeSource } from "../scripts/lib/youtubei";
+import { inShard, parseShard } from "../scripts/lib/shard";
 import type { Channel } from "../scripts/lib/types";
 
 const SNAPSHOT = ".cache/vtuber-index/vtuber-index.json";
@@ -92,10 +93,11 @@ interface Row {
 interface Options {
   apply: boolean;
   limit: number | null;
+  shard: string | null;
 }
 
 function parseArgs(argv: string[]): Options {
-  const options: Options = { apply: false, limit: null };
+  const options: Options = { apply: false, limit: null, shard: null };
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i]!;
     const value = argv[i + 1];
@@ -107,6 +109,10 @@ function parseArgs(argv: string[]): Options {
         options.limit = Math.max(1, Number(value ?? 1));
         i++;
         break;
+      case "--shard":
+        options.shard = value ?? null;
+        i++;
+        break;
       case "--help":
       case "-h":
         console.log(
@@ -115,6 +121,7 @@ function parseArgs(argv: string[]): Options {
             "",
             "  --apply         import the channels the gate admits",
             "  --limit <n>     import at most n channels",
+            "  --shard N/M     only import entries whose id lands in shard N (1-based) of M",
           ].join("\n")
         );
         process.exit(0);
@@ -163,6 +170,7 @@ async function main(): Promise<void> {
   }
 
   const rows: Row[] = [];
+  const shard = options.shard ? parseShard(options.shard) : null;
   for (const entry of entries) {
     // Skip fan / clip accounts before anything else.
     if (
@@ -183,6 +191,8 @@ async function main(): Promise<void> {
     if (entry.channel_id) {
       // vtuber-index entries are keyed by YouTube channel id directly
       const id = `youtube:${entry.channel_id}`;
+      // Shard by the YouTube channel id so parallel jobs don't overlap.
+      if (shard && !inShard(entry.channel_id, shard.index, shard.count)) continue;
       let record: Channel | null | undefined = byId.get(id);
       // Fall back to matching by raw YouTube UC id on the platform link
       if (!record) record = byYoutubeId.get(entry.channel_id) ?? undefined;
@@ -201,6 +211,8 @@ async function main(): Promise<void> {
       // When a YouTube channel is later discovered, canonicalizeChannelIds()
       // re-keys the record to the UC… id and merges duplicates.
       const id = `vtuber-index:${entry.id}`;
+      // Shard by the vtuber-index id for entries without a YouTube channel.
+      if (shard && !inShard(entry.id, shard.index, shard.count)) continue;
       let record: Channel | null | undefined = byId.get(id);
 
       rows.push({
