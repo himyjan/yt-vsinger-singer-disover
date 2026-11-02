@@ -1,7 +1,54 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-01T19:04:35.774Z",
+  "generatedAt": "2026-11-02T00:13:40.040Z",
   "items": [
+    {
+      "id": "NRAnMloDodw",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UC8p1kOa4av6KNLCvO41CN-A",
+      "channelName": "Rine Vartist",
+      "channelKind": "virtual",
+      "region": "my",
+      "gender": "female",
+      "languages": [
+        "ms"
+      ],
+      "isAi": false,
+      "variant": "female_vsinger",
+      "title": "I Won't End This Game Until I Find The Chocobo!",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/NRAnMloDodw/hq720.jpg",
+      "publishedAt": "2026-11-01T21:00:00.000Z",
+      "scheduledStart": "2026-11-01T21:00:00.000Z",
+      "actualStart": null,
+      "isMember": false,
+      "actualEnd": "2026-11-01T23:32:20.296Z",
+      "duration": 9140,
+      "status": "past",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC8p1kOa4av6KNLCvO41CN-A",
+          "name": "Rine Vartist",
+          "kind": "virtual",
+          "region": "my"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-31T18:28:47.453Z",
+      "updatedAt": "2026-11-01T23:32:20.296Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
     {
       "id": "9CdELtkV5v4",
       "platform": "youtube",
@@ -276,7 +323,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:25.311Z",
-      "updatedAt": "2026-11-01T18:53:42.958Z",
+      "updatedAt": "2026-11-01T23:32:28.869Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -323,54 +370,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:26.922Z",
-      "updatedAt": "2026-11-01T18:53:37.143Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "NRAnMloDodw",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UC8p1kOa4av6KNLCvO41CN-A",
-      "channelName": "Rine Vartist",
-      "channelKind": "virtual",
-      "region": "my",
-      "gender": "female",
-      "languages": [
-        "ms"
-      ],
-      "isAi": false,
-      "variant": "female_vsinger",
-      "title": "I Won't End This Game Until I Find The Chocobo!",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/NRAnMloDodw/hq720.jpg",
-      "publishedAt": null,
-      "scheduledStart": "2026-11-01T21:00:00.000Z",
-      "actualStart": null,
-      "isMember": false,
-      "actualEnd": null,
-      "duration": null,
-      "status": "upcoming",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UC8p1kOa4av6KNLCvO41CN-A",
-          "name": "Rine Vartist",
-          "kind": "virtual",
-          "region": "my"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-31T18:28:47.453Z",
-      "updatedAt": "2026-11-01T18:53:48.254Z",
+      "updatedAt": "2026-11-01T23:32:34.126Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -417,7 +417,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.180Z",
-      "updatedAt": "2026-11-01T18:53:34.963Z",
+      "updatedAt": "2026-11-01T23:32:24.449Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -464,7 +464,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.180Z",
-      "updatedAt": "2026-11-01T18:53:34.963Z",
+      "updatedAt": "2026-11-01T23:32:24.449Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }
