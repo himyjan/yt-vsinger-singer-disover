@@ -2,16 +2,18 @@ name: Import USADA VTubers
 
 # Harvests USADA (usadanews.com) VTuber directory and imports new channels.
 #
-# Step 1 (single job): Harvest all VTuber listing pages → .cache/usada/usada.json
+# Step 1 (single job): Harvest listing pages → .cache/usada/usada-all.json
 #   (names + slugs only, no profile pages)
-# Step 2 (20 parallel jobs): Each job fetches profile pages for its volume
-#   shard of entries, imports new channels, updates tracked records
-# Step 3 (fan-in job): Merge volumes, build search index, validate, commit
+# Step 2 (single job): Harvest profile pages → .cache/usada/usada-all.json
+#   (YouTube id, social links, activity status, country, etc.)
+# Step 3 (20 parallel jobs): Each job imports its volume shard of entries
+#   into data/channels/
+# Step 4 (fan-in job): Merge volumes, build search index, validate, commit
 #
-#   npm run data:usada              # harvest listing pages (single job)
-#   npm run data:usada-import       # report what would be imported
+#   npm run data:usada-listings      # harvest listing pages (Step 1)
+#   npm run data:usada-profile       # harvest profile pages (Step 2)
+#   npm run data:usada-import        # report what would be imported (Step 3)
 #   npm run data:usada-import -- --apply  # import all shards (20 parallel jobs)
-#   npm run data:usada-import -- --apply --shard 1/20  # one shard only
 
 on:
   schedule:
@@ -33,7 +35,7 @@ permissions:
   contents: write
 
 jobs:
-  harvest:
+  harvest-listings:
     name: Harvest USADA listing pages
     runs-on: ubuntu-latest
     timeout-minutes: 60
@@ -59,17 +61,8 @@ jobs:
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
 
-      - name: Restore usada cache
-        uses: actions/cache@v6
-        with:
-          path: |
-            .cache/usada
-          key: usada-harvest-${{ github.run_number }}
-          restore-keys: |
-            usada-harvest-
-
       - name: Harvest USADA listing pages
-        run: npm run data:usada
+        run: npm run data:usada-listings
 
       - name: Upload usada cache
         uses: actions/upload-artifact@v7
@@ -78,9 +71,62 @@ jobs:
           path: .cache/usada
           retention-days: 1
 
+  harvest-profiles:
+    name: Harvest USADA profile pages (shard ${{ matrix.volume }})
+    needs: [harvest-listings]
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    strategy:
+      max-parallel: 20
+      fail-fast: false
+      matrix:
+        volume: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          ref: ${{ github.ref_name }}
+          lfs: true
+
+      - name: Install Git LFS
+        run: |
+          git lfs install --skip-repo
+          git lfs pull || true
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "26"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Download usada cache
+        uses: actions/download-artifact@v8
+        with:
+          name: usada-cache
+          path: .cache/usada
+
+      - name: Harvest USADA profile pages for shard ${{ matrix.volume }}+1/20
+        id: harvest
+        run: |
+          SHARD=$(( ${{ matrix.volume }} + 1 ))
+          npm run data:usada-profile -- --shard "${SHARD}/20"
+          echo "shard=$SHARD" >> "$GITHUB_OUTPUT"
+          echo "file=usada-${SHARD}-20.json" >> "$GITHUB_OUTPUT"
+
+      - name: Upload profile shard artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: usada-profile-vol-${{ steps.harvest.outputs.shard }}
+          path: .cache/usada/${{ steps.harvest.outputs.file }}
+          retention-days: 1
+
   plan:
     name: Choose the volume shards
-    needs: [harvest]
+    needs: [harvest-listings, harvest-profiles]
     runs-on: ubuntu-latest
     timeout-minutes: 10
     outputs:
@@ -111,12 +157,11 @@ jobs:
 
   import:
     name: Import volume ${{ matrix.volume }}
-    needs: [harvest, plan]
+    needs: [harvest-listings, harvest-profiles, plan]
     runs-on: ubuntu-latest
     timeout-minutes: 120
     # Twenty jobs, one volume each, all at once — GitHub's ceiling for a
-    # public repository. Each job fetches profile pages for its shard of
-    # entries and imports them. No two jobs touch the same channel shard.
+    # public repository. Each job imports its volume shard of entries.
     strategy:
       max-parallel: 20
       fail-fast: false
@@ -144,20 +189,18 @@ jobs:
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
 
-      - name: Restore usada cache
-        uses: actions/cache@v6
-        with:
-          path: |
-            .cache/usada
-          key: usada-harvest-${{ github.run_number }}
-          restore-keys: |
-            usada-harvest-
-
-      - name: Download usada cache artifact
+      - name: Download usada cache
         uses: actions/download-artifact@v8
         with:
           name: usada-cache
           path: .cache/usada
+
+      - name: Download all profile shard artifacts
+        uses: actions/download-artifact@v8
+        with:
+          pattern: usada-profile-vol-*
+          path: .cache/usada
+          merge-multiple: true
 
       - name: Create this volume only
         run: npm run data:volumes -- --count 20 --only ${{ matrix.volume }}
@@ -166,9 +209,10 @@ jobs:
         env:
           DRY_RUN: ${{ inputs.dry-run }}
         run: |
-          # Each job owns one volume's entries (--shard volume/20) and imports
-          # only those. --shard volume/20 is 1-based: volume 0 → shard 1/20.
-          ARGS=(--shard "${{ matrix.volume }}/20")
+          # Each job owns one volume's entries (--shard volume+1/20) and imports
+          # only those. matrix.volume is 0-based (0-19); --shard is 1-based.
+          SHARD=$(( ${{ matrix.volume }} + 1 ))
+          ARGS=(--shard "${SHARD}/20")
           if [ "${DRY_RUN:-false}" = "true" ]; then ARGS+=(--dry-run); else ARGS+=(--apply); fi
 
           # The scripts read data/ through the working directory, so the volume
@@ -190,7 +234,7 @@ jobs:
 
   merge-and-commit:
     name: Merge volumes and commit dataset
-    needs: [harvest, plan, import]
+    needs: [harvest-listings, harvest-profiles, plan, import]
     runs-on: ubuntu-latest
     timeout-minutes: 90
     steps:
@@ -302,8 +346,9 @@ jobs:
             echo "| Source | USADA (usadanews.com/vtuber/) |"
             echo "| Credentials | none (public HTML) |"
             echo "| Step 1 | Harvest listing pages (single job) |"
-            echo "| Step 2 | 20 parallel profile-grab jobs (volume shards) |"
-            echo "| Step 3 | Merge → index → validate → commit |"
+            echo "| Step 2 | Harvest profile pages (single job) |"
+            echo "| Step 3 | 20 parallel import jobs (volume shards) |"
+            echo "| Step 4 | Merge → index → validate → commit |"
             echo "| Dry run | ${{ inputs.dry-run }} |"
             echo "| Committed | \`data/channels\`, \`data/search\`, \`data/manifest.json\` |"
           } >> "$GITHUB_STEP_SUMMARY"
