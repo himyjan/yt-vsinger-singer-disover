@@ -496,11 +496,25 @@ function backfillAgencies(
   apply: boolean,
 ): { records: number; written: Channel[] } {
   const byId = new Map(records.map((record) => [record.id, record]));
+  const byYoutubeId = new Map<string, Channel>();
+  const byUcId = new Map<string, Channel>();
+  for (const record of records) {
+    for (const platform of record.platforms) {
+      if (platform.platform === "youtube" && platform.id) {
+        if (!byYoutubeId.has(platform.id)) byYoutubeId.set(platform.id, record);
+      }
+    }
+    if (/^UC[\w-]{20,}$/.test(record.id)) {
+      if (!byUcId.has(record.id)) byUcId.set(record.id, record);
+    }
+  }
   let touched = 0;
   const written: Channel[] = [];
   for (const row of rows) {
     if (!row.youtubeId) continue;
-    const record = byId.get(row.youtubeId);
+    let record = byId.get(row.youtubeId);
+    if (!record) record = byYoutubeId.get(row.youtubeId) ?? undefined;
+    if (!record) record = byUcId.get(row.youtubeId) ?? undefined;
     if (!record || record.agency) continue;
     const agency = agencyOfGroups(row.currentGroups);
     if (!agency) continue;
@@ -617,7 +631,15 @@ function matchRecords(
   records: Channel[],
 ): MatchedRow[] {
   const byId = new Map<string, Channel>();
-  for (const record of records) byId.set(record.id, record);
+  const byYoutubeId = new Map<string, Channel>();
+  for (const record of records) {
+    byId.set(record.id, record);
+    for (const platform of record.platforms) {
+      if (platform.platform === "youtube" && platform.id) {
+        if (!byYoutubeId.has(platform.id)) byYoutubeId.set(platform.id, record);
+      }
+    }
+  }
   const byHandle = new Map<string, Channel>();
   for (const record of records) {
     for (const platform of record.platforms) {
@@ -637,6 +659,7 @@ function matchRecords(
 
     const channel =
       (entry.youtubeId ? byId.get(entry.youtubeId) : undefined) ??
+      (entry.youtubeId ? byYoutubeId.get(entry.youtubeId) : undefined) ??
       (entry.youtubeHandle
         ? byHandle.get(entry.youtubeHandle.toLowerCase())
         : undefined);
