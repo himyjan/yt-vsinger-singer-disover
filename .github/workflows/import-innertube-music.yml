@@ -9,7 +9,7 @@ name: Import Innertube Music
 #
 #   npm run data:innertube-music              # harvest all channels
 #   npm run data:innertube-music -- --shard 1/20   # one shard only
- #   npm run data:innertube-music-import -- --apply # import all shards (20 parallel jobs)
+#   npm run data:innertube-music-import -- --apply # import all shards (20 parallel jobs)
 
 on:
   schedule:
@@ -65,7 +65,7 @@ jobs:
       - name: Harvest Innertube music for shard ${{ matrix.volume }}+1/20
         id: harvest
         run: |
-          SHARD=$(( ${{ matrix.volume }} + 1 ))
+          SHARD=$(node -e "console.log(${{ matrix.volume }} + 1)")
           npm run data:innertube-music -- --shard "${SHARD}/20"
           echo "shard=$SHARD" >> "$GITHUB_OUTPUT"
           echo "file=innertube-music-${SHARD}-20.json" >> "$GITHUB_OUTPUT"
@@ -156,12 +156,9 @@ jobs:
         env:
           DRY_RUN: ${{ inputs.dry-run }}
         run: |
-          # Each job owns one volume's channels (--shard volume+1/20) and
-          # imports only those channels' music items. matrix.volume is
-          # 0-based (0-19); --shard is 1-based.
-          SHARD=$(( ${{ matrix.volume }} + 1 ))
-          ARGS=(--shard "${SHARD}/20")
-          if [ "${DRY_RUN:-false}" = "true" ]; then ARGS+=(--dry-run); else ARGS+=(--apply); fi
+          SHARD=$(node -e "console.log(${{ matrix.volume }} + 1)")
+          ARGS="--shard ${SHARD}/20"
+          if [ "${DRY_RUN:-false}" = "true" ]; then ARGS="$ARGS --dry-run"; else ARGS="$ARGS --apply"; fi
 
           # The scripts read data/ through the working directory, so the
           # volume is swapped in as a symlink and swapped back — the same
@@ -169,7 +166,7 @@ jobs:
           VOL_DIR=".volumes/vol-${{ matrix.volume }}/data"
           mv data data-full
           ln -s "$VOL_DIR" data
-          npm run data:innertube-music-import -- "${ARGS[@]}"
+          npm run data:innertube-music-import -- $ARGS
           rm -f data
           mv data-full data
 
@@ -234,7 +231,7 @@ jobs:
             # to another shard, so copying over the split would leave the old
             # row behind beside the new one — the same performer twice.
             rm -rf "$DST"
-            cp -R "$SRC" "$DST"
+            cp -R "$SRC"/. "$DST"/
             echo "restored items for vol-$v"
           done
           if [ "$missing" -gt 0 ]; then
@@ -296,5 +293,5 @@ jobs:
             echo "| Step 2 | 20 parallel import jobs (volume shards) |"
             echo "| Step 3 | Merge → index → validate → commit |"
             echo "| Dry run | ${{ inputs.dry-run }} |"
-            echo "| Committed | \`data/items\`, \`data/search\`, \`data/manifest.json` |"
+            echo "| Committed | \`data/items\`, \`data/search\`, \`data/manifest.json\` |"
           } >> "$GITHUB_STEP_SUMMARY"
