@@ -1,25 +1,17 @@
 name: Import USADA VTubers
 
-# Harvests USADA (usadanews.com) directory and imports the new channels the gate
-# admits into data/channels/. The harvest writes `.cache/usada/usada.json`,
-# and the importer splits entries into 20 volume shards (by YouTube channel id
-# or usadanews slug via volumeOf()), each job importing its own shard in
-# parallel.
+# Harvests USADA (usadanews.com) VTuber directory and imports new channels.
 #
-#   npm run data:usada              # harvest VTuber candidates from USADA
+# Step 1 (single job): Harvest all VTuber listing pages → .cache/usada/usada.json
+#   (names + slugs only, no profile pages)
+# Step 2 (20 parallel jobs): Each job fetches profile pages for its volume
+#   shard of entries, imports new channels, updates tracked records
+# Step 3 (fan-in job): Merge volumes, build search index, validate, commit
+#
+#   npm run data:usada              # harvest listing pages (single job)
 #   npm run data:usada-import       # report what would be imported
-#   npm run data:usada-import -- --apply  # write the new channels
+#   npm run data:usada-import -- --apply  # import all shards (20 parallel jobs)
 #   npm run data:usada-import -- --apply --shard 1/20  # one shard only
-#
-# USADA publishes a YouTube channel id for each entry, so matching against
-# the dataset is direct (no search required).
-#
-# USADA is a VTuber directory — every entry is a virtual claim
-# (`reincarnationOf`-eligible).  What a roster still must not buy is a fan:
-# `detectClipAccount()` and `isFanAccountName()` must both be false.
-#
-#   npm run data:usada-import                     # report only
-#   npm run data:usada-import -- --apply          # import the new channels
 
 on:
   schedule:
@@ -42,20 +34,21 @@ permissions:
 
 jobs:
   harvest:
-    name: Harvest USADA volume ${{ matrix.volume }}
+    name: Harvest USADA listing pages
     runs-on: ubuntu-latest
     timeout-minutes: 60
-    strategy:
-      max-parallel: 20
-      fail-fast: false
-      matrix:
-        volume: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
     steps:
       - name: Checkout
         uses: actions/checkout@v7
         with:
           fetch-depth: 0
           ref: ${{ github.ref_name }}
+          lfs: true
+
+      - name: Install Git LFS
+        run: |
+          git lfs install --skip-repo
+          git lfs pull || true
 
       - name: Set up Node
         uses: actions/setup-node@v7
@@ -66,18 +59,28 @@ jobs:
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
 
-      - name: Harvest USADA volume ${{ matrix.volume }}
-        run: SHARD=$(( ${{ matrix.volume }} + 1 )) && npm run data:usada -- --shard "$SHARD/20" --listings-only
+      - name: Restore usada cache
+        uses: actions/cache@v6
+        with:
+          path: |
+            .cache/usada
+          key: usada-harvest-${{ github.run_number }}
+          restore-keys: |
+            usada-harvest-
 
-      - name: Upload harvest artifact
+      - name: Harvest USADA listing pages
+        run: npm run data:usada
+
+      - name: Upload usada cache
         uses: actions/upload-artifact@v7
         with:
-          name: usada-snapshot-vol-${{ matrix.volume }}
-          path: .cache/usada/usada-${{ matrix.volume }}.json
+          name: usada-cache
+          path: .cache/usada
           retention-days: 1
 
   plan:
     name: Choose the volume shards
+    needs: [harvest]
     runs-on: ubuntu-latest
     timeout-minutes: 10
     outputs:
@@ -101,6 +104,7 @@ jobs:
       - name: Resolve the volume shards this run touches
         id: pick
         run: |
+          # Every volume, every run — no rotation, no slice, nothing skipped.
           VOLUMES=$(node -e 'console.log(JSON.stringify(Array.from({length:20},(_,i)=>i)))')
           echo "volumes=$VOLUMES" >> "$GITHUB_OUTPUT"
           echo "plan: volumes=$VOLUMES"
@@ -109,7 +113,10 @@ jobs:
     name: Import volume ${{ matrix.volume }}
     needs: [harvest, plan]
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 120
+    # Twenty jobs, one volume each, all at once — GitHub's ceiling for a
+    # public repository. Each job fetches profile pages for its shard of
+    # entries and imports them. No two jobs touch the same channel shard.
     strategy:
       max-parallel: 20
       fail-fast: false
@@ -137,12 +144,20 @@ jobs:
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
 
-      - name: Download all harvest artifacts
+      - name: Restore usada cache
+        uses: actions/cache@v6
+        with:
+          path: |
+            .cache/usada
+          key: usada-harvest-${{ github.run_number }}
+          restore-keys: |
+            usada-harvest-
+
+      - name: Download usada cache artifact
         uses: actions/download-artifact@v8
         with:
+          name: usada-cache
           path: .cache/usada
-          pattern: usada-snapshot-vol-*
-          merge-multiple: false
 
       - name: Create this volume only
         run: npm run data:volumes -- --count 20 --only ${{ matrix.volume }}
@@ -151,10 +166,14 @@ jobs:
         env:
           DRY_RUN: ${{ inputs.dry-run }}
         run: |
-          SHARD=$(( ${{ matrix.volume }} + 1 ))
-          ARGS=(--shard "$SHARD/20")
+          # Each job owns one volume's entries (--shard volume/20) and imports
+          # only those. --shard volume/20 is 1-based: volume 0 → shard 1/20.
+          ARGS=(--shard "${{ matrix.volume }}/20")
           if [ "${DRY_RUN:-false}" = "true" ]; then ARGS+=(--dry-run); else ARGS+=(--apply); fi
 
+          # The scripts read data/ through the working directory, so the volume
+          # is swapped in as a symlink and swapped back — the same trick
+          # sync-data.yml and live.yml use.
           VOL_DIR=".volumes/vol-${{ matrix.volume }}/data"
           mv data data-full
           ln -s "$VOL_DIR" data
@@ -171,7 +190,7 @@ jobs:
 
   merge-and-commit:
     name: Merge volumes and commit dataset
-    needs: [plan, import]
+    needs: [harvest, plan, import]
     runs-on: ubuntu-latest
     timeout-minutes: 90
     steps:
@@ -219,6 +238,9 @@ jobs:
               missing=$((missing + 1))
               continue
             fi
+            # Replace, do not merge. A record re-keyed to its UC… id has moved
+            # to another shard, so copying over the split would leave the old
+            # row behind beside the new one — the same performer twice.
             rm -rf "$DST"
             cp -R "$SRC" "$DST"
             echo "restored channels for vol-$v"
@@ -247,7 +269,13 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git fetch origin "$BRANCH"
+
+          # Move HEAD and index to latest branch, keeping generated data/ in
+          # the worktree. --mixed leaves the worktree alone.
           git reset --mixed "origin/$BRANCH"
+
+          # Stage only what this run wrote. Items, songs, overrides, rosters
+          # come from the branch; only channels/search/manifest are written.
           git checkout -- \
             data/items \
             data/songs \
@@ -267,15 +295,15 @@ jobs:
       - name: Summary
         run: |
           {
-            echo "### Import USADA VTubers (20 parallel jobs)"
+            echo "### Import USADA VTubers (20 parallel profile jobs)"
             echo ""
             echo "| | |"
             echo "| --- | --- |"
             echo "| Source | USADA (usadanews.com/vtuber/) |"
             echo "| Credentials | none (public HTML) |"
-            echo "| Volumes | 20 (one per job, parallel) |"
-            echo "| Per volume | ~3,546–3,746 entries sharded by channel id |"
-            echo "| Step | harvest → shard by volumeOf → import per volume → merge → index → validate → commit |"
+            echo "| Step 1 | Harvest listing pages (single job) |"
+            echo "| Step 2 | 20 parallel profile-grab jobs (volume shards) |"
+            echo "| Step 3 | Merge → index → validate → commit |"
             echo "| Dry run | ${{ inputs.dry-run }} |"
             echo "| Committed | \`data/channels\`, \`data/search\`, \`data/manifest.json\` |"
           } >> "$GITHUB_STEP_SUMMARY"
