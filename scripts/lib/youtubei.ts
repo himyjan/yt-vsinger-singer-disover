@@ -1070,43 +1070,51 @@ export class InnerTubeSource {
         const id = item?.video_id ?? item?.content_id ?? item?.id;
         if (typeof id !== "string" || !id) continue;
         let status = liveStatusOf(item);
-        if (!status) continue;
 
         /**
-         * The badge is how the tab *renders* the card; the player response is
-         * what the video *is*. They disagree: a card keeps its "Upcoming"
-         * badge after the stream has aired, and YouTube leaves the badge on a
-         * stream long enough that the Live tab is not evidence on its own.
-         * The player response also carries the start time, which the card
-         * gives only as a localized string in the client's own timezone
-         * ("Scheduled for 10/31/26, 12:00 AM") — unparseable without guessing.
-         *
-         * One extra request per card that is already badged, not per channel:
-         * upcoming and live cards are a small fraction of the catalogue.
+         * The Live tab card badge can lag behind reality: a stream that just
+         * started ("Started now") may still show "Upcoming" on the card while
+         * the player response already says is_live: true. The badge is how the
+         * tab *renders* the card; the player response is what the video *is*.
+         * Always check getBasicInfo() so we don't miss a stream that has
+         * already begun — one extra request per card on the Live tab, which
+         * is a small fraction of the catalogue.
          */
         const state = await this.streamState(id);
-        if (state) {
-          // Skip only if the stream has ended — neither live nor upcoming.
-          // A badge/player disagreement (card says upcoming, player says live,
-          // or vice versa) is resolved below, not skipped.
-          if (!state.isLive && !state.isUpcoming) continue;
-          if (status === "upcoming" && !state.isUpcoming && state.isLive) {
-            status = "live";
-          } else if (status === "live" && !state.isLive && state.isUpcoming) {
-            status = "upcoming";
-          } else if (state.isLive) {
-            status = "live";
-          } else if (state.isUpcoming) {
-            status = "upcoming";
-          }
+        if (!state && !status) continue;
+        if (!state) {
+          // Player data unavailable; fall back to the badge/metadata.
+          out.push({
+            id,
+            title: titleOf(item),
+            thumbnail: thumbnailOf(item),
+            status: status as "live" | "upcoming",
+            scheduledStart: null,
+            actualStart: null,
+            isMember: null,
+          });
+          continue;
+        }
+        if (!state.isLive && !state.isUpcoming && !status) continue;
+
+        // Resolve badge vs player disagreements — the player response wins.
+        if (status === "upcoming" && !state.isUpcoming && state.isLive) {
+          status = "live";
+        } else if (status === "live" && !state.isLive && state.isUpcoming) {
+          status = "upcoming";
+        } else if (state.isLive) {
+          status = "live";
+        } else if (state.isUpcoming) {
+          status = "upcoming";
         }
 
         out.push({
           id,
           title: titleOf(item),
           thumbnail: thumbnailOf(item),
-          status,
-          scheduledStart: status === "upcoming" ? (state?.start ?? null) : null,
+          status: status as "live" | "upcoming",
+          scheduledStart:
+            status === "upcoming" ? (state?.start ?? null) : null,
           actualStart: status === "live" ? (state?.start ?? null) : null,
           isMember: state?.isMember ?? null,
         });
