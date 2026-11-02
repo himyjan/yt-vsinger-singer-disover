@@ -151,10 +151,35 @@ async function main(): Promise<void> {
     process.exit(1);
   }
 
-  const snapshot: { data?: UsadaEntry[]; generatedAt: string } = JSON.parse(
-    fs.readFileSync(SNAPSHOT, "utf8")
-  );
-  const entries = snapshot.data || [];
+  // Read ALL snapshot files from .cache/usada/usada-snapshot-vol-*.json
+  // and merge them together
+  const snapshotDir = path.dirname(SNAPSHOT);
+  const snapshotFiles = fs
+    .readdirSync(snapshotDir)
+    .filter((f) => f.startsWith("usada-snapshot-vol-") && f.endsWith(".json"))
+    .sort();
+
+  const allEntries: UsadaEntry[] = [];
+  const seenIds = new Set<string>();
+
+  for (const file of snapshotFiles) {
+    const filePath = path.join(snapshotDir, file);
+    try {
+      const snapshot: { data?: UsadaEntry[]; generatedAt: string } = JSON.parse(
+        fs.readFileSync(filePath, "utf8")
+      );
+      for (const entry of snapshot.data || []) {
+        if (!seenIds.has(entry.id)) {
+          seenIds.add(entry.id);
+          allEntries.push(entry);
+        }
+      }
+    } catch (err) {
+      console.error(`Failed to read ${filePath}: ${(err as Error).message}`);
+    }
+  }
+
+  const entries = allEntries;
 
   const dataset = readAllChannelRecords();
   const byId = new Map(dataset.map((c) => [c.id, c]));
@@ -243,7 +268,7 @@ async function main(): Promise<void> {
   }
 
   console.log(
-    `snapshot ${snapshot.generatedAt} · ${entries.length} entr(y/ies) · ${dataset.length} record(s) tracked`,
+    `snapshot · ${entries.length} entr(y/ies) · ${dataset.length} record(s) tracked`,
   );
 
   const counts = new Map<string, number>();
