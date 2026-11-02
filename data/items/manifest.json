@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-02T06:05:42.365Z",
+  "generatedAt": "2026-11-02T12:14:00.598Z",
   "regions": [
     {
       "code": "jp",
@@ -24,7 +24,7 @@
         "0e",
         "0f"
       ],
-      "items": 6968
+      "items": 7388
     },
     {
       "code": "cn",
@@ -48,7 +48,7 @@
         "0e",
         "0f"
       ],
-      "items": 86
+      "items": 91
     },
     {
       "code": "tw",
@@ -72,7 +72,7 @@
         "0e",
         "0f"
       ],
-      "items": 1725
+      "items": 1803
     },
     {
       "code": "hk",
@@ -96,7 +96,7 @@
         "0e",
         "0f"
       ],
-      "items": 329
+      "items": 341
     },
     {
       "code": "kr",
@@ -115,10 +115,11 @@
         "0a",
         "0b",
         "0c",
+        "0d",
         "0e",
         "0f"
       ],
-      "items": 27
+      "items": 30
     },
     {
       "code": "en",
@@ -142,7 +143,7 @@
         "0e",
         "0f"
       ],
-      "items": 3163
+      "items": 3312
     },
     {
       "code": "id",
@@ -166,7 +167,7 @@
         "0e",
         "0f"
       ],
-      "items": 248
+      "items": 286
     },
     {
       "code": "my",
@@ -190,7 +191,7 @@
         "0e",
         "0f"
       ],
-      "items": 99
+      "items": 106
     },
     {
       "code": "sea",
@@ -214,7 +215,7 @@
         "0e",
         "0f"
       ],
-      "items": 266
+      "items": 295
     },
     {
       "code": "unknown",
@@ -238,13 +239,13 @@
         "0e",
         "0f"
       ],
-      "items": 299
+      "items": 304
     }
   ],
   "counts": {
-    "total": 13210,
-    "live": 3,
-    "upcoming": 7487
+    "total": 13956,
+    "live": 25,
+    "upcoming": 7787
   },
   "liveParts": [
     "live.json"

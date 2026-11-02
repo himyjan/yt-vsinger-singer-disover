@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-02T06:05:42.365Z",
+  "generatedAt": "2026-11-02T12:14:00.598Z",
   "items": [
     {
       "id": "2sv1rgfhnVM",
@@ -70,9 +70,9 @@
       "scheduledStart": null,
       "actualStart": "2026-11-02T04:00:40.000Z",
       "isMember": false,
-      "actualEnd": null,
-      "duration": null,
-      "status": "live",
+      "actualEnd": "2026-11-02T11:59:27.253Z",
+      "duration": 28727,
+      "status": "past",
       "category": "live",
       "songTitle": null,
       "originalArtist": null,
@@ -92,7 +92,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.283Z",
-      "updatedAt": "2026-11-02T05:53:09.457Z",
+      "updatedAt": "2026-11-02T11:59:27.253Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -258,9 +258,9 @@
       "scheduledStart": null,
       "actualStart": "2026-11-02T01:04:27.000Z",
       "isMember": false,
-      "actualEnd": null,
-      "duration": null,
-      "status": "live",
+      "actualEnd": "2026-11-02T11:59:34.145Z",
+      "duration": 39307,
+      "status": "past",
       "category": "live",
       "songTitle": null,
       "originalArtist": null,
@@ -280,7 +280,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-01T13:12:49.469Z",
-      "updatedAt": "2026-11-02T05:53:05.453Z",
+      "updatedAt": "2026-11-02T11:59:34.145Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4583,7 +4583,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-02T05:53:01.935Z",
-      "updatedAt": "2026-11-02T05:53:01.935Z",
+      "updatedAt": "2026-11-02T11:59:38.335Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4630,7 +4630,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-02T05:53:11.325Z",
-      "updatedAt": "2026-11-02T05:53:11.325Z",
+      "updatedAt": "2026-11-02T11:59:32.996Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4677,7 +4677,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:27.340Z",
-      "updatedAt": "2026-11-02T05:53:11.325Z",
+      "updatedAt": "2026-11-02T11:59:32.996Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4724,7 +4724,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:24.029Z",
-      "updatedAt": "2026-11-02T05:52:57.912Z",
+      "updatedAt": "2026-11-02T11:59:42.334Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4771,7 +4771,54 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-02T05:53:00.592Z",
-      "updatedAt": "2026-11-02T05:53:00.592Z",
+      "updatedAt": "2026-11-02T11:59:25.595Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "382nyVUrv2M",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCD61_HBTgC2bUt9LIc-NqUQ",
+      "channelName": "Myra Mors",
+      "channelKind": "virtual",
+      "region": "en",
+      "gender": "unknown",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "Finishing the game! | Resident Evil 3 (Gamecube)",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/382nyVUrv2M/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2026-11-02T13:00:00.000Z",
+      "actualStart": null,
+      "isMember": false,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCD61_HBTgC2bUt9LIc-NqUQ",
+          "name": "Myra Mors",
+          "kind": "virtual",
+          "region": "en"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-02T12:03:06.070Z",
+      "updatedAt": "2026-11-02T12:03:06.070Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4818,7 +4865,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-01T18:53:34.616Z",
-      "updatedAt": "2026-11-02T05:53:02.220Z",
+      "updatedAt": "2026-11-02T11:59:28.769Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4865,7 +4912,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-02T05:52:52.654Z",
-      "updatedAt": "2026-11-02T05:52:52.654Z",
+      "updatedAt": "2026-11-02T11:59:27.393Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4912,7 +4959,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.567Z",
-      "updatedAt": "2026-11-02T05:52:58.873Z",
+      "updatedAt": "2026-11-02T11:59:39.129Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4959,7 +5006,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:16.423Z",
-      "updatedAt": "2026-11-02T05:52:59.449Z",
+      "updatedAt": "2026-11-02T11:59:31.129Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5006,7 +5053,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-27T22:11:16.041Z",
-      "updatedAt": "2026-11-02T05:53:05.405Z",
+      "updatedAt": "2026-11-02T11:59:29.225Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5053,7 +5100,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-01T18:53:48.254Z",
-      "updatedAt": "2026-11-02T05:53:00.592Z",
+      "updatedAt": "2026-11-02T11:59:25.595Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5100,7 +5147,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-02T05:53:00.183Z",
-      "updatedAt": "2026-11-02T05:53:00.183Z",
+      "updatedAt": "2026-11-02T12:03:06.070Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5147,7 +5194,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.283Z",
-      "updatedAt": "2026-11-02T05:53:09.457Z",
+      "updatedAt": "2026-11-02T11:59:27.253Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5194,7 +5241,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:27.340Z",
-      "updatedAt": "2026-11-02T05:53:11.325Z",
+      "updatedAt": "2026-11-02T11:59:32.996Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5241,7 +5288,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-28T12:50:03.253Z",
-      "updatedAt": "2026-11-02T05:53:02.220Z",
+      "updatedAt": "2026-11-02T11:59:28.769Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5288,7 +5335,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-28T22:33:18.686Z",
-      "updatedAt": "2026-11-02T05:52:49.710Z",
+      "updatedAt": "2026-11-02T11:59:38.249Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5335,7 +5382,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:21.011Z",
-      "updatedAt": "2026-11-02T05:53:02.220Z",
+      "updatedAt": "2026-11-02T11:59:28.769Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5382,7 +5429,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-02T05:53:01.935Z",
-      "updatedAt": "2026-11-02T05:53:01.935Z",
+      "updatedAt": "2026-11-02T11:59:38.335Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5429,7 +5476,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-01T23:32:28.058Z",
-      "updatedAt": "2026-11-02T05:52:58.873Z",
+      "updatedAt": "2026-11-02T11:59:39.129Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5476,7 +5523,54 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T10:13:11.968Z",
-      "updatedAt": "2026-11-02T05:52:52.654Z",
+      "updatedAt": "2026-11-02T11:59:27.393Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "BuDim_N3pDo",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCaZbWw28pvFzPvhRcjW6Isg",
+      "channelName": "ZWEI CHAN",
+      "channelKind": "virtual",
+      "region": "en",
+      "gender": "female",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "female_vsinger",
+      "title": "【VALORANT】OPEN PARTY OPEN RANK",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/BuDim_N3pDo/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2026-11-02T12:30:00.000Z",
+      "actualStart": null,
+      "isMember": false,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCaZbWw28pvFzPvhRcjW6Isg",
+          "name": "ZWEI CHAN",
+          "kind": "virtual",
+          "region": "en"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-02T11:59:31.129Z",
+      "updatedAt": "2026-11-02T11:59:31.129Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5523,7 +5617,54 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-02T05:52:49.710Z",
-      "updatedAt": "2026-11-02T05:52:49.710Z",
+      "updatedAt": "2026-11-02T11:59:38.249Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "CeUH7WNiqVo",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCiBMH1d7ew_3bi2A_zZGsmw",
+      "channelName": "Taiga Toragami Ch. ChromaSHIFT",
+      "channelKind": "virtual",
+      "region": "en",
+      "gender": "female",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "female_vsinger",
+      "title": "【Zelda: Ocarina of Time】First Time Playing Zelda! 🗡️✨【Taiga Toragami | ChromaSHIFT】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/CeUH7WNiqVo/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2026-11-05T23:00:00.000Z",
+      "actualStart": null,
+      "isMember": false,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCiBMH1d7ew_3bi2A_zZGsmw",
+          "name": "Taiga Toragami Ch. ChromaSHIFT",
+          "kind": "virtual",
+          "region": "en"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-02T11:59:38.249Z",
+      "updatedAt": "2026-11-02T11:59:38.249Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5570,7 +5711,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:19.448Z",
-      "updatedAt": "2026-11-02T05:52:49.710Z",
+      "updatedAt": "2026-11-02T11:59:38.249Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5617,7 +5758,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.228Z",
-      "updatedAt": "2026-11-02T05:53:00.592Z",
+      "updatedAt": "2026-11-02T11:59:25.595Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5664,7 +5805,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:22.912Z",
-      "updatedAt": "2026-11-02T05:53:00.183Z",
+      "updatedAt": "2026-11-02T12:03:06.070Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5711,7 +5852,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:25.311Z",
-      "updatedAt": "2026-11-02T05:53:05.405Z",
+      "updatedAt": "2026-11-02T11:59:29.225Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5758,7 +5899,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.283Z",
-      "updatedAt": "2026-11-02T05:53:09.457Z",
+      "updatedAt": "2026-11-02T11:59:27.253Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5805,7 +5946,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.567Z",
-      "updatedAt": "2026-11-02T05:52:58.873Z",
+      "updatedAt": "2026-11-02T11:59:39.129Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5852,7 +5993,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.256Z",
-      "updatedAt": "2026-11-02T05:53:10.454Z",
+      "updatedAt": "2026-11-02T11:59:38.852Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5899,7 +6040,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.567Z",
-      "updatedAt": "2026-11-02T05:52:58.873Z",
+      "updatedAt": "2026-11-02T11:59:39.129Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5946,7 +6087,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:21.011Z",
-      "updatedAt": "2026-11-02T05:53:02.220Z",
+      "updatedAt": "2026-11-02T11:59:28.769Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5993,7 +6134,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:17.489Z",
-      "updatedAt": "2026-11-02T05:53:03.849Z",
+      "updatedAt": "2026-11-02T11:59:30.862Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -6040,7 +6181,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-01T23:32:23.823Z",
-      "updatedAt": "2026-11-02T05:53:05.453Z",
+      "updatedAt": "2026-11-02T11:59:34.145Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -6087,7 +6228,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:22.173Z",
-      "updatedAt": "2026-11-02T05:53:12.216Z",
+      "updatedAt": "2026-11-02T11:59:42.767Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -6134,7 +6275,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-01T23:32:16.338Z",
-      "updatedAt": "2026-11-02T05:52:52.654Z",
+      "updatedAt": "2026-11-02T11:59:27.393Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -6181,7 +6322,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-02T05:52:59.449Z",
-      "updatedAt": "2026-11-02T05:52:59.449Z",
+      "updatedAt": "2026-11-02T11:59:31.129Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -6228,7 +6369,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-01T18:53:34.616Z",
-      "updatedAt": "2026-11-02T05:53:02.220Z",
+      "updatedAt": "2026-11-02T11:59:28.769Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -6275,7 +6416,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.117Z",
-      "updatedAt": "2026-11-02T05:52:52.654Z",
+      "updatedAt": "2026-11-02T11:59:27.393Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -6322,7 +6463,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.180Z",
-      "updatedAt": "2026-11-02T05:53:01.935Z",
+      "updatedAt": "2026-11-02T11:59:38.335Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -6369,7 +6510,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:27.693Z",
-      "updatedAt": "2026-11-02T05:52:51.408Z",
+      "updatedAt": "2026-11-02T11:59:32.231Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -6416,7 +6557,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.117Z",
-      "updatedAt": "2026-11-02T05:52:52.654Z",
+      "updatedAt": "2026-11-02T11:59:27.393Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -6463,7 +6604,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:16.423Z",
-      "updatedAt": "2026-11-02T05:52:59.449Z",
+      "updatedAt": "2026-11-02T11:59:31.129Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -6510,7 +6651,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-25T11:22:49.894Z",
-      "updatedAt": "2026-11-02T05:53:01.935Z",
+      "updatedAt": "2026-11-02T11:59:38.335Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -6557,7 +6698,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:33.129Z",
-      "updatedAt": "2026-11-02T05:52:58.884Z",
+      "updatedAt": "2026-11-02T11:59:30.570Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -6579,7 +6720,7 @@
       "description": null,
       "thumbnail": "https://i.ytimg.com/vi/jvcGjiwuw3c/hq720.jpg",
       "publishedAt": null,
-      "scheduledStart": null,
+      "scheduledStart": "2026-11-03T05:00:00.000Z",
       "actualStart": null,
       "isMember": false,
       "actualEnd": null,
@@ -6604,7 +6745,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-01T23:32:25.445Z",
-      "updatedAt": "2026-11-02T05:53:02.220Z",
+      "updatedAt": "2026-11-02T11:59:28.769Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -6651,7 +6792,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-28T22:33:18.686Z",
-      "updatedAt": "2026-11-02T05:53:00.183Z",
+      "updatedAt": "2026-11-02T12:03:06.070Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -6698,7 +6839,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.042Z",
-      "updatedAt": "2026-11-02T05:53:05.453Z",
+      "updatedAt": "2026-11-02T11:59:34.145Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -6745,7 +6886,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.567Z",
-      "updatedAt": "2026-11-02T05:52:58.873Z",
+      "updatedAt": "2026-11-02T11:59:39.129Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -6792,7 +6933,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-27T17:58:40.188Z",
-      "updatedAt": "2026-11-02T05:53:02.220Z",
+      "updatedAt": "2026-11-02T11:59:28.769Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -6839,7 +6980,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-02T05:53:11.325Z",
-      "updatedAt": "2026-11-02T05:53:11.325Z",
+      "updatedAt": "2026-11-02T11:59:32.996Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -6886,7 +7027,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-02T05:53:01.935Z",
-      "updatedAt": "2026-11-02T05:53:01.935Z",
+      "updatedAt": "2026-11-02T11:59:38.335Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -6933,7 +7074,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-02T05:53:02.220Z",
-      "updatedAt": "2026-11-02T05:53:02.220Z",
+      "updatedAt": "2026-11-02T11:59:28.769Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -6980,7 +7121,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-01T23:32:30.915Z",
-      "updatedAt": "2026-11-02T05:52:58.691Z",
+      "updatedAt": "2026-11-02T11:59:30.785Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -7027,7 +7168,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-01T05:52:25.140Z",
-      "updatedAt": "2026-11-02T05:53:05.405Z",
+      "updatedAt": "2026-11-02T11:59:29.225Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -7074,7 +7215,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-01T04:35:27.571Z",
-      "updatedAt": "2026-11-02T05:52:49.710Z",
+      "updatedAt": "2026-11-02T11:59:38.249Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -7121,7 +7262,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:22.173Z",
-      "updatedAt": "2026-11-02T05:53:12.216Z",
+      "updatedAt": "2026-11-02T11:59:42.767Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -7168,7 +7309,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.567Z",
-      "updatedAt": "2026-11-02T05:52:58.873Z",
+      "updatedAt": "2026-11-02T11:59:39.129Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -7215,7 +7356,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-01T23:32:16.338Z",
-      "updatedAt": "2026-11-02T05:52:52.654Z",
+      "updatedAt": "2026-11-02T11:59:27.393Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -7262,7 +7403,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-02T05:53:00.183Z",
-      "updatedAt": "2026-11-02T05:53:00.183Z",
+      "updatedAt": "2026-11-02T12:03:06.070Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -7309,7 +7450,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:17.489Z",
-      "updatedAt": "2026-11-02T05:53:03.849Z",
+      "updatedAt": "2026-11-02T11:59:30.862Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -7356,7 +7497,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-11-02T05:53:01.935Z",
+      "updatedAt": "2026-11-02T11:59:38.335Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -7403,7 +7544,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:24.029Z",
-      "updatedAt": "2026-11-02T05:52:57.912Z",
+      "updatedAt": "2026-11-02T11:59:42.334Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -7850,7 +7991,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:24.029Z",
-      "updatedAt": "2026-11-02T05:52:57.912Z",
+      "updatedAt": "2026-11-02T11:59:42.334Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -7897,7 +8038,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.228Z",
-      "updatedAt": "2026-11-02T05:53:00.592Z",
+      "updatedAt": "2026-11-02T11:59:25.595Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -7944,7 +8085,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:25.456Z",
-      "updatedAt": "2026-11-02T05:52:58.691Z",
+      "updatedAt": "2026-11-02T11:59:30.785Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -7991,7 +8132,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-11-02T05:53:03.849Z",
+      "updatedAt": "2026-11-02T11:59:30.862Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -8038,7 +8179,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-01T18:53:34.963Z",
-      "updatedAt": "2026-11-02T05:53:01.935Z",
+      "updatedAt": "2026-11-02T11:59:38.335Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -8085,7 +8226,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:22.912Z",
-      "updatedAt": "2026-11-02T05:53:00.183Z",
+      "updatedAt": "2026-11-02T12:03:06.070Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -8132,7 +8273,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-01T23:32:16.338Z",
-      "updatedAt": "2026-11-02T05:52:52.654Z",
+      "updatedAt": "2026-11-02T11:59:27.393Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -8179,7 +8320,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:22.173Z",
-      "updatedAt": "2026-11-02T05:53:12.216Z",
+      "updatedAt": "2026-11-02T11:59:42.767Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -8226,7 +8367,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-02T05:52:51.408Z",
-      "updatedAt": "2026-11-02T05:52:51.408Z",
+      "updatedAt": "2026-11-02T11:59:32.231Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -8235,10 +8376,10 @@
       "platform": "youtube",
       "type": "live",
       "channelId": "UCIeSUTOTkF9Hs7q3SGcO-Ow",
-      "channelName": "Elira Pendora",
+      "channelName": "Elira Pendora 【NIJISANJI EN】",
       "channelKind": "virtual",
       "region": "en",
-      "gender": "unknown",
+      "gender": "male",
       "languages": [
         "en"
       ],
@@ -8261,7 +8402,7 @@
       "collaborators": [
         {
           "channelId": "UCIeSUTOTkF9Hs7q3SGcO-Ow",
-          "name": "Elira Pendora",
+          "name": "Elira Pendora 【NIJISANJI EN】",
           "kind": "virtual",
           "region": "en"
         }
@@ -8273,7 +8414,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T05:10:16.208Z",
-      "updatedAt": "2026-11-02T05:52:52.654Z",
+      "updatedAt": "2026-11-02T11:59:27.393Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -8320,7 +8461,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T18:28:47.453Z",
-      "updatedAt": "2026-11-02T05:53:00.592Z",
+      "updatedAt": "2026-11-02T11:59:25.595Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -8367,7 +8508,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-01T18:53:42.184Z",
-      "updatedAt": "2026-11-02T05:53:10.454Z",
+      "updatedAt": "2026-11-02T11:59:38.852Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -8414,7 +8555,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-11-02T05:52:59.449Z",
+      "updatedAt": "2026-11-02T11:59:31.129Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -8461,7 +8602,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-02T05:53:10.454Z",
-      "updatedAt": "2026-11-02T05:53:10.454Z",
+      "updatedAt": "2026-11-02T11:59:38.852Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -8508,7 +8649,54 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-02T05:53:00.183Z",
-      "updatedAt": "2026-11-02T05:53:00.183Z",
+      "updatedAt": "2026-11-02T12:03:06.070Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "u6mQsfrueAY",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCmqv1ZZjP4_j4RxKiRh01RQ",
+      "channelName": "Zapp Wattson",
+      "channelKind": "virtual",
+      "region": "en",
+      "gender": "female",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "【COLLAB】Let's play Uno and Phasmophobia with @sarahaces!",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/u6mQsfrueAY/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2026-11-07T22:00:00.000Z",
+      "actualStart": null,
+      "isMember": false,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": true,
+      "collaborators": [
+        {
+          "channelId": "UCmqv1ZZjP4_j4RxKiRh01RQ",
+          "name": "Zapp Wattson",
+          "kind": "virtual",
+          "region": "en"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-02T11:59:30.570Z",
+      "updatedAt": "2026-11-02T11:59:30.570Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -8555,7 +8743,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T23:18:50.000Z",
-      "updatedAt": "2026-11-02T05:53:12.216Z",
+      "updatedAt": "2026-11-02T11:59:42.767Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -8602,7 +8790,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.256Z",
-      "updatedAt": "2026-11-02T05:53:10.454Z",
+      "updatedAt": "2026-11-02T11:59:38.852Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -8649,7 +8837,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:21.011Z",
-      "updatedAt": "2026-11-02T05:53:02.220Z",
+      "updatedAt": "2026-11-02T11:59:28.769Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -8696,7 +8884,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-01T18:53:45.032Z",
-      "updatedAt": "2026-11-02T05:52:49.710Z",
+      "updatedAt": "2026-11-02T11:59:38.249Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -8743,7 +8931,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:21.011Z",
-      "updatedAt": "2026-11-02T05:53:02.220Z",
+      "updatedAt": "2026-11-02T11:59:28.769Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -8790,7 +8978,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-02T05:52:52.654Z",
-      "updatedAt": "2026-11-02T05:52:52.654Z",
+      "updatedAt": "2026-11-02T11:59:27.393Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -8837,7 +9025,54 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:19.448Z",
-      "updatedAt": "2026-11-02T05:52:49.710Z",
+      "updatedAt": "2026-11-02T11:59:38.249Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "XGzId-xyxuY",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UC-okrbB2shgsauFNpqoB5rA",
+      "channelName": "Azehara Ch",
+      "channelKind": "virtual",
+      "region": "en",
+      "gender": "unknown",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "UmaMondays - Round 2 Capricorn Cup, ITS SO OVER.",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/XGzId-xyxuY/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2026-11-03T01:00:00.000Z",
+      "actualStart": null,
+      "isMember": false,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": "UmaMondays",
+      "originalArtist": "Round 2 Capricorn Cup, ITS SO OVER.",
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC-okrbB2shgsauFNpqoB5rA",
+          "name": "Azehara Ch",
+          "kind": "virtual",
+          "region": "en"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-02T11:59:34.145Z",
+      "updatedAt": "2026-11-02T11:59:34.145Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -8884,7 +9119,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.283Z",
-      "updatedAt": "2026-11-02T05:53:09.457Z",
+      "updatedAt": "2026-11-02T11:59:27.253Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -8931,7 +9166,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-28T12:50:03.253Z",
-      "updatedAt": "2026-11-02T05:52:59.449Z",
+      "updatedAt": "2026-11-02T11:59:31.129Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -8978,7 +9213,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-01T18:53:42.184Z",
-      "updatedAt": "2026-11-02T05:53:10.454Z",
+      "updatedAt": "2026-11-02T11:59:38.852Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -9025,7 +9260,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.283Z",
-      "updatedAt": "2026-11-02T05:53:09.457Z",
+      "updatedAt": "2026-11-02T11:59:27.253Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -9072,7 +9307,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.256Z",
-      "updatedAt": "2026-11-02T05:53:10.454Z",
+      "updatedAt": "2026-11-02T11:59:38.852Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -9119,7 +9354,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-01T04:35:27.031Z",
-      "updatedAt": "2026-11-02T05:52:58.884Z",
+      "updatedAt": "2026-11-02T11:59:30.570Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -9166,7 +9401,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.180Z",
-      "updatedAt": "2026-11-02T05:53:01.935Z",
+      "updatedAt": "2026-11-02T11:59:38.335Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

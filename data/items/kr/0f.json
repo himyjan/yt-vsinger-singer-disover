@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-02T00:13:40.040Z",
+  "generatedAt": "2026-11-02T12:14:00.598Z",
   "items": [
     {
       "id": "1KBx-ioit_A",
@@ -139,6 +139,53 @@
       "source": "api",
       "addedAt": "2026-10-31T10:13:03.981Z",
       "updatedAt": "2026-10-31T18:28:48.263Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "bLsMYUFFHcQ",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCdoBkCdCEgUNBNt2BhXAyHg",
+      "channelName": "Shigura Akegi Ch.",
+      "channelKind": "virtual",
+      "region": "kr",
+      "gender": "female",
+      "languages": [
+        "ko"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "【R.E.P.O.】 sigh... 【COLLAB PART TWO】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/bLsMYUFFHcQ/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2026-11-03T13:00:00.000Z",
+      "actualStart": null,
+      "isMember": false,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": true,
+      "collaborators": [
+        {
+          "channelId": "UCdoBkCdCEgUNBNt2BhXAyHg",
+          "name": "Shigura Akegi Ch.",
+          "kind": "virtual",
+          "region": "kr"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-02T11:59:31.129Z",
+      "updatedAt": "2026-11-02T11:59:31.129Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

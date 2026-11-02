@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-02T06:05:42.365Z",
+  "generatedAt": "2026-11-02T12:14:00.598Z",
   "items": [
     {
       "id": "0LzXymazrdE",
@@ -45,7 +45,54 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-01T23:32:29.379Z",
-      "updatedAt": "2026-11-02T05:52:59.449Z",
+      "updatedAt": "2026-11-02T11:59:31.129Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "pTdlpYHNl6o",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCbuEjGXMlix-Kp9sa8SfkFA",
+      "channelName": "Yuura Ch. 未階堂ゆうら",
+      "channelKind": "virtual",
+      "region": "my",
+      "gender": "male",
+      "languages": [
+        "ms"
+      ],
+      "isAi": false,
+      "variant": "male_vtuber",
+      "title": "【雜談】Fantasy Dream活動後日談！來聊聊這次都準備了什麽吧~【未階堂ゆうら】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/pTdlpYHNl6o/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2026-11-02T13:00:00.000Z",
+      "actualStart": null,
+      "isMember": false,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCbuEjGXMlix-Kp9sa8SfkFA",
+          "name": "Yuura Ch. 未階堂ゆうら",
+          "kind": "virtual",
+          "region": "my"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-02T11:59:25.595Z",
+      "updatedAt": "2026-11-02T11:59:25.595Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -67,7 +114,7 @@
       "description": null,
       "thumbnail": "https://i.ytimg.com/vi/Zdh_4CUz_j0/hq720.jpg",
       "publishedAt": null,
-      "scheduledStart": "2026-11-03T13:00:00.000Z",
+      "scheduledStart": "2026-11-02T13:00:00.000Z",
       "actualStart": null,
       "isMember": false,
       "actualEnd": null,
@@ -92,7 +139,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.180Z",
-      "updatedAt": "2026-11-02T05:53:01.935Z",
+      "updatedAt": "2026-11-02T11:59:38.335Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

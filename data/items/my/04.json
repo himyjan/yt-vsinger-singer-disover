@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-02T06:05:42.365Z",
+  "generatedAt": "2026-11-02T12:14:00.598Z",
   "items": [
     {
       "id": "NRAnMloDodw",
@@ -323,7 +323,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:25.311Z",
-      "updatedAt": "2026-11-02T05:53:05.405Z",
+      "updatedAt": "2026-11-02T11:59:29.225Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -370,7 +370,54 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:26.922Z",
-      "updatedAt": "2026-11-02T05:53:02.442Z",
+      "updatedAt": "2026-11-02T11:59:40.570Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "kTLgQd7Qh5M",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCO_oLG-JnS73tAbkLbjh0hQ",
+      "channelName": "KirisakiJake",
+      "channelKind": "virtual",
+      "region": "my",
+      "gender": "male",
+      "languages": [
+        "ms"
+      ],
+      "isAi": false,
+      "variant": "male_vtuber",
+      "title": "[THE FIRST DESCENDANT] We're kinda short on time for the Ultimate bunny quest.",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/kTLgQd7Qh5M/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2026-11-02T13:00:00.000Z",
+      "actualStart": null,
+      "isMember": false,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCO_oLG-JnS73tAbkLbjh0hQ",
+          "name": "KirisakiJake",
+          "kind": "virtual",
+          "region": "my"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-02T11:59:31.129Z",
+      "updatedAt": "2026-11-02T11:59:31.129Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -417,7 +464,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.180Z",
-      "updatedAt": "2026-11-02T05:53:01.935Z",
+      "updatedAt": "2026-11-02T11:59:38.335Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -439,7 +486,7 @@
       "description": null,
       "thumbnail": "https://i.ytimg.com/vi/x-nLxTdsM_A/hq720.jpg",
       "publishedAt": null,
-      "scheduledStart": "2026-11-02T13:00:00.000Z",
+      "scheduledStart": "2026-11-03T14:00:00.000Z",
       "actualStart": null,
       "isMember": false,
       "actualEnd": null,
@@ -464,7 +511,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.180Z",
-      "updatedAt": "2026-11-02T05:53:01.935Z",
+      "updatedAt": "2026-11-02T11:59:38.335Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }
