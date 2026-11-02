@@ -76,8 +76,6 @@
     "data:vlistsheet-import": "oxnode scripts/import-vlistsheet.ts",
     "data:vtuber-index": "oxnode scripts/harvest-vtuber-index.ts",
     "data:vtuber-index-import": "oxnode scripts/import-vtuber-index.ts",
-    "data:vtuber-index": "oxnode scripts/harvest-vtuber-index.ts",
-    "data:vtuber-index-import": "oxnode scripts/import-vtuber-index.ts",
     "data:vdb-html": "oxnode scripts/harvest-vdb-html.ts",
     "data:vdb-html-import": "oxnode scripts/import-vdb-html.ts",
     "data:vt4chan": "oxnode scripts/harvest-vt4chan.ts",
@@ -90,12 +88,6 @@
     "data:chuysan-import": "oxnode scripts/import-chuysan.ts",
     "data:ci-me": "oxnode scripts/harvest-cime.ts",
     "data:ci-me-import": "oxnode scripts/import-cime.ts",
-    "data:kick": "oxnode scripts/harvest-kick.ts",
-    "data:kick-import": "oxnode scripts/import-kick.ts",
-    "data:niconico": "oxnode scripts/harvest-niconico.ts",
-    "data:niconico-import": "oxnode scripts/import-niconico.ts",
-    "data:soop": "oxnode scripts/harvest-soop.ts",
-    "data:soop-import": "oxnode scripts/import-soop.ts",
     "data:youtube-discover": "oxnode scripts/harvest-youtube.ts",
     "data:youtube-discover-import": "oxnode scripts/import-youtube.ts"
   },
@@ -127,6 +119,7 @@
   "overrides": {
     "@vitejs/plugin-vue": {
       "vue": "$vue"
-    }
+    },
+    "node-domexception": "2.0.2"
   }
 }
