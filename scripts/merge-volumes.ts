@@ -172,22 +172,20 @@ function main(): void {
     const regionCounts = new Map<RegionCode, { channels: number; items: number }>();
     if (!mergeChannels) {
       for (const region of manifest.regions ?? []) {
-        regionCounts.set(region.code, { channels: region.channels, items: 0 });
+        regionCounts.set(region.code, { channels: region.channels, items: region.items });
       }
     } else {
+      // Start with existing items counts so an empty itemList doesn't zero them out.
+      for (const region of manifest.regions ?? []) {
+        regionCounts.set(region.code, { channels: region.channels, items: region.items });
+      }
       for (const channel of channelList) {
         const entry = regionCounts.get(channel.region) ?? { channels: 0, items: 0 };
         entry.channels += 1;
         regionCounts.set(channel.region, entry);
       }
     }
-    if (!mergeItems) {
-      for (const region of manifest.regions ?? []) {
-        const entry = regionCounts.get(region.code) ?? { channels: 0, items: 0 };
-        entry.items = region.items;
-        regionCounts.set(region.code, entry);
-      }
-    } else {
+    if (mergeItems && itemList.length > 0) {
       for (const item of itemList) {
         const region = (item.region ?? "unknown") as RegionCode;
         const entry = regionCounts.get(region) ?? { channels: 0, items: 0 };
@@ -196,7 +194,10 @@ function main(): void {
       }
     }
 
-    const next = computeCounts(mergeChannels ? channelList : [], mergeItems ? itemList : []);
+    const next = computeCounts(
+      mergeChannels ? channelList : [],
+      mergeItems && itemList.length > 0 ? itemList : [],
+    );
     manifest.counts = {
       ...manifest.counts,
       ...(mergeChannels
@@ -207,7 +208,7 @@ function main(): void {
             channelsSinging: next.channelsSinging,
           }
         : {}),
-      ...(mergeItems
+      ...(mergeItems && itemList.length > 0
         ? {
             items: next.items,
             itemsLive: next.itemsLive,
