@@ -4,11 +4,9 @@
  *
  * `scripts/harvest-usada.ts` produces a snapshot in `.cache/usada/usada.json`;
  * this script reads that snapshot, matches each row against the dataset by
- * YouTube channel id, classifies through classifyChannel(), and imports the
- * ones that pass the virtual-and-singing gate into `data/channels/`.
- *
- *   npm run data:usada-import                     # report only
- *   npm run data:usada-import -- --apply          # import the new channels
+ * YouTube channel id OR YouTube handle, classifies through classifyChannel(),
+ * and imports the ones that pass the virtual-and-singing gate into
+ * `data/channels/`.
  *
  * USADA publishes a YouTube channel id for each entry, so matching against
  * the dataset is direct (no search required).
@@ -35,7 +33,8 @@ import {
 } from "../scripts/lib/import-channels";
 import { readAllChannelRecords } from "../scripts/lib/dataset";
 import { InnerTubeSource } from "../scripts/lib/youtubei";
-import type { Channel } from "../scripts/lib/types";
+import { inShard, parseShard } from "../scripts/lib/shard";
+import type { Affiliation, Channel } from "../scripts/lib/types";
 
 const SNAPSHOT = ".cache/usada/usada.json";
 const RESOLVED = ".cache/usada/usada-resolved.json";
@@ -59,12 +58,22 @@ function writeResolved(cache: ResolvedCache): void {
 interface UsadaEntry {
   id: string;
   name: string;
-  region?: string | null;
-  youtubeId?: string;
-  twitterUrl?: string;
-  twitchUrl?: string;
-  instagramUrl?: string;
-  tiktokUrl?: string;
+  gender: string | null;
+  affiliation: string | null;
+  group: string | null;
+  activity: string | null;
+  debutDate: string | null;
+  country: string | null;
+  youtubeUrl: string | null;
+  youtubeId: string | null;
+  youtubeHandle: string | null;
+  twitterUrl: string | null;
+  twitchUrl: string | null;
+  instagramUrl: string | null;
+  tiktokUrl: string | null;
+  reincarnationOf: string[] | null;
+  roleTags: string[] | null;
+  statusData: string | null;
 }
 
 interface Row {
@@ -79,10 +88,11 @@ interface Row {
 interface Options {
   apply: boolean;
   limit: number | null;
+  shard: string | null;
 }
 
 function parseArgs(argv: string[]): Options {
-  const options: Options = { apply: false, limit: null };
+  const options: Options = { apply: false, limit: null, shard: null };
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i]!;
     const value = argv[i + 1];
@@ -94,6 +104,10 @@ function parseArgs(argv: string[]): Options {
         options.limit = Math.max(1, Number(value ?? 1));
         i++;
         break;
+      case "--shard":
+        options.shard = value ?? null;
+        i++;
+        break;
       case "--help":
       case "-h":
         console.log(
@@ -102,6 +116,7 @@ function parseArgs(argv: string[]): Options {
             "",
             "  --apply         import the channels the gate admits",
             "  --limit <n>     import at most n channels",
+            "  --shard N/M     only import entries whose id lands in shard N (1-based) of M",
           ].join("\n")
         );
         process.exit(0);
@@ -113,6 +128,18 @@ function parseArgs(argv: string[]): Options {
     }
   }
   return options;
+}
+
+/** Maps USADA activity status to our Activity type. */
+function mapActivity(status: string | null): "active" | "preparing" | "graduated" | "unknown" | null {
+  if (!status) return null;
+  const s = status.toLowerCase().trim();
+  if (s === "active" || s === "活動中") return "active";
+  if (s === "preparing" || s === "準備中") return "preparing";
+  if (s === "graduated" || s === "畢業" || s === "引退" || s === "畢業 / 引退" || s === "己引退") return "graduated";
+  if (s === "hiatus" || s === "休止" || s === "休止中") return "active"; // hiatus is still active, just on break
+  if (s === "unknown") return null;
+  return null;
 }
 
 async function main(): Promise<void> {
@@ -143,13 +170,14 @@ async function main(): Promise<void> {
       if (platform.platform === "youtube" && platform.id) {
         if (!byYoutubeId.has(platform.id)) byYoutubeId.set(platform.id, channel);
       }
-      if (/^UC[\w-]{20,}$/.test(channel.id)) {
-        if (!byUcId.has(channel.id)) byUcId.set(channel.id, channel);
-      }
+    }
+    if (/^UC[\w-]{20,}$/.test(channel.id)) {
+      if (!byUcId.has(channel.id)) byUcId.set(channel.id, channel);
     }
   }
 
   const rows: Row[] = [];
+  const shard = options.shard ? parseShard(options.shard) : null;
   for (const entry of entries) {
     // Skip fan / clip accounts before anything else.
     if (
@@ -167,37 +195,51 @@ async function main(): Promise<void> {
       continue;
     }
 
+    // Try to match by YouTube UC id first, then by YouTube handle.
+    let matchedId: string | null = null;
+    let record: Channel | null | undefined = undefined;
+
     if (entry.youtubeId) {
-      // USADA entries are keyed by YouTube channel id directly
-      const id = `youtube:${entry.youtubeId}`;
-      let record: Channel | null | undefined = byId.get(id);
-      // Fall back to matching by raw YouTube UC id on the platform link
-      if (!record) record = byYoutubeId.get(entry.youtubeId) ?? undefined;
-      // Fall back to matching by the record's own UC… id
-      if (!record) record = byUcId.get(entry.youtubeId) ?? undefined;
-
-      rows.push({
-        entry,
-        id,
-        record,
-        verdict: record ? "tracked" : "new",
-        candidates: [],
-      });
-    } else {
-      // No YouTube channel — add as a new record keyed by usada:<id>.
-      // When a YouTube channel is later discovered, canonicalizeChannelIds()
-      // re-keys the record to the UC… id and merges duplicates.
-      const id = `usada:${entry.id}`;
-      let record: Channel | null | undefined = byId.get(id);
-
-      rows.push({
-        entry,
-        id,
-        record,
-        verdict: record ? "tracked" : "new",
-        candidates: [],
-      });
+      // Shard by YouTube UC id.
+      if (shard && !inShard(entry.youtubeId, shard.index, shard.count)) continue;
+      matchedId = `youtube:${entry.youtubeId}`;
+      record =
+        byId.get(matchedId) ??
+        byYoutubeId.get(entry.youtubeId) ??
+        byUcId.get(entry.youtubeId) ??
+        undefined;
     }
+
+    if (!record && entry.youtubeHandle) {
+      // Shard by YouTube handle.
+      if (shard && !inShard(entry.youtubeHandle, shard.index, shard.count)) continue;
+      const h = entry.youtubeHandle.replace(/^@+/, "").toLowerCase();
+      matchedId = `youtube:${h}`;
+      record = byHandle.get(h);
+    }
+
+    // Also try matching by Twitch handle.
+    if (!record && entry.twitchUrl) {
+      const twitchMatch = entry.twitchUrl.match(/twitch\.tv\/([A-Za-z0-9_]+)/i);
+      if (twitchMatch) {
+        // Shard by Twitch login.
+        if (shard && !inShard(twitchMatch[1], shard.index, shard.count)) continue;
+        const h = twitchMatch[1].toLowerCase();
+        const fromHandle = byHandle.get(h);
+        if (fromHandle) {
+          matchedId = `youtube:${fromHandle.id}`;
+          record = fromHandle;
+        }
+      }
+    }
+
+    rows.push({
+      entry,
+      id: matchedId,
+      record,
+      verdict: record ? "tracked" : "new",
+      candidates: [],
+    });
   }
 
   console.log(
@@ -248,6 +290,21 @@ async function main(): Promise<void> {
   const externalsEdits: Array<{ id: string; platform: string; handle: string }> =
     [];
 
+  /** Channel updates for already-tracked records: id → update fn. */
+  const trackedUpdates: Array<{ id: string; update: (c: Channel) => boolean }> =
+    [];
+
+  /** Reincarnation edges: new record id → predecessor channel id. */
+  const reincarnationEdges: Array<{ id: string; predecessorId: string }> = [];
+
+  // Build a map from usadanews slug → dataset channel id for reincarnation resolution.
+  const slugToChannelId = new Map<string, string>();
+  for (const row of rows) {
+    if (row.record && row.entry.id) {
+      slugToChannelId.set(row.entry.id, row.record.id);
+    }
+  }
+
   for (const row of newRows) {
     const entry = row.entry;
     const rowId = row.id!;
@@ -258,8 +315,8 @@ async function main(): Promise<void> {
       const result = await importYouTubeChannels([resolvedId], {
         limit: 1,
         rosterHint: {
-          agency: { [resolvedId]: "" },
-          debut: { [resolvedId]: "" },
+          agency: { [resolvedId]: entry.affiliation ?? "" },
+          debut: { [resolvedId]: entry.debutDate ?? "" },
           gender: { [resolvedId]: "unknown" },
         },
       });
@@ -281,17 +338,115 @@ async function main(): Promise<void> {
           handle: entry.youtubeId,
         });
       }
+      if (entry.youtubeHandle) {
+        externalsEdits.push({
+          id: resolvedId,
+          platform: "youtube",
+          handle: `@${entry.youtubeHandle}`,
+        });
+      }
+      if (entry.twitchUrl) {
+        const m = entry.twitchUrl.match(/twitch\.tv\/([A-Za-z0-9_]+)/i);
+        if (m) {
+          externalsEdits.push({
+            id: resolvedId,
+            platform: "twitch",
+            handle: m[1],
+          });
+        }
+      }
+      if (entry.twitterUrl) {
+        const m = entry.twitterUrl.match(/(?:twitter|x)\.com\/([A-Za-z0-9_]+)/i);
+        if (m) {
+          externalsEdits.push({
+            id: resolvedId,
+            platform: "x",
+            handle: m[1],
+          });
+        }
+      }
+      if (entry.instagramUrl) {
+        const m = entry.instagramUrl.match(/instagram\.com\/([A-Za-z0-9_.]+)/i);
+        if (m) {
+          externalsEdits.push({
+            id: resolvedId,
+            platform: "instagram",
+            handle: m[1],
+          });
+        }
+      }
+      if (entry.tiktokUrl) {
+        const m = entry.tiktokUrl.match(/tiktok\.com\/@([A-Za-z0-9_.]+)/i);
+        if (m) {
+          externalsEdits.push({
+            id: resolvedId,
+            platform: "tiktok",
+            handle: `@${m[1]}`,
+          });
+        }
+      }
+
+      // Collect reincarnation edge: if this entry lists other usadanews
+      // profiles as 前世/轉生, resolve them to dataset channel ids.
+      if (entry.reincarnationOf) {
+        for (const slug of entry.reincarnationOf) {
+          const predId = slugToChannelId.get(slug);
+          if (predId) {
+            reincarnationEdges.push({ id: resolvedId, predecessorId: predId });
+          }
+        }
+      }
+
+      // Collect updates for already-tracked records (activity, debutDate, country, affiliation).
+      if (row.record) {
+        trackedUpdates.push({
+          id: row.record.id,
+          update: (c: Channel) => {
+            let changed = false;
+            const activity = mapActivity(entry.activity);
+            if (activity && c.activity !== activity) {
+              c.activity = activity;
+              changed = true;
+            }
+            if (entry.debutDate && !c.debutDate) {
+              c.debutDate = entry.debutDate;
+              changed = true;
+            }
+            if (entry.activity && c.activity === "unknown") {
+              const a = mapActivity(entry.activity);
+              if (a) { c.activity = a; changed = true; }
+            }
+            if (entry.country && !c.country) {
+              c.country = entry.country;
+              changed = true;
+            }
+            if (entry.affiliation && !c.agency) {
+              c.agency = entry.affiliation;
+              changed = true;
+            }
+            return changed;
+          },
+        });
+      }
     } else {
       // Non-YouTube entry: build the Channel record directly.
+      // Role tags from USADA (e.g. 歌回, VSinger) help classify singing content.
+      const roleTagList = entry.roleTags ?? [];
+      const isSingingTag = roleTagList.some((t) =>
+        /歌回|歌唱|歌ってみた|VSinger|Vsinger|vsinger|音楽|music|cover|original|カバー|弾き語り|KARAOKE|Karaoke|singing/i.test(t)
+      );
       const classification = classifyChannel({
         name: entry.name,
         description: null,
-        tags: [],
-        country: entry.region ?? null,
+        tags: roleTagList,
+        country: entry.country ?? null,
         platform: "usada",
         virtualClaim: "roster",
         hasAvatar: false,
       });
+
+      // Override isSinging if role tags clearly indicate singing content.
+      const isSinging = classification.isSinging || isSingingTag;
 
       const aliases: string[] = [];
 
@@ -308,7 +463,15 @@ async function main(): Promise<void> {
         languages: classification.languages,
         statedLanguages: classification.statedLanguages,
         agency: classification.agency ?? null,
-        affiliation: "unknown",
+        affiliation: entry.affiliation
+          ? entry.affiliation.toLowerCase().includes("independent")
+            ? "independent"
+            : entry.affiliation.toLowerCase().includes("group")
+              ? "group"
+              : entry.affiliation.toLowerCase().includes("community")
+                ? "community"
+                : "unknown"
+          : "unknown",
         avatar: null,
         banner: null,
         description: null,
@@ -316,9 +479,9 @@ async function main(): Promise<void> {
         videoCount: null,
         viewCount: null,
         uploadsPlaylistId: null,
-        country: null,
+        country: entry.country ?? null,
         tags: [],
-        isSinging: classification.isSinging,
+        isSinging: isSinging,
         gender: classification.gender,
         isAi: classification.isAi,
         isOfficialArtist: false,
@@ -330,8 +493,8 @@ async function main(): Promise<void> {
         updatedAt: new Date().toISOString(),
         lastItemsFetchedAt: null,
         lastDetailsFetchedAt: null,
-        activity: "unknown",
-        debutDate: null,
+        activity: mapActivity(entry.activity) ?? "unknown",
+        debutDate: entry.debutDate ?? null,
         graduateDate: null,
         platforms: [],
         externals: {},
@@ -373,6 +536,38 @@ async function main(): Promise<void> {
     console.log(
       `${externalsWritten} record(s) had externals filled from usada`,
     );
+  }
+
+  // Apply updates to already-tracked records (activity, debutDate, country, affiliation).
+  let trackedUpdated = 0;
+  for (const u of trackedUpdates) {
+    const channel = byId.get(u.id);
+    if (channel && u.update(channel)) {
+      trackedUpdated++;
+    }
+  }
+  if (trackedUpdated > 0) {
+    console.log(
+      `${trackedUpdated} tracked record(s) updated from usada (activity, debut, country, agency)`,
+    );
+  }
+
+  // Apply reincarnation edges: write reincarnationOf on new records.
+  if (reincarnationEdges.length > 0) {
+    const reincarnationEdits = reincarnationEdges.map((e) => ({
+      id: e.id,
+      update: (c: Channel) => {
+        if (c.reincarnationOf) return false; // already set, don't overwrite
+        c.reincarnationOf = e.predecessorId;
+        return true;
+      },
+    }));
+    const reincWritten = applyChannelEdits(reincarnationEdits, "usada", now);
+    if (reincWritten > 0) {
+      console.log(
+        `${reincWritten} record(s) got reincarnationOf (轉生/前世) from usada`,
+      );
+    }
   }
 
   console.log(
