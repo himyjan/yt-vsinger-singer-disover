@@ -559,9 +559,16 @@ export function writeDataset(
    * The `items` dataset is raw; the `songs` dataset is the musical view —
    * one record per performance, carrying the song, the original artist, and
    * whether it is a collaboration or an acoustic performance.
+   *
+   * A stream that runs for hours (a karaoke marathon, a 24-hour charity
+   * stream) may carry song markers in its title and be classified as cover
+   * / performance, but it is not a *song* — it is a long-form stream.
+   * Exclude anything longer than two hours from the songs projection.
    */
+  const MAX_SONG_DURATION_SECONDS = 2 * 60 * 60;
   const songItems = items.filter((i) =>
-    ["cover", "mv", "original", "performance"].includes(i.category),
+    ["cover", "mv", "original", "performance"].includes(i.category) &&
+    (i.duration === null || i.duration <= MAX_SONG_DURATION_SECONDS),
   );
   const songs: SongRecord[] = songItems.map((i) => ({
     id: i.id,
