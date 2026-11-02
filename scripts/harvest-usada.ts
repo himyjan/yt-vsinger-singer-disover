@@ -18,10 +18,10 @@
 
 import fs from "node:fs";
 import path from "node:path";
+import { parseShard } from "../scripts/lib/shard";
 
 const SOURCE_URL = "https://usadanews.com";
 const CACHE_DIR = ".cache/usada";
-const OUT_PATH = path.join(CACHE_DIR, "usada.json");
 
 interface UsadaEntry {
   id: string;
@@ -47,10 +47,12 @@ interface UsadaEntry {
 interface Options {
   limit: number | null;
   pages: number | null;
+  shard: string | null;
+  listingsOnly: boolean;
 }
 
 function parseArgs(argv: string[]): Options {
-  const options: Options = { limit: null, pages: null };
+  const options: Options = { limit: null, pages: null, shard: null, listingsOnly: false };
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i]!;
     const value = argv[i + 1];
@@ -61,6 +63,21 @@ function parseArgs(argv: string[]): Options {
         break;
       case "--pages":
         options.pages = Math.max(1, Number(value ?? 1));
+        i++;
+        break;
+      case "--shard":
+        options.shard = value ?? null;
+        i++;
+        break;
+      case "--listings-only":
+        options.listingsOnly = true;
+        break;
+      case "--shard":
+        options.shard = value ?? null;
+        i++;
+        break;
+      case "--shard":
+        options.shard = value ?? null;
         i++;
         break;
       case "--help":
@@ -286,6 +303,7 @@ async function fetchUsadaPage(slug: string): Promise<{
 
 async function main(): Promise<void> {
   const options = parseArgs(process.argv.slice(2));
+  const OUT_PATH = path.join(CACHE_DIR, `usada-${options.shard?.replace("/", "-") ?? "all"}.json`);
   fs.mkdirSync(CACHE_DIR, { recursive: true });
 
   const allCards: Array<{ name: string; slug: string }> = [];
@@ -293,6 +311,16 @@ async function main(): Promise<void> {
   let page = 1;
 
   while (true) {
+    // Shard: only process this page if it belongs to this shard
+    // Shard 1/20 gets pages 1, 21, 41... Shard 2/20 gets pages 2, 22, 42...
+    if (options.shard) {
+      const [shardIdx, shardCount] = options.shard.split("/").map(Number);
+      if (((page - 1) % shardCount) !== (shardIdx - 1)) {
+        page++;
+        continue;
+      }
+    }
+
     const url = page === 1 ? `${SOURCE_URL}/vtuber/` : `${SOURCE_URL}/vtuber/?page=${page}`;
     console.log(`usada: fetching listing page ${url}`);
 
@@ -350,34 +378,67 @@ async function main(): Promise<void> {
   console.log(`usada: ${limited.length} VTuber cards to process`);
 
   // Fetch each individual page to get YouTube ID and social links
+  // Run in parallel batches to speed up harvesting, with concurrency limit
   const entries: UsadaEntry[] = [];
-  for (let i = 0; i < limited.length; i++) {
-    const ch = limited[i];
-    console.log(`  [${i + 1}/${limited.length}] ${ch.name}`);
-    const profile = await fetchUsadaPage(ch.slug);
-    entries.push({
-      id: ch.slug,
-      name: ch.name,
-      gender: null,
-      affiliation: profile.affiliation,
-      group: null,
-      activity: profile.activity,
-      debutDate: profile.debutDate,
-      country: profile.country,
-      youtubeUrl: profile.youtubeUrl,
-      youtubeId: profile.youtubeId,
-      youtubeHandle: profile.youtubeHandle,
-      twitterUrl: profile.twitter ? `https://twitter.com/${profile.twitter}` : null,
-      twitchUrl: profile.twitch ? `https://twitch.tv/${profile.twitch}` : null,
-      instagramUrl: profile.instagram ? `https://instagram.com/${profile.instagram}` : null,
-      tiktokUrl: profile.tiktok ? `https://tiktok.com/@${profile.tiktok}` : null,
-      reincarnationOf: profile.reincarnationOf,
-      roleTags: profile.roleTags,
-      statusData: profile.statusData,
-    });
-    // Small delay to be respectful to the server
-    if (i < limited.length - 1) {
-      await new Promise(resolve => setTimeout(resolve, 100));
+  const concurrency = 8; // Concurrent profile fetches
+  let processed = 0;
+
+  for (let i = 0; i < limited.length; i += concurrency) {
+    const batch = limited.slice(i, i + concurrency);
+    if (!options.listingsOnly) {
+      const results = await Promise.all(
+        batch.map(async (ch) => {
+          processed++;
+          console.log(`  [${processed}/${limited.length}] ${ch.name}`);
+          try {
+            const profile = await fetchUsadaPage(ch.slug);
+            return {
+              id: ch.slug,
+              name: ch.name,
+              gender: null,
+              affiliation: profile.affiliation,
+              group: null,
+              activity: profile.activity,
+              debutDate: profile.debutDate,
+              country: profile.country,
+              youtubeUrl: profile.youtubeUrl,
+              youtubeId: profile.youtubeId,
+              youtubeHandle: profile.youtubeHandle,
+              twitterUrl: profile.twitter ? `https://twitter.com/${profile.twitter}` : null,
+              twitchUrl: profile.twitch ? `https://twitch.tv/${profile.twitch}` : null,
+              instagramUrl: profile.instagram ? `https://instagram.com/${profile.instagram}` : null,
+              tiktokUrl: profile.tiktok ? `https://tiktok.com/@${profile.tiktok}` : null,
+              reincarnationOf: profile.reincarnationOf,
+              roleTags: profile.roleTags,
+              statusData: profile.statusData,
+            };
+          } catch (err) {
+            const msg = err instanceof Error ? err.message : String(err);
+            console.error(`    failed ${ch.name}: ${msg}`);
+            return {
+              id: ch.slug,
+              name: ch.name,
+              gender: null,
+              affiliation: null,
+              group: null,
+              activity: null,
+              debutDate: null,
+              country: null,
+              youtubeUrl: null,
+              youtubeId: null,
+              youtubeHandle: null,
+              twitterUrl: null,
+              twitchUrl: null,
+              instagramUrl: null,
+              tiktokUrl: null,
+              reincarnationOf: null,
+              roleTags: null,
+              statusData: null,
+            };
+          }
+        })
+      );
+      entries.push(...results);
     }
   }
 

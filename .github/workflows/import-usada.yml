@@ -42,9 +42,14 @@ permissions:
 
 jobs:
   harvest:
-    name: Harvest USADA directory
+    name: Harvest USADA volume ${{ matrix.volume }}
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 60
+    strategy:
+      max-parallel: 20
+      fail-fast: false
+      matrix:
+        volume: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -61,14 +66,14 @@ jobs:
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
 
-      - name: Harvest USADA
-        run: npm run data:usada
+      - name: Harvest USADA volume ${{ matrix.volume }}
+        run: SHARD=$(( ${{ matrix.volume }} + 1 )) && npm run data:usada -- --shard "$SHARD/20" --listings-only
 
       - name: Upload harvest artifact
         uses: actions/upload-artifact@v7
         with:
-          name: usada-snapshot
-          path: .cache/usada/usada.json
+          name: usada-snapshot-vol-${{ matrix.volume }}
+          path: .cache/usada/usada-${{ matrix.volume }}.json
           retention-days: 1
 
   plan:
@@ -76,7 +81,6 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     outputs:
-      # A JSON array — `[0,1,…,19]` for a full import.
       volumes: ${{ steps.pick.outputs.volumes }}
     steps:
       - name: Checkout
@@ -97,7 +101,6 @@ jobs:
       - name: Resolve the volume shards this run touches
         id: pick
         run: |
-          # Every volume, every run — no rotation, no slice, nothing skipped.
           VOLUMES=$(node -e 'console.log(JSON.stringify(Array.from({length:20},(_,i)=>i)))')
           echo "volumes=$VOLUMES" >> "$GITHUB_OUTPUT"
           echo "plan: volumes=$VOLUMES"
@@ -107,9 +110,6 @@ jobs:
     needs: [harvest, plan]
     runs-on: ubuntu-latest
     timeout-minutes: 60
-    # Twenty jobs, one volume each, all at once — GitHub's ceiling for a
-    # public repository. Each job imports only its own shard of entries,
-    # so no two jobs touch the same channel shard.
     strategy:
       max-parallel: 20
       fail-fast: false
@@ -137,33 +137,24 @@ jobs:
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
 
-      - name: Download harvest artifact
+      - name: Download all harvest artifacts
         uses: actions/download-artifact@v8
         with:
-          name: usada-snapshot
           path: .cache/usada
+          pattern: usada-snapshot-vol-*
+          merge-multiple: false
 
       - name: Create this volume only
-        # `--only` writes one volume and nothing else: a full split is ~2.6 GB
-        # per job, and nineteen twentieths of it would be thrown away. The
-        # split puts each volume's own copies of `overrides.json`,
-        # `seed-catalog.json`, `upstream.json` and `suggestions.json` beside
-        # it, so a job sees a dataset root that is complete on its own.
         run: npm run data:volumes -- --count 20 --only ${{ matrix.volume }}
 
       - name: Import volume ${{ matrix.volume }} channels
         env:
           DRY_RUN: ${{ inputs.dry-run }}
         run: |
-          # Each job owns one volume's entries (`--shard volume/20`) and
-          # imports only those. `--shard volume/20` is 1-based: volume 0 → shard 1/20.
           SHARD=$(( ${{ matrix.volume }} + 1 ))
           ARGS=(--shard "$SHARD/20")
           if [ "${DRY_RUN:-false}" = "true" ]; then ARGS+=(--dry-run); else ARGS+=(--apply); fi
 
-          # The scripts read `data/` through the working directory, so the
-          # volume is swapped in as a symlink and swapped back — the same
-          # trick `sync-data.yml` and `live.yml` use.
           VOL_DIR=".volumes/vol-${{ matrix.volume }}/data"
           mv data data-full
           ln -s "$VOL_DIR" data
@@ -175,10 +166,6 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: vol-${{ matrix.volume }}
-          # The artifact is rooted at the **contents** of this directory
-          # (`virtual/jp/00.json`, `manifest.json`), which is why the fan-in
-          # downloads with `merge-multiple: false` and addresses each volume
-          # by its artifact name.
           path: .volumes/vol-${{ matrix.volume }}/data/channels
           retention-days: 1
 
@@ -187,9 +174,6 @@ jobs:
     needs: [plan, import]
     runs-on: ubuntu-latest
     timeout-minutes: 90
-    # No job-level `concurrency`: re-declaring the workflow's own group makes
-    # the job wait for a lock its own run holds, and GitHub cancels it as a
-    # deadlock before the first step. The run-level block serialises writers.
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -220,14 +204,10 @@ jobs:
         with:
           path: .volumes/downloads
           pattern: vol-*
-          # `false`, not `true`: an artifact is rooted at the contents of the
-          # directory that was uploaded, so twenty of them merged into one
-          # directory would collide shard-for-shard.
           merge-multiple: false
 
       - name: Replace each volume's channel records
         env:
-          # Only the volumes this run planned — always all twenty for import.
           VOLUMES: ${{ needs.plan.outputs.volumes }}
         run: |
           missing=0
@@ -239,10 +219,6 @@ jobs:
               missing=$((missing + 1))
               continue
             fi
-            # Replace, do not merge. A record re-keyed to its `UC…` id has
-            # moved to another shard, so copying over the split would leave
-            # the old row behind beside the new one — the same performer
-            # twice, under two ids.
             rm -rf "$DST"
             cp -R "$SRC" "$DST"
             echo "restored channels for vol-$v"
@@ -253,11 +229,6 @@ jobs:
           fi
 
       - name: Merge all volumes into data/
-        # `--channels-only`: the import pass writes channel records and
-        # nothing else, and the volumes were split from the checkout this job
-        # started with. Merging their item shards would rewrite every item to
-        # that snapshot — which would revert a `data: live status` commit that
-        # landed while this ran.
         run: npx oxnode scripts/merge-volumes.ts --count 20 --channels-only
 
       - name: Build search index
@@ -276,20 +247,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git fetch origin "$BRANCH"
-
-          # Move HEAD and the index to the latest branch, keeping the generated
-          # `data/` in the working tree. A rebase would try to *merge* two
-          # independently rebuilt datasets, and every derived file (manifest,
-          # search index, shards) conflicts by construction. `--mixed` leaves
-          # the worktree alone.
           git reset --mixed "origin/$BRANCH"
-
-          # Stage **only what this run wrote**. `git add data/` staged the whole
-          # tree, and every file the import pass never touched was the stale
-          # checkout the job started from — so a `data: live status` commit that
-          # landed while this ran was reverted to that snapshot. The import
-          # pass writes channel shards, the rebuilt index and the manifest; the
-          # items, songs, overrides and rosters come from the branch.
           git checkout -- \
             data/items \
             data/songs \
