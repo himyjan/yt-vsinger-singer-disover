@@ -37,6 +37,9 @@ export interface PromotionCandidate {
   name: string | null;
   /** Which source named them, for the log. */
   source: string;
+  /** Direct YouTube channel id (UC… or handle) when the source published it,
+   *  so the name search can be skipped. */
+  channelId?: string | null;
 }
 
 export interface PromotionOptions {
@@ -92,7 +95,8 @@ export async function promoteCandidates(
   };
 
   /** One attempt per distinct name, in the order the sources gave them. */
-  const names: string[] = [];
+  const resolved: Array<{ name: string; key: string; channelId: string | null }> =
+    [];
   const seen = new Set<string>();
   for (const candidate of candidates) {
     const name = candidate.name?.trim();
@@ -100,63 +104,71 @@ export async function promoteCandidates(
     const key = normalizeName(name);
     if (!key || seen.has(key)) continue;
     seen.add(key);
-    names.push(name);
-    if (names.length >= limit) break;
+    resolved.push({ name, key, channelId: candidate.channelId ?? null });
+    if (resolved.length >= limit) break;
   }
-  if (!names.length) return outcome;
+  if (!resolved.length) return outcome;
 
   const source = new InnerTubeSource({ delayMs: 250 });
   if (!(await source.connect())) {
-    for (const name of names) {
-      outcome.failed.push({ name, reason: "InnerTube is unavailable" });
+    for (const r of resolved) {
+      outcome.failed.push({ name: r.name, reason: "InnerTube is unavailable" });
     }
     return outcome;
   }
 
   const approved: string[] = [];
 
-  for (const name of names) {
+  for (const r of resolved) {
     outcome.considered++;
-    const key = normalizeName(name);
-    let channelId: string | null = null;
+    let channelId = r.channelId;
 
-    try {
-      const hits = await source.searchChannels(name, searchResults);
-      for (const id of hits.slice(0, 4)) {
-        const profile = await source.profile(id);
-        if (!profile?.title) continue;
-        if (nameMatches(profile.title, key)) {
-          channelId = profile.id; // the profile's id, not the one we asked for
-          break;
-        }
-      }
-    } catch (error) {
-      outcome.failed.push({ name, reason: messageOf(error) });
-      continue;
-    }
-
+    // When the source did not publish a channel id, resolve the name through
+    // YouTube channel search and confirm against the channel's own title.
     if (!channelId) {
-      outcome.rejected.push({ name, reason: "no channel with that exact name" });
-      continue;
+      try {
+        const hits = await source.searchChannels(r.name, searchResults);
+        for (const id of hits.slice(0, 4)) {
+          const profile = await source.profile(id);
+          if (!profile?.title) continue;
+          if (nameMatches(profile.title, r.key)) {
+            channelId = profile.id; // the profile's id, not the one we asked for
+            break;
+          }
+        }
+      } catch (error) {
+        outcome.failed.push({ name: r.name, reason: messageOf(error) });
+        continue;
+      }
+
+      if (!channelId) {
+        outcome.rejected.push({
+          name: r.name,
+          reason: "no channel with that exact name",
+        });
+        continue;
+      }
     }
 
+    // Gate: the channel needs at least two videos showing virtual-creator
+    // identity and singing evidence.
     try {
       const uploads = await source.uploads(channelId, uploadsPerChannel);
       const evidence = evidenceVideoCount(uploads);
       if (evidence < 2) {
         outcome.rejected.push({
-          name,
+          name: r.name,
           reason: `${evidence} video(s) with virtual + singing evidence, 2 required`,
         });
         continue;
       }
     } catch (error) {
-      outcome.failed.push({ name, reason: messageOf(error) });
+      outcome.failed.push({ name: r.name, reason: messageOf(error) });
       continue;
     }
 
     approved.push(channelId);
-    log(`promote: ${name} → ${channelId} (gate passed)`);
+    log(`promote: ${r.name} → ${channelId} (gate passed)`);
   }
 
   if (!approved.length) return outcome;
