@@ -3,7 +3,7 @@
  * Harvest VTuber channels from Chuysan (vtuber.chuysan.com).
  *
  * Chuysan is a Next.js directory website. Channel data is loaded client-side,
- * but channel links appear in the rendered HTML. This script uses puppeteer-core
+ * but channel links appear in the rendered HTML. This script uses Playwright
  * to render the page and extract channel information.
  *
  *   npm run data:chuysan              # harvest VTuber candidates
