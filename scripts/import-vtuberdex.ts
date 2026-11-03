@@ -11,9 +11,10 @@
  *   npm run data:vtuberdex-import                     # report only
  *   npm run data:vtuberdex-import -- --apply          # import the new channels
  *
- * VTuberDex publishes VTuber names but no YouTube channel ids, so each name
- * is resolved through YouTube channel search and confirmed before import.
- * Each admitted channel is a virtual claim (`reincarnationOf`-eligible).
+ * VTuberDex publishes VTuber names but not always YouTube channel ids. When
+ * a profile page is available, the direct channel id is used; otherwise each
+ * name is resolved through YouTube channel search and confirmed before
+ * import. Each admitted channel is a virtual claim (`reincarnationOf`-eligible).
  * What a roster still must not buy is a fan: the discover-evidence gate
  * excludes clip and fan accounts.
  *
@@ -49,6 +50,7 @@ interface VtuberdexEntry {
   name: string;
   country?: string;
   group?: string;
+  youtubeId?: string;
 }
 
 interface Options {
@@ -118,6 +120,7 @@ async function main(): Promise<void> {
   const candidates: PromotionCandidate[] = entries.map((entry) => ({
     name: entry.name,
     source: "vtuberdex",
+    channelId: entry.youtubeId ?? null,
   }));
 
   const outcome = await promoteCandidates(candidates, {
