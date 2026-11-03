@@ -3,7 +3,7 @@
  * Harvest VTuber channels from Chuysan (vtuber.chuysan.com).
  *
  * Chuysan is a Next.js directory website. Channel data is loaded client-side,
- * but channel links appear in the rendered HTML. This script uses Playwright
+ * but channel links appear in the rendered HTML. This script uses puppeteer-core
  * to render the page and extract channel information.
  *
  *   npm run data:chuysan              # harvest VTuber candidates
@@ -108,8 +108,8 @@ async function main(): Promise<void> {
     console.log(`navigating to ${SITE_URL}`);
     await page.goto(SITE_URL, { waitUntil: "domcontentloaded", timeout: 60000 });
 
-    // Wait for page to fully render - wait for network to be idle
-    await page.waitForTimeout(5000);
+    // Wait for page to fully render
+    await page.evaluate(() => new Promise((resolve) => setTimeout(resolve, 5000)));
 
     const allEntries: Array<{
       channelId: string | null;
@@ -122,8 +122,8 @@ async function main(): Promise<void> {
     while (true) {
       console.log(`  scraping page ${currentPage}`);
 
-      // Wait for channel cards to appear
-      await page.waitForTimeout(3000);
+      // Wait for content to load
+      await page.evaluate(() => new Promise((resolve) => setTimeout(resolve, 3000)));
 
       const pageEntries = await page.evaluate(() => {
         const entries: Array<{
@@ -152,9 +152,9 @@ async function main(): Promise<void> {
           '[data-channel-id]'
         );
         for (const card of channelCards) {
-          const channelId = card.getAttribute("data-channel-id");
+          const channelId = card.getAttribute("channel-id");
           const channelName =
-            card.getAttribute("data-channel-name") ||
+            card.getAttribute("channel-name") ||
             card.textContent?.trim() ||
             null;
           if (channelId) {
@@ -162,7 +162,7 @@ async function main(): Promise<void> {
           }
         }
 
-        // Method 3: Look for any UC... pattern in the page
+        // Method 3: Look for any UC... pattern in the page text
         const textContent = document.body.innerText || "";
         const youtubeChannelRegex = /UC[a-zA-Z0-9_-]{22}/g;
         const matches = textContent.match(youtubeChannelRegex);
@@ -182,6 +182,12 @@ async function main(): Promise<void> {
       console.log(`    found ${pageEntriesCount} channels on this page`);
       allEntries.push(...pageEntries);
 
+      // If no new songs found on this page, stop - we've reached the end
+      if (pageEntriesCount === 0) {
+        console.log("no songs found on this page - stopping");
+        break;
+      }
+
       // Check if we've reached the limit
       if (options.limit && allEntries.length >= options.limit) {
         console.log(`reached limit of ${options.limit} entries`);
@@ -192,7 +198,7 @@ async function main(): Promise<void> {
       const hasNextPage = await page.evaluate(() => {
         // Look for pagination links
         const nextLink = document.querySelector<HTMLElement>(
-          'a[href*="page="], a[href*="page="], a[aria-label="next"], .next, .pagination-next'
+          'a[href*="page="], a[aria-label="next"], .next, .pagination-next'
         );
         if (nextLink && !nextLink.classList.contains("disabled")) {
           return true;
