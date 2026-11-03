@@ -21,14 +21,15 @@ import {
   formatBytes,
 } from "./lib/io";
 
-function copyDir(from: string, to: string): number {
+function copyDir(from: string, to: string, skipDirs: string[] = []): number {
   let count = 0;
   ensureDir(to);
   for (const entry of fs.readdirSync(from, { withFileTypes: true })) {
+    if (entry.isDirectory() && skipDirs.includes(entry.name)) continue;
     const src = path.join(from, entry.name);
     const dest = path.join(to, entry.name);
     if (entry.isDirectory()) {
-      count += copyDir(src, dest);
+      count += copyDir(src, dest, skipDirs);
     } else if (entry.isFile() && entry.name.endsWith(".json")) {
       fs.copyFileSync(src, dest);
       count++;
@@ -76,7 +77,7 @@ function main(): void {
     fs.rmSync(PUBLIC_DATA_DIR, { recursive: true, force: true });
   }
 
-  const count = copyDir(DATA_DIR, PUBLIC_DATA_DIR);
+  const count = copyDir(DATA_DIR, PUBLIC_DATA_DIR, ["songs"]);
   console.log(`[prepare:public] copied ${count} dataset file(s) to public/data/`);
   checkSiteSize(PUBLIC_DATA_DIR);
 }

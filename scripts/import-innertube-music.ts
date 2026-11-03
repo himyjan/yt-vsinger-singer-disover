@@ -1,15 +1,22 @@
 #!/usr/bin/env tsx
 /**
- * Imports harvested USADA music data directly into data/songs/ — never touches
- * data/items/.
+ * Imports harvested Innertube music data directly into data/songs/ — never
+ * touches data/items/.
  *
  * Reads every shard snapshot from .cache/innertube-music/, converts each
  * upload and YouTube Music release into a SongRecord, and writes them into
  * .volumes/vol-N/data/songs/{region}/{bucket}.json.
  *
+ * By default every upload and release is imported. With --music-only, uploads
+ * are filtered to only YouTube category ID "10" (Music) by calling InnerTube's
+ * getInfo() per video — this costs one extra InnerTube request per upload, so
+ * it is slower but keeps non-music uploads (gaming streams, podcasts, etc.)
+ * out of the songs dataset. Official Artist Channel releases always pass.
+ *
  *   npm run data:innertube-music-import              # report only
  *   npm run data:innertube-music-import -- --apply   # write song shards
  *   npm run data:innertube-music-import -- --shard 1/20 --apply  # one shard
+ *   npm run data:innertube-music-import -- --apply --music-only  # only category ID 10
  *
  * USADA publishes a YouTube channel id for each entry, so matching against
  * the dataset is direct (no search required).
@@ -26,6 +33,7 @@ import type {
   SongFile,
   SongRecord,
 } from "../scripts/lib/types";
+import { InnerTubeSource } from "../scripts/lib/youtubei";
 import { inShard, parseShard } from "../scripts/lib/shard";
 import { bucketFor } from "../scripts/lib/dataset";
 import { SIZE_BUDGET } from "./lib/io";
@@ -52,10 +60,16 @@ interface Options {
   apply: boolean;
   limit: number | null;
   shard: string | null;
+  musicOnly: boolean;
 }
 
 function parseArgs(argv: string[]): Options {
-  const options: Options = { apply: false, limit: null, shard: null };
+  const options: Options = {
+    apply: false,
+    limit: null,
+    shard: null,
+    musicOnly: false,
+  };
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i]!;
     const value = argv[i + 1];
@@ -71,16 +85,21 @@ function parseArgs(argv: string[]): Options {
         options.shard = value ?? null;
         i++;
         break;
+      case "--music-only":
+        options.musicOnly = true;
+        break;
       case "--help":
       case "-h":
         console.log(
           [
-            "Usage: npm run data:innertube-music-import [--apply] [--shard N/M] [--limit <n>]",
+            "Usage: npm run data:innertube-music-import [--apply] [--shard N/M] [--limit <n>] [--music-only]",
             "",
             "  (no flags)   report what would be imported, write nothing",
             "  --apply      write song shards into data/songs/",
             "  --shard N/M  only import this shard (1-based), e.g. --shard 1/20",
             "  --limit <n>  import at most n channels",
+            "  --music-only only import uploads whose YouTube category ID is '10' (Music).",
+            "               Requires one InnerTube getInfo() call per upload.",
           ].join("\n")
         );
         process.exit(0);
@@ -253,9 +272,15 @@ async function main(): Promise<void> {
   for (const e of targets) {
     songCount += e.uploads.length + e.releases.length;
   }
-  console.log(
-    `innertube-music-import: ${songCount} song(s) would be imported`,
-  );
+  if (options.musicOnly) {
+    console.log(
+      `innertube-music-import: ${songCount} song(s) would be imported (music-only: uploads filtered by category ID '10')`,
+    );
+  } else {
+    console.log(
+      `innertube-music-import: ${songCount} song(s) would be imported`,
+    );
+  }
 
   if (!options.apply) {
     console.log("Nothing was written. Re-run with --apply.");
@@ -265,13 +290,49 @@ async function main(): Promise<void> {
   const now = new Date().toISOString();
   const songs: SongRecord[] = [];
 
+  // InnerTube source for per-video category lookup (music-only mode).
+  let source: InnerTubeSource | null = null;
+  if (options.musicOnly) {
+    source = new InnerTubeSource({ delayMs: 350 });
+    await source.connect();
+    console.log(
+      "innertube-music-import: music-only mode — filtering uploads by YouTube category ID '10'",
+    );
+  }
+
+  let musicFiltered = 0;
   for (const entry of targets) {
     for (const upload of entry.uploads) {
+      if (options.musicOnly && source) {
+        try {
+          const info = await source.getBasicInfo(upload.id);
+          const categoryId = info?.category_id;
+          if (categoryId !== "10") {
+            musicFiltered += 1;
+            continue;
+          }
+        } catch (err) {
+          const msg = err instanceof Error ? err.message : String(err);
+          console.error(`    category check failed ${upload.id}: ${msg}`);
+          // On failure, include the upload rather than dropping it silently.
+        }
+      }
       const song = uploadToSong(upload, entry, now);
       if (song) songs.push(song);
     }
     for (const release of entry.releases) {
       songs.push(releaseToSong(release, entry, now));
+    }
+  }
+
+  if (options.musicOnly) {
+    console.log(
+      `innertube-music-import: filtered out ${musicFiltered} non-music upload(s)`,
+    );
+    try {
+      await source?.disconnect();
+    } catch {
+      /* ignore disconnect errors */
     }
   }
 

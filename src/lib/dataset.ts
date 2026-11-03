@@ -23,8 +23,10 @@ import type {
   ChannelSummary,
   Gender,
   Item,
+  ItemCategory,
   Manifest,
   RegionCode,
+  SongRecord,
 } from "@shared/lib/types";
 import { markRaw } from "vue";
 import type { SearchPack, SearchHit } from "@shared/lib/search";
@@ -121,9 +123,12 @@ const cache = {
   live: null as Item[] | null,
   upcoming: null as Item[] | null,
   items: new Map<string, Item[]>(),
+  songs: new Map<string, SongRecord[]>(),
   packs: new Map<string, SearchPack[]>(),
   /** Packs that actually exist per origin, in the order they belong together. */
   packFilesByOrigin: new Map<number, { region: RegionCode; shard: number }[]>(),
+  /** Per-origin song region lists, from the songs manifest. */
+  songsManifestByOrigin: new Map<number, { regions: RegionCode[] }>(),
 };
 
 /**
@@ -150,8 +155,10 @@ export function resetDatasetCache(): void {
   cache.live = null;
   cache.upcoming = null;
   cache.items.clear();
+  cache.songs.clear();
   cache.packs.clear();
   cache.packFilesByOrigin.clear();
+  cache.songsManifestByOrigin.clear();
 }
 
 /* -------------------------------------------------------------------------- */
@@ -579,6 +586,149 @@ export async function loadItems(regions: RegionCode[] | "all"): Promise<Item[]> 
   );
 
   return results.flat();
+}
+
+/** One origin's song regions, from the songs manifest. */
+async function loadOriginSongsManifest(
+  origin: DatasetOrigin,
+): Promise<{ regions: RegionCode[] }> {
+  const cached = cache.songsManifestByOrigin.get(origin.index);
+  if (cached) return cached;
+  const parsed = await fetchJson<{
+    byRegion?: Record<RegionCode, number>;
+  }>(origin, "data/songs/manifest.json");
+  const resolved = {
+    regions: parsed?.byRegion ? Object.keys(parsed.byRegion) as RegionCode[] : [],
+  };
+  cache.songsManifestByOrigin.set(origin.index, resolved);
+  return resolved;
+}
+
+/**
+ * Loads every song for the given regions. `region: "all"` loads every region
+ * that the songs manifest knows about. Region shards are size-chunked
+ * (`{region}.json`, `{region}.1.json`, …) and are read until a shard returns
+ * no songs.
+ */
+export async function loadSongs(
+  regions: RegionCode[] | "all" = "all",
+): Promise<SongRecord[]> {
+  const origins = await loadOrigins();
+  const manifests = await Promise.all(
+    origins.map((origin) => loadOriginSongsManifest(origin)),
+  );
+
+  const targets =
+    regions === "all"
+      ? [...new Set(manifests.flatMap((m) => m.regions))]
+      : regions;
+
+  const results = await Promise.all(
+    targets.map(async (region) => {
+      const cached = cache.songs.get(region);
+      if (cached) return cached;
+
+      const perOrigin = await Promise.all(
+        origins.map(async (origin) => {
+          const regionSongs: SongRecord[] = [];
+          for (let shard = 0; ; shard += 1) {
+            const path =
+              shard === 0
+                ? `data/songs/${region}.json`
+                : `data/songs/${region}.${shard}.json`;
+            const parsed = await fetchJson<{ songs?: SongRecord[] }>(
+              origin,
+              path,
+            );
+            if (!parsed?.songs?.length) break;
+            regionSongs.push(...parsed.songs);
+          }
+          return regionSongs;
+        }),
+      );
+
+      const merged = uniqueById(perOrigin.flat()).map(immutable);
+      cache.songs.set(region, merged);
+      return merged;
+    }),
+  );
+
+  const combined = uniqueById(results.flat()).map(immutable);
+  cache.songs.set("all" as RegionCode, combined);
+  return combined;
+}
+
+/**
+ * Filters songs by the same query fields as `filterItems`, minus the fields
+ * songs don't carry (`status`, `scheduledStart`, `isMember`). Song records
+ * are already all song categories, so no category pre-filter is needed.
+ */
+export function filterSongs(songs: SongRecord[], query: ItemQuery): SongRecord[] {
+  const kind = query.kind ?? "both";
+  const region = query.region ?? "all";
+  const categories = query.categories ?? [];
+  const gender = query.gender ?? "all";
+  const ai = query.ai ?? "all";
+  const language = query.language ?? "all";
+  const role = query.role ?? "all";
+  const vtuberOnly = query.vtuberOnly ?? "all";
+  const text = query.text?.trim().toLowerCase() ?? "";
+
+  const filtered = songs.filter((song) => {
+    if (kind !== "both" && song.channelKind !== kind) return false;
+    if (region !== "all" && song.region !== region) return false;
+    if (categories.length > 0 && !categories.includes(song.category)) return false;
+    if (gender !== "all" && song.gender !== gender) return false;
+    if (ai === "ai" && !song.isAi) return false;
+    if (ai === "human" && song.isAi) return false;
+    if (language !== "all") {
+      const langs = Array.isArray(song.languages) ? song.languages : [song.languages];
+      if (!langs.includes(language)) return false;
+    }
+    if (role === "singer" || role === "producer") {
+      if (song.channelKind !== "real") return false;
+    }
+    if (role === "vsinger" || role === "vtuber") {
+      if (song.channelKind !== "virtual") return false;
+    }
+    if (vtuberOnly === "vsinger" || vtuberOnly === "vtuber") {
+      if (song.channelKind !== "virtual") return false;
+    }
+    if (text) {
+      const haystack = `${song.title} ${song.songTitle ?? ""} ${
+        song.originalArtist ?? ""
+      } ${song.channelName}`.toLowerCase();
+      if (!haystack.includes(text)) return false;
+    }
+    return true;
+  });
+
+  return filtered;
+}
+
+/**
+ * Sorts songs by the user's chosen order. Songs don't carry `scheduledStart`
+ * or `concurrentViewers`, so those sort keys fall back to `publishedAt` and
+ * `viewCount` respectively.
+ */
+export function sortSongs(songs: SongRecord[], order: string): SongRecord[] {
+  const byTime = (a: SongRecord, b: SongRecord) =>
+    (b.publishedAt ?? "").localeCompare(a.publishedAt ?? "");
+
+  const sorted = [...songs];
+  switch (order) {
+    case "oldest":
+      return sorted.sort((a, b) => -byTime(a, b));
+    case "title":
+      return sorted.sort((a, b) => a.title.localeCompare(b.title));
+    case "views":
+      return sorted.sort((a, b) => (b.viewCount ?? 0) - (a.viewCount ?? 0));
+    case "duration":
+      return sorted.sort((a, b) => (b.duration ?? 0) - (a.duration ?? 0));
+    case "recent":
+    default:
+      return sorted.sort(byTime);
+  }
 }
 
 /**

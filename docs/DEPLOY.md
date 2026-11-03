@@ -240,7 +240,7 @@ When available, the Analytics view reads daily snapshots from the public
 [`yt-vsinger-singer-disover-analytics`](https://github.com/himyjan/yt-vsinger-singer-disover-analytics)
 repository. The sync workflow samples platform profiles incrementally and
 appends date-sharded JSON there, keeping unbounded history out of this
-repository's 180 MB dataset budget. Without `ANALYTICS_REPO_TOKEN`, sync
+repository's 10 GB dataset budget. Without `ANALYTICS_REPO_TOKEN`, sync
 continues normally but emits a workflow warning and skips the history archive.
 Some metrics are unavailable unless their platform publishes them or the
 corresponding API credentials are configured; the Analytics view identifies
@@ -412,7 +412,7 @@ The workflows install the LFS client explicitly:
 - `node_modules/` and `public/data/` are ignored — the second is the copy
   `prepare:public` makes for the build, and committing it stored the dataset
   twice.
-- The dataset has hard size budgets — 8 MB per file, 180 MB for `data/` —
+- The dataset has hard size budgets — 8 MB per file, 10 GB for `data/` —
   enforced on write and checked in CI.
 - Retention rules keep the dataset bounded: 30 items per channel, 1095-day
   (three-year) age limit, live and upcoming items always kept.

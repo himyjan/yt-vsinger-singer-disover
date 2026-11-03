@@ -192,25 +192,6 @@ function main(): void {
       example: "items/upcoming.json",
     },
     {
-      path: "/data/songs/manifest.json",
-      returns: "Song totals, by category and by region",
-      shape: "{ schemaVersion, generatedAt, total, byCategory: {}, byRegion: {} }",
-      example: "songs/manifest.json",
-    },
-    {
-      path: "/data/songs/index.json",
-      returns: "Every song record in one file",
-      shape:
-        "{ schemaVersion, generatedAt, songs: [{ id, channelId, channelName, songTitle, originalArtist, category, isCollab, collaborators, isAcoustic, publishedAt, duration, viewCount, url }] }",
-      example: "songs/index.json",
-    },
-    {
-      path: "/data/songs/{region}.json",
-      returns: "The songs of one region",
-      shape: "{ schemaVersion, generatedAt, songs: [Song] }",
-      example: "songs/jp.json",
-    },
-    {
       path: "/data/search/manifest.json",
       returns: "Which regions have a search pack, and how large each one is",
       shape:
