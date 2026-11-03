@@ -3,7 +3,7 @@
  * Harvest VTuber channels from Chuysan (vtuber.chuysan.com).
  *
  * Chuysan is a Next.js directory website. Channel data is loaded client-side,
- * but channel links appear in the rendered HTML. This script uses puppeteer-core
+ * but channel links appear in the rendered HTML. This script uses Playwright
  * to render the page and extract channel information.
  *
  *   npm run data:chuysan              # harvest VTuber candidates
@@ -15,7 +15,7 @@
 
 import fs from "node:fs";
 import path from "node:path";
-import puppeteer from "puppeteer-core";
+import { chromium } from "playwright";
 
 const SITE_URL = "https://vtuber.chuysan.com/channels";
 const CACHE_DIR = ".cache/chuysan";
@@ -80,7 +80,7 @@ async function main(): Promise<void> {
 
   console.log(`chuysan: harvesting from ${SITE_URL}`);
 
-  const browser = await puppeteer.launch({
+  const browser = await chromium.launch({
     headless: true,
     executablePath: options.executablePath,
     args: [
@@ -94,22 +94,22 @@ async function main(): Promise<void> {
       "--no-zygote",
       "--single-process",
       "--disable-accelerated-2d-canvas",
-      "--disable-gl-drawing-for-tests",
       "--disable-web-security",
     ],
   });
 
   try {
     const page = await browser.newPage();
-    page.setUserAgent(
-      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-    );
+    await page.setExtraHTTPHeaders({
+      "User-Agent":
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    });
 
     console.log(`navigating to ${SITE_URL}`);
     await page.goto(SITE_URL, { waitUntil: "domcontentloaded", timeout: 60000 });
 
     // Wait for page to fully render - wait for network to be idle
-    await page.evaluate(() => new Promise((resolve) => setTimeout(resolve, 5000)));
+    await page.waitForTimeout(5000);
 
     const allEntries: Array<{
       channelId: string | null;
@@ -123,9 +123,9 @@ async function main(): Promise<void> {
       console.log(`  scraping page ${currentPage}`);
 
       // Wait for channel cards to appear
-      await page.evaluate(() => new Promise((resolve) => setTimeout(resolve, 3000)));
+      await page.waitForTimeout(3000);
 
-      const rawEntries = await page.evaluate(() => {
+      const pageEntries = await page.evaluate(() => {
         const entries: Array<{
           channelId: string | null;
           channelName: string | null;
@@ -178,9 +178,9 @@ async function main(): Promise<void> {
         return entries;
       });
 
-      const pageEntriesCount = rawEntries.length;
+      const pageEntriesCount = pageEntries.length;
       console.log(`    found ${pageEntriesCount} songs on this page`);
-      allEntries.push(...rawEntries);
+      allEntries.push(...pageEntries);
 
       // Check if we've reached the limit
       if (options.limit && allEntries.length >= options.limit) {
