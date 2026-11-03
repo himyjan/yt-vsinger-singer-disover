@@ -75,6 +75,8 @@
     "data:virtualhumans-import": "oxnode scripts/import-virtualhumans.ts",
     "data:virtuallife": "oxnode scripts/harvest-virtuallife.ts",
     "data:virtuallife-import": "oxnode scripts/import-virtuallife.ts",
+    "data:rita": "oxnode scripts/harvest-rita.ts",
+    "data:rita-import": "oxnode scripts/import-rita.ts",
     "data:vlistsheet": "oxnode scripts/harvest-vlistsheet.ts",
     "data:vlistsheet-import": "oxnode scripts/import-vlistsheet.ts",
     "data:vtuber-index": "oxnode scripts/harvest-vtuber-index.ts",
