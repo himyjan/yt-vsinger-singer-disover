@@ -1,43 +1,47 @@
 #!/usr/bin/env tsx
 /**
- * Imports harvested InnerTube music data into item shards.
+ * Imports harvested USADA music data directly into data/songs/ — never touches
+ * data/items/.
  *
  * Reads every shard snapshot from .cache/innertube-music/, converts each
- * upload and YouTube Music release into an Item record (through classifyItem
- * for song/cover/original detection), and writes them into volume shards
- * under .volumes/vol-N/data/items/.
+ * upload and YouTube Music release into a SongRecord, and writes them into
+ * .volumes/vol-N/data/songs/{region}/{bucket}.json.
  *
  *   npm run data:innertube-music-import              # report only
- *   npm run data:innertube-music-import -- --apply   # write item shards
+ *   npm run data:innertube-music-import -- --apply   # write song shards
  *   npm run data:innertube-music-import -- --shard 1/20 --apply  # one shard
+ *
+ * USADA publishes a YouTube channel id for each entry, so matching against
+ * the dataset is direct (no search required).
  */
 
 import fs from "node:fs";
 import path from "node:path";
-import { classifyItem, type ItemSignals } from "../scripts/lib/classify";
-import { readAllChannelRecords, readAllItems, writeItemShards } from "../scripts/lib/dataset";
-import {
-  SCHEMA_VERSION,
-  type Item,
-  type RegionCode,
-  type ItemCategory,
-  type ArtistKind,
-  type Gender,
-  type Variant,
+import { classifyItem } from "../scripts/lib/classify";
+import { readAllChannelRecords } from "../scripts/lib/dataset";
+import type {
+  Channel as ChannelType,
+  ItemCategory,
+  RegionCode,
+  SongFile,
+  SongRecord,
 } from "../scripts/lib/types";
 import { inShard, parseShard } from "../scripts/lib/shard";
-import { ensureDir, writeJsonIfChanged } from "../scripts/lib/io";
+import { bucketFor } from "../scripts/lib/dataset";
+import { SIZE_BUDGET } from "./lib/io";
+import { SCHEMA_VERSION, ALL_REGIONS } from "./lib/types";
+import { ensureDir, readJson, writeJsonIfChanged } from "./lib/io";
 
 const CACHE_DIR = ".cache/innertube-music";
 
 interface MusicEntry {
   channelId: string;
   channelName: string;
-  channelKind: ArtistKind;
+  channelKind: ChannelType["kind"];
   channelRegion: string | null;
-  channelGender: Gender;
-  channelVariant: Variant;
-  channelLanguages: string | string[];
+  channelGender: ChannelType["gender"];
+  channelVariant: ChannelType["variant"];
+  channelLanguages: ChannelType["languages"];
   channelIsAi: boolean;
   officialArtist: boolean;
   uploads: Array<{ id: string; title: string; thumbnail: string | null }>;
@@ -74,7 +78,7 @@ function parseArgs(argv: string[]): Options {
             "Usage: npm run data:innertube-music-import [--apply] [--shard N/M] [--limit <n>]",
             "",
             "  (no flags)   report what would be imported, write nothing",
-            "  --apply      write item shards into .volumes/vol-N/data/items/",
+            "  --apply      write song shards into data/songs/",
             "  --shard N/M  only import this shard (1-based), e.g. --shard 1/20",
             "  --limit <n>  import at most n channels",
           ].join("\n")
@@ -126,11 +130,11 @@ function readEntries(): MusicEntry[] {
   return entries;
 }
 
-function uploadToItem(
+function uploadToSong(
   upload: { id: string; title: string; thumbnail: string | null },
   channel: MusicEntry,
   now: string,
-): Item | null {
+): SongRecord | null {
   if (!upload.id) return null;
 
   const classification = classifyItem({
@@ -141,17 +145,16 @@ function uploadToItem(
     status: "past",
     isShort: false,
     durationSeconds: null,
-    channelRegion: (channel.channelRegion ?? "unknown") as unknown as RegionCode,
+    channelRegion: (channel.channelRegion ?? "unknown") as RegionCode,
   });
 
   return {
     id: upload.id,
-    platform: "youtube",
     type: "video",
     channelId: channel.channelId,
     channelName: channel.channelName,
     channelKind: channel.channelKind,
-    region: (channel.channelRegion ?? "unknown") as unknown as RegionCode,
+    channelRegion: (channel.channelRegion ?? "unknown") as RegionCode,
     gender: channel.channelGender,
     languages: channel.channelLanguages,
     isAi: channel.channelIsAi,
@@ -174,7 +177,7 @@ function uploadToItem(
         channelId: channel.channelId,
         name: channel.channelName,
         kind: channel.channelKind,
-        region: (channel.channelRegion ?? "unknown") as unknown as RegionCode,
+        channelRegion: (channel.channelRegion ?? "unknown") as RegionCode,
       },
     ],
     isAcoustic: classification.isAcoustic,
@@ -185,27 +188,21 @@ function uploadToItem(
     source: "api",
     addedAt: now,
     updatedAt: now,
-    lastItemsFetchedAt: null,
-    lastDetailsFetchedAt: null,
   };
 }
 
-function releaseToItem(
+function releaseToSong(
   release: { id: string; title: string; thumbnail: string | null },
   channel: MusicEntry,
   now: string,
-): Item {
+): SongRecord {
   return {
     id: release.id,
-    platform: "youtube",
-    url: `https://www.youtube.com/playlist?list=${encodeURIComponent(
-      release.id,
-    )}`,
     type: "playlist",
     channelId: channel.channelId,
     channelName: channel.channelName,
     channelKind: channel.channelKind,
-    region: (channel.channelRegion ?? "unknown") as unknown as RegionCode,
+    channelRegion: (channel.channelRegion ?? "unknown") as RegionCode,
     gender: channel.channelGender,
     languages: channel.channelLanguages,
     isAi: channel.channelIsAi,
@@ -228,7 +225,7 @@ function releaseToItem(
         channelId: channel.channelId,
         name: channel.channelName,
         kind: channel.channelKind,
-        region: (channel.channelRegion ?? "unknown") as unknown as RegionCode,
+        channelRegion: (channel.channelRegion ?? "unknown") as RegionCode,
       },
     ],
     isAcoustic: false,
@@ -239,8 +236,6 @@ function releaseToItem(
     source: "api",
     addedAt: now,
     updatedAt: now,
-    lastItemsFetchedAt: null,
-    lastDetailsFetchedAt: null,
   };
 }
 
@@ -275,13 +270,13 @@ async function main(): Promise<void> {
     targets = targets.slice(0, options.limit);
   }
 
-  // Count items that would be imported.
-  let itemCount = 0;
+  // Count songs that would be imported.
+  let songCount = 0;
   for (const e of targets) {
-    itemCount += e.uploads.length + e.releases.length;
+    songCount += e.uploads.length + e.releases.length;
   }
   console.log(
-    `innertube-music-import: ${itemCount} item(s) would be imported`,
+    `innertube-music-import: ${songCount} song(s) would be imported`,
   );
 
   if (!options.apply) {
@@ -290,28 +285,28 @@ async function main(): Promise<void> {
   }
 
   const now = new Date().toISOString();
-  const items: Item[] = [];
+  const songs: SongRecord[] = [];
 
   for (const entry of targets) {
     for (const upload of entry.uploads) {
-      const item = uploadToItem(upload, entry, now);
-      if (item) items.push(item);
+      const song = uploadToSong(upload, entry, now);
+      if (song) songs.push(song);
     }
     for (const release of entry.releases) {
-      items.push(releaseToItem(release, entry, now));
+      songs.push(releaseToSong(release, entry, now));
     }
   }
 
   // Sort by id for stable output (same as the sync's total order).
-  items.sort((a, b) => a.id.localeCompare(b.id));
+  songs.sort((a, b) => a.id.localeCompare(b.id));
 
-  if (items.length === 0) {
-    console.log("innertube-music-import: no new items to import — nothing written");
+  if (songs.length === 0) {
+    console.log("innertube-music-import: no new songs to import — nothing written");
     return;
   }
 
-  // Write item shards into .volumes/vol-N/data/ — one file per volume job.
-  // writeItemShards takes a root dir and writes items/{region}/{bucket}.json.
+  // Write song shards into .volumes/vol-N/data/songs/ — one file per volume job.
+  // writeSongShards takes a root dir and writes songs/{region}/{bucket}.json.
   // We pass a per-volume root so each job writes its own slice.
   if (options.shard) {
     const shard = parseShard(options.shard);
@@ -323,39 +318,134 @@ async function main(): Promise<void> {
       "data",
     );
 
-    // Read existing items from this volume so we don't delete items in
-    // buckets/regions this shard doesn't touch. Items are sharded by item-id
-    // hash, not by channel shard, so two volume jobs can write items into the
-    // same region/bucket file. We merge new items with existing ones before
+    // Read existing songs from this volume so we don't delete songs in
+    // buckets/regions this shard doesn't touch. Songs are sharded by song-id
+    // hash, not by channel shard, so two volume jobs can write songs into the
+    // same region/bucket file. We merge new songs with existing ones before
     // writing, preserving everything already in the volume.
-    const existingItems = readAllItems(volRoot);
-    const merged = new Map<string, Item>();
-    for (const item of existingItems) merged.set(item.id, item);
-    for (const item of items) merged.set(item.id, item);
-    const allItems = [...merged.values()];
-    allItems.sort((a, b) => a.id.localeCompare(b.id));
+    const existingSongs = readAllSongs(volRoot);
+    const merged = new Map<string, SongRecord>();
+    for (const song of existingSongs) merged.set(song.id, song);
+    for (const song of songs) merged.set(song.id, song);
+    const allSongs = [...merged.values()];
+    allSongs.sort((a, b) => a.id.localeCompare(b.id));
 
     ensureDir(volRoot);
-    writeItemShards(allItems, now, volRoot);
+    writeSongShards(allSongs, now, volRoot);
     console.log(
-      `innertube-music-import: wrote ${allItems.length} item(s) (${items.length} new) into .volumes/vol-${volIndex}/data/items/`,
+      `innertube-music-import: wrote ${allSongs.length} song(s) (${songs.length} new) into .volumes/vol-${volIndex}/data/songs/`,
     );
   } else {
     // No shard: write into data/ directly.
     const volRoot = path.join(process.cwd(), "data");
 
-    // Read existing items and merge with new ones, same as the sharded path.
-    const existingItems = readAllItems(volRoot);
-    const merged = new Map<string, Item>();
-    for (const item of existingItems) merged.set(item.id, item);
-    for (const item of items) merged.set(item.id, item);
-    const allItems = [...merged.values()];
-    allItems.sort((a, b) => a.id.localeCompare(b.id));
+    // Read existing songs and merge with new ones, same as the sharded path.
+    const existingSongs = readAllSongs(volRoot);
+    const merged = new Map<string, SongRecord>();
+    for (const song of existingSongs) merged.set(song.id, song);
+    for (const song of songs) merged.set(song.id, song);
+    const allSongs = [...merged.values()];
+    allSongs.sort((a, b) => a.id.localeCompare(b.id));
 
-    writeItemShards(allItems, now, volRoot);
+    writeSongShards(allSongs, now, volRoot);
     console.log(
-      `innertube-music-import: wrote ${allItems.length} item(s) (${items.length} new) into data/items/`,
+      `innertube-music-import: wrote ${allSongs.length} song(s) (${songs.length} new) into data/songs/`,
     );
+  }
+}
+
+function readAllSongs(root: string): SongRecord[] {
+  const out: SongRecord[] = [];
+  const songsRoot = path.join(root, "songs");
+  if (!fs.existsSync(songsRoot)) return out;
+  for (const region of fs.readdirSync(songsRoot)) {
+    const dir = path.join(songsRoot, region);
+    if (!fs.statSync(dir).isDirectory()) continue;
+    for (const file of fs.readdirSync(dir)) {
+      if (!file.endsWith(".json")) continue;
+      const parsed = readJson<{ songs?: SongRecord[] }>(
+        path.join(dir, file),
+        {},
+      );
+      out.push(...(parsed.songs ?? []));
+    }
+  }
+  return out;
+}
+
+function writeSongShards(
+  songs: SongRecord[],
+  now: string,
+  root: string,
+): void {
+  const songsByRegion = new Map<RegionCode, Map<string, SongRecord[]>>();
+  for (const song of songs) {
+    const region = song.region ?? "unknown";
+    let byBucket = songsByRegion.get(region);
+    if (!byBucket) {
+      byBucket = new Map();
+      songsByRegion.set(region, byBucket);
+    }
+    const bucket = bucketFor(song.id);
+    const list = byBucket.get(bucket) ?? [];
+    list.push(song);
+    byBucket.set(bucket, list);
+  }
+
+  const songsRoot = path.join(root, "songs");
+  const keepItemDirs = new Set<string>();
+
+  for (const region of ALL_REGIONS) {
+    const byBucket = songsByRegion.get(region);
+    if (!byBucket || byBucket.size === 0) continue;
+    keepItemDirs.add(region);
+    const dir = path.join(songsRoot, region);
+    ensureDir(dir);
+    const keepFiles = new Set<string>();
+    const buckets = [...byBucket.keys()].sort();
+    const extraParts: string[] = [];
+    for (const bucket of buckets) {
+      const list = (byBucket.get(bucket) ?? []).sort((a, b) => {
+        const byDate = (b.publishedAt ?? "").localeCompare(a.publishedAt ?? "");
+        return byDate !== 0 ? byDate : a.id.localeCompare(b.id);
+      });
+
+      const chunks: SongRecord[][] = [];
+      let current: SongRecord[] = [];
+      let bytes = 32;
+      for (const song of list) {
+        const size = Buffer.byteLength(JSON.stringify(song, null, 2), "utf8") + 1;
+        if (current.length && bytes + size > SIZE_BUDGET.maxFileBytes) {
+          chunks.push(current);
+          current = [];
+          bytes = 32;
+        }
+        current.push(song);
+        bytes += size;
+      }
+      chunks.push(current);
+
+      for (let index = 0; index < chunks.length; index++) {
+        const name = index === 0 ? bucket : `${bucket}.${index}`;
+        writeJsonIfChanged(path.join(root, "songs", region, `${name}.json`), {
+          schemaVersion: SCHEMA_VERSION,
+          generatedAt: now,
+          songs: chunks[index],
+        } satisfies SongFile);
+        keepFiles.add(`${name}.json`);
+        if (index > 0) extraParts.push(name);
+      }
+      buckets.push(...extraParts);
+    }
+
+    // Remove region directories that no longer hold data.
+    if (fs.existsSync(dir)) {
+      for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+        if (!entry.isDirectory()) continue;
+        if (keepItemDirs.has(entry.name)) continue;
+        fs.rmSync(path.join(dir, entry.name), { recursive: true, force: true });
+      }
+    }
   }
 }
 
