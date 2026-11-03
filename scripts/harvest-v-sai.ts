@@ -49,7 +49,7 @@ interface PaginationDetails {
 
 interface VtuberApiResponse {
   data: VtuberProfile[];
-  paginationDetails: PaginationDetails;
+  paginationDetails?: PaginationDetails;
 }
 
 interface Options {
@@ -99,9 +99,13 @@ async function fetchPage(offset: number, size: number): Promise<VtuberApiRespons
         body: JSON.stringify({ offset, size }),
       },
     );
-    if (!res.ok) return null;
+    if (!res.ok) {
+      console.error(`  fetch failed: HTTP ${res.status} at offset ${offset}`);
+      return null;
+    }
     return (await res.json()) as VtuberApiResponse;
-  } catch {
+  } catch (err) {
+    console.error(`  fetch failed at offset ${offset}:`, (err as Error).message);
     return null;
   }
 }
@@ -115,38 +119,68 @@ async function main(): Promise<void> {
   const allProfiles: VtuberProfile[] = [];
   let offset = 0;
   let pageNum = 1;
+  const MAX_PAGES = 100; // Safety limit to prevent infinite loops
 
-  for (;;) {
+  while (true) {
+    console.log(`v-sai: fetching page ${pageNum} (offset ${offset}, limit ${pageSize})`);
     const page = await fetchPage(offset, pageSize);
-    if (!page?.data) {
-      console.error(
-        `v-sai: API unavailable at offset ${offset} — stopping`,
-      );
+
+    if (!page) {
+      console.error(`v-sai: API request failed at offset ${offset}, stopping`);
       break;
     }
 
-    allProfiles.push(...page.data);
+    const pageData = page.data || [];
+    if (pageData.length === 0) {
+      console.log("v-sai: no more items returned, stopping");
+      break;
+    }
+
+    allProfiles.push(...pageData);
     console.log(
-      `v-sai: page ${pageNum} offset ${offset}: ${page.data.length} profiles`,
+      `v-sai: page ${pageNum}: got ${page.data.length} items (total so far: ${allProfiles.length})`,
     );
 
+    // Check if we've reached the user limit
+    if (options.limit && allProfiles.length >= options.limit) {
+      console.log(`reached limit of ${options.limit} entries`);
+      allProfiles.length = options.limit;
+      break;
+    }
+
+    // Check pagination details to see if there's more
     const { paginationDetails } = page;
     if (!paginationDetails) {
-      console.log("v-sai: no pagination details — assuming single page");
-      break;
+      console.log("v-sai: no pagination info in response, checking if we got fewer than pageSize items");
+      if (page.data.length < pageSize) {
+        console.log("v-sai: got fewer items than page size, assuming last page");
+        break;
+      }
+    } else {
+      const { totalItems, totalPages } = paginationDetails;
+      console.log(`v-sai: pagination totalItems=${totalItems} totalPages=${totalPages} currentPage=${paginationDetails.currentPage}`);
+
+      // If we've reached or passed totalItems, we're done
+      if (totalItems > 0 && allProfiles.length >= totalItems) {
+        console.log(`v-sai: reached totalItems (${totalItems}), stopping`);
+        break;
+      }
+      if (paginationDetails.totalPages && pageNum >= paginationDetails.totalPages) {
+        console.log(`v-sai: reached totalPages (${totalPages}), stopping`);
+        break;
+      }
     }
-    const { totalItems, totalPages } = paginationDetails;
-    console.log(
-      `v-sai: totalItems=${totalItems} totalPages=${totalPages} currentPage=${paginationDetails.currentPage}`,
-    );
-    if (offset + pageSize >= totalItems) break;
-    if (paginationDetails.totalPages && pageNum >= paginationDetails.totalPages)
-      break;
 
     offset += pageSize;
     pageNum++;
-    if (allProfiles.length >= (options.limit ?? Infinity)) break;
+
+    if (pageNum > MAX_PAGES) {
+      console.log(`reached max page limit (${MAX_PAGES}), stopping`);
+      break;
+    }
   }
+
+  console.log(`v-sai: harvested ${allProfiles.length} total profiles before filtering`);
 
   // Filter to profiles that have a YouTube link (the dataset keys VTubers by YouTube id)
   const withYoutube = allProfiles.filter(
