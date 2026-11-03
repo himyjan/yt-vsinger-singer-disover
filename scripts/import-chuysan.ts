@@ -34,6 +34,7 @@ import {
   type RosterHint,
 } from "../scripts/lib/import-channels";
 import { readAllChannelRecords } from "../scripts/lib/dataset";
+import { inShard, parseShard } from "../scripts/lib/shard";
 import type { Channel, Gender } from "../scripts/lib/types";
 
 const SNAPSHOT = ".cache/chuysan/chuysan.json";
@@ -63,10 +64,11 @@ interface Row {
 interface Options {
   apply: boolean;
   limit: number | null;
+  shard: { index: number; count: number } | null;
 }
 
 function parseArgs(argv: string[]): Options {
-  const options: Options = { apply: false, limit: null };
+  const options: Options = { apply: false, limit: null, shard: null };
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i]!;
     const value = argv[i + 1];
@@ -78,6 +80,10 @@ function parseArgs(argv: string[]): Options {
         options.limit = Math.max(1, Number(value ?? 1));
         i++;
         break;
+      case "--shard":
+        options.shard = parseShard(value);
+        i++;
+        break;
       case "--help":
       case "-h":
         console.log(
@@ -86,6 +92,7 @@ function parseArgs(argv: string[]): Options {
             "",
             "  --apply         import the channels the gate admits",
             "  --limit <n>     import at most n channels",
+            "  --shard N/M     only process the Nth of M shards",
           ].join("\n")
         );
         process.exit(0);
@@ -129,6 +136,12 @@ async function main(): Promise<void> {
 
   const rows: Row[] = [];
   for (const entry of entries) {
+    // Shard by the YouTube channel id so parallel volume jobs don't overlap.
+    const shard = options.shard;
+    if (shard && entry.channel_id && !inShard(entry.channel_id, shard.index, shard.count)) {
+      continue;
+    }
+
     // Skip fan / clip accounts before anything else.
     if (
       detectClipAccount(entry.name ?? "", entry.channel_id ?? "") ||

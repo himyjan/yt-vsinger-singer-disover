@@ -249,7 +249,7 @@ async function harvestViaProfiles(
               id: s.id,
               song: s.song ?? "",
               originalArtist: s.originalArtist,
-              channelId: undefined,
+              channelId: "",
               channelName: undefined,
             } as MusicdexSongEntry);
           }
