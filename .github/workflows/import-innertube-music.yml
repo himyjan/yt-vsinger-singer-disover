@@ -1,26 +1,30 @@
 name: Import Innertube Music
 
 # Harvests music (uploads + YouTube Music releases) from YouTube channels
-# using InnerTube's channel catalog — no Data API quota.
+# using InnerTube's channel catalog — no Data API quota — and commits the
+# result straight into data/songs/.
 #
-# Step 1 (20 parallel jobs): Each job fetches music for its volume shard of
+# The old path rebuilt data/songs/ from data/items/ (npm run data:build-songs),
+# which only ever saw items the sync had already collected. Innertube music
+# also surfaces Official Artist Channel releases and older uploads the sync
+# never touches, so those songs were lost on rebuild. This flow keeps them:
+#
+#   Step 1 (20 parallel jobs): each job harvests music for its volume shard of
 #   YouTube channels → .cache/innertube-music/innertube-music-{shard}-20.json
-# Step 2 (fan-in job): Merge volume item shards, build search index, validate, commit
+#   Step 2 (20 parallel jobs): each job imports its volume shard into
+#   .volumes/vol-N/data/songs/ via `npm run data:innertube-music-import`
+#   Step 3 (fan-in job): merge volumes into the flat data/songs/ layout,
+#   validate, commit
 #
 #   npm run data:innertube-music              # harvest all channels
 #   npm run data:innertube-music -- --shard 1/20   # one shard only
-#   npm run data:innertube-music-import -- --apply # import all shards (20 parallel jobs)
+#   npm run data:innertube-music-import -- --apply # import all shards
 
 on:
   schedule:
     # Weekly, Wednesday 09:00 UTC (after the sync's item pass)
     - cron: "0 9 * * 3"
   workflow_dispatch:
-    inputs:
-      dry-run:
-        description: "Report what would change without writing"
-        required: false
-        default: "false"
 
 concurrency:
   group: dataset-writer-${{ github.repository }}
@@ -114,7 +118,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 120
     # Twenty jobs, one volume each, all at once — GitHub's ceiling for a
-    # public repository. Each job imports its volume shard of items.
+    # public repository. Each job imports its volume shard of songs.
     strategy:
       max-parallel: 20
       fail-fast: false
@@ -156,6 +160,9 @@ jobs:
         env:
           DRY_RUN: ${{ inputs.dry-run }}
         run: |
+          # Each job owns one volume's entries (--shard volume+1/20) and
+          # imports only those channels' music items. matrix.volume is
+          # 0-based (0-19); --shard is 1-based.
           SHARD=$(node -e "console.log(${{ matrix.volume }} + 1)")
           ARGS="--shard ${SHARD}/20"
           if [ "${DRY_RUN:-false}" = "true" ]; then ARGS="$ARGS --dry-run"; else ARGS="$ARGS --apply"; fi
@@ -170,15 +177,15 @@ jobs:
           rm -f data
           mv data-full data
 
-      - name: Upload volume artifacts
+      - name: Upload volume song shards
         uses: actions/upload-artifact@v7
         with:
           name: vol-${{ matrix.volume }}
-          path: .volumes/vol-${{ matrix.volume }}/data/items
+          path: .volumes/vol-${{ matrix.volume }}/data/songs
           retention-days: 1
 
   merge-and-commit:
-    name: Merge volumes and commit dataset
+    name: Merge volumes into data/songs/ and commit
     needs: [harvest-music, plan, import]
     runs-on: ubuntu-latest
     timeout-minutes: 90
@@ -207,40 +214,39 @@ jobs:
       - name: Create volume split for merge
         run: npm run data:volumes -- --count 20
 
-      - name: Download volume artifacts
+      - name: Download volume song shards
         uses: actions/download-artifact@v8
         with:
           path: .volumes/downloads
           pattern: vol-*
           merge-multiple: false
 
-      - name: Replace each volume's item records
+      - name: Replace each volume's song shards
         env:
           VOLUMES: ${{ needs.plan.outputs.volumes }}
         run: |
           missing=0
           for v in $(echo "$VOLUMES" | tr -d '[]' | tr ',' ' '); do
-            SRC=".volumes/downloads/vol-$v"
-            DST=".volumes/vol-$v/data/items"
+            SRC=".volumes/downloads/vol-$v/data/songs"
+            DST=".volumes/vol-$v/data/songs"
             if [ ! -d "$SRC" ]; then
-              echo "::error::artifact vol-$v is missing"
+              echo "::error::artifact vol-$v has no songs"
               missing=$((missing + 1))
               continue
             fi
-            # Replace, do not merge. A record re-keyed to its UC… id has moved
-            # to another shard, so copying over the split would leave the old
-            # row behind beside the new one — the same performer twice.
+            # Replace, do not merge. A song re-keyed into another volume
+            # would leave the old row behind beside the new one.
             rm -rf "$DST"
-            cp -R "$SRC"/. "$DST"/
-            echo "restored items for vol-$v"
+            cp -R "$SRC" "$DST"
+            echo "restored songs for vol-$v"
           done
           if [ "$missing" -gt 0 ]; then
-            echo "::error::$missing volume artifact(s) missing — refusing to merge a partial sweep"
+            echo "::error::$missing volume(s) missing songs — refusing to merge a partial sweep"
             exit 1
           fi
 
-      - name: Merge all volumes into data/
-        run: npx oxnode scripts/merge-volumes.ts --count 20 --items-only
+      - name: Merge all volumes into data/songs/
+        run: npx oxnode scripts/merge-songs.ts --count 20
 
       - name: Build search index
         run: npm run data:index
@@ -263,16 +269,17 @@ jobs:
           # the worktree. --mixed leaves the worktree alone.
           git reset --mixed "origin/$BRANCH"
 
-          # Stage only what this run wrote. Channels, overrides, rosters come
-          # from the branch; only items/search/manifest are written.
+          # Stage only what this run wrote. Channels, items, overrides,
+          # rosters and suggestions come from the branch; only songs change.
           git checkout -- \
             data/channels \
+            data/items \
             data/overrides.json \
             data/seed-catalog.json \
             data/suggestions.json \
             data/upstream.json \
             data/volumes.json 2>/dev/null || true
-          git add data/items data/search data/manifest.json
+          git add data/songs
           if git diff --cached --quiet; then
             echo "Innertube music imports unchanged — nothing to commit"
             exit 0
@@ -291,7 +298,7 @@ jobs:
             echo "| Credentials | none (quota-free) |"
             echo "| Step 1 | 20 parallel harvest jobs (volume shards) |"
             echo "| Step 2 | 20 parallel import jobs (volume shards) |"
-            echo "| Step 3 | Merge → index → validate → commit |"
-            echo "| Dry run | ${{ inputs.dry-run }} |"
-            echo "| Committed | \`data/items\`, \`data/search\`, \`data/manifest.json\` |"
+            echo "| Step 3 | Merge volumes → data/songs/ → index → validate → commit |"
+            echo "| Rebuild from items | skipped — songs come from the Innertube imports directly |"
+            echo "| Committed | \`data/songs\` |"
           } >> "$GITHUB_STEP_SUMMARY"
