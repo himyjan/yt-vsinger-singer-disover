@@ -36,7 +36,8 @@ import {
 } from "../scripts/lib/import-channels";
 import { readAllChannelRecords } from "../scripts/lib/dataset";
 import { InnerTubeSource } from "../scripts/lib/youtubei";
-import type { Channel } from "../scripts/lib/types";
+import { normalizeCountry, COUNTRY_REGION } from "../scripts/lib/regions";
+import type { Channel, RegionCode } from "../scripts/lib/types";
 
 const SNAPSHOT = ".cache/virtualhumans/virtualhumans.json";
 const RESOLVED = ".cache/virtualhumans/virtualhumans-resolved.json";
@@ -66,6 +67,7 @@ interface VirtualHumansEntry {
   instagram?: string;
   tiktok?: string;
   debutDate?: string;
+  country?: string;
 }
 
 interface Row {
@@ -240,6 +242,12 @@ async function main(): Promise<void> {
         agency: row.id ? { [row.id!]: "" } : undefined,
         debut: row.id ? { [row.id!]: row.entry.debutDate ?? "" } : undefined,
         gender: row.id ? { [row.id!]: "unknown" } : undefined,
+        region: row.id
+          ? (() => {
+              const iso = normalizeCountry(row.entry.country ?? null);
+              return iso ? COUNTRY_REGION[iso] : undefined;
+            })()
+          : undefined,
       },
     });
     if ((result.added as unknown[]).length > 0) {

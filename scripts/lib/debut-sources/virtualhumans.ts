@@ -2,10 +2,11 @@
  * VirtualHumans discovery source.
  *
  * virtualhumans.org is a VTuber directory published as a Webflow site with no
- * JSON API. The listing page at /vtubers contains VTuber cards with name,
- * handle (@handle) and slug (/human/<slug>). Each candidate is keyed by
- * `virtualhumans:<name>` and carries no YouTube id — the promote step resolves
- * names to YouTube channels through a name search.
+ * JSON API. The listing page at /vtubers loads its cards client-side, so
+ * instead we parse the public sitemap.xml to enumerate every
+ * /human/<slug> profile page. Each candidate is keyed by
+ * `virtualhumans:<name>` and carries no YouTube id — the promote step
+ * resolves names to YouTube channels through a name search.
  *
  * No authentication required.
  */
@@ -15,13 +16,7 @@ import type { Candidate } from "../identity";
 import type { DebutSource } from "./types";
 import type { RegionCode } from "../types";
 
-const SOURCE_URL = "https://virtualhumans.org";
-
-interface VirtualHumansEntry {
-  name: string;
-  country?: string;
-  group?: string;
-}
+const SITEMAP_URL = "https://virtualhumans.org/sitemap.xml";
 
 export class VirtualHumansSource implements DebutSource {
   readonly id = "virtualhumans";
@@ -39,25 +34,32 @@ export class VirtualHumansSource implements DebutSource {
 
   async fetch(_since: string | null): Promise<Candidate[]> {
     try {
-      const res = await fetch(SOURCE_URL + "/vtubers", {
+      const res = await fetch(SITEMAP_URL, {
         signal: AbortSignal.timeout(30_000),
         headers: {
           "User-Agent": "yt-vsinger-singer-tracker/1.0 (dataset builder)",
-          Accept: "text/html",
+          Accept: "application/xml",
         },
       });
       if (!res.ok) return [];
-      const html = await res.text();
-      const entries = parseVirtualHumansHtml(html);
+      const xml = await res.text();
+      const slugs = parseSitemap(xml);
 
       const candidates: Candidate[] = [];
-      for (const ch of entries.slice(0, this.limit)) {
+      for (const url of slugs.slice(0, this.limit)) {
+        const slug = slugFromUrl(url);
+        // Best-effort name from slug: replace hyphens with spaces, capitalize.
+        const name = slug
+          .split("-")
+          .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+          .join(" ");
+
         candidates.push({
-          id: `virtualhumans:${ch.name}`,
-          name: ch.name,
+          id: `virtualhumans:${name}`,
+          name,
           handle: null,
-          region: (ch.country ?? null) as RegionCode | null | undefined,
-          affiliation: ch.group ?? null,
+          region: null,
+          affiliation: null,
           debutDate: null,
           graduateDate: null,
           externals: {},
@@ -73,23 +75,23 @@ export class VirtualHumansSource implements DebutSource {
   }
 }
 
-/** Parses VTuber cards from the VirtualHumans listing HTML. */
-function parseVirtualHumansHtml(html: string): VirtualHumansEntry[] {
-  const entries: VirtualHumansEntry[] = [];
+/** Extracts the slug from a /human/<slug> URL. */
+function slugFromUrl(url: string): string {
+  const m = url.match(/\/human\/([^\/]+)\/?$/);
+  return m ? m[1]! : url;
+}
+
+/** Parses sitemap.xml to extract all /human/<slug> URLs. */
+function parseSitemap(xml: string): string[] {
+  const slugs: string[] = [];
   const seen = new Set<string>();
-
-  // Match: <a href="/human/<slug>" ...><div ...><h2>Name</h2><h3>@handle</h3>
-  const cardRegex = /<a href="(\/human\/[^"]+)" class="link-block contained w-inline-block">[\s\S]*?<h2 class="title light white">([^<]+)<\/h2>[\s\S]*?<h3 class="title light small white">@([^<]+)<\/h3>/g;
+  const regex = /<loc>(https:\/\/virtualhumans\.org\/human\/([^<]+))<\/loc>/g;
   let match: RegExpExecArray | null;
-  while ((match = cardRegex.exec(html)) !== null) {
-    const name = match[2].trim();
-    const handle = match[3].trim();
-
-    if (!name || seen.has(name)) continue;
-    seen.add(name);
-
-    entries.push({ name, country: undefined, group: undefined });
+  while ((match = regex.exec(xml)) !== null) {
+    const slug = match[2];
+    if (!slug || seen.has(slug)) continue;
+    seen.add(slug);
+    slugs.push(match[1]);
   }
-
-  return entries;
+  return slugs;
 }
