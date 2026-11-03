@@ -92,7 +92,17 @@ export function layoutFor(root: string) {
     itemsUpcoming: path.join(root, "items", "upcoming.json"),
     songsManifest: path.join(root, "songs", "manifest.json"),
     songsIndex: path.join(root, "songs", "index.json"),
-    songsRegion: (r: string) => path.join(root, "songs", `${r}.json`),
+    /**
+     * One shard of a region's songs. Region files are size-chunked so no
+     * single file exceeds the per-file budget — a region like `jp` can hold
+     * tens of megabytes of songs, written as `jp.json`, `jp.1.json`, … .
+     */
+    songsRegion: (r: string, shard: number = 0) =>
+      path.join(
+        root,
+        "songs",
+        shard === 0 ? r : `${r}.${shard}.json`,
+      ),
     songsCategory: (c: string) =>
       path.join(root, "songs", "categories", `${c}.json`),
     searchManifest: path.join(root, "search", "manifest.json"),
@@ -425,6 +435,70 @@ export function writeItemShards(
   return { removed };
 }
 
+/**
+ * Size-chunked writer for one region's songs.
+ *
+ * Writes `songs/{region}.json`, `songs/{region}.1.json`, … so no single
+ * file exceeds the per-file budget. Returns the shard file names written.
+ * Stale shards for the region (e.g. `jp.3.json` when only two remain) are
+ * removed.
+ */
+export function writeSongShards(
+  dir: string,
+  baseName: string,
+  list: SongRecord[],
+  now: string,
+): string[] {
+  ensureDir(dir);
+  const ordered = [...list].sort((a, b) => a.id.localeCompare(b.id));
+
+  /**
+   * Target well below the per-file budget so the JSON wrapper (`{schemaVersion,
+   * generatedAt, songs:[...]}` plus array brackets and commas) keeps every
+   * shard under the ceiling even when the per-song estimate is slightly off.
+   */
+  const chunkTargetBytes = Math.floor(SIZE_BUDGET.maxFileBytes * 0.7);
+
+  const chunks: SongRecord[][] = [];
+  let current: SongRecord[] = [];
+  let bytes = 32;
+  for (const song of ordered) {
+    const size = Buffer.byteLength(JSON.stringify(song, null, 2), "utf8") + 1;
+    if (current.length && bytes + size > chunkTargetBytes) {
+      chunks.push(current);
+      current = [];
+      bytes = 32;
+    }
+    current.push(song);
+    bytes += size;
+  }
+  chunks.push(current);
+
+  const written: string[] = [];
+  for (let index = 0; index < chunks.length; index++) {
+    const name = index === 0 ? baseName : `${baseName}.${index}`;
+    written.push(`${name}.json`);
+    writeJsonIfChanged(path.join(dir, `${name}.json`), {
+      schemaVersion: SCHEMA_VERSION,
+      generatedAt: now,
+      songs: chunks[index],
+    } satisfies SongFile);
+  }
+
+  // Prune stale shards for this base name no longer held.
+  const keep = new Set(written);
+  const prefix = `${baseName}.`;
+  if (fs.existsSync(dir)) {
+    for (const entry of fs.readdirSync(dir)) {
+      if (!entry.endsWith(".json")) continue;
+      if (entry === `${baseName}.json`) continue;
+      if (entry.startsWith(prefix) && keep.has(entry)) continue;
+      if (entry.startsWith(prefix)) fs.rmSync(path.join(dir, entry), { force: true });
+    }
+  }
+  return written;
+}
+
 /** Writes the whole dataset. */
 export function writeDataset(
   channels: Channel[],
@@ -626,14 +700,19 @@ export function writeDataset(
   for (const region of ALL_REGIONS) {
     const list = songsByRegion.get(region);
     if (!list?.length) continue;
-    keepSongFiles.add(`${region}.json`);
-    writeJsonIfChanged(layout.songsRegion(region), {
-      schemaVersion: SCHEMA_VERSION,
-      generatedAt: now,
-      songs: list,
-    } satisfies SongFile);
+    const shards = writeSongShards(songsDir, region, list, now);
+    for (const shard of shards) keepSongFiles.add(shard);
   }
-  removed.push(...pruneStale(songsDir, keepSongFiles));
+  // Remove stale song shard files and any leftover single-file region JSON
+  // from an older (unsharded) layout. index.json/manifest.json are written
+  // below and must not be pruned; the categories/ directory is kept.
+  if (fs.existsSync(songsDir)) {
+    for (const entry of fs.readdirSync(songsDir)) {
+      if (!entry.endsWith(".json")) continue;
+      if (entry === "index.json" || entry === "manifest.json") continue;
+      if (!keepSongFiles.has(entry)) fs.rmSync(path.join(songsDir, entry), { force: true });
+    }
+  }
 
   // Per-category slices make "every cover" a single cheap fetch.
   const songsCategoryDir = path.join(songsDir, "categories");
@@ -644,20 +723,14 @@ export function writeDataset(
     const list = songs.filter((s) => s.category === category);
     categoryCounts[category] = list.length;
     if (!list.length) continue;
-    keepCategoryFiles.add(`${category}.json`);
-    writeJsonIfChanged(layout.songsCategory(category), {
-      schemaVersion: SCHEMA_VERSION,
-      generatedAt: now,
-      songs: list,
-    } satisfies SongFile);
+    const shards = writeSongShards(songsCategoryDir, category, list, now);
+    for (const shard of shards) keepCategoryFiles.add(shard);
   }
   removed.push(...pruneStale(songsCategoryDir, keepCategoryFiles));
 
-  writeJsonIfChanged(layout.songsIndex, {
-    schemaVersion: SCHEMA_VERSION,
-    generatedAt: now,
-    songs,
-  } satisfies SongFile);
+  const indexShards = writeSongShards(songsDir, "index", songs, now);
+  for (const shard of indexShards) keepSongFiles.add(shard);
+
   writeJson(layout.songsManifest, {
     schemaVersion: SCHEMA_VERSION,
     generatedAt: now,
