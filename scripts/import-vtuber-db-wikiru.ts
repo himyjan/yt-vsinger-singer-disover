@@ -44,6 +44,14 @@ import { InnerTubeSource } from "../scripts/lib/youtubei";
 import { acquireRunLock } from "../scripts/lib/io";
 import type { Activity, Channel, RegionCode } from "../scripts/lib/types";
 
+function log(message: string): void {
+  process.stdout.write(message + "\n");
+}
+
+function logErr(message: string): void {
+  process.stderr.write(message + "\n");
+}
+
 const SNAPSHOT = ".cache/vtuber-db-wikiru/vtuber-db-wikiru.json";
 
 interface VtuberDbWikiruEntry {
@@ -94,7 +102,7 @@ function parseArgs(argv: string[]): Options {
         break;
       case "--help":
       case "-h":
-        console.log(
+        log(
           [
             "Usage: npm run data:vtuber-db-wikiru-import -- [options]",
             "",
@@ -106,7 +114,7 @@ function parseArgs(argv: string[]): Options {
         process.exit(0);
       default:
         if (arg.startsWith("-")) {
-          console.error(`unknown option: ${arg}`);
+          logErr(`unknown option: ${arg}`);
           process.exit(1);
         }
     }
@@ -199,17 +207,30 @@ async function resolveChannel(
       }
       continue;
     }
-    try {
-      const profile = await source.profile(candidateId, { lang: "en" });
-      const title = normalize(profile?.title ?? "");
-      if (
-        title &&
-        (title.includes(nameLower) || nameLower.includes(title))
-      ) {
-        confirmed.push(candidateId);
+    let profileResolved = false;
+    for (let attempt = 0; attempt < 3; attempt++) {
+      try {
+        const profile = await source.profile(candidateId, { lang: "en" });
+        const title = normalize(profile?.title ?? "");
+        if (
+          title &&
+          (title.includes(nameLower) || nameLower.includes(title))
+        ) {
+          confirmed.push(candidateId);
+          profileResolved = true;
+          break;
+        }
+      } catch {
+        // Retry on transient failures
+        if (attempt < 2) {
+          await new Promise((r) => setTimeout(r, 1000 * (attempt + 1)));
+        }
       }
-    } catch {
-      // A profile that will not resolve is not a match.
+    }
+    if (!profileResolved) {
+      logErr(
+        `resolveChannel: profile fetch failed for ${candidateId} after 3 attempts — skipping`,
+      );
     }
   }
 
@@ -245,7 +266,7 @@ async function resolveChannel(
 async function main(): Promise<void> {
   const options = parseArgs(process.argv.slice(2));
   if (!fs.existsSync(SNAPSHOT)) {
-    console.error(
+    logErr(
       `no snapshot at ${SNAPSHOT} — run npm run data:vtuber-db-wikiru first`,
     );
     process.exit(1);
@@ -270,7 +291,9 @@ async function main(): Promise<void> {
   const limit = options.limit ?? entries.length;
   const toResolve = entries.slice(0, limit);
 
-  for (const entry of toResolve) {
+  for (let i = 0; i < toResolve.length; i++) {
+    const entry = toResolve[i]!;
+
     // Skip fan / clip accounts before anything else.
     if (
       detectClipAccount(entry.name ?? "", entry.affiliation ?? "") ||
@@ -296,9 +319,14 @@ async function main(): Promise<void> {
       reason: resolved.reason,
       candidates: resolved.candidates,
     });
-  }
 
-  console.log(
+    // Per-channel progress with flush so it shows live during the run
+    process.stdout.write(
+      `\r[${i + 1}/${toResolve.length}] ${entry.name} → ${resolved.verdict}${resolved.reason ? ` (${resolved.reason})` : ""}        `,
+    );
+  }
+  log(''); // newline after progress line
+  log(
     `snapshot ${snapshot.generatedAt} · ${entries.length} entr(y/ies) · ${dataset.length} record(s) tracked`,
   );
 
@@ -314,7 +342,7 @@ async function main(): Promise<void> {
     "ambiguous",
   ] as const) {
     const count = counts.get(verdict) ?? 0;
-    if (count) console.log(`  ${verdict.padEnd(12)} ${count}`);
+    if (count) log(`  ${verdict.padEnd(12)} ${count}`);
   }
 
   const fresh = rows.filter((row) => row.verdict === "new" && row.id);
@@ -324,7 +352,7 @@ async function main(): Promise<void> {
   }
   const newRows = [...deduped.values()];
 
-  console.log(
+  log(
     newRows.length +
       " channel(s) would be imported" +
       (newRows.length
@@ -341,8 +369,8 @@ async function main(): Promise<void> {
   );
 
   if (!options.apply) {
-    console.log("Nothing was written. Re-run with --apply.");
-    return;
+    log("Nothing was written. Re-run with --apply.");
+      return;
   }
 
   const now = new Date().toISOString();
@@ -370,17 +398,17 @@ async function main(): Promise<void> {
     const result = await importYouTubeChannels(batch, {
       limit: options.batchSize,
       rosterHint: { activity, agency, debut },
-      onLog: (message) => console.log("  " + message),
+      onLog: (message) => log("  " + message),
     });
     added += result.added.length;
     existing += result.existing;
     for (const f of result.failed) {
-      console.error(
+      logErr(
         `vtuber-db-wikiru: ${f.id} failed — ${f.reason}`,
       );
       failed++;
     }
-    console.log(
+    log(
       "import: " +
         Math.min(offset + options.batchSize, ids.length) +
         "/" +
@@ -400,13 +428,15 @@ async function main(): Promise<void> {
     if (row.verdict === "ambiguous") skippedAmbiguous++;
   }
 
-  console.log(
+  log(
     `\n${added} channel(s) written · ${existing} already tracked · ${failed} failed · ${skippedNoMatch} no-match · ${skippedAmbiguous} ambiguous`,
   );
-  if (added > 0) console.log("Run npm run data:index next.");
+  if (added > 0) {
+    log("Run npm run data:index next.");
+    }
 }
 
 main().catch((error: unknown) => {
-  console.error(error instanceof Error ? error.message : String(error));
+  logErr(error instanceof Error ? error.message : String(error));
   process.exit(1);
 });

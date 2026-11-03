@@ -129,7 +129,6 @@ function parseArgs(argv: string[]): Options {
             "               Requires one InnerTube getInfo() call per upload.",
           ].join("\n")
         );
-process.stdout.flush();
         process.exit(0);
       default:
         if (arg.startsWith("-")) {
@@ -285,12 +284,10 @@ async function main(): Promise<void> {
     console.log(
       `innertube-music-import: shard ${options.shard} — ${targets.length} of ${entries.length} channel(s)`,
     );
-process.stdout.flush();
   } else {
     console.log(
       `innertube-music-import: ${entries.length} channel(s) total`,
     );
-process.stdout.flush();
   }
 
   // Resume: skip channels already processed in a previous run of this shard.
@@ -303,7 +300,6 @@ process.stdout.flush();
     console.log(
       `innertube-music-import: skipping ${alreadyProcessed.size} already-processed channel(s) from previous run(s)`,
     );
-process.stdout.flush();
   }
 
   if (options.limit) {
@@ -319,17 +315,14 @@ process.stdout.flush();
     console.log(
       `innertube-music-import: ${songCount} song(s) would be imported from ${targets.length} channel(s) (music-only: uploads filtered by category ID '10')`,
     );
-process.stdout.flush();
   } else {
     console.log(
       `innertube-music-import: ${songCount} song(s) would be imported from ${targets.length} channel(s)`,
     );
-process.stdout.flush();
   }
 
   if (!options.apply) {
     console.log("Nothing was written. Re-run with --apply.");
-process.stdout.flush();
     return;
   }
 
@@ -344,7 +337,6 @@ process.stdout.flush();
     console.log(
       "innertube-music-import: music-only mode — filtering uploads by YouTube category ID '10'",
     );
-process.stdout.flush();
   }
 
   let musicFiltered = 0;
@@ -380,7 +372,6 @@ process.stdout.flush();
     console.log(
       `innertube-music-import: filtered out ${musicFiltered} non-music upload(s)`,
     );
-process.stdout.flush();
     try {
       await source?.disconnect();
     } catch {
@@ -393,7 +384,6 @@ process.stdout.flush();
 
   if (songs.length === 0) {
     console.log("innertube-music-import: no new songs to import — nothing written");
-process.stdout.flush();
     return;
   }
 
@@ -427,7 +417,6 @@ process.stdout.flush();
     console.log(
       `innertube-music-import: wrote ${allSongs.length} song(s) (${songs.length} new) into .volumes/vol-${volIndex}/data/songs/`,
     );
-process.stdout.flush();
   } else {
     // No shard: write into data/ directly.
     const volRoot = path.join(process.cwd(), "data");
@@ -444,7 +433,6 @@ process.stdout.flush();
     console.log(
       `innertube-music-import: wrote ${allSongs.length} song(s) (${songs.length} new) into data/songs/`,
     );
-process.stdout.flush();
   }
 }
 
