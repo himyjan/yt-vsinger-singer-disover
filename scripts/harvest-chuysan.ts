@@ -2,9 +2,9 @@
 /**
  * Harvest VTuber channels from Chuysan (vtuber.chuysan.com).
  *
- * Chuysan is a Next.js directory website. Channel data is loaded client-side,
- * but channel links appear in the rendered HTML. This script uses Playwright
- * to render the page and extract channel information.
+ * Chuysan is a Next.js directory website. Channel data is loaded client-side
+ * via API calls after page load. This script uses Playwright to render the
+ * page and extract channel information.
  *
  *   npm run data:chuysan              # harvest VTuber candidates
  *   npm run data:chuysan -- --limit 200   # maximum channels to extract
@@ -106,10 +106,10 @@ async function main(): Promise<void> {
     });
 
     console.log(`navigating to ${SITE_URL}`);
-    await page.goto(SITE_URL, { waitUntil: "domcontentloaded", timeout: 60000 });
+    await page.goto(SITE_URL, { waitUntil: "networkidle", timeout: 60000 });
 
-    // Wait for page to fully render
-    await page.evaluate(() => new Promise((resolve) => setTimeout(resolve, 5000)));
+    // Wait for channel cards to appear in the DOM
+    await page.waitForTimeout(5000);
 
     const allEntries: Array<{
       channelId: string | null;
@@ -122,8 +122,8 @@ async function main(): Promise<void> {
     while (true) {
       console.log(`  scraping page ${currentPage}`);
 
-      // Wait for content to load
-      await page.evaluate(() => new Promise((resolve) => setTimeout(resolve, 3000)));
+      // Wait for channel cards to appear
+      await page.waitForTimeout(3000);
 
       const pageEntries = await page.evaluate(() => {
         const entries: Array<{
@@ -131,7 +131,7 @@ async function main(): Promise<void> {
           channelName: string | null;
         }> = [];
 
-        // Method 1: Look for YouTube channel links directly
+        // Method 1: Look for YouTube channel links
         const links = document.querySelectorAll<HTMLElement>(
           'a[href*="youtube.com/channel/"]'
         );
@@ -152,9 +152,9 @@ async function main(): Promise<void> {
           '[data-channel-id]'
         );
         for (const card of channelCards) {
-          const channelId = card.getAttribute("channel-id");
+          const channelId = card.getAttribute("data-channel-id");
           const channelName =
-            card.getAttribute("channel-name") ||
+            card.getAttribute("data-channel-name") ||
             card.textContent?.trim() ||
             null;
           if (channelId) {
@@ -182,12 +182,6 @@ async function main(): Promise<void> {
       console.log(`    found ${pageEntriesCount} channels on this page`);
       allEntries.push(...pageEntries);
 
-      // If no new songs found on this page, stop - we've reached the end
-      if (pageEntriesCount === 0) {
-        console.log("no songs found on this page - stopping");
-        break;
-      }
-
       // Check if we've reached the limit
       if (options.limit && allEntries.length >= options.limit) {
         console.log(`reached limit of ${options.limit} entries`);
@@ -196,9 +190,8 @@ async function main(): Promise<void> {
 
       // Check for next page button
       const hasNextPage = await page.evaluate(() => {
-        // Look for pagination links
         const nextLink = document.querySelector<HTMLElement>(
-          'a[href*="page="], a[aria-label="next"], .next, .pagination-next'
+          'a[href*="page="], a[aria-label="next"], .next, .pagination-next, [aria-label="next page"]'
         );
         if (nextLink && !nextLink.classList.contains("disabled")) {
           return true;
