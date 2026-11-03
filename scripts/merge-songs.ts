@@ -76,6 +76,29 @@ function readVolumeSongs(volDir: string): SongRecord[] {
   return out;
 }
 
+/** Reads every song already committed under data/songs/. */
+function readExistingSongs(songsDir: string): SongRecord[] {
+  const out: SongRecord[] = [];
+  if (!fs.existsSync(songsDir)) return out;
+  // Region shards: {region}.json, {region}.1.json, …
+  for (const entry of fs.readdirSync(songsDir)) {
+    if (!entry.endsWith(".json")) continue;
+    if (entry === "index.json" || entry === "manifest.json") continue;
+    const parsed = readJson<Shard>(path.join(songsDir, entry), {});
+    out.push(...(parsed.songs ?? []));
+  }
+  // Category slices: categories/{category}.json, {category}.1.json, …
+  const catDir = path.join(songsDir, "categories");
+  if (fs.existsSync(catDir)) {
+    for (const entry of fs.readdirSync(catDir)) {
+      if (!entry.endsWith(".json")) continue;
+      const parsed = readJson<Shard>(path.join(catDir, entry), {});
+      out.push(...(parsed.songs ?? []));
+    }
+  }
+  return out;
+}
+
 function main(): void {
   const count = parseCount(process.argv.slice(2));
 
@@ -109,6 +132,27 @@ function main(): void {
   if (raw !== songsById.size) {
     console.log(
       `merge-songs: deduplicated ${raw - songsById.size} song(s) across volumes`,
+    );
+  }
+
+  /* --- merge with songs already on disk -------------------------------- */
+  /**
+   * Keep every song already committed under data/songs/ that this run's
+   * volumes did not re-harvest (e.g. songs from other workflows, or channels
+   * not in this run's harvest). Volume songs win on id collision because
+   * they carry the freshest platform data.
+   */
+  const existingSongs = readExistingSongs(SONGS_ROOT);
+  let existingKept = 0;
+  for (const song of existingSongs) {
+    if (!songsById.has(song.id)) {
+      songsById.set(song.id, song);
+      existingKept += 1;
+    }
+  }
+  if (existingKept > 0) {
+    console.log(
+      `merge-songs: kept ${existingKept} existing song(s) not re-harvested this run`,
     );
   }
 
