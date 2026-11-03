@@ -22,8 +22,8 @@ const CACHE_DIR = ".cache/chuysan";
 const OUT_PATH = path.join(CACHE_DIR, "chuysan.json");
 
 interface ChuYsanChannel {
-  channelId?: string;
-  channelName?: string;
+  channelId?: string | null;
+  channelName?: string | null;
   description?: string;
   thumbnail?: string | null;
   subscribers?: number;
@@ -81,7 +81,7 @@ async function main(): Promise<void> {
   console.log(`chuysan: harvesting from ${SITE_URL}`);
 
   const browser = await puppeteer.launch({
-    headless: "new",
+    headless: true,
     executablePath: options.executablePath,
     args: [
       "--no-sandbox",
