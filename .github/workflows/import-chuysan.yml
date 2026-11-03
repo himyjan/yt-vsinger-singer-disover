@@ -1,0 +1,280 @@
+name: Import Chuysan VTubers
+
+# Harvests Chuysan (vtuber.chuysan.com) VTuber directory and imports new channels.
+#
+# Step 1 (single job): Harvest listing → .cache/chuysan/chuysan.json
+# Step 2 (20 parallel jobs): Each job imports its volume shard of entries
+#   into data/channels/
+# Step 3 (fan-in job): Merge volumes, build search index, validate, commit
+#
+#   npm run data:chuysan              # harvest listing (Step 1)
+#   npm run data:chuysan-import        # report what would be imported (Step 2)
+#   npm run data:chuysan-import -- --apply  # import all shards (20 parallel jobs)
+
+on:
+  schedule:
+    # Weekly, Tuesday 09:00 UTC (after the sync's roster pass)
+    - cron: "0 9 * * 2"
+  workflow_dispatch:
+
+concurrency:
+  group: dataset-writer-${{ github.repository }}
+  cancel-in-progress: false
+  queue: max
+
+permissions:
+  contents: write
+
+jobs:
+  harvest-chuysan:
+    name: Harvest Chuysan channels
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          ref: ${{ github.ref_name }}
+          lfs: true
+
+      - name: Install Git LFS
+        run: |
+          git lfs install --skip-repo
+          git lfs pull || true
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "26"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Harvest Chuysan channels
+        run: npm run data:chuysan
+
+      - name: Upload chuysan cache
+        uses: actions/upload-artifact@v7
+        with:
+          name: chuysan-cache
+          path: .cache/chuysan
+          retention-days: 1
+
+  plan:
+    name: Choose the volume shards
+    needs: [harvest-chuysan]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      volumes: ${{ steps.pick.outputs.volumes }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 1
+          ref: ${{ github.ref_name }}
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "26"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Resolve the volume shards this run touches
+        id: pick
+        run: |
+          # Every volume, every run — no rotation, no slice, nothing skipped.
+          VOLUMES=$(node -e 'console.log(JSON.stringify(Array.from({length:20},(_,i)=>i)))')
+          echo "volumes=$VOLUMES" >> "$GITHUB_OUTPUT"
+          echo "plan: volumes=$VOLUMES"
+
+  import:
+    name: Import volume ${{ matrix.volume }}
+    needs: [harvest-chuysan, plan]
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    # Twenty jobs, one volume each, all at once — GitHub's ceiling for a
+    # public repository. Each job imports its volume shard of entries.
+    strategy:
+      max-parallel: 20
+      fail-fast: false
+      matrix:
+        volume: ${{ fromJSON(needs.plan.outputs.volumes) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          ref: ${{ github.ref_name }}
+          lfs: true
+
+      - name: Install Git LFS
+        run: |
+          git lfs install --skip-repo
+          git lfs pull || true
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "26"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Download chuysan cache
+        uses: actions/download-artifact@v8
+        with:
+          name: chuysan-cache
+          path: .cache/chuysan
+
+      - name: Create this volume only
+        run: npm run data:volumes -- --count 20 --only ${{ matrix.volume }}
+
+      - name: Import volume ${{ matrix.volume }} channels
+        run: |
+          # Each job owns one volume's entries (--shard volume+1/20) and imports
+          # only those. matrix.volume is 0-based (0-19); --shard is 1-based.
+          SHARD=$(( ${{ matrix.volume }} + 1 ))
+          ARGS=(--shard "${SHARD}/20" --apply)
+
+          # The scripts read data/ through the working directory, so the volume
+          # is swapped in as a symlink and swapped back — the same trick
+          # sync-data.yml and live.yml use.
+          VOL_DIR=".volumes/vol-${{ matrix.volume }}/data"
+          mv data data-full
+          ln -s "$VOL_DIR" data
+          npm run data:chuysan-import -- "${ARGS[@]}"
+          rm -f data
+          mv data-full data
+
+      - name: Upload volume artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: vol-${{ matrix.volume }}
+          path: .volumes/vol-${{ matrix.volume }}/data/channels
+          retention-days: 1
+
+  merge-and-commit:
+    name: Merge volumes and commit dataset
+    needs: [harvest-chuysan, plan, import]
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          ref: ${{ github.ref_name }}
+          lfs: true
+
+      - name: Install Git LFS
+        run: |
+          git lfs install --skip-repo
+          git lfs pull || true
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "26"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Create volume split for merge
+        run: npm run data:volumes -- --count 20
+
+      - name: Download volume artifacts
+        uses: actions/download-artifact@v8
+        with:
+          path: .volumes/downloads
+          pattern: vol-*
+          merge-multiple: false
+
+      - name: Replace each volume's channel records
+        env:
+          VOLUMES: ${{ needs.plan.outputs.volumes }}
+        run: |
+          missing=0
+          for v in $(echo "$VOLUMES" | tr -d '[]' | tr ',' ' '); do
+            SRC=".volumes/downloads/vol-$v"
+            DST=".volumes/vol-$v/data/channels"
+            if [ ! -d "$SRC" ]; then
+              echo "::error::artifact vol-$v is missing"
+              missing=$((missing + 1))
+              continue
+            fi
+            # Replace, do not merge. A record re-keyed to its UC… id has moved
+            # to another shard, so copying over the split would leave the old
+            # row behind beside the new one — the same performer twice.
+            rm -rf "$DST"
+            cp -R "$SRC" "$DST"
+            echo "restored channels for vol-$v"
+          done
+          if [ "$missing" -gt 0 ]; then
+            echo "::error::$missing volume artifact(s) missing — refusing to merge a partial sweep"
+            exit 1
+          fi
+
+      - name: Merge all volumes into data/
+        run: npx oxnode scripts/merge-volumes.ts --count 20 --channels-only
+
+      - name: Build search index
+        run: npm run data:index
+
+      - name: Validate dataset
+        run: npm run data:validate
+
+      - name: Check the stored repository size
+        run: npm run repo:size -- --max-mb 900 --warn-mb 700
+
+      - name: Commit Chuysan imports
+        env:
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch origin "$BRANCH"
+
+          # Move HEAD and index to latest branch, keeping generated data/ in
+          # the worktree. --mixed leaves the worktree alone.
+          git reset --mixed "origin/$BRANCH"
+
+          # Stage only what this run wrote. Items, songs, overrides, rosters
+          # come from the branch; only channels/search/manifest are written.
+          git checkout -- \
+            data/items \
+            data/songs \
+            data/overrides.json \
+            data/seed-catalog.json \
+            data/suggestions.json \
+            data/upstream.json \
+            data/volumes.json 2>/dev/null || true
+          git add data/channels data/search data/manifest.json
+          if git diff --cached --quiet; then
+            echo "Chuysan imports unchanged — nothing to commit"
+            exit 0
+          fi
+          git commit -m "data: import Chuysan VTubers (${{ github.run_number }})"
+          git push origin "HEAD:$BRANCH"
+
+      - name: Summary
+        run: |
+          {
+            echo "### Import Chuysan VTubers (20 parallel jobs)"
+            echo ""
+            echo "| | |"
+            echo "| --- | --- |"
+            echo "| Source | Chuysan (vtuber.chuysan.com/api/channels) |"
+            echo "| Credentials | none (public JSON) |"
+            echo "| Step 1 | Harvest listing (single job) |"
+            echo "| Step 2 | 20 parallel import jobs (volume shards) |"
+            echo "| Step 3 | Merge → index → validate → commit |"
+            echo "| Committed | \`data/channels\`, \`data/search\`, \`data/manifest.json\` |"
+          } >> "$GITHUB_STEP_SUMMARY"
