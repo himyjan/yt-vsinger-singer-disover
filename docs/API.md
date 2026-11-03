@@ -101,9 +101,6 @@ A projection is written as as many parts as the 8 MB per-file budget needs;
 `items/manifest.json` lists them as `liveParts` and `upcomingParts`. The first
 part keeps the historical name, so a reader that ignores the list still gets
 the beginning of it — but a correct reader fetches every part it names.
-| `/data/songs/manifest.json` | Song totals, by category and by region |
-| `/data/songs/index.json` | Every song record |
-| `/data/songs/{region}.json` | The songs of one region |
 | `/data/search/manifest.json` | Which regions have a search pack, and its size |
 | `/data/search/{region}.json` | One region's inverted search index |
 

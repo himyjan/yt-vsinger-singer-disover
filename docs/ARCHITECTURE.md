@@ -88,10 +88,15 @@ browser anyway. So the dataset is split:
 | `data/items/live.json` | currently live — part 0 | small |
 | `data/items/upcoming.json` | scheduled streams and premieres — part 0 | up to 4 MB |
 | `data/items/{live,upcoming}.<n>.json` | further parts, listed in `items/manifest.json` | up to 4 MB |
-| `data/songs/<region>.json` | the music-centric projection | ~200 KB |
-| `data/songs/categories/<c>.json` | one file per song category | ~100 KB |
+| `data/songs/<region>.json` | the music-centric projection — sharded `<region>.<n>.json` past 8 MB per file | up to 8 MB each |
+| `data/songs/categories/<c>.json` | one file per song category — sharded likewise | up to 8 MB each |
 | `data/search/<region>.json` | inverted index for one region — shard 0 | 1–5 MB |
 | `data/search/<region>.<n>.json` | further packs of a region too big for one file | 1–5 MB |
+
+`data/songs/` is **not** published to the site: its shards are too many
+megabytes for GitHub Pages' 1 GB site ceiling (`prepare-public.ts` skips it,
+and `build-api.ts` drops the songs endpoints). The frontend loads songs
+per-region on demand when the Songs tab is open.
 
 The browser loads only the slice it needs: the channel manifest on startup,
 the shards of the regions and kinds it is showing when the user picks one, the

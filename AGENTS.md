@@ -310,7 +310,7 @@ network-derived values into a record's classification.
 ### 9. Never write a file over the size budget
 
 `scripts/lib/io.ts` throws when a file exceeds 8 MB, and `data/` is capped at
-180 MB. GitHub recommends a repository under 1 GB, documents 10 GB of `.git`
+10 GB. GitHub recommends a repository under 1 GB, documents 10 GB of `.git`
 as its maximum, and enforces 2 GB per push and 100 MB per object. If a change
 makes the dataset grow, add a retention rule rather than raising the budget.
 
@@ -359,6 +359,17 @@ page came from, so its base is `""`. **The client already reads N origins**:
 `src/lib/origins.ts` discovers them from `data/volumes.json` and every loader
 in `src/lib/dataset.ts` fans out and merges. The file is optional — absent is
 the single-origin deployment, and that path must stay exactly as it is.
+
+**`data/songs/` is not published to the site.** It is ~3.7 GB locally (1M+
+songs), which exceeds GitHub Pages' 1 GB site ceiling. `prepare-public.ts`
+skips it with `skipDirs: ["songs"]`, and `build-api.ts` drops the songs
+endpoints. On a single-origin deployment the frontend's `loadSongs()` fetches
+`data/songs/manifest.json`, gets a 404, and gracefully shows "No songs" —
+the Songs tab only works on a volume-split deployment where `data/songs/`
+shards live under a volume's own `data/` and are served through
+`data/volumes.json`. To publish songs, split the catalogue into volumes
+(`npm run data:volumes -- --count N`) and deploy each volume as its own site
+origin.
 
 ### 10. Every record keeps its provenance
 
@@ -569,6 +580,7 @@ waiting for its channel to come round in the rotation again.
 | A SOOP record has no avatar, name or fan count                                                                   | `npm run data:details -- --platform soop` — the offline profile is `GET api-channel.sooplive.com/v1.1/channel/{userId}/station`; `CHA1004` means the channel does not exist, and the live feed is only the fallback                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | Fill the missing follower counts                                                                                 | `npm run data:details -- --counts-only --limit 500`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | A Bilibili-only record with no YouTube/Twitch link                                                               | `npm run data:links -- --limit 200` (add `--platform bilibili --shard 2/4` to slice it, or `--region jp` for the Japanese mirror case)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| Import Innertube Music (uploads + YT Music releases from YouTube channels)                                       | `.github/workflows/import-innertube-music.yml` — 20 parallel harvest jobs → 20 parallel import jobs → per-volume song shards merged into `data/songs/` via `scripts/merge-songs.ts`. Batched into ≤1 GiB pushes so no single push exceeds GitHub's 2 GB per-push limit. Only `data/songs/` is committed; `data/items/` is untouched. |
 | A record filed under `cn` that is really Japanese                                                                | `npm run data:details -- --weak-region` re-derives it; `data:links` corrects it from the discovered YouTube country                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | Fix the classifier itself                                                                                        | `scripts/lib/classify.ts`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
 | Link a talent who returned under a new persona (轉生)                                                            | `data/overrides.json` — `reincarnationOf` on the **new** record, naming the previous channel id. The drawer derives 「轉生帳號」 on the old record from that one field, so never write it twice; the edge chains (`B.reincarnationOf = A`, `C.reincarnationOf = B`) and any number of records may point at the same predecessor                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
@@ -682,6 +694,11 @@ uv run --no-project --python 3.13 --with "twscrape[curl]" python scripts/harvest
 npm run data:singing-events-youtube  # YouTube video search via InnerTube → lists/x-singing-tags.json (no quota)
 npm run data:singing-events-virtuallivecalendar  # virtuallivecalendar.jp → lists/singing-events.json (best-effort scrape)
 npm run data:singing-events-twipla  # twipla.jp → lists/x-singing-tags.json (best-effort scrape)
+npm run data:innertube-music              # harvest Innertube music for all YouTube channels → .cache/innertube-music/
+npm run data:innertube-music -- --shard N/20   # one shard only
+npm run data:innertube-music-import              # report what would be imported into data/songs/
+npm run data:innertube-music-import -- --apply   # import all shards (20 parallel volume jobs)
+npm run data:innertube-music-import -- --apply --music-only  # only uploads with YouTube category ID "10" (Music)
 npm run data:ids                     # re-key handle / bilibili / roster ids to the UC… id
 npm run data:validate                # structure + budgets
 npm run repo:size                    # the stored history, not the tree

@@ -4,7 +4,7 @@ name: Import Innertube Music
 # using InnerTube's channel catalog — no Data API quota — and commits the
 # result straight into data/songs/.
 #
-# The old path rebuilt data/songs/ from data/items/ (npm run data:build-songs),
+# The old path rebuilt data/songs/ from data/items/ — replaced by importing
 # which only ever saw items the sync had already collected. Innertube music
 # also surfaces Official Artist Channel releases and older uploads the sync
 # never touches, so those songs were lost on rebuild. This flow keeps them:
@@ -13,8 +13,8 @@ name: Import Innertube Music
 #   YouTube channels → .cache/innertube-music/innertube-music-{shard}-20.json
 #   Step 2 (20 parallel jobs): each job imports its volume shard into
 #   .volumes/vol-N/data/songs/ via `npm run data:innertube-music-import`
-#   Step 3 (fan-in job): merge volumes into the flat data/songs/ layout,
-#   validate, commit
+#   Step 3 (fan-in job): merge volumes into `data/songs/` via `scripts/merge-songs.ts`
+#   (size-chunked shards per region/category/index), then index → validate → commit
 #
 #   npm run data:innertube-music              # harvest all channels
 #   npm run data:innertube-music -- --shard 1/20   # one shard only
