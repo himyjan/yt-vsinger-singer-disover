@@ -19,6 +19,7 @@ name: Import Innertube Music
 #   npm run data:innertube-music              # harvest all channels
 #   npm run data:innertube-music -- --shard 1/20   # one shard only
 #   npm run data:innertube-music-import -- --apply # import all shards
+#   npm run data:innertube-music-import -- --apply --music-only  # only Music category (id 10)
 
 on:
   schedule:
@@ -164,7 +165,7 @@ jobs:
           # imports only those channels' music items. matrix.volume is
           # 0-based (0-19); --shard is 1-based.
           SHARD=$(node -e "console.log(${{ matrix.volume }} + 1)")
-          ARGS="--shard ${SHARD}/20"
+          ARGS="--shard ${SHARD}/20 --music-only"
           if [ "${DRY_RUN:-false}" = "true" ]; then ARGS="$ARGS --dry-run"; else ARGS="$ARGS --apply"; fi
 
           # The scripts read data/ through the working directory, so the
