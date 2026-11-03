@@ -298,11 +298,13 @@ jobs:
           BATCH_LIMIT=$((1024 * 1024 * 1024))  # 1 GiB
           batch_files=()
           batch_size=0
+          batch_num=0
 
           flush_batch() {
             if [ "${#batch_files[@]}" -eq 0 ]; then return 0; fi
-            printf '%s\0' "${batch_files[@]}" | git add -z --stdin
-            git commit -m "data: import Innertube music (${{ github.run_number }})"
+            batch_num=$((batch_num + 1))
+            git add "${batch_files[@]}"
+            git commit -m "data: import Innertube music (${{ github.run_number }}) batch $batch_num"
             git push origin "HEAD:$BRANCH"
             batch_files=()
             batch_size=0
