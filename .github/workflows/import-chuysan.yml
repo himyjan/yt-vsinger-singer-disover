@@ -43,8 +43,8 @@ jobs:
           git lfs install --skip-repo
           git lfs pull || true
 
-      - name: Install Chrome for Puppeteer
-        run: npx puppeteer browsers install chrome
+      - name: Install Chrome for Playwright
+        run: npx playwright install chromium
       - name: Set up Node
         uses: actions/setup-node@v7
         with:
@@ -55,9 +55,7 @@ jobs:
         run: npm ci --no-audit --no-fund
 
       - name: Harvest Chuysan channels
-        run: |
-          CHROME_PATH=$(which google-chrome-stable)
-          npm run data:chuysan -- --executable-path "$CHROME_PATH"
+        run: npx oxnode scripts/harvest-chuysan.ts
 
       - name: Upload chuysan cache
         uses: actions/upload-artifact@v7
