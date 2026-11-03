@@ -2,9 +2,14 @@
 /**
  * Harvest VTuber channels from Chuysan (vtuber.chuysan.com).
  *
- * Chuysan is a Next.js directory website. Channel data is loaded client-side
- * via API calls after page load. This script uses Playwright to render the
- * page and extract channel information.
+ * Chuysan is a Thai VTuber directory. Its website is a Next.js client-side
+ * app that loads channel data from a public JSON API, so scraping the HTML
+ * is brittle and unreliable. This script fetches the API directly:
+ *
+ *   https://storage.googleapis.com/thaivtuberranking.appspot.com/v2/channel_data/simple_list.json
+ *
+ * Each entry carries a YouTube channel id (`channel_id`), name (`title`),
+ * debut date (`published_at`), subscriber/view counts, and thumbnail.
  *
  *   npm run data:chuysan              # harvest VTuber candidates
  *   npm run data:chuysan -- --limit 200   # maximum channels to extract
@@ -15,28 +20,39 @@
 
 import fs from "node:fs";
 import path from "node:path";
-import { chromium } from "playwright";
 
-const SITE_URL = "https://vtuber.chuysan.com/channels";
+const API_URL =
+  "https://storage.googleapis.com/thaivtuberranking.appspot.com/v2/channel_data/simple_list.json";
 const CACHE_DIR = ".cache/chuysan";
 const OUT_PATH = path.join(CACHE_DIR, "chuysan.json");
 
+interface ChuysanApiEntry {
+  channel_id: string;
+  title: string;
+  thumbnail_icon_url?: string | null;
+  subscribers?: number | null;
+  views?: number | null;
+  published_at?: string | null;
+  last_published_video_at?: string | null;
+  updated_at?: number | null;
+  is_rebranded?: boolean | null;
+}
+
 interface ChuYsanChannel {
-  channelId?: string | null;
-  channelName?: string | null;
-  description?: string;
+  channel_id?: string;
+  name?: string;
+  description?: string | null;
   thumbnail?: string | null;
-  subscribers?: number;
-  views?: number;
-  publishedAt?: string;
+  subscribers?: number | null;
+  views?: number | null;
+  published_at?: string | null;
   region?: string | null;
   gender?: string | null;
-  languages?: string[];
+  languages?: string[] | null;
 }
 
 interface Options {
   limit: number | null;
-  executablePath?: string;
 }
 
 function parseArgs(argv: string[]): Options {
@@ -49,18 +65,13 @@ function parseArgs(argv: string[]): Options {
         options.limit = Math.max(1, Number(value ?? 1));
         i++;
         break;
-      case "--executable-path":
-        options.executablePath = value ?? null;
-        i++;
-        break;
       case "--help":
       case "-h":
         console.log(
           [
-            "Usage: npm run data:chuysan [--limit <n>] [--executable-path <path>]",
+            "Usage: npm run data:chuysan [--limit <n>]",
             "",
-            "  --limit <n>             maximum number of channels to scrape",
-            "  --executable-path <path>  path to Chrome/Chromium executable",
+            "  --limit <n>  maximum number of channels to harvest",
           ].join("\n")
         );
         process.exit(0);
@@ -78,175 +89,63 @@ async function main(): Promise<void> {
   const options = parseArgs(process.argv.slice(2));
   fs.mkdirSync(CACHE_DIR, { recursive: true });
 
-  console.log(`chuysan: harvesting from ${SITE_URL}`);
+  console.log(`chuysan: fetching ${API_URL}`);
 
-  const browser = await chromium.launch({
-    headless: true,
-    executablePath: options.executablePath,
-    args: [
-      "--no-sandbox",
-      "--disable-setuid-sandbox",
-      "--disable-dev-shm-usage",
-      "--disable-gpu",
-      "--disable-software-rasterizer",
-      "--disable-features=site-per-process,VizDisplayCompositor",
-      "--no-first-run",
-      "--no-zygote",
-      "--single-process",
-      "--disable-accelerated-2d-canvas",
-      "--disable-web-security",
-    ],
-  });
-
+  let entries: ChuysanApiEntry[];
   try {
-    const page = await browser.newPage();
-    await page.setExtraHTTPHeaders({
-      "User-Agent":
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    const res = await fetch(API_URL, {
+      headers: { Accept: "application/json" },
+      signal: AbortSignal.timeout(60_000),
     });
-
-    console.log(`navigating to ${SITE_URL}`);
-    await page.goto(SITE_URL, { waitUntil: "networkidle", timeout: 60000 });
-
-    // Wait for channel cards to appear in the DOM
-    await page.waitForTimeout(5000);
-
-    const allEntries: Array<{
-      channelId: string | null;
-      channelName: string | null;
-    }> = [];
-
-    let currentPage = 1;
-    const maxPages = 50; // Safety limit to prevent infinite loops
-
-    while (true) {
-      console.log(`  scraping page ${currentPage}`);
-
-      // Wait for channel cards to appear
-      await page.waitForTimeout(3000);
-
-      const pageEntries = await page.evaluate(() => {
-        const entries: Array<{
-          channelId: string | null;
-          channelName: string | null;
-        }> = [];
-
-        // Method 1: Look for YouTube channel links
-        const links = document.querySelectorAll<HTMLElement>(
-          'a[href*="youtube.com/channel/"]'
-        );
-        for (const link of links) {
-          const href = link.getAttribute("href");
-          if (!href) continue;
-          const match = href.match(/youtube\.com\/channel\/(UC[\w-]{22})/);
-          if (match) {
-            const channelId = match[1];
-            const channelName =
-              link.textContent?.trim() || link.getAttribute("aria-label") || null;
-            entries.push({ channelId, channelName });
-          }
-        }
-
-        // Method 2: Look for channel cards with data attributes
-        const channelCards = document.querySelectorAll<HTMLElement>(
-          '[data-channel-id]'
-        );
-        for (const card of channelCards) {
-          const channelId = card.getAttribute("data-channel-id");
-          const channelName =
-            card.getAttribute("data-channel-name") ||
-            card.textContent?.trim() ||
-            null;
-          if (channelId) {
-            entries.push({ channelId, channelName });
-          }
-        }
-
-        // Method 3: Look for any UC... pattern in the page text
-        const textContent = document.body.innerText || "";
-        const youtubeChannelRegex = /UC[a-zA-Z0-9_-]{22}/g;
-        const matches = textContent.match(youtubeChannelRegex);
-        if (matches) {
-          for (const channelId of matches) {
-            const existing = entries.find((e) => e.channelId === channelId);
-            if (!existing) {
-              entries.push({ channelId, channelName: null });
-            }
-          }
-        }
-
-        return entries;
-      });
-
-      const pageEntriesCount = pageEntries.length;
-      console.log(`    found ${pageEntriesCount} channels on this page`);
-      allEntries.push(...pageEntries);
-
-      // Check if we've reached the limit
-      if (options.limit && allEntries.length >= options.limit) {
-        console.log(`reached limit of ${options.limit} entries`);
-        break;
-      }
-
-      // Check for next page button
-      const hasNextPage = await page.evaluate(() => {
-        const nextLink = document.querySelector<HTMLElement>(
-          'a[href*="page="], a[aria-label="next"], .next, .pagination-next, [aria-label="next page"]'
-        );
-        if (nextLink && !nextLink.classList.contains("disabled")) {
-          return true;
-        }
-        return false;
-      });
-
-      if (!hasNextPage) {
-        console.log("no more pages found");
-        break;
-      }
-
-      // Go to next page
-      await page.evaluate(() => {
-        const nextLink = document.querySelector<HTMLElement>(
-          'a[href*="page="], a[href*="page="], a[aria-label="next"], .next, .pagination-next'
-        );
-        if (nextLink) {
-          (nextLink as HTMLAnchorElement).click();
-        }
-      });
-
-      currentPage++;
-      if (currentPage > 50) {
-        console.log("reached max pages limit");
-        break;
-      }
-
-      // Wait for next page to load
-      await page.evaluate(() => new Promise((resolve) => setTimeout(resolve, 5000)));
+    if (!res.ok) {
+      console.error(`chuysan: HTTP ${res.status} — aborting`);
+      process.exit(1);
     }
-
-    // Deduplicate by channel id
-    const seen = new Set<string>();
-    const uniqueEntries: ChuYsanChannel[] = [];
-    for (const entry of allEntries) {
-      if (!entry.channelId || seen.has(entry.channelId)) continue;
-      seen.add(entry.channelId);
-      uniqueEntries.push(entry);
-    }
-
-    const snapshot = {
-      generatedAt: new Date().toISOString(),
-      source: "vtuber.chuysan.com",
-      count: uniqueEntries.length,
-      data: uniqueEntries,
-    };
-
-    fs.writeFileSync(OUT_PATH, JSON.stringify(snapshot, null, 2));
-    console.log(
-      `chuysan: ${uniqueEntries.length} entr(y/ies) harvested → ${OUT_PATH}`,
+    const body = (await res.json()) as { result?: ChuysanApiEntry[] };
+    entries = body.result ?? [];
+  } catch (err) {
+    console.error(
+      `chuysan: fetch failed — ${err instanceof Error ? err.message : String(err)}`,
     );
-  } finally {
-    await browser.close();
+    process.exit(1);
   }
+
+  if (!entries.length) {
+    console.error("chuysan: no entries found — leaving previous cache untouched");
+    process.exit(0);
+  }
+
+  // Map API fields to the shape the importer expects (channel_id, name, etc.).
+  const mapped: ChuYsanChannel[] = entries.map((e) => ({
+    channel_id: e.channel_id,
+    name: e.title,
+    description: null,
+    thumbnail: e.thumbnail_icon_url ?? null,
+    subscribers: e.subscribers ?? null,
+    views: e.views ?? null,
+    published_at: e.published_at ?? null,
+    region: null,
+    gender: null,
+    languages: null,
+  }));
+
+  let limited = mapped;
+  if (options.limit) limited = mapped.slice(0, options.limit);
+
+  console.log(`chuysan: ${entries.length} entr(y/ies) found → ${limited.length} harvested`);
+
+  const snapshot = {
+    generatedAt: new Date().toISOString(),
+    source: "vtuber.chuysan.com",
+    count: limited.length,
+    total: entries.length,
+    data: limited,
+  };
+
+  fs.writeFileSync(OUT_PATH, JSON.stringify(snapshot, null, 2));
+  console.log(
+    `chuysan: ${limited.length} entr(y/ies) harvested → ${OUT_PATH}`,
+  );
 }
 
 main().catch((error: unknown) => {
