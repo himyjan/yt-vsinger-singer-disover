@@ -43,6 +43,15 @@ jobs:
           git lfs install --skip-repo
           git lfs pull || true
 
+      - name: Install Chrome for Puppeteer
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget gnupg
+          wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+          sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable --no-install-recommends
+
       - name: Set up Node
         uses: actions/setup-node@v7
         with:
@@ -53,7 +62,9 @@ jobs:
         run: npm ci --no-audit --no-fund
 
       - name: Harvest Chuysan channels
-        run: npm run data:chuysan
+        run: |
+          CHROME_PATH=$(which google-chrome-stable)
+          npm run data:chuysan -- --executable-path "$CHROME_PATH"
 
       - name: Upload chuysan cache
         uses: actions/upload-artifact@v7
