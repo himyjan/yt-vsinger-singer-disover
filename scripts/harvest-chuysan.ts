@@ -108,70 +108,142 @@ async function main(): Promise<void> {
     console.log(`navigating to ${SITE_URL}`);
     await page.goto(SITE_URL, { waitUntil: "domcontentloaded", timeout: 60000 });
 
-    // Wait a bit for dynamic content to load
-    await new Promise((resolve) => setTimeout(resolve, 5000));
+    // Wait for page to fully render - wait for network to be idle
+    await page.evaluate(() => new Promise((resolve) => setTimeout(resolve, 5000)));
 
-    const rawEntries = await page.evaluate(() => {
-      const entries: Array<{
-        channelId: string | null;
-        channelName: string | null;
-      }> = [];
+    const allEntries: Array<{
+      channelId: string | null;
+      channelName: string | null;
+    }> = [];
 
-      // Try multiple selectors to find YouTube channel links
-      const selectors = [
-        'a[href*="youtube.com/channel/"]',
-        'a[href*="youtube.com/@"]',
-        'a[href*="youtu.be/"]',
-        'a[href^="/channel/"]',
-        'a[href*="/channel/"]',
-      ];
+    let currentPage = 1;
+    const maxPages = 50; // Safety limit to prevent infinite loops
 
-      for (const selector of selectors) {
-        const links = document.querySelectorAll<HTMLElement>(selector);
-        console.log(`Found ${links.length} links matching '${selector}'`);
+    while (true) {
+      console.log(`  scraping page ${currentPage}`);
 
+      // Wait for channel cards to appear
+      await page.evaluate(() => new Promise((resolve) => setTimeout(resolve, 3000)));
+
+      const rawEntries = await page.evaluate(() => {
+        const entries: Array<{
+          channelId: string | null;
+          channelName: string | null;
+        }> = [];
+
+        // Method 1: Look for YouTube channel links directly
+        const links = document.querySelectorAll<HTMLElement>(
+          'a[href*="youtube.com/channel/"]'
+        );
         for (const link of links) {
           const href = link.getAttribute("href");
           if (!href) continue;
-
-          // Handle YouTube URLs
-          if (href.includes("youtube.com/channel/")) {
-            const match = href.match(/youtube\.com\/channel\/(UC[\w-]{22})/);
-            if (match) {
-              const channelId = match[1];
-              const channelName = link.textContent?.trim() || null;
-              entries.push({ channelId, channelName });
-              continue;
-            }
+          const match = href.match(/youtube\.com\/channel\/(UC[\w-]{22})/);
+          if (match) {
+            const channelId = match[1];
+            const channelName =
+              link.textContent?.trim() || link.getAttribute("aria-label") || null;
+            entries.push({ channelId, channelName });
           }
+        }
 
-          // Handle channel paths on this site
-          if (href.startsWith("/channel/")) {
-            const match = href.match(/^\/channel\/(UC[\w-]{22})/);
-            if (match) {
-              const channelId = match[1];
-              const channelName =
-                link.textContent?.trim() || link.getAttribute("aria-label") || null;
-              entries.push({ channelId, channelName });
+        // Method 2: Look for channel cards with data attributes
+        const channelCards = document.querySelectorAll<HTMLElement>(
+          '[data-channel-id]'
+        );
+        for (const card of channelCards) {
+          const channelId = card.getAttribute("data-channel-id");
+          const channelName =
+            card.getAttribute("data-channel-name") ||
+            card.textContent?.trim() ||
+            null;
+          if (channelId) {
+            entries.push({ channelId, channelName });
+          }
+        }
+
+        // Method 3: Look for any UC... pattern in the page
+        const textContent = document.body.innerText || "";
+        const youtubeChannelRegex = /UC[a-zA-Z0-9_-]{22}/g;
+        const matches = textContent.match(youtubeChannelRegex);
+        if (matches) {
+          for (const channelId of matches) {
+            const existing = entries.find((e) => e.channelId === channelId);
+            if (!existing) {
+              entries.push({ channelId, channelName: null });
             }
           }
         }
-      }
-      return entries;
-    });
 
-    const entries: ChuYsanChannel[] = rawEntries;
+        return entries;
+      });
+
+      const pageEntriesCount = rawEntries.length;
+      console.log(`    found ${pageEntriesCount} songs on this page`);
+      allEntries.push(...rawEntries);
+
+      // Check if we've reached the limit
+      if (options.limit && allEntries.length >= options.limit) {
+        console.log(`reached limit of ${options.limit} entries`);
+        break;
+      }
+
+      // Check for next page button
+      const hasNextPage = await page.evaluate(() => {
+        // Look for pagination links
+        const nextLink = document.querySelector<HTMLElement>(
+          'a[href*="page="], a[href*="page="], a[aria-label="next"], .next, .pagination-next'
+        );
+        if (nextLink && !nextLink.classList.contains("disabled")) {
+          return true;
+        }
+        return false;
+      });
+
+      if (!hasNextPage) {
+        console.log("no more pages found");
+        break;
+      }
+
+      // Go to next page
+      await page.evaluate(() => {
+        const nextLink = document.querySelector<HTMLElement>(
+          'a[href*="page="], a[href*="page="], a[aria-label="next"], .next, .pagination-next'
+        );
+        if (nextLink) {
+          (nextLink as HTMLAnchorElement).click();
+        }
+      });
+
+      currentPage++;
+      if (currentPage > 50) {
+        console.log("reached max pages limit");
+        break;
+      }
+
+      // Wait for next page to load
+      await page.evaluate(() => new Promise((resolve) => setTimeout(resolve, 5000)));
+    }
+
+    // Deduplicate by channel id
+    const seen = new Set<string>();
+    const uniqueEntries: ChuYsanChannel[] = [];
+    for (const entry of allEntries) {
+      if (!entry.channelId || seen.has(entry.channelId)) continue;
+      seen.add(entry.channelId);
+      uniqueEntries.push(entry);
+    }
 
     const snapshot = {
       generatedAt: new Date().toISOString(),
       source: "vtuber.chuysan.com",
-      count: entries.length,
-      data: entries,
+      count: uniqueEntries.length,
+      data: uniqueEntries,
     };
 
     fs.writeFileSync(OUT_PATH, JSON.stringify(snapshot, null, 2));
     console.log(
-      `chuysan: ${entries.length} entr(y/ies) harvested → ${OUT_PATH}`,
+      `chuysan: ${uniqueEntries.length} entr(y/ies) harvested → ${OUT_PATH}`,
     );
   } finally {
     await browser.close();
