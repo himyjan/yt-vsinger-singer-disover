@@ -1,14 +1,14 @@
-name: Import vtuber-db VTubers
+name: Import vtuber-db-wikiru VTubers
 
-# Harvests vtuber-database.wikiru.jp (VtuberDB) Cargo tables and imports the
+# Harvests vtuber-database.wikiru.jp (VtuberDB namelist CSV) and imports the
 # new channels the gate admits into data/channels/. The harvest writes
-# `.cache/vtuber-db/vtuber-db.json`, and the importer reads it, matches each
-# row against the dataset by YouTube channel id, classifies through
-# classifyChannel(), and adds the survivors.
+# `.cache/vtuber-db-wikiru/vtuber-db-wikiru.json`, and the importer reads it,
+# resolves each performer name to a YouTube channel via InnerTube search,
+# confirms through classifyChannel(), and adds the survivors.
 #
-#   npm run data:vtuber-db           # harvest the snapshot
-#   npm run data:vtuber-db-import    # report what would be imported
-#   npm run data:vtuber-db-import -- --apply  # write the new channels
+#   npm run data:vtuber-db-wikiru            # harvest the snapshot
+#   npm run data:vtuber-db-wikiru-import     # report what would be imported
+#   npm run data:vtuber-db-wikiru-import -- --apply  # write the new channels
 
 on:
   schedule:
@@ -31,7 +31,7 @@ permissions:
 
 jobs:
   harvest-and-import:
-    name: Harvest and import vtuber-db
+    name: Harvest and import vtuber-db-wikiru
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
@@ -56,27 +56,27 @@ jobs:
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
 
-      - name: Restore vtuber-db cache
+      - name: Restore vtuber-db-wikiru cache
         uses: actions/cache@v6
         with:
           path: |
-            .cache/vtuber-db
-          key: vtuber-db-harvest-${{ github.run_number }}
+            .cache/vtuber-db-wikiru
+          key: vtuber-db-wikiru-harvest-${{ github.run_number }}
           restore-keys: |
-            vtuber-db-harvest-
+            vtuber-db-wikiru-harvest-
 
-      - name: Harvest vtuber-db
-        run: npm run data:vtuber-db
+      - name: Harvest vtuber-db-wikiru
+        run: npm run data:vtuber-db-wikiru
 
-      - name: Import vtuber-db channels
+      - name: Import vtuber-db-wikiru channels
         env:
           DRY_RUN: ${{ inputs.dry-run }}
         run: |
           if [ "$DRY_RUN" = "true" ]; then
-            echo "Dry run: would import vtuber-db channels"
-            npm run data:vtuber-db-import
+            echo "Dry run: would import vtuber-db-wikiru channels"
+            npm run data:vtuber-db-wikiru-import
           else
-            npm run data:vtuber-db-import -- --apply
+            npm run data:vtuber-db-wikiru-import -- --apply
           fi
 
       - name: Build search index
@@ -85,7 +85,7 @@ jobs:
       - name: Validate dataset
         run: npm run data:validate
 
-      - name: Commit vtuber-db imports
+      - name: Commit vtuber-db-wikiru imports
         env:
           BRANCH: ${{ github.ref_name }}
         run: |
@@ -95,21 +95,21 @@ jobs:
           git reset --mixed "origin/$BRANCH"
           git add data/channels data/search data/manifest.json
           if git diff --cached --quiet; then
-            echo "vtuber-db imports unchanged — nothing to commit"
+            echo "vtuber-db-wikiru imports unchanged — nothing to commit"
             exit 0
           fi
-          git commit -m "data: import vtuber-db VTubers (${{ github.run_number }})"
+          git commit -m "data: import vtuber-db-wikiru VTubers (${{ github.run_number }})"
           git push origin "HEAD:$BRANCH"
 
       - name: Summary
         run: |
           {
-            echo "### Import vtuber-db VTubers"
+            echo "### Import vtuber-db-wikiru VTubers"
             echo ""
             echo "| | |"
             echo "| --- | --- |"
-            echo "| Source | vtuber-database.wikiru.jp (VtuberDB Cargo tables) |"
-            echo "| Step | harvest → import → index → validate → commit |"
+            echo "| Source | vtuber-database.wikiru.jp (VtuberDB namelist CSV) |"
+            echo "| Step | harvest → resolve via YouTube search → gate → import → index → validate → commit |"
             echo "| Dry run | ${{ inputs.dry-run }} |"
             echo "| Committed | \`data/channels\`, \`data/search\`, \`data/manifest.json\` |"
           } >> "$GITHUB_STEP_SUMMARY"
