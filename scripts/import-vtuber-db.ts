@@ -1,51 +1,61 @@
 #!/usr/bin/env tsx
 /**
- * Compares a vtuberdb.com harvest with the dataset, and can import the new
- * channels.
+ * Compares a vtuberdb.com namelist harvest with the dataset and imports
+ * new channels.
  *
- * `scripts/harvest-vtuber-db.ts` produces a snapshot in `.cache/`; this is the
- * gate between that snapshot and `data/`. It prints what would change and
- * writes nothing without `--apply`.
- *
- * ## The identity
- *
- * vtuberdb.com's Cargo tables publish the performer's name but NOT their
- * YouTube channel id or handle. So every entry needs a YouTube name search
- * (InnerTube, quota-free) to find the channel. The search result is confirmed
- * only when the channel's own title confirms the roster's display name —
- * containment tested both ways — and the name is distinctive
- * (`isDistinctiveName()`). Clip and fan accounts are rejected.
- *
- * ## The gate
- *
- * vtuberdb is a performer directory — every entry is a VTuber — so a row is
- * a **virtual claim** (`rosterIds`). What a roster still must not buy is a
- * fan: `detectClipAccount()` and `isFanAccountName()` must both be false.
+ * `scripts/harvest-vtuber-db.ts` produces a snapshot in `.cache/`;
+ * this script reads that snapshot and imports each entry through its
+ * YouTube channel id (the namelist CSV publishes `チャンネルID` directly,
+ * so no name search is needed).
  *
  *   npm run data:vtuber-db-import                     # report only
  *   npm run data:vtuber-db-import -- --apply          # import the new channels
- *   npm run data:vtuber-db-import -- --limit 50       # search 50 names
+ *   npm run data:vtuber-db-import -- --limit 50       # resolve at most 50 channels
+ *
+ * Every namelist row is a VTuber — a **virtual claim** (`reincarnationOf`-
+ * eligible). Rows whose YouTube link is dead (`リンク切れ`) or that carry no
+ * channel id are skipped and reported, never imported.
+ *
+ * The roster's agency and added date are passed as hints so `classifyChannel`
+ * can fall back to them when the profile decides nothing; the platform still
+ * owns the name and the record is keyed by the `UC…` channel id.
  */
 
 import fs from "node:fs";
-import { readAllChannelRecords } from "./lib/dataset";
+import path from "node:path";
 import {
   detectClipAccount,
   isFanAccountName,
+  classifyChannel,
 } from "./lib/classify";
-import { normalize } from "./lib/classify";
-import { isDistinctiveName } from "./lib/link-discovery";
 import { applyChannelEdits } from "./lib/roster-fill";
 import {
   importYouTubeChannels,
   type RosterHint,
 } from "./lib/import-channels";
-import { canonicalAgency } from "./lib/regions";
+import { readAllChannelRecords } from "./lib/dataset";
 import { InnerTubeSource } from "./lib/youtubei";
 import type { VtuberDbEntry } from "./lib/vtuber-db";
 import type { Activity, Channel } from "./lib/types";
 
-const SNAPSHOT = ".cache/vtuber-db.json";
+const SNAPSHOT = ".cache/vtuber-db/vtuber-db.json";
+
+type Verdict =
+  | "tracked"
+  | "new"
+  | "rejected"
+  | "dead"
+  | "no-channel"
+  | "imported"
+  | "skipped";
+
+interface Row {
+  entry: VtuberDbEntry;
+  channelId: string | null;
+  record: Channel | null | undefined;
+  verdict: Verdict;
+  reason?: string;
+}
 
 interface Options {
   apply: boolean;
@@ -57,221 +67,154 @@ function parseArgs(argv: string[]): Options {
   const options: Options = { apply: false, limit: null, batchSize: 50 };
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i]!;
-    if (arg === "--apply") options.apply = true;
-    else if (arg === "--limit") {
-      options.limit = Math.max(1, Number(argv[++i] ?? 1));
-    } else if (arg === "--batch") {
-      options.batchSize = Math.max(1, Math.min(50, Number(argv[++i] ?? 50)));
-    } else if (arg === "--help" || arg === "-h") {
-      console.log(
-        [
-          "Usage: npm run data:vtuber-db-import -- [options]",
-          "",
-          "  --apply         import the channels the gate admits",
-          "  --limit <n>     search at most n names",
-          "  --batch <n>     ids per import call (max 50)",
-        ].join("\n"),
-      );
-      process.exit(0);
+    const value = argv[i + 1];
+    switch (arg) {
+      case "--apply":
+        options.apply = true;
+        break;
+      case "--limit":
+        options.limit = Math.max(1, Number(value ?? 1));
+        i++;
+        break;
+      case "--batch":
+        options.batchSize = Math.max(1, Math.min(50, Number(value ?? 50)));
+        i++;
+        break;
+      case "--help":
+      case "-h":
+        console.log(
+          [
+            "Usage: npm run data:vtuber-db-import -- [options]",
+            "",
+            "  --apply         import the channels the gate admits",
+            "  --limit <n>     import at most n channels",
+            "  --batch <n>     channel ids per import call (max 50)",
+          ].join("\n")
+        );
+        process.exit(0);
+      default:
+        if (arg.startsWith("-")) {
+          console.error(`unknown option: ${arg}`);
+          process.exit(1);
+        }
     }
   }
   return options;
 }
 
-type Verdict = "tracked" | "new" | "fan" | "no-match" | "ambiguous";
+/** Maps the namelist's free-text status to the controlled activity enum. */
+function foldActivity(status: string | null): Activity {
+  if (!status) return "unknown";
+  const s = status.trim();
+  if (s.includes("卒業")) return "graduated";
+  if (s.includes("準備中")) return "preparing";
+  if (s.includes("活動中")) return "active";
+  return "unknown";
+}
 
-interface Row {
-  entry: VtuberDbEntry;
-  id: string | null;
-  record: Channel | null;
-  verdict: Verdict;
-  reason?: string;
-  candidates: string[];
+/** The namelist's free-text affiliation is not a controlled vocabulary. */
+function foldAffiliation(value: string | null): Channel["affiliation"] {
+  if (!value) return "unknown";
+  return value.toLowerCase().includes("independent") ||
+    value.includes("個人勢") ||
+    value.includes("個人") ||
+    value.includes("企業勢")
+    ? "independent"
+    : "group";
 }
 
 async function main(): Promise<void> {
   const options = parseArgs(process.argv.slice(2));
   if (!fs.existsSync(SNAPSHOT)) {
     console.error(
-      "no snapshot at " +
-        SNAPSHOT +
-        " — run npm run data:vtuber-db first",
+      `no snapshot at ${SNAPSHOT} — run npm run data:vtuber-db first`,
     );
     process.exit(1);
   }
 
-  const snapshot: { entries: VtuberDbEntry[]; generatedAt: string } =
-    JSON.parse(fs.readFileSync(SNAPSHOT, "utf8"));
-  const entries = snapshot.entries;
+  const snapshot: {
+    entries?: VtuberDbEntry[];
+    generatedAt: string;
+  } = JSON.parse(fs.readFileSync(SNAPSHOT, "utf8"));
+  const entries = snapshot.entries || [];
 
   const dataset = readAllChannelRecords();
-  const byId = new Map(dataset.map((channel) => [channel.id, channel]));
-
-  const byHandle = new Map<string, Channel>();
-  for (const channel of dataset) {
-    for (const platform of channel.platforms) {
-      if (platform.platform === "youtube" && platform.handle) {
-        const h = platform.handle.replace(/^@/, "").toLowerCase();
-        if (!byHandle.has(h)) byHandle.set(h, channel);
-      }
-    }
-  }
+  const byId = new Map(dataset.map((c) => [c.id, c]));
 
   const rows: Row[] = [];
-  const source = await (async () => {
-    const s = new InnerTubeSource({ delayMs: 150 });
-    const ready = await s.connect();
-    return ready ? s : null;
-  })();
-
   for (const entry of entries) {
-    /**
-     * The fan test runs before anything else.
-     */
+    // Skip fan / clip accounts before anything else.
     if (
-      detectClipAccount(
-        entry.displayName ?? "",
-        entry.affiliation ?? "",
-      ) ||
+      detectClipAccount(entry.displayName ?? "", entry.agency ?? "") ||
       isFanAccountName(entry.displayName ?? "")
     ) {
       rows.push({
         entry,
-        id: null,
+        channelId: null,
         record: null,
-        verdict: "fan",
+        verdict: "rejected",
         reason: "a clip or fan account",
-        candidates: [],
       });
       continue;
     }
 
-    const name = entry.displayName ?? entry.pageName;
-    if (!isDistinctiveName(name)) {
+    // A dead YouTube link can't be imported.
+    if (entry.dead) {
       rows.push({
         entry,
-        id: null,
+        channelId: entry.channelId,
         record: null,
-        verdict: "no-match",
-        reason:
-          "the name is not distinctive enough for a name search",
-        candidates: [],
+        verdict: "dead",
+        reason: "the YouTube link is dead",
       });
       continue;
     }
 
-    /**
-     * Search YouTube by the roster's display name. InnerTube answers
-     * channel results without spending Data API quota.
-     */
-    let candidates: string[] = [];
-    if (source) {
-      candidates = await source.searchChannels(name, 5);
-    }
-
-    /**
-     * Confirm a candidate only when the channel's own title confirms the
-     * roster's display name — containment tested both ways — and exactly
-     * one candidate matches. Two channels that both carry the name are an
-     * ambiguity, not a link.
-     */
-    const confirmed: string[] = [];
-    const nameLower = normalize(name);
-    for (const candidateId of candidates) {
-      const record = byId.get(candidateId);
-      if (record) {
-        const recordNameLower = normalize(record.name);
-        const aliasesLower = record.aliases.map((a) =>
-          normalize(a),
-        );
-        const allNames = [recordNameLower, ...aliasesLower];
-        if (
-          allNames.some(
-            (n) =>
-              n.includes(nameLower) || nameLower.includes(n),
-          )
-        ) {
-          confirmed.push(candidateId);
-        }
-        continue;
-      }
-      confirmed.push(candidateId);
-    }
-
-    if (confirmed.length === 0) {
+    if (!entry.channelId) {
       rows.push({
         entry,
-        id: null,
+        channelId: null,
         record: null,
-        verdict: "no-match",
-        reason:
-          "no YouTube channel matched the roster name",
-        candidates,
+        verdict: "no-channel",
+        reason: "no YouTube channel id in the namelist row",
       });
       continue;
     }
 
-    if (confirmed.length > 1) {
-      rows.push({
-        entry,
-        id: null,
-        record: null,
-        verdict: "ambiguous",
-        reason:
-          confirmed.length +
-          " channels match the name — ambiguity",
-        candidates,
-      });
-      continue;
-    }
-
-    const channelId = confirmed[0]!;
-    const existingRecord = byId.get(channelId);
+    const existingRecord = byId.get(entry.channelId);
     rows.push({
       entry,
-      id: channelId,
+      channelId: entry.channelId,
       record: existingRecord ?? null,
       verdict: existingRecord ? "tracked" : "new",
-      candidates,
     });
   }
 
   console.log(
-    "snapshot " +
-      snapshot.generatedAt +
-      " · " +
-      entries.length +
-      " entr(y/ies) · " +
-      dataset.length +
-      " record(s) tracked",
+    `snapshot ${snapshot.generatedAt} · ${entries.length} entr(y/ies) · ${dataset.length} record(s) tracked`,
   );
-  const counts = new Map<Verdict, number>();
-  for (const row of rows)
+
+  const counts = new Map<string, number>();
+  for (const row of rows) {
     counts.set(row.verdict, (counts.get(row.verdict) ?? 0) + 1);
+  }
   for (const verdict of [
     "tracked",
     "new",
-    "fan",
-    "no-match",
-    "ambiguous",
+    "rejected",
+    "dead",
+    "no-channel",
   ] as const) {
     const count = counts.get(verdict) ?? 0;
-    if (count)
-      console.log(
-        "  " + verdict.padEnd(12) + " " + count,
-      );
+    if (count) console.log(`  ${verdict.padEnd(12)} ${count}`);
   }
 
-  /* ---------------------------------------------------------------------- */
-  /* Import                                                                 */
-  /* ---------------------------------------------------------------------- */
-
   const fresh = rows.filter(
-    (row) => row.verdict === "new" && row.id,
+    (row) => row.verdict === "new" && row.channelId,
   );
   const deduped = new Map<string, Row>();
   for (const row of fresh) {
-    if (!deduped.has(row.id!)) deduped.set(row.id!, row);
+    if (!deduped.has(row.channelId!)) deduped.set(row.channelId!, row);
   }
   const newRows = [...deduped.values()];
 
@@ -282,23 +225,7 @@ async function main(): Promise<void> {
         ? ":\n" +
           newRows
             .slice(0, 20)
-            .map(
-              (row) => {
-                const statusPart = row.entry.status
-                  ? " · " + row.entry.status
-                  : "";
-                return (
-                  "  " +
-                  row.id +
-                  "  " +
-                  row.entry.displayName +
-                  "  [" +
-                  (row.entry.affiliation ?? "?") +
-                  statusPart +
-                  "]"
-                );
-              },
-            )
+            .map((row) => `  ${row.channelId}  ${row.entry.displayName}`)
             .join("\n")
         : ""),
   );
@@ -310,28 +237,18 @@ async function main(): Promise<void> {
 
   const now = new Date().toISOString();
   const agency: Record<string, string> = {};
-  const activity: Record<string, Activity> = {};
   const debut: Record<string, string> = {};
+  const activity: Record<string, Activity> = {};
 
   for (const row of newRows) {
-    if (!row.id) continue;
-    const entry = row.entry;
-    if (entry.affiliation) agency[row.id] = entry.affiliation;
-    if (
-      entry.status?.includes("卒") ||
-      entry.status?.includes("graduated")
-    ) {
-      activity[row.id] = "graduated";
-    } else if (
-      entry.status?.includes("活動") ||
-      entry.status?.includes("active")
-    ) {
-      activity[row.id] = "active";
-    }
-    if (entry.debutDate) debut[row.id] = entry.debutDate;
+    const entry = row.entry!;
+    const id = row.channelId!;
+    if (entry.agency) agency[id] = entry.agency;
+    if (entry.addedDate) debut[id] = entry.addedDate;
+    activity[id] = foldActivity(entry.status);
   }
 
-  const ids = newRows.map((row) => row.id!).filter(Boolean);
+  const ids = newRows.map((row) => row.channelId!).filter(Boolean);
   let added = 0;
   let existing = 0;
   let failed = 0;
@@ -340,18 +257,16 @@ async function main(): Promise<void> {
     const batch = ids.slice(offset, offset + options.batchSize);
     const result = await importYouTubeChannels(batch, {
       limit: options.batchSize,
-      rosterIds: new Set(
-        entries.map((e) => e.pageName),
-      ),
-      rosterHint: { activity, agency, debut },
+      rosterIds: new Set(ids),
+      rosterHint: { agency, debut, activity },
       onLog: (message) => console.log("  " + message),
     });
     added += result.added.length;
     existing += result.existing;
     for (const f of result.failed) {
-        console.error(`vtuber-db: ${f.id} failed — ${f.reason}`);
-        failed++;
-      }
+      console.error(`vtuber-db: ${f.id} failed — ${f.reason}`);
+      failed++;
+    }
     console.log(
       "import: " +
         Math.min(offset + options.batchSize, ids.length) +
@@ -367,21 +282,17 @@ async function main(): Promise<void> {
     );
   }
 
+  const skippedDead = counts.get("dead") ?? 0;
+  const skippedNoChannel = counts.get("no-channel") ?? 0;
+  const skippedRejected = counts.get("rejected") ?? 0;
+
   console.log(
-    "\n" +
-      added +
-      " channel(s) written · " +
-      existing +
-      " already tracked · " +
-      failed +
-      " failed",
+    `\n${added} channel(s) written · ${existing} already tracked · ${failed} failed · ${skippedDead} dead link(s) · ${skippedNoChannel} no channel · ${skippedRejected} rejected`,
   );
   if (added > 0) console.log("Run npm run data:index next.");
 }
 
 main().catch((error: unknown) => {
-  console.error(
-    error instanceof Error ? error.message : String(error),
-  );
+  console.error(error instanceof Error ? error.message : String(error));
   process.exit(1);
 });
