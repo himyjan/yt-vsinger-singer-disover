@@ -110,6 +110,30 @@ async function fetchPage(offset: number, size: number): Promise<VtuberApiRespons
   }
 }
 
+async function fetchProfileDetail(id: string): Promise<VtuberProfile | null> {
+  try {
+    const res = await fetch(
+      "https://api.v-sai.com/api.vtubers.v1.VtuberProfilesService/GetVtuberProfile",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({ id }),
+      },
+    );
+    if (!res.ok) {
+      console.error(`  profile fetch failed: HTTP ${res.status} for id ${id}`);
+      return null;
+    }
+    return (await res.json()) as VtuberProfile;
+  } catch (err) {
+    console.error(`  profile fetch failed for id ${id}:`, (err as Error).message);
+    return null;
+  }
+}
+
 async function main(): Promise<void> {
   const options = parseArgs(process.argv.slice(2));
   const pageSize = options.limit ?? 100;
@@ -121,6 +145,7 @@ async function main(): Promise<void> {
   let pageNum = 1;
   const MAX_PAGES = 100; // Safety limit to prevent infinite loops
 
+  // --- Phase 1: paginate the listing API until empty ---
   while (true) {
     console.log(`v-sai: fetching page ${pageNum} (offset ${offset}, limit ${pageSize})`);
     const page = await fetchPage(offset, pageSize);
@@ -148,27 +173,10 @@ async function main(): Promise<void> {
       break;
     }
 
-    // Check pagination details to see if there's more
-    const { paginationDetails } = page;
-    if (!paginationDetails) {
-      console.log("v-sai: no pagination info in response, checking if we got fewer than pageSize items");
-      if (page.data.length < pageSize) {
-        console.log("v-sai: got fewer items than page size, assuming last page");
-        break;
-      }
-    } else {
-      const { totalItems, totalPages } = paginationDetails;
-      console.log(`v-sai: pagination totalItems=${totalItems} totalPages=${totalPages} currentPage=${paginationDetails.currentPage}`);
-
-      // If we've reached or passed totalItems, we're done
-      if (totalItems > 0 && allProfiles.length >= totalItems) {
-        console.log(`v-sai: reached totalItems (${totalItems}), stopping`);
-        break;
-      }
-      if (paginationDetails.totalPages && pageNum >= paginationDetails.totalPages) {
-        console.log(`v-sai: reached totalPages (${totalPages}), stopping`);
-        break;
-      }
+    // If we got fewer items than pageSize, this is the last page
+    if (pageData.length < pageSize) {
+      console.log("v-sai: got fewer items than page size, reached last page");
+      break;
     }
 
     offset += pageSize;
@@ -180,6 +188,46 @@ async function main(): Promise<void> {
     }
   }
 
+  // --- Phase 2: fetch each profile's detailed data ---
+  console.log(`v-sai: fetching details for ${allProfiles.length} profile(s)`);
+  const PROFILE_BATCH = 6;
+  let profilesFetched = 0;
+  let profilesFailed = 0;
+
+  for (let i = 0; i < allProfiles.length; i += PROFILE_BATCH) {
+    const batch = allProfiles.slice(i, i + PROFILE_BATCH);
+    const results = await Promise.all(
+      batch.map(async (profile): Promise<{ profile: VtuberProfile; fetched: boolean }> => {
+        const detail = await fetchProfileDetail(profile.id);
+        if (detail) {
+          // Merge detail fields onto the listing profile (detail wins on overlap)
+          return { profile: { ...profile, ...detail }, fetched: true };
+        }
+        return { profile, fetched: false };
+      }),
+    );
+
+    for (const r of results) {
+      if (r.fetched) {
+        profilesFetched++;
+      } else {
+        profilesFailed++;
+      }
+    }
+
+    // Replace the batch with merged results
+    allProfiles.splice(i, PROFILE_BATCH, ...results.map((r) => r.profile));
+
+    // Small pause between batches to be polite to the source
+    if (i + PROFILE_BATCH < allProfiles.length) {
+      await new Promise((resolve) => setTimeout(resolve, 300));
+    }
+  }
+
+  console.log(
+    `v-sai: fetched details for ${profilesFetched} profile(s), ${profilesFailed} failed`,
+  );
+
   console.log(`v-sai: harvested ${allProfiles.length} total profiles before filtering`);
 
   // Filter to profiles that have a YouTube link (the dataset keys VTubers by YouTube id)
@@ -190,9 +238,10 @@ async function main(): Promise<void> {
   const snapshot = {
     generatedAt: new Date().toISOString(),
     source: "v-sai.com",
-    count: allProfiles.length,
-    youtubeCount: withYoutube.length,
-    data: allProfiles,
+    total: allProfiles.length,
+    byCategory: {},
+    byRegion: {},
+    songs: allProfiles,
   };
 
   fs.writeFileSync(OUT_PATH, JSON.stringify(snapshot, null, 2));
