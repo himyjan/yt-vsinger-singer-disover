@@ -1,18 +1,18 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-03T12:32:46.243Z",
+  "generatedAt": "2026-11-03T13:00:15.073Z",
   "regions": [
     {
       "code": "jp",
       "shard": 0,
-      "entries": 6264,
-      "bytes": 3562912
+      "entries": 6265,
+      "bytes": 3588199
     },
     {
       "code": "jp",
       "shard": 1,
-      "entries": 6264,
-      "bytes": 4216719
+      "entries": 6265,
+      "bytes": 4239779
     },
     {
       "code": "jp",
@@ -23,50 +23,50 @@
     {
       "code": "cn",
       "shard": 0,
-      "entries": 8891,
-      "bytes": 4078796
+      "entries": 8856,
+      "bytes": 4099390
     },
     {
       "code": "tw",
       "shard": 0,
       "entries": 6156,
-      "bytes": 4384156
+      "bytes": 4388438
     },
     {
       "code": "hk",
       "shard": 0,
-      "entries": 1052,
-      "bytes": 822888
+      "entries": 1053,
+      "bytes": 823644
     },
     {
       "code": "kr",
       "shard": 0,
-      "entries": 403,
-      "bytes": 230732
+      "entries": 405,
+      "bytes": 232019
     },
     {
       "code": "en",
       "shard": 0,
-      "entries": 10619,
-      "bytes": 4601812
+      "entries": 10616,
+      "bytes": 4612759
     },
     {
       "code": "en",
       "shard": 1,
-      "entries": 10619,
-      "bytes": 4590644
+      "entries": 10616,
+      "bytes": 4603365
     },
     {
       "code": "en",
       "shard": 2,
-      "entries": 10619,
-      "bytes": 4602053
+      "entries": 10616,
+      "bytes": 4614395
     },
     {
       "code": "en",
       "shard": 3,
-      "entries": 10616,
-      "bytes": 5564393
+      "entries": 10613,
+      "bytes": 5552234
     },
     {
       "code": "id",
@@ -78,13 +78,13 @@
       "code": "my",
       "shard": 0,
       "entries": 725,
-      "bytes": 427474
+      "bytes": 427539
     },
     {
       "code": "sea",
       "shard": 0,
-      "entries": 1638,
-      "bytes": 843601
+      "entries": 1637,
+      "bytes": 845845
     },
     {
       "code": "unknown",
@@ -93,5 +93,5 @@
       "bytes": 3103985
     }
   ],
-  "total": 88339
+  "total": 88296
 }
