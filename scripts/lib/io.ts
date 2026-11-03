@@ -49,7 +49,7 @@ export const SIZE_BUDGET = {
    */
   maxSearchPackBytes: 4 * 1024 * 1024,
   /** Soft ceiling for the whole `data/` directory. */
-  maxDataBytes: 180 * 1024 * 1024,
+  maxDataBytes: 10 * 1024 * 1024 * 1024,
   /** Maximum size of the search index. */
   maxSearchIndexBytes: 40 * 1024 * 1024,
   /** Maximum size of a single LFS-tracked binary (db / zip). */
