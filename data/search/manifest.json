@@ -1,24 +1,24 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-03T14:49:45.784Z",
+  "generatedAt": "2026-11-03T15:02:19.716Z",
   "regions": [
     {
       "code": "jp",
       "shard": 0,
-      "entries": 6414,
-      "bytes": 3655188
+      "entries": 6419,
+      "bytes": 3658580
     },
     {
       "code": "jp",
       "shard": 1,
-      "entries": 6414,
-      "bytes": 4212764
+      "entries": 6419,
+      "bytes": 4214377
     },
     {
       "code": "jp",
       "shard": 2,
-      "entries": 6413,
-      "bytes": 6579998
+      "entries": 6417,
+      "bytes": 6620623
     },
     {
       "code": "cn",
@@ -29,8 +29,8 @@
     {
       "code": "tw",
       "shard": 0,
-      "entries": 6157,
-      "bytes": 4408913
+      "entries": 6158,
+      "bytes": 4406200
     },
     {
       "code": "hk",
@@ -41,8 +41,8 @@
     {
       "code": "kr",
       "shard": 0,
-      "entries": 410,
-      "bytes": 233614
+      "entries": 411,
+      "bytes": 234489
     },
     {
       "code": "en",
@@ -54,19 +54,19 @@
       "code": "en",
       "shard": 1,
       "entries": 10619,
-      "bytes": 4590956
+      "bytes": 4591020
     },
     {
       "code": "en",
       "shard": 2,
       "entries": 10619,
-      "bytes": 4602846
+      "bytes": 4602848
     },
     {
       "code": "en",
       "shard": 3,
-      "entries": 10616,
-      "bytes": 5564453
+      "entries": 10617,
+      "bytes": 5562406
     },
     {
       "code": "id",
@@ -93,5 +93,5 @@
       "bytes": 3103985
     }
   ],
-  "total": 88794
+  "total": 88811
 }
