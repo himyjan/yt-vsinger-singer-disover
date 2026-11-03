@@ -1,0 +1,179 @@
+name: Import vTubie VTubers
+
+# Harvests vtubie.com/vtuber VTuber directory and imports new channels.
+#
+# Step 1 (single job): Harvest groups/members/profiles → .cache/vtubie-groups.json
+#   Needs Chrome + puppeteer-core because vtubie.com sits behind a Cloudflare
+#   managed challenge that only a real browser can clear.
+# Step 2 (single job): Read the snapshot, classify each candidate through
+#   classifyChannel(), and import the ones that pass the gate into
+#   data/channels/.
+# Step 3: Build search index, validate, commit.
+#
+#   npm run data:vtubie-groups            # harvest the snapshot
+#   npm run data:vtubie-import            # report what would be imported
+#   npm run data:vtubie-import -- --apply # import the new channels
+
+on:
+  schedule:
+    # Weekly, Wednesday 04:00 UTC
+    - cron: "0 4 * * 3"
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        description: "Report what would change without writing"
+        required: false
+        default: "false"
+
+concurrency:
+  group: dataset-writer-${{ github.repository }}
+  cancel-in-progress: false
+  queue: max
+
+permissions:
+  contents: write
+
+jobs:
+  harvest-vtubie:
+    name: Harvest vTubie groups
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          ref: ${{ github.ref_name }}
+          lfs: true
+
+      - name: Install Git LFS
+        run: |
+          git lfs install --skip-repo
+          git lfs pull || true
+
+      - name: Install Chrome for the Cloudflare challenge
+        run: npx playwright install chromium
+
+      - name: Install puppeteer-core (the vtubie harvester imports it dynamically)
+        run: npm install --no-save --no-audit --no-fund puppeteer-core
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "26"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Restore vtubie cache
+        uses: actions/cache@v6
+        with:
+          path: |
+            .cache/vtubie-groups.json
+            .cache/vtubie-groups-state.json
+          key: vtubie-harvest-${{ github.run_number }}
+          restore-keys: |
+            vtubie-harvest-
+
+      - name: Harvest vTubie groups
+        run: npm run data:vtubie-groups -- --headless
+
+      - name: Upload vtubie cache
+        uses: actions/upload-artifact@v7
+        with:
+          name: vtubie-cache
+          path: |
+            .cache/vtubie-groups.json
+            .cache/vtubie-groups-state.json
+          retention-days: 1
+
+  import-vtubie:
+    name: Import vTubie channels
+    needs: [harvest-vtubie]
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          ref: ${{ github.ref_name }}
+          lfs: true
+
+      - name: Install Git LFS
+        run: |
+          git lfs install --skip-repo
+          git lfs pull || true
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "26"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Download vtubie cache
+        uses: actions/download-artifact@v8
+        with:
+          name: vtubie-cache
+          path: .cache
+
+      - name: Import vTubie channels
+        env:
+          DRY_RUN: ${{ inputs.dry-run }}
+        run: |
+          if [ "$DRY_RUN" = "true" ]; then
+            echo "Dry run: would import vTubie channels"
+            npm run data:vtubie-import
+          else
+            npm run data:vtubie-import -- --apply
+          fi
+
+      - name: Build search index
+        run: npm run data:index
+
+      - name: Validate dataset
+        run: npm run data:validate
+
+      - name: Commit vTubie imports
+        env:
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch origin "$BRANCH"
+          git reset --mixed "origin/$BRANCH"
+          git checkout -- \
+            data/items \
+            data/songs \
+            data/overrides.json \
+            data/seed-catalog.json \
+            data/suggestions.json \
+            data/upstream.json \
+            data/volumes.json 2>/dev/null || true
+          git add data/channels data/search data/manifest.json
+          if git diff --cached --quiet; then
+            echo "vTubie imports unchanged — nothing to commit"
+            exit 0
+          fi
+          git commit -m "data: import vTubie VTubers (${{ github.run_number }})"
+          git push origin "HEAD:$BRANCH"
+
+      - name: Summary
+        run: |
+          {
+            echo "### Import vTubie VTubers"
+            echo ""
+            echo "| | |"
+            echo "| --- | --- |"
+            echo "| Source | vtubie.com (VTuber directory) |"
+            echo "| Credentials | none (public directory, Cloudflare challenge cleared by Chrome) |"
+            echo "| Step 1 | Harvest groups → members → profiles (single job, Chrome + puppeteer-core) |"
+            echo "| Step 2 | Import admitted channels into data/channels/ |"
+            echo "| Step 3 | Build search index → validate → commit |"
+            echo "| Dry run | ${{ inputs.dry-run }} |"
+            echo "| Committed | \`data/channels\`, \`data/search\`, \`data/manifest.json\` |"
+          } >> "$GITHUB_STEP_SUMMARY"
