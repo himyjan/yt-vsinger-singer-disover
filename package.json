@@ -61,6 +61,8 @@
     "data:fandom-import": "oxnode scripts/import-fandom.ts",
     "data:vtuber-db": "oxnode scripts/harvest-vtuber-db.ts",
     "data:vtuber-db-import": "oxnode scripts/import-vtuber-db.ts",
+    "data:vtuber-db-wikiru": "oxnode scripts/harvest-vtuber-db-wikiru.ts",
+    "data:vtuber-db-wikiru-import": "oxnode scripts/import-vtuber-db-wikiru.ts",
     "data:vtuberdex": "oxnode scripts/harvest-vtuberdex.ts",
     "data:vtuberdex-import": "oxnode scripts/import-vtuberdex.ts",
     "data:vtpedia": "oxnode scripts/harvest-vtpedia.ts",
@@ -77,8 +79,6 @@
     "data:vlistsheet-import": "oxnode scripts/import-vlistsheet.ts",
     "data:vtuber-index": "oxnode scripts/harvest-vtuber-index.ts",
     "data:vtuber-index-import": "oxnode scripts/import-vtuber-index.ts",
-    "data:vdb-html": "oxnode scripts/harvest-vdb-html.ts",
-    "data:vdb-html-import": "oxnode scripts/import-vdb-html.ts",
     "data:vt4chan": "oxnode scripts/harvest-vt4chan.ts",
     "data:vt4chan-import": "oxnode scripts/import-vt4chan.ts",
     "data:musicdex": "oxnode scripts/harvest-musicdex.ts",
@@ -109,14 +109,14 @@
     "youtubei.js": "^18.3.0"
   },
   "optionalDependencies": {
-    "better-sqlite3": "^13.0.3",
-    "puppeteer-core": "^25.16.0"
+    "better-sqlite3": "^13.0.3"
   },
   "devDependencies": {
     "@oxc-node/cli": "^1.0.1",
     "@types/better-sqlite3": "^9.6.0",
     "@types/node": "^26.6.6",
     "@vue/content-mapper": "^4.0.0-alpha.3",
+    "playwright": "^1.64.1",
     "typescript": "^7.1.0-beta",
     "vite": "^8.3.5"
   },
