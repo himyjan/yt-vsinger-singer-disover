@@ -2,6 +2,10 @@ name: Import Chuysan VTubers
 
 # Harvests Chuysan (vtuber.chuysan.com) VTuber directory and imports new channels.
 #
+# The directory is a Next.js client-side app, so the harvest fetches its public
+# JSON API instead of scraping HTML:
+#   https://storage.googleapis.com/thaivtuberranking.appspot.com/v2/channel_data/simple_list.json
+#
 # Step 1 (single job): Harvest listing → .cache/chuysan/chuysan.json
 # Step 2 (20 parallel jobs): Each job imports its volume shard of entries
 #   into data/channels/
@@ -43,8 +47,6 @@ jobs:
           git lfs install --skip-repo
           git lfs pull || true
 
-      - name: Install Chrome for Playwright
-        run: npx playwright install chromium
       - name: Set up Node
         uses: actions/setup-node@v7
         with:
@@ -55,7 +57,7 @@ jobs:
         run: npm ci --no-audit --no-fund
 
       - name: Harvest Chuysan channels
-        run: npx oxnode scripts/harvest-chuysan.ts
+        run: npm run data:chuysan
 
       - name: Upload chuysan cache
         uses: actions/upload-artifact@v7
