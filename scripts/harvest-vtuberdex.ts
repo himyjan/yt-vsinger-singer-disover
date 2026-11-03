@@ -3,13 +3,15 @@
  * Harvest VTuber channels from VTuberDex.
  *
  * vtuberdex.pages.dev is a static HTML directory of VTubers. It has no JSON
- * API, so this script parses the HTML directory page to extract VTuber names,
- * countries, and groups from the card elements.
+ * API and **no paging** — every card is rendered on the single index page —
+ * so this script fetches that one page and parses the card elements to
+ * extract VTuber names, countries, and groups.
  *
  * Each entry is keyed by `vtuberdex:<name>` and carries no YouTube id — the
  * import step resolves names to YouTube channels through a name search.
  *
  *   npm run data:vtuberdex              # harvest VTuber candidates from VTuberDex
+ *   npm run data:vtuberdex -- --limit 50  # sample for a parser check
  *
  * Nothing here writes `data/` — adding the channels is a separate step
  * through `npm run data:vtuberdex-import`.
@@ -30,21 +32,16 @@ interface VtuberdexEntry {
 
 interface Options {
   limit: number | null;
-  pages: number | null;
 }
 
 function parseArgs(argv: string[]): Options {
-  const options: Options = { limit: null, pages: null };
+  const options: Options = { limit: null };
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i]!;
     const value = argv[i + 1];
     switch (arg) {
       case "--limit":
         options.limit = Math.max(1, Number(value ?? 1));
-        i++;
-        break;
-      case "--pages":
-        options.pages = Math.max(1, Number(value ?? 1));
         i++;
         break;
       case "--help":
@@ -54,7 +51,6 @@ function parseArgs(argv: string[]): Options {
             "Usage: npm run data:vtuberdex [options]",
             "",
             "  --limit <n>  max entries to harvest",
-            "  --pages <n>  max directory pages to read (default: all)",
           ].join("\n")
         );
         process.exit(0);
@@ -73,13 +69,25 @@ function parseVtuberdexHtml(html: string): VtuberdexEntry[] {
   const entries: VtuberdexEntry[] = [];
   const seen = new Set<string>();
 
-  // Match vtuber-card divs: <div class="vtuber-card cardN" data-pais="..." data-group="...">
-  const cardRegex = /<div class="vtuber-card[^"]*"[^>]*data-pais="([^"]*)"[^>]*data-group="([^"]*)"[^>]*>[\s\S]*?<h2>([^<]+)<\/h2>/g;
-  let match: RegExpExecArray | null;
-  while ((match = cardRegex.exec(html)) !== null) {
-    const country = match[1] || undefined;
-    const group = match[2] || undefined;
-    const name = match[3].trim();
+  // Split the page into individual vtuber-card blocks, then pull each card's
+  // attributes and name independently — attributes may appear in any order,
+  // and some cards omit data-group or data-pais entirely.
+  const cardBlocks = html.split(/<div class="vtuber-card[^>]*>/);
+  for (const block of cardBlocks.slice(1)) {
+    const countryMatch = block.match(/\bdata-pais="([^"]*)"/);
+    const groupMatch = block.match(/\bdata-group="([^"]*)"/);
+    // Match <h2>...</h2>, or handle malformed HTML like <h2>Name<h2>
+    // (missing closing slash) by stopping at the next <h2 or </div>.
+    const nameMatch = block.match(/<h2>([\s\S]*?)(?=<\/h2>|<h2\s|<\/div>|$)/);
+
+    const country = countryMatch?.[1] || undefined;
+    const group = groupMatch?.[1] || undefined;
+    const name = nameMatch
+      ? nameMatch[1]!
+          .replace(/<[^>]*>/g, " ")
+          .replace(/\s+/g, " ")
+          .trim()
+      : "";
 
     if (!name || seen.has(name)) continue;
     seen.add(name);
@@ -94,52 +102,35 @@ async function main(): Promise<void> {
   const options = parseArgs(process.argv.slice(2));
   fs.mkdirSync(CACHE_DIR, { recursive: true });
 
-  const allEntries: VtuberdexEntry[] = [];
-  let page = 1;
-
-  for (;;) {
-    if (options.pages !== null && page > options.pages) break;
-
-    const url = page === 1 ? SOURCE_URL : `${SOURCE_URL}?page=${page}`;
-    console.log(`vtuberdex: fetching ${url}`);
-    let html: string;
-    try {
-      const res = await fetch(url, {
-        headers: { Accept: "text/html" },
-        signal: AbortSignal.timeout(30_000),
-      });
-      if (!res.ok) {
-        console.error(
-          `vtuberdex: HTTP ${res.status} on page ${page} — stopping`,
-        );
-        break;
-      }
-      html = await res.text();
-    } catch {
-      console.error(
-        `vtuberdex: fetch failed on page ${page} — stopping`,
-      );
-      break;
+  console.log(`vtuberdex: fetching ${SOURCE_URL}`);
+  let html: string;
+  try {
+    const res = await fetch(SOURCE_URL, {
+      headers: { Accept: "text/html" },
+      signal: AbortSignal.timeout(60_000),
+    });
+    if (!res.ok) {
+      console.error(`vtuberdex: HTTP ${res.status} — stopping`);
+      process.exit(1);
     }
-
-    const entries = parseVtuberdexHtml(html);
-    if (entries.length === 0) {
-      console.log(`vtuberdex: no entries on page ${page} — stopping`);
-      break;
-    }
-
-    allEntries.push(...entries);
-    console.log(`  page ${page}: ${entries.length} entries`);
-
-    page++;
-    if (options.limit && allEntries.length >= options.limit) {
-      allEntries.length = options.limit;
-      break;
-    }
+    html = await res.text();
+  } catch (error: unknown) {
+    console.error(
+      `vtuberdex: fetch failed — ${error instanceof Error ? error.message : String(error)}`,
+    );
+    process.exit(1);
   }
 
-  let limited = allEntries;
-  if (options.limit) limited = allEntries.slice(0, options.limit);
+  const entries = parseVtuberdexHtml(html);
+  if (entries.length === 0) {
+    console.error("vtuberdex: no entries found on the page — stopping");
+    process.exit(1);
+  }
+
+  console.log(`vtuberdex: ${entries.length} entr(y/ies) found on the page`);
+
+  let limited = entries;
+  if (options.limit) limited = entries.slice(0, options.limit);
 
   const snapshot = {
     generatedAt: new Date().toISOString(),
@@ -150,7 +141,7 @@ async function main(): Promise<void> {
 
   fs.writeFileSync(OUT_PATH, JSON.stringify(snapshot, null, 2));
   console.log(
-    `vtuberdex: ${limited.length} entr(y/ies) harvested from ${page - 1} page(s) → ${OUT_PATH}`,
+    `vtuberdex: ${limited.length} entr(y/ies) harvested → ${OUT_PATH}`,
   );
 }
 
