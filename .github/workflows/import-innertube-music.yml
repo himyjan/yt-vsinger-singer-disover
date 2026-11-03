@@ -227,10 +227,10 @@ jobs:
         run: |
           missing=0
           for v in $(echo "$VOLUMES" | tr -d '[]' | tr ',' ' '); do
-            SRC=".volumes/downloads/vol-$v/data/songs"
+            SRC=".volumes/downloads/vol-$v"
             DST=".volumes/vol-$v/data/songs"
             if [ ! -d "$SRC" ]; then
-              echo "::error::artifact vol-$v has no songs"
+              echo "::error::artifact vol-$v is missing"
               missing=$((missing + 1))
               continue
             fi
