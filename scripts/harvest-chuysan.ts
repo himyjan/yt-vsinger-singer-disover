@@ -87,11 +87,15 @@ async function main(): Promise<void> {
       "--no-sandbox",
       "--disable-setuid-sandbox",
       "--disable-dev-shm-usage",
-      "--disable-accelerated-2d-canvas",
+      "--disable-gpu",
+      "--disable-software-rasterizer",
+      "--disable-features=site-per-process,VizDisplayCompositor",
       "--no-first-run",
       "--no-zygote",
       "--single-process",
-      "--disable-gpu",
+      "--disable-accelerated-2d-canvas",
+      "--disable-gl-drawing-for-tests",
+      "--disable-web-security",
     ],
   });
 
