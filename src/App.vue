@@ -22,23 +22,26 @@ import {
   watch,
 } from "vue";
 import { ALL_PLATFORMS } from "@shared/lib/types";
-import type { Channel, ChannelSummary, Item, RegionCode } from "@shared/lib/types";
+import type { Channel, ChannelSummary, Item, RegionCode, SongRecord } from "@shared/lib/types";
 import type { SearchEntryRecord } from "@shared/lib/search";
 import {
   loadAllChannels,
   loadItems,
   loadLive,
   loadManifest,
+  loadSongs,
   loadSummaries,
   loadUpcoming,
   filterChannels,
   filterItems,
+  filterSongs,
   formatCount,
   platformOfItem,
   resetDatasetCache,
   search,
   sortChannels,
   sortItems,
+  sortSongs,
 } from "@/lib/dataset";
 import {
   activeAccount,
@@ -109,6 +112,7 @@ const channels = ref<Channel[]>([]);
 const live = ref<Item[]>([]);
 const upcoming = ref<Item[]>([]);
 const allItems = ref<Item[]>([]);
+const allSongs = ref<SongRecord[]>([]);
 const loading = ref(true);
 const analyticsAvailable = ref(false);
 const searchHits = ref<SearchEntryRecord[]>([]);
@@ -510,26 +514,32 @@ const visibleUpcoming = computed(() =>
   ),
 );
 
-const visibleSongs = computed(() =>
-  sortItems(
-    filterItems(
-      allItems.value.filter((i) => ["cover", "mv", "original", "performance"].includes(i.category)),
-      {
-        kind: state.scope,
-        region: state.region,
-        platform: state.platform,
-        categories: state.categories,
-        acoustic: state.acousticOnly,
-        gender: state.gender,
-        ai: state.ai,
-        affiliation: state.affiliation,
-        language: state.language,
-        role: state.role,
-        vtuberOnly: state.vtuberOnly,
-      },
-    ),
-    state.sort.songs,
+const filteredSongs = computed(() =>
+  filterSongs(
+    allSongs.value,
+    {
+      kind: state.scope,
+      region: state.region,
+      platform: state.platform,
+      categories: state.categories,
+      acoustic: state.acousticOnly,
+      gender: state.gender,
+      ai: state.ai,
+      affiliation: state.affiliation,
+      language: state.language,
+      role: state.role,
+      vtuberOnly: state.vtuberOnly,
+      text: state.query.trim() || undefined,
+    },
   ),
+);
+
+const visibleSongs = computed(() =>
+  sortSongs(filteredSongs.value, state.sort.songs).slice(0, songPageCount.value),
+);
+
+const hasMoreSongs = computed(
+  () => filteredSongs.value.length > visibleSongs.value.length,
 );
 
 /** True when any sub-filter is active (scope, region, platform, categories, etc.). */
@@ -648,7 +658,9 @@ const filteredChannels = computed(() => {
  * without ever mounting at once.
  */
 const CHANNEL_PAGE_SIZE = 240;
+const SONG_PAGE_SIZE = 240;
 const channelPageCount = ref(CHANNEL_PAGE_SIZE);
+const songPageCount = ref(SONG_PAGE_SIZE);
 
 const visibleChannels = computed(() => filteredChannels.value.slice(0, channelPageCount.value));
 
@@ -688,11 +700,39 @@ watch(channelFilterKey, () => {
   channelPageCount.value = CHANNEL_PAGE_SIZE;
 });
 
+const songFilterKey = computed(() =>
+  JSON.stringify([
+    state.scope,
+    state.region,
+    state.platform,
+    state.categories,
+    state.acousticOnly,
+    state.gender,
+    state.ai,
+    state.affiliation,
+    state.language,
+    state.role,
+    state.vtuberOnly,
+    state.query,
+    state.sort.songs,
+    state.view,
+  ]),
+);
+
+watch(songFilterKey, () => {
+  songPageCount.value = SONG_PAGE_SIZE;
+});
+
 function loadMoreChannels(): void {
   channelPageCount.value += CHANNEL_PAGE_SIZE;
 }
 
+function loadMoreSongs(): void {
+  songPageCount.value += SONG_PAGE_SIZE;
+}
+
 const channelsSentinel = infiniteScroll(loadMoreChannels);
+const songsSentinel = infiniteScroll(loadMoreSongs);
 
 const linkedProviders = computed(() =>
   AUTH_PROVIDERS.filter((provider) => (state.accounts[provider.id] ?? []).length > 0),
@@ -940,6 +980,41 @@ watch(
   () => [state.view, state.saved.length],
   () => {
     if (state.view === "saved") void loadSavedChannels();
+  },
+  { immediate: true },
+);
+
+/**
+ * Loads songs for the selected region when the Songs tab is open.
+ *
+ * Songs are sharded by region in `data/songs/`, so only the selected region
+ * is downloaded — loading every region at once would be hundreds of
+ * megabytes, the same reason the channel roster is loaded per-region.
+ *
+ * When the region filter is "all", all regions' songs are loaded; the
+ * result is cached under the "all" key so a subsequent region change and
+ * return to "all" does not re-fetch.
+ */
+watch(
+  () => state.region,
+  async (region) => {
+    if (state.view !== "songs") return;
+    const regions = region === "all" ? "all" : [region];
+    allSongs.value = await loadSongs(regions);
+  },
+  { immediate: true },
+);
+
+// Also load songs when the Songs tab is opened (region may already be set).
+watch(
+  () => state.view,
+  async (view) => {
+    if (view !== "songs") return;
+    if (state.region === "all") {
+      allSongs.value = await loadSongs("all");
+    } else {
+      allSongs.value = await loadSongs([state.region]);
+    }
   },
   { immediate: true },
 );
@@ -3030,12 +3105,13 @@ onMounted(async () => {
           <LiveCard
             v-for="item in visibleSongs"
             :key="item.id"
-            :item="item"
+            :item="item as unknown as Item"
             :channel="summaryById.get(item.channelId) ?? null"
             @open="openItem"
           />
         </div>
-        <p v-else class="py-16 text-center text-sm text-neutral-500">
+        <div v-if="hasMoreSongs" ref="songsSentinel" />
+        <p v-else-if="!visibleSongs.length" class="py-16 text-center text-sm text-neutral-500">
           No songs for this filter yet.
         </p>
       </section>

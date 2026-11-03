@@ -26,8 +26,9 @@ data/
 ├── songs/
 │   ├── manifest.json           totals by category and region
 │   ├── index.json              SongRecord[] — the music-centric projection
-│   ├── <region>.json           SongRecord[] — one region
-│   └── categories/<c>.json     SongRecord[] — cover / mv / original / performance
+│   ├── <region>.json           SongRecord[] — one region (part 0)
+│   ├── <region>.<n>.json       SongRecord[] — further parts, if it outgrew the budget
+│   └── categories/<c>.json     SongRecord[] — cover / mv / original / performance (sharded likewise)
 └── search/
     ├── manifest.json           every pack, in the order they belong together
     ├── <region>.json           SearchPack — the inverted index, shard 0
@@ -50,6 +51,7 @@ published as the root of its own repository:
         ├── overrides.json
         ├── channels/…
         ├── items/…            partitioned by volumeOf(item.channelId)
+        ├── songs/…            per-volume song shards (cover / mv / original / performance)
         └── search/…           each volume indexes its own records
 ```
 

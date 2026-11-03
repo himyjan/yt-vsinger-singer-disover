@@ -255,7 +255,7 @@ itself:
 | What               | Ceiling | Where                                          |
 | ------------------ | ------- | ---------------------------------------------- |
 | one file           | 8 MB    | `SIZE_BUDGET.maxFileBytes`, on write           |
-| the tree           | 180 MB  | `SIZE_BUDGET.maxDataBytes`, in `data:validate` |
+| the tree           | 10 GB   | `SIZE_BUDGET.maxDataBytes`, in `data:validate` |
 | the published site | 1 GB    | `prepare:public` warns at 75 %, fails above    |
 | the stored history | 900 MB  | `repo:size --max-mb 900` in the sync           |
 

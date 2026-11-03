@@ -525,6 +525,11 @@ export class InnerTubeSource {
     }
   }
 
+  /** Releases the Innertube client. */
+  disconnect(): void {
+    this.client = null;
+  }
+
   /** Waits between requests so InnerTube does not rate-limit us. */
   private async throttle(): Promise<void> {
     if (this.limiter.isTripped()) return;
@@ -1037,6 +1042,33 @@ export class InnerTubeSource {
       this.onLog(
         `innertube: releases failed for ${channelId} — ${message}`,
       );
+      return null;
+    }
+  }
+
+  /**
+   * Basic video info from InnerTube's player endpoint.
+   *
+   * Returns the raw `basic_info` object, which includes `category_id` (e.g.
+   * `"10"` for Music), or `null` when the lookup failed.
+   *
+   * Costs no Data API quota — InnerTube is quota-free.
+   */
+  async getBasicInfo(
+    videoId: string,
+  ): Promise<{ category_id?: string; [key: string]: any } | null> {
+    if (!this.client) return null;
+    try {
+      await this.throttle();
+      const info: any = await withTimeout(
+        this.client.getBasicInfo(videoId),
+        REQUEST_TIMEOUT_MS,
+      );
+      return info?.basic_info ?? null;
+    } catch (err) {
+      const message = (err as Error).message;
+      if (!isNotRateLimited(message)) this.limiter.penalise();
+      this.onLog(`innertube: getBasicInfo failed for ${videoId} — ${message}`);
       return null;
     }
   }
