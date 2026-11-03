@@ -106,10 +106,10 @@ async function main(): Promise<void> {
     );
 
     console.log(`navigating to ${SITE_URL}`);
-    await page.goto(SITE_URL, { waitUntil: "networkidle2", timeout: 60000 });
+    await page.goto(SITE_URL, { waitUntil: "domcontentloaded", timeout: 60000 });
 
-    // Wait for channel cards to appear
-    await page.waitForSelector("a[href*='/channel/']", { timeout: 10000 });
+    // Wait a bit for dynamic content to load
+    await new Promise((resolve) => setTimeout(resolve, 5000));
 
     const rawEntries = await page.evaluate(() => {
       const entries: Array<{
@@ -117,25 +117,50 @@ async function main(): Promise<void> {
         channelName: string | null;
       }> = [];
 
-      // Find all links to /channel/UC... pages
-      const links = document.querySelectorAll('a[href^="/channel/"]');
-      for (const link of links) {
-        const href = link.getAttribute("href");
-        if (!href) continue;
-        const match = href.match(/^\/channel\/(UC[\w-]{22})/);
-        if (!match) continue;
-        const channelId = match[1];
-        const channelName =
-          link.textContent?.trim() || link.getAttribute("aria-label") || null;
-        entries.push({ channelId, channelName });
+      // Try multiple selectors to find YouTube channel links
+      const selectors = [
+        'a[href*="youtube.com/channel/"]',
+        'a[href*="youtube.com/@"]',
+        'a[href*="youtu.be/"]',
+        'a[href^="/channel/"]',
+        'a[href*="/channel/"]',
+      ];
+
+      for (const selector of selectors) {
+        const links = document.querySelectorAll<HTMLElement>(selector);
+        console.log(`Found ${links.length} links matching '${selector}'`);
+
+        for (const link of links) {
+          const href = link.getAttribute("href");
+          if (!href) continue;
+
+          // Handle YouTube URLs
+          if (href.includes("youtube.com/channel/")) {
+            const match = href.match(/youtube\.com\/channel\/(UC[\w-]{22})/);
+            if (match) {
+              const channelId = match[1];
+              const channelName = link.textContent?.trim() || null;
+              entries.push({ channelId, channelName });
+              continue;
+            }
+          }
+
+          // Handle channel paths on this site
+          if (href.startsWith("/channel/")) {
+            const match = href.match(/^\/channel\/(UC[\w-]{22})/);
+            if (match) {
+              const channelId = match[1];
+              const channelName =
+                link.textContent?.trim() || link.getAttribute("aria-label") || null;
+              entries.push({ channelId, channelName });
+            }
+          }
+        }
       }
       return entries;
     });
 
-    const entries: ChuYsanChannel[] = rawEntries.map((e) => ({
-      channelId: e.channelId,
-      channelName: e.channelName,
-    }));
+    const entries: ChuYsanChannel[] = rawEntries;
 
     const snapshot = {
       generatedAt: new Date().toISOString(),
