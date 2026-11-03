@@ -1,0 +1,116 @@
+name: Import vtuberhk VTubers
+
+# Harvests vtuber.hk and imports the new channels the gate admits into
+# data/channels/. The harvest writes `.cache/vtuberhk-channels.json`,
+# and the importer reads it, matches each row against the dataset by YouTube
+# channel id, classifies through classifyChannel(), and adds the survivors.
+#
+#   npm run data:vtuberhk                 # harvest the snapshot
+#   npm run data:vtuberhk-import          # report what would be imported
+#   npm run data:vtuberhk-import -- --apply  # write the new channels
+#
+#   npm run data:vtuberhk-import -- --stats --apply  # also fill counts
+
+on:
+  schedule:
+    # Weekly, Monday 03:00 UTC
+    - cron: "0 3 * * 1"
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        description: "Report what would change without writing"
+        required: false
+        default: "false"
+
+concurrency:
+  group: dataset-writer-${{ github.repository }}
+  cancel-in-progress: false
+  queue: max
+
+permissions:
+  contents: write
+
+jobs:
+  harvest-and-import:
+    name: Harvest and import vtuberhk
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          ref: ${{ github.ref_name }}
+          lfs: true
+
+      - name: Install Git LFS
+        run: |
+          git lfs install --skip-repo
+          git lfs pull || true
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "26"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Restore vtuberhk cache
+        uses: actions/cache@v6
+        with:
+          path: |
+            .cache/vtuberhk-channels.json
+          key: vtuberhk-harvest-${{ github.run_number }}
+          restore-keys: |
+            vtuberhk-harvest-
+
+      - name: Harvest vtuberhk
+        run: npm run data:vtuberhk
+
+      - name: Import vtuberhk channels
+        env:
+          DRY_RUN: ${{ inputs.dry-run }}
+        run: |
+          if [ "$DRY_RUN" = "true" ]; then
+            echo "Dry run: would import vtuberhk channels"
+            npm run data:vtuberhk-import
+          else
+            npm run data:vtuberhk-import -- --apply
+          fi
+
+      - name: Build search index
+        run: npm run data:index
+
+      - name: Validate dataset
+        run: npm run data:validate
+
+      - name: Commit vtuberhk imports
+        env:
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch origin "$BRANCH"
+          git reset --mixed "origin/$BRANCH"
+          git add data/channels data/search data/manifest.json
+          if git diff --cached --quiet; then
+            echo "vtuberhk imports unchanged — nothing to commit"
+            exit 0
+          fi
+          git commit -m "data: import vtuberhk VTubers (${{ github.run_number }})"
+          git push origin "HEAD:$BRANCH"
+
+      - name: Summary
+        run: |
+          {
+            echo "### Import vtuberhk VTubers"
+            echo ""
+            echo "| | |"
+            echo "| --- | --- |"
+            echo "| Source | vtuber.hk |"
+            echo "| Step | harvest → import → index → validate → commit |"
+            echo "| Dry run | ${{ inputs.dry-run }} |"
+            echo "| Committed | \`data/channels\`, \`data/search\`, \`data/manifest.json\` |"
+          } >> "$GITHUB_STEP_SUMMARY"
