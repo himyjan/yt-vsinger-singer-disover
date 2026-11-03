@@ -84,7 +84,6 @@
     "data:musicdex-import": "oxnode scripts/import-musicdex.ts",
     "data:innertube-music": "oxnode scripts/harvest-innertube-music.ts",
     "data:innertube-music-import": "oxnode scripts/import-innertube-music.ts",
-    "data:build-songs": "oxnode scripts/build-songs.ts",
     "data:usada": "oxnode scripts/harvest-usada.ts",
     "data:usada-listings": "oxnode scripts/harvest-usada.ts --listings-only",
     "data:usada-profile": "oxnode scripts/harvest-usada.ts --profile",

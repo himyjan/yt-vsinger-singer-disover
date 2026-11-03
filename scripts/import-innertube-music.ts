@@ -145,7 +145,7 @@ function uploadToSong(
     status: "past",
     isShort: false,
     durationSeconds: null,
-    channelRegion: (channel.channelRegion ?? "unknown") as RegionCode,
+    channelRegion: (channel.channelRegion ?? "unknown") as unknown as RegionCode,
   });
 
   return {

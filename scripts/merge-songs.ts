@@ -7,10 +7,10 @@
  * Volumes are disjoint by channel id — hence by song id — so the merge is a
  * union keyed by song id and no two volumes hold the same song.
  *
- * Writes the canonical flat layout the app reads:
- *   data/songs/{region}.json          one file per region
+ * Writes the canonical sharded layout:
+ *   data/songs/{region}.json, {region}.1.json, …   songs per region, size-chunked
  *   data/songs/categories/{category}.json   cover / mv / original / performance
- *   data/songs/index.json             every song, id order
+ *   data/songs/index.json             every song, in id order
  *   data/songs/manifest.json          totals and the region table
  *
  *   npx oxnode scripts/merge-songs.ts --count 20
@@ -25,6 +25,7 @@ import {
   writeJsonIfChanged,
 } from "./lib/io";
 import { ALL_REGIONS, SCHEMA_VERSION } from "./lib/types";
+import { writeSongShards } from "./lib/dataset";
 import type { ItemCategory, RegionCode, SongFile, SongRecord } from "./lib/types";
 
 const VOLUMES_ROOT = path.join(process.cwd(), ".volumes");
@@ -117,7 +118,7 @@ function main(): void {
 
   ensureDir(SONGS_ROOT);
 
-  /* --- region files: data/songs/{region}.json -------------------------- */
+  /* --- region files: data/songs/{region}.json, {region}.1.json, … ------- */
   const byRegion = new Map<RegionCode, SongRecord[]>();
   for (const song of allSongs) {
     const region = song.region ?? "unknown";
@@ -127,16 +128,12 @@ function main(): void {
   }
 
   const keepRegionFiles = new Set<string>();
+  const now = new Date().toISOString();
   for (const region of ALL_REGIONS) {
     const list = byRegion.get(region);
     if (!list?.length) continue;
-    keepRegionFiles.add(`${region}.json`);
-    list.sort((a, b) => a.id.localeCompare(b.id));
-    writeJsonIfChanged(path.join(SONGS_ROOT, `${region}.json`), {
-      schemaVersion: SCHEMA_VERSION,
-      generatedAt: new Date().toISOString(),
-      songs: list,
-    } satisfies SongFile);
+    const shards = writeSongShards(SONGS_ROOT, region, list, now);
+    for (const shard of shards) keepRegionFiles.add(shard);
   }
 
   /* --- category slices -------------------------------------------------- */
@@ -151,23 +148,13 @@ function main(): void {
     const list = allSongs.filter((s) => s.category === category);
     categoryCounts[category] = list.length;
     if (!list.length) continue;
-    keepCategoryFiles.add(`${category}.json`);
-    writeJsonIfChanged(
-      path.join(songsCategoryDir, `${category}.json`),
-      {
-        schemaVersion: SCHEMA_VERSION,
-        generatedAt: new Date().toISOString(),
-        songs: list,
-      } satisfies SongFile,
-    );
+    const shards = writeSongShards(songsCategoryDir, category, list, now);
+    for (const shard of shards) keepCategoryFiles.add(shard);
   }
 
   /* --- index: every song in id order ----------------------------------- */
-  writeJsonIfChanged(path.join(SONGS_ROOT, "index.json"), {
-    schemaVersion: SCHEMA_VERSION,
-    generatedAt: new Date().toISOString(),
-    songs: allSongs,
-  } satisfies SongFile);
+  const indexShards = writeSongShards(SONGS_ROOT, "index", allSongs, now);
+  for (const shard of indexShards) keepRegionFiles.add(shard);
 
   /* --- manifest -------------------------------------------------------- */
   const byRegionCounts: Record<RegionCode, number> = {} as Record<
@@ -191,15 +178,15 @@ function main(): void {
     byRegion: byRegionOut,
   });
 
-  /* --- prune stale files/dirs ------------------------------------------ */
+  /* --- prune stale files ------------------------------------------------- */
   const keepFiles = new Set<string>(keepRegionFiles);
   keepFiles.add("index.json");
   keepFiles.add("manifest.json");
   if (fs.existsSync(SONGS_ROOT)) {
     for (const entry of fs.readdirSync(SONGS_ROOT)) {
-      if (entry === "categories") continue;
+      if (!entry.endsWith(".json")) continue;
       if (keepFiles.has(entry)) continue;
-      fs.rmSync(path.join(SONGS_ROOT, entry), { recursive: true, force: true });
+      fs.rmSync(path.join(SONGS_ROOT, entry), { force: true });
     }
   }
   if (fs.existsSync(songsCategoryDir)) {
