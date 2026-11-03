@@ -179,7 +179,7 @@ async function main(): Promise<void> {
       });
 
       const pageEntriesCount = pageEntries.length;
-      console.log(`    found ${pageEntriesCount} songs on this page`);
+      console.log(`    found ${pageEntriesCount} channels on this page`);
       allEntries.push(...pageEntries);
 
       // Check if we've reached the limit
