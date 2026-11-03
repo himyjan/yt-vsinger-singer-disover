@@ -41,6 +41,33 @@ import { SCHEMA_VERSION, ALL_REGIONS } from "./lib/types";
 import { ensureDir, readJson, writeJsonIfChanged } from "./lib/io";
 
 const CACHE_DIR = ".cache/innertube-music";
+const PROGRESS_DIR = path.join(process.cwd(), "data", "innertube-music-import-progress");
+
+function progressPath(shard: string | null): string {
+  return path.join(
+    PROGRESS_DIR,
+    `import-progress-${shard?.replace("/", "-") ?? "all"}.json`,
+  );
+}
+
+function readProgress(shard: string | null): Set<string> {
+  try {
+    const data = JSON.parse(
+      fs.readFileSync(progressPath(shard), "utf8"),
+    ) as { processed?: string[] };
+    return new Set(data.processed ?? []);
+  } catch {
+    return new Set();
+  }
+}
+
+function writeProgress(shard: string | null, processed: Set<string>): void {
+  fs.mkdirSync(PROGRESS_DIR, { recursive: true });
+  fs.writeFileSync(
+    progressPath(shard),
+    JSON.stringify({ processed: [...processed] }, null, 2),
+  );
+}
 
 interface MusicEntry {
   channelId: string;
@@ -263,6 +290,18 @@ async function main(): Promise<void> {
     );
   }
 
+  // Resume: skip channels already processed in a previous run of this shard.
+  const alreadyProcessed = readProgress(options.shard);
+  const previouslyProcessed = targets.filter((e) =>
+    alreadyProcessed.has(e.channelId),
+  ).length;
+  targets = targets.filter((e) => !alreadyProcessed.has(e.channelId));
+  if (alreadyProcessed.size > 0) {
+    console.log(
+      `innertube-music-import: skipping ${alreadyProcessed.size} already-processed channel(s) from previous run(s)`,
+    );
+  }
+
   if (options.limit) {
     targets = targets.slice(0, options.limit);
   }
@@ -274,11 +313,11 @@ async function main(): Promise<void> {
   }
   if (options.musicOnly) {
     console.log(
-      `innertube-music-import: ${songCount} song(s) would be imported (music-only: uploads filtered by category ID '10')`,
+      `innertube-music-import: ${songCount} song(s) would be imported from ${targets.length} channel(s) (music-only: uploads filtered by category ID '10')`,
     );
   } else {
     console.log(
-      `innertube-music-import: ${songCount} song(s) would be imported`,
+      `innertube-music-import: ${songCount} song(s) would be imported from ${targets.length} channel(s)`,
     );
   }
 
@@ -323,6 +362,10 @@ async function main(): Promise<void> {
     for (const release of entry.releases) {
       songs.push(releaseToSong(release, entry, now));
     }
+    // Mark this channel as processed and persist progress after each channel
+    // so an interrupted run can resume without re-processing.
+    alreadyProcessed.add(entry.channelId);
+    writeProgress(options.shard, alreadyProcessed);
   }
 
   if (options.musicOnly) {
