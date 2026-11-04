@@ -399,8 +399,17 @@ async function main(): Promise<void> {
     // number of uploads: base timeout + 30s per upload (each upload needs a
     // getBasicInfo() call for category checking). Channels taking longer
     // than this are marked as dead and skipped.
-    const channelTimeoutMs =
-      options.channelTimeoutMs + entry.uploads.length * 30_000;
+    // Per-upload timeout: each getBasicInfo() call gets its own timeout
+    // so one stuck upload doesn't block the whole channel.
+    const perUploadTimeoutMs = 30_000;
+
+    // Channel timeout scales with number of uploads: base 10 min + 10s per
+    // upload, capped at 30 minutes. A channel with 1000 uploads gets
+    // 10 min + 10000s ≈ 176 min, but capped at 30 min.
+    const channelTimeoutMs = Math.min(
+      options.channelTimeoutMs + entry.uploads.length * 10_000,
+      30 * 60_000,
+    );
     const channelTimeout = new Promise<never>((_resolve, reject) =>
       setTimeout(
         () =>
@@ -418,9 +427,26 @@ async function main(): Promise<void> {
       await Promise.race([
         (async () => {
           for (const upload of entry.uploads) {
+            // Per-upload timeout: each getBasicInfo() call gets its own
+            // timeout so one stuck upload doesn't block the whole channel.
+            const uploadTimeout = new Promise<never>((_resolve, reject) =>
+              setTimeout(
+                () =>
+                  reject(
+                    new Error(
+                      `upload ${upload.id} timed out after ${perUploadTimeoutMs / 1000}s`,
+                    ),
+                  ),
+                perUploadTimeoutMs,
+              ),
+            );
+
             if (options.musicOnly && source) {
               try {
-                const info = await source.getBasicInfo(upload.id);
+                const info = await Promise.race([
+                  source.getBasicInfo(upload.id),
+                  uploadTimeout,
+                ]);
                 const categoryId = info?.category_id;
                 if (categoryId !== "10") {
                   musicFiltered += 1;
