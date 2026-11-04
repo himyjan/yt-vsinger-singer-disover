@@ -582,7 +582,9 @@ async function main(): Promise<void> {
               } catch (err) {
                 const msg = err instanceof Error ? err.message : String(err);
                 console.error(`    category check failed ${upload.id}: ${msg}`);
-                // On failure, include the upload rather than dropping it silently.
+                // On failure, skip the upload — we cannot verify it is music.
+                musicFiltered += 1;
+                continue;
               }
             }
             const song = uploadToSong(upload, entry, now);
