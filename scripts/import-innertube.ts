@@ -395,17 +395,21 @@ async function main(): Promise<void> {
   const deadChannels = readDead(options.shard);
   for (const entry of targets) {
     // Wrap each channel's processing in a timeout so a slow/dead channel
-    // doesn't block the entire run indefinitely. If a channel takes longer
-    // than channelTimeoutMs, it's marked as dead and skipped.
+    // doesn't block the entire run indefinitely. Timeout scales with the
+    // number of uploads: base timeout + 30s per upload (each upload needs a
+    // getBasicInfo() call for category checking). Channels taking longer
+    // than this are marked as dead and skipped.
+    const channelTimeoutMs =
+      options.channelTimeoutMs + entry.uploads.length * 30_000;
     const channelTimeout = new Promise<never>((_resolve, reject) =>
       setTimeout(
         () =>
           reject(
             new Error(
-              `channel ${entry.channelId} (${entry.channelName}) timed out after ${options.channelTimeoutMs / 1000}s`,
+              `channel ${entry.channelId} (${entry.channelName}) timed out after ${channelTimeoutMs / 1000}s`,
             ),
           ),
-        options.channelTimeoutMs,
+        channelTimeoutMs,
       ),
     );
 
