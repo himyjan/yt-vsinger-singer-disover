@@ -933,9 +933,13 @@ export class InnerTubeSource {
           });
         }
       } catch (err) {
-        this.onLog(
-          `innertube: uploads failed for ${channelId} — ${(err as Error).message}`,
-        );
+        const message = (err as Error).message;
+        // A channel with no videos tab, or one that is only Shorts, is normal.
+        if (!/Tab .* not found/.test(message)) {
+          this.onLog(
+            `innertube: uploads failed for ${channelId} — ${message}`,
+          );
+        }
       }
 
       const releases: InnerTubeRelease[] = officialArtist
