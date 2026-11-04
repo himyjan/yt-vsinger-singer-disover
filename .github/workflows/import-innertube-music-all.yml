@@ -186,7 +186,7 @@ jobs:
           # processed by exactly one job. --limit 500 caps per-job work.
           JOB_COUNT=${{ needs.plan.outputs.job_count }}
           SHARD_INDEX=$(( ${{ matrix.job }} + 1 ))
-          ARGS="--shard ${SHARD_INDEX}/${JOB_COUNT} --music-only --limit 500 --max-uploads 3000 --delay-ms 150 --retry-dead --retry-dead-timeout-ms 6000 --budget-minutes 330"
+          ARGS="--shard ${SHARD_INDEX}/${JOB_COUNT} --music-only --limit 500 --max-uploads 3000 --delay-ms 100 --retry-dead --retry-dead-timeout-ms 6000 --budget-minutes 330"
           if [ "${DRY_RUN:-false}" = "true" ]; then ARGS="$ARGS --dry-run"; else ARGS="$ARGS --apply"; fi
 
           # Swap data/ for this volume's symlink, import, swap back.

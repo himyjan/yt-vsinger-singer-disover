@@ -709,7 +709,7 @@ npm run data:innertube-music -- --shard N/20   # one shard only
 npm run data:innertube-music-import              # report what would be imported into data/songs/
 npm run data:innertube-music-import -- --apply   # import all shards (20 parallel volume jobs)
 npm run data:innertube-music-import -- --apply --music-only  # only uploads with YouTube category ID "10" (Music)
-npm run data:innertube-music-import -- --apply --music-only --limit 500 --max-uploads 3000 --delay-ms 150 --retry-dead --retry-dead-timeout-ms 6000 --budget-minutes 330  # bounded import with dead-channel retry
+npm run data:innertube-music-import -- --apply --music-only --limit 500 --max-uploads 3000 --delay-ms 100 --retry-dead --retry-dead-timeout-ms 6000 --budget-minutes 330  # bounded import with dead-channel retry
 npm run data:innertube-music-import -- --retry-dead  # retry previously timed-out channels
 npm run data:ids                     # re-key handle / bilibili / roster ids to the UC… id
 npm run data:validate                # structure + budgets
