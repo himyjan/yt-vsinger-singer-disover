@@ -117,6 +117,7 @@ interface Options {
   musicOnly: boolean;
   channelTimeoutMs: number;
   retryDead: boolean;
+  maxUploads: number;
 }
 
 function parseArgs(argv: string[]): Options {
@@ -127,6 +128,7 @@ function parseArgs(argv: string[]): Options {
     musicOnly: false,
     channelTimeoutMs: 1_200_000, // 20 minutes per channel
     retryDead: false,
+    maxUploads: 3428, // Channels with more uploads than this are auto-skipped
   };
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i]!;
@@ -153,11 +155,15 @@ function parseArgs(argv: string[]): Options {
       case "--retry-dead":
         options.retryDead = true;
         break;
+      case "--max-uploads":
+        options.maxUploads = Math.max(1, Number(value ?? 3428));
+        i++;
+        break;
       case "--help":
       case "-h":
         console.log(
           [
-            "Usage: npm run data:innertube-music-import [--apply] [--shard N/M] [--limit <n>] [--music-only] [--channel-timeout <ms>] [--retry-dead]",
+            "Usage: npm run data:innertube-music-import [--apply] [--shard N/M] [--limit <n>] [--music-only] [--channel-timeout <ms>] [--retry-dead] [--max-uploads <n>]",
             "",
             "  (no flags)   report what would be imported, write nothing",
             "  --apply      write song shards into data/songs/",
@@ -168,6 +174,7 @@ function parseArgs(argv: string[]): Options {
             "  --channel-timeout <ms>  per-channel timeout in ms (default: 1200000 = 20 min)",
             "               Channels taking longer are marked dead and skipped.",
             "  --retry-dead   retry channels that previously timed out (dead-channels.json)",
+            "  --max-uploads  skip channels with more than this many uploads (default: 3428 ≈ 20 min at 350ms each)",
           ].join("\n")
         );
         process.exit(0);
@@ -394,6 +401,16 @@ async function main(): Promise<void> {
   // so they're skipped on subsequent runs unless --retry-dead is used.
   const deadChannels = readDead(options.shard);
   for (const entry of targets) {
+    // Skip channels with too many uploads - they will always time out
+    // because each upload requires a getBasicInfo() call (~350ms each).
+    if (entry.uploads.length > options.maxUploads) {
+      deadChannels.add(entry.channelId);
+      console.log(
+        `  SKIPPED: ${entry.channelId} (${entry.channelName}) has ${entry.uploads.length} uploads, exceeds max of ${options.maxUploads}`,
+      );
+      continue;
+    }
+
     // Wrap each channel's processing in a timeout so a slow/dead channel
     // doesn't block the entire run indefinitely. Timeout scales with the
     // number of uploads: base timeout + 30s per upload (each upload needs a
