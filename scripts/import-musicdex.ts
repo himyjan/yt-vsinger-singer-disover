@@ -32,12 +32,20 @@ import {
   rebuildChannelsManifest,
   refreshManifestChannelCounts,
   writeItemShards,
+  writeSongShards,
 } from "../scripts/lib/dataset";
-import { acquireRunLock } from "../scripts/lib/io";
+import { acquireRunLock, writeJsonIfChanged } from "../scripts/lib/io";
 import { canonicalAgency } from "../scripts/lib/regions";
+import { ALL_REGIONS } from "../scripts/lib/types";
 import { normalizeChannelId } from "../scripts/lib/platforms";
 import { toCountRef } from "../scripts/lib/types";
-import type { Channel, Item } from "../scripts/lib/types";
+import type {
+  Channel,
+  Item,
+  ItemCategory,
+  RegionCode,
+  SongRecord,
+} from "../scripts/lib/types";
 
 const SNAPSHOT = ".cache/musicdex/musicdex.json";
 
@@ -129,6 +137,61 @@ function loadAllItems(): Item[] {
     }
   }
   return items;
+}
+
+/** Read every song already committed under data/songs/ (region shards only). */
+function loadExistingSongs(): SongRecord[] {
+  const out: SongRecord[] = [];
+  const songsDir = path.join("data", "songs");
+  if (!fs.existsSync(songsDir)) return out;
+  for (const entry of fs.readdirSync(songsDir)) {
+    if (!entry.endsWith(".json")) continue;
+    if (entry === "index.json" || entry === "manifest.json") continue;
+    try {
+      const parsed = JSON.parse(
+        fs.readFileSync(path.join(songsDir, entry), "utf8"),
+      ) as { songs?: SongRecord[] };
+      out.push(...(parsed.songs ?? []));
+    } catch {
+      // skip unreadable shard
+    }
+  }
+  return out;
+}
+
+/** Convert a Musicdex song into a SongRecord using the channel record for metadata. */
+function songToRecord(
+  ms: MusicdexSong,
+  channel: Channel | undefined,
+): SongRecord | null {
+  if (!channel) return null;
+  const category: ItemCategory =
+    (musicdexCategory(ms) as ItemCategory) ?? "other";
+  return {
+    id: ms.videoId,
+    channelId: ms.channelId,
+    channelName: channel.name,
+    channelKind: channel.kind,
+    region: channel.region,
+    variant: channel.variant,
+    gender: channel.gender,
+    languages: channel.languages,
+    isAi: channel.isAi,
+    title: channel.name,
+    songTitle: ms.name,
+    originalArtist: ms.originalArtist ?? null,
+    category,
+    isCollab: false,
+    collaborators: [
+      { channelId: channel.id, name: channel.name, kind: channel.kind, region: channel.region },
+    ],
+    isAcoustic: false,
+    publishedAt: ms.availableAt ?? null,
+    duration: null,
+    thumbnail: channel.avatar ?? null,
+    viewCount: null,
+    url: `https://www.youtube.com/watch?v=${ms.videoId}`,
+  };
 }
 
 async function main(): Promise<void> {
@@ -308,11 +371,39 @@ async function main(): Promise<void> {
     if (changed) itemsEnriched++;
   }
 
-  console.log(
-    `channels: ${channelsMatched} matched · ${channelsUpdated} updated`,
+  // ------------------------------------------------------------------
+  // 3. Song import: write Musicdex songs to data/songs/.
+  //    Dedup by video id — Musicdex songs win on collision, existing
+  //    songs not re-harvested are kept.
+  // ------------------------------------------------------------------
+  const songsById = new Map<string, SongRecord>();
+  let songsWritten = 0;
+
+  for (const ms of mdexSongs) {
+    const channel = byYoutubeId.get(normalizeChannelId(ms.channelId));
+    const record = songToRecord(ms, channel);
+    if (!record) continue;
+    // Musicdex version wins on id collision.
+    songsById.set(record.id, record);
+    songsWritten++;
+  }
+
+  // Keep existing songs not re-harvested this run.
+  const existingSongs = loadExistingSongs();
+  let existingKept = 0;
+  for (const song of existingSongs) {
+    if (!songsById.has(song.id)) {
+      songsById.set(song.id, song);
+      existingKept++;
+    }
+  }
+
+  const allSongs = [...songsById.values()].sort((a, b) =>
+    a.id.localeCompare(b.id),
   );
+
   console.log(
-    `songs: ${songsMatched} matched · ${itemsEnriched} item(s) enriched`,
+    `songs: ${songsWritten} new · ${existingKept} existing kept · ${allSongs.length} total`,
   );
 
   if (!options.apply) {
@@ -323,8 +414,69 @@ async function main(): Promise<void> {
   // Write enriched item shards.
   const now = new Date().toISOString();
   writeItemShards(items, now);
+
+  // Write song shards to data/songs/.
+  const songsDir = path.join("data", "songs");
+  const keepSongFiles = new Set<string>();
+  for (const region of ALL_REGIONS) {
+    const list = allSongs.filter((s) => s.region === region);
+    if (!list.length) continue;
+    const shards = writeSongShards(songsDir, region, list, now);
+    for (const shard of shards) keepSongFiles.add(shard);
+  }
+  // Remove stale region shard files.
+  const songsDirExists = fs.existsSync(songsDir);
+  if (songsDirExists) {
+    for (const entry of fs.readdirSync(songsDir)) {
+      if (!entry.endsWith(".json")) continue;
+      if (entry === "index.json" || entry === "manifest.json") continue;
+      if (!keepSongFiles.has(entry))
+        fs.rmSync(path.join(songsDir, entry), { force: true });
+    }
+  }
+
+  // Per-category slices.
+  const songsCategoryDir = path.join(songsDir, "categories");
+  const keepCategoryFiles = new Set<string>();
+  const categoryCounts: Record<ItemCategory, number> = {
+    cover: 0,
+    mv: 0,
+    original: 0,
+    performance: 0,
+    live: 0,
+    premiere: 0,
+    other: 0,
+  };
+  for (const category of ["cover", "mv", "original", "performance"] as const) {
+    const list = allSongs.filter((s) => s.category === category);
+    categoryCounts[category] = list.length;
+    if (!list.length) continue;
+    const shards = writeSongShards(songsCategoryDir, category, list, now);
+    for (const shard of shards) keepCategoryFiles.add(shard);
+  }
+
+  const indexShards = writeSongShards(songsDir, "index", allSongs, now);
+  for (const shard of indexShards) keepSongFiles.add(shard);
+
+  // Manifest.
+  const byRegionOut: Record<string, number> = {};
+  for (const song of allSongs) {
+    const region = song.region;
+    byRegionOut[region] = (byRegionOut[region] ?? 0) + 1;
+  }
+  writeJsonIfChanged(
+    path.join(songsDir, "manifest.json"),
+    {
+      schemaVersion: 1,
+      generatedAt: now,
+      total: allSongs.length,
+      byCategory: categoryCounts,
+      byRegion: byRegionOut,
+    },
+  );
+
   console.log(
-    `${itemsEnriched} item(s) written to data/items/ — run npm run data:index next.`,
+    `${allSongs.length} song(s) written to data/songs/ — run npm run data:index next.`,
   );
 }
 
