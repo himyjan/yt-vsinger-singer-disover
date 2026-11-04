@@ -132,7 +132,7 @@ function parseArgs(argv: string[]): Options {
     channelTimeoutMs: 1_200_000, // 20 minutes per channel
     retryDead: false,
     maxUploads: 3000, // Channels with more uploads than this are auto-skipped
-    delayMs: 350, // ms between InnerTube requests; lower = faster, riskier
+    delayMs: 100, // ms between InnerTube requests; lower = faster, riskier
     budgetMinutes: 330, // overall time budget per job (leaves buffer before 360-min job timeout)
     retryDeadTimeoutMs: 6_000, // per-upload timeout for --retry-dead channels (6s default)
   };
@@ -194,7 +194,7 @@ function parseArgs(argv: string[]): Options {
             "  --retry-dead   retry channels that previously timed out (dead-channels.json)",
             "  --retry-dead-timeout-ms  per-upload timeout for --retry-dead channels in ms (default: 6000 = 6s; only used with --retry-dead)",
             "  --max-uploads  skip channels with more than this many uploads (default: 3000 ≈ 17 min at 350ms each)",
-            "  --delay-ms     ms between InnerTube requests (default: 350; lower = faster, higher rate-limit risk)",
+            "  --delay-ms     ms between InnerTube requests (default: 100; lower = faster, higher rate-limit risk)",
             "  --budget-minutes  overall time budget per job in minutes (default: 330; stops early and writes partial results)",
           ].join("\n")
         );
