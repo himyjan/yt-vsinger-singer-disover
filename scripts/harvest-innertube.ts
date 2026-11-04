@@ -122,7 +122,7 @@ async function main(): Promise<void> {
     process.exit(0);
   }
 
-  const source = new InnerTubeSource({ delayMs: 350 });
+  const source = new InnerTubeSource({ delayMs: 100 });
   await source.connect();
 
   const entries: MusicEntry[] = [];
