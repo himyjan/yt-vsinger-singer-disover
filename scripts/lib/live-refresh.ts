@@ -262,21 +262,13 @@ export async function refreshLivePass(
           if (index >= total) return;
           const channel = liveTargets[index]!;
 
-          // Wrap the liveStreams call in its own timeout so a slow/dead
-          // channel can't block this worker (and therefore Promise.all)
-          // indefinitely. liveStreams() already has per-request timeouts, but
-          // a channel with 30 live/upcoming videos each calling streamState()
-          // can still take several minutes.
-          const channelTimeout = new Promise<null>((resolve) =>
-            setTimeout(() => resolve(null), perChannelTimeoutMs),
-          );
-          streamsById.set(
-            channel.id,
-            await Promise.race([
-              innertube.liveStreams(channel.id),
-              channelTimeout,
-            ]),
-          );
+          // liveStreams() already has per-request timeouts (withTimeout at
+          // 20s per getChannel/getLiveStreams/getBasicInfo call), so no
+          // wrapper timeout is needed here. A Promise.race timeout would
+          // abandon the underlying request but leave it running — it would
+          // keep calling throttle() on the shared rate limiter and block
+          // other workers, making the whole pass slower.
+          streamsById.set(channel.id, await innertube.liveStreams(channel.id));
 
           const c = ++checked;
           if (c % 10 === 0 || c === total) logProgress(false);
