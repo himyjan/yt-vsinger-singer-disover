@@ -120,6 +120,7 @@ interface Options {
   maxUploads: number;
   delayMs: number;
   budgetMinutes: number;
+  retryDeadTimeoutMs: number;
 }
 
 function parseArgs(argv: string[]): Options {
@@ -133,6 +134,7 @@ function parseArgs(argv: string[]): Options {
     maxUploads: 3000, // Channels with more uploads than this are auto-skipped
     delayMs: 350, // ms between InnerTube requests; lower = faster, riskier
     budgetMinutes: 330, // overall time budget per job (leaves buffer before 360-min job timeout)
+    retryDeadTimeoutMs: 15_000, // per-upload timeout for --retry-dead channels (15s default)
   };
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i]!;
@@ -159,6 +161,10 @@ function parseArgs(argv: string[]): Options {
       case "--retry-dead":
         options.retryDead = true;
         break;
+      case "--retry-dead-timeout-ms":
+        options.retryDeadTimeoutMs = Math.max(50, Number(value ?? 15_000));
+        i++;
+        break;
       case "--max-uploads":
         options.maxUploads = Math.max(1, Number(value ?? 3000));
         i++;
@@ -175,7 +181,7 @@ function parseArgs(argv: string[]): Options {
       case "-h":
         console.log(
           [
-            "Usage: npm run data:innertube-music-import [--apply] [--shard N/M] [--limit <n>] [--music-only] [--channel-timeout <ms>] [--retry-dead] [--max-uploads <n>] [--delay-ms <n>] [--budget-minutes <n>]",
+            "Usage: npm run data:innertube-music-import [--apply] [--shard N/M] [--limit <n>] [--music-only] [--channel-timeout <ms>] [--retry-dead] [--retry-dead-timeout-ms <n>] [--max-uploads <n>] [--delay-ms <n>] [--budget-minutes <n>]",
             "",
             "  (no flags)   report what would be imported, write nothing",
             "  --apply      write song shards into data/songs/",
@@ -186,6 +192,7 @@ function parseArgs(argv: string[]): Options {
             "  --channel-timeout <ms>  per-channel timeout in ms (default: 1200000 = 20 min)",
             "               Channels taking longer are marked dead and skipped.",
             "  --retry-dead   retry channels that previously timed out (dead-channels.json)",
+            "  --retry-dead-timeout-ms  per-upload timeout for --retry-dead channels in ms (default: 15000 = 15s; only used with --retry-dead)",
             "  --max-uploads  skip channels with more than this many uploads (default: 3000 ≈ 17 min at 350ms each)",
             "  --delay-ms     ms between InnerTube requests (default: 350; lower = faster, higher rate-limit risk)",
             "  --budget-minutes  overall time budget per job in minutes (default: 330; stops early and writes partial results)",
@@ -543,15 +550,21 @@ async function main(): Promise<void> {
 
             // Per-upload timeout: each getBasicInfo() call gets its own
             // timeout so one stuck upload doesn't block the whole channel.
+            // When --retry-dead is set, use the retry-dead-specific timeout
+            // (default 15s instead of 30s) since these channels are already
+            // known to be slow/problematic.
+            const uploadTimeoutMs = options.retryDead
+              ? options.retryDeadTimeoutMs
+              : perUploadTimeoutMs;
             const uploadTimeout = new Promise<never>((_resolve, reject) =>
               setTimeout(
                 () =>
                   reject(
                     new Error(
-                      `upload ${upload.id} timed out after ${perUploadTimeoutMs / 1000}s`,
+                      `upload ${upload.id} timed out after ${uploadTimeoutMs / 1000}s`,
                     ),
                   ),
-                perUploadTimeoutMs,
+                uploadTimeoutMs,
               ),
             );
 
