@@ -240,7 +240,7 @@ export async function refreshLivePass(
 
     const logProgress = (force: boolean): void => {
       const nowMs = Date.now();
-      if (!force && nowMs - lastProgressAt < 10_000) return;
+      if (!force && nowMs - lastProgressAt < 5_000) return;
       lastProgressAt = nowMs;
       ctx.log(
         `innertube live: ${checked}/${total} channel(s) checked ` +
@@ -249,6 +249,10 @@ export async function refreshLivePass(
     };
 
     const perChannelTimeoutMs = 60_000; // 60 seconds per channel max
+
+    ctx.log(
+      `innertube live: starting ${total} channel(s) with concurrency ${concurrency}`,
+    );
 
     const workers = Array.from(
       { length: Math.min(concurrency, liveTargets.length) },
@@ -275,7 +279,7 @@ export async function refreshLivePass(
           );
 
           const c = ++checked;
-          if (c % 50 === 0 || c === total) logProgress(false);
+          if (c % 10 === 0 || c === total) logProgress(false);
         }
       },
     );
@@ -388,11 +392,17 @@ export async function refreshLivePass(
   );
 
   const multiLimit = Math.min(multiTargets.length, ctx.limitMultiPlatformLive);
+  if (multiTargets.length) {
+    ctx.log(
+      `multi-platform live: starting ${multiLimit} channel(s) across ` +
+        `${[...PER_CHANNEL_LIVE_PLATFORMS].join(", ")}`,
+    );
+  }
   let multiChecked = 0;
   let multiLastProgressAt = Date.now();
   const logMultiProgress = (force: boolean): void => {
     const nowMs = Date.now();
-    if (!force && nowMs - multiLastProgressAt < 10_000) return;
+    if (!force && nowMs - multiLastProgressAt < 5_000) return;
     multiLastProgressAt = nowMs;
     ctx.log(
       `multi-platform live: ${multiChecked}/${multiLimit} channel(s) checked`,
@@ -418,7 +428,7 @@ export async function refreshLivePass(
       const streams = await adapter.live(liveChannel);
       result.multiPlatformChecked++;
       multiChecked++;
-      if (multiChecked % 50 === 0 || multiChecked === multiLimit)
+      if (multiChecked % 10 === 0 || multiChecked === multiLimit)
         logMultiProgress(false);
       if (!streams || streams.length === 0) continue;
       result.multiPlatformFound += streams.length;
