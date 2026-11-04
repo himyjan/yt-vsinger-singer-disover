@@ -118,6 +118,7 @@ interface Options {
   channelTimeoutMs: number;
   retryDead: boolean;
   maxUploads: number;
+  delayMs: number;
 }
 
 function parseArgs(argv: string[]): Options {
@@ -129,6 +130,7 @@ function parseArgs(argv: string[]): Options {
     channelTimeoutMs: 1_200_000, // 20 minutes per channel
     retryDead: false,
     maxUploads: 3000, // Channels with more uploads than this are auto-skipped
+    delayMs: 350, // ms between InnerTube requests; lower = faster, riskier
   };
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i]!;
@@ -156,14 +158,18 @@ function parseArgs(argv: string[]): Options {
         options.retryDead = true;
         break;
       case "--max-uploads":
-        options.maxUploads = Math.max(1, Number(value ?? 3428));
+        options.maxUploads = Math.max(1, Number(value ?? 3000));
+        i++;
+        break;
+      case "--delay-ms":
+        options.delayMs = Math.max(50, Number(value ?? 350));
         i++;
         break;
       case "--help":
       case "-h":
         console.log(
           [
-            "Usage: npm run data:innertube-music-import [--apply] [--shard N/M] [--limit <n>] [--music-only] [--channel-timeout <ms>] [--retry-dead] [--max-uploads <n>]",
+            "Usage: npm run data:innertube-music-import [--apply] [--shard N/M] [--limit <n>] [--music-only] [--channel-timeout <ms>] [--retry-dead] [--max-uploads <n>] [--delay-ms <n>]",
             "",
             "  (no flags)   report what would be imported, write nothing",
             "  --apply      write song shards into data/songs/",
@@ -175,6 +181,7 @@ function parseArgs(argv: string[]): Options {
             "               Channels taking longer are marked dead and skipped.",
             "  --retry-dead   retry channels that previously timed out (dead-channels.json)",
             "  --max-uploads  skip channels with more than this many uploads (default: 3000 ≈ 17 min at 350ms each)",
+            "  --delay-ms     ms between InnerTube requests (default: 350; lower = faster, higher rate-limit risk)",
           ].join("\n")
         );
         process.exit(0);
@@ -389,7 +396,7 @@ async function main(): Promise<void> {
   // InnerTube source for per-video category lookup (music-only mode).
   let source: InnerTubeSource | null = null;
   if (options.musicOnly) {
-    source = new InnerTubeSource({ delayMs: 350 });
+    source = new InnerTubeSource({ delayMs: options.delayMs });
     await source.connect();
     console.log(
       "innertube-music-import: music-only mode — filtering uploads by YouTube category ID '10'",
