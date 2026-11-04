@@ -1,0 +1,366 @@
+name: Import Innertube Music (All)
+
+# Harvests music (uploads + YouTube Music releases) from YouTube channels
+# using InnerTube's channel catalog — no Data API quota — and commits the
+# result straight into data/songs/.
+#
+# Unlike import-innertube-music.yml (fixed 20 volume jobs), this workflow
+# dynamically calculates the import parallelism: job_count = ceil(total
+# channels / 500). Each import job processes one shard of the channel set
+# with --limit 500, so every channel is covered exactly once.
+#
+#   Step 1 (20 parallel jobs): harvest music per volume shard
+#   Step 2 (plan job): count total channels, compute job_count = ceil(N/500)
+#   Step 3 (job_count parallel jobs): import each shard into data/songs/
+#   Step 4 (fan-in): merge volumes, index, validate, commit
+
+on:
+  schedule:
+    # Weekly, Wednesday 09:00 UTC (after the sync's item pass)
+    - cron: "0 9 * * 3"
+  workflow_dispatch:
+
+concurrency:
+  group: dataset-writer-${{ github.repository }}
+  cancel-in-progress: false
+  queue: max
+
+permissions:
+  contents: write
+
+jobs:
+  harvest-music:
+    name: Harvest Innertube music (shard ${{ matrix.volume }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    strategy:
+      max-parallel: 20
+      fail-fast: false
+      matrix:
+        volume: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          ref: ${{ github.ref_name }}
+          lfs: true
+
+      - name: Install Git LFS
+        run: |
+          git lfs install --skip-repo
+          git lfs pull || true
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "26"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Harvest Innertube music for shard ${{ matrix.volume }}+1/20
+        id: harvest
+        run: |
+          SHARD=$(node -e "console.log(${{ matrix.volume }} + 1)")
+          npm run data:innertube-music -- --shard "${SHARD}/20"
+          echo "shard=$SHARD" >> "$GITHUB_OUTPUT"
+          echo "file=innertube-music-${SHARD}-20.json" >> "$GITHUB_OUTPUT"
+
+      - name: Upload music shard artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: innertube-music-vol-${{ steps.harvest.outputs.shard }}
+          path: .cache/innertube-music/${{ steps.harvest.outputs.file }}
+          retention-days: 1
+
+  plan:
+    name: Calculate import job count
+    needs: [harvest-music]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      job_count: ${{ steps.count.outputs.job_count }}
+      matrix: ${{ steps.count.outputs.matrix }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 1
+          ref: ${{ github.ref_name }}
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "26"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Download all music shard artifacts
+        uses: actions/download-artifact@v8
+        with:
+          pattern: innertube-music-vol-*
+          path: .cache/innertube-music
+          merge-multiple: true
+
+      - name: Count channels and calculate job count
+        id: count
+        run: |
+          # Count total channel entries across all harvest shard files.
+          TOTAL=0
+          for f in .cache/innertube-music/innertube-music-*.json; do
+            if [ -f "$f" ]; then
+              N=$(node -e "
+                try {
+                  const d = JSON.parse(require('fs').readFileSync('$f','utf8'));
+                  console.log(Array.isArray(d) ? d.length : 0);
+                } catch { console.log(0); }
+              ")
+              TOTAL=$((TOTAL + N))
+            fi
+          done
+
+          # job_count = ceil(total_channels / 500), capped at 100.
+          JOB_COUNT=$(( (TOTAL + 499) / 500 ))
+          if [ "$JOB_COUNT" -gt 100 ]; then JOB_COUNT=100; fi
+          if [ "$JOB_COUNT" -lt 1 ]; then JOB_COUNT=1; fi
+
+          # Generate JSON matrix [0, 1, ..., JOB_COUNT-1] (0-based for --shard).
+          MATRIX=$(node -e "console.log(JSON.stringify(Array.from({length:$JOB_COUNT},(_,i)=>i)))")
+
+          echo "Total channels: $TOTAL"
+          echo "Import jobs: $JOB_COUNT (limit 500 per job)"
+          echo "job_count=$JOB_COUNT" >> "$GITHUB_OUTPUT"
+          echo "matrix=$MATRIX" >> "$GITHUB_OUTPUT"
+
+  import:
+    name: Import music shard ${{ matrix.job }}+1/${{ needs.plan.outputs.job_count }}
+    needs: [harvest-music, plan]
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    # Up to 20 concurrent jobs for public repos; matrix may be larger and
+    # jobs are processed FIFO as slots free up.
+    strategy:
+      max-parallel: 20
+      fail-fast: false
+      matrix:
+        job: ${{ fromJSON(needs.plan.outputs.matrix) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          ref: ${{ github.ref_name }}
+          lfs: true
+
+      - name: Install Git LFS
+        run: |
+          git lfs install --skip-repo
+          git lfs pull || true
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "26"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Download all music shard artifacts
+        uses: actions/download-artifact@v8
+        with:
+          pattern: innertube-music-vol-*
+          path: .cache/innertube-music
+          merge-multiple: true
+
+      - name: Create this volume only
+        run: npm run data:volumes -- --count ${{ needs.plan.outputs.job_count }} --only ${{ matrix.job }}
+
+      - name: Import music shard ${{ matrix.job }}+1
+        env:
+          DRY_RUN: ${{ inputs.dry-run }}
+        run: |
+          # Each job owns shard (matrix.job + 1) of JOB_COUNT total shards.
+          # Channels are distributed by rendezvous hash, so every channel is
+          # processed by exactly one job. --limit 500 caps per-job work.
+          JOB_COUNT=${{ needs.plan.outputs.job_count }}
+          SHARD_INDEX=$(( ${{ matrix.job }} + 1 ))
+          ARGS="--shard ${SHARD_INDEX}/${JOB_COUNT} --music-only --limit 500 --max-uploads 3000 --delay-ms 150 --retry-dead --budget-minutes 330"
+          if [ "${DRY_RUN:-false}" = "true" ]; then ARGS="$ARGS --dry-run"; else ARGS="$ARGS --apply"; fi
+
+          # Swap data/ for this volume's symlink, import, swap back.
+          VOL_DIR=".volumes/vol-${{ matrix.job }}/data"
+          mv data data-full
+          ln -s "$VOL_DIR" data
+          npm run data:innertube-music-import -- $ARGS
+          rm -f data
+          mv data-full data
+
+      - name: Upload volume song shards
+        uses: actions/upload-artifact@v7
+        with:
+          name: vol-${{ matrix.job }}
+          path: .volumes/vol-${{ matrix.job }}/data/songs
+          retention-days: 1
+
+  merge-and-commit:
+    name: Merge volumes into data/songs/ and commit
+    needs: [harvest-music, plan, import]
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          ref: ${{ github.ref_name }}
+          lfs: true
+
+      - name: Install Git LFS
+        run: |
+          git lfs install --skip-repo
+          git lfs pull || true
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "26"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Create volume split for merge
+        run: npm run data:volumes -- --count ${{ needs.plan.outputs.job_count }}
+
+      - name: Download volume song shards
+        uses: actions/download-artifact@v8
+        with:
+          path: .volumes/downloads
+          pattern: vol-*
+          merge-multiple: false
+
+      - name: Replace each volume's song shards
+        env:
+          JOB_COUNT: ${{ needs.plan.outputs.job_count }}
+        run: |
+          missing=0
+          for v in $(seq 0 $((JOB_COUNT - 1))); do
+            SRC=".volumes/downloads/vol-$v"
+            DST=".volumes/vol-$v/data/songs"
+            if [ ! -d "$SRC" ]; then
+              echo "::error::artifact vol-$v is missing"
+              missing=$((missing + 1))
+              continue
+            fi
+            # Replace, do not merge. A song re-keyed into another volume
+            # would leave the old row behind beside the new one.
+            rm -rf "$DST"
+            cp -R "$SRC" "$DST"
+            echo "restored songs for vol-$v"
+          done
+          if [ "$missing" -gt 0 ]; then
+            echo "::error::$missing volume(s) missing songs — refusing to merge a partial sweep"
+            exit 1
+          fi
+
+      - name: Merge all volumes into data/songs/
+        run: npx oxnode scripts/merge-songs.ts --count ${{ needs.plan.outputs.job_count }}
+
+      - name: Build search index
+        run: npm run data:index
+
+      - name: Validate dataset
+        run: npm run data:validate
+
+      - name: Check the stored repository size
+        run: npm run repo:size -- --max-mb 900 --warn-mb 700
+
+      - name: Commit Innertube music imports
+        env:
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          set -e
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch origin "$BRANCH"
+
+          # Reset index to branch HEAD, keep the worktree (new songs in data/songs/)
+          git reset --mixed "origin/$BRANCH"
+
+          # Restore non-songs files from the branch (only data/songs changes)
+          git checkout -- \
+            data/channels \
+            data/items \
+            data/overrides.json \
+            data/seed-catalog.json \
+            data/suggestions.json \
+            data/upstream.json \
+            data/volumes.json 2>/dev/null || true
+
+          # Collect every song file that is new or modified vs the branch.
+          mapfile -t SONGS < <({
+            git diff --name-only "origin/$BRANCH" -- data/songs/ || true
+            git ls-files --others --exclude-standard -- data/songs/ || true
+          } | sort -u)
+
+          if [ "${#SONGS[@]}" -eq 0 ]; then
+            echo "Innertube music imports unchanged — nothing to commit"
+            exit 0
+          fi
+
+          # Push in size-limited batches so no single push exceeds GitHub's
+          # 2 GB per-push hard limit. Target ~1 GiB per batch for safety.
+          # After each push origin/$BRANCH advances, so the next push only
+          # sends that batch's new objects (git never re-sends what is already
+          # on the remote).
+          BATCH_LIMIT=$((1024 * 1024 * 1024))  # 1 GiB
+          batch_files=()
+          batch_size=0
+          batch_num=0
+
+          flush_batch() {
+            if [ "${#batch_files[@]}" -eq 0 ]; then return 0; fi
+            batch_num=$((batch_num + 1))
+            git add "${batch_files[@]}"
+            if [ -d "data/innertube-music-import-progress" ]; then
+              git add data/innertube-music-import-progress
+            fi
+            git commit -m "data: import Innertube music (${{ github.run_number }}) batch $batch_num"
+            git push origin "HEAD:$BRANCH"
+            batch_files=()
+            batch_size=0
+          }
+
+          for f in "${SONGS[@]}"; do
+            fsize=$(stat -c%s "$f" 2>/dev/null || echo 0)
+            if [ $((batch_size + fsize)) -gt $BATCH_LIMIT ] && [ "${#batch_files[@]}" -gt 0 ]; then
+              flush_batch
+            fi
+            batch_files+=("$f")
+            batch_size=$((batch_size + fsize))
+          done
+
+          # Final batch
+          flush_batch
+
+      - name: Summary
+        run: |
+          {
+            echo "### Import Innertube Music (All)"
+            echo ""
+            echo "| | |"
+            echo "| --- | --- |"
+            echo "| Source | YouTube channels via InnerTube channel catalog |"
+            echo "| Credentials | none (quota-free) |"
+            echo "| Step 1 | 20 parallel harvest jobs (volume shards) |"
+            echo "| Step 2 | Plan job: job_count = ceil(total_channels / 500), capped at 100 |"
+            echo "| Step 3 | ${{ needs.plan.outputs.job_count }} parallel import jobs (--shard INDEX/JOB_COUNT --limit 500) |"
+            echo "| Step 4 | Merge volumes → data/songs/ → index → validate → commit |"
+            echo "| Batch push | Songs committed + pushed in ≤1 GiB batches (under GitHub's 2 GB per-push limit) |"
+            echo "| Committed | \`data/songs\` |"
+          } >> "$GITHUB_STEP_SUMMARY"
