@@ -562,7 +562,7 @@ honest about the well-known databases it *cannot* read.
 | [PVC.moe](https://pvc.moe) | — | Profile data — only in the client bundle |
 | [VTuber.hk](https://vtuber.hk) | ✅ | 672 Hong Kong channels with their state (活動中 / 準備中 / 己引退), plus `/data/channels.json` statistics and `live-hkv` / `archive-hkv` — read by `npm run data:vtuberhk` |
 | [Holodex](https://holodex.net) | — | A YouTube stream index with a clip index and Multiview — the API needs a key (`HOLODEX_API_KEY`) and answers `403` without one |
-| [Musicdex](https://music.holodex.net) | — | Songs and set lists tagged out of singing streams — the same API and key |
+| [Musicdex](https://music.holodex.net) | — | Songs and set lists tagged out of singing streams — public API `api/v2/` (no key, needs browser headers); `MUSICDEX_API_KEY`/`HOLODEX_API_KEY` enables the keyed path. Harvested by `npm run data:musicdex`, imported by `npm run data:musicdex-import -- --apply` into `data/channels/`, `data/items/` and `data/songs/` |
 | [Streams Charts](https://streamscharts.com/vtubers) | — | Channel statistics — blocks automated requests |
 
 ## The quota-free sources
