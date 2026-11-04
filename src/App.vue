@@ -1000,7 +1000,14 @@ watch(
   async (region) => {
     if (state.view !== "songs") return;
     const regions = region === "all" ? "all" : [region];
-    allSongs.value = await loadSongs(regions);
+    try {
+      allSongs.value = await loadSongs(regions);
+    } catch {
+      // Single-origin deployments (e.g. Vercel) skip data/songs/ during
+      // prepare-public, so manifest.json returns 404. Show "No songs"
+      // instead of crashing the tab.
+      allSongs.value = [];
+    }
   },
   { immediate: true },
 );
@@ -1011,9 +1018,17 @@ watch(
   async (view) => {
     if (view !== "songs") return;
     if (state.region === "all") {
-      allSongs.value = await loadSongs("all");
+      try {
+        allSongs.value = await loadSongs("all");
+      } catch {
+        allSongs.value = [];
+      }
     } else {
-      allSongs.value = await loadSongs([state.region]);
+      try {
+        allSongs.value = await loadSongs([state.region]);
+      } catch {
+        allSongs.value = [];
+      }
     }
   },
   { immediate: true },
