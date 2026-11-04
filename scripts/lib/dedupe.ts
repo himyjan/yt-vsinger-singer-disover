@@ -393,7 +393,7 @@ export function mergeChannels(target: Channel, other: Channel): Channel {
     uploadsPlaylistId:
       target.uploadsPlaylistId ?? other.uploadsPlaylistId,
     country: target.country ?? other.country,
-    tags: [...new Set([...target.tags, ...other.tags])].slice(0, 30),
+    tags: [...new Set([...target.tags, ...other.tags])],
     isSinging: target.isSinging || other.isSinging,
     gender: target.gender !== "unknown" ? target.gender : other.gender,
     isAi: target.isAi || other.isAi,
