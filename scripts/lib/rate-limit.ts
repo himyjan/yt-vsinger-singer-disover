@@ -132,7 +132,11 @@ export class RateLimiter {
   reward(): void {
     this.consecutive = 0;
     if (this.interval > this.minInterval) {
-      this.interval = Math.max(this.minInterval, Math.floor(this.interval / 2));
+      // Recover faster than we slow down: cut the interval by 75% on each
+      // success when well above the minimum, so a run that was rate-limited
+      // gets back to full speed within a handful of calls instead of many.
+      const divisor = this.interval > this.minInterval * 4 ? 4 : 2;
+      this.interval = Math.max(this.minInterval, Math.floor(this.interval / divisor));
       this.onChange?.(this.interval);
     }
   }
