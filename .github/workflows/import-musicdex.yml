@@ -110,7 +110,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git fetch origin "$BRANCH"
           git reset --mixed "origin/$BRANCH"
-          git add data/channels data/items data/search data/manifest.json
+          git add data/channels data/items data/songs data/search data/manifest.json
           if git diff --cached --quiet; then
             echo "Musicdex imports unchanged — nothing to commit"
             exit 0
@@ -127,7 +127,7 @@ jobs:
             echo "| --- | --- |"
             echo "| Source | Musicdex (music.holodex.net) |"
             echo "| Credentials | MUSICDEX_API_KEY / HOLODEX_API_KEY (optional; public API works without) |"
-            echo "| Step | harvest → match channels/items → enrich → index → validate → commit |"
+            echo "| Step | harvest → match channels/items/songs → enrich → index → validate → commit |"
             echo "| Dry run | ${{ inputs.dry-run }} |"
-            echo "| Committed | \`data/channels\`, \`data/items\`, \`data/search\`, \`data/manifest.json\` |"
+            echo "| Committed | \`data/channels\`, \`data/items\`, \`data/songs\`, \`data/search\`, \`data/manifest.json\` |"
           } >> "$GITHUB_STEP_SUMMARY"
