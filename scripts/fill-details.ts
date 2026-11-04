@@ -210,7 +210,7 @@ function parseArgs(argv: string[]): Options {
     limit: Infinity,
     platform: null,
     dryRun: false,
-    intervalMs: 450,
+    intervalMs: 100,
     nameOnly: false,
     force: false,
     normalizeIds: false,

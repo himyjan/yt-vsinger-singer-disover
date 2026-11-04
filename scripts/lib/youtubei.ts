@@ -516,7 +516,7 @@ export class InnerTubeSource {
     if (this.client) return true;
     try {
       this.client = await Innertube.create();
-      this.onLog("innertube: client ready (no API quota)");
+      this.onLog(`innertube: client ready (no API quota), delay ${this.delayMs}ms`);
       return true;
     } catch (err) {
       this.onLog(`innertube: unavailable — ${(err as Error).message}`);
