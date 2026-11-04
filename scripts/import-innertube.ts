@@ -455,6 +455,15 @@ async function main(): Promise<void> {
     // partial results are saved before the job timeout kills the run.
     const elapsed = Date.now() - startTime;
     if (elapsed >= budgetMs) {
+      // Budget exhausted: every remaining target is unprocessed — record them
+      // as dead so they can be retried with --retry-dead.
+      const remainingIndex = targets.indexOf(entry);
+      for (const remaining of targets.slice(remainingIndex)) {
+        deadChannels.add(remaining.channelId);
+        console.log(
+          `  BUDGET: ${remaining.channelId} (${remaining.channelName}) not processed — budget exhausted, saved to dead list`,
+        );
+      }
       console.log(
         `innertube-music-import: budget of ${options.budgetMinutes} min exhausted after ${channelsProcessed}/${targets.length} channels — writing partial results`,
       );
