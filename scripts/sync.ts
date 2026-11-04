@@ -312,7 +312,7 @@ const config: SyncConfig = readJson(
     maxChannelDetailsPerRun: 500,
     maxTwitchResolutionsPerRun: 150,
     detailsDelayMs: 700,
-    innertubeDelayMs: 100,
+    innertubeDelayMs: 250,
     searchResultsPerKeyword: 25,
     refreshLiveEveryRun: true,
     searches: [],
