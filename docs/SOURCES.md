@@ -372,28 +372,38 @@ with their pre-fame career, and its infobox image is a photograph of them.
 
 `https://holodex.net` · `https://music.holodex.net`
 
-**Discovery references, not sources** — no page of either is ingested.
-Holodex indexes YouTube VTuber streams (live, upcoming, channels,
-organisations, a **clip index** with the clipper relations behind it) and its
-**Multiview** plays several streams at once; Musicdex is the music layer —
-songs and set lists tagged out of singing streams, with playlists by performer
-and organisation.
+**Holodex is a discovery reference, not a source** — no page of it is ingested.
+It indexes YouTube VTuber streams (live, upcoming, channels, organisations, a
+clip index with clipper relations) and its **Multiview** plays several streams
+at once. The API v2 needs `HOLODEX_API_KEY` and answers `403` without one, so
+its inventory cannot be counted before the work starts.
 
-What ingestion would take: the API v2 (live/upcoming, videos, channels,
-search, comment search) is the only machine-readable path, it needs a
-`HOLODEX_API_KEY` repository secret, and the docs publish no fixed quota —
-the terms reserve the right to throttle “excessive” use, so an adapter would
-have to sit behind `scripts/lib/rate-limit.ts` like every other source that
-pushes back. Every endpoint answers `403` without a key, so the inventory
-cannot even be counted before the work starts.
+**Musicdex** (music.holodex.net) **is now a source**. Its public API at
+`https://music.holodex.net/api/v2/` needs no key (only browser-like
+`User-Agent`, `Referer`, `Origin` headers); `MUSICDEX_API_KEY`/`HOLODEX_API_KEY`
+enables the keyed `api/v1/songs` path as an alternative. The project runs:
 
-What is already covered without them: the song and original-artist metadata
-comes from the linked VTuber Music Dataset and VocaDB, and the live/upcoming
-list from InnerTube, so neither site is the only route to anything this
-project needs. Read them for the two things it does not build — a clip index,
-and song-level tagging of a stream — not for their data. Their frontends are
-open (Holodex MIT, Musicdex Apache-2.0); their backend crawler and dataset are
-not.
+- `npm run data:musicdex` — harvests channel profiles (`/api/v2/channels`) and
+  songs (`/api/v2/songs/hot`) per org into `.cache/musicdex/musicdex.json`.
+  Org discovery falls back to Playwright scraping the homepage navigation.
+- `npm run data:musicdex-import -- --apply` — matches channels by YouTube
+  channel id (updates agency, avatar, subscriber/video count, tags, activity,
+  twitter external) and songs by YouTube video id (enriches items in
+  `data/items/` with song title, original artist, category, publishedAt), and
+  writes song records to `data/songs/` (region shards, category slices, index,
+  manifest). Songs are deduplicated by YouTube video id — Musicdex versions win
+  on collision, existing songs not re-harvested are kept.
+
+What this project gets from Musicdex that nothing else provides: curated
+song-level tagging (title, original artist, category) extracted from VTuber
+singing streams, plus channel profiles with org/agency, avatar, subscriber
+count, and activity state.
+
+What Holodex alone still provides that Musicdex does not: a clip index with
+clipper relations — not ingested by this project.
+
+Read them for their frontends (Holodex MIT, Musicdex Apache-2.0); their
+backend crawlers and datasets are not.
 
 ### 9–13. The platform APIs
 
@@ -878,6 +888,13 @@ npm run data:discover -- --source chuysan
 
 Each row carries a `channel_id`, so it is admitted to the identity registry as a `chuysan`-keyed candidate and then promoted through the same virtual-and-singing gate as vTubie and vdb rows. The directory is Thai-centred, so candidates arrive with `region: "sea"` by default.
 
+In addition to discovery, Chuysan has a dedicated import pipeline:
+`npm run data:chuysan` harvests the full roster into `.cache/chuysan/chuysan.json`,
+then `npm run data:chuysan-import -- --apply` matches each entry by YouTube
+channel id, classifies through `classifyChannel()`, rejects clip/fan accounts,
+and imports new records into `data/channels/`. The import supports
+`--shard N/M` for parallel volume jobs and `--limit <n>` for testing.
+
 #### What Chuysan has that this project does not
 
 | Chuysan | What it publishes | This project today | Plan |
@@ -940,8 +957,8 @@ are not measured here.
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | blocking JS + CSS | **125 KB** (116,014 B JS + 9,373 B CSS) | 282 KB (48,642 B JS + 233,943 B CSS), plus a 206 KB ad script | 276 KB | 385 KB | 165 KB | 32 KB of static HTML | 229 KB (131,307 B JS + 97,686 B CSS) + Google Fonts |
 | hashed asset cache | `immutable`, one year (Vercel) | no `Cache-Control`; ETag only | hashed | hashed | ten minutes, flat | ten minutes, flat | no `Cache-Control`, ETag only |
-| data access | committed JSON, no key | sitemap + one server-rendered page per entry, no key; the REST API is behind Cloudflare | API v2, `X-APIKEY` | same key | static JSON | static `list.json` | server-rendered HTML, no key |
-| inventory | **72,691 channels**, 1,803 items | 9,359 entries (905 V-Singer, 3,751 V-Streamer, 9,127 V-Tuber, 143 V-UP) | not published; `403` without a key | not published | 288 groups; performer list not published | 10,138 records | 672 channels (235 Twitch logins) |
+| data access | committed JSON, no key | sitemap + one server-rendered page per entry, no key; the REST API is behind Cloudflare | API v2, `X-APIKEY` | public API `api/v2/` no key (keyed `api/v1/songs` optional) | static JSON | static `list.json` | server-rendered HTML, no key |
+| inventory | **72,691 channels**, 1,803 items | 9,359 entries (905 V-Singer, 3,751 V-Streamer, 9,127 V-Tuber, 143 V-UP) | not published; `403` without a key | published via `/api/v2/channels` + `/api/v2/songs/hot` per org | 288 groups; performer list not published | 10,138 records | 672 channels (235 Twitch logins) |
 | platforms tracked | 9 with adapters | YouTube plus Twitch / X / Instagram / TikTok / Bilibili / Niconico links | YouTube (Twitch in Multiview only) | YouTube | YouTube, Twitch | Bilibili stats; ids for any | YouTube; Twitch as a directory |
 | regions | 10, aliases per locale | none — languages instead | language filters | — | TW, HK, MY | `cn`-centric | HK |
 | refresh | every 6 h | undocumented; `<lastmod>` allows incremental reads | undocumented | undocumented | ~30 min (its own timestamps) | ~5 min stats / <15 s live (its own claim) | undocumented; the state is edited, not measured |
