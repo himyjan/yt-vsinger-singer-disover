@@ -15,9 +15,6 @@ name: Import Innertube Music (All)
 #   Step 4 (fan-in): merge volumes, index, validate, commit
 
 on:
-  schedule:
-    # Weekly, Wednesday 09:00 UTC (after the sync's item pass)
-    - cron: "0 9 * * 3"
   workflow_dispatch:
 
 concurrency:
