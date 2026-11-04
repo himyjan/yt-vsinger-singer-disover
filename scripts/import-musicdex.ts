@@ -177,7 +177,7 @@ function songToRecord(
     gender: channel.gender,
     languages: channel.languages,
     isAi: channel.isAi,
-    title: channel.name,
+    title: ms.name,
     songTitle: ms.name,
     originalArtist: ms.originalArtist ?? null,
     category,
@@ -188,7 +188,7 @@ function songToRecord(
     isAcoustic: false,
     publishedAt: ms.availableAt ?? null,
     duration: null,
-    thumbnail: channel.avatar ?? null,
+    thumbnail: null,
     viewCount: null,
     url: `https://www.youtube.com/watch?v=${ms.videoId}`,
   };
