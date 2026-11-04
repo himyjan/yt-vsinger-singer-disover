@@ -188,7 +188,7 @@ function songToRecord(
     isAcoustic: false,
     publishedAt: ms.availableAt ?? null,
     duration: null,
-    thumbnail: null,
+    thumbnail: `https://i.ytimg.com/vi/${ms.videoId}/hqdefault.jpg`,
     viewCount: null,
     url: `https://www.youtube.com/watch?v=${ms.videoId}`,
   };
