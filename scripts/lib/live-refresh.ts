@@ -233,18 +233,54 @@ export async function refreshLivePass(
     const streamsById = new Map<string, InnerTubeLive[] | null>();
     let cursor = 0;
 
+    /** Shared progress counter, incremented by each worker as it finishes a channel. */
+    let checked = 0;
+    const total = liveTargets.length;
+    let lastProgressAt = Date.now();
+
+    const logProgress = (force: boolean): void => {
+      const nowMs = Date.now();
+      if (!force && nowMs - lastProgressAt < 10_000) return;
+      lastProgressAt = nowMs;
+      ctx.log(
+        `innertube live: ${checked}/${total} channel(s) checked ` +
+          `(${Math.round((checked / total) * 100)}%)`,
+      );
+    };
+
+    const perChannelTimeoutMs = 60_000; // 60 seconds per channel max
+
     const workers = Array.from(
       { length: Math.min(concurrency, liveTargets.length) },
       async () => {
         for (;;) {
           const index = cursor++;
-          if (index >= liveTargets.length) return;
+          if (index >= total) return;
           const channel = liveTargets[index]!;
-          streamsById.set(channel.id, await innertube.liveStreams(channel.id));
+
+          // Wrap the liveStreams call in its own timeout so a slow/dead
+          // channel can't block this worker (and therefore Promise.all)
+          // indefinitely. liveStreams() already has per-request timeouts, but
+          // a channel with 30 live/upcoming videos each calling streamState()
+          // can still take several minutes.
+          const channelTimeout = new Promise<null>((resolve) =>
+            setTimeout(() => resolve(null), perChannelTimeoutMs),
+          );
+          streamsById.set(
+            channel.id,
+            await Promise.race([
+              innertube.liveStreams(channel.id),
+              channelTimeout,
+            ]),
+          );
+
+          const c = ++checked;
+          if (c % 50 === 0 || c === total) logProgress(false);
         }
       },
     );
     await Promise.all(workers);
+    logProgress(true);
 
     for (const channel of liveTargets) {
       const streams = streamsById.get(channel.id) ?? null;
@@ -351,7 +387,19 @@ export async function refreshLivePass(
     (a.link.lastCheckedAt ?? "").localeCompare(b.link.lastCheckedAt ?? ""),
   );
 
-  for (const target of multiTargets.slice(0, ctx.limitMultiPlatformLive)) {
+  const multiLimit = Math.min(multiTargets.length, ctx.limitMultiPlatformLive);
+  let multiChecked = 0;
+  let multiLastProgressAt = Date.now();
+  const logMultiProgress = (force: boolean): void => {
+    const nowMs = Date.now();
+    if (!force && nowMs - multiLastProgressAt < 10_000) return;
+    multiLastProgressAt = nowMs;
+    ctx.log(
+      `multi-platform live: ${multiChecked}/${multiLimit} channel(s) checked`,
+    );
+  };
+
+  for (const target of multiTargets.slice(0, multiLimit)) {
     const adapter = adapterById.get(target.platform);
     if (!adapter?.live) continue;
 
@@ -369,6 +417,9 @@ export async function refreshLivePass(
       };
       const streams = await adapter.live(liveChannel);
       result.multiPlatformChecked++;
+      multiChecked++;
+      if (multiChecked % 50 === 0 || multiChecked === multiLimit)
+        logMultiProgress(false);
       if (!streams || streams.length === 0) continue;
       result.multiPlatformFound += streams.length;
       const current = new Set(streams.map((stream) => stream.id));
@@ -397,9 +448,10 @@ export async function refreshLivePass(
     }
   }
   if (multiTargets.length) {
-    log(
+    logMultiProgress(true);
+    ctx.log(
       `multi-platform live: checked ${result.multiPlatformChecked}/` +
-        `${Math.min(multiTargets.length, ctx.limitMultiPlatformLive)} channel(s) across ` +
+        `${multiLimit} channel(s) across ` +
         `${[...PER_CHANNEL_LIVE_PLATFORMS].join(", ")}, ` +
         `found ${result.multiPlatformFound}`,
     );
