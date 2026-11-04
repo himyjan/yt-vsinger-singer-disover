@@ -165,7 +165,7 @@ jobs:
           # imports only those channels' music items. matrix.volume is
           # 0-based (0-19); --shard is 1-based.
           SHARD=$(node -e "console.log(${{ matrix.volume }} + 1)")
-          ARGS="--shard ${SHARD}/20 --music-only --limit 500 --max-uploads 3000 --delay-ms 150"
+          ARGS="--shard ${SHARD}/20 --music-only --limit 500 --max-uploads 3000 --delay-ms 150 --retry-dead"
           if [ "${DRY_RUN:-false}" = "true" ]; then ARGS="$ARGS --dry-run"; else ARGS="$ARGS --apply"; fi
 
           # The scripts read data/ through the working directory, so the
