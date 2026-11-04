@@ -77,7 +77,7 @@ function main(): void {
     fs.rmSync(PUBLIC_DATA_DIR, { recursive: true, force: true });
   }
 
-  const count = copyDir(DATA_DIR, PUBLIC_DATA_DIR, ["songs"]);
+  const count = copyDir(DATA_DIR, PUBLIC_DATA_DIR, []);
   console.log(`[prepare:public] copied ${count} dataset file(s) to public/data/`);
   checkSiteSize(PUBLIC_DATA_DIR);
 }
