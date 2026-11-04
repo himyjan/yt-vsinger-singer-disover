@@ -119,6 +119,7 @@ interface Options {
   retryDead: boolean;
   maxUploads: number;
   delayMs: number;
+  budgetMinutes: number;
 }
 
 function parseArgs(argv: string[]): Options {
@@ -131,6 +132,7 @@ function parseArgs(argv: string[]): Options {
     retryDead: false,
     maxUploads: 3000, // Channels with more uploads than this are auto-skipped
     delayMs: 350, // ms between InnerTube requests; lower = faster, riskier
+    budgetMinutes: 330, // overall time budget per job (leaves buffer before 360-min job timeout)
   };
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i]!;
@@ -165,11 +167,15 @@ function parseArgs(argv: string[]): Options {
         options.delayMs = Math.max(50, Number(value ?? 350));
         i++;
         break;
+      case "--budget-minutes":
+        options.budgetMinutes = Math.max(10, Number(value ?? 330));
+        i++;
+        break;
       case "--help":
       case "-h":
         console.log(
           [
-            "Usage: npm run data:innertube-music-import [--apply] [--shard N/M] [--limit <n>] [--music-only] [--channel-timeout <ms>] [--retry-dead] [--max-uploads <n>] [--delay-ms <n>]",
+            "Usage: npm run data:innertube-music-import [--apply] [--shard N/M] [--limit <n>] [--music-only] [--channel-timeout <ms>] [--retry-dead] [--max-uploads <n>] [--delay-ms <n>] [--budget-minutes <n>]",
             "",
             "  (no flags)   report what would be imported, write nothing",
             "  --apply      write song shards into data/songs/",
@@ -182,6 +188,7 @@ function parseArgs(argv: string[]): Options {
             "  --retry-dead   retry channels that previously timed out (dead-channels.json)",
             "  --max-uploads  skip channels with more than this many uploads (default: 3000 ≈ 17 min at 350ms each)",
             "  --delay-ms     ms between InnerTube requests (default: 350; lower = faster, higher rate-limit risk)",
+            "  --budget-minutes  overall time budget per job in minutes (default: 330; stops early and writes partial results)",
           ].join("\n")
         );
         process.exit(0);
@@ -392,6 +399,9 @@ async function main(): Promise<void> {
 
   const now = new Date().toISOString();
   const songs: SongRecord[] = [];
+  const startTime = Date.now();
+  const budgetMs = options.budgetMinutes * 60_000;
+  const WRITE_EVERY_CHANNELS = 100;
 
   // InnerTube source for per-video category lookup (music-only mode).
   let source: InnerTubeSource | null = null;
@@ -407,7 +417,50 @@ async function main(): Promise<void> {
   // Channels that timed out or errored during this run — written to dead file
   // so they're skipped on subsequent runs unless --retry-dead is used.
   const deadChannels = readDead(options.shard);
+  let channelsProcessed = 0;
+  let lastWriteAt = startTime;
+
+  /** Write the songs collected so far, merged with existing volume songs. */
+  async function writePartialSongs(label: string): Promise<void> {
+    if (songs.length === 0) return;
+    songs.sort((a, b) => a.id.localeCompare(b.id));
+    let volRoot: string;
+    if (options.shard) {
+      const shard = parseShard(options.shard);
+      const volIndex = shard.index - 1;
+      volRoot = path.join(
+        process.cwd(),
+        ".volumes",
+        `vol-${volIndex}`,
+        "data",
+      );
+    } else {
+      volRoot = path.join(process.cwd(), "data");
+    }
+    const existingSongs = readAllSongs(volRoot);
+    const merged = new Map<string, SongRecord>();
+    for (const song of existingSongs) merged.set(song.id, song);
+    for (const song of songs) merged.set(song.id, song);
+    const allSongs = [...merged.values()];
+    allSongs.sort((a, b) => a.id.localeCompare(b.id));
+    ensureDir(volRoot);
+    writeSongShards(allSongs, now, volRoot);
+    console.log(
+      `innertube-music-import: ${label} wrote ${allSongs.length} song(s) (${songs.length} new this run)`,
+    );
+  }
+
   for (const entry of targets) {
+    // Overall time budget: stop early if we're running out of time so
+    // partial results are saved before the job timeout kills the run.
+    const elapsed = Date.now() - startTime;
+    if (elapsed >= budgetMs) {
+      console.log(
+        `innertube-music-import: budget of ${options.budgetMinutes} min exhausted after ${channelsProcessed}/${targets.length} channels — writing partial results`,
+      );
+      break;
+    }
+
     // Skip channels with too many uploads - they will always time out
     // because each upload requires a getBasicInfo() call (~350ms each).
     if (entry.uploads.length > options.maxUploads) {
@@ -503,6 +556,15 @@ async function main(): Promise<void> {
     if (channelProcessed) {
       alreadyProcessed.add(entry.channelId);
       writeProgress(options.shard, alreadyProcessed);
+      channelsProcessed++;
+
+      // Write partial results periodically so progress isn't lost if
+      // the job is canceled or times out.
+      if (channelsProcessed % WRITE_EVERY_CHANNELS === 0) {
+        await writePartialSongs(
+          `after ${channelsProcessed}/${targets.length} channels`,
+        );
+      }
     }
   }
 
@@ -525,60 +587,12 @@ async function main(): Promise<void> {
     }
   }
 
-  // Sort by id for stable output (same as the sync's total order).
-  songs.sort((a, b) => a.id.localeCompare(b.id));
+  // Final write of all songs collected this run.
+  await writePartialSongs("final");
 
   if (songs.length === 0) {
     console.log("innertube-music-import: no new songs to import — nothing written");
     return;
-  }
-
-  // Write song shards into .volumes/vol-N/data/songs/ — one file per volume job.
-  // writeSongShards takes a root dir and writes songs/{region}/{bucket}.json.
-  // We pass a per-volume root so each job writes its own slice.
-  if (options.shard) {
-    const shard = parseShard(options.shard);
-    const volIndex = shard.index - 1;
-    const volRoot = path.join(
-      process.cwd(),
-      ".volumes",
-      `vol-${volIndex}`,
-      "data",
-    );
-
-    // Read existing songs from this volume so we don't delete songs in
-    // buckets/regions this shard doesn't touch. Songs are sharded by song-id
-    // hash, not by channel shard, so two volume jobs can write songs into the
-    // same region/bucket file. We merge new songs with existing ones before
-    // writing, preserving everything already in the volume.
-    const existingSongs = readAllSongs(volRoot);
-    const merged = new Map<string, SongRecord>();
-    for (const song of existingSongs) merged.set(song.id, song);
-    for (const song of songs) merged.set(song.id, song);
-    const allSongs = [...merged.values()];
-    allSongs.sort((a, b) => a.id.localeCompare(b.id));
-
-    ensureDir(volRoot);
-    writeSongShards(allSongs, now, volRoot);
-    console.log(
-      `innertube-music-import: wrote ${allSongs.length} song(s) (${songs.length} new) into .volumes/vol-${volIndex}/data/songs/`,
-    );
-  } else {
-    // No shard: write into data/ directly.
-    const volRoot = path.join(process.cwd(), "data");
-
-    // Read existing songs and merge with new ones, same as the sharded path.
-    const existingSongs = readAllSongs(volRoot);
-    const merged = new Map<string, SongRecord>();
-    for (const song of existingSongs) merged.set(song.id, song);
-    for (const song of songs) merged.set(song.id, song);
-    const allSongs = [...merged.values()];
-    allSongs.sort((a, b) => a.id.localeCompare(b.id));
-
-    writeSongShards(allSongs, now, volRoot);
-    console.log(
-      `innertube-music-import: wrote ${allSongs.length} song(s) (${songs.length} new) into data/songs/`,
-    );
   }
 }
 
