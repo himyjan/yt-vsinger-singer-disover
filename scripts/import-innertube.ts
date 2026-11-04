@@ -42,6 +42,7 @@ import { ensureDir, readJson, writeJsonIfChanged } from "./lib/io";
 
 const CACHE_DIR = ".cache/innertube-music";
 const PROGRESS_DIR = path.join(process.cwd(), "data", "innertube-music-import-progress");
+const DEAD_CHANNELS_DIR = path.join(process.cwd(), "data", "innertube-music-dead");
 
 function progressPath(shard: string | null): string {
   return path.join(
@@ -69,6 +70,32 @@ function writeProgress(shard: string | null, processed: Set<string>): void {
   );
 }
 
+function deadPath(shard: string | null): string {
+  return path.join(
+    DEAD_CHANNELS_DIR,
+    `dead-${shard?.replace("/", "-") ?? "all"}.json`,
+  );
+}
+
+function readDead(shard: string | null): Set<string> {
+  try {
+    const data = JSON.parse(
+      fs.readFileSync(deadPath(shard), "utf8"),
+    ) as { dead?: string[] };
+    return new Set(data.dead ?? []);
+  } catch {
+    return new Set();
+  }
+}
+
+function writeDead(shard: string | null, dead: Set<string>): void {
+  fs.mkdirSync(DEAD_CHANNELS_DIR, { recursive: true });
+  fs.writeFileSync(
+    deadPath(shard),
+    JSON.stringify({ dead: [...dead] }, null, 2),
+  );
+}
+
 interface MusicEntry {
   channelId: string;
   channelName: string;
@@ -88,6 +115,8 @@ interface Options {
   limit: number | null;
   shard: string | null;
   musicOnly: boolean;
+  channelTimeoutMs: number;
+  retryDead: boolean;
 }
 
 function parseArgs(argv: string[]): Options {
@@ -96,6 +125,8 @@ function parseArgs(argv: string[]): Options {
     limit: null,
     shard: null,
     musicOnly: false,
+    channelTimeoutMs: 1_200_000, // 20 minutes per channel
+    retryDead: false,
   };
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i]!;
@@ -115,11 +146,18 @@ function parseArgs(argv: string[]): Options {
       case "--music-only":
         options.musicOnly = true;
         break;
+      case "--channel-timeout":
+        options.channelTimeoutMs = Math.max(10_000, Number(value ?? 1_200_000));
+        i++;
+        break;
+      case "--retry-dead":
+        options.retryDead = true;
+        break;
       case "--help":
       case "-h":
         console.log(
           [
-            "Usage: npm run data:innertube-music-import [--apply] [--shard N/M] [--limit <n>] [--music-only]",
+            "Usage: npm run data:innertube-music-import [--apply] [--shard N/M] [--limit <n>] [--music-only] [--channel-timeout <ms>] [--retry-dead]",
             "",
             "  (no flags)   report what would be imported, write nothing",
             "  --apply      write song shards into data/songs/",
@@ -127,6 +165,9 @@ function parseArgs(argv: string[]): Options {
             "  --limit <n>  import at most n channels",
             "  --music-only only import uploads whose YouTube category ID is '10' (Music).",
             "               Requires one InnerTube getInfo() call per upload.",
+            "  --channel-timeout <ms>  per-channel timeout in ms (default: 1200000 = 20 min)",
+            "               Channels taking longer are marked dead and skipped.",
+            "  --retry-dead   retry channels that previously timed out (dead-channels.json)",
           ].join("\n")
         );
         process.exit(0);
@@ -292,14 +333,23 @@ async function main(): Promise<void> {
 
   // Resume: skip channels already processed in a previous run of this shard.
   const alreadyProcessed = readProgress(options.shard);
+  const alreadyDead = readDead(options.shard);
   const previouslyProcessed = targets.filter((e) =>
     alreadyProcessed.has(e.channelId),
   ).length;
   targets = targets.filter((e) => !alreadyProcessed.has(e.channelId));
-  if (alreadyProcessed.size > 0) {
+  // Also skip previously dead channels unless --apply --retry-dead is used
+  if (options.retryDead) {
     console.log(
-      `innertube-music-import: skipping ${alreadyProcessed.size} already-processed channel(s) from previous run(s)`,
+      `innertube-music-import: ${alreadyDead.size} previously dead channel(s) will be retried`,
     );
+  } else {
+    targets = targets.filter((e) => !alreadyDead.has(e.channelId));
+    if (alreadyDead.size > 0) {
+      console.log(
+        `innertube-music-import: skipping ${alreadyDead.size} previously dead channel(s) (re-run with --retry-dead to retry)`,
+      );
+    }
   }
 
   if (options.limit) {
@@ -340,32 +390,74 @@ async function main(): Promise<void> {
   }
 
   let musicFiltered = 0;
+  // Channels that timed out or errored during this run — written to dead file
+  // so they're skipped on subsequent runs unless --retry-dead is used.
+  const deadChannels = readDead(options.shard);
   for (const entry of targets) {
-    for (const upload of entry.uploads) {
-      if (options.musicOnly && source) {
-        try {
-          const info = await source.getBasicInfo(upload.id);
-          const categoryId = info?.category_id;
-          if (categoryId !== "10") {
-            musicFiltered += 1;
-            continue;
+    // Wrap each channel's processing in a timeout so a slow/dead channel
+    // doesn't block the entire run indefinitely. If a channel takes longer
+    // than channelTimeoutMs, it's marked as dead and skipped.
+    const channelTimeout = new Promise<never>((_resolve, reject) =>
+      setTimeout(
+        () =>
+          reject(
+            new Error(
+              `channel ${entry.channelId} (${entry.channelName}) timed out after ${options.channelTimeoutMs / 1000}s`,
+            ),
+          ),
+        options.channelTimeoutMs,
+      ),
+    );
+
+    let channelProcessed = false;
+    try {
+      await Promise.race([
+        (async () => {
+          for (const upload of entry.uploads) {
+            if (options.musicOnly && source) {
+              try {
+                const info = await source.getBasicInfo(upload.id);
+                const categoryId = info?.category_id;
+                if (categoryId !== "10") {
+                  musicFiltered += 1;
+                  continue;
+                }
+              } catch (err) {
+                const msg = err instanceof Error ? err.message : String(err);
+                console.error(`    category check failed ${upload.id}: ${msg}`);
+                // On failure, include the upload rather than dropping it silently.
+              }
+            }
+            const song = uploadToSong(upload, entry, now);
+            if (song) songs.push(song);
           }
-        } catch (err) {
-          const msg = err instanceof Error ? err.message : String(err);
-          console.error(`    category check failed ${upload.id}: ${msg}`);
-          // On failure, include the upload rather than dropping it silently.
-        }
-      }
-      const song = uploadToSong(upload, entry, now);
-      if (song) songs.push(song);
+          for (const release of entry.releases) {
+            songs.push(releaseToSong(release, entry, now));
+          }
+          channelProcessed = true;
+        })(),
+        channelTimeout,
+      ]);
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      console.error(`    channel ${entry.channelId} (${entry.channelName}): ${msg}`);
+      // Mark as dead so it's not retried next run unless --retry-dead is used
+      deadChannels.add(entry.channelId);
+      continue;
     }
-    for (const release of entry.releases) {
-      songs.push(releaseToSong(release, entry, now));
+
+    if (channelProcessed) {
+      alreadyProcessed.add(entry.channelId);
+      writeProgress(options.shard, alreadyProcessed);
     }
-    // Mark this channel as processed and persist progress after each channel
-    // so an interrupted run can resume without re-processing.
-    alreadyProcessed.add(entry.channelId);
-    writeProgress(options.shard, alreadyProcessed);
+  }
+
+  // Write dead channels report
+  if (deadChannels.size > 0) {
+    writeDead(options.shard, deadChannels);
+    console.log(
+      `innertube-music-import: ${deadChannels.size} channel(s) timed out or failed — written to dead-channels.json`,
+    );
   }
 
   if (options.musicOnly) {
