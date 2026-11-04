@@ -495,7 +495,24 @@ async function main(): Promise<void> {
     const channelTimeoutMs = Math.min(
       options.channelTimeoutMs + entry.uploads.length * 10_000,
       30 * 60_000,
+      // Never let one channel burn past the remaining budget:
+      // cap at remaining time minus a 2-minute buffer for writing.
+      Math.max(0, budgetMs - (Date.now() - startTime) - 2 * 60_000),
     );
+    if (channelTimeoutMs <= 0) {
+      // Not enough time left for even one channel — save the rest to dead.
+      const remainingIndex = targets.indexOf(entry);
+      for (const remaining of targets.slice(remainingIndex)) {
+        deadChannels.add(remaining.channelId);
+        console.log(
+          `  BUDGET: ${remaining.channelId} (${remaining.channelName}) not processed — budget exhausted, saved to dead list`,
+        );
+      }
+      console.log(
+        `innertube-music-import: budget of ${options.budgetMinutes} min exhausted after ${channelsProcessed}/${targets.length} channels — writing partial results`,
+      );
+      break;
+    }
     const channelTimeout = new Promise<never>((_resolve, reject) =>
       setTimeout(
         () =>
@@ -513,6 +530,17 @@ async function main(): Promise<void> {
       await Promise.race([
         (async () => {
           for (const upload of entry.uploads) {
+            // Budget check inside the upload loop: if we're running out of
+            // time, stop mid-channel so partial results can be saved.
+            const elapsed = Date.now() - startTime;
+            if (elapsed >= budgetMs) {
+              deadChannels.add(entry.channelId);
+              console.log(
+                `  BUDGET: ${entry.channelId} (${entry.channelName}) stopped mid-channel — budget exhausted, saved to dead list`,
+              );
+              return;
+            }
+
             // Per-upload timeout: each getBasicInfo() call gets its own
             // timeout so one stuck upload doesn't block the whole channel.
             const uploadTimeout = new Promise<never>((_resolve, reject) =>
