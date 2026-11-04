@@ -1,17 +1,21 @@
-name: Import Musicdex songs
+name: Import Musicdex channels and songs
 
-# Harvests song metadata from Musicdex (music.holodex.net) and enriches
-# dataset items with curated song title, original artist, and category.
+# Harvests channel profiles and songs from Musicdex (music.holodex.net) and
+# enriches the dataset with curated song title, original artist, category,
+# channel agency, avatar, subscriber count, and more.
 # The harvest writes `.cache/musicdex/musicdex.json`, and the importer
-# reads it, matches each song to a dataset item by YouTube video id, and
-# writes enriched items back to data/items/<region>/<bucket>.json.
+# reads it, matches channels by YouTube channel id and songs by YouTube
+# video id, and writes enriched records back to data/channels/ and
+# data/items/<region>/<bucket>.json.
 #
-#   npm run data:musicdex              # harvest song metadata from Musicdex
+#   npm run data:musicdex              # harvest channel profiles + songs
 #   npm run data:musicdex-import       # report what would be enriched
-#   npm run data:musicdex-import -- --apply  # write the enriched items
+#   npm run data:musicdex-import -- --apply  # write the enriched data
 #
-# Musicdex needs MUSICDEX_API_KEY or HOLODEX_API_KEY. Without a key the
-# harvest writes nothing, so there is nothing to import.
+# The public API at https://music.holodex.net/api/v2/ needs no key. When
+# MUSICDEX_API_KEY / HOLODEX_API_KEY is set, the keyed API path is used
+# instead. Playwright is used as a fallback to discover orgs from the
+# homepage.
 
 on:
   schedule:
@@ -34,7 +38,7 @@ permissions:
 
 jobs:
   harvest-and-import:
-    name: Harvest and import Musicdex songs
+    name: Harvest and import Musicdex channels and songs
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
@@ -59,6 +63,9 @@ jobs:
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
 
+      - name: Install Chrome for Playwright (org discovery fallback)
+        run: npx playwright install chromium
+
       - name: Restore musicdex cache
         uses: actions/cache@v6
         with:
@@ -68,22 +75,22 @@ jobs:
           restore-keys: |
             musicdex-harvest-
 
-      - name: Harvest Musicdex songs
+      - name: Harvest Musicdex channels and songs
         env:
           MUSICDEX_API_KEY: ${{ secrets.MUSICDEX_API_KEY }}
           HOLODEX_API_KEY: ${{ secrets.HOLODEX_API_KEY }}
         run: npm run data:musicdex
 
-      - name: Import Musicdex songs
+      - name: Import Musicdex channels and songs
         env:
           DRY_RUN: ${{ inputs.dry-run }}
         run: |
           if [ ! -f .cache/musicdex/musicdex.json ]; then
-            echo "No musicdex snapshot found — nothing to import (harvest may have found no data or no API key)."
+            echo "No musicdex snapshot found — nothing to import (harvest may have found no data)."
             exit 0
           fi
           if [ "$DRY_RUN" = "true" ]; then
-            echo "Dry run: would enrich musicdex songs"
+            echo "Dry run: would enrich musicdex channels and items"
             npm run data:musicdex-import
           else
             npm run data:musicdex-import -- --apply
@@ -103,24 +110,24 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git fetch origin "$BRANCH"
           git reset --mixed "origin/$BRANCH"
-          git add data/items data/search data/manifest.json
+          git add data/channels data/items data/search data/manifest.json
           if git diff --cached --quiet; then
             echo "Musicdex imports unchanged — nothing to commit"
             exit 0
           fi
-          git commit -m "data: import musicdex song metadata (${{ github.run_number }})"
+          git commit -m "data: import musicdex channel profiles and songs (${{ github.run_number }})"
           git push origin "HEAD:$BRANCH"
 
       - name: Summary
         run: |
           {
-            echo "### Import Musicdex songs"
+            echo "### Import Musicdex channels and songs"
             echo ""
             echo "| | |"
             echo "| --- | --- |"
             echo "| Source | Musicdex (music.holodex.net) |"
-            echo "| Credentials | MUSICDEX_API_KEY / HOLODEX_API_KEY |"
-            echo "| Step | harvest → match by video id → enrich items → index → validate → commit |"
+            echo "| Credentials | MUSICDEX_API_KEY / HOLODEX_API_KEY (optional; public API works without) |"
+            echo "| Step | harvest → match channels/items → enrich → index → validate → commit |"
             echo "| Dry run | ${{ inputs.dry-run }} |"
-            echo "| Committed | \`data/items\`, \`data/search\`, \`data/manifest.json\` |"
+            echo "| Committed | \`data/channels\`, \`data/items\`, \`data/search\`, \`data/manifest.json\` |"
           } >> "$GITHUB_STEP_SUMMARY"
