@@ -305,7 +305,10 @@ jobs:
           flush_batch() {
             if [ "${#batch_files[@]}" -eq 0 ]; then return 0; fi
             batch_num=$((batch_num + 1))
-            git add "${batch_files[@]}" data/innertube-music-import-progress
+            git add "${batch_files[@]}"
+            if [ -d "data/innertube-music-import-progress" ]; then
+              git add data/innertube-music-import-progress
+            fi
             git commit -m "data: import Innertube music (${{ github.run_number }}) batch $batch_num"
             git push origin "HEAD:$BRANCH"
             batch_files=()
