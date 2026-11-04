@@ -128,7 +128,7 @@ function parseArgs(argv: string[]): Options {
     musicOnly: false,
     channelTimeoutMs: 1_200_000, // 20 minutes per channel
     retryDead: false,
-    maxUploads: 3428, // Channels with more uploads than this are auto-skipped
+    maxUploads: 3000, // Channels with more uploads than this are auto-skipped
   };
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i]!;
@@ -174,7 +174,7 @@ function parseArgs(argv: string[]): Options {
             "  --channel-timeout <ms>  per-channel timeout in ms (default: 1200000 = 20 min)",
             "               Channels taking longer are marked dead and skipped.",
             "  --retry-dead   retry channels that previously timed out (dead-channels.json)",
-            "  --max-uploads  skip channels with more than this many uploads (default: 3428 ≈ 20 min at 350ms each)",
+            "  --max-uploads  skip channels with more than this many uploads (default: 3000 ≈ 17 min at 350ms each)",
           ].join("\n")
         );
         process.exit(0);
