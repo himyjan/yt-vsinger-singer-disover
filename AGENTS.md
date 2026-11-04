@@ -360,16 +360,12 @@ page came from, so its base is `""`. **The client already reads N origins**:
 in `src/lib/dataset.ts` fans out and merges. The file is optional — absent is
 the single-origin deployment, and that path must stay exactly as it is.
 
-**`data/songs/` is not published to the site.** It is ~3.7 GB locally (1M+
-songs), which exceeds GitHub Pages' 1 GB site ceiling. `prepare-public.ts`
-skips it with `skipDirs: ["songs"]`, and `build-api.ts` drops the songs
-endpoints. On a single-origin deployment the frontend's `loadSongs()` fetches
-`data/songs/manifest.json`, gets a 404, and gracefully shows "No songs" —
-the Songs tab only works on a volume-split deployment where `data/songs/`
-shards live under a volume's own `data/` and are served through
-`data/volumes.json`. To publish songs, split the catalogue into volumes
-(`npm run data:volumes -- --count N`) and deploy each volume as its own site
-origin.
+**`data/songs/` is published to the site.** It is ~5.7 MB locally (3,259
+songs), well under GitHub Pages' 1 GB site ceiling. `prepare-public.ts`
+copies it with the rest of `data/`, and `build-api.ts` includes the songs
+endpoints. On any deployment the frontend's `loadSongs()` fetches
+`data/songs/manifest.json` and shows the Songs tab — the Songs tab works on
+both single-origin and volume-split deployments.
 
 ### 10. Every record keeps its provenance
 
