@@ -81,10 +81,12 @@ interface Options {
   apply: boolean;
   limit: number | null;
   batchSize: number;
+  shardIndex: number;
+  shardCount: number;
 }
 
 function parseArgs(argv: string[]): Options {
-  const options: Options = { apply: false, limit: null, batchSize: 50 };
+  const options: Options = { apply: false, limit: null, batchSize: 50, shardIndex: 0, shardCount: 1 };
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i]!;
     const value = argv[i + 1];
@@ -100,6 +102,20 @@ function parseArgs(argv: string[]): Options {
         options.batchSize = Math.max(1, Math.min(50, Number(value ?? 50)));
         i++;
         break;
+      case "--shard": {
+        const [indexRaw, countRaw] = String(value ?? "").split("/");
+        const index = Number(indexRaw);
+        const count = Number(countRaw);
+        if (Number.isInteger(index) && Number.isInteger(count) && count > 0 && index >= 1 && index <= count) {
+          options.shardIndex = index - 1;
+          options.shardCount = count;
+        } else {
+          logErr(`invalid --shard value: ${value}; expected N/M with 1 <= N <= M`);
+          process.exit(1);
+        }
+        i++;
+        break;
+      }
       case "--help":
       case "-h":
         log(
@@ -109,6 +125,7 @@ function parseArgs(argv: string[]): Options {
             "  --apply         import the channels the gate admits",
             "  --limit <n>     resolve at most n names",
             "  --batch <n>     ids per import call (max 50)",
+            "  --shard N/M     only this shard (1-based), e.g. --shard 1/20",
           ].join("\n")
         );
         process.exit(0);
@@ -289,7 +306,10 @@ async function main(): Promise<void> {
   })();
 
   const limit = options.limit ?? entries.length;
-  const toResolve = entries.slice(0, limit);
+  // Apply shard first (every shardCount-th entry starting at shardIndex),
+  // then limit. This lets N parallel jobs split the entries without overlap.
+  const sharded = entries.filter((_e, idx) => idx % options.shardCount === options.shardIndex);
+  const toResolve = sharded.slice(0, limit);
 
   for (let i = 0; i < toResolve.length; i++) {
     const entry = toResolve[i]!;
