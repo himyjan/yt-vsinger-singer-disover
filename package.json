@@ -99,7 +99,7 @@
     "data:youtube-discover-import": "oxnode scripts/import-youtube.ts"
   },
   "dependencies": {
-    "@google/genai": "^2.32.0",
+    "@google/genai": "^3.0.0",
     "@tailwindcss/vite": "^4.3.4",
     "@vitejs/plugin-vue": "^6.0.10",
     "cime-sdk": "^1.2.0",
