@@ -99,7 +99,7 @@ jobs:
           # The pool and the delay are what keep a volume at ~19 min instead of
           # 78: the limiter spaces the requests, the workers hide the latency.
           ARGS=(--live-only --limit-live 7000 --limit-multi-platform-live 400)
-          ARGS+=(--live-concurrency 12 --innertube-delay 150)
+          ARGS+=(--live-concurrency 12 --innertube-delay 100)
           if [ "${DRY_RUN:-false}" = "true" ]; then ARGS+=(--dry-run); fi
           VOL_DIR=".volumes/vol-${{ matrix.volume }}/data"
           mv data data-full
