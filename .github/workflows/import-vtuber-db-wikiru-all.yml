@@ -102,7 +102,7 @@ jobs:
         run: npm ci --no-audit --no-fund
 
       - name: Download harvest snapshot
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: vtuber-db-wikiru-snapshot
           path: .cache/vtuber-db-wikiru
@@ -165,7 +165,7 @@ jobs:
         run: npm ci --no-audit --no-fund
 
       - name: Download harvest snapshot
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: vtuber-db-wikiru-snapshot
           path: .cache/vtuber-db-wikiru
