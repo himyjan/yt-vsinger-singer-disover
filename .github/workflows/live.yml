@@ -102,7 +102,7 @@ jobs:
           # Process ~2,500 channels per job so each completes well within the
           # limit; remaining channels are picked up next run.
           ARGS=(--live-only --limit-live 2500 --limit-multi-platform-live 400)
-          ARGS+=(--live-concurrency 12 --innertube-delay 100)
+          ARGS+=(--live-concurrency 12 --innertube-delay 250)
           if [ "${DRY_RUN:-false}" = "true" ]; then ARGS+=(--dry-run); fi
           VOL_DIR=".volumes/vol-${{ matrix.volume }}/data"
           mv data data-full
