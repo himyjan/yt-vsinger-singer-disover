@@ -96,10 +96,13 @@ jobs:
           # The cap must stay above the largest volume's YouTube count (3,283
           # at twenty volumes); below it, `page` never advances and that
           # volume's tail is skipped forever. 7,000 leaves room to grow.
-          # The pool and the delay are what keep a volume at ~19 min instead of
-          # 78: the limiter spaces the requests, the workers hide the latency.
-          ARGS=(--live-only --limit-live 7000 --limit-multi-platform-live 400)
-          ARGS+=(--live-concurrency 12 --innertube-delay 250)
+          # Each volume has ~3,284 YouTube channels. At 100ms delay per
+          # request with ~2 requests per channel plus per-video getBasicInfo
+          # calls, processing all 3,284 can exceed the 60-minute job timeout.
+          # Process ~2,500 channels per job so each completes well within the
+          # limit; remaining channels are picked up next run.
+          ARGS=(--live-only --limit-live 2500 --limit-multi-platform-live 400)
+          ARGS+=(--live-concurrency 12 --innertube-delay 100)
           if [ "${DRY_RUN:-false}" = "true" ]; then ARGS+=(--dry-run); fi
           VOL_DIR=".volumes/vol-${{ matrix.volume }}/data"
           mv data data-full
