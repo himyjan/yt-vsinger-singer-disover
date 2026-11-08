@@ -6,8 +6,9 @@
  *   GET https://api.chzzk.naver.com/service/v1.0/channels?categoryCode=...&size=...
  * No authentication required for basic channel listing.
  *
- * Only VTuber/VSinger channels are harvested — keywords filter out real
- * singers.
+ * Only VTuber / VSinger channels are harvested — keywords filter out real
+ * singers. Multiple category codes are tried (GAME, MUSIC, ETC) so music
+ * and variety VTubers are not missed.
  *
  *   npm run data:chzzk              # harvest CHZZK VTuber candidates
  *   npm run data:chzzk -- --limit 200
@@ -24,14 +25,24 @@ const CHZZK_API = "https://api.chzzk.naver.com/service/v1.0";
 const CACHE_DIR = ".cache/chzzk";
 const OUT_PATH = path.join(CACHE_DIR, "chzzk.json");
 
+/** Category codes to harvest — GAME plus MUSIC/ETC for music VTubers. */
+const CATEGORY_CODES = ["GAME", "MUSIC", "ETC"];
+
 /** VTuber / VSinger keywords — only channels matching these are kept. */
 const VTUBER_KEYWORDS = [
   "vtuber",
   "vsinger",
-  "버추얼",
   "버튜버",
+  "버추얼",
   "가상",
   "노래방",
+  "노래",
+  "음악",
+  "라이브",
+  "커버",
+  "버추얼유튜버",
+  "가상유튜버",
+  "버츄얼",
   "virtual youtuber",
   "virtual singer",
 ];
@@ -64,7 +75,7 @@ function parseArgs(argv: string[]): Options {
           [
             "Usage: npm run data:chzzk [--limit <n>]",
             "",
-            "  --limit <n>   max channels (default 200)",
+            "  --limit <n>   max channels per category (default 200)",
           ].join("\n")
         );
         process.exit(0);
@@ -78,7 +89,7 @@ function parseArgs(argv: string[]): Options {
   return options;
 }
 
-/** True when the channel looks like a VTuber/VSinger (not a real singer). */
+/** True when the channel looks like a VTuber / VSinger (not a real singer). */
 function isVtuberChannel(ch: ChzzkChannel): boolean {
   const haystack = ch.channelName.toLowerCase();
   return VTUBER_KEYWORDS.some((kw) => haystack.includes(kw.toLowerCase()));
@@ -90,29 +101,47 @@ async function main(): Promise<void> {
 
   fs.mkdirSync(CACHE_DIR, { recursive: true });
 
-  console.log("chzzk: fetching VTuber channel listings");
-  const res = await fetchJson<{ content?: ChzzkChannel[] }>(
-    `${CHZZK_API}/channels?categoryCode=GAME&size=${limit}`,
-  );
+  const allChannels: ChzzkChannel[] = [];
+  const seen = new Set<string>();
 
-  if (!res?.content) {
-    console.log("chzzk: no channel data returned");
-    process.exit(0);
+  for (const categoryCode of CATEGORY_CODES) {
+    console.log(
+      `chzzk: fetching category ${categoryCode} (limit ${limit})`,
+    );
+    const res = await fetchJson<{ content?: ChzzkChannel[] }>(
+      `${CHZZK_API}/channels?categoryCode=${categoryCode}&size=${limit}`,
+    );
+
+    if (!res?.content) {
+      console.log(`chzzk: category ${categoryCode} returned no data`);
+      continue;
+    }
+
+    let added = 0;
+    for (const ch of res.content) {
+      if (!ch.channelId || seen.has(ch.channelId)) continue;
+      seen.add(ch.channelId);
+      allChannels.push(ch);
+      added++;
+    }
+    console.log(`chzzk: category ${categoryCode} → ${added} new channel(s)`);
   }
 
   // Filter to VTuber/VSinger only — real singers are excluded.
-  const vtuberChannels = res.content.filter(isVtuberChannel);
+  const vtuberChannels = allChannels.filter(isVtuberChannel);
 
   const snapshot = {
     generatedAt: new Date().toISOString(),
     count: vtuberChannels.length,
+    totalScanned: allChannels.length,
+    categories: CATEGORY_CODES,
     data: vtuberChannels,
     keywords: VTUBER_KEYWORDS,
   };
 
   fs.writeFileSync(OUT_PATH, JSON.stringify(snapshot, null, 2));
   console.log(
-    `chzzk: ${vtuberChannels.length} VTuber channel(s) of ${res.content.length} → ${OUT_PATH}`,
+    `chzzk: ${vtuberChannels.length} VTuber channel(s) of ${allChannels.length} scanned → ${OUT_PATH}`,
   );
 }
 
