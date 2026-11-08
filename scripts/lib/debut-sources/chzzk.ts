@@ -54,6 +54,12 @@ function isVtuberChannel(ch: ChzzkChannel): boolean {
   return VTUBER_KEYWORDS.some((kw) => haystack.includes(kw.toLowerCase()));
 }
 
+/** True when the channel has the Korean VTuber tag 버튜버 in its name. */
+function hasVtuberTag(ch: ChzzkChannel): boolean {
+  const haystack = ch.channelName.toLowerCase();
+  return haystack.includes("버튜버");
+}
+
 export class ChzzkSource implements DebutSource {
   readonly id = "chzzk";
   readonly label = "CHZZK";
@@ -86,8 +92,10 @@ export class ChzzkSource implements DebutSource {
     }
 
     // Filter to VTuber/VSinger only — real singers are excluded.
+    // MUSIC category requires the 버튜버 tag specifically.
     const candidates: Candidate[] = [];
     for (const ch of allChannels) {
+      if (ch.categoryValue === "MUSIC" && !hasVtuberTag(ch)) continue;
       if (!isVtuberChannel(ch)) continue;
 
       candidates.push({
