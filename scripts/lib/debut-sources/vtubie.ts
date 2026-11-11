@@ -116,9 +116,9 @@ interface PlaywrightLike {
 async function loadPlaywright(): Promise<PlaywrightLike | null> {
   try {
     const mod = await import("playwright") as { chromium?: { launch?: unknown } };
-    const launch = mod.chromium?.launch;
-    if (typeof launch === "function") {
-      return { launch: launch as PlaywrightLike["launch"] };
+    const chromiumLaunch = mod.chromium?.launch;
+    if (typeof chromiumLaunch === "function") {
+      return { launch: chromiumLaunch.bind(mod.chromium) as PlaywrightLike["launch"] };
     }
     return null;
   } catch {
