@@ -46,6 +46,7 @@ import type {
   RegionCode,
   SongRecord,
 } from "../scripts/lib/types";
+import { InnerTubeSource } from "../scripts/lib/youtubei";
 
 const SNAPSHOT = ".cache/musicdex/musicdex.json";
 
@@ -220,6 +221,16 @@ async function main(): Promise<void> {
     return;
   }
 
+  // Connect to InnerTube to fetch video durations for songs.
+  // Musicdex does not publish song durations, so we look them up via YouTube.
+  const innertube = new InnerTubeSource();
+  const innertubeReady = await innertube.connect();
+  if (!innertubeReady) {
+    console.log(
+      "musicdex-import: InnerTube unavailable — song durations will be null",
+    );
+  }
+
   // ------------------------------------------------------------------
   // 1. Channel import: match by YouTube channel id and update records.
   // ------------------------------------------------------------------
@@ -386,6 +397,25 @@ async function main(): Promise<void> {
     // Musicdex version wins on id collision.
     songsById.set(record.id, record);
     songsWritten++;
+  }
+
+  // Fetch video durations via InnerTube so the Songs tab shows length.
+  // Musicdex does not publish durations, so we look them up per video.
+  if (innertubeReady && innertube) {
+    console.log(
+      `musicdex-import: fetching durations for ${songsById.size} song(s)`,
+    );
+    for (const [id, song] of songsById) {
+      if (song.duration !== null) continue;
+      try {
+        const info = await innertube.getBasicInfo(id);
+        song.duration = info?.basic_info?.lengthSeconds ?? null;
+      } catch {
+        // Leave duration as null on failure.
+      }
+      // Pace requests to avoid rate limiting.
+      await new Promise((r) => setTimeout(r, 350));
+    }
   }
 
   // Keep existing songs not re-harvested this run.
