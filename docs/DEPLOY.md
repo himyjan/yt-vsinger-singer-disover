@@ -56,7 +56,7 @@ concurrency:
 ```
 
 Without `queue: max` a group holds one running and one pending run, and a new
-arrival cancels the *pending* one. That is how a scheduled sync disappears
+arrival cancels the _pending_ one. That is how a scheduled sync disappears
 behind another run while looking like it was merely queued. With
 `queue: max` up to 100 runs wait for the group in FIFO order and a waiting sync
 is never replaced. It is rejected by workflow validation when combined with
@@ -116,8 +116,8 @@ Virtual YouTuber Wiki and the vTubie directory, and `--promote` writes channel
 records. Its output is `data/identities.json`, which is committed like any
 other dataset file, so a run that finds nothing new produces no diff at all.
 
-vTubie needs a Chrome binary. The Ubuntu runners have `google-chrome`
-installed; anywhere else, point `VTUBIE_CHROME_PATH` at one. `puppeteer-core`
+vTubie needs a Chromium binary. The Ubuntu runners have `google-Chromium`
+installed; anywhere else, point `VTUBIE_Chromium_PATH` at one. `playwright`
 is an optional dependency, and a checkout without it discovers nothing from
 that source and says so in the log rather than failing.
 
@@ -151,11 +151,11 @@ performer's own text, their X bio through FxTwitter, Wikidata) still run.
 They share the `dataset-writer-*` group, so they queue behind the sync and each
 other rather than writing the same shards at once.
 
-| Workflow | Schedule | Writes | Covers |
-| --- | --- | --- | --- |
-| `fill-links.yml` | Mon 03:00 | channels | `externals` from the **HoloList and bacharu rosters** — only records those rosters carry |
-| `fill-details-parallel.yml` | daily 05:17 | channels | every details mode, worst-first by default, 20 jobs × 600 records |
-| `fill-externals.yml` | daily 06:17 | channels | `externals` for the records that have **nothing beyond `youtube`**, oldest-asked first, 20 jobs × 600 records |
+| Workflow                    | Schedule    | Writes   | Covers                                                                                                        |
+| --------------------------- | ----------- | -------- | ------------------------------------------------------------------------------------------------------------- |
+| `fill-links.yml`            | Mon 03:00   | channels | `externals` from the **HoloList and bacharu rosters** — only records those rosters carry                      |
+| `fill-details-parallel.yml` | daily 05:17 | channels | every details mode, worst-first by default, 20 jobs × 600 records                                             |
+| `fill-externals.yml`        | daily 06:17 | channels | `externals` for the records that have **nothing beyond `youtube`**, oldest-asked first, 20 jobs × 600 records |
 
 **`fill-details-parallel.yml` runs every mode**, chosen with its `mode` input:
 `all` (the default backlog), `names`, `counts`, `externals`, `platform`,
@@ -167,7 +167,7 @@ be nineteen checkouts and installs for nothing.
 
 **Why `fill-externals.yml` exists beside the other two.** A roster only knows
 its own members, so a real artist with no roster entry (Taylor Swift) is never
-touched by `fill-links.yml`. The details pass *does* read the about page — that
+touched by `fill-links.yml`. The details pass _does_ read the about page — that
 is where a channel publishes its other accounts — but its backlog is ordered
 worst-first, and a record that merely lacks its links scores lowest, so it sits
 behind tens of thousands with no avatar. `data:details --externals-only`
@@ -217,16 +217,16 @@ reports a few megabytes and passes forever.
 
 Add these under **Settings → Secrets and variables → Actions**:
 
-| Secret                 | Required | Purpose                                                                                                                                |
-| ---------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| Secret                 | Required | Purpose                                                                                                                                                                    |
+| ---------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `YOUTUBE_API_KEY`      | no       | YouTube Data API v3 extras: richer video statistics, exact broadcast times and a fallback for failed InnerTube lookups; discovery, uploads and live status work without it |
-| `TWITCH_CLIENT_ID`     | no       | Twitch application client ID; used with the secret for sync channel discovery and live data                                            |
-| `TWITCH_CLIENT_SECRET` | no       | Twitch application client secret; used with the client ID for sync channel discovery and live data                                     |
-| `VK_ACCESS_TOKEN`      | no       | VK service token; required for keyword discovery and API-backed upload collection                                                     |
-| `CI_ME_CLIENT_ID`      | no       | CI.ME Open API application client ID; enables profile refresh for known channel IDs                                                   |
-| `CI_ME_CLIENT_SECRET`  | no       | CI.ME Open API application client secret; enables profile refresh for known channel IDs                                                |
-| `GEMINI_API_KEY`       | no       | Search-grounded verification (`data:verify`) and the optional `--web` link discovery; the free tier is enough                       |
-| `ANALYTICS_REPO_TOKEN` | no       | Fine-grained token with Contents read/write access to `himyjan/yt-vsinger-singer-disover-analytics`; enables daily analytics archiving |
+| `TWITCH_CLIENT_ID`     | no       | Twitch application client ID; used with the secret for sync channel discovery and live data                                                                                |
+| `TWITCH_CLIENT_SECRET` | no       | Twitch application client secret; used with the client ID for sync channel discovery and live data                                                                         |
+| `VK_ACCESS_TOKEN`      | no       | VK service token; required for keyword discovery and API-backed upload collection                                                                                          |
+| `CI_ME_CLIENT_ID`      | no       | CI.ME Open API application client ID; enables profile refresh for known channel IDs                                                                                        |
+| `CI_ME_CLIENT_SECRET`  | no       | CI.ME Open API application client secret; enables profile refresh for known channel IDs                                                                                    |
+| `GEMINI_API_KEY`       | no       | Search-grounded verification (`data:verify`) and the optional `--web` link discovery; the free tier is enough                                                              |
+| `ANALYTICS_REPO_TOKEN` | no       | Fine-grained token with Contents read/write access to `himyjan/yt-vsinger-singer-disover-analytics`; enables daily analytics archiving                                     |
 
 `GITHUB_TOKEN` is provided automatically and needs no configuration.
 
@@ -248,8 +248,8 @@ those limitations rather than treating missing metrics as zero.
 
 ## Repository variables
 
-| Variable         | Default         | Purpose                                       |
-| ---------------- | --------------- | --------------------------------------------- |
+| Variable         | Default         | Purpose                                                                          |
+| ---------------- | --------------- | -------------------------------------------------------------------------------- |
 | `VITE_BASE_PATH` | `/<repo-name>/` | Overrides the base path the deploy workflow derives; set `/` for a custom domain |
 
 ## Build-time variables for the web app
@@ -257,11 +257,11 @@ those limitations rather than treating missing metrics as zero.
 These are **not** secret — they are baked into the public bundle. They are
 set as repository _variables_ so the deploy workflow can inject them.
 
-| Variable                | Purpose                                                    |
-| ----------------------- | ---------------------------------------------------------- |
-| `VITE_GOOGLE_CLIENT_ID` | Enables YouTube account linking (Google Identity Services) |
-| `VITE_TWITCH_CLIENT_ID` | Enables Twitch account linking (public client, PKCE)       |
-| `VITE_VK_CLIENT_ID`     | Enables VK account linking                                 |
+| Variable                | Purpose                                                      |
+| ----------------------- | ------------------------------------------------------------ |
+| `VITE_GOOGLE_CLIENT_ID` | Enables YouTube account linking (Google Identity Services)   |
+| `VITE_TWITCH_CLIENT_ID` | Enables Twitch account linking (public client, PKCE)         |
+| `VITE_VK_CLIENT_ID`     | Enables VK account linking                                   |
 | `VITE_KICK_CLIENT_ID`   | Enables KICK account linking (OAuth 2.1 PKCE, public client) |
 
 Bilibili account linking needs no configuration — the user supplies their own
@@ -310,9 +310,11 @@ the base path from the repository name and the repository variable only
 overrides it:
 
 {% raw %}
+
 ```yaml
 VITE_BASE_PATH: ${{ vars.VITE_BASE_PATH || format('/{0}/', github.event.repository.name) }}
 ```
+
 {% endraw %}
 
 The Vite config reads it (`base: env.VITE_BASE_PATH || "/"`) and the data
@@ -419,27 +421,27 @@ The workflows install the LFS client explicitly:
 
 #### The limits that apply
 
-| Limit | Value | Enforced? |
-| --- | --- | --- |
-| repository on disk (`.git`) | 10 GB | recommended maximum |
-| a comfortable repository | 1 GB | recommendation |
-| **published site** | **1 GB** | **enforced** — the deploy fails |
-| a single push | 2 GB | **enforced** |
-| a single object | 100 MB | **enforced** (1 MB recommended) |
-| files in one diff | 300, or 1 MB of raw diff | the UI truncates the rest |
-| entries in one directory | 3,000 | recommendation |
-| pushes | 6 per minute | recommendation |
+| Limit                       | Value                    | Enforced?                       |
+| --------------------------- | ------------------------ | ------------------------------- |
+| repository on disk (`.git`) | 10 GB                    | recommended maximum             |
+| a comfortable repository    | 1 GB                     | recommendation                  |
+| **published site**          | **1 GB**                 | **enforced** — the deploy fails |
+| a single push               | 2 GB                     | **enforced**                    |
+| a single object             | 100 MB                   | **enforced** (1 MB recommended) |
+| files in one diff           | 300, or 1 MB of raw diff | the UI truncates the rest       |
+| entries in one directory    | 3,000                    | recommendation                  |
+| pushes                      | 6 per minute             | recommendation                  |
 
 #### What actually binds
 
 Two of those measure **different things**, and they are an order of magnitude
 apart:
 
-| | Repository | Site |
-| --- | --- | --- |
+|          | Repository                    | Site                               |
+| -------- | ----------------------------- | ---------------------------------- |
 | measures | every snapshot ever committed | the one snapshot that is published |
-| ceiling | 10 GB | **1 GB** |
-| grows by | every commit | the catalogue |
+| ceiling  | 10 GB                         | **1 GB**                           |
+| grows by | every commit                  | the catalogue                      |
 
 `prepare:public` checks the site, not the repository: it warns at 75 % of the
 Pages ceiling and fails the build above it, because a deploy that runs for ten
@@ -451,7 +453,7 @@ while the repository is still around 250 MB. That is the number the plan is
 actually racing.
 
 So the gate is 900 MB and the volume trigger is 700 MB, not 7.5 GB. A 7.5 GB
-*catalogue* is a reasonable target; a 7.5 GB *repository* is not, because it
+_catalogue_ is a reasonable target; a 7.5 GB _repository_ is not, because it
 could only be published as a site twenty times the ceiling. The way to own 7.5 GB
 is twenty volumes of ~375 MB, each with its own site, which is what the ladder's
 third rung does — and then the gate is checked **per volume**, not for the
@@ -459,21 +461,21 @@ catalogue as a whole.
 
 #### The tree is not the repository
 
-`trackedRepoSize()` in `validate.ts` sums the files git tracks *now*.
+`trackedRepoSize()` in `validate.ts` sums the files git tracks _now_.
 GitHub stores the **history**: every shard a run rewrites adds a blob, and a
 reset, an aborted rebase or a force-push can leave packs behind that no ref
 reaches. Measured on 2026-10-28, after the last of those were cleared:
 
-| | |
-| --- | --- |
-| one `data/` snapshot, packed | 28 MiB |
-| code, `docs/` and skills history | 5 MiB |
-| the whole repository after 78 data commits | 134.6 MiB |
-| a routine data commit (median) | 0.3 MiB |
-| a bulk rewrite — `reclassify --apply` over the catalogue | 20 MiB |
-| the 10,254-record import plus that reclassify, together | 27 MiB |
+|                                                          |           |
+| -------------------------------------------------------- | --------- |
+| one `data/` snapshot, packed                             | 28 MiB    |
+| code, `docs/` and skills history                         | 5 MiB     |
+| the whole repository after 78 data commits               | 134.6 MiB |
+| a routine data commit (median)                           | 0.3 MiB   |
+| a bulk rewrite — `reclassify --apply` over the catalogue | 20 MiB    |
+| the 10,254-record import plus that reclassify, together  | 27 MiB    |
 
-Two things follow. A snapshot is not what costs; the *number of them* is, and
+Two things follow. A snapshot is not what costs; the _number of them_ is, and
 delta compression keeps each one cheap. And the expensive commit is the bulk
 rewrite, not the daily refresh.
 
@@ -481,12 +483,12 @@ rewrite, not the daily refresh.
 
 Four rungs, each with its own trigger. Do not skip one.
 
-| When | Do this | Leaves |
-| --- | --- | --- |
-| weekly | `repo-size.yml` reports the stored size | a number, once a week |
-| **the 1st of every month** | squash the data history to one snapshot | ~28 MiB now, ~55 MiB by the next squash |
-| still above 700 MB after a squash, or two squashes inside six months | split the catalogue into **volumes** — `npm run data:volumes -- --count N`, then `--verify` | each volume under 700 MB |
-| the sync's `repo:size --max-mb 900` gate fails | **stop** — the run refuses to commit and a person decides | never crosses 1 GB |
+| When                                                                 | Do this                                                                                     | Leaves                                  |
+| -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | --------------------------------------- |
+| weekly                                                               | `repo-size.yml` reports the stored size                                                     | a number, once a week                   |
+| **the 1st of every month**                                           | squash the data history to one snapshot                                                     | ~28 MiB now, ~55 MiB by the next squash |
+| still above 700 MB after a squash, or two squashes inside six months | split the catalogue into **volumes** — `npm run data:volumes -- --count N`, then `--verify` | each volume under 700 MB                |
+| the sync's `repo:size --max-mb 900` gate fails                       | **stop** — the run refuses to commit and a person decides                                   | never crosses 1 GB                      |
 
 The gate is what makes the ladder work: no run can push the repository past
 900 MB, so there is always 100 MB of room to act in.
@@ -591,7 +593,7 @@ npm run data:volumes -- --count 4 \
 `{name}/`. Volume 0 is the origin the page was served from, so its `base` is
 always `""` and its records are the ones under `/data`.
 
-`--verify` reads the volumes *and* `data/`, and fails when a record is in two
+`--verify` reads the volumes _and_ `data/`, and fails when a record is in two
 volumes, in none, or in a volume other than the one `volumeOf()` names — a
 verification that only looked at the volumes would accept a split that lost a
 million records. `--self-test` checks the other half: that the function is

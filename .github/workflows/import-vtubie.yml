@@ -3,7 +3,7 @@ name: Import vTubie VTubers
 # Harvests vtubie.com/vtuber VTuber directory and imports new channels.
 #
 # Step 1 (single job): Harvest groups/members/profiles → .cache/vtubie-groups.json
-#   Needs Chrome + puppeteer-core because vtubie.com sits behind a Cloudflare
+#   Needs Chromium + playwright because vtubie.com sits behind a Cloudflare
 #   managed challenge that only a real browser can clear.
 # Step 2 (single job): Read the snapshot, classify each candidate through
 #   classifyChannel(), and import the ones that pass the gate into
@@ -51,11 +51,11 @@ jobs:
           git lfs install --skip-repo
           git lfs pull || true
 
-      - name: Install Chrome for the Cloudflare challenge
+      - name: Install Chromium for the Cloudflare challenge
         run: npx playwright install chromium
 
-      - name: Install puppeteer-core (the vtubie harvester imports it dynamically)
-        run: npm install --no-save --no-audit --no-fund puppeteer-core
+      - name: Install playwright (the vtubie harvester imports it dynamically)
+        run: npm install --no-save --no-audit --no-fund playwright
 
       - name: Set up Node
         uses: actions/setup-node@v7
@@ -170,8 +170,8 @@ jobs:
             echo "| | |"
             echo "| --- | --- |"
             echo "| Source | vtubie.com (VTuber directory) |"
-            echo "| Credentials | none (public directory, Cloudflare challenge cleared by Chrome) |"
-            echo "| Step 1 | Harvest groups → members → profiles (single job, Chrome + puppeteer-core) |"
+            echo "| Credentials | none (public directory, Cloudflare challenge cleared by Chromium) |"
+            echo "| Step 1 | Harvest groups → members → profiles (single job, Chromium + playwright) |"
             echo "| Step 2 | Import admitted channels into data/channels/ |"
             echo "| Step 3 | Build search index → validate → commit |"
             echo "| Dry run | ${{ inputs.dry-run }} |"
