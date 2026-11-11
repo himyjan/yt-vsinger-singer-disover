@@ -348,7 +348,7 @@ async function main(): Promise<void> {
   if (options.shard) {
     const shard = parseShard(options.shard);
     targets = entries.filter((e) =>
-      inShard(e.channelId, shard.index, shard.count),
+      inShard(e.channelId, shard.index - 1, shard.count),
     );
     console.log(
       `innertube-music-import: shard ${options.shard} — ${targets.length} of ${entries.length} channel(s)`,
