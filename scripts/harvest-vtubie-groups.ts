@@ -32,6 +32,7 @@
 
 import fs from "node:fs";
 import path from "node:path";
+import { chromium } from "playwright";
 import { findChrome } from "./lib/debut-sources/vtubie";
 import {
   groupListingHasNext,
@@ -63,19 +64,15 @@ interface BrowserLike {
   close(): Promise<void>;
 }
 
-async function loadPuppeteer(): Promise<{
+async function loadPlaywright(): Promise<{
   launch(options: Record<string, unknown>): Promise<BrowserLike>;
 } | null> {
-  const specifier = "puppeteer-core";
   try {
-    const mod = (await import(specifier)) as unknown as {
-      default?: { launch?: unknown };
-      launch?: unknown;
+    const chromiumLaunch = chromium.launch;
+    return {
+      launch: (options: Record<string, unknown>) =>
+        chromiumLaunch(options as Parameters<typeof chromium.launch>[0]) as unknown as Promise<BrowserLike>,
     };
-    const api = mod.default ?? mod;
-    return typeof api.launch === "function"
-      ? (api as { launch: (o: Record<string, unknown>) => Promise<BrowserLike> })
-      : null;
   } catch {
     return null;
   }
@@ -720,15 +717,15 @@ async function main(): Promise<void> {
     console.error("No Chrome/Chromium found — set VTUBIE_CHROME_PATH.");
     process.exit(1);
   }
-  const puppeteer = await loadPuppeteer();
-  if (!puppeteer) {
-    console.error("puppeteer-core is not installed — `npm i puppeteer-core`.");
+  const browserLike = await loadPlaywright();
+  if (!browserLike) {
+    console.error("playwright is not installed — `npm i playwright-core`.");
     process.exit(1);
   }
 
   const state = loadState(options.statePath, options.reset);
 
-  const browser = await puppeteer.launch({
+  const browser = await browserLike.launch({
     executablePath,
     headless: options.headed ? false : true,
     userDataDir: options.profileDir,
