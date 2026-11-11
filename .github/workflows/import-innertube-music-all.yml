@@ -120,9 +120,9 @@ jobs:
             fi
           done
 
-          # job_count = ceil(total_channels / 500), capped at 100.
+          # job_count = ceil(total_channels / 500), no cap — ensures each
+          # shard has at most ~500 channels so --limit 500 covers all of them.
           JOB_COUNT=$(( (TOTAL + 499) / 500 ))
-          if [ "$JOB_COUNT" -gt 100 ]; then JOB_COUNT=100; fi
           if [ "$JOB_COUNT" -lt 1 ]; then JOB_COUNT=1; fi
 
           # Generate JSON matrix [0, 1, ..., JOB_COUNT-1] (0-based for --shard).
