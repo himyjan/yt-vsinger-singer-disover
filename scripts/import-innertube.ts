@@ -106,8 +106,8 @@ interface MusicEntry {
   channelLanguages: ChannelType["languages"];
   channelIsAi: boolean;
   officialArtist: boolean;
-  uploads: Array<{ id: string; title: string; thumbnail: string | null }>;
-  releases: Array<{ id: string; title: string; thumbnail: string | null }>;
+  uploads: Array<{ id: string; title: string; thumbnail: string | null; duration?: number | null }>;
+  releases: Array<{ id: string; title: string; thumbnail: string | null; duration?: number | null }>;
 }
 
 interface Options {
@@ -246,7 +246,7 @@ function readEntries(): MusicEntry[] {
 }
 
 function uploadToSong(
-  upload: { id: string; title: string; thumbnail: string | null },
+  upload: { id: string; title: string; thumbnail: string | null; duration?: number | null },
   channel: MusicEntry,
   now: string,
 ): SongRecord | null {
@@ -259,7 +259,7 @@ function uploadToSong(
     channelKind: channel.channelKind,
     status: "past",
     isShort: false,
-    durationSeconds: null,
+    durationSeconds: upload.duration ?? null,
     channelRegion: (channel.channelRegion ?? "unknown") as unknown as RegionCode,
   });
 
@@ -276,7 +276,7 @@ function uploadToSong(
     title: upload.title || "Untitled",
     thumbnail: upload.thumbnail,
     publishedAt: null,
-    duration: null,
+    duration: upload.duration ?? null,
     category: classification.category as ItemCategory,
     songTitle: classification.songTitle ?? null,
     originalArtist: classification.originalArtist ?? null,
@@ -579,6 +579,9 @@ async function main(): Promise<void> {
                   musicFiltered += 1;
                   continue;
                 }
+                // Extract duration from YouTube player response so the
+                // song's video length shows on the Songs tab.
+                upload.duration = info?.basic_info?.lengthSeconds ?? null;
               } catch (err) {
                 const msg = err instanceof Error ? err.message : String(err);
                 console.error(`    category check failed ${upload.id}: ${msg}`);
