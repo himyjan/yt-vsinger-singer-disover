@@ -5,7 +5,7 @@
  * The directory is a WordPress site behind a Cloudflare managed challenge, so
  * a plain `fetch` gets `403 Just a moment...`; only a client that runs the
  * challenge JavaScript sees the page. This script therefore drives a real
- * Chrome through `puppeteer-core`, then does every subsequent page read as a
+ * Chromium through `playwright`, then does every subsequent page read as a
  * same-origin `fetch` **inside** that page, so the clearance cookie the
  * challenge granted is sent with each request.
  *
@@ -33,7 +33,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { chromium } from "playwright";
-import { findChrome } from "./lib/debut-sources/vtubie";
+import { findChromium } from "./lib/debut-sources/vtubie";
 import {
   groupListingHasNext,
   parseGroupListing,
@@ -276,7 +276,7 @@ async function warmUp(page: PageLike, log: (message: string) => void): Promise<b
   for (let attempt = 0; attempt < 3; attempt++) {
     await page
       .goto(`${ORIGIN}/groups/`, { waitUntil: "domcontentloaded", timeout: 60_000 })
-      .catch(() => {});
+      .catch(() => { });
     const deadline = Date.now() + 45_000;
     while (Date.now() < deadline) {
       const title = await page.title().catch(() => "");
@@ -285,7 +285,7 @@ async function warmUp(page: PageLike, log: (message: string) => void): Promise<b
     }
     log(
       `still on the Cloudflare challenge after 45s (attempt ${attempt + 1}/3)` +
-        " — a datacenter IP or a fresh profile is usually why",
+      " — a datacenter IP or a fresh profile is usually why",
     );
   }
   return false;
@@ -410,8 +410,8 @@ async function discoverGroups(
     pagesRead++;
     log(
       `listing: page ${pageNumber} → ${cards.length} groups` +
-        (fresh === cards.length ? "" : `, ${fresh} new`) +
-        ` (${state.groups.length} known)`,
+      (fresh === cards.length ? "" : `, ${fresh} new`) +
+      ` (${state.groups.length} known)`,
     );
 
     if (!groupListingHasNext(html)) {
@@ -440,8 +440,8 @@ async function readMembers(
   const pending = state.groups.filter((group) =>
     options.recheck
       ? group.members === null ||
-        group.unreadable !== undefined ||
-        (group.memberCount !== null && (group.members?.length ?? 0) < group.memberCount)
+      group.unreadable !== undefined ||
+      (group.memberCount !== null && (group.members?.length ?? 0) < group.memberCount)
       : group.members === null,
   );
   const limit = options.limit === null ? pending.length : Math.min(options.limit, pending.length);
@@ -485,8 +485,8 @@ async function readMembers(
   saveState(options.statePath, state);
   log(
     `members: read ${done}` +
-      (unreadable ? `, ${unreadable} unreadable` : "") +
-      `, ${uniqueMemberCount(state)} member(s) in total`,
+    (unreadable ? `, ${unreadable} unreadable` : "") +
+    `, ${uniqueMemberCount(state)} member(s) in total`,
   );
 }
 
@@ -516,7 +516,7 @@ async function readProfiles(
 
   /** A few at a time: the directory is not ours to hammer. */
   const workers = Array.from({ length: Math.min(options.concurrency, queue.length) }, async () => {
-    for (;;) {
+    for (; ;) {
       if (blocked !== null) return;
       const slug = queue.shift();
       if (!slug) return;
@@ -537,7 +537,7 @@ async function readProfiles(
         options.delayMs = Math.min(MAX_DELAY_MS, Math.max(1_500, options.delayMs * 2));
         log(
           `profiles: ${url} — 429, slowing to one page every ` +
-            `${(options.delayMs / 1_000).toFixed(1)}s for the rest of this pass`,
+          `${(options.delayMs / 1_000).toFixed(1)}s for the rest of this pass`,
         );
         await sleep(COOLDOWN_MS);
         read = await readPage(page, url);
@@ -609,10 +609,10 @@ async function readProfiles(
   saveState(options.statePath, state);
   log(
     `profiles: read ${done}` +
-      (gone ? `, ${gone} deleted` : "") +
-      (failed ? `, ${failed} unparsed` : "") +
-      (blocked !== null ? `, stopped on ${blocked}` : "") +
-      `, ${Object.keys(state.profiles).length} in total`,
+    (gone ? `, ${gone} deleted` : "") +
+    (failed ? `, ${failed} unparsed` : "") +
+    (blocked !== null ? `, stopped on ${blocked}` : "") +
+    `, ${Object.keys(state.profiles).length} in total`,
   );
 }
 
@@ -659,19 +659,19 @@ function writeSnapshot(state: State, outPath: string): void {
       ...member,
       profile: profile
         ? {
-            name: profile.name,
-            types: profile.types,
-            region: profile.region,
-            groups: profile.groups,
-            debutDate: profile.debutDate,
-            status: profile.status,
-            twitter: profile.twitter,
-            youtubeId: profile.youtubeId,
-            gender: profile.gender,
-            languages: profile.languages,
-            subscribers: profile.subscribers,
-            description: profile.description,
-          }
+          name: profile.name,
+          types: profile.types,
+          region: profile.region,
+          groups: profile.groups,
+          debutDate: profile.debutDate,
+          status: profile.status,
+          twitter: profile.twitter,
+          youtubeId: profile.youtubeId,
+          gender: profile.gender,
+          languages: profile.languages,
+          subscribers: profile.subscribers,
+          description: profile.description,
+        }
         : null,
     };
   });
@@ -702,7 +702,7 @@ function writeSnapshot(state: State, outPath: string): void {
   );
   console.log(
     `snapshot: ${outPath} · ${state.groups.length} groups · ` +
-      `${against.length} members · ${Object.keys(state.profiles).length} profiles`,
+    `${against.length} members · ${Object.keys(state.profiles).length} profiles`,
   );
 }
 
@@ -712,9 +712,9 @@ async function main(): Promise<void> {
   const options = parseArgs(process.argv.slice(2));
   const log = (message: string): void => console.log(message);
 
-  const executablePath = findChrome();
+  const executablePath = findChromium();
   if (!executablePath) {
-    console.error("No Chrome/Chromium found — set VTUBIE_CHROME_PATH.");
+    console.error("No Chromium/Chromium found — set VTUBIE_Chromium_PATH.");
     process.exit(1);
   }
   const browserLike = await loadPlaywright();
@@ -757,11 +757,11 @@ async function main(): Promise<void> {
       await readProfiles(page, state, options, log);
     }
 
-    await page.close().catch(() => {});
+    await page.close().catch(() => { });
     saveState(options.statePath, state);
     writeSnapshot(state, options.outPath);
   } finally {
-    await browser.close().catch(() => {});
+    await browser.close().catch(() => { });
   }
 }
 

@@ -12,11 +12,11 @@
  *    challenge JavaScript sees the page. That is why this source drives a
  *    real browser instead of an HTTP request.
  *
- * 2. **`puppeteer-core` is optional and ships no browser.** When the module
- *    or a Chrome/Chromium binary is missing, `isConfigured()` is false and
+ * 2. **`playwright` is optional and ships no browser.** When the module
+ *    or a Chromium/Chromium binary is missing, `isConfigured()` is false and
  *    the run continues without vTubie. Point the adapter at a browser with
- *    `VTUBIE_CHROME_PATH` (or `PUPPETEER_EXECUTABLE_PATH`); GitHub's Ubuntu
- *    runners already have `google-chrome` installed.
+ *    `VTUBIE_Chromium_PATH` (or `PUPPETEER_EXECUTABLE_PATH`); GitHub's Ubuntu
+ *    runners already have `google-Chromium` installed.
  *
  * A challenge that never clears is a *normal* outcome on a datacenter IP, and
  * it is treated as one: after `challengeTimeoutMs` the adapter logs why and
@@ -60,7 +60,7 @@ export interface VtubieOptions {
   delayMs?: number;
   /** Show the browser window. Implies a display (Xvfb, or a desktop). */
   headed?: boolean;
-  /** Explicit Chrome/Chromium binary. */
+  /** Explicit Chromium/Chromium binary. */
   executablePath?: string;
   /** Where log lines go. */
   onLog?: (message: string) => void;
@@ -128,32 +128,32 @@ async function loadPlaywright(): Promise<PlaywrightLike | null> {
 
 /** Environment overrides, in the order they win. */
 const EXECUTABLE_ENV = [
-  "VTUBIE_CHROME_PATH",
+  "VTUBIE_Chromium_PATH",
   "PUPPETEER_EXECUTABLE_PATH",
-  "CHROME_PATH",
-  "CHROME_BIN",
+  "Chromium_PATH",
+  "Chromium_BIN",
 ];
 
 /** The binaries the common platforms install. */
 const EXECUTABLE_CANDIDATES = [
-  "/usr/bin/google-chrome",
-  "/usr/bin/google-chrome-stable",
+  "/usr/bin/google-Chromium",
+  "/usr/bin/google-Chromium-stable",
   "/usr/bin/chromium",
   "/usr/bin/chromium-browser",
   "/snap/bin/chromium",
-  "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+  "/Applications/Google Chromium.app/Contents/MacOS/Google Chromium",
   "/Applications/Chromium.app/Contents/MacOS/Chromium",
 ];
 
-/** The Chrome that `npx @puppeteer/browsers install chrome@stable` leaves. */
-function cachedChrome(): string | null {
+/** The Chromium that `npx @puppeteer/browsers install Chromium@stable` leaves. */
+function cachedChromium(): string | null {
   const root = path.join(
     process.env.PLAYWRIGHT_BROWSERS_PATH ?? process.env.PUPPETEER_CACHE_DIR ?? path.join(process.env.HOME ?? "", ".cache"),
     "ms-playwright",
   );
   try {
     for (const version of fs.readdirSync(root)) {
-      const candidate = path.join(root, version, "chrome-linux64", "chrome");
+      const candidate = path.join(root, version, "Chromium-linux64", "Chromium");
       if (fs.existsSync(candidate)) return candidate;
     }
   } catch {
@@ -162,8 +162,8 @@ function cachedChrome(): string | null {
   return null;
 }
 
-/** Finds a Chrome/Chromium binary, or `null` when there is none. */
-export function findChrome(): string | null {
+/** Finds a Chromium/Chromium binary, or `null` when there is none. */
+export function findChromium(): string | null {
   for (const name of EXECUTABLE_ENV) {
     const value = process.env[name];
     if (value && fs.existsSync(value)) return value;
@@ -171,7 +171,7 @@ export function findChrome(): string | null {
   for (const candidate of EXECUTABLE_CANDIDATES) {
     if (fs.existsSync(candidate)) return candidate;
   }
-  return cachedChrome();
+  return cachedChromium();
 }
 
 /* -------------------------------------------------------------------------- */
@@ -204,8 +204,8 @@ export class VtubieSource implements DebutSource {
     this.delayMs = Math.max(0, options.delayMs ?? 2_000);
     this.headed = options.headed ?? false;
     this.executablePath =
-      options.executablePath ?? findChrome();
-    this.onLog = options.onLog ?? (() => {});
+      options.executablePath ?? findChromium();
+    this.onLog = options.onLog ?? (() => { });
   }
 
   isConfigured(): boolean {
@@ -215,7 +215,7 @@ export class VtubieSource implements DebutSource {
   unavailableReason(): string | null {
     return this.executablePath
       ? null
-      : "no Chrome/Chromium binary — set VTUBIE_CHROME_PATH";
+      : "no Chromium/Chromium binary — set VTUBIE_Chromium_PATH";
   }
 
   async fetch(_since: string | null): Promise<Candidate[]> {
@@ -271,7 +271,7 @@ export class VtubieSource implements DebutSource {
 
         this.onLog(
           `vtubie: page ${pageNumber} → ${parsed.length} entries` +
-            (fresh.length === parsed.length ? "" : `, ${fresh.length} new`),
+          (fresh.length === parsed.length ? "" : `, ${fresh.length} new`),
         );
 
         // Three signals end the walk: an empty page, no "Next" link, or a
@@ -284,7 +284,7 @@ export class VtubieSource implements DebutSource {
     } catch (error) {
       this.onLog(`vtubie: stopped early (${messageOf(error)})`);
     } finally {
-      await browser.close().catch(() => {});
+      await browser.close().catch(() => { });
     }
 
     if (!entries.length) {

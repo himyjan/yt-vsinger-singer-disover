@@ -124,27 +124,27 @@ A Hong Kong–centred tracker — 俗稱的DD網 — that lists every channel it
 on one page, with the `UC…` id, the name, the subscriber count, the video
 count and the total view count, grouped by the performer's state:
 
-| Section | Count | This project's field |
-| --- | ---: | --- |
-| 活動中 (active) | 452 | `activity: "active"` |
-| 準備中 (preparing) | 39 | `activity: "preparing"` |
-| 己引退 (retired) | 162 | `activity: "graduated"` |
-| 觀察中 (watching) | 2 | `activity: "active"` |
-| 相關組織 (organizations) | 17 | reported, **not** imported: an agency is not a performer |
+| Section                  | Count | This project's field                                     |
+| ------------------------ | ----: | -------------------------------------------------------- |
+| 活動中 (active)          |   452 | `activity: "active"`                                     |
+| 準備中 (preparing)       |    39 | `activity: "preparing"`                                  |
+| 己引退 (retired)         |   162 | `activity: "graduated"`                                  |
+| 觀察中 (watching)        |     2 | `activity: "active"`                                     |
+| 相關組織 (organizations) |    17 | reported, **not** imported: an agency is not a performer |
 
 The **roster and its state** are the one thing the site does not publish as
 JSON: 活動中 / 準備中 / 己引退 are `<section>` lists in `GET /channels/` (812 KB
 of server-rendered HTML). Everything else is a static JSON file, and the
 harvest reads it instead of scraping:
 
-| Request | Size | What it gives |
-| --- | ---: | --- |
-| `GET /data/channels.json` | 1.3 MB | a YouTube `channels.list` dump keyed by channel id: title, description, `customUrl`, published country, and `statistics.viewCount` / `videoCount` / `subscriberCount` |
-| `GET /data/live-hkv.json` | 50 KB | 146 live and upcoming streams: `cid`, video id, title, `u` (start, Unix seconds), `vc` (viewers), `pf` |
-| `GET /data/archive-hkv.json` | 92 KB | 278 recently ended streams and uploads, keyed by index, with `d` (runtime) |
-| `GET /data/featured.json?p=N` | 14 KB a page | 50 精華 clips a page, 29 pages: the **clip channel** (`ct`) and the video |
-| `GET /data/list-hkv-watching.json` | 55 B | the site's own watch list, two channel ids |
-| `GET /twitch` | 112 KB | 235 Twitch logins, no counts |
+| Request                            |         Size | What it gives                                                                                                                                                         |
+| ---------------------------------- | -----------: | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `GET /data/channels.json`          |       1.3 MB | a YouTube `channels.list` dump keyed by channel id: title, description, `customUrl`, published country, and `statistics.viewCount` / `videoCount` / `subscriberCount` |
+| `GET /data/live-hkv.json`          |        50 KB | 146 live and upcoming streams: `cid`, video id, title, `u` (start, Unix seconds), `vc` (viewers), `pf`                                                                |
+| `GET /data/archive-hkv.json`       |        92 KB | 278 recently ended streams and uploads, keyed by index, with `d` (runtime)                                                                                            |
+| `GET /data/featured.json?p=N`      | 14 KB a page | 50 精華 clips a page, 29 pages: the **clip channel** (`ct`) and the video                                                                                             |
+| `GET /data/list-hkv-watching.json` |         55 B | the site's own watch list, two channel ids                                                                                                                            |
+| `GET /twitch`                      |       112 KB | 235 Twitch logins, no counts                                                                                                                                          |
 
 It is the cheapest region source the project has — **the id is published, so
 no name search is involved** — and the only one that states graduation for the
@@ -187,12 +187,12 @@ A general VTuber directory — not an agency site — of **9,359 entries**, each
 WordPress post at `https://hololist.net/<slug>/` and each filed under one or
 more of four types:
 
-| Type | Entries | What it is |
-| --- | ---: | --- |
-| V-Tuber | 9,127 | the mainstream virtual performer |
-| V-Streamer | 3,751 | a streamer-first virtual performer |
-| V-Singer | 905 | a virtual **singer** — the part of the roster this project is named after |
-| V-UP | 143 | 虚拟UP主, the Chinese word for the same thing |
+| Type       | Entries | What it is                                                                |
+| ---------- | ------: | ------------------------------------------------------------------------- |
+| V-Tuber    |   9,127 | the mainstream virtual performer                                          |
+| V-Streamer |   3,751 | a streamer-first virtual performer                                        |
+| V-Singer   |     905 | a virtual **singer** — the part of the roster this project is named after |
+| V-UP       |     143 | 虚拟UP主, the Chinese word for the same thing                             |
 
 The types overlap, so the four sum past the roster. Entries are global: every
 Hololive and Holostars branch, NIJISANJI and NIJISANJI EN, VShojo, Phase
@@ -203,11 +203,11 @@ but `/wp-json/wp/v2/posts` answers `403` through Cloudflare, `robots.txt`
 disallows `/*?*`, and the archive pages (`/debut/`, `/newest/`) are
 client-rendered shells. What is left is the path the site itself advertises:
 
-| Request | What it gives |
-| --- | --- |
-| `GET /wp-sitemap.xml` | the index: five post sitemaps |
+| Request                                 | What it gives                                                                         |
+| --------------------------------------- | ------------------------------------------------------------------------------------- |
+| `GET /wp-sitemap.xml`                   | the index: five post sitemaps                                                         |
 | `GET /wp-sitemap-posts-post-{1..5}.xml` | 2,000 + 2,000 + 2,000 + 2,000 + 1,359 = **9,359 entry URLs**, each with a `<lastmod>` |
-| `GET /<slug>/` | one server-rendered entry, about 56 KB |
+| `GET /<slug>/`                          | one server-rendered entry, about 56 KB                                                |
 
 That is one request per entry and ~525 MB for the first census — lighter than
 bacharu's 2.9 GB — and `<lastmod>` makes every later run incremental: the
@@ -219,24 +219,24 @@ moved. `npm run data:hololist` writes one file per entry under
 **What an entry publishes.** The page is a stack of `<section id="…">` blocks,
 which is a better shape than most rosters:
 
-| Section | Example | This project's field |
-| --- | --- | --- |
-| `h1` | `Akugaki Koa` | `name` (the platform's title still wins) |
-| `#nickname` | `Koa-tan`, `AKGK` | `aliases` — *planned* |
-| `#type` | `V-Tuber`, `V-Streamer` | the roster's virtual claim (`rosterIds`) |
-| `#tags`, `#content` | `Demon`, `Singing` | `tags`, `isSinging` — *planned* |
-| `#debut` | `May 3, 2024` | `debutDate` (`RosterHint.debut`) |
-| `#birthday` | `October 28` | **no field yet** |
-| `#height` | `135 cm` | **no field yet** |
-| `#affiliation` | `ChromaSHIFT` | `agency` (`RosterHint.agency`, canonicalised) |
-| `#language` | `English`, `Japanese`, `Spanish` | `languages`, and the language the profile is asked in (`RosterHint.languages`) |
-| `#gender` | `Female` | `gender` — a fallback behind the classifier (`RosterHint.gender`) |
-| `#model` | `L2D`, `3D` | **no field yet** |
-| `#status` | `Active`, `Retired` | `activity` (`RosterHint.activity`) |
-| `#description`, `#lore` | prose | the profile's description wins; the lore has **no field** |
-| `#links` | YouTube `@handle`, Twitch, X, Instagram, TikTok, Bilibili, Niconico | `platforms[]` and `externals` |
-| `#fanbase`, `#oshi-mark`, `#hashtag`, `#likes`, `#dislikes`, `#character-sheet` | `Koanikis`, `↝ ⛓️`, `#AKGKart` | **no field yet** |
-| the count `<a title="63,600">63.6K</a>` | the exact subscriber count | `subscribers` |
+| Section                                                                         | Example                                                             | This project's field                                                           |
+| ------------------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| `h1`                                                                            | `Akugaki Koa`                                                       | `name` (the platform's title still wins)                                       |
+| `#nickname`                                                                     | `Koa-tan`, `AKGK`                                                   | `aliases` — _planned_                                                          |
+| `#type`                                                                         | `V-Tuber`, `V-Streamer`                                             | the roster's virtual claim (`rosterIds`)                                       |
+| `#tags`, `#content`                                                             | `Demon`, `Singing`                                                  | `tags`, `isSinging` — _planned_                                                |
+| `#debut`                                                                        | `May 3, 2024`                                                       | `debutDate` (`RosterHint.debut`)                                               |
+| `#birthday`                                                                     | `October 28`                                                        | **no field yet**                                                               |
+| `#height`                                                                       | `135 cm`                                                            | **no field yet**                                                               |
+| `#affiliation`                                                                  | `ChromaSHIFT`                                                       | `agency` (`RosterHint.agency`, canonicalised)                                  |
+| `#language`                                                                     | `English`, `Japanese`, `Spanish`                                    | `languages`, and the language the profile is asked in (`RosterHint.languages`) |
+| `#gender`                                                                       | `Female`                                                            | `gender` — a fallback behind the classifier (`RosterHint.gender`)              |
+| `#model`                                                                        | `L2D`, `3D`                                                         | **no field yet**                                                               |
+| `#status`                                                                       | `Active`, `Retired`                                                 | `activity` (`RosterHint.activity`)                                             |
+| `#description`, `#lore`                                                         | prose                                                               | the profile's description wins; the lore has **no field**                      |
+| `#links`                                                                        | YouTube `@handle`, Twitch, X, Instagram, TikTok, Bilibili, Niconico | `platforms[]` and `externals`                                                  |
+| `#fanbase`, `#oshi-mark`, `#hashtag`, `#likes`, `#dislikes`, `#character-sheet` | `Koanikis`, `↝ ⛓️`, `#AKGKart`                                      | **no field yet**                                                               |
+| the count `<a title="63,600">63.6K</a>`                                         | the exact subscriber count                                          | `subscribers`                                                                  |
 
 The links are the reason the roster is worth reading. The YouTube account is
 an `@handle` — never a `UC…` id — so the importer resolves it through
@@ -254,7 +254,7 @@ What the roster decides, and what it does not (`AGENTS.md` rule 15):
 - **The agency, the languages, the debut, the gender and the state.** All five
   are fallbacks or facts the profile does not publish: the agency only where
   the title and description name none, the languages as the language to
-  *ask* the profile in, the gender only where the classifier answered
+  _ask_ the profile in, the gender only where the classifier answered
   `unknown`, and `Retired` as `activity: "graduated"`.
 - **Not the name, the region or the role.** The platform still owns the name.
   The site publishes no country, so the region is whatever YouTube's about
@@ -280,20 +280,20 @@ anything else.
 
 Read from the site on 2026-10-28, one entry at a time, against the dataset.
 
-| HoloList | What it publishes | This project today | Plan |
-| --- | --- | --- | --- |
-| **2.5× the roster of any single source** | 9,359 entries across every agency | 72,361 channels, most from vdb and bacharu | import the ids the gate admits (`data:hololist-import --apply`) |
-| **the performer's other accounts** | Twitch, X, Instagram, TikTok, Bilibili, Niconico beside the YouTube channel | `externals` is filled from a description harvest, and most records have none | **done** — `--links` |
-| **the debut date** | `May 3, 2024` | `debutDate` exists; InnerTube never states it | **done** — `RosterHint.debut` |
-| **birthdays** | `October 28`, per entry | **no field** | `birthday` (`MM-DD`) on `Channel`, then a `/birthday/` view — the site's own birthday page is its most-used one |
-| **anniversaries** | debut month + day, computed | `debutDate` is stored | a `/anniversary/` view over `debutDate`, once the dates are filled |
-| **height, weight, zodiac, MBTI** | `135 cm`, `Scorpio` | **no field** | **not planned** — profile trivia, and a schema field with no view is a field that forks the record |
-| **model type** | `L2D`, `3D` | **no field** | `modelType` on `Channel`, shown in the drawer — cheap, and a real filter for VTuber users |
-| **fanbase name, oshi mark, hashtags** | `Koanikis`, `↝ ⛓️`, `#AKGKart` | **no field** | `fanbaseName` and the hashtags as `tags`; the oshi mark is decoration |
-| **likes / dislikes / lore** | prose lists | **no field** | **not planned** — it is the character's biography, not the performer's, and the dataset is a tracker rather than a wiki |
-| **ratings, favourites, watchlist, spotlight** | a signed-in account feature | the Subs view and the account menu | nothing to build — a different product |
-| **live / debuts / retirements calendars** | `/live/`, `/debut/`, `/retirement/` | live items exist per card; retirements are `activity` | the **timetable** and **recent** views already planned from VtuberHK cover `/live/`; `/retirement/` is a filter over `activity` |
-| **exact counts in the markup** | `title="63,600"` | `subscribers` from InnerTube; `viewCount` / `videoCount` are usually empty | the subscriber count is passed for new imports; a `data:details --stats` pass is still the missing half |
+| HoloList                                      | What it publishes                                                           | This project today                                                           | Plan                                                                                                                            |
+| --------------------------------------------- | --------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| **2.5× the roster of any single source**      | 9,359 entries across every agency                                           | 72,361 channels, most from vdb and bacharu                                   | import the ids the gate admits (`data:hololist-import --apply`)                                                                 |
+| **the performer's other accounts**            | Twitch, X, Instagram, TikTok, Bilibili, Niconico beside the YouTube channel | `externals` is filled from a description harvest, and most records have none | **done** — `--links`                                                                                                            |
+| **the debut date**                            | `May 3, 2024`                                                               | `debutDate` exists; InnerTube never states it                                | **done** — `RosterHint.debut`                                                                                                   |
+| **birthdays**                                 | `October 28`, per entry                                                     | **no field**                                                                 | `birthday` (`MM-DD`) on `Channel`, then a `/birthday/` view — the site's own birthday page is its most-used one                 |
+| **anniversaries**                             | debut month + day, computed                                                 | `debutDate` is stored                                                        | a `/anniversary/` view over `debutDate`, once the dates are filled                                                              |
+| **height, weight, zodiac, MBTI**              | `135 cm`, `Scorpio`                                                         | **no field**                                                                 | **not planned** — profile trivia, and a schema field with no view is a field that forks the record                              |
+| **model type**                                | `L2D`, `3D`                                                                 | **no field**                                                                 | `modelType` on `Channel`, shown in the drawer — cheap, and a real filter for VTuber users                                       |
+| **fanbase name, oshi mark, hashtags**         | `Koanikis`, `↝ ⛓️`, `#AKGKart`                                              | **no field**                                                                 | `fanbaseName` and the hashtags as `tags`; the oshi mark is decoration                                                           |
+| **likes / dislikes / lore**                   | prose lists                                                                 | **no field**                                                                 | **not planned** — it is the character's biography, not the performer's, and the dataset is a tracker rather than a wiki         |
+| **ratings, favourites, watchlist, spotlight** | a signed-in account feature                                                 | the Subs view and the account menu                                           | nothing to build — a different product                                                                                          |
+| **live / debuts / retirements calendars**     | `/live/`, `/debut/`, `/retirement/`                                         | live items exist per card; retirements are `activity`                        | the **timetable** and **recent** views already planned from VtuberHK cover `/live/`; `/retirement/` is a filter over `activity` |
+| **exact counts in the markup**                | `title="63,600"`                                                            | `subscribers` from InnerTube; `viewCount` / `videoCount` are usually empty   | the subscriber count is passed for new imports; a `data:details --stats` pass is still the missing half                         |
 
 #### The build plan
 
@@ -421,35 +421,35 @@ Several platforms expose public or quota-free routes, but their availability,
 credentials and coverage differ. A public endpoint is not necessarily a
 stable or complete search API:
 
-| Platform | Official | Quota-free equivalent | Gives |
-| --- | --- | --- | --- |
-| YouTube | Data API v3 | **InnerTube** (`youtubei.js`) | channel and video search, description, avatar, subscribers, uploads, releases, live/upcoming |
-| Twitch | Helix (client id **and** secret) | **GQL** (`gql.twitch.tv`) for browser account features | description, avatar, followers, live; sync keyword discovery uses Helix |
-| [Twitch VTuber search](https://dev.twitch.tv/docs/api/reference#search-channels) | **Helix** (`Client-Id` / `Client-Secret`) | **`search/channels`** | broadcaster id, login, display name, title, thumbnail — wired as `scripts/lib/debut-sources/twitch.ts`, a discovery source for VTuber/VSinger searches |
-| Bilibili | — | **WBI-signed public API** | description, avatar, followers, uploads, live (via `online/list?rid=160` VTuber partition) |
-| CHZZK | — | **the public API** | channel search, profile, followers, live |
-| KICK | — | **the public API** | profile and live data for known channels; no usable public keyword search |
-| SOOP | — | **the public live-list API** | first-page live titles, channel names, viewer counts |
-| [CI.ME Open API](https://developers.ci.me/docs/api-channels) | **Open API** (`Client-Id` / `Client-Secret`) | **the public live-status endpoint** | channel profile and follower count (batched, 20 ids per request); per-channel live status via `GET /api/openapi/v1/{channelId}/live-status`, which needs no credentials |
-| X / Twitter | — (no free read API) | [**FxTwitter**](https://github.com/FixTweet/FxTwitter) (`api.fxtwitter.com/<handle>`) | the bio, the website field and the location — where a Bilibili-only performer usually writes their YouTube link |
-| Niconico | — | **the public API** | search, uploads, live programs via Content Search API v2 |
-| [Chuysan Thai VTuber Ranking](https://chuymaster.github.io/thaivtuberranking-docs/) | — | **public JSON API** (`storage.googleapis.com/thaivtuberranking.appspot.com`) | channel ids, names, descriptions, subscriber counts, publish dates — read via `v2/channel_data/simple_list.json`; wired as `scripts/lib/debut-sources/chuysan.ts`, a discovery source for Thai VTubers |
-| [Bilibili VTuber ranking](https://github.com/SocialSisterYi/bilibili-API-collect) | — | **public API** (`api.bilibili.com/x/web-interface/ranking/v2?rid=160`) | mid, uname, face, sign — wired as `scripts/lib/debut-sources/bilibili.ts`, a discovery source for Chinese VTubers |
-| [CHZZK channel listings](https://chzzk.naver.com) | — | **public API** (`api.chzzk.naver.com/service/v1.0/channels`) | channel id, name, follower count — wired as `scripts/lib/debut-sources/chzzk.ts`, a discovery source for Korean VTubers |
-| [KICK channel directory](https://kick.com/api/v2/channels) | — | **public API** (`kick.com/api/v2/channels`) | channel id, username, title, viewer count — wired as `scripts/lib/debut-sources/kick.ts`, a discovery source |
-| [Niconico Content Search API v2](https://search.nicovideo.jp) | — | **public API** (`api.search.nicovideo.jp/api/v2/search`) | content id, title, user id, nickname — wired as `scripts/lib/debut-sources/niconico.ts`, a discovery source |
-| [SOOP live broadcast list](https://live.sooplive.co.kr/api/main_broad_list_api.php) | — | **public API** (`live.sooplive.co.kr/api/main_broad_list_api.php`) | channel id, broadcaster name, title, viewer count — wired as `scripts/lib/debut-sources/soop.ts`, a discovery source |
-| [v-sai.com/vtuber](https://www.v-sai.com/api) | — | **public JSON API** (`https://www.v-sai.com/api`) | channel ids, names, descriptions, publish dates — wired as `scripts/lib/debut-sources/v-sai.ts`, a discovery source for Vietnamese VTubers |
-| [vtuber-database.wikiru.jp (VtuberDB)](https://vtuber-database.wikiru.jp) | — | **Cargo tables via public JSON API** | channel ids, names, kana, affiliations, debut dates — wired as `scripts/lib/debut-sources/vdb.ts`, a discovery source for Japanese VTubers |
-| [vtuberdex.pages.dev](https://vtuberdex.pages.dev) | — | **public JSON API** (`https://vtuberdex.pages.dev`) | channel ids, names, descriptions, publish dates — wired as `scripts/lib/debut-sources/vtuberdex.ts`, a discovery source |
-| [virtualhumans.org](https://virtualhumans.org) | — | **public JSON API** (`https://virtualhumans.org`) | channel ids, names, descriptions, publish dates — wired as `scripts/lib/debut-sources/virtualhumans.ts`, a discovery source |
-| [vtpedia](https://vtpedia.org) | — | **public JSON API** | channel ids, names, descriptions, publish dates — wired as `scripts/lib/debut-sources/vtpedia.ts`, a discovery source |
-| [vtubers.tw](https://vtubers.tw) | — | **public JSON API** | channel ids, names, descriptions, publish dates — wired as `scripts/lib/debut-sources/vtubers.tw.ts`, a discovery source for Taiwanese VTubers |
-| [Virtuallife](https://virtuallife.tv/?site=vtuber) | — | **HTML directory** (`virtuallife.tv/?site=vtuber`) | VTuber names, YouTube channel ids, Twitter/Instagram/TikTok handles — wired as `scripts/lib/debut-sources/virtuallife.ts`, a discovery source for German VTubers |
-| [4chan /vt/](https://boards.4chan.org/vt/) | — | **JSON API** (`a.4cdn.org/vt/catalog.json`) | Thread comments with YouTube channel links — wired as `scripts/lib/debut-sources/vt4chan.ts`, a discovery source. Anonymous imageboard — fan accounts excluded via detectClipAccount() and isFanAccountName(). |
-| [ci.me](https://ci.me) | **Open API** (`Client-Id` / `Client-Secret`) | **the public live-status endpoint** | CI.ME channel ids, names, follower counts — wired as `scripts/lib/debut-sources/ci-me.ts`, a discovery source for CI.ME VTubers |
+| Platform                                                                            | Official                                     | Quota-free equivalent                                                                 | Gives                                                                                                                                                                                                          |
+| ----------------------------------------------------------------------------------- | -------------------------------------------- | ------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| YouTube                                                                             | Data API v3                                  | **InnerTube** (`youtubei.js`)                                                         | channel and video search, description, avatar, subscribers, uploads, releases, live/upcoming                                                                                                                   |
+| Twitch                                                                              | Helix (client id **and** secret)             | **GQL** (`gql.twitch.tv`) for browser account features                                | description, avatar, followers, live; sync keyword discovery uses Helix                                                                                                                                        |
+| [Twitch VTuber search](https://dev.twitch.tv/docs/api/reference#search-channels)    | **Helix** (`Client-Id` / `Client-Secret`)    | **`search/channels`**                                                                 | broadcaster id, login, display name, title, thumbnail — wired as `scripts/lib/debut-sources/twitch.ts`, a discovery source for VTuber/VSinger searches                                                         |
+| Bilibili                                                                            | —                                            | **WBI-signed public API**                                                             | description, avatar, followers, uploads, live (via `online/list?rid=160` VTuber partition)                                                                                                                     |
+| CHZZK                                                                               | —                                            | **the public API**                                                                    | channel search, profile, followers, live                                                                                                                                                                       |
+| KICK                                                                                | —                                            | **the public API**                                                                    | profile and live data for known channels; no usable public keyword search                                                                                                                                      |
+| SOOP                                                                                | —                                            | **the public live-list API**                                                          | first-page live titles, channel names, viewer counts                                                                                                                                                           |
+| [CI.ME Open API](https://developers.ci.me/docs/api-channels)                        | **Open API** (`Client-Id` / `Client-Secret`) | **the public live-status endpoint**                                                   | channel profile and follower count (batched, 20 ids per request); per-channel live status via `GET /api/openapi/v1/{channelId}/live-status`, which needs no credentials                                        |
+| X / Twitter                                                                         | — (no free read API)                         | [**FxTwitter**](https://github.com/FixTweet/FxTwitter) (`api.fxtwitter.com/<handle>`) | the bio, the website field and the location — where a Bilibili-only performer usually writes their YouTube link                                                                                                |
+| Niconico                                                                            | —                                            | **the public API**                                                                    | search, uploads, live programs via Content Search API v2                                                                                                                                                       |
+| [Chuysan Thai VTuber Ranking](https://chuymaster.github.io/thaivtuberranking-docs/) | —                                            | **public JSON API** (`storage.googleapis.com/thaivtuberranking.appspot.com`)          | channel ids, names, descriptions, subscriber counts, publish dates — read via `v2/channel_data/simple_list.json`; wired as `scripts/lib/debut-sources/chuysan.ts`, a discovery source for Thai VTubers         |
+| [Bilibili VTuber ranking](https://github.com/SocialSisterYi/bilibili-API-collect)   | —                                            | **public API** (`api.bilibili.com/x/web-interface/ranking/v2?rid=160`)                | mid, uname, face, sign — wired as `scripts/lib/debut-sources/bilibili.ts`, a discovery source for Chinese VTubers                                                                                              |
+| [CHZZK channel listings](https://chzzk.naver.com)                                   | —                                            | **public API** (`api.chzzk.naver.com/service/v1.0/channels`)                          | channel id, name, follower count — wired as `scripts/lib/debut-sources/chzzk.ts`, a discovery source for Korean VTubers                                                                                        |
+| [KICK channel directory](https://kick.com/api/v2/channels)                          | —                                            | **public API** (`kick.com/api/v2/channels`)                                           | channel id, username, title, viewer count — wired as `scripts/lib/debut-sources/kick.ts`, a discovery source                                                                                                   |
+| [Niconico Content Search API v2](https://search.nicovideo.jp)                       | —                                            | **public API** (`api.search.nicovideo.jp/api/v2/search`)                              | content id, title, user id, nickname — wired as `scripts/lib/debut-sources/niconico.ts`, a discovery source                                                                                                    |
+| [SOOP live broadcast list](https://live.sooplive.co.kr/api/main_broad_list_api.php) | —                                            | **public API** (`live.sooplive.co.kr/api/main_broad_list_api.php`)                    | channel id, broadcaster name, title, viewer count — wired as `scripts/lib/debut-sources/soop.ts`, a discovery source                                                                                           |
+| [v-sai.com/vtuber](https://www.v-sai.com/api)                                       | —                                            | **public JSON API** (`https://www.v-sai.com/api`)                                     | channel ids, names, descriptions, publish dates — wired as `scripts/lib/debut-sources/v-sai.ts`, a discovery source for Vietnamese VTubers                                                                     |
+| [vtuber-database.wikiru.jp (VtuberDB)](https://vtuber-database.wikiru.jp)           | —                                            | **Cargo tables via public JSON API**                                                  | channel ids, names, kana, affiliations, debut dates — wired as `scripts/lib/debut-sources/vdb.ts`, a discovery source for Japanese VTubers                                                                     |
+| [vtuberdex.pages.dev](https://vtuberdex.pages.dev)                                  | —                                            | **public JSON API** (`https://vtuberdex.pages.dev`)                                   | channel ids, names, descriptions, publish dates — wired as `scripts/lib/debut-sources/vtuberdex.ts`, a discovery source                                                                                        |
+| [virtualhumans.org](https://virtualhumans.org)                                      | —                                            | **public JSON API** (`https://virtualhumans.org`)                                     | channel ids, names, descriptions, publish dates — wired as `scripts/lib/debut-sources/virtualhumans.ts`, a discovery source                                                                                    |
+| [vtpedia](https://vtpedia.org)                                                      | —                                            | **public JSON API**                                                                   | channel ids, names, descriptions, publish dates — wired as `scripts/lib/debut-sources/vtpedia.ts`, a discovery source                                                                                          |
+| [vtubers.tw](https://vtubers.tw)                                                    | —                                            | **public JSON API**                                                                   | channel ids, names, descriptions, publish dates — wired as `scripts/lib/debut-sources/vtubers.tw.ts`, a discovery source for Taiwanese VTubers                                                                 |
+| [Virtuallife](https://virtuallife.tv/?site=vtuber)                                  | —                                            | **HTML directory** (`virtuallife.tv/?site=vtuber`)                                    | VTuber names, YouTube channel ids, Twitter/Instagram/TikTok handles — wired as `scripts/lib/debut-sources/virtuallife.ts`, a discovery source for German VTubers                                               |
+| [4chan /vt/](https://boards.4chan.org/vt/)                                          | —                                            | **JSON API** (`a.4cdn.org/vt/catalog.json`)                                           | Thread comments with YouTube channel links — wired as `scripts/lib/debut-sources/vt4chan.ts`, a discovery source. Anonymous imageboard — fan accounts excluded via detectClipAccount() and isFanAccountName(). |
+| [ci.me](https://ci.me)                                                              | **Open API** (`Client-Id` / `Client-Secret`) | **the public live-status endpoint**                                                   | CI.ME channel ids, names, follower counts — wired as `scripts/lib/debut-sources/ci-me.ts`, a discovery source for CI.ME VTubers                                                                                |
 
-**InnerTube** (`scripts/lib/youtubei.ts`) — the channel's *description* is the
+**InnerTube** (`scripts/lib/youtubei.ts`) — the channel's _description_ is the
 richest field in the project: it is where a performer states their own
 language, their agency and their links. It also gives the avatar, the
 subscriber count, the upload list, the YouTube Music releases, and the Live
@@ -528,13 +528,13 @@ every participant, and the event itself is evidence that the channel sings.
 
 Two sources feed the query list:
 
-| Source | What it is | How it is read |
-| --- | --- | --- |
-| **歌枠リレーカレンダー** | @shimesaba_krm's Google Sheet, the community's canonical calendar of singing relays, one cell per event per day | `npm run data:singing-events` — the CSV export of the current month's sheet, plus the previous months from the year sheet's named tabs via `gviz/tq?tqx=out:csv&sheet=…` |
-| **X** | event announcements (`"歌枠リレー" "タイムテーブル"`) and recruitment posts (`#歌枠リレー募集`) | `scripts/harvest-x-singing-tags.py` through twscrape, keeping the hashtags that name a singing event |
-| **YouTube** | video search for `"歌枠リレー"` and related terms, extracting `#○○歌枠リレー` hashtags from titles and descriptions | `npm run data:singing-events-youtube` — InnerTube video search, no Data API quota |
-| **virtuallivecalendar.jp** | Japanese virtual live calendar of singing events | `npm run data:singing-events-virtuallivecalendar` — best-effort HTML scrape |
-| **twipla.jp** | Japanese TwiPla event dashboard, indie VTuber recruitment posts | `npm run data:singing-events-twipla` — best-effort HTML scrape |
+| Source                     | What it is                                                                                                          | How it is read                                                                                                                                                           |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **歌枠リレーカレンダー**   | @shimesaba_krm's Google Sheet, the community's canonical calendar of singing relays, one cell per event per day     | `npm run data:singing-events` — the CSV export of the current month's sheet, plus the previous months from the year sheet's named tabs via `gviz/tq?tqx=out:csv&sheet=…` |
+| **X**                      | event announcements (`"歌枠リレー" "タイムテーブル"`) and recruitment posts (`#歌枠リレー募集`)                     | `scripts/harvest-x-singing-tags.py` through twscrape, keeping the hashtags that name a singing event                                                                     |
+| **YouTube**                | video search for `"歌枠リレー"` and related terms, extracting `#○○歌枠リレー` hashtags from titles and descriptions | `npm run data:singing-events-youtube` — InnerTube video search, no Data API quota                                                                                        |
+| **virtuallivecalendar.jp** | Japanese virtual live calendar of singing events                                                                    | `npm run data:singing-events-virtuallivecalendar` — best-effort HTML scrape                                                                                              |
+| **twipla.jp**              | Japanese TwiPla event dashboard, indie VTuber recruitment posts                                                     | `npm run data:singing-events-twipla` — best-effort HTML scrape                                                                                                           |
 
 All sources write to a single unified `lists/singing-events.json` with unique event names — nothing is overwritten, and entries that name the same event (calendar name vs X hashtag) are merged into one entry. `scripts/sync.ts` reads them through `scripts/lib/singing-events.ts`. The calendar's names come first (an event there has a date, a timetable and a participant list), and the X/YouTube hashtags fill in the events the calendar has not filed yet.
 
@@ -556,12 +556,12 @@ every other search.
 A person's subscription list is not in any public source, so the app grows the
 catalogue from the one list the user already owns:
 
-| Route | Limit | Cost | Works when |
-| --- | --- | --- | --- |
-| **InnerTube `FEchannels`** (`server.ts` bridge, **Refresh**) | none | no quota | the dev server runs and the account is linked (full `youtube` scope) |
-| Data API `subscriptions.list(mine=true)` | **1,000 items** | quota | signed in (the API itself reads with `youtube.readonly`; the app asks full for InnerTube) |
-| Google Takeout `subscriptions/subscriptions.csv` | none | hours of queue | the export is not empty |
-| **`youtube.com/feed/channels` script** (`src/lib/subs-export.ts`) | none | seconds | signed in to the browser |
+| Route                                                             | Limit           | Cost           | Works when                                                                                |
+| ----------------------------------------------------------------- | --------------- | -------------- | ----------------------------------------------------------------------------------------- |
+| **InnerTube `FEchannels`** (`server.ts` bridge, **Refresh**)      | none            | no quota       | the dev server runs and the account is linked (full `youtube` scope)                      |
+| Data API `subscriptions.list(mine=true)`                          | **1,000 items** | quota          | signed in (the API itself reads with `youtube.readonly`; the app asks full for InnerTube) |
+| Google Takeout `subscriptions/subscriptions.csv`                  | none            | hours of queue | the export is not empty                                                                   |
+| **`youtube.com/feed/channels` script** (`src/lib/subs-export.ts`) | none            | seconds        | signed in to the browser                                                                  |
 
 The file routes (Takeout and the script) end as the same
 `Channel Id, Channel Url, Channel Title` CSV, read by `parseTakeoutCsv()`; the
@@ -583,11 +583,12 @@ every Twitch page ships with, so there is no secret to manage and no quota.
 
 **Bilibili WBI** (`scripts/lib/platforms/bilibili.ts`) — Bilibili's equivalent
 of InnerTube. Two pieces:
+
 - the **visitor id** (`buvid3`), fetched once from `x/frontend/finger/spi` and
   sent as a cookie, which is what stops the risk-control system answering
   with HTTP 412;
 - the **WBI signature**, computed from the two rotating key URLs — and the
-  key file names must be taken *without their extensions*, or every signed
+  key file names must be taken _without their extensions_, or every signed
   request is rejected with `-412 request was banned`.
 
 ### Filling in the missing data
@@ -600,13 +601,13 @@ each run fills in a slice, and the filled-in data is committed.
 The details pass sorts the channels so the ones missing the most visible
 fields go first:
 
-| Field | Where it comes from |
-| --- | --- |
-| the **description** | InnerTube (YouTube), Helix (Twitch), the Bilibili `card` endpoint, CHZZK and KICK profile endpoints |
-| the **avatar** | the same profile sources |
-| the **follower count** | InnerTube, Helix (Twitch), `x/relation/stat` (Bilibili), CHZZK and KICK profile endpoints |
-| the **country** | YouTube's about page — the record's own statement of where it belongs |
-| the **links** | the channel's own published links |
+| Field                  | Where it comes from                                                                                 |
+| ---------------------- | --------------------------------------------------------------------------------------------------- |
+| the **description**    | InnerTube (YouTube), Helix (Twitch), the Bilibili `card` endpoint, CHZZK and KICK profile endpoints |
+| the **avatar**         | the same profile sources                                                                            |
+| the **follower count** | InnerTube, Helix (Twitch), `x/relation/stat` (Bilibili), CHZZK and KICK profile endpoints           |
+| the **country**        | YouTube's about page — the record's own statement of where it belongs                               |
+| the **links**          | the channel's own published links                                                                   |
 
 The free sources cost no quota, so the pass can afford to be generous — it is
 limited by politeness rather than by the budget, and the adaptive limiter
@@ -631,16 +632,16 @@ Bilibili account is a mirror.
 `npm run data:links` closes the gap. It reads the identities a performer
 publishes about themselves, strongest first:
 
-| Source | What it is | How the link is trusted |
-| --- | --- | --- |
-| the record's description | the Bilibili signature, a YouTube about page | it is the performer's own words |
-| the record's `externals` | handles harvested from a description | the same |
-| the performer's **X profile** (FxTwitter) | the bio, the website field, the location | the same |
-| **Wikidata**, by name in `ja` / `zh` / `en` | `P2397` YouTube, `P4047` Twitch | the profile must point back at the record |
-| **YouTube channel search** (InnerTube) | the record's display name, through `searchChannels()` — no Data API quota | the channel's name must be the record's, and it must not be a clip/fan account |
-| **web search** (`--web`, `GEMINI_API_KEY`) | a search-grounded model | the profile must point back at the record |
+| Source                                      | What it is                                                                | How the link is trusted                                                        |
+| ------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| the record's description                    | the Bilibili signature, a YouTube about page                              | it is the performer's own words                                                |
+| the record's `externals`                    | handles harvested from a description                                      | the same                                                                       |
+| the performer's **X profile** (FxTwitter)   | the bio, the website field, the location                                  | the same                                                                       |
+| **Wikidata**, by name in `ja` / `zh` / `en` | `P2397` YouTube, `P4047` Twitch                                           | the profile must point back at the record                                      |
+| **YouTube channel search** (InnerTube)      | the record's display name, through `searchChannels()` — no Data API quota | the channel's name must be the record's, and it must not be a clip/fan account |
+| **web search** (`--web`, `GEMINI_API_KEY`)  | a search-grounded model                                                   | the profile must point back at the record                                      |
 
-The last three answer a **name** match, so what they return is a *candidate*,
+The last three answer a **name** match, so what they return is a _candidate_,
 not a link. A candidate is accepted only when the resolved profile points back
 at the record — the Bilibili space id in the YouTube description, the same X
 handle — or when its title is the record's distinctive **display name**. A
@@ -654,7 +655,7 @@ adopted it. A link found in the performer's **own text** is taken at face
 value, because there the performer said it themselves.
 
 Containment is tested in both directions, because the two sides decorate a name
-differently: 「雫るる_Official」 keeps its suffix (`normalizeName()` strips
+differently: 「雫るる\_Official」 keeps its suffix (`normalizeName()` strips
 `official` only where it is a word — never after kana), and the channel is
 just 「雫るる」. The record's name is the distinctive side and has to appear in
 the candidate's; a one- or two-character name confirms nothing. A **search**
@@ -693,8 +694,8 @@ API at all, which is why the bio is read through FxTwitter.
 `vtubie.com/allvtubers/?pg=N`, ten to a page, and has no API — their FAQ
 answers "in development", and every path (including `/wp-json/`) sits behind
 a Cloudflare managed challenge. A plain `fetch` gets `403 Just a moment...`,
-so the adapter drives a real browser through `puppeteer-core` (optional, and
-it ships no Chrome) and reads the cards. A challenge that does not clear is a
+so the adapter drives a real browser through `playwright` (optional, and
+it ships no Chromium) and reads the cards. A challenge that does not clear is a
 normal outcome on a datacenter IP: the source says so and returns nothing
 rather than failing the run.
 
@@ -846,26 +847,26 @@ Both passes run under the run lock, re-read the dataset inside it, and write not
 
 Read from the site on 2026-10-28, one entry at a time, against the dataset.
 
-| bacharu | What it publishes | This project today | Plan |
-| --- | --- | --- | --- |
-| **109,828 performers** | the largest single roster | 72,691 channels across all sources | import the ids the gate admits (`data:bacharu-import --apply`) |
-| **every platform link** | Twitch, X, Instagram, TikTok, Bilibili, Niconico, KICK, CHZZK, SOOP, VK plus `web:` | `externals` for tracked records from `--links` | done — `--links --apply` |
-| **country / region** | `countries` + `nationality`, filed per performer | `region`, filled only where unknown | done — `--hints --apply` |
-| **debut date** | free text (`2022/07/03`, `June 18, 2022`, `YouTube: 2024/06/01`) | `debutDate` | done — `--hints --apply` parses it |
-| **gender** | `Female` / `Male` / free text | `gender`, filled only where unknown | done — `--hints --apply` maps `Female`→`female` |
-| **status** | `active` / `preparing` / `graduated` / `hidden` | `activity` | done — `--hints --apply` maps it |
-| **groups with current/former** | affiliation history per performer | `agency` + `affiliation` | done — `--agencies` fills empty agency |
-| **avatar on its own CDN** | `avatar`, `banner` as fallbacks | `avatar` from `data:details` | done — used until the profile pass overwrites |
-| **Twitter activity** | follower count, last tweet, locked/suspended state | **no field** | not planned — snapshot trivia, not tracker state |
-| **birthday** | `October 28`, per entry | **no field** | `birthday` (`MM-DD`) on `Channel`, then a `/birthday/` view |
-| **anniversary** | debut month + day, computed | `debutDate` is stored | an `/anniversary/` view over `debutDate` |
-| **model type** | `L2D`, `3D` | **no field** | not planned — profile trivia |
-| **fanbase name, hashtags** | prose lists per entry | **no field** | not planned — biography, not tracker data |
-| **follower counts** | Twitch, X subscriber counts per entry | `subscribers` / counts per platform link | done — the Twitch-keying import reads the follower count |
-| **Twitch schedule** | scheduled stream times per performer | **no field** | not planned — roster trivia |
-| **YouTube followers history** | historical subscriber counts | **no field** | not planned — historical trivia |
-| **Recent Activity (X)** | recent posts per performer | **no field** | not planned — social media trivia |
-| **debut page** | lists everyone who debuted on a day | **no field** | not planned — roster trivia, not a tracker field |
+| bacharu                        | What it publishes                                                                   | This project today                             | Plan                                                           |
+| ------------------------------ | ----------------------------------------------------------------------------------- | ---------------------------------------------- | -------------------------------------------------------------- |
+| **109,828 performers**         | the largest single roster                                                           | 72,691 channels across all sources             | import the ids the gate admits (`data:bacharu-import --apply`) |
+| **every platform link**        | Twitch, X, Instagram, TikTok, Bilibili, Niconico, KICK, CHZZK, SOOP, VK plus `web:` | `externals` for tracked records from `--links` | done — `--links --apply`                                       |
+| **country / region**           | `countries` + `nationality`, filed per performer                                    | `region`, filled only where unknown            | done — `--hints --apply`                                       |
+| **debut date**                 | free text (`2022/07/03`, `June 18, 2022`, `YouTube: 2024/06/01`)                    | `debutDate`                                    | done — `--hints --apply` parses it                             |
+| **gender**                     | `Female` / `Male` / free text                                                       | `gender`, filled only where unknown            | done — `--hints --apply` maps `Female`→`female`                |
+| **status**                     | `active` / `preparing` / `graduated` / `hidden`                                     | `activity`                                     | done — `--hints --apply` maps it                               |
+| **groups with current/former** | affiliation history per performer                                                   | `agency` + `affiliation`                       | done — `--agencies` fills empty agency                         |
+| **avatar on its own CDN**      | `avatar`, `banner` as fallbacks                                                     | `avatar` from `data:details`                   | done — used until the profile pass overwrites                  |
+| **Twitter activity**           | follower count, last tweet, locked/suspended state                                  | **no field**                                   | not planned — snapshot trivia, not tracker state               |
+| **birthday**                   | `October 28`, per entry                                                             | **no field**                                   | `birthday` (`MM-DD`) on `Channel`, then a `/birthday/` view    |
+| **anniversary**                | debut month + day, computed                                                         | `debutDate` is stored                          | an `/anniversary/` view over `debutDate`                       |
+| **model type**                 | `L2D`, `3D`                                                                         | **no field**                                   | not planned — profile trivia                                   |
+| **fanbase name, hashtags**     | prose lists per entry                                                               | **no field**                                   | not planned — biography, not tracker data                      |
+| **follower counts**            | Twitch, X subscriber counts per entry                                               | `subscribers` / counts per platform link       | done — the Twitch-keying import reads the follower count       |
+| **Twitch schedule**            | scheduled stream times per performer                                                | **no field**                                   | not planned — roster trivia                                    |
+| **YouTube followers history**  | historical subscriber counts                                                        | **no field**                                   | not planned — historical trivia                                |
+| **Recent Activity (X)**        | recent posts per performer                                                          | **no field**                                   | not planned — social media trivia                              |
+| **debut page**                 | lists everyone who debuted on a day                                                 | **no field**                                   | not planned — roster trivia, not a tracker field               |
 
 #### The build plan
 
@@ -897,11 +898,11 @@ and imports new records into `data/channels/`. The import supports
 
 #### What Chuysan has that this project does not
 
-| Chuysan | What it publishes | This project today | Plan |
-| --- | --- | --- | --- |
-| **~10,000 Thai VTuber channels** | channel id, name, description, thumbnail, subscriber count, publish/update dates, uploads playlist id | nothing | import ids the gate admits (`data:discover --source chuysan --promote`) |
-| **channel descriptions** | free text with Thai-language social links | `externals` from `data:links` | not yet — `data:links` only searches YouTube names |
-| **channel links** | YouTube channel id only | `platforms.youtube` | done — the id is the `channel_id` field |
+| Chuysan                          | What it publishes                                                                                     | This project today            | Plan                                                                    |
+| -------------------------------- | ----------------------------------------------------------------------------------------------------- | ----------------------------- | ----------------------------------------------------------------------- |
+| **~10,000 Thai VTuber channels** | channel id, name, description, thumbnail, subscriber count, publish/update dates, uploads playlist id | nothing                       | import ids the gate admits (`data:discover --source chuysan --promote`) |
+| **channel descriptions**         | free text with Thai-language social links                                                             | `externals` from `data:links` | not yet — `data:links` only searches YouTube names                      |
+| **channel links**                | YouTube channel id only                                                                               | `platforms.youtube`           | done — the id is the `channel_id` field                                 |
 
 ### Rate limiting
 
@@ -920,18 +921,18 @@ and the profiles from InnerTube and Twitch GQL.
 These are the well-known VTuber databases worth knowing about, and why they
 are not in the pipeline.
 
-| Source | Why not |
-| --- | --- |
-| [Virtual YouTuber Wiki](https://virtualyoutuber.fandom.com/) | The MediaWiki API works, and it is wired in as a **debut discovery source** (`scripts/lib/debut-sources/fandom.ts`) — debut dates, graduation dates, YouTube handles, X handles and affiliations from `{{Character}}` infoboxes. The roster itself is not yet wired for direct channel import |
-| [AI VTuber DB](https://aivtuberdb.com) | Worth reading for the AI flag, but it publishes no machine-readable file |
-| [PVC.moe](https://pvc.moe) | The data is only in the client bundle |
-| [Streams Charts](https://streamscharts.com/vtubers) | Blocks automated requests |
-| [JustOneAPI](https://github.com/justoneapi/justoneapi-python) | A token-based proxy for the protected platforms — a paid service, so the free sources are preferred. Its generated resources are a useful catalogue of which endpoints exist |
-| [facebook-gql-scraper](https://github.com/XD-MHLOO/facebook-gql-scraper) | Facebook's internal GraphQL, driven by `scripts/harvest-facebook-groups.py`. It needs a **logged-in cookie session**: without one, a group URL answers `302 → /login/?next=…`, the `fb_dtsg` token never appears, and search and group reads both fail. Worth using with a session, because group posts are where Taiwanese VTubers are announced |
-| r/VirtualYoutubers | `.json` and `/api/` both answer a block page (403); `new/.rss` works and is read by `.cache/harvest-reddit.ts`, and YouTube `oembed` turns a post's video into its channel |
-| X communities | A logged-out page renders the community header and a few posts with no `tweetText` nodes and no links, and there is no community timeline endpoint. A **user** timeline is readable — see the twscrape row below — but `UserUnavailable` is ambiguous: it means no session **or** a protected account, and the two cannot be told apart from the answer alone |
-| [twscrape](https://github.com/vladkens/twscrape) | The working way to read X: `scripts/harvest-x-twscrape.py` wraps it with a cookie-based account, so login → `userId` (`UserByScreenName`) → `UserTweets` happens in the library, with per-endpoint rate-limit rotation across accounts. `TWS_HTTP_BACKEND=curl` is required for `user_by_id` (Cloudflare rejects httpx) and `TWS_TELEMETRY=0` turns its telemetry off. Verified: a timeline, a search, and expanding `t.co` links into `links[].expandedUrl` all work with one cookie account |
-| [OpenCLI](https://github.com/jackwener/opencli) | 173 site CLIs, `twitter` and `reddit` among them, but every action needs a browser and a cookie session — and `twitter tweets` takes a `username` while X's `UserTweets` takes a `userId`, so it carries the same friction as calling the endpoint by hand |
+| Source                                                                   | Why not                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| ------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Virtual YouTuber Wiki](https://virtualyoutuber.fandom.com/)             | The MediaWiki API works, and it is wired in as a **debut discovery source** (`scripts/lib/debut-sources/fandom.ts`) — debut dates, graduation dates, YouTube handles, X handles and affiliations from `{{Character}}` infoboxes. The roster itself is not yet wired for direct channel import                                                                                                                                                                                                 |
+| [AI VTuber DB](https://aivtuberdb.com)                                   | Worth reading for the AI flag, but it publishes no machine-readable file                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| [PVC.moe](https://pvc.moe)                                               | The data is only in the client bundle                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| [Streams Charts](https://streamscharts.com/vtubers)                      | Blocks automated requests                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| [JustOneAPI](https://github.com/justoneapi/justoneapi-python)            | A token-based proxy for the protected platforms — a paid service, so the free sources are preferred. Its generated resources are a useful catalogue of which endpoints exist                                                                                                                                                                                                                                                                                                                  |
+| [facebook-gql-scraper](https://github.com/XD-MHLOO/facebook-gql-scraper) | Facebook's internal GraphQL, driven by `scripts/harvest-facebook-groups.py`. It needs a **logged-in cookie session**: without one, a group URL answers `302 → /login/?next=…`, the `fb_dtsg` token never appears, and search and group reads both fail. Worth using with a session, because group posts are where Taiwanese VTubers are announced                                                                                                                                             |
+| r/VirtualYoutubers                                                       | `.json` and `/api/` both answer a block page (403); `new/.rss` works and is read by `.cache/harvest-reddit.ts`, and YouTube `oembed` turns a post's video into its channel                                                                                                                                                                                                                                                                                                                    |
+| X communities                                                            | A logged-out page renders the community header and a few posts with no `tweetText` nodes and no links, and there is no community timeline endpoint. A **user** timeline is readable — see the twscrape row below — but `UserUnavailable` is ambiguous: it means no session **or** a protected account, and the two cannot be told apart from the answer alone                                                                                                                                 |
+| [twscrape](https://github.com/vladkens/twscrape)                         | The working way to read X: `scripts/harvest-x-twscrape.py` wraps it with a cookie-based account, so login → `userId` (`UserByScreenName`) → `UserTweets` happens in the library, with per-endpoint rate-limit rotation across accounts. `TWS_HTTP_BACKEND=curl` is required for `user_by_id` (Cloudflare rejects httpx) and `TWS_TELEMETRY=0` turns its telemetry off. Verified: a timeline, a search, and expanding `t.co` links into `links[].expandedUrl` all work with one cookie account |
+| [OpenCLI](https://github.com/jackwener/opencli)                          | 173 site CLIs, `twitter` and `reddit` among them, but every action needs a browser and a cookie session — and `twitter tweets` takes a `username` while X's `UserTweets` takes a `userId`, so it carries the same friction as calling the endpoint by hand                                                                                                                                                                                                                                    |
 
 If any of them publishes a JSON or CSV file, adding it is one adapter and
 one line in the registry.
@@ -940,11 +941,11 @@ one line in the registry.
 
 These are read for **how** a platform's API is called, not for their data.
 
-| Project | What it settled |
-| --- | --- |
+| Project                                                  | What it settled                                                                                                                                                                 |
+| -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [biliscope](https://github.com/gaogaotiantian/biliscope) | The WBI signature, the mixin key (file names **without** the `.jpg`), the fact that `web_location` is not required (PR #287), and the `w_webid` that `space/wbi/acc/info` wants |
-| [youtubei.js](https://github.com/LuanRT/YouTube.js) | InnerTube: the profile, the upload grid, the live streams, and `navigation/resolve_url` for turning a `@handle` into a channel id |
-| `gql.twitch.tv` | The GQL endpoint and the public web client id |
+| [youtubei.js](https://github.com/LuanRT/YouTube.js)      | InnerTube: the profile, the upload grid, the live streams, and `navigation/resolve_url` for turning a `@handle` into a channel id                                               |
+| `gql.twitch.tv`                                          | The GQL endpoint and the public web client id                                                                                                                                   |
 
 ## How this compares to the other trackers
 
@@ -953,16 +954,16 @@ Method: `curl --compressed` from one US VM plus each site's own published
 files. Payload and TTFB are network facts; Core Web Vitals need a browser and
 are not measured here.
 
-| | this project | HoloList | Holodex | Musicdex | Taiwan tracker | vdb | VtuberHK |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| blocking JS + CSS | **125 KB** (116,014 B JS + 9,373 B CSS) | 282 KB (48,642 B JS + 233,943 B CSS), plus a 206 KB ad script | 276 KB | 385 KB | 165 KB | 32 KB of static HTML | 229 KB (131,307 B JS + 97,686 B CSS) + Google Fonts |
-| hashed asset cache | `immutable`, one year (Vercel) | no `Cache-Control`; ETag only | hashed | hashed | ten minutes, flat | ten minutes, flat | no `Cache-Control`, ETag only |
-| data access | committed JSON, no key | sitemap + one server-rendered page per entry, no key; the REST API is behind Cloudflare | API v2, `X-APIKEY` | public API `api/v2/` no key (keyed `api/v1/songs` optional) | static JSON | static `list.json` | server-rendered HTML, no key |
-| inventory | **72,691 channels**, 1,803 items | 9,359 entries (905 V-Singer, 3,751 V-Streamer, 9,127 V-Tuber, 143 V-UP) | not published; `403` without a key | published via `/api/v2/channels` + `/api/v2/songs/hot` per org | 288 groups; performer list not published | 10,138 records | 672 channels (235 Twitch logins) |
-| platforms tracked | 9 with adapters | YouTube plus Twitch / X / Instagram / TikTok / Bilibili / Niconico links | YouTube (Twitch in Multiview only) | YouTube | YouTube, Twitch | Bilibili stats; ids for any | YouTube; Twitch as a directory |
-| regions | 10, aliases per locale | none — languages instead | language filters | — | TW, HK, MY | `cn`-centric | HK |
-| refresh | every 6 h | undocumented; `<lastmod>` allows incremental reads | undocumented | undocumented | ~30 min (its own timestamps) | ~5 min stats / <15 s live (its own claim) | undocumented; the state is edited, not measured |
-| licence | MIT | not stated | MIT frontend | Apache-2.0 | Unlicense | VDBL (CC BY-NC-SA data, GPL code) | not stated |
+|                    | this project                            | HoloList                                                                                | Holodex                            | Musicdex                                                       | Taiwan tracker                           | vdb                                       | VtuberHK                                            |
+| ------------------ | --------------------------------------- | --------------------------------------------------------------------------------------- | ---------------------------------- | -------------------------------------------------------------- | ---------------------------------------- | ----------------------------------------- | --------------------------------------------------- |
+| blocking JS + CSS  | **125 KB** (116,014 B JS + 9,373 B CSS) | 282 KB (48,642 B JS + 233,943 B CSS), plus a 206 KB ad script                           | 276 KB                             | 385 KB                                                         | 165 KB                                   | 32 KB of static HTML                      | 229 KB (131,307 B JS + 97,686 B CSS) + Google Fonts |
+| hashed asset cache | `immutable`, one year (Vercel)          | no `Cache-Control`; ETag only                                                           | hashed                             | hashed                                                         | ten minutes, flat                        | ten minutes, flat                         | no `Cache-Control`, ETag only                       |
+| data access        | committed JSON, no key                  | sitemap + one server-rendered page per entry, no key; the REST API is behind Cloudflare | API v2, `X-APIKEY`                 | public API `api/v2/` no key (keyed `api/v1/songs` optional)    | static JSON                              | static `list.json`                        | server-rendered HTML, no key                        |
+| inventory          | **72,691 channels**, 1,803 items        | 9,359 entries (905 V-Singer, 3,751 V-Streamer, 9,127 V-Tuber, 143 V-UP)                 | not published; `403` without a key | published via `/api/v2/channels` + `/api/v2/songs/hot` per org | 288 groups; performer list not published | 10,138 records                            | 672 channels (235 Twitch logins)                    |
+| platforms tracked  | 9 with adapters                         | YouTube plus Twitch / X / Instagram / TikTok / Bilibili / Niconico links                | YouTube (Twitch in Multiview only) | YouTube                                                        | YouTube, Twitch                          | Bilibili stats; ids for any               | YouTube; Twitch as a directory                      |
+| regions            | 10, aliases per locale                  | none — languages instead                                                                | language filters                   | —                                                              | TW, HK, MY                               | `cn`-centric                              | HK                                                  |
+| refresh            | every 6 h                               | undocumented; `<lastmod>` allows incremental reads                                      | undocumented                       | undocumented                                                   | ~30 min (its own timestamps)             | ~5 min stats / <15 s live (its own claim) | undocumented; the state is edited, not measured     |
+| licence            | MIT                                     | not stated                                                                              | MIT frontend                       | Apache-2.0                                                     | Unlicense                                | VDBL (CC BY-NC-SA data, GPL code)         | not stated                                          |
 
 **This project's edge:** cross-platform identity rebuilt from each platform,
 the region-evidence chain with recorded provenance, ten regions where the
@@ -987,14 +988,14 @@ twenty rows at a time.
 Read from the site on 2026-10-28. Its whole feature set is five pages, and
 four of them are things this project has the data for but no view of:
 
-| VtuberHK | What it shows | This project today | Plan |
-| --- | --- | --- | --- |
-| 節目 (`/`) | the live and upcoming schedule | live and upcoming **items** exist, but only per card | a **timetable** view — group the upcoming items by start time (`live-hkv.json` shows the shape: one row per stream with its start) |
-| 影片 (`/archive/`) | the most recently ended streams and uploads, in YouTube's delivery order | the same items exist, with `publishedAt` | a **recent** feed, ordered by `publishedAt`, across the whole scope |
-| 精華 (`/highlight/`) | a curated clip list | clips are *rejected* as duplicates (`detectClipAccount()`) | **not planned** — a clip is a fan re-upload, and the dataset hides those (`data/overrides.json`). A "clips mentioning this performer" index is Holodex's ground, not this one's |
-| sorting (`頻道` by subscriber / videos / views) | three sort keys over 672 channels | `subscribers` and `videoCount` are stored, `viewCount` is not filled | `data:vtuberhk-import -- --stats` fills the three counts for HK records from `channels.json` (876 fields over 360 records); a general `data:details --stats` pass is still to be written, then the sort |
-| 觀察中 (watch list) | a local list of channels to watch | the Subs view is stronger — it is account-linked and synced | nothing to build |
-| `/twitch` (235 logins) | a Twitch directory for the same scene | Twitch is a platform adapter, and a record may hold both accounts | feed the logins to `data:links` as **candidates**: a login that matches a tracked performer is a cross-platform link, and the confirmation rules are the same ones a name search follows |
+| VtuberHK                                        | What it shows                                                            | This project today                                                   | Plan                                                                                                                                                                                                    |
+| ----------------------------------------------- | ------------------------------------------------------------------------ | -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 節目 (`/`)                                      | the live and upcoming schedule                                           | live and upcoming **items** exist, but only per card                 | a **timetable** view — group the upcoming items by start time (`live-hkv.json` shows the shape: one row per stream with its start)                                                                      |
+| 影片 (`/archive/`)                              | the most recently ended streams and uploads, in YouTube's delivery order | the same items exist, with `publishedAt`                             | a **recent** feed, ordered by `publishedAt`, across the whole scope                                                                                                                                     |
+| 精華 (`/highlight/`)                            | a curated clip list                                                      | clips are _rejected_ as duplicates (`detectClipAccount()`)           | **not planned** — a clip is a fan re-upload, and the dataset hides those (`data/overrides.json`). A "clips mentioning this performer" index is Holodex's ground, not this one's                         |
+| sorting (`頻道` by subscriber / videos / views) | three sort keys over 672 channels                                        | `subscribers` and `videoCount` are stored, `viewCount` is not filled | `data:vtuberhk-import -- --stats` fills the three counts for HK records from `channels.json` (876 fields over 360 records); a general `data:details --stats` pass is still to be written, then the sort |
+| 觀察中 (watch list)                             | a local list of channels to watch                                        | the Subs view is stronger — it is account-linked and synced          | nothing to build                                                                                                                                                                                        |
+| `/twitch` (235 logins)                          | a Twitch directory for the same scene                                    | Twitch is a platform adapter, and a record may hold both accounts    | feed the logins to `data:links` as **candidates**: a login that matches a tracked performer is a cross-platform link, and the confirmation rules are the same ones a name search follows                |
 
 The two worth building are the timetable and the recent feed — both are views
 over data already on disk — and the sort needs one field the details pass never
@@ -1014,13 +1015,13 @@ fills, which the HK roster now supplies for its own scene.
 
 Every source identifies a performer differently:
 
-| Source | Identifier |
-| --- | --- |
-| YouTube | `UC…` channel id, or an `@handle` |
-| vdb | A UUID, plus a list of platform accounts |
-| Taiwan tracker | A YouTube channel id and a Twitch id |
-| VocaDB | A numeric artist id, plus its web links |
-| Wikidata | A `Q…` item, plus the `P2397` YouTube id |
+| Source         | Identifier                               |
+| -------------- | ---------------------------------------- |
+| YouTube        | `UC…` channel id, or an `@handle`        |
+| vdb            | A UUID, plus a list of platform accounts |
+| Taiwan tracker | A YouTube channel id and a Twitch id     |
+| VocaDB         | A numeric artist id, plus its web links  |
+| Wikidata       | A `Q…` item, plus the `P2397` YouTube id |
 
 `scripts/lib/identity.ts` keeps a registry of **identity keys** — a YouTube
 channel id, a handle, a platform-native id — and merges records that share

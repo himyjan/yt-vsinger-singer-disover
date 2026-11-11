@@ -63,7 +63,7 @@ jobs:
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
 
-      - name: Install Chrome for Playwright (org discovery fallback)
+      - name: Install Chromium for Playwright (org discovery fallback)
         run: npx playwright install chromium
 
       - name: Restore musicdex cache
