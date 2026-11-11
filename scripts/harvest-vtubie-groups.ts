@@ -68,10 +68,9 @@ async function loadPlaywright(): Promise<{
   launch(options: Record<string, unknown>): Promise<BrowserLike>;
 } | null> {
   try {
-    const chromiumLaunch = chromium.launch;
     return {
       launch: (options: Record<string, unknown>) =>
-        chromiumLaunch(options as Parameters<typeof chromium.launch>[0]) as unknown as Promise<BrowserLike>,
+        chromium.launch(options as Parameters<typeof chromium.launch>[0]) as unknown as Promise<BrowserLike>,
     };
   } catch {
     return null;
