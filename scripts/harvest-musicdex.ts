@@ -41,6 +41,10 @@ const KNOWN_ORGS = [
   "774inc",
   "GuildCQ",
   "ReAcT",
+  "VShojo",
+  "IRIAM",
+  ".LIVE",
+  "WACTOR",
 ];
 
 const BROWSER_HEADERS = {
@@ -281,18 +285,52 @@ async function fetchChannelsForOrg(org: string): Promise<MusicdexChannel[]> {
 }
 
 async function fetchSongsForOrg(org: string): Promise<MusicdexSong[]> {
-  const url = `${PUBLIC_API}/songs/hot?org=${encodeURIComponent(org)}`;
-  const body = (await fetchJson(url)) as any[];
-  if (!Array.isArray(body)) return [];
+  // Try paginated song endpoints. The channels endpoint uses limit/offset
+  // pagination; songs/hot may or may not support it. Try /songs/hot first
+  // (with pagination), then fall back to /songs without /hot.
+  const endpointBuilders = [
+    (offset: number) =>
+      `${PUBLIC_API}/songs/hot?org=${encodeURIComponent(org)}&limit=100&offset=${offset}`,
+    (offset: number) =>
+      `${PUBLIC_API}/songs?org=${encodeURIComponent(org)}&limit=100&offset=${offset}`,
+  ];
 
-  return body.map((s) => ({
-    videoId: s.video_id,
-    channelId: s.channel_id,
-    name: s.name ?? "",
-    originalArtist: s.original_artist ?? null,
-    isMv: s.is_mv === true,
-    availableAt: s.available_at ?? null,
-  }));
+  for (const makeUrl of endpointBuilders) {
+    const songs: MusicdexSong[] = [];
+    let offset = 0;
+    let firstVideoId: string | null = null;
+
+    for (;;) {
+      const url = makeUrl(offset);
+      const body = (await fetchJson(url)) as any[];
+      if (!Array.isArray(body) || body.length === 0) break;
+
+      if (offset === 0) {
+        firstVideoId = body[0]?.video_id ?? null;
+      } else if (firstVideoId && body[0]?.video_id === firstVideoId) {
+        // Pagination not supported — same first song as offset=0
+        break;
+      }
+
+      for (const s of body) {
+        songs.push({
+          videoId: s.video_id,
+          channelId: s.channel_id,
+          name: s.name ?? "",
+          originalArtist: s.original_artist ?? null,
+          isMv: s.is_mv === true,
+          availableAt: s.available_at ?? null,
+        });
+      }
+
+      if (body.length < 100) break;
+      offset += 100;
+    }
+
+    if (songs.length > 0) return songs;
+  }
+
+  return [];
 }
 
 async function harvestViaPublicApi(
