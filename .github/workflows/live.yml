@@ -93,13 +93,13 @@ jobs:
           CI_ME_CLIENT_ID: ${{ secrets.CI_ME_CLIENT_ID }}
           CI_ME_CLIENT_SECRET: ${{ secrets.CI_ME_CLIENT_SECRET }}
         run: |
-          # Each volume has ~3,284 YouTube channels. At 25ms delay per
+          # Each volume has ~3,284 YouTube channels. At 250ms delay per
           # request with ~2-4 requests per channel, processing all 3,284 can
-          # approach the 60-minute job timeout. Process ~1,500 channels per
+          # approach the 60-minute job timeout. Process ~2,000 channels per
           # job so each completes well within the limit; remaining channels
           # are picked up next run.
-          ARGS=(--live-only --limit-live 1500 --limit-multi-platform-live 200)
-          ARGS+=(--live-concurrency 20 --innertube-delay 25)
+          ARGS=(--live-only --limit-live 2000 --limit-multi-platform-live 400)
+          ARGS+=(--live-concurrency 12 --innertube-delay 250)
           if [ "${DRY_RUN:-false}" = "true" ]; then ARGS+=(--dry-run); fi
           VOL_DIR=".volumes/vol-${{ matrix.volume }}/data"
           mv data data-full
