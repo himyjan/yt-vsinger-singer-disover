@@ -79,7 +79,7 @@ export interface VtubieEntry {
 /* -------------------------------------------------------------------------- */
 
 /**
- * The slice of `puppeteer-core` this adapter uses.
+ * The slice of `playwright` this adapter uses.
  *
  * It is declared here rather than imported so that a checkout without the
  * optional dependency still type-checks — the same reason the legacy SQLite
@@ -98,7 +98,7 @@ interface PageLike {
   content(): Promise<string>;
   close(): Promise<void>;
 }
-interface PuppeteerLike {
+interface PlaywrightLike {
   launch(options: {
     executablePath: string;
     headless: boolean;
@@ -107,20 +107,20 @@ interface PuppeteerLike {
 }
 
 /**
- * Loads `puppeteer-core`.
+ * Loads `playwright`.
  *
  * The specifier is a variable so the TypeScript compiler does not try to
  * resolve a module that is deliberately optional; a missing package is a
  * `null`, not a crash.
  */
-async function loadPuppeteer(): Promise<PuppeteerLike | null> {
-  const specifier = "puppeteer-core";
+async function loadPlaywright(): Promise<PlaywrightLike | null> {
   try {
-    const mod = (await import(specifier)) as unknown as {
-      default?: PuppeteerLike;
-    } & Partial<PuppeteerLike>;
-    const api = mod.default ?? (mod as PuppeteerLike);
-    return typeof api.launch === "function" ? api : null;
+    const mod = await import("playwright") as { chromium?: { launch?: unknown } };
+    const launch = mod.chromium?.launch;
+    if (typeof launch === "function") {
+      return { launch: launch as PlaywrightLike["launch"] };
+    }
+    return null;
   } catch {
     return null;
   }
@@ -148,9 +148,8 @@ const EXECUTABLE_CANDIDATES = [
 /** The Chrome that `npx @puppeteer/browsers install chrome@stable` leaves. */
 function cachedChrome(): string | null {
   const root = path.join(
-    process.env.PUPPETEER_CACHE_DIR ?? path.join(process.env.HOME ?? "", ".cache"),
-    "puppeteer",
-    "chrome",
+    process.env.PLAYWRIGHT_BROWSERS_PATH ?? process.env.PUPPETEER_CACHE_DIR ?? path.join(process.env.HOME ?? "", ".cache"),
+    "ms-playwright",
   );
   try {
     for (const version of fs.readdirSync(root)) {
@@ -229,17 +228,17 @@ export class VtubieSource implements DebutSource {
       this.onLog(`vtubie: ${this.unavailableReason()}`);
       return [];
     }
-    const puppeteer = await loadPuppeteer();
-    if (!puppeteer) {
+    const playwrightLike = await loadPlaywright();
+    if (!playwrightLike) {
       this.onLog(
-        "vtubie: puppeteer-core is not installed — `npm i puppeteer-core` to read the directory",
+        "vtubie: playwright is not installed — `npm i playwright-core` to read the directory",
       );
       return [];
     }
 
     let browser: BrowserLike;
     try {
-      browser = await puppeteer.launch({
+      browser = await playwrightLike.launch({
         executablePath: this.executablePath,
         headless: !this.headed,
         args: [
