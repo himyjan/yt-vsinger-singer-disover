@@ -258,7 +258,7 @@ export function writeItemShards(
 
   const itemsByRegion = new Map<RegionCode, Map<string, Item[]>>();
   for (const item of items) {
-    const region = item.region ?? "unknown";
+    const region = item.region || "unknown";
     let byBucket = itemsByRegion.get(region);
     if (!byBucket) {
       byBucket = new Map();
