@@ -99,14 +99,14 @@
     "data:youtube-discover-import": "oxnode scripts/import-youtube.ts"
   },
   "dependencies": {
-    "@google/genai": "^3.0.0",
-    "@tailwindcss/vite": "^4.3.4",
+    "@google/genai": "^3.1.0",
+    "@tailwindcss/vite": "^4.3.5",
     "@vitejs/plugin-vue": "^6.0.10",
     "cime-sdk": "^1.2.0",
     "consola": "^3.4.2",
     "react": "^19.3.1",
     "uWebSockets.js": "https://github.com/uNetworking/uWebSockets.js/archive/v20.71.0.tar.gz",
-    "vite": "^8.3.5",
+    "vite": "^8.3.8",
     "vue": "^3.6.0-rc.14",
     "youtubei.js": "^18.3.0"
   },
@@ -118,9 +118,9 @@
     "@types/better-sqlite3": "^9.6.0",
     "@types/node": "^26.6.6",
     "@vue/content-mapper": "^4.0.0-alpha.3",
-    "playwright": "^1.64.1",
+    "playwright": "^1.65.0",
     "typescript": "^7.1.0-beta",
-    "vite": "^8.3.5"
+    "vite": "^8.3.8"
   },
   "overrides": {
     "@vitejs/plugin-vue": {
