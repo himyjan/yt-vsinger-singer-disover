@@ -2,21 +2,16 @@ name: Live status
 
 # Refreshes who is streaming right now, on every platform, and nothing else.
 #
-# The catalogue is split into twenty volumes (`npm run data:volumes -- --count 20`),
-# 3,546–3,746 channels each (measured). **Twenty jobs run in parallel, one
-# volume each**: a volume is ~5 minutes of checks, and the whole catalogue in
-# one job would be ~13 h — more than the 6 h a GitHub job may run. Each job
-# writes only its own volume's item files, which travel back as artifacts; one
-# fan-in job merges, rebuilds the index, validates and commits once.
+# The catalogue is split into volumes (`npm run data:volumes -- --count N`),
+# ~1250 channels each. **N jobs run in parallel, one volume each**: a volume is
+# ~5 minutes of checks, and the whole catalogue in one job would be ~13 h —
+# more than the 6 h a GitHub job may run. Each job writes only its own volume's
+# item files, which travel back as artifacts; one fan-in job merges, rebuilds
+# the index, validates and commits once.
 #
-# The split count is fixed at twenty because the matrix below is a fixed list.
-# Do not add a `volume-count` input without making the matrix dynamic — the two
-# would disagree, and a job would process a volume that was never created.
-#
-# Twenty is also the practical ceiling: splitting a volume across two jobs would
-# make both write the same `items/` files, and the second would overwrite the
-# first's findings. A volume is the smallest unit that can be checked alone —
-# to go wider, raise the volume count, not the jobs per volume.
+# The split count is dynamic: `ceil(total_channels / 1250)`. Each job processes
+# one shard of ~1250 channels, so every channel is checked exactly once per run.
+# Do not hard-code the volume count — it depends on catalogue size.
 #
 # `--live-only` writes only item files — no channel records change.
 
@@ -39,17 +34,65 @@ permissions:
   contents: write
 
 jobs:
+  plan:
+    name: Count channels and calculate job count
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      job_count: ${{ steps.count.outputs.job_count }}
+      matrix: ${{ steps.count.outputs.matrix }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 1
+          ref: ${{ github.ref_name }}
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "26"
+          cache: npm
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Count channels and calculate job count
+        id: count
+        run: |
+          TOTAL=$(node -e "
+            const fs = require('fs');
+            const path = require('path');
+            let total = 0;
+            for (const kind of ['virtual', 'real']) {
+              const dir = path.join('data/channels', kind);
+              if (!fs.existsSync(dir)) continue;
+              for (const file of fs.readdirSync(dir)) {
+                if (!file.endsWith('.json')) continue;
+                const data = JSON.parse(fs.readFileSync(path.join(dir, file), 'utf8'));
+                total += data.length;
+              }
+            }
+            console.log(total);
+          ")
+          JOB_COUNT=$(( (TOTAL + 1249) / 1250 ))
+          if [ "$JOB_COUNT" -lt 1 ]; then JOB_COUNT=1; fi
+          MATRIX=$(node -e "console.log(JSON.stringify(Array.from({length:$JOB_COUNT},(_,i)=>i)))")
+          echo "Total channels: $TOTAL"
+          echo "Live jobs: $JOB_COUNT (limit 1250 per job)"
+          echo "job_count=$JOB_COUNT" >> "$GITHUB_OUTPUT"
+          echo "matrix=$MATRIX" >> "$GITHUB_OUTPUT"
+
   process-volumes:
-    name: Process live status for volume ${{ matrix.volume }}
+    name: Process live status for volume ${{ matrix.job }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
     strategy:
-      # Twenty jobs, one volume each, all at once. `max-parallel` is the cap on
-      # simultaneous jobs, and 20 is GitHub's ceiling for a public repository —
-      # exactly enough for one job per volume.
+      # Dynamic job count: ceil(total_channels / 1250). One job per shard,
+      # all at once. `max-parallel` is the cap on simultaneous jobs, and 20
+      # is GitHub's ceiling for a public repository — exactly enough for one
+      # job per volume.
       max-parallel: 20
+      fail-fast: false
       matrix:
-        volume: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+        job: ${{ fromJSON(needs.plan.outputs.matrix) }}
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -57,34 +100,29 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.ref_name }}
           lfs: true
-
       - name: Install Git LFS
         run: |
           git lfs install --skip-repo
           git lfs pull || true
-
       - name: Set up Node
         uses: actions/setup-node@v7
         with:
           node-version: "26"
           cache: npm
-
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
-
       - name: Create this volume only
         # `--only` writes one volume and nothing else. Without it every job
-        # builds the whole 2.6 GB split and throws nineteen twentieths away —
-        # twenty times over, on the same runner minutes it needs for the checks.
+        # builds the whole split and throws N-1 volumes away — N times over,
+        # on the same runner minutes it needs for the checks.
         #
         # The shared inputs the pass opens — `overrides.json`,
         # `seed-catalog.json` (read at **import** time), `upstream.json`,
         # `suggestions.json` — are copied in by the split itself, so nothing
         # has to be copied in afterwards. A `--only N` also leaves the other
         # volumes alone, so a re-run in the same checkout is idempotent.
-        run: npm run data:volumes -- --count 20 --only ${{ matrix.volume }}
-
-      - name: Process volume ${{ matrix.volume }}
+        run: npm run data:volumes -- --count ${{ needs.plan.outputs.job_count }} --only ${{ matrix.job }}
+      - name: Process volume ${{ matrix.job }}
         env:
           DRY_RUN: ${{ inputs.dry-run }}
           TWITCH_CLIENT_ID: ${{ secrets.TWITCH_CLIENT_ID }}
@@ -93,31 +131,32 @@ jobs:
           CI_ME_CLIENT_ID: ${{ secrets.CI_ME_CLIENT_ID }}
           CI_ME_CLIENT_SECRET: ${{ secrets.CI_ME_CLIENT_SECRET }}
         run: |
-          # Each volume has ~3,284 YouTube channels. At 250ms delay per
-          # request with ~2-4 requests per channel, processing all 3,284 can
-          # approach the 60-minute job timeout. Process ~2,000 channels per
+          # Each volume has ~1250 YouTube channels. At 250ms delay per
+          # request with ~2-4 requests per channel, processing all 1,500 can
+          # approach the 60-minute job timeout. Process ~1,500 channels per
           # job so each completes well within the limit; remaining channels
           # are picked up next run.
-          ARGS=(--live-only --limit-live 2000 --limit-multi-platform-live 400)
+          JOB_COUNT=${{ needs.plan.outputs.job_count }}
+          SHARD_INDEX=$(( ${{ matrix.job }} + 1 ))
+          ARGS=(--live-only --limit-live 1250 --limit-multi-platform-live 300)
           ARGS+=(--live-concurrency 12 --innertube-delay 250)
           if [ "${DRY_RUN:-false}" = "true" ]; then ARGS+=(--dry-run); fi
-          VOL_DIR=".volumes/vol-${{ matrix.volume }}/data"
+          VOL_DIR=".volumes/vol-${{ matrix.job }}/data"
           mv data data-full
           ln -s "$VOL_DIR" data
-          npx oxnode scripts/sync.ts -- "${ARGS[@]}"
+          npx oxnode scripts/sync.ts -- --shard "${SHARD_INDEX}/${JOB_COUNT}" --live-only --limit-live 1250 --limit-multi-platform-live 400 --live-concurrency 16 --innertube-delay 250
           rm -f data
           mv data-full data
-
       - name: Upload volume artifacts
         uses: actions/upload-artifact@v7
         with:
-          name: vol-${{ matrix.volume }}
-          path: .volumes/vol-${{ matrix.volume }}/data/items/
+          name: vol-${{ matrix.job }}
+          path: .volumes/vol-${{ matrix.job }}/data/items/
           retention-days: 1
 
   merge-and-commit:
     name: Merge volumes and commit dataset
-    needs: process-volumes
+    needs: [plan, process-volumes]
     runs-on: ubuntu-latest
     timeout-minutes: 90
     # No job-level `concurrency` here. Re-declaring the workflow's own group
@@ -131,24 +170,19 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.ref_name }}
           lfs: true
-
       - name: Install Git LFS
         run: |
           git lfs install --skip-repo
           git lfs pull || true
-
       - name: Set up Node
         uses: actions/setup-node@v7
         with:
           node-version: "26"
           cache: npm
-
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
-
       - name: Create volume split for merge
-        run: npm run data:volumes -- --count 20
-
+        run: npm run data:volumes -- --count ${{ needs.plan.outputs.job_count }}
       - name: Download volume artifacts
         uses: actions/download-artifact@v8
         with:
@@ -164,12 +198,11 @@ jobs:
           # and the merge re-merged the split: the live status the run had just
           # fetched was thrown away and the commit only changed timestamps.
           merge-multiple: false
-
       - name: Copy downloaded items into volume dirs
         run: |
-          VOLUME_COUNT=20
+          JOB_COUNT=${{ needs.plan.outputs.job_count }}
           missing=0
-          for v in $(seq 0 $((VOLUME_COUNT - 1))); do
+          for v in $(seq 0 $((JOB_COUNT - 1))); do
             SRC=".volumes/downloads/vol-$v"
             DST=".volumes/vol-$v/data/items"
             if [ ! -d "$SRC" ]; then
@@ -191,24 +224,19 @@ jobs:
             echo "::error::$missing volume artifact(s) missing — refusing to merge a partial sweep"
             exit 1
           fi
-
       - name: Merge all volumes into data/
         # `--items-only`: the live pass writes item files and nothing else, and
         # the volumes were split from the checkout this job started with.
         # Merging their channel shards would rewrite every channel record to
         # that snapshot — which is how a `data: fill channel details` commit
         # that landed while this ran was reverted.
-        run: npx oxnode scripts/merge-volumes.ts --count 20 --items-only
-
+        run: npx oxnode scripts/merge-volumes.ts --count ${{ needs.plan.outputs.job_count }} --items-only
       - name: Build search index
         run: npm run data:index
-
       - name: Validate dataset
         run: npm run data:validate
-
       - name: Check the stored repository size
         run: npm run repo:size -- --max-mb 900 --warn-mb 700
-
       - name: Commit live status
         env:
           BRANCH: ${{ github.ref_name }}
@@ -250,15 +278,15 @@ jobs:
           fi
           git commit -m "data: live status (${{ github.run_number }})"
           git push origin "HEAD:$BRANCH"
-
       - name: Summary
         run: |
+          JOB_COUNT=${{ needs.plan.outputs.job_count }}
           {
             echo "### Live status"
             echo ""
             echo "| Metric | Value |"
             echo "| --- | --- |"
-            echo "| Volumes processed | 20 (20 parallel jobs × 1 volume each) |"
+            echo "| Volumes processed | $JOB_COUNT ($JOB_COUNT parallel jobs × 1 volume each) |"
             echo "| Live pass | `--live-only` per volume, then merged |"
             echo "| Index | rebuilt after merge |"
             echo "| Committed | \`data/\` |"
