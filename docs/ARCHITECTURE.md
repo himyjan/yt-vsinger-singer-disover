@@ -256,7 +256,7 @@ discovered channel). The survivors go through `importYouTubeChannels()`, which
 builds the record, applies `data/overrides.json`, merges it into the shards
 and rebuilds the search index.
 
-The vTubie source drives a real browser (`puppeteer-core`, optional) because
+The vTubie source drives a real browser (`playwright`, optional) because
 their pages sit behind a Cloudflare challenge and there is no API. A challenge
 that does not clear is reported and yields no candidates; it never fails the
 run.

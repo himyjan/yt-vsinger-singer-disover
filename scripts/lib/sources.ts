@@ -223,7 +223,7 @@ export const SOURCES: SourceInfo[] = [
     access: "html",
     used: true,
     usedFor:
-      "New performers through `npm run data:discover` (and `--promote` for the ones that pass the virtual-and-singing gate) — the pages sit behind a Cloudflare challenge, so they are read with a browser (puppeteer-core, optional)",
+      "New performers through `npm run data:discover` (and `--promote` for the ones that pass the virtual-and-singing gate) — the pages sit behind a Cloudflare challenge, so they are read with a browser (playwright, optional)",
   },
   {
     id: "aivtuberdb",

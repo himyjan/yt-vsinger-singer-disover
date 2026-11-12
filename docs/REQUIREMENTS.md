@@ -837,7 +837,7 @@ object** (1 MB is the recommended object size). Git LFS caps a single file at
         on singing terms alone.
       - **vTubie** — a directory of roughly 20,000 performers, ten to a page.
         No API, and the pages sit behind a Cloudflare managed challenge, so it
-        is read with a real browser (`puppeteer-core`, optional).
+        is read with a real browser (`playwright`, optional).
         `npm run data:discover -- --promote` resolves the names it finds to
         YouTube channels and applies the same two-video gate the YouTube
         discovery applies; the source itself only ever produces candidates.
