@@ -33,6 +33,7 @@ const PER_CHANNEL_LIVE_PLATFORMS = new Set<PlatformId>([
   "soop",
   "ci.me",
   "vk",
+  "twitch",
 ]);
 
 export interface LiveRefreshContext {
