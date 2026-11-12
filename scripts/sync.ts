@@ -1132,6 +1132,7 @@ async function main(): Promise<void> {
       budget,
       releaseLock,
     });
+    writeChannelShards(channels, items, 'data', now);
     return;
   }
 
