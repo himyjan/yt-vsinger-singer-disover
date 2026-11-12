@@ -72,6 +72,7 @@ jobs:
             }
             console.log(total);
           ")
+          : "${TOTAL:=0}"
           JOB_COUNT=$(( (TOTAL + 1249) / 1250 ))
           if [ "$JOB_COUNT" -lt 1 ]; then JOB_COUNT=1; fi
           MATRIX=$(node -e "console.log(JSON.stringify(Array.from({length:$JOB_COUNT},(_,i)=>i)))")
