@@ -115,6 +115,7 @@ import {
   ROOT,
 } from "./lib/io";
 import {
+  bucketFor,
   layout,
   writeDataset,
   writeItemShards,
@@ -386,7 +387,7 @@ const nowIso = () => new Date().toISOString();
 function inShard(id: string, args: Args): boolean {
   return (
     args.shardCount <= 1 ||
-    shardOf(id, SHARD_COUNT) === (args.shardIndex - 1) % SHARD_COUNT
+    Number.parseInt(bucketFor(id), 16) === (args.shardIndex - 1) % SHARD_COUNT
   );
 }
 
