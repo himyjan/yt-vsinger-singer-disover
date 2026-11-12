@@ -395,6 +395,17 @@ export async function refreshLivePass(
     if (!channel.id.startsWith("UC") && !native && !hasLiveLinks) continue;
     for (const link of channel.platforms) {
       if (!PER_CHANNEL_LIVE_PLATFORMS.has(link.platform)) continue;
+      /**
+       * Only targets whose adapter can actually answer are worth a slot.
+       *
+       * Twitch's adapter is absent without credentials, and those 2,257
+       * links sort first (they have never been checked, so `lastCheckedAt`
+       * is empty). Slicing `multiLimit` before this check let them consume
+       * the entire budget and starved CI.ME / KICK / CHZZK / SOOP / VK —
+       * the run reported "checked 1/8" with seven skips.
+       */
+      const adapter = adapterById.get(link.platform);
+      if (!adapter?.live) continue;
       multiTargets.push({ channel, platform: link.platform, link });
     }
   }
