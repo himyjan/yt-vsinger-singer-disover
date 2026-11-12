@@ -1210,6 +1210,44 @@ async function main(): Promise<void> {
   const ctx = { innertube, twitch, adapters, prefetched };
 
   /**
+   * Promote externals entries to platform links.
+   *
+   * A description is where a performer publishes their other accounts —
+   * Twitch, X, Instagram. The handles land in `externals`, but they only
+   * become real platform identities when they are in `platforms`:
+   * `primaryPlatformOf()` reads it, the live check reads it, and the details
+   * fill fetches it. So every externals entry on a known platform becomes a
+   * platform link, and the channel is marked as updated so the change is
+   * written back.
+   */
+  const promotionNow = new Date().toISOString();
+  for (const channel of all) {
+    const externals = channel.externals ?? {};
+    const existing = new Set((channel.platforms ?? []).map((p) => p.platform));
+    let changed = false;
+    for (const [platform, handle] of Object.entries(externals)) {
+      if (existing.has(platform)) continue;
+      if (platform !== "youtube" && platform !== "twitch") continue;
+      channel.platforms ??= [];
+      channel.platforms.push({
+        platform: platform as PlatformId,
+        id: String(handle),
+        handle: null,
+        name: null,
+        url: platform === "twitch"
+          ? `https://www.twitch.tv/${handle}`
+          : `https://www.youtube.com/@${handle}`,
+        subscribers: { tag: "hidden" },
+        avatar: null,
+        lastCheckedAt: promotionNow,
+      });
+      existing.add(platform);
+      changed = true;
+    }
+    if (changed) updatedById.set(channel.id, channel);
+  }
+
+  /**
    * The failures of one platform in a row.
    *
    * A source that is pushing back — Bilibili's risk control, for instance —
