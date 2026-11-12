@@ -25,7 +25,7 @@
  *   npm run data:discover -- --dry-run
  *
  * vTubie is read through a real browser (their directory is behind a
- * Cloudflare challenge and has no API); `puppeteer-core` is an optional
+ * Cloudflare challenge and has no API); `playwright` is an optional
  * dependency, so a checkout without it simply discovers nothing from that
  * source and says so.
  */

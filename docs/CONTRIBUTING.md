@@ -182,7 +182,7 @@ A source must degrade gracefully — return an empty array rather than throwing
 when its API is unreachable.
 
 Two sources exist: `fandom.ts` (the Virtual YouTuber Wiki's MediaWiki API) and
-`vtubie.ts` (the vTubie directory, read through `puppeteer-core` because the
+`vtubie.ts` (the vTubie directory, read through `playwright` because the
 pages sit behind a Cloudflare challenge and there is no API). Run them with:
 
 ```bash
