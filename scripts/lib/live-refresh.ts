@@ -65,6 +65,8 @@ export interface LiveRefreshContext {
    * decides how much network latency is hidden behind it.
    */
   concurrency?: number;
+  /** Per-channel timeout in ms. Defaults to 10000 (10s). Null means default. */
+  liveTimeoutMs?: number | null;
   /** The shard predicate the run was started with. */
   inShard: (channelId: string) => boolean;
   log: (msg: string) => void;
@@ -257,7 +259,7 @@ export async function refreshLivePass(
       );
     };
 
-    const perChannelTimeoutMs = 30_000; // 30 seconds per channel max
+    const perChannelTimeoutMs = ctx.liveTimeoutMs || 10_000;
 
     ctx.log(
       `innertube live: starting ${total} channel(s) with concurrency ${concurrency}`,
