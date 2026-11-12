@@ -60,31 +60,51 @@ jobs:
           TOTAL=$(node -e "
             const fs = require('fs');
             const path = require('path');
-            let total = 0;
-            try {
-              for (const kind of ['virtual', 'real']) {
-                const dir = path.join('data/channels', kind);
-                if (!fs.existsSync(dir)) continue;
-                for (const file of fs.readdirSync(dir)) {
-                  if (!file.endsWith('.json')) continue;
-                  try {
-                    const data = JSON.parse(fs.readFileSync(path.join(dir, file), 'utf8'));
-                    total += Array.isArray(data) ? data.length : 0;
-                  } catch {}
+
+            function walk(dir) {
+              if (!fs.existsSync(dir)) return [];
+              let results = [];
+              for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+                const full = path.join(dir, entry.name);
+                if (entry.isDirectory()) {
+                  results = results.concat(walk(full));
+                } else if (entry.name.endsWith('.json')) {
+                  results.push(full);
                 }
               }
-            } catch {}
+              return results;
+            }
+
+            const files = walk('data/channels');
+            console.error('Found JSON files:', files.length);
+
+            let total = 0;
+            for (const file of files) {
+              const raw = fs.readFileSync(file, 'utf8');
+              if (raw.startsWith('version https://github.com')) {
+                console.error('LFS pointer not pulled:', file);
+                continue;
+              }
+              const data = JSON.parse(raw);
+              if (Array.isArray(data)) {
+                total += data.length;
+              } else if (data && Array.isArray(data.channels)) {
+                total += data.channels.length;
+              } else if (data && typeof data === 'object') {
+                total += Object.keys(data).length;
+              }
+            }
             console.log(total);
-          ") || echo "0"
-          TOTAL="${TOTAL:-0}"
+          ")
+          echo "Raw TOTAL output: '$TOTAL'"
+          TOTAL="${TOTAL:=0}"
           JOB_COUNT=$(( (TOTAL + 1249) / 1250 ))
           if [ "$JOB_COUNT" -lt 1 ]; then JOB_COUNT=1; fi
-          MATRIX=$(node -e "console.log(JSON.stringify(Array.from({length:$JOB_COUNT},(_,i)=>i)))" 2>/dev/null || echo "[]")
+          MATRIX=$(node -e "console.log(JSON.stringify(Array.from({length:$JOB_COUNT},(_,i)=>i)))")
           echo "Total channels: $TOTAL"
           echo "Live jobs: $JOB_COUNT (limit 1250 per job)"
           echo "job_count=$JOB_COUNT" >> "$GITHUB_OUTPUT"
           echo "matrix=$MATRIX" >> "$GITHUB_OUTPUT"
-
   process-volumes:
     name: Process live status for volume ${{ matrix.job }}
     runs-on: ubuntu-latest
