@@ -200,8 +200,16 @@ export async function refreshLivePass(
    * visits with no cursor file to keep.
    */
   const candidates = channels
-    .filter((c) => c.id.startsWith("UC") && ctx.inShard(c.id))
-    .sort((a, b) => a.id.localeCompare(b.id));
+    .filter((c) => {
+      const ytLink = c.platforms.find((p) => p.platform === "youtube");
+      if (!ytLink || !ytLink.id) return false;
+      return ctx.inShard(ytLink.id);
+    })
+    .sort((a, b) => {
+      const ytA = a.platforms.find((p) => p.platform === "youtube")!.id;
+      const ytB = b.platforms.find((p) => p.platform === "youtube")!.id;
+      return ytA.localeCompare(ytB);
+    });
 
   const total = candidates.length;
   const limit = Math.max(0, ctx.limitLive);
