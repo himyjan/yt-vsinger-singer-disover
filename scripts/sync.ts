@@ -188,6 +188,13 @@ interface Args {
    * channel profiles.
    */
   innertubeDelayMs: number | null;
+  /**
+   * Per-channel live-check timeout in ms.
+   *
+   * Dead or slow channels can otherwise spend the full 30s timeout each,
+   * and enough of them push a volume past the job timeout.
+   */
+  liveTimeoutMs: number | null;
   keywords: string[];
   force: boolean;
   /**
@@ -216,6 +223,7 @@ function parseArgs(argv: string[]): Args {
     livePage: 1,
     liveConcurrency: 4,
     innertubeDelayMs: null,
+    liveTimeoutMs: null,
     keywords: [],
     force: false,
     shardIndex: 0,
@@ -239,6 +247,8 @@ function parseArgs(argv: string[]): Args {
       args.liveConcurrency = Math.max(1, Math.min(16, Number(argv[++i]) || 4));
     else if (a === "--innertube-delay")
       args.innertubeDelayMs = Math.max(0, Number(argv[++i]) || 0);
+    else if (a === "--live-timeout")
+      args.liveTimeoutMs = Math.max(1000, Number(argv[++i]) || 10_000);
     else if (a === "--limit-multi-platform-live") args.limitMultiPlatformLive = Number(argv[++i]);
     else if (a === "--keyword") args.keywords.push(argv[++i]);
     else if (a === "--shard") {
@@ -859,6 +869,7 @@ async function runLiveOnly(opts: {
     limitLive: args.limitLive ?? config.maxLiveChannelsPerRun,
     limitMultiPlatformLive: args.limitMultiPlatformLive ?? 2000,
     concurrency: args.liveConcurrency,
+    liveTimeoutMs: args.liveTimeoutMs,
     page: args.livePage,
     inShard: (id: string) => inShard(id, args),
     log,

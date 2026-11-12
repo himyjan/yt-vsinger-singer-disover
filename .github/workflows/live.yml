@@ -164,7 +164,7 @@ jobs:
           # are picked up next run.
           JOB_COUNT=${{ needs.plan.outputs.job_count }}
           SHARD_INDEX=$(( ${{ matrix.job }} + 1 ))
-          ARGS=(--live-only --limit-live 1250 --limit-multi-platform-live 300 --live-concurrency 12 --innertube-delay 250)
+          ARGS=(--live-only --limit-live 1250 --limit-multi-platform-live 300 --live-concurrency 12 --innertube-delay 250 --live-timeout 10000)
           if [ "${DRY_RUN:-false}" = "true" ]; then ARGS+=(--dry-run); fi
           VOL_DIR=".volumes/vol-${{ matrix.job }}/data"
           mv data data-full
