@@ -119,6 +119,7 @@ import {
   writeDataset,
   writeItemShards,
   writeChannelShards,
+  SHARD_COUNT,
   describeDatasetSize,
   readAllChannelRecords,
 } from "./lib/dataset";
@@ -385,7 +386,7 @@ const nowIso = () => new Date().toISOString();
 function inShard(id: string, args: Args): boolean {
   return (
     args.shardCount <= 1 ||
-    shardOf(id, args.shardCount) === args.shardIndex
+    shardOf(id, SHARD_COUNT) === (args.shardIndex - 1) % SHARD_COUNT
   );
 }
 
