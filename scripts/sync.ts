@@ -57,7 +57,6 @@ import {
 } from "./lib/analytics";
 import { checkUpstreams, writeRevisions } from "./lib/upstream";
 import { TwitchGqlSource } from "./lib/twitch-gql";
-import { shardOf } from "./lib/shard";
 import {
   hasSingingDiscoveryEvidence,
   hasVirtualIdentityEvidence,
