@@ -170,7 +170,7 @@ function parseArgs(argv: string[]): Options {
         i++;
         break;
       case "--delay-ms":
-        options.delayMs = Math.max(50, Number(value ?? 100));
+        options.delayMs = Math.max(250, Number(value ?? 250));
         i++;
         break;
       case "--budget-minutes":
