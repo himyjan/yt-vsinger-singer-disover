@@ -59,18 +59,21 @@ interface PageLike {
   setViewport(viewport: { width: number; height: number }): Promise<void>;
   close(): Promise<void>;
 }
-interface BrowserLike {
+interface BrowserContextLike {
   newPage(): Promise<PageLike>;
   close(): Promise<void>;
 }
 
 async function loadPlaywright(): Promise<{
-  launch(options: Record<string, unknown>): Promise<BrowserLike>;
+  launchPersistentContext(options: Record<string, unknown>): Promise<BrowserContextLike>;
 } | null> {
   try {
+    const chromiumLaunchPersistentContext = chromium.launchPersistentContext;
     return {
-      launch: (options: Record<string, unknown>) =>
-        chromium.launch(options as Parameters<typeof chromium.launch>[0]) as unknown as Promise<BrowserLike>,
+      launchPersistentContext: (options: Record<string, unknown>) =>
+        chromiumLaunchPersistentContext(
+          options as unknown as Parameters<typeof chromium.launchPersistentContext>[0],
+        ) as unknown as Promise<BrowserContextLike>,
     };
   } catch {
     return null;
@@ -718,13 +721,13 @@ async function main(): Promise<void> {
   }
   const browserLike = await loadPlaywright();
   if (!browserLike) {
-    console.error("playwright is not installed — `npm i playwright-core`.");
+    console.error("playwright is not installed — `npm i playwright`.");
     process.exit(1);
   }
 
   const state = loadState(options.statePath, options.reset);
 
-  const browser = await browserLike.launch({
+  const browserContext = await browserLike.launchPersistentContext({
     executablePath,
     headless: options.headed ? false : true,
     userDataDir: options.profileDir,
@@ -737,7 +740,7 @@ async function main(): Promise<void> {
   });
 
   try {
-    const page = await browser.newPage();
+    const page = await browserContext.newPage();
     await page.setViewport({ width: 1280, height: 900 });
     const ready = await warmUp(page, log);
     if (!ready) {
@@ -760,7 +763,7 @@ async function main(): Promise<void> {
     saveState(options.statePath, state);
     writeSnapshot(state, options.outPath);
   } finally {
-    await browser.close().catch(() => { });
+    await browserContext.close().catch(() => { });
   }
 }
 
