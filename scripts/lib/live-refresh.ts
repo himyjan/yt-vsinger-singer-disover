@@ -394,7 +394,7 @@ export async function refreshLivePass(
       if (!PER_CHANNEL_LIVE_PLATFORMS.has(link.platform)) continue;
       // Shard multi-platform live checks by their link id so each channel
       // is checked by exactly one job, not every job.
-      if (!ctx.inShard(link.id)) continue;
+      if (!ctx.inShard(channel.id)) continue:
       multiTargets.push({ channel, platform: link.platform, link });
     }
   }
