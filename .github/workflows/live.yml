@@ -89,6 +89,7 @@ jobs:
     name: Process live status for volume ${{ matrix.job }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    needs: plan
     strategy:
       # Dynamic job count: ceil(total_channels / 1250). One job per shard,
       # all at once. `max-parallel` is the cap on simultaneous jobs, and 20
@@ -97,7 +98,7 @@ jobs:
       max-parallel: 20
       fail-fast: false
       matrix:
-        job: ${{ fromJSON(needs.plan.outputs.matrix) }}
+        job: ${{ fromJSON(needs.plan.outputs.matrix || '[]') }}
     steps:
       - name: Checkout
         uses: actions/checkout@v7
