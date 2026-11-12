@@ -392,6 +392,9 @@ export async function refreshLivePass(
     if (!channel.id.startsWith("UC") && !native && !hasLiveLinks) continue;
     for (const link of channel.platforms) {
       if (!PER_CHANNEL_LIVE_PLATFORMS.has(link.platform)) continue;
+      // Shard multi-platform live checks by their link id so each channel
+      // is checked by exactly one job, not every job.
+      if (!ctx.inShard(link.id)) continue;
       multiTargets.push({ channel, platform: link.platform, link });
     }
   }
@@ -500,7 +503,7 @@ export async function refreshLivePass(
         if (!mid) continue;
         const channel =
           channelById.get(mid) ?? channelById.get(`bilibili:${mid}`);
-        if (!channel) continue;
+        if (!channel || !ctx.inShard(channel.id)) continue;
         result.bilibiliChecked++;
 
         const item = ctx.buildPlatformItem(stream, now, channel);
@@ -562,7 +565,7 @@ export async function refreshLivePass(
         if (!userId) continue;
         const channel =
           channelById.get(userId) ?? channelById.get(`niconico:${userId}`);
-        if (!channel) continue;
+        if (!channel || !ctx.inShard(channel.id)) continue;
         result.niconicoChecked++;
 
         const item = ctx.buildPlatformItem(stream, now, channel);
