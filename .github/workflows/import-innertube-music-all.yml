@@ -133,6 +133,12 @@ jobs:
           echo "job_count=$JOB_COUNT" >> "$GITHUB_OUTPUT"
           echo "matrix=$MATRIX" >> "$GITHUB_OUTPUT"
 
+          # Validate: JOB_COUNT must be >= 1
+          if [ "$JOB_COUNT" -lt 1 ]; then
+            echo "::error::JOB_COUNT is $JOB_COUNT, expected >= 1"
+            exit 1
+          fi
+
   import:
     name: Import music shard ${{ matrix.job }}+1/${{ needs.plan.outputs.job_count }}
     needs: [harvest-music, plan]
@@ -144,7 +150,7 @@ jobs:
       max-parallel: 20
       fail-fast: false
       matrix:
-        job: ${{ fromJSON(needs.plan.outputs.matrix) }}
+        job: ${{ fromJSON(needs.plan.outputs.matrix || '[]') }}
     steps:
       - name: Checkout
         uses: actions/checkout@v7
