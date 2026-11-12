@@ -118,6 +118,7 @@ import {
   layout,
   writeDataset,
   writeItemShards,
+  writeChannelShards,
   describeDatasetSize,
   readAllChannelRecords,
 } from "./lib/dataset";
@@ -1132,7 +1133,7 @@ async function main(): Promise<void> {
       budget,
       releaseLock,
     });
-    writeChannelShards(channels, items, 'data', now);
+    writeChannelShards(channels, now, 'data');
     return;
   }
 

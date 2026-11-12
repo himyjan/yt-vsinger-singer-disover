@@ -164,13 +164,12 @@ jobs:
           # are picked up next run.
           JOB_COUNT=${{ needs.plan.outputs.job_count }}
           SHARD_INDEX=$(( ${{ matrix.job }} + 1 ))
-          ARGS=(--live-only --limit-live 1250 --limit-multi-platform-live 300)
-          ARGS+=(--live-concurrency 12 --innertube-delay 250)
+          ARGS=(--live-only --limit-live 1250 --limit-multi-platform-live 300 --live-concurrency 12 --innertube-delay 250)
           if [ "${DRY_RUN:-false}" = "true" ]; then ARGS+=(--dry-run); fi
           VOL_DIR=".volumes/vol-${{ matrix.job }}/data"
           mv data data-full
           ln -s "$VOL_DIR" data
-          npx oxnode scripts/sync.ts -- --shard "${SHARD_INDEX}/${JOB_COUNT}" --live-only --limit-live 1250 --limit-multi-platform-live 400 --live-concurrency 16 --innertube-delay 250
+          npx oxnode scripts/sync.ts -- --shard "${SHARD_INDEX}/${JOB_COUNT}" "${ARGS[@]}"
           rm -f data
           mv data-full data
       - name: Upload volume artifacts

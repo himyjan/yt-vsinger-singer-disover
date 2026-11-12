@@ -162,7 +162,7 @@ function parseArgs(argv: string[]): Options {
         options.retryDead = true;
         break;
       case "--retry-dead-timeout-ms":
-        options.retryDeadTimeoutMs = Math.max(50, Number(value ?? 15_000));
+        options.retryDeadTimeoutMs = Math.max(50, Number(value ?? 6_000));
         i++;
         break;
       case "--max-uploads":
@@ -170,7 +170,7 @@ function parseArgs(argv: string[]): Options {
         i++;
         break;
       case "--delay-ms":
-        options.delayMs = Math.max(50, Number(value ?? 350));
+        options.delayMs = Math.max(50, Number(value ?? 100));
         i++;
         break;
       case "--budget-minutes":

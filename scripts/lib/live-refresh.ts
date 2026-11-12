@@ -392,9 +392,11 @@ export async function refreshLivePass(
     if (!channel.id.startsWith("UC") && !native && !hasLiveLinks) continue;
     for (const link of channel.platforms) {
       if (!PER_CHANNEL_LIVE_PLATFORMS.has(link.platform)) continue;
-      // Shard multi-platform live checks by their link id so each channel
-      // is checked by exactly one job, not every job.
-      if (!ctx.inShard(channel.id)) continue:
+      // Shard multi-platform live checks by channel id so each channel
+      // is checked by exactly one job, not every job. Using channel.id
+      // matches how channels were sharded when written (bucketFor(channel.id)
+      // in writeChannelShards), not link.id which may omit the platform prefix.
+      if (!ctx.inShard(channel.id)) continue;
       multiTargets.push({ channel, platform: link.platform, link });
     }
   }
