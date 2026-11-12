@@ -114,17 +114,16 @@ import {
   ROOT,
 } from "./lib/io";
 import {
-  bucketFor,
   layout,
   writeDataset,
   writeItemShards,
   writeChannelShards,
-  SHARD_COUNT,
   describeDatasetSize,
   readAllChannelRecords,
 } from "./lib/dataset";
 import { buildRegionMeta } from "./lib/regions";
 import { ALL_PLATFORMS } from "./lib/types";
+import { volumeOf } from "./lib/volume";
 import type {
   Channel,
   ChannelFile,
@@ -386,7 +385,7 @@ const nowIso = () => new Date().toISOString();
 function inShard(id: string, args: Args): boolean {
   return (
     args.shardCount <= 1 ||
-    Number.parseInt(bucketFor(id), 16) === (args.shardIndex - 1) % SHARD_COUNT
+    volumeOf(id, args.shardCount) === args.shardIndex - 1
   );
 }
 
