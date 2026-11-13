@@ -99,9 +99,9 @@
     "data:youtube-discover-import": "oxnode scripts/import-youtube.ts"
   },
   "dependencies": {
-    "@google/genai": "^3.1.0",
+    "@google/genai": "^3.3.0",
     "@tailwindcss/vite": "^4.3.5",
-    "@vitejs/plugin-vue": "^6.0.10",
+    "@vitejs/plugin-vue": "^6.0.11",
     "cime-sdk": "^1.2.0",
     "consola": "^3.4.2",
     "react": "^19.3.1",
@@ -111,10 +111,10 @@
     "youtubei.js": "^18.3.0"
   },
   "optionalDependencies": {
-    "better-sqlite3": "^13.0.3"
+    "better-sqlite3": "^13.1.1"
   },
   "devDependencies": {
-    "@oxc-node/cli": "^1.0.1",
+    "@oxc-node/cli": "^1.0.2",
     "@types/better-sqlite3": "^9.6.0",
     "@types/node": "^26.6.6",
     "@vue/content-mapper": "^4.0.0-alpha.3",
