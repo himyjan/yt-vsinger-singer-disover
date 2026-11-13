@@ -610,18 +610,40 @@ export class InnerTubeSource {
     const cached = this.handleCache.get(key.toLowerCase());
     if (cached !== undefined) return cached;
 
-    if (!this.client) return null;
     try {
       await this.throttle();
-      const endpoint: any = await withTimeout(
-        this.client.resolveURL(`https://www.youtube.com/@${key}`),
-        REQUEST_TIMEOUT_MS,
-      );
+      const res = await fetch("https://youtube.com/youtubei/v1/navigation/resolve_url", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
+        body: JSON.stringify({
+          url: `https://www.youtube.com/@${key}`,
+          context: {
+            client: {
+              clientName: "WEB",
+              clientVersion: "2.20260101.00.00",
+            },
+          },
+        }),
+      });
+      if (!res.ok) {
+        if (res.status === 429) this.limiter.penalise();
+        this.handleCache.set(key.toLowerCase(), null);
+        this.onLog(`innertube: @${key} HTTP ${res.status}`);
+        return null;
+      }
+      const data = (await res.json()) as {
+        endpoint?: { browseEndpoint?: { browseId?: string } };
+      };
       const id: string | null =
-        endpoint?.browseId ?? endpoint?.payload?.browseId ?? null;
+        data?.endpoint?.browseEndpoint?.browseId ?? null;
       this.handleCache.set(key.toLowerCase(), id);
-      if (id) this.limiter.reward();
-      else this.onLog(`innertube: no channel for @${key}`);
+      if (id) {
+        this.limiter.reward();
+        this.onLog(`innertube: @${key} → ${id}`);
+      } else {
+        this.onLog(`innertube: no channel for @${key}`);
+      }
       return id;
     } catch (err) {
       const message = (err as Error).message;
