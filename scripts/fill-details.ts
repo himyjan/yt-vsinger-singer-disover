@@ -78,7 +78,7 @@ import {
 } from "./lib/dataset";
 import { logLine, progressBar } from "./lib/progress";
 import { InnerTubeSource } from "./lib/youtubei";
-import { TwitchGqlSource } from "./lib/twitch-gql";
+import { TwitchGqlSource, type TwitchProfile } from "./lib/twitch-gql";
 import { createAdapters } from "./lib/platform-registry";
 import {
   isPlaceholderAvatar,
@@ -379,6 +379,8 @@ async function fetchProfile(
     adapters: Map<PlatformId, DetailsAdapter>;
     /** Profiles fetched in batches before the loop, by `platform:query`. */
     prefetched: Map<string, any>;
+    /** Pre-fetched Twitch profiles, by lookup key (id or handle). */
+    twitchProfiles?: Map<string, TwitchProfile | null>;
   },
 ): Promise<Profile | null> {
   const link = channel.platforms.find((p) => p.platform === platform);
@@ -442,6 +444,19 @@ async function fetchProfile(
     if (platform === "twitch") {
       // The numeric id is the stable identifier; the login changes on rename.
       const lookup = /^\d+$/.test(link.id) ? link.id : query;
+      // Use pre-fetched profile if available (batched before the loop,
+      // one GQL request per 50 channels instead of one per channel)
+      const preFetched = ctx.twitchProfiles?.get(lookup);
+      if (preFetched !== undefined) {
+        if (!preFetched) return null;
+        return {
+          name: preFetched.displayName,
+          avatar: preFetched.avatar,
+          description: preFetched.description,
+          subscribers: preFetched.followers ?? null,
+          videoCount: null,
+        };
+      }
       const profile = await ctx.twitch.profile(lookup);
       if (!profile) return null;
       return {
@@ -1207,7 +1222,13 @@ async function main(): Promise<void> {
     log(`${platform}: ${found}/${queries.length} profile(s) fetched in batches`);
   }
 
-  const ctx = { innertube, twitch, adapters, prefetched };
+  const ctx = { innertube, twitch, adapters, prefetched } as {
+    innertube: InnerTubeSource;
+    twitch: TwitchGqlSource;
+    adapters: Map<PlatformId, DetailsAdapter>;
+    prefetched: Map<string, any>;
+    twitchProfiles?: Map<string, TwitchProfile | null>;
+  };
 
   /**
    * Promote externals entries to platform links.
@@ -1259,6 +1280,31 @@ async function main(): Promise<void> {
   const consecutiveFailures = new Map<PlatformId, number>();
 
   const bar = progressBar("details", pending.length, { unit: "channels" });
+
+  /**
+   * Pre-fetch Twitch profiles in batches before the per-channel loop.
+   *
+   * Twitch GQL accepts an array of operations in one POST, so instead of
+   * one HTTP request per channel (thousands of sequential calls), we
+   * batch up to 50 per request. The lookup key is the channel's numeric id
+   * or its login — whatever `fetchProfile()` would have asked for.
+   */
+  const twitchLookups = [...new Set(
+    pending
+      .filter((c) => primaryPlatformOf(c) === "twitch")
+      .map((c) => {
+        const link = c.platforms?.find((p) => p.platform === "twitch");
+        if (!link) return null;
+        return /^\d+$/.test(link.id) ? link.id : (link.handle ?? link.id);
+      })
+      .filter((x): x is string => !!x),
+  )];
+  const twitchProfileList = await ctx.twitch.profileMany(twitchLookups, 50);
+  const twitchProfileMap = new Map<string, TwitchProfile | null>();
+  for (let i = 0; i < twitchLookups.length; i++) {
+    twitchProfileMap.set(twitchLookups[i], twitchProfileList[i]);
+  }
+  ctx.twitchProfiles = twitchProfileMap;
 
   for (const channel of pending) {
     const platform = primaryPlatformOf(channel);
