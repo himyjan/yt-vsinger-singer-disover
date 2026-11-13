@@ -268,13 +268,13 @@ export async function refreshLivePass(
     const perChannelTimeoutMs = ctx.liveTimeoutMs || 10_000;
     const cutoffMs = Date.now() - 48 * 60 * 60 * 1000;
 
-    /* --- Stage 1: RSS pre-filter pool (80 workers, CDN-cached) --------------
+    /* --- Stage 1: RSS pre-filter pool (15 workers, CDN-cached) --------------
      *
      * Fetch all channel RSS feeds concurrently. Only channels with recent
      * videos (updated within 48h) or previously live/upcoming items advance
      * to Stage 2. Most channels return nothing, saving InnerTube requests.
      */
-    const rssConcurrency = 80;
+    const rssConcurrency = 15;
     const candidatesByChannelId = new Map<
       string,
       { id: string; title: string }[]
