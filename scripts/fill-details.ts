@@ -1299,7 +1299,7 @@ async function main(): Promise<void> {
       })
       .filter((x): x is string => !!x),
   )];
-  const twitchProfileList = await ctx.twitch.profileMany(twitchLookups, 30);
+  const twitchProfileList = await ctx.twitch.profileMany(twitchLookups, 35);
   const twitchProfileMap = new Map<string, TwitchProfile | null>();
   for (let i = 0; i < twitchLookups.length; i++) {
     twitchProfileMap.set(twitchLookups[i], twitchProfileList[i]);
