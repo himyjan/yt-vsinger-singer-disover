@@ -109,6 +109,15 @@ export interface PlatformAdapter {
   ): Promise<PlatformUpload[]>;
   /** Lists live / upcoming streams for a channel. */
   live(channel: PlatformChannel): Promise<PlatformUpload[]>;
+  /**
+   * Lists live / upcoming streams for many channels at once.
+   *
+   * Default implementation calls `live()` per channel; platforms whose API
+   * supports batch queries (Twitch `streams` accepts up to 100 ids/logins)
+   * should override this to avoid one request per channel — a job with
+   * thousands of links would otherwise hammer the platform's rate limit.
+   */
+  liveMany?(channels: PlatformChannel[]): Promise<PlatformUpload[]>;
   /** Fetch a media thumbnail for a platform-native item id, when supported. */
   thumbnailForItem?(id: string): Promise<string | null>;
   /** Discovers channels by keyword. Used by the discovery sweep. */

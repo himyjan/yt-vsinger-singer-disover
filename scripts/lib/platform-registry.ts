@@ -259,6 +259,50 @@ class TwitchAdapter implements PlatformAdapter {
       url: `https://www.twitch.tv/${channel.handle}`,
     }));
   }
+
+  /** Batched live check — Helix `streams` accepts up to 100 ids/logins per request. */
+  async liveMany(channels: PlatformChannel[]): Promise<PlatformUpload[]> {
+    const byId: PlatformChannel[] = [];
+    const byLogin: PlatformChannel[] = [];
+    for (const channel of channels) {
+      if (/^\d+$/.test(channel.id)) byId.push(channel);
+      else byLogin.push(channel);
+    }
+
+    const streams: any[] = [];
+    if (byId.length) streams.push(...(await this.client.streams(byId.map((c) => c.id))));
+    if (byLogin.length)
+      streams.push(...(await this.client.streamsByLogin(byLogin.map((c) => c.id))));
+
+    const byStreamId = new Map<string, PlatformChannel>();
+    for (const channel of channels) byStreamId.set(channel.id, channel);
+
+    const out: PlatformUpload[] = [];
+    for (const stream of streams) {
+      const owner = byStreamId.get(stream.user_id ?? "");
+      if (!owner) continue;
+      out.push({
+        platform: "twitch" as PlatformId,
+        id: stream.id,
+        channelId: owner.id,
+        title: stream.title ?? "",
+        description: stream.description ?? null,
+        thumbnail: stream.thumbnail_url
+          ? stream.thumbnail_url.replace("{width}", "640").replace("{height}", "360")
+          : null,
+        publishedAt: stream.started_at ?? null,
+        scheduledStart: stream.started_at ?? null,
+        duration: null,
+        status: "live" as const,
+        category: "live" as const,
+        songTitle: null,
+        originalArtist: null,
+        viewCount: stream.viewer_count ?? null,
+        url: `https://www.twitch.tv/${owner.handle}`,
+      });
+    }
+    return out;
+  }
 }
 
 /* -------------------------------------------------------------------------- */
