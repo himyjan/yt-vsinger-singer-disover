@@ -431,54 +431,94 @@ export async function refreshLivePass(
     );
   };
 
+  /**
+   * Group targets by platform so batch-capable adapters (Twitch: Helix
+   * `streams` accepts up to 100 ids/logins per request) are called once per
+   * batch instead of once per channel. Without this, a job with thousands of
+   * Twitch links hammered Helix with one `streams` call per channel and got
+   * rate-limited (429) for every single one.
+   */
+  const byPlatform = new Map<
+    PlatformId,
+    { channel: Channel; platform: PlatformId; link: Channel["platforms"][number] }[]
+  >();
   for (const target of multiTargets.slice(0, multiLimit)) {
-    const adapter = adapterById.get(target.platform);
-    if (!adapter?.live) continue;
+    const bucket = byPlatform.get(target.platform) ?? [];
+    bucket.push(target);
+    byPlatform.set(target.platform, bucket);
+  }
 
+  for (const [platform, targets] of byPlatform) {
+    const adapter = adapterById.get(platform);
+    if (!adapter) continue;
+
+    let streams: PlatformUpload[] = [];
     try {
-      const liveChannel: PlatformChannel = {
-        platform: target.link.platform,
-        id: target.link.id,
-        handle: target.link.handle,
-        name: target.link.name,
-        url: target.link.url,
-        subscribers: target.link.subscribers,
-        avatar: target.link.avatar,
-        description: null,
-        tags: [],
-      };
-      const streams = await adapter.live(liveChannel);
-      result.multiPlatformChecked++;
-      multiChecked++;
-      if (multiChecked % 10 === 0 || multiChecked === multiLimit)
-        logMultiProgress(false);
-      if (!streams || streams.length === 0) continue;
-      result.multiPlatformFound += streams.length;
-      const current = new Set(streams.map((stream) => stream.id));
+      streams = adapter.liveMany
+        ? await adapter.liveMany(
+            targets.map((t) => ({
+              platform: t.link.platform,
+              id: t.link.id,
+              handle: t.link.handle,
+              name: t.link.name,
+              url: t.link.url,
+              subscribers: t.link.subscribers,
+              avatar: t.link.avatar,
+              description: null,
+              tags: [],
+            })),
+          )
+        : await Promise.all(
+            targets.map((t) =>
+              adapter.live!({
+                platform: t.link.platform,
+                id: t.link.id,
+                handle: t.link.handle,
+                name: t.link.name,
+                url: t.link.url,
+                subscribers: t.link.subscribers,
+                avatar: t.link.avatar,
+                description: null,
+                tags: [],
+              }),
+            ),
+          ).then((r) => r.flat());
+    } catch (error) {
+      log(
+        `warn: ${platform} live check batch failed: ` +
+          `${(error as Error).message}`,
+      );
+      continue;
+    }
 
-      for (const stream of streams) {
-        const item = ctx.buildPlatformItem(stream, now, target.channel);
-        if (!item) continue;
-        item.type = "live";
-        item.status = stream.status ?? "live";
-        item.platform = target.platform;
-        storeItem(itemById, item);
-      }
+    result.multiPlatformChecked += targets.length;
+    multiChecked += targets.length;
+    if (multiChecked % 10 === 0 || multiChecked === multiLimit)
+      logMultiProgress(false);
 
+    const current = new Set(streams.map((stream) => stream.id));
+    result.multiPlatformFound += streams.length;
+
+    for (const stream of streams) {
+      const item = ctx.buildPlatformItem(stream, now);
+      if (!item) continue;
+      item.type = "live";
+      item.status = stream.status ?? "live";
+      item.platform = platform;
+      storeItem(itemById, item);
+    }
+
+    for (const target of targets) {
       retireEndedStreams(
         itemsByChannel.get(target.channel.id) ?? [],
         itemById,
-        target.platform,
+        platform,
         current,
         now,
       );
-    } catch (error) {
-      log(
-        `warn: ${target.platform} live check failed for ${target.link.id}: ` +
-          `${(error as Error).message}`,
-      );
     }
   }
+
   if (multiTargets.length) {
     logMultiProgress(true);
     ctx.log(
