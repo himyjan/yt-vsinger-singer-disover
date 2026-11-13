@@ -207,6 +207,19 @@ export class TwitchClient {
     return out;
   }
 
+  /** Live streams for the given user logins. */
+  async streamsByLogin(logins: string[]): Promise<any[]> {
+    const out: any[] = [];
+    for (let i = 0; i < logins.length; i += 100) {
+      const chunk = logins.slice(i, i + 100);
+      const res = await this.request<{ data?: any[] }>("streams", {
+        user_login: chunk.join(","),
+      });
+      out.push(...(res.data ?? []));
+    }
+    return out;
+  }
+
   /** Total follower count for a broadcaster. */
   async followers(broadcasterId: string): Promise<CountRef> {
     const res = await this.request<{ total?: number }>(
