@@ -240,13 +240,86 @@ export async function refreshLivePass(
      * order, so the stored item order does not depend on which request came
      * back first — the pipeline stays deterministic (AGENTS rule 8).
      */
-    const concurrency = Math.max(1, Math.min(16, ctx.concurrency ?? 4));
-    const streamsById = new Map<string, InnerTubeLive[] | null>();
-    let cursor = 0;
+    const perChannelTimeoutMs = ctx.liveTimeoutMs || 10_000;
+    const cutoffMs = Date.now() - 48 * 60 * 60 * 1000;
 
-    /** Shared progress counter, incremented by each worker as it finishes a channel. */
+    /* --- Stage 1: RSS pre-filter pool (80 workers, CDN-cached) --------------
+     *
+     * Fetch all channel RSS feeds concurrently. Only channels with recent
+     * videos (updated within 48h) or previously live/upcoming items advance
+     * to Stage 2. Most channels return nothing, saving InnerTube requests.
+     */
+    const rssConcurrency = 80;
+    const candidatesByChannelId = new Map<
+      string,
+      { id: string; title: string }[]
+    >();
+    const rssFailedChannelIds = new Set<string>();
+    let rssCursor = 0;
+
+    ctx.log(
+      `rss scan: checking ${liveTargets.length} channel(s) with concurrency ${rssConcurrency}`,
+    );
+
+    const rssWorkers = Array.from(
+      { length: Math.min(rssConcurrency, liveTargets.length) },
+      async () => {
+        for (;;) {
+          const index = rssCursor++;
+          if (index >= liveTargets.length) return;
+          const channel = liveTargets[index]!;
+
+          // Previously live/upcoming streams are always candidates so they
+          // can be re-verified (24/7 streams, early-scheduled premieres).
+          const activeItems = (itemsByChannel.get(channel.id) ?? []).filter(
+            (item) =>
+              item.platform === "youtube" &&
+              (item.status === "live" || item.status === "upcoming"),
+          );
+          const activeVideoIds = new Set(
+            activeItems.map((item) => item.id),
+          );
+
+          const recent = await innertube.fetchRSS(channel.id);
+          if (recent === null && activeVideoIds.size === 0) {
+            rssFailedChannelIds.add(channel.id);
+            continue;
+          }
+
+          const videoMap = new Map<string, string>();
+          for (const item of activeItems) {
+            videoMap.set(item.id, item.title);
+          }
+          for (const entry of recent ?? []) {
+            const updatedMs = Date.parse(entry.updated);
+            if (!Number.isNaN(updatedMs) && updatedMs >= cutoffMs) {
+              videoMap.set(entry.id, entry.title);
+            }
+          }
+
+          if (videoMap.size > 0) {
+            candidatesByChannelId.set(
+              channel.id,
+              [...videoMap.entries()].map(([id, title]) => ({ id, title })),
+            );
+          }
+        }
+      },
+    );
+    await Promise.all(rssWorkers);
+
+    /* --- Stage 2: InnerTube /player pool (16 workers, rate-limited) -------
+     *
+     * Only channels with recent/active videos from Stage 1 are checked.
+     * This cuts InnerTube requests by ~95% compared to checking every channel.
+     */
+    const channelsToVerify = liveTargets.filter((c) =>
+      candidatesByChannelId.has(c.id),
+    );
+    const playerConcurrency = Math.max(1, Math.min(20, ctx.concurrency ?? 16));
+    const streamsById = new Map<string, InnerTubeLive[] | null>();
+    let playerCursor = 0;
     let checked = 0;
-    const total = liveTargets.length;
     let lastProgressAt = Date.now();
 
     const logProgress = (force: boolean): void => {
@@ -254,51 +327,67 @@ export async function refreshLivePass(
       if (!force && nowMs - lastProgressAt < 5_000) return;
       lastProgressAt = nowMs;
       ctx.log(
-        `innertube live: ${checked}/${total} channel(s) checked ` +
-          `(${Math.round((checked / total) * 100)}%)`,
+        `innertube player: ${checked}/${channelsToVerify.length} candidate channel(s) verified`,
       );
     };
 
-    const perChannelTimeoutMs = ctx.liveTimeoutMs || 10_000;
-
     ctx.log(
-      `innertube live: starting ${total} channel(s) with concurrency ${concurrency}`,
+      `innertube player: verifying ${channelsToVerify.length}/${liveTargets.length} active channel(s) with concurrency ${playerConcurrency}`,
     );
 
-    const workers = Array.from(
-      { length: Math.min(concurrency, liveTargets.length) },
+    const playerWorkers = Array.from(
+      { length: Math.min(playerConcurrency, channelsToVerify.length) },
       async () => {
         for (;;) {
-          const index = cursor++;
-          if (index >= total) return;
-          const channel = liveTargets[index]!;
+          const index = playerCursor++;
+          if (index >= channelsToVerify.length) return;
+          const channel = channelsToVerify[index]!;
+          const videos = candidatesByChannelId.get(channel.id) ?? [];
 
-          // Wrap the liveStreams call in its own timeout so a slow/dead
-          // channel can't block this worker indefinitely. liveStreams()
-          // already has per-request timeouts (20s per getChannel /
-          // getLiveStreams / getBasicInfo call), but a channel with many
-          // live/upcoming videos can still take several minutes.
-          const channelTimeout = new Promise<null>((resolve) =>
+          const verifyChannel = async (): Promise<InnerTubeLive[]> => {
+            const liveList: InnerTubeLive[] = [];
+            for (const video of videos) {
+              const state = await innertube.checkPlayerState(video.id);
+              if (!state || (!state.isLive && !state.isUpcoming)) continue;
+              liveList.push({
+                id: video.id,
+                title: video.title,
+                thumbnail: null,
+                status: state.isLive ? "live" : "upcoming",
+                scheduledStart: state.isUpcoming ? state.start : null,
+                actualStart: state.isLive ? state.start : null,
+                isMember: state.isMember,
+              });
+            }
+            return liveList;
+          };
+
+          const timeout = new Promise<null>((resolve) =>
             setTimeout(() => resolve(null), perChannelTimeoutMs),
           );
           streamsById.set(
             channel.id,
-            await Promise.race([
-              innertube.liveStreams(channel.id),
-              channelTimeout,
-            ]),
+            await Promise.race([verifyChannel(), timeout]),
           );
 
           const c = ++checked;
-          if (c % 10 === 0 || c === total) logProgress(false);
+          if (c % 25 === 0 || c === channelsToVerify.length) logProgress(false);
         }
       },
     );
-    await Promise.all(workers);
-    logProgress(true);
+    await Promise.all(playerWorkers);
+    if (channelsToVerify.length > 0) logProgress(true);
 
+    // Apply results deterministically in liveTargets order
     for (const channel of liveTargets) {
-      const streams = streamsById.get(channel.id) ?? null;
+      if (rssFailedChannelIds.has(channel.id)) continue;
+
+      // Channels skipped by Stage 1 had 304 Not Modified or no recent videos,
+      // and no previously active items -> confirmed 0 live streams.
+      const streams = candidatesByChannelId.has(channel.id)
+        ? (streamsById.get(channel.id) ?? null)
+        : [];
+
       if (streams === null) continue;
       result.youtubeChecked++;
       const current = new Set(streams.map((stream) => stream.id));

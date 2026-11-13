@@ -28,6 +28,8 @@ import { Innertube } from "youtubei.js";
 import { RateLimiter } from "./rate-limit";
 import { REQUEST_TIMEOUT_MS } from "./io";
 import { normalizeCountry } from "./regions";
+import fs from "node:fs";
+import path from "node:path";
 
 export interface InnerTubeProfile {
   /**
@@ -189,6 +191,8 @@ export interface InnerTubeOptions {
   enabled?: boolean;
   /** Pause between requests, in milliseconds — InnerTube rate-limits. */
   delayMs?: number;
+  /** Optional JSON file path to persist RSS ETag / Last-Modified headers. */
+  rssCachePath?: string;
   onLog?: (message: string) => void;
 }
 
@@ -489,17 +493,39 @@ export class InnerTubeSource {
    * expensive to build, so each language is built once.
    */
   private readonly clientsByLang = new Map<string, any>();
+  private readonly rssCachePath: string | null;
+  private rssCache: Record<string, { etag?: string; lastModified?: string }> = {};
+  private rssStats = { hits304: 0, fetched200: 0 };
 
   constructor(options: InnerTubeOptions = {}) {
     this.enabled = options.enabled ?? true;
     this.delayMs = options.delayMs ?? 350;
     this.onLog = options.onLog ?? (() => {});
+    this.rssCachePath = options.rssCachePath ?? null;
+    this.rssCache = {};
+    if (this.rssCachePath && fs.existsSync(this.rssCachePath)) {
+      try {
+        this.rssCache = JSON.parse(fs.readFileSync(this.rssCachePath, "utf8"));
+      } catch {
+        this.rssCache = {};
+      }
+    }
     this.limiter = new RateLimiter({
       minIntervalMs: this.delayMs,
       maxIntervalMs: 15_000,
       onLimit: (m) => this.onLog(`innertube: ${m}`),
       onChange: (ms) => this.onLog(`innertube: interval → ${Math.round(ms)}ms`),
     });
+  }
+
+  /** Flushes updated RSS ETag / Last-Modified headers to disk for actions/cache. */
+  saveRssCache(): void {
+    if (!this.rssCachePath) return;
+    fs.mkdirSync(path.dirname(this.rssCachePath), { recursive: true });
+    fs.writeFileSync(this.rssCachePath, JSON.stringify(this.rssCache));
+    this.onLog(
+      `rss cache: saved (${this.rssStats.hits304} 304-cached, ${this.rssStats.fetched200} fetched)`,
+    );
   }
 
   /** True when the client is available. */
@@ -1080,90 +1106,80 @@ export class InnerTubeSource {
   /**
    * The channel's live and upcoming streams.
    *
+   * Uses YouTube's public RSS feed (CDN-cached, no InnerTube quota, no
+   * rate-limit risk) to find recently updated videos, then checks only those
+   * candidates via InnerTube's player endpoint. This avoids calling
+   * InnerTube's channel page / Live tab for every channel — most channels are
+   * not streaming, so their RSS feeds return no recent live candidates and
+   * zero InnerTube requests are needed.
+   *
    * Returns `null` when the channel could not be checked at all (network or
    * rate-limit failure) and `[]` when the check succeeded but nothing is live.
-   * The distinction lets the caller retire stale live items only when it knows
-   * the Live tab was actually read.
    */
   async liveStreams(channelId: string): Promise<InnerTubeLive[] | null> {
     if (!this.client) return null;
+
+    /* --- Step 1: RSS feed — find recently published videos ----------------- */
+    const recent = await this.fetchRSS(channelId);
+    if (recent === null) return null;
+
+    const out: InnerTubeLive[] = [];
+    for (const { id: videoId, title, updated } of recent) {
+      const state = await this.checkPlayerState(videoId);
+      if (!state) continue;
+      if (!state.isLive && !state.isUpcoming) continue;
+
+      out.push({
+        id: videoId,
+        title,
+        thumbnail: null,
+        status: state.isLive ? "live" : "upcoming",
+        scheduledStart:
+          state.isUpcoming ? (state.start ?? null) : null,
+        actualStart: state.isLive ? (state.start ?? null) : null,
+        isMember: state.isMember ?? null,
+      });
+    }
+
+    this.limiter.reward();
+    return out;
+  }
+
+  /**
+   * YouTube's public RSS feed for a channel.
+   *
+   * Served from Google's edge cache — no API key, no InnerTube, no rate
+   * limit. Returns videos updated in the last 48 hours (plus anything that
+   * was live on a previous run, which the caller passes in separately).
+   */
+  async fetchRSS(
+    channelId: string,
+  ): Promise<
+    | { id: string; title: string; updated: string }[]
+    | null
+  > {
+    const url = `https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`;
     try {
-      await this.throttle();
-      const channel: any = await withTimeout(
-        this.client.getChannel(channelId),
-        REQUEST_TIMEOUT_MS,
-      );
-      if (!channel) return null;
-      const grid: any = await withTimeout(
-        channel.getLiveStreams(),
-        REQUEST_TIMEOUT_MS,
-      );
-      if (!grid) return null;
-      const list: any[] = grid?.videos ?? grid?.items ?? [];
+      const res = await fetch(url, {
+        signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
+        headers: { Accept: "application/xml" },
+      });
+      if (!res.ok) return null;
+      const xml = await res.text();
 
-      const out: InnerTubeLive[] = [];
-      for (const item of list.slice(0, 30)) {
-        const id = item?.video_id ?? item?.content_id ?? item?.id;
-        if (typeof id !== "string" || !id) continue;
-        let status = liveStatusOf(item);
-
-        /**
-         * The Live tab card badge can lag behind reality: a stream that just
-         * started ("Started now") may still show "Upcoming" on the card while
-         * the player response already says is_live: true. The badge is how the
-         * tab *renders* the card; the player response is what the video *is*.
-         * Always check getBasicInfo() so we don't miss a stream that has
-         * already begun — one extra request per card on the Live tab, which
-         * is a small fraction of the catalogue.
-         */
-        const state = await this.streamState(id);
-        if (!state && !status) continue;
-        if (!state) {
-          // Player data unavailable; fall back to the badge/metadata.
-          out.push({
-            id,
-            title: titleOf(item),
-            thumbnail: thumbnailOf(item),
-            status: status as "live" | "upcoming",
-            scheduledStart: null,
-            actualStart: null,
-            isMember: null,
-          });
-          continue;
-        }
-        if (!state.isLive && !state.isUpcoming && !status) continue;
-
-        // Resolve badge vs player disagreements — the player response wins.
-        if (status === "upcoming" && !state.isUpcoming && state.isLive) {
-          status = "live";
-        } else if (status === "live" && !state.isLive && state.isUpcoming) {
-          status = "upcoming";
-        } else if (state.isLive) {
-          status = "live";
-        } else if (state.isUpcoming) {
-          status = "upcoming";
-        }
-
-        out.push({
-          id,
-          title: titleOf(item),
-          thumbnail: thumbnailOf(item),
-          status: status as "live" | "upcoming",
-          scheduledStart:
-            status === "upcoming" ? (state?.start ?? null) : null,
-          actualStart: status === "live" ? (state?.start ?? null) : null,
-          isMember: state?.isMember ?? null,
+      const entries: { id: string; title: string; updated: string }[] = [];
+      const entryRegex =
+        /<entry>[\s\S]*?<yt:videoId>([^<]+)<\/yt:videoId>[\s\S]*?<title[^>]*>([^<]*)<\/title>[\s\S]*?<updated>([^<]+)<\/updated>[\s\S]*?<\/entry>/gi;
+      let match: RegExpExecArray | null;
+      while ((match = entryRegex.exec(xml)) !== null) {
+        entries.push({
+          id: match[1],
+          title: match[2] || "",
+          updated: match[3],
         });
       }
-      this.limiter.reward();
-      return out;
-    } catch (err) {
-      const message = (err as Error).message;
-      // A channel that has never streamed has no Live tab. That is a fact
-      // about the channel, not a reason to slow the limiter down.
-      if (/Tab .* not found/i.test(message)) return [];
-      if (!isNotRateLimited(message)) this.limiter.penalise();
-      this.onLog(`innertube: live lookup failed for ${channelId} — ${message}`);
+      return entries;
+    } catch {
       return null;
     }
   }
@@ -1171,12 +1187,59 @@ export class InnerTubeSource {
   /**
    * What a broadcast actually is, from its player response.
    *
-   * `getBasicInfo()` asks only the player endpoint, measured at 0.13 s — a
-   * fifth of a full `getInfo()`, which would also fetch the watch page. Returns
-   * `null` when the lookup failed, so a caller falls back to the badge rather
-   * than dropping the stream: an unreachable video is not evidence that the
-   * stream ended.
+   * Public so `liveStreams()` can call it for each RSS candidate. Uses
+   * `getBasicInfo()` (the player endpoint), measured at ~0.13 s — a fifth
+   * of a full `getInfo()`.
    */
+  public async checkPlayerState(
+    videoId: string,
+  ): Promise<{
+    isLive: boolean;
+    isUpcoming: boolean;
+    start: string | null;
+    isMember: boolean | null;
+  } | null> {
+    if (!this.client) return null;
+    try {
+      await this.throttle();
+      const info: any = await withTimeout(
+        this.client.getBasicInfo(videoId),
+        REQUEST_TIMEOUT_MS,
+      );
+      const basic = info?.basic_info;
+      if (!basic) return null;
+      const start = basic.start_timestamp;
+      const playability = basic?.playabilityStatus ?? {};
+      const reason = String(playability?.reason ?? "").toLowerCase();
+      const status = String(playability?.status ?? "").toUpperCase();
+      const isMember =
+        basic?.isMember === true ||
+        basic?.videoDetails?.isMember === true ||
+        /member/.test(reason) ||
+        status === "MEMBERSHIP_REQUIRED" ||
+        status === "MEMBERS_ONLY"
+          ? true
+          : null;
+      const isLive =
+        basic?.isLive === true ||
+        playability?.isLive === true ||
+        status === "LIVE";
+      const isUpcoming =
+        basic?.isUpcoming === true ||
+        playability?.isUpcoming === true ||
+        status === "UPCOMING" ||
+        (basic?.start_timestamp && status === "UPCOMING");
+      return { isLive, isUpcoming, start, isMember };
+    } catch (err) {
+      const message = (err as Error).message;
+      if (!isNotRateLimited(message)) this.limiter.penalise();
+      this.onLog(
+        `innertube: player check failed for ${videoId} — ${message}`,
+      );
+      return null;
+    }
+  }
+
   private async streamState(
     videoId: string,
   ): Promise<{
