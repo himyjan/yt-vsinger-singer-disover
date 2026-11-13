@@ -186,18 +186,21 @@ jobs:
 
           # Copy written items to a clean staging directory for upload-artifact.
           # Symlinks break Node's path.resolve() and upload-artifact, so we copy
-          # to a real directory before uploading.
+          # to a real directory before uploading. Use a non-dot directory name
+          # (artifact-items) so upload-artifact@v7 does not ignore it
+          # (include-hidden-files defaults to false).
           mkdir -p data/items
-          mkdir -p .artifact-items
-          cp -R data/items/. .artifact-items/
+          mkdir -p artifact-items
+          cp -R data/items/. artifact-items/
           echo "Staged item files:"
-          find .artifact-items -type f | wc -l
+          find artifact-items -type f | wc -l
 
       - name: Upload volume artifacts
         uses: actions/upload-artifact@v7
         with:
           name: vol-${{ matrix.job }}
-          path: .artifact-items/
+          path: artifact-items
+          if-no-files-found: error
           retention-days: 1
 
   merge-and-commit:
@@ -244,12 +247,19 @@ jobs:
           # and the merge re-merged the split: the live status the run had just
           # fetched was thrown away and the commit only changed timestamps.
           merge-multiple: false
+      - name: Download volume artifacts
+        uses: actions/download-artifact@v8
+        with:
+          path: downloads
+          pattern: vol-*
+          merge-multiple: false
       - name: Copy downloaded items into volume dirs
         run: |
+          ls -la downloads || true
           JOB_COUNT=${{ needs.plan.outputs.job_count }}
           missing=0
           for v in $(seq 0 $((JOB_COUNT - 1))); do
-            SRC=".volumes/downloads/vol-$v"
+            SRC="downloads/vol-$v"
             DST=".volumes/vol-$v/data/items"
             if [ ! -d "$SRC" ]; then
               echo "::error::artifact vol-$v is missing"
@@ -261,7 +271,8 @@ jobs:
             # so the tree has to be copied as a tree. Flattening it with
             # `cp "$f" "$DST/"` made every region's `00.json` the same file.
             cp -R "$SRC"/. "$DST"/
-            echo "restored items for vol-$v"
+            rm -f "$DST/keep.txt"
+            echo "restored items for vol-$v ($(find "$DST" -type f | wc -l) files)"
           done
           # A volume that produced no artifact means the sweep is partial; the
           # merge would then write the *old* data for that volume and look
