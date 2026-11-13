@@ -262,6 +262,7 @@ class TwitchAdapter implements PlatformAdapter {
 
   /** Batched live check — Helix `streams` accepts up to 100 ids/logins per request. */
   async liveMany(channels: PlatformChannel[]): Promise<PlatformUpload[]> {
+    const BATCH_SIZE = 100; // Helix `streams` limit per request
     const byId: PlatformChannel[] = [];
     const byLogin: PlatformChannel[] = [];
     for (const channel of channels) {
@@ -270,9 +271,15 @@ class TwitchAdapter implements PlatformAdapter {
     }
 
     const streams: any[] = [];
-    if (byId.length) streams.push(...(await this.client.streams(byId.map((c) => c.id))));
-    if (byLogin.length)
-      streams.push(...(await this.client.streamsByLogin(byLogin.map((c) => c.id))));
+    // Helix accepts up to 100 user_ids per request — batch explicitly.
+    for (let i = 0; i < byId.length; i += BATCH_SIZE) {
+      const chunk = byId.slice(i, i + BATCH_SIZE).map((c) => c.id);
+      streams.push(...(await this.client.streams(chunk)));
+    }
+    for (let i = 0; i < byLogin.length; i += BATCH_SIZE) {
+      const chunk = byLogin.slice(i, i + BATCH_SIZE).map((c) => c.id);
+      streams.push(...(await this.client.streamsByLogin(chunk)));
+    }
 
     const byStreamId = new Map<string, PlatformChannel>();
     for (const channel of channels) byStreamId.set(channel.id, channel);
