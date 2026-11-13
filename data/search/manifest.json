@@ -1,24 +1,24 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-12T19:56:55.006Z",
+  "generatedAt": "2026-11-13T00:53:57.511Z",
   "regions": [
     {
       "code": "jp",
       "shard": 0,
       "entries": 6459,
-      "bytes": 3687644
+      "bytes": 3687603
     },
     {
       "code": "jp",
       "shard": 1,
       "entries": 6459,
-      "bytes": 4210299
+      "bytes": 4209487
     },
     {
       "code": "jp",
       "shard": 2,
-      "entries": 6457,
-      "bytes": 6649304
+      "entries": 6458,
+      "bytes": 6666001
     },
     {
       "code": "cn",
@@ -93,5 +93,5 @@
       "bytes": 3204018
     }
   ],
-  "total": 90238
+  "total": 90239
 }
