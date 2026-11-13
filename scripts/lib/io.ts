@@ -282,6 +282,73 @@ export function mergeById<
 }
 
 /**
+ * Merges freshly-fetched item records into the existing dataset items.
+ *
+ * Preserves enriched metadata (songTitle, originalArtist, tags, etc.) that a
+ * live/RSS check might not repopulate, so a quick live-status refresh never
+ * wipes curated song credits or duration data.
+ */
+export function mergeItemsById<
+  T extends {
+    id: string;
+    addedAt?: string;
+    source?: string;
+    songTitle?: string | null;
+    originalArtist?: string | null;
+    thumbnail?: string | null;
+    description?: string | null;
+    duration?: number | null;
+    viewCount?: number | null;
+    likeCount?: number | null;
+    concurrentViewers?: number | null;
+    publishedAt?: string | null;
+    scheduledStart?: string | null;
+    actualStart?: string | null;
+    actualEnd?: string | null;
+    tags?: string[];
+  },
+>(existing: T[], incoming: T[]): T[] {
+  const map = new Map<string, T>();
+  for (const rec of existing) map.set(rec.id, rec);
+
+  for (const rec of incoming) {
+    const prev = map.get(rec.id);
+    if (!prev) {
+      map.set(rec.id, rec);
+      continue;
+    }
+    map.set(rec.id, {
+      ...prev,
+      ...rec,
+      addedAt: prev.addedAt ?? rec.addedAt,
+      source:
+        prev.source === "seed" || prev.source === "manual"
+          ? prev.source
+          : rec.source,
+      // Keep enriched metadata when incoming live/RSS check has null/empty
+      songTitle: rec.songTitle ?? prev.songTitle ?? null,
+      originalArtist: rec.originalArtist ?? prev.originalArtist ?? null,
+      thumbnail: rec.thumbnail ?? prev.thumbnail ?? null,
+      description: rec.description ?? prev.description ?? null,
+      duration: rec.duration ?? prev.duration ?? null,
+      viewCount: rec.viewCount ?? prev.viewCount ?? null,
+      likeCount: rec.likeCount ?? prev.likeCount ?? null,
+      concurrentViewers: rec.concurrentViewers ?? prev.concurrentViewers ?? null,
+      publishedAt: rec.publishedAt ?? prev.publishedAt ?? null,
+      scheduledStart: rec.scheduledStart ?? prev.scheduledStart ?? null,
+      actualStart: rec.actualStart ?? prev.actualStart ?? null,
+      actualEnd: rec.actualEnd ?? prev.actualEnd ?? null,
+      tags: [...new Set([...(prev.tags ?? []), ...(rec.tags ?? [])])].slice(
+        0,
+        25,
+      ),
+    } as T);
+  }
+
+  return [...map.values()].sort((a, b) => a.id.localeCompare(b.id));
+}
+
+/**
  * How long a network request is given before it is abandoned.
  *
  * A fetch with no timeout never rejects — it simply hangs, and a hung

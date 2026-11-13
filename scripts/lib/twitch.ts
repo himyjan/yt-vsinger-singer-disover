@@ -99,19 +99,20 @@ export class TwitchClient {
     return this.token!;
   }
 
-  private cachePath(endpoint: string, params: Record<string, string>): string {
-    const key = Buffer.from(
-      `${endpoint}?${Object.entries(params)
-        .sort()
-        .map(([k, v]) => `${k}=${v}`)
-        .join("&")}`,
-    ).toString("base64url");
+  private cachePath(endpoint: string, params: Record<string, string | string[]>): string {
+    const query = Object.entries(params)
+      .sort(([a], [b]) => a.localeCompare(b))
+      .flatMap(([k, v]) =>
+        Array.isArray(v) ? v.map((item) => `${k}=${item}`) : [`${k}=${v}`],
+      )
+      .join("&");
+    const key = Buffer.from(`${endpoint}?${query}`).toString("base64url");
     return path.join(this.cacheDir, `${key}.json`);
   }
 
   private async request<T = any>(
     endpoint: string,
-    params: Record<string, string>,
+    params: Record<string, string | string[]>,
   ): Promise<T> {
     const file = this.cachePath(endpoint, params);
     if (!this.noCache && fs.existsSync(file)) {
@@ -124,7 +125,13 @@ export class TwitchClient {
 
     const token = await this.getToken();
     const url = new URL(`${HELIX}/${endpoint}`);
-    for (const [k, v] of Object.entries(params)) url.searchParams.set(k, v);
+    for (const [k, v] of Object.entries(params)) {
+      if (Array.isArray(v)) {
+        for (const item of v) url.searchParams.append(k, item);
+      } else {
+        url.searchParams.set(k, v);
+      }
+    }
 
     const res = await fetch(url.toString(), {
       signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
@@ -154,7 +161,7 @@ export class TwitchClient {
     for (let i = 0; i < logins.length; i += 100) {
       const chunk = logins.slice(i, i + 100);
       const res = await this.request<{ data?: any[] }>("users", {
-        login: chunk.join(","),
+        login: chunk,
       });
       out.push(...(res.data ?? []));
     }
@@ -187,7 +194,7 @@ export class TwitchClient {
     for (let i = 0; i < broadcasterIds.length; i += 100) {
       const chunk = broadcasterIds.slice(i, i + 100);
       const res = await this.request<{ data?: any[] }>("channels", {
-        broadcaster_id: chunk.join(","),
+        broadcaster_id: chunk,
       });
       out.push(...(res.data ?? []));
     }
@@ -200,7 +207,7 @@ export class TwitchClient {
     for (let i = 0; i < userIds.length; i += 100) {
       const chunk = userIds.slice(i, i + 100);
       const res = await this.request<{ data?: any[] }>("streams", {
-        user_id: chunk.join(","),
+        user_id: chunk,
       });
       out.push(...(res.data ?? []));
     }
@@ -213,7 +220,7 @@ export class TwitchClient {
     for (let i = 0; i < logins.length; i += 100) {
       const chunk = logins.slice(i, i + 100);
       const res = await this.request<{ data?: any[] }>("streams", {
-        user_login: chunk.join(","),
+        user_login: chunk,
       });
       out.push(...(res.data ?? []));
     }

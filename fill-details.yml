@@ -1,0 +1,395 @@
+name: Fill channel details
+
+# Fills the per-record details a sync does not: avatars, names, follower
+# counts, the upload total and the `externals` links.
+#
+# **One run, every mode, twenty volumes in parallel.** The old single-job pass
+# covered 2,000 records a run and was ordered worst-first, so a record whose
+# only gap was its links sat behind thousands with no avatar and was never
+# reached — 「もかん ch / Mokan」 kept an empty `externals` block through every
+# weekly run. The catalogue is split into twenty volumes (`volumeOf(id)`,
+# 3,546–3,746 channels each) and each job owns one volume: with no `--limit`
+# each volume sweep processes every pending channel in it, so a full run
+# covers the whole catalogue across twenty parallel jobs, and the fan-in job
+# commits once.
+#
+# Modes (the `mode` input; `all` is the scheduled one):
+#
+#   all            the default worst-first backlog (avatar, count, uploads, links)
+#   names          `--name-only`: correct the name and the aliases
+#   counts         `--counts-only`: the hidden follower counts
+#   externals      `--externals-only`: records with nothing but a YouTube link
+#   platform       `--platform <name>`: one platform only
+#   normalize-ids  `--normalize-ids` (`data:ids`): re-key handle ids to `UC…`
+#   weak-region    `--weak-region`: re-derive a region that is only a guess
+#
+# `platform`, `force` and `id` combine with any mode, exactly as the flags do
+# on the command line. `--id` is the one thing that does not fan out — a record
+# lives in exactly one volume — so the `plan` job resolves each id with
+# `scripts/volume-of.ts` and hands the matrix only the volumes that hold them.
+#
+# **The links pass runs weekly, inside the same daily run.** Every Monday
+# (UTC) each volume job runs the default pass and then `--externals-only`, so
+# the 11,110 records that carry nothing but a YouTube link are swept once a
+# week by the same 12,000-record budget. `mode=externals` forces it any day.
+#
+# A volume is the smallest unit that can be written alone. Splitting one across
+# two jobs would make both write the same channel shards, and whichever
+# finished last would overwrite the other's corrections. To go wider, raise the
+# volume count, not the jobs per volume.
+
+on:
+  schedule:
+    # Daily at 05:17 UTC: after the 04:00 roster jobs, off the hour so the
+    # shared GitHub cron pool is not the bottleneck. One schedule — the links
+    # pass is chosen by the weekday inside the run, not by a second cron.
+    - cron: "17 5 * * *"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "Which pass to run"
+        type: choice
+        required: false
+        default: all
+        options:
+          - all
+          - names
+          - counts
+          - externals
+          - platform
+          - normalize-ids
+          - weak-region
+      platform:
+        description: "Platform filter (bilibili, kick, ci.me, soop, …)"
+        required: false
+        default: ""
+      id:
+        description: "Fill these channel ids only, comma-separated (e.g. UC…,UC…)"
+        required: false
+        default: ""
+      limit:
+        description: "Max channels per volume this run (empty = all of them)"
+        required: false
+        default: ""
+      interval:
+        description: "Milliseconds between requests inside one job"
+        required: false
+        default: "200"
+      force:
+        description: "Ignore the freshness window"
+        required: false
+        default: "false"
+      dry-run:
+        description: "Fetch profiles but write nothing"
+        required: false
+        default: "false"
+
+concurrency:
+  group: dataset-writer-${{ github.repository }}
+  cancel-in-progress: false
+  queue: max
+
+permissions:
+  contents: write
+
+jobs:
+  plan:
+    name: Choose the volumes
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      # A JSON array — `[0,1,…]` for a bulk pass, `[9]` for a targeted one.
+      volumes: ${{ steps.pick.outputs.volumes }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 1
+          ref: ${{ github.ref_name }}
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "26"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Resolve the volumes this run touches
+        id: pick
+        env:
+          IDS: ${{ inputs.id }}
+        run: |
+          if [ -z "$IDS" ]; then
+            VOLUMES=$(node -e 'console.log(JSON.stringify(Array.from({length:20},(_,i)=>i)))')
+          else
+            # One record lives in exactly one volume, so a targeted run only
+            # has work to do in the volumes that hold the named ids.
+            VOLUMES=$(npx oxnode scripts/volume-of.ts 20 "$IDS")
+          fi
+          echo "volumes=$VOLUMES" >> "$GITHUB_OUTPUT"
+          echo "plan: volumes=$VOLUMES"
+
+  fill-details:
+    name: Fill details for volume ${{ matrix.volume }}
+    needs: plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    strategy:
+      # Twenty jobs, one volume each, all at once — GitHub's ceiling for a
+      # public repository. A volume that fails must not cancel the other
+      # nineteen: their artifacts are still useful if the run is retried.
+      max-parallel: 20
+      fail-fast: false
+      matrix:
+        volume: ${{ fromJSON(needs.plan.outputs.volumes) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          ref: ${{ github.ref_name }}
+          lfs: true
+
+      - name: Install Git LFS
+        run: |
+          git lfs install --skip-repo
+          git lfs pull || true
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "26"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Create this volume only
+        # `--only` writes one volume and nothing else: a full split is ~2.6 GB
+        # per job, and nineteen twentieths of it would be thrown away. The
+        # split puts each volume's own copies of `overrides.json`,
+        # `seed-catalog.json`, `upstream.json` and `suggestions.json` beside
+        # it, so a job sees a dataset root that is complete on its own.
+        run: npm run data:volumes -- --count 20 --only ${{ matrix.volume }}
+
+      - name: Fill details for volume ${{ matrix.volume }}
+        env:
+          MODE: ${{ inputs.mode || 'all' }}
+          PLATFORM: ${{ inputs.platform }}
+          IDS: ${{ inputs.id }}
+          LIMIT: ${{ inputs.limit || 600 }}
+          INTERVAL: ${{ inputs.interval || 200 }}
+          FORCE: ${{ inputs.force }}
+          DRY_RUN: ${{ inputs.dry-run }}
+          TWITCH_CLIENT_ID: ${{ secrets.TWITCH_CLIENT_ID }}
+          TWITCH_CLIENT_SECRET: ${{ secrets.TWITCH_CLIENT_SECRET }}
+          VK_ACCESS_TOKEN: ${{ secrets.VK_ACCESS_TOKEN }}
+          CI_ME_CLIENT_ID: ${{ secrets.CI_ME_CLIENT_ID }}
+          CI_ME_CLIENT_SECRET: ${{ secrets.CI_ME_CLIENT_SECRET }}
+        run: |
+          ARGS=(--interval "$INTERVAL")
+          if [ -n "$LIMIT" ]; then ARGS+=(--limit "$LIMIT"); fi
+          case "$MODE" in
+            names)         ARGS+=(--name-only) ;;
+            counts)        ARGS+=(--counts-only) ;;
+            externals)     ARGS+=(--externals-only) ;;
+            normalize-ids) ARGS+=(--normalize-ids) ;;
+            weak-region)   ARGS+=(--weak-region) ;;
+            platform)
+              if [ -z "$PLATFORM" ]; then
+                echo "::error::mode=platform needs the platform input"
+                exit 1
+              fi
+              ;;
+          esac
+          # `--platform`, `--force` and `--id` combine with any mode, exactly as
+          # the flags do on the command line: `mode=names` + `platform=kick`
+          # renames only the KICK records, and `id` narrows it to those ids.
+          if [ -n "$PLATFORM" ]; then ARGS+=(--platform "$PLATFORM"); fi
+          if [ "$FORCE" = "true" ]; then ARGS+=(--force); fi
+          if [ "$DRY_RUN" = "true" ]; then ARGS+=(--dry-run); fi
+          if [ -n "$IDS" ]; then ARGS+=(--id "$IDS"); fi
+
+          # The scripts read `data/` through the working directory, so the
+          # volume is swapped in as a symlink and swapped back — the same
+          # trick `live.yml` uses, and the reason a job only ever sees its own
+          # records.
+          VOL_DIR=".volumes/vol-${{ matrix.volume }}/data"
+          mv data data-full
+          ln -s "$VOL_DIR" data
+
+          npm run data:details -- "${ARGS[@]}"
+
+          # Monday: the links pass, on the same volume, after the main one.
+          # The default backlog reaches a record that merely lacks its links
+          # only after every record with no avatar, so the block would stay
+          # empty forever; `--externals-only` selects those records directly
+          # and orders them oldest-asked-first. One sweep a week covers the
+          # 11,110 that qualify at this budget.
+          if [ "$MODE" = "all" ] && [ -z "$IDS" ] && [ "$(date -u +%u)" = "1" ]; then
+            echo "Monday — also filling the records with no links beyond YouTube"
+            EXT=(--externals-only --interval "$INTERVAL")
+            if [ -n "$LIMIT" ]; then EXT+=(--limit "$LIMIT"); fi
+            if [ "$DRY_RUN" = "true" ]; then EXT+=(--dry-run); fi
+            npm run data:details -- "${EXT[@]}"
+          fi
+
+          rm -f data
+          mv data-full data
+
+      - name: Upload volume artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: vol-${{ matrix.volume }}
+          # The artifact is rooted at the **contents** of this directory
+          # (`virtual/jp/00.json`, `manifest.json`), which is why the fan-in
+          # downloads with `merge-multiple: false` and addresses each volume
+          # by its artifact name.
+          path: .volumes/vol-${{ matrix.volume }}/data/channels
+          retention-days: 1
+
+  merge-and-commit:
+    name: Merge volumes and commit dataset
+    needs: [plan, fill-details]
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    # No job-level `concurrency`: re-declaring the workflow's own group makes
+    # the job wait for a lock its own run holds, and GitHub cancels it as a
+    # deadlock before the first step. The run-level block serialises writers.
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          ref: ${{ github.ref_name }}
+          lfs: true
+
+      - name: Install Git LFS
+        run: |
+          git lfs install --skip-repo
+          git lfs pull || true
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "26"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Create volume split for merge
+        run: npm run data:volumes -- --count 20
+
+      - name: Download volume artifacts
+        uses: actions/download-artifact@v8
+        with:
+          path: .volumes/downloads
+          pattern: vol-*
+          # `false`, not `true`: an artifact is rooted at the contents of the
+          # directory that was uploaded, so twenty of them merged into one
+          # directory would collide shard-for-shard and the per-volume copy
+          # below would find nothing to copy.
+          merge-multiple: false
+
+      - name: Replace each volume's channel records
+        env:
+          # Only the volumes this run planned — a targeted run has one, and
+          # demanding the other nineteen would fail a run that succeeded.
+          VOLUMES: ${{ needs.plan.outputs.volumes }}
+        run: |
+          missing=0
+          for v in $(echo "$VOLUMES" | tr -d '[]' | tr ',' ' '); do
+            SRC=".volumes/downloads/vol-$v"
+            DST=".volumes/vol-$v/data/channels"
+            if [ ! -d "$SRC" ]; then
+              echo "::error::artifact vol-$v is missing"
+              missing=$((missing + 1))
+              continue
+            fi
+            # Replace, do not merge. A record re-keyed to its `UC…` id has
+            # moved to another shard, so copying over the split would leave
+            # the old row behind beside the new one — the same performer
+            # twice, under two ids.
+            rm -rf "$DST"
+            cp -R "$SRC" "$DST"
+            echo "restored channels for vol-$v"
+          done
+          if [ "$missing" -gt 0 ]; then
+            echo "::error::$missing volume artifact(s) missing — refusing to merge a partial sweep"
+            exit 1
+          fi
+
+      - name: Merge all volumes into data/
+        # `--channels-only`: the details pass writes channel records and
+        # nothing else, and the volumes were split from the checkout this job
+        # started with. Merging their item shards would rewrite every item to
+        # that snapshot — which would revert a `data: live status` commit that
+        # landed while this ran.
+        run: npx oxnode scripts/merge-volumes.ts --count 20 --channels-only
+
+      - name: Build search index
+        run: npm run data:index
+
+      - name: Validate dataset
+        run: npm run data:validate
+
+      - name: Check the stored repository size
+        run: npm run repo:size -- --max-mb 900 --warn-mb 700
+
+      - name: Commit detail fills
+        env:
+          BRANCH: ${{ github.ref_name }}
+          MODE: ${{ inputs.mode || 'all' }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch origin "$BRANCH"
+
+          # Move HEAD and the index to the latest branch, keeping the generated
+          # `data/` in the working tree. A rebase would try to *merge* two
+          # independently rebuilt datasets, and every derived file (manifest,
+          # search index, shards) conflicts by construction. `--mixed` leaves
+          # the worktree alone.
+          git reset --mixed "origin/$BRANCH"
+
+          # Stage **only what this run wrote**. `git add data/` staged the whole
+          # tree, and every file the details pass never touched was the stale
+          # checkout the job started from — so a `data: live status` commit that
+          # landed while this ran was reverted to that snapshot. The details
+          # pass writes channel shards, the rebuilt index and the manifest; the
+          # items, songs, overrides and rosters come from the branch.
+          git checkout -- \
+            data/items \
+            data/songs \
+            data/overrides.json \
+            data/seed-catalog.json \
+            data/suggestions.json \
+            data/upstream.json \
+            data/volumes.json 2>/dev/null || true
+          git add data/channels data/search data/manifest.json
+          if git diff --cached --quiet; then
+            echo "details unchanged — nothing to commit"
+            exit 0
+          fi
+          git commit -m "data: fill channel details ($MODE) (${{ github.run_number }})"
+          git push origin "HEAD:$BRANCH"
+
+      - name: Summary
+        run: |
+          {
+            echo "### Channel details"
+            echo ""
+            echo "| | |"
+            echo "| --- | --- |"
+            echo "| mode | \`${{ inputs.mode || 'all' }}\` |"
+            echo "| links pass | $([ "$(date -u +%u)" = "1" ] && echo 'ran (Monday)' || echo 'not today — Mondays only') |"
+            echo "| volumes | ${{ needs.plan.outputs.volumes }} |"
+            echo "| per volume | ${{ inputs.limit || 'all' }} records |"
+            echo "| interval | ${{ inputs.interval || 200 }} ms |"
+            echo "| ids | ${{ inputs.id || '(none — the whole backlog)' }} |"
+            echo ""
+            git show --stat --oneline HEAD | head -5
+          } >> "$GITHUB_STEP_SUMMARY"
