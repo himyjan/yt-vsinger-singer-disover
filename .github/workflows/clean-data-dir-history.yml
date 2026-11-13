@@ -1,0 +1,56 @@
+name: Clean Data Directory History (Keep Latest) # 執行與運作邏輯完整歷史抓取 (fetch-depth: 0)：確保工具能讀取所有的舊 commit 與舊 bloob。安全備份機制：因為直接過濾路徑會將整個 data/ 從歷史抹除（包含最新一份），腳本會先將最新工作區的 data/ 暫存至上一層目錄。過濾與還原：透過 filter-repo-rs --path data/ --invert-paths 清除歷史中所有龐大的舊 data/ 歷史檔案後，再將最新的一份 data/ 寫回並建立一個乾淨的 Commit。強制推送：覆蓋遠端儲存庫，釋放 GitHub 儲存庫空間。
+
+on:
+  workflow_dispatch: # 支援在 GitHub Actions 頁面手動點擊執行
+
+jobs:
+  clean-data-history:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # 允許 GitHub Actions 強制推送重寫後的歷史
+    steps:
+      - name: Checkout repository with full history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # 需要完整歷史才能進行過濾
+
+      - name: Install Rust & filter-repo-rs
+        run: |
+          cargo install filter-repo-rs
+          # 將 Cargo bin 目錄加入 PATH
+          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+
+      - name: Configure Git User
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Run filter-repo-rs on data/ directory
+        run: |
+          # 策略說明：
+          # 1. 預設情況下，filter-repo-rs 會從所有歷史 commit 中移除指定的 --path。
+          # 2. 如果你想「完全刪除舊的 blob 但保留最新的一個 commit 的 data/」，
+          #    最穩健的做法是先備份最新工作區的 data/，過濾歷史後再把最新 data/ 放回來。
+
+          echo "1. 備份工作區最新的一份 data/..."
+          mkdir -p ../data_backup
+          cp -r data/* ../data_backup/
+
+          echo "2. 使用 filter-repo-rs 從所有歷史記錄中徹底拔除 data/..."
+          filter-repo-rs --path data/ --invert-paths
+
+          echo "3. 將最新的一份 data/ 還原回工作區並重新提交..."
+          mkdir -p data
+          cp -r ../data_backup/* data/
+
+          git add data/
+          git commit -m "chore: keep only the latest version of data/ directory" || echo "No changes to commit"
+
+      - name: Force push to remote repository
+        run: |
+          git push origin --force --all
+          git push origin --force --tags
+
+      - name: Prune local garbage collection
+        run: |
+          git gc --prune=now --aggressive
