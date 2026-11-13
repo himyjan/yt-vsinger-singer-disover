@@ -1,0 +1,56 @@
+name: Clean Data Directory History (Keep Latest)
+
+on:
+  workflow_dispatch: # Allows manual trigger from the GitHub Actions tab
+
+jobs:
+  clean-data-history:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Allows GitHub Actions to force push the rewritten history
+    steps:
+      - name: Checkout repository with full history
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0 # Full history is required for filtering
+          persist-credentials: true # Ensures credentials are kept for pushing
+
+      - name: Install Rust & filter-repo-rs
+        run: |
+          cargo install filter-repo-rs
+          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+
+      - name: Configure Git User
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Run filter-repo-rs on data/ directory
+        run: |
+          echo "1. Backing up the latest version of the data/ directory..."
+          mkdir -p ../data_backup
+          cp -r data/* ../data_backup/
+
+          echo "2. Purging data/ from all historical commits using filter-repo-rs..."
+          filter-repo-rs --path data/ --invert-paths
+
+          echo "3. Restoring the latest data/ directory to the working tree and committing..."
+          mkdir -p data
+          cp -r ../data_backup/* data/
+          
+          git add data/
+          git commit -m "chore: keep only the latest version of data/ directory" || echo "No changes to commit"
+
+      - name: Re-bind Remote Origin with Auth Token
+        run: |
+          # filter-repo-rs wipes out remote settings; we must re-add origin right before pushing
+          git remote add origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+
+      - name: Force push to remote repository
+        run: |
+          git push origin --force --all
+          git push origin --force --tags
+
+      - name: Prune local garbage collection
+        run: |
+          git gc --prune=now --aggressive
