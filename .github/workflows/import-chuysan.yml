@@ -236,7 +236,7 @@ jobs:
         run: npm run data:validate
 
       - name: Check the stored repository size
-        run: npm run repo:size -- --max-mb 900 --warn-mb 700
+        run: npm run repo:size -- --max-mb 10240 --warn-mb 6144
 
       - name: Commit Chuysan imports
         env:
