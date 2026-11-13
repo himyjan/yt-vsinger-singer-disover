@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-13T13:18:36.891Z",
-  "total": 76240,
+  "generatedAt": "2026-11-13T19:55:52.875Z",
+  "total": 76228,
   "regions": [
     {
       "code": "jp",
-      "channels": 11983,
+      "channels": 11982,
       "virtual": {
-        "channels": 11964,
+        "channels": 11963,
         "buckets": [
           "00",
           "01",
@@ -49,9 +49,9 @@
     },
     {
       "code": "cn",
-      "channels": 8760,
+      "channels": 8783,
       "virtual": {
-        "channels": 8759,
+        "channels": 8782,
         "buckets": [
           "00",
           "01",
@@ -80,9 +80,9 @@
     },
     {
       "code": "tw",
-      "channels": 4360,
+      "channels": 4326,
       "virtual": {
-        "channels": 4360,
+        "channels": 4326,
         "buckets": [
           "00",
           "01",
@@ -109,9 +109,9 @@
     },
     {
       "code": "hk",
-      "channels": 714,
+      "channels": 708,
       "virtual": {
-        "channels": 714,
+        "channels": 708,
         "buckets": [
           "00",
           "01",
@@ -138,9 +138,9 @@
     },
     {
       "code": "kr",
-      "channels": 412,
+      "channels": 411,
       "virtual": {
-        "channels": 410,
+        "channels": 409,
         "buckets": [
           "00",
           "01",
@@ -170,9 +170,9 @@
     },
     {
       "code": "en",
-      "channels": 39510,
+      "channels": 39518,
       "virtual": {
-        "channels": 39495,
+        "channels": 39503,
         "buckets": [
           "00",
           "01",
@@ -269,9 +269,9 @@
     },
     {
       "code": "sea",
-      "channels": 2041,
+      "channels": 2042,
       "virtual": {
-        "channels": 2041,
+        "channels": 2042,
         "buckets": [
           "00",
           "01",
@@ -298,9 +298,9 @@
     },
     {
       "code": "unknown",
-      "channels": 6710,
+      "channels": 6708,
       "virtual": {
-        "channels": 6708,
+        "channels": 6706,
         "buckets": [
           "00",
           "01",
