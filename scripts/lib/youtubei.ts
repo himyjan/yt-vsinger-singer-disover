@@ -514,6 +514,7 @@ export class InnerTubeSource {
     rateLimited429: 0,
     errors: 0,
   };
+  private playerStats = { live: 0, upcoming: 0, offline: 0, blocked: 0 };
 
   constructor(options: InnerTubeOptions = {}) {
     this.enabled = options.enabled ?? true;
@@ -535,6 +536,7 @@ export class InnerTubeSource {
       rateLimited429: 0,
       errors: 0,
     };
+    this.playerStats = { live: 0, upcoming: 0, offline: 0, blocked: 0 };
     this.limiter = new RateLimiter({
       minIntervalMs: this.delayMs,
       maxIntervalMs: 15_000,
@@ -549,7 +551,7 @@ export class InnerTubeSource {
     fs.mkdirSync(path.dirname(this.rssCachePath), { recursive: true });
     fs.writeFileSync(this.rssCachePath, JSON.stringify(this.rssCache));
     this.onLog(
-      `rss cache: saved (${this.rssStats.hits304} 304-cached, ${this.rssStats.fetched200} fetched)`,
+      `rss cache: saved (${this.rssStats.hits304} 304-cached, ${this.rssStats.fetched200} fetched, ${this.rssStats.notFound404} 404, ${this.rssStats.rateLimited429} 429, ${this.rssStats.errors} err) | player: ${this.playerStats.live} live, ${this.playerStats.upcoming} upcoming, ${this.playerStats.offline} offline, ${this.playerStats.blocked} blocked`,
     );
   }
 
@@ -1116,7 +1118,7 @@ export class InnerTubeSource {
     try {
       await this.throttle();
       const info: any = await withTimeout(
-        this.client.getBasicInfo(videoId),
+        this.client.getBasicInfo(videoId, "TV_EMBEDDED"),
         REQUEST_TIMEOUT_MS,
       );
       return info?.basic_info ?? null;
@@ -1286,7 +1288,7 @@ export class InnerTubeSource {
     try {
       await this.throttle();
       const info: any = await withTimeout(
-        this.client.getBasicInfo(videoId),
+        this.client.getBasicInfo(videoId, "TV_EMBEDDED"),
         REQUEST_TIMEOUT_MS,
       );
       const basic = info?.basic_info;
@@ -1298,49 +1300,53 @@ export class InnerTubeSource {
       const liveBroadcast = basic?.liveBroadcastDetails ?? {};
       const details = basic?.videoDetails ?? {};
       const isMember =
-        basic?.isMember === true ||
-        basic?.videoDetails?.isMember === true ||
+        basic?.is_member === true ||
+        basic?.videoDetails?.is_member === true ||
         /member/.test(reason) ||
         status === "MEMBERSHIP_REQUIRED" ||
         status === "MEMBERS_ONLY"
           ? true
           : null;
-      const isLive = Boolean(
-        basic?.isLive || playability?.isLive || status === "LIVE",
-      );
+      const isLive =
+        basic.is_live === true ||
+        playability?.is_live === true ||
+        status === "LIVE";
       const isUpcoming = Boolean(
         basic?.isUpcoming ||
           playability?.isUpcoming ||
           status === "UPCOMING" ||
           (basic.start_timestamp && status === "UPCOMING"),
       );
-      const rawLength = Number(details.lengthSeconds);
+      const rawLength = Number(details.length_seconds);
       const duration =
         Number.isFinite(rawLength) && rawLength > 0 ? rawLength : null;
       const isPremiere = isLive && duration !== null;
-      const rawViews = Number(details.viewCount);
+      const rawViews = Number(details.view_count);
       const viewCount =
         Number.isFinite(rawViews) && rawViews >= 0 ? rawViews : null;
       const startTimestamp =
-        typeof liveBroadcast.startTimestamp === "string" &&
-        liveBroadcast.startTimestamp
-          ? new Date(liveBroadcast.startTimestamp).toISOString()
+        typeof liveBroadcast.start_timestamp === "string" &&
+        liveBroadcast.start_timestamp
+          ? new Date(liveBroadcast.start_timestamp).toISOString()
           : null;
       const endTimestamp =
-        typeof liveBroadcast.endTimestamp === "string" &&
-        liveBroadcast.endTimestamp
-          ? new Date(liveBroadcast.endTimestamp).toISOString()
+        typeof liveBroadcast.end_timestamp === "string" &&
+        liveBroadcast.end_timestamp
+          ? new Date(liveBroadcast.end_timestamp).toISOString()
           : null;
       const publishDate =
-        typeof basic.publishDate === "string" && basic.publishDate
-          ? new Date(basic.publishDate).toISOString()
+        typeof basic.publish_date === "string" && basic.publish_date
+          ? new Date(basic.publish_date).toISOString()
           : null;
+      if (isLive) this.playerStats.live++;
+      else if (isUpcoming) this.playerStats.upcoming++;
+      else this.playerStats.offline++;
       return {
         title: typeof details.title === "string" ? details.title : "",
         description:
-          typeof details.shortDescription === "string" &&
-          details.shortDescription.trim()
-            ? details.shortDescription.trim().slice(0, 600)
+          typeof details.short_description === "string" &&
+          details.short_description.trim()
+            ? details.short_description.trim().slice(0, 600)
             : null,
         tags: Array.isArray(details.keywords)
           ? details.keywords
@@ -1379,7 +1385,7 @@ export class InnerTubeSource {
     try {
       await this.throttle();
       const info: any = await withTimeout(
-        this.client.getBasicInfo(videoId),
+        this.client.getBasicInfo(videoId, "TV_EMBEDDED"),
         REQUEST_TIMEOUT_MS,
       );
       const basic = info?.basic_info;
@@ -1388,9 +1394,13 @@ export class InnerTubeSource {
       const playability = basic?.playabilityStatus ?? {};
       const reason = String(playability?.reason ?? "").toLowerCase();
       const status = String(playability?.status ?? "").toUpperCase();
+      if (status === "LOGIN_REQUIRED" || /not a bot|sign in/i.test(reason)) {
+        this.playerStats.blocked++;
+        return null;
+      }
       const isMember =
-        basic?.isMember === true ||
-        basic?.videoDetails?.isMember === true ||
+        basic?.is_member === true ||
+        basic?.videoDetails?.is_member === true ||
         /member/.test(reason) ||
         status === "MEMBERSHIP_REQUIRED" ||
         status === "MEMBERS_ONLY"
