@@ -10,7 +10,7 @@ jobs:
       contents: write # 允許 GitHub Actions 強制推送重寫後的歷史
     steps:
       - name: Checkout repository with full history
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0 # 需要完整歷史才能進行過濾
 
