@@ -296,6 +296,14 @@ export async function refreshLivePass(
           const ytLink = channel.platforms.find((p) => p.platform === "youtube");
           const ytChannelId = ytLink?.id ?? channel.id;
 
+          // YouTube RSS only accepts UC... channel IDs. Skip @handle,
+          // youtube:user-..., bilibili:..., ci.me:... and any other non-YouTube
+          // platform ids immediately - they can never return RSS entries.
+          if (!/^UC[\w-]{22}$/.test(ytChannelId)) {
+            rssFailedChannelIds.add(channel.id);
+            continue;
+          }
+
           // Previously live/upcoming streams are always candidates so they
           // can be re-verified (24/7 streams, early-scheduled premieres).
           const activeItems = (itemsByChannel.get(channel.id) ?? []).filter(
