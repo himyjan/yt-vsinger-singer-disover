@@ -151,10 +151,35 @@ function retireEndedStreams(
   return retired;
 }
 
-/** Keeps `addedAt` from the record already on disk, so history survives. */
+/** Keeps `addedAt` from the record already on disk, so history survives.
+ *
+ * Preserves enriched metadata (songTitle, originalArtist, tags, etc.) so
+ * a live-status refresh never wipes curated song credits or duration data.
+ */
 function storeItem(itemById: Map<string, Item>, item: Item): void {
   const prev = itemById.get(item.id);
-  itemById.set(item.id, { ...item, addedAt: prev?.addedAt ?? item.addedAt });
+  if (!prev) {
+    itemById.set(item.id, item);
+    return;
+  }
+  itemById.set(item.id, {
+    ...prev,
+    ...item,
+    addedAt: prev.addedAt ?? item.addedAt,
+    songTitle: item.songTitle ?? prev.songTitle,
+    originalArtist: item.originalArtist ?? prev.originalArtist,
+    thumbnail: item.thumbnail ?? prev.thumbnail,
+    description: item.description ?? prev.description,
+    duration: item.duration ?? prev.duration,
+    viewCount: item.viewCount ?? prev.viewCount,
+    likeCount: item.likeCount ?? prev.likeCount,
+    concurrentViewers: item.concurrentViewers ?? prev.concurrentViewers,
+    publishedAt: item.publishedAt ?? prev.publishedAt,
+    scheduledStart: item.scheduledStart ?? prev.scheduledStart,
+    actualStart: item.actualStart ?? prev.actualStart,
+    actualEnd: item.actualEnd ?? prev.actualEnd,
+    tags: [...new Set([...(prev.tags ?? []), ...(item.tags ?? [])])].slice(0, 25),
+  });
 }
 
 export async function refreshLivePass(
@@ -351,11 +376,17 @@ export async function refreshLivePass(
               if (!state || (!state.isLive && !state.isUpcoming)) continue;
               liveList.push({
                 id: video.id,
-                title: video.title,
+                title: state.title || video.title,
+                description: state.description ?? null,
+                tags: state.tags,
+                duration: state.duration ?? null,
+                viewCount: state.viewCount ?? null,
+                isPremiere: state.isPremiere ?? false,
                 thumbnail: null,
                 status: state.isLive ? "live" : "upcoming",
                 scheduledStart: state.isUpcoming ? state.start : null,
                 actualStart: state.isLive ? state.start : null,
+                actualEnd: state.end ?? null,
                 isMember: state.isMember,
               });
             }
@@ -409,6 +440,16 @@ export async function refreshLivePass(
           now,
         );
         if (!item) continue;
+
+        // Populate extra metadata from InnerTube /player without Data API quota
+        if (stream.description !== null) item.description = stream.description;
+        if (stream.tags.length) item.tags = stream.tags;
+        if (stream.duration !== null) item.duration = stream.duration;
+        if (stream.viewCount !== null) item.viewCount = stream.viewCount;
+        if (stream.isPremiere && item.category === "live") {
+          item.category = "premiere";
+        }
+
         storeItem(itemById, item);
         result.youtubeLiveItemIds.add(item.id);
       }
@@ -588,8 +629,15 @@ export async function refreshLivePass(
     const current = new Set(streams.map((stream) => stream.id));
     result.multiPlatformFound += streams.length;
 
+    const ownerByLinkKey = new Map<string, Channel>();
+    for (const target of targets) {
+      if (target.link.id) ownerByLinkKey.set(target.link.id.toLowerCase(), target.channel);
+      if (target.link.handle) ownerByLinkKey.set(target.link.handle.toLowerCase(), target.channel);
+    }
+
     for (const stream of streams) {
-      const item = ctx.buildPlatformItem(stream, now);
+      const owner = ownerByLinkKey.get(String(stream.channelId ?? "").toLowerCase());
+      const item = ctx.buildPlatformItem(stream, now, owner);
       if (!item) continue;
       item.type = "live";
       item.status = stream.status ?? "live";

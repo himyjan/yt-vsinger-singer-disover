@@ -108,7 +108,7 @@ import {
   CACHE_DIR,
   paths,
   readJson,
-  mergeById,
+  mergeItemsById,
   acquireRunLock,
   writeJsonIfChanged,
   ROOT,
@@ -401,7 +401,7 @@ const nowIso = () => new Date().toISOString();
 function inShard(id: string, args: Args): boolean {
   return (
     args.shardCount <= 1 ||
-    volumeOf(id, args.shardCount) === args.shardIndex - 1
+    volumeOf(id, args.shardCount) === args.shardIndex
   );
 }
 
@@ -1620,6 +1620,9 @@ async function main(): Promise<void> {
     }
 
     for (const channel of roster) {
+      // Only roster entries belonging to this runner's volume.
+      if (!inShard(channel.id, args)) continue;
+
       const knownId =
         channelById.has(channel.id)
           ? channel.id
@@ -3485,7 +3488,14 @@ async function main(): Promise<void> {
     log(`bilibili: filled ${thumbnailsFilled} missing media thumbnail(s)`);
   }
 
-  channels = mergeById(existingChannels, channels);
+  channels = channels
+    .map((incoming) => {
+      const prev = existingChannels.find((c) => c.id === incoming.id);
+      if (!prev) return incoming;
+      // incoming is `target` (fresh data wins), prev is `other` (fills gaps & history)
+      return mergeChannels(incoming, prev);
+    })
+    .sort((a, b) => a.id.localeCompare(b.id));
 
   /**
    * Real artists keep their own platform link. For their externals, existing
@@ -3514,7 +3524,7 @@ async function main(): Promise<void> {
     }
   }
 
-  items = mergeById(existingItems, items).map((item) => ({
+  items = mergeItemsById(existingItems, items).map((item) => ({
     ...item,
     thumbnail: item.thumbnail ?? existingThumbnailById.get(item.id) ?? null,
   }));

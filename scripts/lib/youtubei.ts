@@ -143,6 +143,16 @@ export interface InnerTubeLive {
   id: string;
   /** The broadcast title. */
   title: string;
+  /** Full video description from videoDetails.shortDescription. */
+  description: string | null;
+  /** Video keywords/tags from videoDetails.keywords. */
+  tags: string[];
+  /** Duration in seconds (populated for premieres and finished VODs). */
+  duration: number | null;
+  /** Current view count snapshot. */
+  viewCount: number | null;
+  /** True when the broadcast is an active premiere (isLive && lengthSeconds > 0). */
+  isPremiere: boolean;
   /** The thumbnail URL. */
   thumbnail: string | null;
   /** Whether the broadcast is live now or scheduled. */
@@ -151,6 +161,8 @@ export interface InnerTubeLive {
   scheduledStart: string | null;
   /** When the broadcast actually began, for a live one. */
   actualStart?: string | null;
+  /** When the broadcast actually ended, if already finished. */
+  actualEnd?: string | null;
   /** True when the stream is members-only (channel membership required to watch). */
   isMember: boolean | null;
 }
@@ -495,7 +507,13 @@ export class InnerTubeSource {
   private readonly clientsByLang = new Map<string, any>();
   private readonly rssCachePath: string | null;
   private rssCache: Record<string, { etag?: string; lastModified?: string }> = {};
-  private rssStats = { hits304: 0, fetched200: 0 };
+  private rssStats = {
+    hits304: 0,
+    fetched200: 0,
+    notFound404: 0,
+    rateLimited429: 0,
+    errors: 0,
+  };
 
   constructor(options: InnerTubeOptions = {}) {
     this.enabled = options.enabled ?? true;
@@ -510,6 +528,13 @@ export class InnerTubeSource {
         this.rssCache = {};
       }
     }
+    this.rssStats = {
+      hits304: 0,
+      fetched200: 0,
+      notFound404: 0,
+      rateLimited429: 0,
+      errors: 0,
+    };
     this.limiter = new RateLimiter({
       minIntervalMs: this.delayMs,
       maxIntervalMs: 15_000,
@@ -1131,12 +1156,17 @@ export class InnerTubeSource {
 
       out.push({
         id: videoId,
-        title,
+        title: state.title || title,
+        description: state.description ?? null,
+        tags: state.tags,
+        duration: state.duration ?? null,
+        viewCount: state.viewCount ?? null,
+        isPremiere: state.isPremiere ?? false,
         thumbnail: null,
         status: state.isLive ? "live" : "upcoming",
-        scheduledStart:
-          state.isUpcoming ? (state.start ?? null) : null,
-        actualStart: state.isLive ? (state.start ?? null) : null,
+        scheduledStart: state.isUpcoming ? state.start : null,
+        actualStart: state.isLive ? state.start : null,
+        actualEnd: state.end ?? null,
         isMember: state.isMember ?? null,
       });
     }
@@ -1159,29 +1189,74 @@ export class InnerTubeSource {
     | null
   > {
     const url = `https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`;
-    try {
-      const res = await fetch(url, {
-        signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
-        headers: { Accept: "application/xml" },
-      });
-      if (!res.ok) return null;
-      const xml = await res.text();
+    const prev = this.rssCache[channelId];
+    const headers: Record<string, string> = {
+      Accept: "application/xml",
+      "User-Agent":
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+    };
+    if (prev?.etag) headers["If-None-Match"] = prev.etag;
+    if (prev?.lastModified) headers["If-Modified-Since"] = prev.lastModified;
 
-      const entries: { id: string; title: string; updated: string }[] = [];
-      const entryRegex =
-        /<entry>[\s\S]*?<yt:videoId>([^<]+)<\/yt:videoId>[\s\S]*?<title[^>]*>([^<]*)<\/title>[\s\S]*?<updated>([^<]+)<\/updated>[\s\S]*?<\/entry>/gi;
-      let match: RegExpExecArray | null;
-      while ((match = entryRegex.exec(xml)) !== null) {
-        entries.push({
-          id: match[1],
-          title: match[2] || "",
-          updated: match[3],
+    for (let attempt = 0; attempt < 2; attempt++) {
+      try {
+        const res = await fetch(url, {
+          signal: AbortSignal.timeout(10_000),
+          headers,
         });
+
+        if (res.status === 304) {
+          this.rssStats.hits304++;
+          return [];
+        }
+        if (res.status === 404) {
+          this.rssStats.notFound404++;
+          return []; // Deleted/terminated channel — no live streams
+        }
+        if (res.status === 429 || res.status >= 500) {
+          if (attempt === 0) {
+            await new Promise((r) => setTimeout(r, 1500));
+            continue;
+          }
+          if (res.status === 429) this.rssStats.rateLimited429++;
+          else this.rssStats.errors++;
+          return null;
+        }
+        if (!res.ok) {
+          this.rssStats.errors++;
+          return null;
+        }
+
+        this.rssStats.fetched200++;
+        const etag = res.headers.get("etag") ?? undefined;
+        const lastModified = res.headers.get("last-modified") ?? undefined;
+        if (etag || lastModified) {
+          this.rssCache[channelId] = { etag, lastModified };
+        }
+
+        const xml = await res.text();
+        const entries: { id: string; title: string; updated: string }[] = [];
+        const entryRegex =
+          /<entry>[\s\S]*?<yt:videoId>([^<]+)<\/yt:videoId>[\s\S]*?<title[^>]*>([^<]*)<\/title>[\s\S]*?<updated>([^<]+)<\/updated>[\s\S]*?<\/entry>/gi;
+        let match: RegExpExecArray | null;
+        while ((match = entryRegex.exec(xml)) !== null) {
+          entries.push({
+            id: match[1]!,
+            title: match[2] || "",
+            updated: match[3]!,
+          });
+        }
+        return entries;
+      } catch {
+        if (attempt === 0) {
+          await new Promise((r) => setTimeout(r, 1000));
+          continue;
+        }
+        this.rssStats.errors++;
+        return null;
       }
-      return entries;
-    } catch {
-      return null;
     }
+    return null;
   }
 
   /**
@@ -1194,9 +1269,17 @@ export class InnerTubeSource {
   public async checkPlayerState(
     videoId: string,
   ): Promise<{
+    title: string;
+    description: string | null;
+    tags: string[];
+    duration: number | null;
+    viewCount: number | null;
+    isPremiere: boolean;
     isLive: boolean;
     isUpcoming: boolean;
     start: string | null;
+    end: string | null;
+    publishDate: string | null;
     isMember: boolean | null;
   } | null> {
     if (!this.client) return null;
@@ -1208,10 +1291,12 @@ export class InnerTubeSource {
       );
       const basic = info?.basic_info;
       if (!basic) return null;
-      const start = basic.start_timestamp;
       const playability = basic?.playabilityStatus ?? {};
       const reason = String(playability?.reason ?? "").toLowerCase();
       const status = String(playability?.status ?? "").toUpperCase();
+      const start = basic.start_timestamp;
+      const liveBroadcast = basic?.liveBroadcastDetails ?? {};
+      const details = basic?.videoDetails ?? {};
       const isMember =
         basic?.isMember === true ||
         basic?.videoDetails?.isMember === true ||
@@ -1220,16 +1305,58 @@ export class InnerTubeSource {
         status === "MEMBERS_ONLY"
           ? true
           : null;
-      const isLive =
-        basic?.isLive === true ||
-        playability?.isLive === true ||
-        status === "LIVE";
-      const isUpcoming =
-        basic?.isUpcoming === true ||
-        playability?.isUpcoming === true ||
-        status === "UPCOMING" ||
-        (basic?.start_timestamp && status === "UPCOMING");
-      return { isLive, isUpcoming, start, isMember };
+      const isLive = Boolean(
+        basic?.isLive || playability?.isLive || status === "LIVE",
+      );
+      const isUpcoming = Boolean(
+        basic?.isUpcoming ||
+          playability?.isUpcoming ||
+          status === "UPCOMING" ||
+          (basic.start_timestamp && status === "UPCOMING"),
+      );
+      const rawLength = Number(details.lengthSeconds);
+      const duration =
+        Number.isFinite(rawLength) && rawLength > 0 ? rawLength : null;
+      const isPremiere = isLive && duration !== null;
+      const rawViews = Number(details.viewCount);
+      const viewCount =
+        Number.isFinite(rawViews) && rawViews >= 0 ? rawViews : null;
+      const startTimestamp =
+        typeof liveBroadcast.startTimestamp === "string" &&
+        liveBroadcast.startTimestamp
+          ? new Date(liveBroadcast.startTimestamp).toISOString()
+          : null;
+      const endTimestamp =
+        typeof liveBroadcast.endTimestamp === "string" &&
+        liveBroadcast.endTimestamp
+          ? new Date(liveBroadcast.endTimestamp).toISOString()
+          : null;
+      const publishDate =
+        typeof basic.publishDate === "string" && basic.publishDate
+          ? new Date(basic.publishDate).toISOString()
+          : null;
+      return {
+        title: typeof details.title === "string" ? details.title : "",
+        description:
+          typeof details.shortDescription === "string" &&
+          details.shortDescription.trim()
+            ? details.shortDescription.trim().slice(0, 600)
+            : null,
+        tags: Array.isArray(details.keywords)
+          ? details.keywords
+              .filter((k: unknown): k is string => typeof k === "string")
+              .slice(0, 25)
+          : [],
+        duration,
+        viewCount,
+        isPremiere,
+        isLive,
+        isUpcoming,
+        start: startTimestamp,
+        end: endTimestamp,
+        publishDate,
+        isMember,
+      };
     } catch (err) {
       const message = (err as Error).message;
       if (!isNotRateLimited(message)) this.limiter.penalise();

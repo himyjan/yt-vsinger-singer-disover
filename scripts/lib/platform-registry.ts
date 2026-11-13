@@ -277,17 +277,26 @@ class TwitchAdapter implements PlatformAdapter {
       streams.push(...(await this.client.streams(chunk)));
     }
     for (let i = 0; i < byLogin.length; i += BATCH_SIZE) {
-      const chunk = byLogin.slice(i, i + BATCH_SIZE).map((c) => c.id);
+      const chunk = byLogin
+        .slice(i, i + BATCH_SIZE)
+        .map((c) => (c.handle ?? c.id).replace(/^@+/, "").toLowerCase())
+        .filter(Boolean);
       streams.push(...(await this.client.streamsByLogin(chunk)));
     }
 
-    const byStreamId = new Map<string, PlatformChannel>();
-    for (const channel of channels) byStreamId.set(channel.id, channel);
+    const byKey = new Map<string, PlatformChannel>();
+    for (const channel of channels) {
+      if (channel.id) byKey.set(channel.id.toLowerCase(), channel);
+      if (channel.handle) byKey.set(channel.handle.toLowerCase(), channel);
+    }
 
     const out: PlatformUpload[] = [];
     for (const stream of streams) {
-      const owner = byStreamId.get(stream.user_id ?? "");
+      const owner =
+        byKey.get(String(stream.user_id ?? "").toLowerCase()) ??
+        byKey.get(String(stream.user_login ?? "").toLowerCase());
       if (!owner) continue;
+      const login = stream.user_login ?? owner.handle ?? owner.id;
       out.push({
         platform: "twitch" as PlatformId,
         id: stream.id,
@@ -305,7 +314,7 @@ class TwitchAdapter implements PlatformAdapter {
         songTitle: null,
         originalArtist: null,
         viewCount: stream.viewer_count ?? null,
-        url: `https://www.twitch.tv/${owner.handle}`,
+        url: `https://twitch.tv/${login}`,
       });
     }
     return out;

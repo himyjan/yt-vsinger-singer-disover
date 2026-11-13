@@ -175,9 +175,9 @@ function main(): void {
         regionCounts.set(region.code, { channels: region.channels, items: region.items });
       }
     } else {
-      // Start with existing items counts so an empty itemList doesn't zero them out.
+      // Channels come entirely from volume shards — start at 0, count from channelList.
       for (const region of manifest.regions ?? []) {
-        regionCounts.set(region.code, { channels: region.channels, items: region.items });
+        regionCounts.set(region.code, { channels: 0, items: region.items });
       }
       for (const channel of channelList) {
         const entry = regionCounts.get(channel.region) ?? { channels: 0, items: 0 };
