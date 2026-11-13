@@ -176,17 +176,28 @@ jobs:
             --rss-cache ".cache/rss-etags-vol-${{ matrix.job }}.json"
           )
           if [ "${DRY_RUN:-false}" = "true" ]; then ARGS+=(--dry-run); fi
-          VOL_DIR=".volumes/vol-${{ matrix.job }}/data"
-          mv data data-full
-          ln -s "$VOL_DIR" data
+
+          # Swap real directories (no symlinks) so Node path resolution
+          # always writes to data/items/, and upload-artifact can find them.
+          rm -rf data
+          mv ".volumes/vol-${{ matrix.job }}/data" data
+
           npx oxnode scripts/sync.ts -- "${ARGS[@]}"
-          rm -f data
-          mv data-full data
+
+          # Copy written items to a clean staging directory for upload-artifact.
+          # Symlinks break Node's path.resolve() and upload-artifact, so we copy
+          # to a real directory before uploading.
+          mkdir -p data/items
+          mkdir -p .artifact-items
+          cp -R data/items/. .artifact-items/
+          echo "Staged item files:"
+          find .artifact-items -type f | wc -l
+
       - name: Upload volume artifacts
         uses: actions/upload-artifact@v7
         with:
           name: vol-${{ matrix.job }}
-          path: .volumes/vol-${{ matrix.job }}/data/items/
+          path: .artifact-items/
           retention-days: 1
 
   merge-and-commit:
