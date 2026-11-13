@@ -506,7 +506,10 @@ export class InnerTubeSource {
    */
   private readonly clientsByLang = new Map<string, any>();
   private readonly rssCachePath: string | null;
-  private rssCache: Record<string, { etag?: string; lastModified?: string }> = {};
+  private rssCache: Record<
+    string,
+    { etag?: string; lastModified?: string; notFoundUntil?: number }
+  > = {};
   private rssStats = {
     hits304: 0,
     fetched200: 0,
@@ -1190,8 +1193,25 @@ export class InnerTubeSource {
     | { id: string; title: string; updated: string }[]
     | null
   > {
+    // YouTube RSS only works with a real UC... channel ID.
+    // Skip @handle, youtube:user-..., UC.../featured, or any non-UC ID
+    // immediately — they always return HTTP 404.
+    if (!/^UC[\w-]{22}$/.test(channelId)) {
+      this.rssStats.notFound404++;
+      return [];
+    }
+
     const url = `https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`;
     const prev = this.rssCache[channelId];
+    // Skip channels that returned 404 within the last 7 days — they are
+    // dead/terminated and will never come back.
+    if (
+      prev?.notFoundUntil &&
+      Date.now() < prev.notFoundUntil
+    ) {
+      this.rssStats.notFound404++;
+      return [];
+    }
     const headers: Record<string, string> = {
       Accept: "application/xml",
       "User-Agent":
@@ -1213,6 +1233,10 @@ export class InnerTubeSource {
         }
         if (res.status === 404) {
           this.rssStats.notFound404++;
+          this.rssCache[channelId] = {
+            ...prev,
+            notFoundUntil: Date.now() + 7 * 24 * 60 * 60 * 1000,
+          };
           return []; // Deleted/terminated channel — no live streams
         }
         if (res.status === 429 || res.status >= 500) {
