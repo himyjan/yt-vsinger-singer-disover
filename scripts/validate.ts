@@ -56,7 +56,7 @@ function validateManifest(): Manifest | null {
   );
   check(
     typeof manifest.generatedAt === "string" &&
-      !Number.isNaN(Date.parse(manifest.generatedAt)),
+    !Number.isNaN(Date.parse(manifest.generatedAt)),
     "manifest.generatedAt is not a valid ISO timestamp",
   );
   check(
@@ -204,8 +204,8 @@ function validateChannelLayout(): void {
   if (extra.length) {
     fail(
       `${extra.length} channel shard(s) are not in the manifest — run \`npm run data:sync\`: ` +
-        extra.slice(0, 5).join(", ") +
-        (extra.length > 5 ? `, … ${extra.length - 5} more` : ""),
+      extra.slice(0, 5).join(", ") +
+      (extra.length > 5 ? `, … ${extra.length - 5} more` : ""),
     );
   }
   for (const key of declared.keys()) {
@@ -368,11 +368,13 @@ function validateSizes(): void {
   };
   walk(DATA_DIR);
 
-  // GitHub refuses pushes above ~2 GB; measure what git actually tracks.
+  // GitHub refuses pushes above ~2 GB; recommends staying under 1 GB; documents
+  // 10 GB of .git as its maximum. Tracked repo size is what GitHub actually
+  // stores, so measure that.
   const tracked = trackedRepoSize();
-  if (tracked > 900 * 1024 * 1024) {
+  if (tracked > 6.6 * 1024 * 1024 * 1024) {
     warn(
-      `tracked repository content is ${formatBytes(tracked)} — GitHub recommends staying under 1 GB (10 GB of .git is its documented maximum). Consider Git LFS for binaries.`,
+      `tracked repository content is ${formatBytes(tracked)} — GitHub recommends staying under 1 GB (10 GB of .git is its Gihub documented maximum repo size). Consider Git LFS for binaries.`,
     );
   }
 }
