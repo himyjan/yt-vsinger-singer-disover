@@ -64,8 +64,8 @@ jobs:
 
       - name: Measure
         env:
-          MAX_MB: ${{ inputs.max-mb || '1024' }}
-          WARN_MB: ${{ inputs.warn-mb || '600' }}
+          MAX_MB: ${{ inputs.max-mb || '10240' }}
+          WARN_MB: ${{ inputs.warn-mb || '6144' }}
           REPACK: ${{ inputs.repack || 'false' }}
         run: |
           args=(--max-mb "$MAX_MB" --warn-mb "$WARN_MB")

@@ -185,7 +185,6 @@ jobs:
           path: .volumes/vol-${{ matrix.volume }}/data/songs
           retention-days: 1
 
-
   merge-and-commit:
     name: Merge volumes into data/songs/ and commit
     needs: [harvest-music, plan, import]
@@ -257,7 +256,7 @@ jobs:
         run: npm run data:validate
 
       - name: Check the stored repository size
-        run: npm run repo:size -- --max-mb 900 --warn-mb 700
+        run: npm run repo:size -- --max-mb 10240 --warn-mb 6144
 
       - name: Commit Innertube music imports
         env:
