@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-11-05T13:18:25.417Z",
+  "sources": [
+    {
+      "id": "vdb",
+      "label": "vdb — the Virtual YouTuber Name List Database",
+      "sha": "f12b74fdaf87866f870bda8de9bd1c7d27de8cbd",
+      "committedAt": "2026-11-04T09:16:39Z",
+      "message": "Merge pull request #26786 from dd-center/submit-26785",
+      "checkedAt": "2026-11-05T13:18:25.417Z"
+    },
+    {
+      "id": "taiwan-tracker",
+      "label": "Taiwan VTuber Tracking Data",
+      "sha": "573ccf1806dde0459cc01fab0fb38818cac3eb07",
+      "committedAt": "2026-11-05T12:46:31Z",
+      "message": "Automatic update at 2026/11/05 20:46",
+      "checkedAt": "2026-11-05T13:18:25.417Z"
+    },
+    {
+      "id": "music-dataset",
+      "label": "VTuber Music Dataset",
+      "sha": "8fa1ef8c1ab54cfd0ef858b3942ac8acee5863b1",
+      "committedAt": "2022-06-23T16:05:50Z",
+      "message": "Merge pull request #2 from meihei3/dependabot/pip/httplib2-0.19.0",
+      "checkedAt": "2026-11-05T13:18:25.417Z"
+    }
+  ]
+}
