@@ -293,6 +293,8 @@ export async function refreshLivePass(
           const index = rssCursor++;
           if (index >= liveTargets.length) return;
           const channel = liveTargets[index]!;
+          const ytLink = channel.platforms.find((p) => p.platform === "youtube");
+          const ytChannelId = ytLink?.id ?? channel.id;
 
           // Previously live/upcoming streams are always candidates so they
           // can be re-verified (24/7 streams, early-scheduled premieres).
@@ -305,7 +307,7 @@ export async function refreshLivePass(
             activeItems.map((item) => item.id),
           );
 
-          const recent = await innertube.fetchRSS(channel.id);
+          const recent = await innertube.fetchRSS(ytChannelId);
           if (recent === null && activeVideoIds.size === 0) {
             rssFailedChannelIds.add(channel.id);
             continue;
