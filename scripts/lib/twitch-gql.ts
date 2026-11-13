@@ -167,6 +167,74 @@ export class TwitchGqlSource {
     const user = data?.user;
     if (!user?.id) return null;
 
+    return this.parseProfile(user);
+  }
+
+  /**
+   * Profiles for many channels in one GQL request.
+   *
+   * Twitch's GQL endpoint accepts an array of operations in one POST, so
+   * this batches up to `maxBatch` channels per request instead of one
+   * HTTP call per channel.
+   */
+  async profileMany(
+    loginOrIds: string[],
+    maxBatch = 50,
+  ): Promise<(TwitchProfile | null)[]> {
+    if (!loginOrIds.length) return [];
+
+    const queries = loginOrIds.map((loginOrId) => {
+      const isId = /^\d+$/.test(loginOrId);
+      const field = isId ? "id" : "login";
+      const value = isId ? `"${loginOrId}"` : `"${loginOrId.replace(/"/g, "")}"`;
+      return `query { user(${field}: ${value}) { id login displayName description profileImageURL(width: 200) followers { totalCount } stream { id title viewersCount game { displayName } } } }`;
+    });
+
+    const results: (TwitchProfile | null)[] = [];
+    for (let i = 0; i < queries.length; i += maxBatch) {
+      const chunk = queries.slice(i, i + maxBatch);
+      const data = await this.queryMany<{
+        user: {
+          id: string;
+          login?: string;
+          displayName?: string;
+          description?: string;
+          profileImageURL?: string | null;
+          followers?: { totalCount?: number } | null;
+          stream?: {
+            id: string;
+            title?: string;
+            viewersCount?: number;
+            game?: { displayName?: string } | null;
+          } | null;
+        } | null;
+      }>(chunk);
+      for (const entry of data) {
+        const user = entry?.user;
+        if (!user?.id) {
+          results.push(null);
+        } else {
+          results.push(this.parseProfile(user));
+        }
+      }
+    }
+    return results;
+  }
+
+  private parseProfile(user: {
+    id: string;
+    login?: string | null;
+    displayName?: string | null;
+    description?: string | null;
+    profileImageURL?: string | null;
+    followers?: { totalCount?: number } | null;
+    stream?: {
+      id: string;
+      title?: string | null;
+      viewersCount?: number | null;
+      game?: { displayName?: string | null } | null;
+    } | null;
+  }): TwitchProfile {
     return {
       id: user.id,
       login: user.login ?? null,
@@ -183,6 +251,55 @@ export class TwitchGqlSource {
           }
         : null,
     };
+  }
+
+  private async queryMany<T>(body: string[]): Promise<T[]> {
+    try {
+      await this.throttle();
+      const res = await fetch(GQL, {
+        signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
+        method: "POST",
+        headers: {
+          "Client-Id": this.clientId,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body.map((q) => ({ query: q }))),
+      });
+      if (!res.ok) {
+        this.limiter.penalise();
+        this.onLog(
+          `twitch gql batch failed: HTTP ${res.status}`,
+        );
+        return body.map(() => null as unknown as T);
+      }
+      const json = (await res.json()) as Array<{
+        data?: T;
+        errors?: { message: string }[];
+      }>;
+      // GraphQL can return non-fatal errors alongside valid data (e.g.
+      // a field-level error on profileImageURL doesn't invalidate the
+      // whole response). Only treat an entry as failed if it has no data.
+      const results: T[] = [];
+      for (const entry of json) {
+        if (entry?.data) {
+          results.push(entry.data);
+        } else if (entry?.errors?.length) {
+          this.limiter.penalise();
+          this.onLog(
+            `twitch gql batch: ${entry.errors[0]?.message ?? "error"}`,
+          );
+          results.push(null as unknown as T);
+        } else {
+          results.push(null as unknown as T);
+        }
+      }
+      this.limiter.reward();
+      return results;
+    } catch (err) {
+      this.limiter.penalise();
+      this.onLog(`twitch gql batch: ${(err as Error).message}`);
+      return body.map(() => null as unknown as T);
+    }
   }
 
   /**
