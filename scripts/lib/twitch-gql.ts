@@ -179,7 +179,7 @@ export class TwitchGqlSource {
    */
   async profileMany(
     loginOrIds: string[],
-    maxBatch = 50,
+    maxBatch = 30, // Twitch GQL rejects batches > 35 queries
   ): Promise<(TwitchProfile | null)[]> {
     if (!loginOrIds.length) return [];
 
