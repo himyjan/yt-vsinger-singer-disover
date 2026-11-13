@@ -149,7 +149,7 @@ jobs:
         # volumes alone, so a re-run in the same checkout is idempotent.
         run: npm run data:volumes -- --count ${{ needs.plan.outputs.job_count }} --only ${{ matrix.job }}
       - name: Cache RSS ETags for volume ${{ matrix.job }}
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: .cache/rss-etags-vol-${{ matrix.job }}.json
           key: rss-etags-vol-${{ matrix.job }}-${{ github.run_id }}
