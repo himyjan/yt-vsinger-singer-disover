@@ -515,6 +515,8 @@ function needsStableId(channel: Channel): boolean {
   // A tab in the id means it was built from a URL, not a channel.
   if (channel.id.includes("/") || (link.id ?? "").includes("/")) return true;
   if (link.id && !link.id.startsWith("UC")) return true;
+  // channel.id itself may be a handle (@someone) rather than UC…
+  if (!channel.id.startsWith("UC")) return true;
   const bare = channel.id.replace(/^youtube:(user-)?/, "");
   return channel.id !== bare && !bare.startsWith("UC");
 }
