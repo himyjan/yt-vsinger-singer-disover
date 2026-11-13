@@ -117,7 +117,6 @@ import {
   layout,
   writeDataset,
   writeItemShards,
-  writeChannelShards,
   describeDatasetSize,
   readAllChannelRecords,
 } from "./lib/dataset";
@@ -195,6 +194,11 @@ interface Args {
    * and enough of them push a volume past the job timeout.
    */
   liveTimeoutMs: number | null;
+  /**
+   * Optional JSON file path to persist RSS ETag / Last-Modified headers
+   * for 304 Not Modified on unchanged channel feeds.
+   */
+  rssCachePath: string | null;
   keywords: string[];
   force: boolean;
   /**
@@ -224,6 +228,7 @@ function parseArgs(argv: string[]): Args {
     liveConcurrency: 4,
     innertubeDelayMs: null,
     liveTimeoutMs: null,
+    rssCachePath: null,
     keywords: [],
     force: false,
     shardIndex: 0,
@@ -249,6 +254,7 @@ function parseArgs(argv: string[]): Args {
       args.innertubeDelayMs = Math.max(0, Number(argv[++i]) || 0);
     else if (a === "--live-timeout")
       args.liveTimeoutMs = Math.max(1000, Number(argv[++i]) || 10_000);
+    else if (a === "--rss-cache") args.rssCachePath = argv[++i] ?? null;
     else if (a === "--limit-multi-platform-live") args.limitMultiPlatformLive = Number(argv[++i]);
     else if (a === "--keyword") args.keywords.push(argv[++i]);
     else if (a === "--shard") {
@@ -888,6 +894,7 @@ async function runLiveOnly(opts: {
   if (args.dryRun) {
     log("dry run — nothing written");
     printSummary(manifest, channels, updated);
+    innertube.saveRssCache();
     releaseLock();
     return;
   }
@@ -907,6 +914,7 @@ async function runLiveOnly(opts: {
       `live/upcoming, ${result.youtubeRetired} retired`,
   );
   printSummary(manifest, channels, updated);
+  innertube.saveRssCache();
   releaseLock();
 }
 
@@ -984,6 +992,7 @@ async function main(): Promise<void> {
   const innertube = new InnerTubeSource({
     enabled: process.env.YOUTUBE_USE_INNERTUBE !== "0",
     delayMs: args.innertubeDelayMs ?? config.innertubeDelayMs,
+    rssCachePath: args.rssCachePath ?? undefined,
     onLog: (m) => log(m),
   });
   await innertube.connect();
@@ -1144,7 +1153,6 @@ async function main(): Promise<void> {
       budget,
       releaseLock,
     });
-    writeChannelShards(channels, now, 'data');
     return;
   }
 

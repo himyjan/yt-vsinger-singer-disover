@@ -3,21 +3,21 @@ name: Live status
 # Refreshes who is streaming right now, on every platform, and nothing else.
 #
 # The catalogue is split into volumes (`npm run data:volumes -- --count N`),
-# ~1250 channels each. **N jobs run in parallel, one volume each**: a volume is
-# ~5 minutes of checks, and the whole catalogue in one job would be ~13 h —
-# more than the 6 h a GitHub job may run. Each job writes only its own volume's
-# item files, which travel back as artifacts; one fan-in job merges, rebuilds
-# the index, validates and commits once.
+# ~10,000 channels each. **N jobs run in parallel, one volume each**: with
+# RSS + ETag pre-filtering and InnerTube /player $fields masks, each volume
+# finishes in ~30–60 seconds. Each job writes only its own volume's item files,
+# which travel back as artifacts; one fan-in job merges, rebuilds the index,
+# validates and commits once.
 #
-# The split count is dynamic: `ceil(total_channels / 1250)`. Each job processes
-# one shard of ~1250 channels, so every channel is checked exactly once per run.
+# The split count is dynamic: `ceil(total_channels / 10000)`. Each job processes
+# one volume of ~10,000 channels, so every channel is checked once per run.
 # Do not hard-code the volume count — it depends on catalogue size.
 #
 # `--live-only` writes only item files — no channel records change.
 
 on:
   schedule:
-    - cron: "7 */2 * * *"
+    - cron: "*/30 * * * *"
   workflow_dispatch:
     inputs:
       dry-run:
@@ -98,20 +98,20 @@ jobs:
           ")
           echo "Raw TOTAL output: '$TOTAL'"
           TOTAL="${TOTAL:=0}"
-          JOB_COUNT=$(( (TOTAL + 1249) / 1250 ))
+          JOB_COUNT=$(( (TOTAL + 9999) / 10000 ))
           if [ "$JOB_COUNT" -lt 1 ]; then JOB_COUNT=1; fi
           MATRIX=$(node -e "console.log(JSON.stringify(Array.from({length:$JOB_COUNT},(_,i)=>i)))")
           echo "Total channels: $TOTAL"
-          echo "Live jobs: $JOB_COUNT (limit 1250 per job)"
+          echo "Live jobs: $JOB_COUNT (limit 10000 per job)"
           echo "job_count=$JOB_COUNT" >> "$GITHUB_OUTPUT"
           echo "matrix=$MATRIX" >> "$GITHUB_OUTPUT"
   process-volumes:
     name: Process live status for volume ${{ matrix.job }}
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 30
     needs: plan
     strategy:
-      # Dynamic job count: ceil(total_channels / 1250). One job per shard,
+      # Dynamic job count: ceil(total_channels / 10000). One job per shard,
       # all at once. `max-parallel` is the cap on simultaneous jobs, and 20
       # is GitHub's ceiling for a public repository — exactly enough for one
       # job per volume.
@@ -148,6 +148,13 @@ jobs:
         # has to be copied in afterwards. A `--only N` also leaves the other
         # volumes alone, so a re-run in the same checkout is idempotent.
         run: npm run data:volumes -- --count ${{ needs.plan.outputs.job_count }} --only ${{ matrix.job }}
+      - name: Cache RSS ETags for volume ${{ matrix.job }}
+        uses: actions/cache@v6
+        with:
+          path: .cache/rss-etags-vol-${{ matrix.job }}.json
+          key: rss-etags-vol-${{ matrix.job }}-${{ github.run_id }}
+          restore-keys: |
+            rss-etags-vol-${{ matrix.job }}-
       - name: Process volume ${{ matrix.job }}
         env:
           DRY_RUN: ${{ inputs.dry-run }}
@@ -157,19 +164,22 @@ jobs:
           CI_ME_CLIENT_ID: ${{ secrets.CI_ME_CLIENT_ID }}
           CI_ME_CLIENT_SECRET: ${{ secrets.CI_ME_CLIENT_SECRET }}
         run: |
-          # Each volume has ~1250 YouTube channels. At 250ms delay per
-          # request with ~2-4 requests per channel, processing all 1,500 can
-          # approach the 60-minute job timeout. Process ~1,500 channels per
-          # job so each completes well within the limit; remaining channels
-          # are picked up next run.
-          JOB_COUNT=${{ needs.plan.outputs.job_count }}
-          SHARD_INDEX=$(( ${{ matrix.job }} + 1 ))
-          ARGS=(--live-only --limit-live 1250 --limit-multi-platform-live 300 --live-concurrency 12 --innertube-delay 250 --live-timeout 10000)
+          # VOL_DIR already holds only this shard's 1/N slice of channels,
+          # so --shard is omitted to avoid double-filtering.
+          ARGS=(
+            --live-only
+            --limit-live 10000
+            --limit-multi-platform-live 2500
+            --live-concurrency 16
+            --innertube-delay 30
+            --live-timeout 8000
+            --rss-cache ".cache/rss-etags-vol-${{ matrix.job }}.json"
+          )
           if [ "${DRY_RUN:-false}" = "true" ]; then ARGS+=(--dry-run); fi
           VOL_DIR=".volumes/vol-${{ matrix.job }}/data"
           mv data data-full
           ln -s "$VOL_DIR" data
-          npx oxnode scripts/sync.ts -- --shard "${SHARD_INDEX}/${JOB_COUNT}" "${ARGS[@]}"
+          npx oxnode scripts/sync.ts -- "${ARGS[@]}"
           rm -f data
           mv data-full data
       - name: Upload volume artifacts
