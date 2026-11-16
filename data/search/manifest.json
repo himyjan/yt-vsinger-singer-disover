@@ -1,72 +1,72 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-16T19:40:18.218Z",
+  "generatedAt": "2026-11-16T22:38:12.861Z",
   "regions": [
     {
       "code": "jp",
       "shard": 0,
-      "entries": 6471,
-      "bytes": 3706172
+      "entries": 6462,
+      "bytes": 3707344
     },
     {
       "code": "jp",
       "shard": 1,
-      "entries": 6471,
-      "bytes": 4224840
+      "entries": 6462,
+      "bytes": 4231908
     },
     {
       "code": "jp",
       "shard": 2,
-      "entries": 6469,
-      "bytes": 6672972
+      "entries": 6460,
+      "bytes": 6664952
     },
     {
       "code": "cn",
       "shard": 0,
-      "entries": 8864,
-      "bytes": 4162396
+      "entries": 8872,
+      "bytes": 4164776
     },
     {
       "code": "tw",
       "shard": 0,
-      "entries": 6127,
-      "bytes": 4401568
+      "entries": 6130,
+      "bytes": 4401844
     },
     {
       "code": "hk",
       "shard": 0,
-      "entries": 1050,
-      "bytes": 823005
+      "entries": 1049,
+      "bytes": 823755
     },
     {
       "code": "kr",
       "shard": 0,
-      "entries": 445,
-      "bytes": 253429
+      "entries": 443,
+      "bytes": 252060
     },
     {
       "code": "en",
       "shard": 0,
-      "entries": 10715,
-      "bytes": 4636329
+      "entries": 10716,
+      "bytes": 4660133
     },
     {
       "code": "en",
       "shard": 1,
-      "entries": 10715,
-      "bytes": 4624524
+      "entries": 10716,
+      "bytes": 4648076
     },
     {
       "code": "en",
       "shard": 2,
-      "entries": 10715,
-      "bytes": 4635352
+      "entries": 10716,
+      "bytes": 4658423
     },
     {
       "code": "en",
       "shard": 3,
-      "entries": 10715,
-      "bytes": 5587638
+      "entries": 10714,
+      "bytes": 5611139
     },
     {
       "code": "id",
@@ -84,14 +84,14 @@
       "code": "sea",
       "shard": 0,
       "entries": 2338,
-      "bytes": 1171441
+      "bytes": 1171440
     },
     {
       "code": "unknown",
       "shard": 0,
-      "entries": 6976,
-      "bytes": 3188651
+      "entries": 6982,
+      "bytes": 3192087
     }
   ],
-  "total": 90212
+  "total": 90201
 }
