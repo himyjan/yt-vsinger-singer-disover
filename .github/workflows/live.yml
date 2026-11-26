@@ -187,19 +187,19 @@ jobs:
           # Copy written items to a clean staging directory for upload-artifact.
           # Symlinks break Node's path.resolve() and upload-artifact, so we copy
           # to a real directory before uploading. Use a non-dot directory name
-          # (artifact-items) so upload-artifact@v7 does not ignore it
+          # (item-shards) so upload-artifact@v7 does not ignore it
           # (include-hidden-files defaults to false).
           mkdir -p data/items
-          mkdir -p artifact-items
-          cp -R data/items/. artifact-items/
+          mkdir -p item-shards
+          cp -R data/items/. item-shards/
           echo "Staged item files:"
-          find artifact-items -type f | wc -l
+          find item-shards -type f | wc -l
 
       - name: Upload volume artifacts
         uses: actions/upload-artifact@v7
         with:
           name: vol-${{ matrix.job }}
-          path: artifact-items
+          path: item-shards
           if-no-files-found: error
           retention-days: 1
 
