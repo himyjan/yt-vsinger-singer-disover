@@ -170,9 +170,9 @@ jobs:
             --live-only
             --limit-live 10000
             --limit-multi-platform-live 2500
-            --live-concurrency 16
-            --innertube-delay 30
-            --live-timeout 8000
+            --live-concurrency 8
+            --innertube-delay 2000
+            --live-timeout 30000
             --rss-cache ".cache/rss-etags-vol-${{ matrix.job }}.json"
           )
           if [ "${DRY_RUN:-false}" = "true" ]; then ARGS+=(--dry-run); fi
