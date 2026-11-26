@@ -227,7 +227,12 @@ function isNotRateLimited(message: string): boolean {
   // because checkPlayerState never rewarded success the interval stuck at
   // 15s for the rest of the run — leaving orphaned player checks queued
   // long after the pass had finished.
-  return /does not exist|not found|404|removed|terminated|status code 400|unavailable|unplayable|private|存在しません|削除されました|停止しました|利用できません|不存在|已被删除|已删除|不存在该用户|존재하지 않습니다|삭제되었습니다/i.test(
+  // An HTTP 403 from the player endpoint means THIS video is not playable by
+  // the client (age / members / region gate, or a stale token for that video)
+  // — it is not a rate limit. Only 429/412/503 are (see detectRateLimit).
+  // Penalising the shared limiter for scattered 403s doubled it to 15 s and,
+  // with no successes to reward(), left all later checks crawling at 15 s.
+  return /does not exist|not found|404|removed|terminated|status code 400|status code 403|status code 410|unavailable|unplayable|private|存在しません|削除されました|停止しました|利用できません|不存在|已被删除|已删除|不存在该用户|존재하지 않습니다|삭제되었습니다/i.test(
     message,
   );
 }
