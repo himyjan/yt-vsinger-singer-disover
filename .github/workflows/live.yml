@@ -171,7 +171,7 @@ jobs:
             --limit-live 10000
             --limit-multi-platform-live 2500
             --live-concurrency 16
-            --innertube-delay 30
+            --innertube-delay 250
             --live-timeout 8000
             --rss-cache ".cache/rss-etags-vol-${{ matrix.job }}.json"
           )
