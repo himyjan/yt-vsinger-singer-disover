@@ -255,28 +255,27 @@ jobs:
           merge-multiple: false
       - name: Copy downloaded items into volume dirs
         run: |
-          ls -la downloads || true
+          echo "=== Downloads directory contents ==="
+          ls -la downloads/ 2>/dev/null || echo "downloads directory does not exist"
           JOB_COUNT=${{ needs.plan.outputs.job_count }}
           missing=0
           for v in $(seq 0 $((JOB_COUNT - 1))); do
             SRC="downloads/vol-$v"
             DST=".volumes/vol-$v/data/items"
             if [ ! -d "$SRC" ]; then
-              echo "::error::artifact vol-$v is missing"
+              echo "::error::artifact vol-$v is missing at $SRC"
+              echo "Contents of downloads/:"
+              ls -la downloads/ 2>/dev/null || echo "downloads directory does not exist"
               missing=$((missing + 1))
               continue
             fi
+            echo "Contents of vol-$v:"
+            ls -la "$SRC" || true
             mkdir -p "$DST"
-            # `items/` holds region subdirectories (`en/00.json`, `jp/00.json`),
-            # so the tree has to be copied as a tree. Flattening it with
-            # `cp "$f" "$DST/"` made every region's `00.json` the same file.
             cp -R "$SRC"/. "$DST"/
             rm -f "$DST/keep.txt"
             echo "restored items for vol-$v ($(find "$DST" -type f | wc -l) files)"
           done
-          # A volume that produced no artifact means the sweep is partial; the
-          # merge would then write the *old* data for that volume and look
-          # like a successful run.
           if [ "$missing" -gt 0 ]; then
             echo "::error::$missing volume artifact(s) missing — refusing to merge a partial sweep"
             exit 1
