@@ -312,7 +312,11 @@ export function writeItemShards(
 
       for (let index = 0; index < chunks.length; index++) {
         const name = index === 0 ? bucket : `${bucket}.${index}`;
-        writeJsonIfChanged(l.itemsRegion(region, `${name}.json`), {
+        // itemsRegion() appends `.json` itself — passing `${name}.json` would
+        // write `00.json.json`, which pruneStale() then deletes because its
+        // keep set holds `00.json`. That left a manifest naming shards that
+        // did not exist, so no region items ever reached the dataset.
+        writeJsonIfChanged(l.itemsRegion(region, name), {
           schemaVersion: SCHEMA_VERSION,
           generatedAt: now,
           items: chunks[index],
