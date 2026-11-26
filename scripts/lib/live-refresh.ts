@@ -379,10 +379,20 @@ export async function refreshLivePass(
           const channel = channelsToVerify[index]!;
           const videos = candidatesByChannelId.get(channel.id) ?? [];
 
+          // A timed-out check must STOP issuing requests, not keep running in
+          // the background. Promise.race does not cancel the losing promise,
+          // so without this flag an 8 s timeout left `verifyChannel()` looping
+          // through the remaining videos, each queued in the serialized rate
+          // limiter (backed off to 15 s). That kept the Node event loop alive
+          // long after the pass had printed its summary — the run looked
+          // frozen and never reached the commit step.
+          const controller = new AbortController();
           const verifyChannel = async (): Promise<InnerTubeLive[]> => {
             const liveList: InnerTubeLive[] = [];
             for (const video of videos) {
+              if (controller.signal.aborted) break;
               const state = await innertube.checkPlayerState(video.id);
+              if (controller.signal.aborted) break;
               if (!state || (!state.isLive && !state.isUpcoming)) continue;
               liveList.push({
                 id: video.id,
@@ -403,13 +413,24 @@ export async function refreshLivePass(
             return liveList;
           };
 
-          const timeout = new Promise<null>((resolve) =>
-            setTimeout(() => resolve(null), perChannelTimeoutMs),
-          );
+          let timeoutHandle: ReturnType<typeof setTimeout> | undefined;
+          const timeout = new Promise<null>((resolve) => {
+            timeoutHandle = setTimeout(() => {
+              controller.abort();
+              resolve(null);
+            }, perChannelTimeoutMs);
+          });
           streamsById.set(
             channel.id,
             await Promise.race([verifyChannel(), timeout]),
           );
+          // Whichever side won, cancel the pending timer and signal any
+          // in-flight verifyChannel loop to stop. Without this a completed
+          // check left an 8 s timer — and a timed-out check left its orphaned
+          // loop issuing requests — keeping the event loop alive after the
+          // pass had finished.
+          if (timeoutHandle !== undefined) clearTimeout(timeoutHandle);
+          controller.abort();
 
           const c = ++checked;
           if (c % 25 === 0 || c === channelsToVerify.length) logProgress(false);

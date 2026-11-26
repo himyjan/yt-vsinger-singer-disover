@@ -221,7 +221,13 @@ export interface InnerTubeOptions {
  * does not exist" — and a Japanese channel is fetched in Japanese.
  */
 function isNotRateLimited(message: string): boolean {
-  return /does not exist|not found|404|removed|terminated|status code 400|存在しません|削除されました|停止しました|利用できません|不存在|已被删除|已删除|不存在该用户|존재하지 않습니다|삭제되었습니다/i.test(
+  // "This video is unavailable"/"unplayable"/"private" are per-video
+  // conditions (deleted, members-only, region-blocked), NOT a rate limit.
+  // Without these, one dead video doubles the shared limiter interval, and
+  // because checkPlayerState never rewarded success the interval stuck at
+  // 15s for the rest of the run — leaving orphaned player checks queued
+  // long after the pass had finished.
+  return /does not exist|not found|404|removed|terminated|status code 400|unavailable|unplayable|private|存在しません|削除されました|停止しました|利用できません|不存在|已被删除|已删除|不存在该用户|존재하지 않습니다|삭제되었습니다/i.test(
     message,
   );
 }
@@ -440,10 +446,17 @@ function liveStatusOf(item: any): "live" | "upcoming" | null {
  * the caller treats the result as "no data".
  */
 function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T | null> {
-  return Promise.race([
-    promise,
-    new Promise<null>((resolve) => setTimeout(() => resolve(null), ms)),
-  ]);
+  // Clear the timer when the real promise wins, otherwise every completed
+  // call leaves a pending timer that keeps the event loop alive. With a loop
+  // of thousands of checks this delayed process exit long after the work
+  // was done (the live pass looked frozen after printing its summary).
+  let handle: ReturnType<typeof setTimeout> | undefined;
+  const timer = new Promise<null>((resolve) => {
+    handle = setTimeout(() => resolve(null), ms);
+  });
+  return Promise.race([promise, timer]).finally(() => {
+    if (handle !== undefined) clearTimeout(handle);
+  });
 }
 
 /**
@@ -1337,6 +1350,10 @@ export class InnerTubeSource {
         this.client.getBasicInfo(videoId, "TV_EMBEDDED"),
         REQUEST_TIMEOUT_MS,
       );
+      // A successful response means the shared limiter can relax again after
+      // any transient 429 penalty. Without this, one rate-limited request
+      // doubled the interval permanently for the rest of the pass.
+      this.limiter.reward();
       const basic = info?.basic_info;
       if (!basic) return null;
       const playability = basic?.playabilityStatus ?? {};
