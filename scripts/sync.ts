@@ -401,7 +401,7 @@ const nowIso = () => new Date().toISOString();
 function inShard(id: string, args: Args): boolean {
   return (
     args.shardCount <= 1 ||
-    volumeOf(id, args.shardCount) === args.shardIndex
+    volumeOf(id, args.shardCount) === args.shardIndex - 1
   );
 }
 
