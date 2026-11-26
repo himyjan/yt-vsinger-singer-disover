@@ -1355,7 +1355,9 @@ export class InnerTubeSource {
           : null;
       const isLive =
         basic.is_live === true ||
+        basic.isLive === true ||
         playability?.is_live === true ||
+        playability?.isLive === true ||
         status === "LIVE";
       const isUpcoming = Boolean(
         basic?.isUpcoming ||
