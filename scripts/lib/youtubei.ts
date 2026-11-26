@@ -1359,12 +1359,13 @@ export class InnerTubeSource {
         playability?.is_live === true ||
         playability?.isLive === true ||
         status === "LIVE";
-      const isUpcoming = Boolean(
-        basic?.isUpcoming ||
-          playability?.isUpcoming ||
-          status === "UPCOMING" ||
-          (basic.start_timestamp && status === "UPCOMING"),
-      );
+      const isUpcoming =
+        basic?.is_upcoming === true ||
+        basic?.isUpcoming === true ||
+        playability?.is_upcoming === true ||
+        playability?.isUpcoming === true ||
+        status === "UPCOMING" ||
+        (basic.start_timestamp && status === "UPCOMING");
       const rawLength = Number(details.length_seconds);
       const duration =
         Number.isFinite(rawLength) && rawLength > 0 ? rawLength : null;
@@ -1457,8 +1458,18 @@ export class InnerTubeSource {
             ? false
             : null;
       return {
-        isLive: basic.is_live === true,
-        isUpcoming: basic.is_upcoming === true,
+        isLive:
+          basic.is_live === true ||
+          basic.isLive === true ||
+          playability?.is_live === true ||
+          playability?.isLive === true ||
+          status === "LIVE",
+        isUpcoming:
+          basic?.is_upcoming === true ||
+          basic?.isUpcoming === true ||
+          playability?.is_upcoming === true ||
+          playability?.isUpcoming === true ||
+          status === "UPCOMING",
         start:
           start instanceof Date
             ? start.toISOString()
