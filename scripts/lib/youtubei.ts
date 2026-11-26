@@ -536,6 +536,21 @@ export class InnerTubeSource {
     errors: 0,
   };
   private playerStats = { live: 0, upcoming: 0, offline: 0, blocked: 0 };
+  /**
+   * Hard failures (HTTP 403/429) from the player endpoint. A burst of them
+   * means YouTube has flagged this IP/session (datacenter runners get this
+   * after a few hundred requests). Backing off cannot clear an IP flag —
+   * only a fresh session can, and if that fails the only sane move is to stop
+   * rather than grind thousands of doomed requests until the job times out.
+   */
+  private playerHardFailures = 0;
+  private playerReconnected = false;
+  private playerBlockedFlag = false;
+
+  /** True once the player endpoint has been declared unusable for this run. */
+  get isPlayerBlocked(): boolean {
+    return this.playerBlockedFlag;
+  }
 
   constructor(options: InnerTubeOptions = {}) {
     this.enabled = options.enabled ?? true;
@@ -602,6 +617,34 @@ export class InnerTubeSource {
   /** Releases the Innertube client. */
   disconnect(): void {
     this.client = null;
+  }
+
+  /**
+   * Records a hard player-endpoint failure and decides whether the session is
+   * salvageable. A fresh session (new visitor data) clears a soft block; if a
+   * second session is blocked too, the IP itself is flagged and no amount of
+   * waiting helps — give up on player checks for this run so it finishes and
+   * commits the streams it already found instead of timing out.
+   */
+  private async onPlayerHardFailure(): Promise<void> {
+    if (this.playerBlockedFlag) return;
+    this.playerHardFailures++;
+    if (this.playerHardFailures < 12) return;
+    if (!this.playerReconnected) {
+      this.playerReconnected = true;
+      this.playerHardFailures = 0;
+      this.onLog(
+        "innertube: player endpoint blocked (12 hard failures) — reconnecting with a fresh session",
+      );
+      this.client = null;
+      await this.connect();
+      return;
+    }
+    this.playerBlockedFlag = true;
+    this.playerStats.blocked++;
+    this.onLog(
+      "innertube: player endpoint still blocked after reconnect — skipping remaining player checks (IP flagged)",
+    );
   }
 
   /** Waits between requests so InnerTube does not rate-limit us. */
@@ -1348,7 +1391,7 @@ export class InnerTubeSource {
     publishDate: string | null;
     isMember: boolean | null;
   } | null> {
-    if (!this.client) return null;
+    if (!this.client || this.playerBlockedFlag) return null;
     try {
       await this.throttle();
       const info: any = await withTimeout(
@@ -1359,6 +1402,7 @@ export class InnerTubeSource {
       // any transient 429 penalty. Without this, one rate-limited request
       // doubled the interval permanently for the rest of the pass.
       this.limiter.reward();
+      this.playerHardFailures = 0;
       const basic = info?.basic_info;
       if (!basic) return null;
       const playability = basic?.playabilityStatus ?? {};
@@ -1436,7 +1480,15 @@ export class InnerTubeSource {
       };
     } catch (err) {
       const message = (err as Error).message;
-      if (!isNotRateLimited(message)) this.limiter.penalise();
+      const hardBlock = /status code 403|status code 429|forbidden/i.test(message);
+      // A 403/429 is an IP/session flag, not a per-video condition: drive the
+      // circuit breaker (fresh session once, then stop), but do NOT widen the
+      // shared limiter — backing off cannot clear an IP flag and would crawl.
+      if (hardBlock) {
+        await this.onPlayerHardFailure();
+      } else if (!isNotRateLimited(message)) {
+        this.limiter.penalise();
+      }
       this.onLog(
         `innertube: player check failed for ${videoId} — ${message}`,
       );

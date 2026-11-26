@@ -387,11 +387,17 @@ export async function refreshLivePass(
           // long after the pass had printed its summary — the run looked
           // frozen and never reached the commit step.
           const controller = new AbortController();
-          const verifyChannel = async (): Promise<InnerTubeLive[]> => {
+          const verifyChannel = async (): Promise<InnerTubeLive[] | null> => {
+            // If the player endpoint has been declared blocked (IP flagged),
+            // stop issuing requests and report "not checked" (null) so the
+            // apply loop skips these channels instead of retiring their live
+            // items on a run that never actually verified them.
+            if (innertube.isPlayerBlocked) return null;
             const liveList: InnerTubeLive[] = [];
             for (const video of videos) {
               if (controller.signal.aborted) break;
               const state = await innertube.checkPlayerState(video.id);
+              if (innertube.isPlayerBlocked) return null;
               if (controller.signal.aborted) break;
               if (!state || (!state.isLive && !state.isUpcoming)) continue;
               liveList.push({
