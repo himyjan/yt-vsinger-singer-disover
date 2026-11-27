@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T05:11:58.713Z",
+  "generatedAt": "2026-11-27T14:18:38.980Z",
   "items": [
     {
       "id": "wXbhletqKx8",
@@ -3018,7 +3018,7 @@
       "channelName": "千草はな",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
@@ -4088,6 +4088,53 @@
       "source": "api",
       "addedAt": "2026-11-02T11:59:38.335Z",
       "updatedAt": "2026-11-26T23:49:33.240Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "23s0_09cD4U",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCPQRl6ceaNBTeuHkMqsfl7Q",
+      "channelName": "紫海由爱",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "zh-Hans"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "【初見🔰灰の地上陸】Valheimをする時間をとれた∣ #初心者  #valheim  #vtuber #shorts",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/23s0_09cD4U/hq720.jpg",
+      "publishedAt": "2026-11-03T12:00:00.000Z",
+      "scheduledStart": "2026-11-03T12:00:00.000Z",
+      "actualStart": null,
+      "isMember": false,
+      "actualEnd": "2026-11-26T23:49:29.115Z",
+      "duration": null,
+      "status": "past",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCPQRl6ceaNBTeuHkMqsfl7Q",
+          "name": "紫海由爱",
+          "kind": "virtual",
+          "region": "cn"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-02T11:59:25.595Z",
+      "updatedAt": "2026-11-26T23:49:29.115Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -8134,53 +8181,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "JIf5pij64Vw",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCl1Dwj1cD4G2XOXfRJOsFdQ",
-      "channelName": "ryo",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "female",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "female_vtuber",
-      "title": "【アノマリス】異界の調査をやってみる!!",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/JIf5pij64Vw/hq720.jpg",
-      "publishedAt": "2026-11-01T13:30:00.000Z",
-      "scheduledStart": "2026-11-01T13:30:00.000Z",
-      "actualStart": null,
-      "isMember": false,
-      "actualEnd": "2026-11-01T18:53:50.861Z",
-      "duration": 19430,
-      "status": "past",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCl1Dwj1cD4G2XOXfRJOsFdQ",
-          "name": "ryo",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-11-01T13:12:33.506Z",
-      "updatedAt": "2026-11-01T18:53:50.861Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "VkL4b7FMAso",
       "platform": "youtube",
       "type": "live",
@@ -9128,7 +9128,7 @@
       "channelName": "大空スバル",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
@@ -11296,12 +11296,12 @@
       "channelName": "ちよみch. 千代浦蝶美 /あおぎり高校",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "female",
+      "gender": "unknown",
       "languages": [
         "ja"
       ],
       "isAi": false,
-      "variant": "female_vtuber",
+      "variant": "vtuber",
       "title": "【歌枠】HAPPY HALLOWEEN🎃アニソン、J-POP、ボカロ等、ハロウィンっぽい歌も歌うよ！ #あおぎり高校 #千代浦蝶美 #vsinger",
       "description": null,
       "thumbnail": "https://i.ytimg.com/vi/hMpwPZI6wR4/hq720.jpg",
@@ -13405,6 +13405,52 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "6QwgADUEbuw",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCiw0IHf0T1XWNDgTOA57CbQ",
+      "channelName": "ゆいまるちゃん",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "female",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "【 #NTE 】初見さん大歓迎！お昼にたのしくNTEをやります🐰💕【 Vtuberゆいまるちゃん #PR #ぶいきゃす 】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/6QwgADUEbuw/hq720.jpg",
+      "publishedAt": "2026-10-26T04:43:04.152Z",
+      "scheduledStart": null,
+      "actualStart": "2026-10-26T04:43:04.152Z",
+      "actualEnd": "2026-10-26T10:32:00.415Z",
+      "duration": null,
+      "status": "past",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCiw0IHf0T1XWNDgTOA57CbQ",
+          "name": "ゆいまるちゃん",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-26T04:43:04.152Z",
+      "updatedAt": "2026-10-26T10:32:00.415Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "jRK5EzQP4Aw",
       "platform": "youtube",
       "type": "live",
@@ -13412,7 +13458,7 @@
       "channelName": "Kazaki Ch. ‐ 森中花咲 ‐",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
@@ -14017,7 +14063,7 @@
       "channelName": "竜胆尊",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
@@ -17519,7 +17565,7 @@
         "ja"
       ],
       "isAi": false,
-      "variant": "unknown",
+      "variant": "vsinger",
       "title": "real me?",
       "description": null,
       "thumbnail": "https://i.ytimg.com/vi/_K3xvHEyRYE/default.jpg",
@@ -17614,7 +17660,7 @@
       "channelName": "町田ちま【にじさんじ】",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
@@ -17919,7 +17965,7 @@
         "ja"
       ],
       "isAi": false,
-      "variant": "vtuber",
+      "variant": "vsinger",
       "title": "Luminous Flow",
       "description": null,
       "thumbnail": "https://i.ytimg.com/vi/mX7X-GrUbFo/default.jpg",
@@ -18014,7 +18060,7 @@
       "channelName": "夢追翔のJUKE BOX",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "male",
       "languages": [
         "ja"
       ],
@@ -18669,7 +18715,7 @@
         "ja"
       ],
       "isAi": false,
-      "variant": "vtuber",
+      "variant": "vsinger",
       "title": "Shellrium",
       "description": null,
       "thumbnail": "https://i.ytimg.com/vi/slY3W8hhsrY/default.jpg",
@@ -18919,7 +18965,7 @@
         "ja"
       ],
       "isAi": false,
-      "variant": "unknown",
+      "variant": "vsinger",
       "title": "anew",
       "description": null,
       "thumbnail": "https://i.ytimg.com/vi/6kg3Ji2tlYw/hqdefault.jpg",
@@ -19314,7 +19360,7 @@
       "channelName": "甲斐田 晴 / Kaida Haru【にじさんじ】",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
@@ -19964,7 +20010,7 @@
       "channelName": "夢追翔のJUKE BOX",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "male",
       "languages": [
         "ja"
       ],
@@ -20472,6 +20518,53 @@
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
       "updatedAt": "2026-11-27T04:48:49.083Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "rtHg8BQEcYE",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCSUOEmvQLKPdiRnUgmHYX2g",
+      "channelName": "黑桐亚里亚",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "zh-Hans"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "໒꒱⋆ﾟ ɪɴғᴏ┊メンバーシップ加入特典のおしらせ",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/rtHg8BQEcYE/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2027-03-31T03:00:00.000Z",
+      "actualStart": null,
+      "isMember": false,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCSUOEmvQLKPdiRnUgmHYX2g",
+          "name": "黑桐亚里亚",
+          "kind": "virtual",
+          "region": "cn"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-24T20:46:02.237Z",
+      "updatedAt": "2026-11-02T11:59:34.145Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -21846,7 +21939,7 @@
       "channelName": "大空スバル",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],

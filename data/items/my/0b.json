@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T00:11:29.954Z",
+  "generatedAt": "2026-11-27T14:18:38.980Z",
   "items": [
     {
       "id": "UP0xlFg3YIw",
@@ -234,6 +234,53 @@
       "source": "api",
       "addedAt": "2026-10-31T03:16:27.340Z",
       "updatedAt": "2026-11-26T23:49:54.532Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "316379203817",
+      "platform": "twitch",
+      "type": "live",
+      "channelId": "UC_b8jZp1pX7Bxm2L40IkPzg",
+      "channelName": "Amayuki Shiina Ch. 天雪夕納",
+      "channelKind": "virtual",
+      "region": "my",
+      "gender": "male",
+      "languages": [
+        "ms"
+      ],
+      "isAi": false,
+      "variant": "male_vtuber",
+      "title": "【GTARP】桃源奇境3.0 | 快12月了 | 天雪视角 | Day 6 | 27112026 | 天雪夕纳",
+      "description": null,
+      "thumbnail": null,
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "isMember": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC_b8jZp1pX7Bxm2L40IkPzg",
+          "name": "Amayuki Shiina Ch. 天雪夕納",
+          "kind": "virtual",
+          "region": "my"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": 4,
+      "source": "api",
+      "addedAt": "2026-11-27T14:18:38.980Z",
+      "updatedAt": "2026-11-27T14:18:38.980Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T05:11:58.713Z",
+  "generatedAt": "2026-11-27T14:18:38.980Z",
   "items": [
     {
       "id": "O6AsvPpnGcY",
@@ -3315,6 +3315,53 @@
       "source": "api",
       "addedAt": "2026-10-31T03:16:17.489Z",
       "updatedAt": "2026-11-02T11:59:30.862Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "315719918574",
+      "platform": "twitch",
+      "type": "live",
+      "channelId": "UC-SVHkNF6-HpaPeZV2OzMBw",
+      "channelName": "凜空ゆあ",
+      "channelKind": "virtual",
+      "region": "tw",
+      "gender": "unknown",
+      "languages": [
+        "zh-Hant"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "【凜空ゆあ】LoL | ••୨୧冬天是容易感知幸福的季節୨୧•• | 連動/工商/掛台/超大歡迎 @rikuyua_0x0",
+      "description": null,
+      "thumbnail": null,
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "isMember": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC-SVHkNF6-HpaPeZV2OzMBw",
+          "name": "凜空ゆあ",
+          "kind": "virtual",
+          "region": "tw"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": 24,
+      "source": "api",
+      "addedAt": "2026-11-27T14:18:38.980Z",
+      "updatedAt": "2026-11-27T14:18:38.980Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },

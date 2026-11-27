@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T05:11:58.713Z",
+  "generatedAt": "2026-11-27T14:18:38.980Z",
   "items": [
     {
       "id": "JMJR1y_WmBE",
@@ -561,6 +561,52 @@
       "source": "api",
       "addedAt": "2026-10-31T03:16:25.311Z",
       "updatedAt": "2026-10-31T18:28:58.720Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "e9MVv6kbW9k",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCHRvpwyD6-6KO2xBmlAMabw",
+      "channelName": "無茶古茶「HK Vtuber」",
+      "channelKind": "virtual",
+      "region": "hk",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "［パラソーシャル］台主又被跟蹤??｜無茶古茶",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/e9MVv6kbW9k/hq720.jpg",
+      "publishedAt": "2026-10-31T13:00:00.000Z",
+      "scheduledStart": "2026-10-31T13:00:00.000Z",
+      "actualStart": null,
+      "actualEnd": "2026-10-31T18:28:42.047Z",
+      "duration": 19722,
+      "status": "past",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCHRvpwyD6-6KO2xBmlAMabw",
+          "name": "無茶古茶「HK Vtuber」",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-31T03:16:23.567Z",
+      "updatedAt": "2026-10-31T18:28:42.047Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },

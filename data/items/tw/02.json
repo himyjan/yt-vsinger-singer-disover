@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T05:11:58.713Z",
+  "generatedAt": "2026-11-27T14:18:38.980Z",
   "items": [
     {
       "id": "4BlkBVyo2mY",
@@ -3735,6 +3735,100 @@
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.283Z",
       "updatedAt": "2026-11-27T04:48:45.146Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "315720303854",
+      "platform": "twitch",
+      "type": "live",
+      "channelId": "UC0hS8ZGEcMeHgrmQlYkeZqg",
+      "channelName": "ミミmiiimiii Ch.",
+      "channelKind": "virtual",
+      "region": "tw",
+      "gender": "unknown",
+      "languages": [
+        "zh-Hant"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "【3+3】11/27 今天不能亂說話連動 嘿嘿:D｜ミミ",
+      "description": null,
+      "thumbnail": null,
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "isMember": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC0hS8ZGEcMeHgrmQlYkeZqg",
+          "name": "ミミmiiimiii Ch.",
+          "kind": "virtual",
+          "region": "tw"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": 13,
+      "source": "api",
+      "addedAt": "2026-11-27T14:18:38.980Z",
+      "updatedAt": "2026-11-27T14:18:38.980Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "315720328174",
+      "platform": "twitch",
+      "type": "live",
+      "channelId": "UC-LpSz9hr_PD6njjHmhli5A",
+      "channelName": "漣玥 Lenyueh Ch.",
+      "channelKind": "virtual",
+      "region": "tw",
+      "gender": "unknown",
+      "languages": [
+        "zh-Hant"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "暗有利古戰場本戰D4 有團BUFF的我又活了!!",
+      "description": null,
+      "thumbnail": null,
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "isMember": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC-LpSz9hr_PD6njjHmhli5A",
+          "name": "漣玥 Lenyueh Ch.",
+          "kind": "virtual",
+          "region": "tw"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": 15,
+      "source": "api",
+      "addedAt": "2026-11-27T14:18:38.980Z",
+      "updatedAt": "2026-11-27T14:18:38.980Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },

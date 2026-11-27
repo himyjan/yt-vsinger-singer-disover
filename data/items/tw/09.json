@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T05:11:58.713Z",
+  "generatedAt": "2026-11-27T14:18:38.980Z",
   "items": [
     {
       "id": "Ua9NY9vs-Dk",
@@ -3455,6 +3455,100 @@
       "source": "api",
       "addedAt": "2026-10-31T03:16:26.922Z",
       "updatedAt": "2026-11-02T11:59:40.570Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "316351044072",
+      "platform": "twitch",
+      "type": "live",
+      "channelId": "UC-xSYBz463ehbn6Nestv-3A",
+      "channelName": "那由多 Nayuta -ch.",
+      "channelKind": "virtual",
+      "region": "tw",
+      "gender": "unknown",
+      "languages": [
+        "zh-Hant"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "11/27 day4 只要全忘了 那就沒事了",
+      "description": null,
+      "thumbnail": null,
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "isMember": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC-xSYBz463ehbn6Nestv-3A",
+          "name": "那由多 Nayuta -ch.",
+          "kind": "virtual",
+          "region": "tw"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": 5,
+      "source": "api",
+      "addedAt": "2026-11-27T14:18:38.980Z",
+      "updatedAt": "2026-11-27T14:18:38.980Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "316781010034",
+      "platform": "twitch",
+      "type": "live",
+      "channelId": "UC_wZTg59Tq6GqyPnFe_ICjQ",
+      "channelName": "Maru Ch. 千草まる",
+      "channelKind": "virtual",
+      "region": "tw",
+      "gender": "female",
+      "languages": [
+        "zh-Hant"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "【Mahjong Soul：雀魂】  ft.貓抓板  開麻前先給你們看個有趣的東西www",
+      "description": null,
+      "thumbnail": null,
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "isMember": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC_wZTg59Tq6GqyPnFe_ICjQ",
+          "name": "Maru Ch. 千草まる",
+          "kind": "virtual",
+          "region": "tw"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": 20,
+      "source": "api",
+      "addedAt": "2026-11-27T14:18:38.980Z",
+      "updatedAt": "2026-11-27T14:18:38.980Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },

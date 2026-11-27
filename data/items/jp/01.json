@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T05:11:58.713Z",
+  "generatedAt": "2026-11-27T14:18:38.980Z",
   "items": [
     {
       "id": "6d9k3VEFzx8",
@@ -1409,53 +1409,6 @@
       "source": "api",
       "addedAt": "2026-10-27T17:58:40.188Z",
       "updatedAt": "2026-11-26T23:49:34.524Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "1l1YkUzKuXs",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCKCb7zirdauYVUPokYvoNTQ",
-      "channelName": "海琳あおい / Mitama Aoi",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "female",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "female_vsinger",
-      "title": "【📢グッズ情報】海琳あおい加入記念グッズ受注販売受付中🌱",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/1l1YkUzKuXs/hq720.jpg",
-      "publishedAt": "2026-11-17T14:30:00.000Z",
-      "scheduledStart": "2026-11-17T14:30:00.000Z",
-      "actualStart": null,
-      "isMember": false,
-      "actualEnd": "2026-11-26T23:49:33.240Z",
-      "duration": null,
-      "status": "past",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCKCb7zirdauYVUPokYvoNTQ",
-          "name": "海琳あおい / Mitama Aoi",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-31T03:16:22.912Z",
-      "updatedAt": "2026-11-26T23:49:33.240Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -6214,7 +6167,7 @@
       "channelName": "もう一度だけVTuberやってもいい? 🅥",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "male",
       "languages": [
         "ja"
       ],
@@ -6637,7 +6590,7 @@
       "channelName": "小花衣 ももみ / Momomi Kohanai",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
@@ -13007,7 +12960,7 @@
       "channelName": "Subaru Ch. 大空スバル",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
@@ -13145,7 +13098,7 @@
       "channelName": "舞元啓介",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
@@ -17737,7 +17690,7 @@
         "ja"
       ],
       "isAi": false,
-      "variant": "vtuber",
+      "variant": "vsinger",
       "title": "MICHISHIRUBE (Cover)",
       "description": null,
       "thumbnail": "https://i.ytimg.com/vi/Y4nctYwl5Yw/hqdefault.jpg",
@@ -18020,6 +17973,56 @@
       "source": "api",
       "addedAt": "2026-10-25T07:43:14.768Z",
       "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_kVi0LHx1oO6rGqcacwcSsVIojZiuPzPfQ",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_kVi0LHx1oO6rGqcacwcSsVIojZiuPzPfQ",
+      "type": "playlist",
+      "channelId": "UCP0BspO_AMEe3aQqqpo89Dg",
+      "channelName": "Moona Hoshinova hololive",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "id"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "DEJAVU",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/cU5_JIEFTOw/hqdefault.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCP0BspO_AMEe3aQqqpo89Dg",
+          "name": "Moona Hoshinova hololive",
+          "kind": "virtual",
+          "region": "id"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-26T12:56:51.125Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -18537,7 +18540,7 @@
         "ja"
       ],
       "isAi": false,
-      "variant": "vtuber",
+      "variant": "vsinger",
       "title": "Full Power Cute Declaration!",
       "description": null,
       "thumbnail": "https://i.ytimg.com/vi/O3QwBig3OSI/hqdefault.jpg",
@@ -20846,53 +20849,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "TS2BPS8lALo",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCgeR64r5PraIX7Y2j5VK4Pw",
-      "channelName": "よもぎ",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "【Vtuber】ふりーちゃっと※概要欄チェック【雑談】",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/TS2BPS8lALo/hq720.jpg",
-      "publishedAt": null,
-      "scheduledStart": "2026-12-31T15:00:00.000Z",
-      "actualStart": null,
-      "isMember": false,
-      "actualEnd": null,
-      "duration": null,
-      "status": "upcoming",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCgeR64r5PraIX7Y2j5VK4Pw",
-          "name": "よもぎ",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-11-02T05:53:05.453Z",
-      "updatedAt": "2026-11-02T11:59:34.145Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "U4mZdTjJIbw",
       "platform": "youtube",
       "type": "live",
@@ -21652,7 +21608,7 @@
       "channelName": "神田笑一",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],

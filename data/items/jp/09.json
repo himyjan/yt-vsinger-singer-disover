@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T05:11:58.713Z",
+  "generatedAt": "2026-11-27T14:18:38.980Z",
   "items": [
     {
       "id": "L_NcKyl4STk",
@@ -1373,7 +1373,7 @@
       "channelName": "小花衣ももみ",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
@@ -5885,7 +5885,7 @@
       "channelName": "甘噛ろあ",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "male",
       "languages": [
         "ja"
       ],
@@ -7107,7 +7107,7 @@
       "channelName": "える",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
@@ -8611,7 +8611,7 @@
       "channelName": "猫熊潞潞_Official",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "male",
       "languages": [
         "ja"
       ],
@@ -11344,7 +11344,7 @@
       "channelName": "社築",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
@@ -13000,7 +13000,7 @@
       "channelName": "小花衣 ももみ / Momomi Kohanai",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
@@ -13736,12 +13736,12 @@
       "channelName": "凛々咲 / Ririsya",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "female",
+      "gender": "unknown",
       "languages": [
         "ja"
       ],
       "isAi": false,
-      "variant": "female_vtuber",
+      "variant": "vtuber",
       "title": "【 #ぶいせかマイクラ  】Day5 ✧ ミニイベントと家作り！ ✧ First PvP Event!【 VTuber / #凛々咲 #Ririsya 】",
       "description": null,
       "thumbnail": "https://i.ytimg.com/vi/4vcpb7iZZpY/hq720.jpg",
@@ -13955,6 +13955,52 @@
       "source": "api",
       "addedAt": "2026-10-25T16:14:08.234Z",
       "updatedAt": "2026-10-27T10:02:58.969Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "741ODO-pBZI",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCS8w-7krErjLdDXY93yAeLA",
+      "channelName": "【くらまちゃんねる 】御先蔵馬",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "female",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "【 #歌枠 #弾き語り】リクエスト受け付けながら、のんびり弾き語り🦊🐾【 Vtuber/御先蔵馬】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/741ODO-pBZI/hq720.jpg",
+      "publishedAt": "2026-10-27T10:02:58.969Z",
+      "scheduledStart": null,
+      "actualStart": "2026-10-27T10:02:58.969Z",
+      "actualEnd": "2026-10-27T17:58:40.188Z",
+      "duration": null,
+      "status": "past",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCS8w-7krErjLdDXY93yAeLA",
+          "name": "【くらまちゃんねる 】御先蔵馬",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": true,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-27T10:02:58.969Z",
+      "updatedAt": "2026-10-27T17:58:40.188Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -16161,53 +16207,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "f5jT6mE7zIY",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCeK9HFcRZoTrvqcUCtccMoQ",
-      "channelName": "渋谷ハジメのはじめ支部",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "female",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "female_vtuber",
-      "title": "Free chat",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/f5jT6mE7zIY/hq720.jpg",
-      "publishedAt": null,
-      "scheduledStart": "2027-05-04T15:00:00.000Z",
-      "actualStart": null,
-      "isMember": false,
-      "actualEnd": null,
-      "duration": null,
-      "status": "upcoming",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCeK9HFcRZoTrvqcUCtccMoQ",
-          "name": "渋谷ハジメのはじめ支部",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-31T03:16:19.448Z",
-      "updatedAt": "2026-11-02T11:59:38.249Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "fe_2DPZnw8E",
       "platform": "youtube",
       "type": "live",
@@ -16732,7 +16731,7 @@
       "channelName": "森中花咲",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
@@ -17343,7 +17342,7 @@
       "channelName": "花京院ちえり",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
@@ -18005,7 +18004,7 @@
       "channelName": "夢追翔のJUKE BOX",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "male",
       "languages": [
         "ja"
       ],
@@ -18305,7 +18304,7 @@
       "channelName": "戌亥とこ -Inui Toko-",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
@@ -18455,7 +18454,7 @@
       "channelName": "緑仙 / Ryushen",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
@@ -18505,7 +18504,7 @@
       "channelName": "戌亥とこ -Inui Toko-",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
@@ -18747,6 +18746,56 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "OLAK5uy_kzhCMP6xGpfP3d1dTROyOV1Ac-KumdQSk",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_kzhCMP6xGpfP3d1dTROyOV1Ac-KumdQSk",
+      "type": "playlist",
+      "channelId": "UCP0BspO_AMEe3aQqqpo89Dg",
+      "channelName": "Moona Hoshinova hololive",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "id"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "Who’s Toxic ? It’s You!",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/5odnoc-n-dA/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCP0BspO_AMEe3aQqqpo89Dg",
+          "name": "Moona Hoshinova hololive",
+          "kind": "virtual",
+          "region": "id"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-26T12:56:51.125Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "OLAK5uy_l1A98SfLWQ9TrELQA8YccX4TmUVMv_PD4",
       "platform": "youtube",
       "url": "https://www.youtube.com/playlist?list=OLAK5uy_l1A98SfLWQ9TrELQA8YccX4TmUVMv_PD4",
@@ -18905,12 +18954,12 @@
       "channelName": "凛々咲 / Ririsya",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "female",
+      "gender": "unknown",
       "languages": [
         "ja"
       ],
       "isAi": false,
-      "variant": "female_vtuber",
+      "variant": "vtuber",
       "title": "SUISEI (Cover)",
       "description": null,
       "thumbnail": "https://i.ytimg.com/vi/YV29C720Icw/hqdefault.jpg",
@@ -19155,12 +19204,12 @@
       "channelName": "凛々咲 / Ririsya",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "female",
+      "gender": "unknown",
       "languages": [
         "ja"
       ],
       "isAi": false,
-      "variant": "female_vtuber",
+      "variant": "vtuber",
       "title": "Starring...",
       "description": null,
       "thumbnail": "https://i.ytimg.com/vi/s5UBteO-CGo/hqdefault.jpg",
@@ -19893,6 +19942,56 @@
       "source": "api",
       "addedAt": "2026-10-25T07:43:14.768Z",
       "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_mTpnFlM7RR82uu2t6mRaJbzQlcfGseeCk",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_mTpnFlM7RR82uu2t6mRaJbzQlcfGseeCk",
+      "type": "playlist",
+      "channelId": "UCP0BspO_AMEe3aQqqpo89Dg",
+      "channelName": "Moona Hoshinova hololive",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "id"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "Perisai Jitu",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/mkVX5IjdXRE/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCP0BspO_AMEe3aQqqpo89Dg",
+          "name": "Moona Hoshinova hololive",
+          "kind": "virtual",
+          "region": "id"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-26T12:56:51.125Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },

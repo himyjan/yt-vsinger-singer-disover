@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T05:11:58.713Z",
+  "generatedAt": "2026-11-27T14:18:38.980Z",
   "items": [
     {
       "id": "VwQXd3pe9Mo",
@@ -3550,6 +3550,53 @@
       "source": "api",
       "addedAt": "2026-10-31T03:16:22.173Z",
       "updatedAt": "2026-11-27T04:48:32.102Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "316843073523",
+      "platform": "twitch",
+      "type": "live",
+      "channelId": "UC1C3RPBNPLQ248juwwYIkkg",
+      "channelName": "星空上的夜喵",
+      "channelKind": "virtual",
+      "region": "tw",
+      "gender": "unknown",
+      "languages": [
+        "zh-Hant"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "抽抽",
+      "description": null,
+      "thumbnail": null,
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "isMember": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC1C3RPBNPLQ248juwwYIkkg",
+          "name": "星空上的夜喵",
+          "kind": "virtual",
+          "region": "tw"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": 3,
+      "source": "api",
+      "addedAt": "2026-11-27T14:18:38.980Z",
+      "updatedAt": "2026-11-27T14:18:38.980Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T05:11:58.713Z",
+  "generatedAt": "2026-11-27T14:18:38.980Z",
   "items": [
     {
       "id": "ndH5HD9sghw",
@@ -574,12 +574,12 @@
       "channelName": "波宵かなで / Namiyoi Kanade【そらびん】",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "female",
+      "gender": "unknown",
       "languages": [
         "ja"
       ],
       "isAi": false,
-      "variant": "female_vtuber",
+      "variant": "vtuber",
       "title": "今週のスケジュールだよ～💙",
       "description": null,
       "thumbnail": "https://i.ytimg.com/vi/1NVNl--dS2A/hq720.jpg",
@@ -1608,53 +1608,6 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-02T05:53:12.216Z",
-      "updatedAt": "2026-11-26T23:49:45.482Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "UZPZN9odOTU",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCTF6upqGU4yHduecX0Oy3Pg",
-      "channelName": "𝐬𝐡𝟏𝐚𝐧",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vsinger",
-      "title": "【#月夜に花咲く歌枠リレー】☽  閉会式 ✦ みんなで紡いだ最高の夜を語ろう ꕤ︎︎￤#sh1arch1ve【sh1an ￤#Vsinger 】",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/UZPZN9odOTU/hq720.jpg",
-      "publishedAt": "2026-11-14T13:30:00.000Z",
-      "scheduledStart": "2026-11-14T13:30:00.000Z",
-      "actualStart": null,
-      "isMember": false,
-      "actualEnd": "2026-11-26T23:49:45.482Z",
-      "duration": null,
-      "status": "past",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCTF6upqGU4yHduecX0Oy3Pg",
-          "name": "𝐬𝐡𝟏𝐚𝐧",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-11-02T11:59:29.225Z",
       "updatedAt": "2026-11-26T23:49:45.482Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
@@ -7824,12 +7777,12 @@
       "channelName": "リーエ香澄KasumiLeigher",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
       "isAi": false,
-      "variant": "vtuber",
+      "variant": "female_vtuber",
       "title": "【 SINGING / 歌枠 】リハビリ＆新アプリ実験歌枠！トラブルも楽しんでほしいお姉ちゃん🎙【リーエ香澄】",
       "description": null,
       "thumbnail": "https://i.ytimg.com/vi/zTS5LvpP_iQ/hq720.jpg",
@@ -8142,6 +8095,53 @@
       "source": "api",
       "addedAt": "2026-11-01T13:12:43.618Z",
       "updatedAt": "2026-11-02T05:52:58.691Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "AOYxtV8K8m8",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCiw0IHf0T1XWNDgTOA57CbQ",
+      "channelName": "唯茉瑠",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "female",
+      "languages": [
+        "zh-Hans"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "【 #モンハンアウトランダーズ 】狩猟解禁！！新たな冒険に出発するぞおおお🐰🎀【 Vtuber /ゆいまるちゃん 】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/AOYxtV8K8m8/hq720.jpg",
+      "publishedAt": "2026-11-02T03:00:00.000Z",
+      "scheduledStart": "2026-11-02T03:00:00.000Z",
+      "actualStart": null,
+      "isMember": false,
+      "actualEnd": "2026-11-02T05:53:03.849Z",
+      "duration": 10383,
+      "status": "past",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCiw0IHf0T1XWNDgTOA57CbQ",
+          "name": "唯茉瑠",
+          "kind": "virtual",
+          "region": "cn"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-01T18:53:51.457Z",
+      "updatedAt": "2026-11-02T05:53:03.849Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -9234,7 +9234,7 @@
       "channelName": "astel ch.アステル",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "male",
       "languages": [
         "ja"
       ],
@@ -9845,7 +9845,7 @@
       "channelName": "鈴木勝 / Suzuki Masaru【にじさんじ】",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
@@ -11842,7 +11842,7 @@
       "channelName": "雨風ノナリィ Nonallie Amakaze",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "male",
       "languages": [
         "ja"
       ],
@@ -12659,6 +12659,52 @@
       "source": "api",
       "addedAt": "2026-10-31T03:16:21.011Z",
       "updatedAt": "2026-10-31T18:28:48.263Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "DqCFh0O58NY",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCSUOEmvQLKPdiRnUgmHYX2g",
+      "channelName": "Aria Ch. 黒桐アリア",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "〖メン限┊10月〗今月のこと&11月の作戦会議するぞっ！【#黒桐アリア┊#Vtuber】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/DqCFh0O58NY/hq720.jpg",
+      "publishedAt": "2026-10-31T12:00:00.000Z",
+      "scheduledStart": "2026-10-31T12:00:00.000Z",
+      "actualStart": null,
+      "actualEnd": "2026-10-31T18:28:40.962Z",
+      "duration": 23320,
+      "status": "past",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCSUOEmvQLKPdiRnUgmHYX2g",
+          "name": "Aria Ch. 黒桐アリア",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-31T03:16:23.042Z",
+      "updatedAt": "2026-10-31T18:28:40.962Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -14832,7 +14878,7 @@
       "channelName": "フミ/にじさんじ",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
@@ -14970,12 +15016,12 @@
       "channelName": "心恋音むいる / Kokone Muiru【ベルプロ】",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "female",
+      "gender": "unknown",
       "languages": [
         "ja"
       ],
       "isAi": false,
-      "variant": "female_vtuber",
+      "variant": "vtuber",
       "title": "🩷ғʀᴇᴇ ᴄʜᴀᴛ🩷",
       "description": null,
       "thumbnail": "https://i.ytimg.com/vi/_sn7byuHt5k/hq720.jpg",
@@ -17654,7 +17700,7 @@
         "ja"
       ],
       "isAi": false,
-      "variant": "unknown",
+      "variant": "vsinger",
       "title": "announce📢メジャーデビュー記念リリースParty先行チケット販売中✧ #NEPHLA",
       "description": null,
       "thumbnail": "https://i.ytimg.com/vi/eDmbfGaVDBM/hq720.jpg",
@@ -19443,6 +19489,56 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "OLAK5uy_kQxCEknZ1DNNz68NDC8WjXdfJyFG4vrgE",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_kQxCEknZ1DNNz68NDC8WjXdfJyFG4vrgE",
+      "type": "playlist",
+      "channelId": "UCP0BspO_AMEe3aQqqpo89Dg",
+      "channelName": "Moona Hoshinova hololive",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "id"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "ORBITURE",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/qTr2x78_u4k/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCP0BspO_AMEe3aQqqpo89Dg",
+          "name": "Moona Hoshinova hololive",
+          "kind": "virtual",
+          "region": "id"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-26T12:56:51.125Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "OLAK5uy_kqYIzhmxA5JkFzC407_1xCFeZOXyrQ-UE",
       "platform": "youtube",
       "url": "https://www.youtube.com/playlist?list=OLAK5uy_kqYIzhmxA5JkFzC407_1xCFeZOXyrQ-UE",
@@ -19451,7 +19547,7 @@
       "channelName": "夢追翔のJUKE BOX",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "male",
       "languages": [
         "ja"
       ],
@@ -19589,6 +19685,56 @@
       "source": "api",
       "addedAt": "2026-10-25T07:36:28.069Z",
       "updatedAt": "2026-10-25T07:43:14.768Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "OLAK5uy_kvOMrRh3aw1EvFEnDLYkIn2BzGm9bYO70",
+      "platform": "youtube",
+      "url": "https://www.youtube.com/playlist?list=OLAK5uy_kvOMrRh3aw1EvFEnDLYkIn2BzGm9bYO70",
+      "type": "playlist",
+      "channelId": "UCP0BspO_AMEe3aQqqpo89Dg",
+      "channelName": "Moona Hoshinova hololive",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "id"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "愛の小さな歌",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/frcPP_RH6yI/default.jpg",
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "past",
+      "category": "other",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCP0BspO_AMEe3aQqqpo89Dg",
+          "name": "Moona Hoshinova hololive",
+          "kind": "virtual",
+          "region": "id"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [
+        "youtube-music",
+        "release"
+      ],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-25T07:43:14.768Z",
+      "updatedAt": "2026-10-26T12:56:51.125Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -19901,7 +20047,7 @@
       "channelName": "緑仙 / Ryushen",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
@@ -20601,7 +20747,7 @@
       "channelName": "町田ちま【にじさんじ】",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
@@ -21506,7 +21652,7 @@
         "ja"
       ],
       "isAi": false,
-      "variant": "vtuber",
+      "variant": "vsinger",
       "title": "Mermaid and Moon Drops",
       "description": null,
       "thumbnail": "https://i.ytimg.com/vi/YVMu7HGwPaU/default.jpg",
@@ -21551,7 +21697,7 @@
       "channelName": "夢追翔のJUKE BOX",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "male",
       "languages": [
         "ja"
       ],
@@ -22126,7 +22272,7 @@
       "channelName": "エリー・コニファー",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
@@ -23149,6 +23295,53 @@
       "source": "api",
       "addedAt": "2026-10-31T03:16:16.423Z",
       "updatedAt": "2026-11-02T11:59:31.129Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "X1ZuXbIUIEE",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCSUOEmvQLKPdiRnUgmHYX2g",
+      "channelName": "黑桐亚里亚",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "zh-Hans"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "𖧷 ғʀᴇᴇ ᴄʜᴀᴛ ┊今週の予定や黒猫家の居場所👑🐾",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/X1ZuXbIUIEE/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2027-03-21T14:45:00.000Z",
+      "actualStart": null,
+      "isMember": false,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCSUOEmvQLKPdiRnUgmHYX2g",
+          "name": "黑桐亚里亚",
+          "kind": "virtual",
+          "region": "cn"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-24T20:46:02.237Z",
+      "updatedAt": "2026-11-02T11:59:34.145Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },

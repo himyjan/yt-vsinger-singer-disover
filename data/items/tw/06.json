@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T05:11:58.713Z",
+  "generatedAt": "2026-11-27T14:18:38.980Z",
   "items": [
     {
       "id": "DnKuBZ1PzmE",
@@ -2846,6 +2846,100 @@
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.042Z",
       "updatedAt": "2026-11-02T11:59:34.145Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "316780638834",
+      "platform": "twitch",
+      "type": "live",
+      "channelId": "UC-tU5iB1NTY6XSaPZt3GCww",
+      "channelName": "棉羽‧尤克特拉希爾 Mianyu·Yggdrasill Ch.",
+      "channelKind": "virtual",
+      "region": "tw",
+      "gender": "female",
+      "languages": [
+        "zh-Hant"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "【#啾棉電波室|雜談台】網路怪奇你我也，問問東西來是非  EP35  #VTuber #初見歡迎 #雜談",
+      "description": null,
+      "thumbnail": null,
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "isMember": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC-tU5iB1NTY6XSaPZt3GCww",
+          "name": "棉羽‧尤克特拉希爾 Mianyu·Yggdrasill Ch.",
+          "kind": "virtual",
+          "region": "tw"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": 11,
+      "source": "api",
+      "addedAt": "2026-11-27T14:18:38.980Z",
+      "updatedAt": "2026-11-27T14:18:38.980Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "316781208946",
+      "platform": "twitch",
+      "type": "live",
+      "channelId": "UC_Py7Vm5J6G8p9SPnFSjaqw",
+      "channelName": "紅葉谷いつき♦♦Momijiya Itsuki",
+      "channelKind": "virtual",
+      "region": "tw",
+      "gender": "unknown",
+      "languages": [
+        "zh-Hant"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "【】畫圖!【紅葉谷いつき/紅葉谷幾月】 !DC",
+      "description": null,
+      "thumbnail": null,
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "isMember": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC_Py7Vm5J6G8p9SPnFSjaqw",
+          "name": "紅葉谷いつき♦♦Momijiya Itsuki",
+          "kind": "virtual",
+          "region": "tw"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": 3,
+      "source": "api",
+      "addedAt": "2026-11-27T14:18:38.980Z",
+      "updatedAt": "2026-11-27T14:18:38.980Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },

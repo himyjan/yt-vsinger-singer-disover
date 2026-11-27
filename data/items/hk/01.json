@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T05:11:58.713Z",
+  "generatedAt": "2026-11-27T14:18:38.980Z",
   "items": [
     {
       "id": "25wkOy0dA04",
@@ -890,6 +890,53 @@
       "source": "api",
       "addedAt": "2026-10-31T03:16:19.448Z",
       "updatedAt": "2026-11-27T04:48:32.102Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "315754969456",
+      "platform": "twitch",
+      "type": "live",
+      "channelId": "UC09mAbVFHcq950SfN_growA",
+      "channelName": "奶茶 • 米爾珂Ch.",
+      "channelKind": "virtual",
+      "region": "hk",
+      "gender": "unknown",
+      "languages": [
+        "yue"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "【紫勾勾努力中】跟三個可愛寶一起去露營囉owo || @mirutea_vtuber || 中文台 @kayin1014 @fifi_vtuber @nanashiyuki_ch",
+      "description": null,
+      "thumbnail": null,
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "isMember": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC09mAbVFHcq950SfN_growA",
+          "name": "奶茶 • 米爾珂Ch.",
+          "kind": "virtual",
+          "region": "hk"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": 13,
+      "source": "api",
+      "addedAt": "2026-11-27T14:18:38.980Z",
+      "updatedAt": "2026-11-27T14:18:38.980Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },

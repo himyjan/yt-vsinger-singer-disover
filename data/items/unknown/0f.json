@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T05:11:58.713Z",
+  "generatedAt": "2026-11-27T14:18:38.980Z",
   "items": [
     {
       "id": "322618969563",
@@ -1987,6 +1987,53 @@
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.567Z",
       "updatedAt": "2026-11-02T11:59:39.129Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "kpKOr0LSClY",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCcgDP2RmeCqW1GTms1mkUlQ",
+      "channelName": "Karu Ch.【ARP】",
+      "channelKind": "virtual",
+      "region": "unknown",
+      "gender": "unknown",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "📢FreeChat 🎀 เอาไว้บ่นคิดถึงเอาไว้คุยเล่นนนะ",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/kpKOr0LSClY/hq720.jpg",
+      "publishedAt": null,
+      "scheduledStart": "2028-10-23T17:00:00.000Z",
+      "actualStart": null,
+      "isMember": false,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCcgDP2RmeCqW1GTms1mkUlQ",
+          "name": "Karu Ch.【ARP】",
+          "kind": "virtual",
+          "region": "sea"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-31T03:16:33.129Z",
+      "updatedAt": "2026-11-02T11:59:30.570Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },

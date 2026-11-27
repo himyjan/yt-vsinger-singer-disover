@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T05:11:58.713Z",
+  "generatedAt": "2026-11-27T14:18:38.980Z",
   "items": [
     {
       "id": "6aEdTUbzVkQ",
@@ -856,7 +856,7 @@
       "channelName": "鈴木勝",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
@@ -4193,7 +4193,7 @@
       "channelName": "もう一度だけVTuberやってもいい? 🅥",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "male",
       "languages": [
         "ja"
       ],
@@ -4522,7 +4522,7 @@
       "channelName": "千草はな",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
@@ -5133,7 +5133,7 @@
       "channelName": "千草はな",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
@@ -5984,7 +5984,7 @@
         "ja"
       ],
       "isAi": false,
-      "variant": "vtuber",
+      "variant": "vsinger",
       "title": "【#雑談】シェルとまったりお話ししよ？初見さんもお気軽に！【#海月シェル /vtuber 】",
       "description": null,
       "thumbnail": "https://i.ytimg.com/vi/73snFkRjnZA/hq720.jpg",
@@ -6391,53 +6391,6 @@
       "source": "api",
       "addedAt": "2026-11-02T11:59:38.249Z",
       "updatedAt": "2026-11-26T23:49:33.240Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "O2xgpiExWMw",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCgeR64r5PraIX7Y2j5VK4Pw",
-      "channelName": "よもぎ",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "【APEX】フルパランクで目指せダイヤ！？ 初見さん大歓迎!!※概要欄チェック【Vtuber】",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/O2xgpiExWMw/hq720.jpg",
-      "publishedAt": "2026-11-02T12:10:00.000Z",
-      "scheduledStart": "2026-11-02T12:10:00.000Z",
-      "actualStart": null,
-      "isMember": false,
-      "actualEnd": "2026-11-26T23:49:54.532Z",
-      "duration": null,
-      "status": "past",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCgeR64r5PraIX7Y2j5VK4Pw",
-          "name": "よもぎ",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-11-02T11:59:34.145Z",
-      "updatedAt": "2026-11-26T23:49:54.532Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -8787,6 +8740,53 @@
       "source": "api",
       "addedAt": "2026-10-31T03:16:24.029Z",
       "updatedAt": "2026-11-01T13:12:43.908Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "WPb5Lv5vzsM",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCSUOEmvQLKPdiRnUgmHYX2g",
+      "channelName": "黑桐亚里亚",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "zh-Hans"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "〖 真・女神転生┊SFC版 〗メガテンについて勉強したい…ᐟ.ᐟ教えてくださいᐟ.ᐟ※ストーリー進行ネタバレ禁止【#黒桐アリア┊#Vtuber】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/WPb5Lv5vzsM/hq720.jpg",
+      "publishedAt": "2026-11-01T12:00:00.000Z",
+      "scheduledStart": "2026-11-01T12:00:00.000Z",
+      "actualStart": null,
+      "isMember": false,
+      "actualEnd": "2026-11-01T13:12:49.469Z",
+      "duration": 4369,
+      "status": "past",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCSUOEmvQLKPdiRnUgmHYX2g",
+          "name": "黑桐亚里亚",
+          "kind": "virtual",
+          "region": "cn"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-01T05:52:24.736Z",
+      "updatedAt": "2026-11-01T13:12:49.469Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -13781,12 +13781,12 @@
       "channelName": "凛々咲 / Ririsya",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "female",
+      "gender": "unknown",
       "languages": [
         "ja"
       ],
       "isAi": false,
-      "variant": "female_vtuber",
+      "variant": "vtuber",
       "title": "【 #ぶいせかマイクラ  】Day3 ✧ 初のPvPイベント！ボコボコにするぞ ✧ First PvP Event!【 VTuber / #凛々咲 #Ririsya 】",
       "description": null,
       "thumbnail": "https://i.ytimg.com/vi/qPbnW7Uq5Jo/hq720.jpg",
@@ -15516,7 +15516,7 @@
       "channelName": "長尾景",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
@@ -18508,7 +18508,7 @@
       "channelName": "甲斐田 晴 / Kaida Haru【にじさんじ】",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
@@ -18808,7 +18808,7 @@
       "channelName": "夢追翔のJUKE BOX",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "male",
       "languages": [
         "ja"
       ],
@@ -19058,7 +19058,7 @@
       "channelName": "緑仙 / Ryushen",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
@@ -19458,7 +19458,7 @@
       "channelName": "緑仙 / Ryushen",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
@@ -19858,12 +19858,12 @@
       "channelName": "桃瀬にな / Nina Momose",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "female",
+      "gender": "unknown",
       "languages": [
         "ja"
       ],
       "isAi": false,
-      "variant": "female_vsinger",
+      "variant": "vsinger",
       "title": "miraihenosorachizu",
       "description": null,
       "thumbnail": "https://i.ytimg.com/vi/stdYHL_RKQE/hqdefault.jpg",
@@ -19908,7 +19908,7 @@
       "channelName": "甲斐田 晴 / Kaida Haru【にじさんじ】",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
@@ -21350,7 +21350,7 @@
       "channelName": "来栖夏芽",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
@@ -21773,7 +21773,7 @@
       "channelName": "来栖夏芽",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "female",
       "languages": [
         "ja"
       ],
@@ -22102,7 +22102,7 @@
       "channelName": "胡桃沢りりか",
       "channelKind": "virtual",
       "region": "jp",
-      "gender": "unknown",
+      "gender": "male",
       "languages": [
         "ja"
       ],
