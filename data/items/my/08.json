@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T15:05:20.498Z",
+  "generatedAt": "2026-11-27T23:35:09.322Z",
   "items": [
     {
       "id": "FQEtgsxd39w",
@@ -49,6 +49,53 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "T4QKknrKTPg",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCWPr9RV_vUj-IxEw8qT11hw",
+      "channelName": "Kirisato Channelつはらきりさと",
+      "channelKind": "virtual",
+      "region": "my",
+      "gender": "female",
+      "languages": [
+        "ms"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "[🔴LIVE]story of season~~",
+      "description": null,
+      "thumbnail": null,
+      "publishedAt": "2026-11-27T23:15:25.843Z",
+      "scheduledStart": null,
+      "actualStart": null,
+      "isMember": null,
+      "actualEnd": "2026-11-27T23:15:25.843Z",
+      "duration": 0,
+      "status": "past",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCWPr9RV_vUj-IxEw8qT11hw",
+          "name": "Kirisato Channelつはらきりさと",
+          "kind": "virtual",
+          "region": "my"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T14:43:54.264Z",
+      "updatedAt": "2026-11-27T23:15:25.843Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "316404770410",
       "platform": "twitch",
       "url": "https://twitch.tv/ayasunrise_",
@@ -69,9 +116,9 @@
       "publishedAt": "2026-11-27T12:25:18Z",
       "scheduledStart": "2026-11-27T12:25:18Z",
       "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "live",
+      "actualEnd": "2026-11-27T23:15:31.872Z",
+      "duration": 39013,
+      "status": "past",
       "category": "live",
       "songTitle": null,
       "originalArtist": null,
@@ -91,7 +138,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-27T14:43:59.275Z",
-      "updatedAt": "2026-11-27T14:43:59.275Z",
+      "updatedAt": "2026-11-27T23:15:31.872Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -116,9 +163,9 @@
       "publishedAt": "2026-11-27T11:39:30Z",
       "scheduledStart": "2026-11-27T11:39:30Z",
       "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "live",
+      "actualEnd": "2026-11-27T23:15:47.118Z",
+      "duration": 41777,
+      "status": "past",
       "category": "live",
       "songTitle": null,
       "originalArtist": null,
@@ -144,7 +191,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-27T14:43:59.055Z",
-      "updatedAt": "2026-11-27T14:43:59.055Z",
+      "updatedAt": "2026-11-27T23:15:47.118Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -424,53 +471,6 @@
       "source": "api",
       "addedAt": "2026-10-30T04:35:35.383Z",
       "updatedAt": "2026-11-02T11:59:32.231Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "T4QKknrKTPg",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCWPr9RV_vUj-IxEw8qT11hw",
-      "channelName": "Kirisato Channelつはらきりさと",
-      "channelKind": "virtual",
-      "region": "my",
-      "gender": "female",
-      "languages": [
-        "ms"
-      ],
-      "isAi": false,
-      "variant": "female_vtuber",
-      "title": "[🔴LIVE]story of season~~",
-      "description": null,
-      "thumbnail": null,
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "isMember": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "live",
-      "category": "live",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCWPr9RV_vUj-IxEw8qT11hw",
-          "name": "Kirisato Channelつはらきりさと",
-          "kind": "virtual",
-          "region": "my"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-11-27T14:43:54.264Z",
-      "updatedAt": "2026-11-27T14:43:54.264Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

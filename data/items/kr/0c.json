@@ -1,7 +1,101 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-02T06:05:42.365Z",
+  "generatedAt": "2026-11-27T23:35:09.322Z",
   "items": [
+    {
+      "id": "321334782558",
+      "platform": "twitch",
+      "url": "https://twitch.tv/genevieve_xoo",
+      "type": "live",
+      "channelId": "UCHX4Bvbd551UKFOMo4Gq-Hg",
+      "channelName": "GenevieveXO",
+      "channelKind": "virtual",
+      "region": "kr",
+      "gender": "female",
+      "languages": [
+        "ko"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "We're sick so we'll play a scawy game then Baby Tenno grind. | !spin !sounds",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_genevieve_xoo-640x360.jpg",
+      "publishedAt": "2026-11-27T22:14:59Z",
+      "scheduledStart": "2026-11-27T22:14:59Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCHX4Bvbd551UKFOMo4Gq-Hg",
+          "name": "GenevieveXO",
+          "kind": "virtual",
+          "region": "kr"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 3,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T23:15:29.995Z",
+      "updatedAt": "2026-11-27T23:15:29.995Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "317978093815",
+      "platform": "twitch",
+      "url": "https://twitch.tv/ojojisan",
+      "type": "live",
+      "channelId": "UCD2OMo3GEqaraw6P-XzwKsA",
+      "channelName": "오조오지상",
+      "channelKind": "virtual",
+      "region": "kr",
+      "gender": "unknown",
+      "languages": [
+        "ko"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "【Minecraft】 Today is the black Friday!! What are you getting? !discord !twitter !디스코드",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_ojojisan-640x360.jpg",
+      "publishedAt": "2026-11-27T18:52:45Z",
+      "scheduledStart": "2026-11-27T18:52:45Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCD2OMo3GEqaraw6P-XzwKsA",
+          "name": "오조오지상",
+          "kind": "virtual",
+          "region": "kr"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 1,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T23:15:47.118Z",
+      "updatedAt": "2026-11-27T23:15:47.118Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
     {
       "id": "tSudVDPvQak",
       "platform": "youtube",

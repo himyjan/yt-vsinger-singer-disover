@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T15:05:20.498Z",
+  "generatedAt": "2026-11-27T23:35:09.322Z",
   "items": [
     {
       "id": "cqVcci7PQN4",
@@ -93,6 +93,53 @@
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.567Z",
       "updatedAt": "2026-11-26T23:49:36.908Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "01qWBzusPWY",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCwFDleRWnE7jXvPvntrwjIQ",
+      "channelName": "凌仲【香港VTuber】",
+      "channelKind": "virtual",
+      "region": "hk",
+      "gender": "unknown",
+      "languages": [
+        "yue"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "深宵細聽 # 232【香港VTuber/凌仲】",
+      "description": null,
+      "thumbnail": null,
+      "publishedAt": "2026-11-27T23:15:25.843Z",
+      "scheduledStart": null,
+      "actualStart": null,
+      "isMember": null,
+      "actualEnd": "2026-11-27T23:15:25.843Z",
+      "duration": 0,
+      "status": "past",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCwFDleRWnE7jXvPvntrwjIQ",
+          "name": "凌仲【香港VTuber】",
+          "kind": "virtual",
+          "region": "hk"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-26T23:49:29.115Z",
+      "updatedAt": "2026-11-27T23:15:25.843Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -706,53 +753,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "01qWBzusPWY",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCwFDleRWnE7jXvPvntrwjIQ",
-      "channelName": "凌仲【香港VTuber】",
-      "channelKind": "virtual",
-      "region": "hk",
-      "gender": "unknown",
-      "languages": [
-        "yue"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "深宵細聽 # 232【香港VTuber/凌仲】",
-      "description": null,
-      "thumbnail": null,
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "isMember": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "live",
-      "category": "live",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCwFDleRWnE7jXvPvntrwjIQ",
-          "name": "凌仲【香港VTuber】",
-          "kind": "virtual",
-          "region": "hk"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-11-26T23:49:29.115Z",
-      "updatedAt": "2026-11-27T14:43:54.264Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "0e-vTwY9jmQ",
       "platform": "youtube",
       "type": "live",
@@ -795,7 +795,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.567Z",
-      "updatedAt": "2026-11-27T14:44:02.595Z",
+      "updatedAt": "2026-11-27T23:15:29.995Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -936,7 +936,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:22.173Z",
-      "updatedAt": "2026-11-27T14:44:02.999Z",
+      "updatedAt": "2026-11-27T23:15:34.053Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },

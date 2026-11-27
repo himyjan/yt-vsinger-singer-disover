@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T15:05:20.498Z",
+  "generatedAt": "2026-11-27T23:35:09.322Z",
   "items": [
     {
       "id": "l8ZkSW7XTvM",
@@ -561,7 +561,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:17.489Z",
-      "updatedAt": "2026-11-27T14:44:03.304Z",
+      "updatedAt": "2026-11-27T23:15:32.572Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -609,6 +609,53 @@
       "source": "api",
       "addedAt": "2026-11-01T04:35:27.571Z",
       "updatedAt": "2026-11-02T11:59:38.249Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "Nq1c2DYRAsM",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCi6dB0VEiJV7kSNKyIpYbUA",
+      "channelName": "Pearlie",
+      "channelKind": "virtual",
+      "region": "hk",
+      "gender": "unknown",
+      "languages": [
+        "yue"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "ᗢᘏᓗ  WUWA - YangYang!  &amp; Chill Lofi ! || !vgen !discord [Eng./中]",
+      "description": null,
+      "thumbnail": null,
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "isMember": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": "ᗢᘏᓗ WUWA",
+      "originalArtist": "YangYang! &amp; Chill Lofi ! || !vgen !discord [Eng./中]",
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCi6dB0VEiJV7kSNKyIpYbUA",
+          "name": "Pearlie",
+          "kind": "virtual",
+          "region": "hk"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T23:15:34.053Z",
+      "updatedAt": "2026-11-27T23:15:34.053Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

@@ -1,7 +1,54 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T15:05:20.498Z",
+  "generatedAt": "2026-11-27T23:35:09.322Z",
   "items": [
+    {
+      "id": "zOwvCzVs0p0",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCgVejeoa338l2xxgg9cGtoQ",
+      "channelName": "Nazellia Ryoku",
+      "channelKind": "virtual",
+      "region": "id",
+      "gender": "female",
+      "languages": [
+        "id"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "💼【 Goose Goose Duck 】 &quot;FITNAAAAHHH!&quot; | Nazellia Ryoku [VTUBER ID]",
+      "description": null,
+      "thumbnail": null,
+      "publishedAt": "2026-11-27T23:15:31.815Z",
+      "scheduledStart": null,
+      "actualStart": null,
+      "isMember": null,
+      "actualEnd": "2026-11-27T23:15:31.815Z",
+      "duration": 0,
+      "status": "past",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCgVejeoa338l2xxgg9cGtoQ",
+          "name": "Nazellia Ryoku",
+          "kind": "virtual",
+          "region": "id"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T14:44:11.832Z",
+      "updatedAt": "2026-11-27T23:15:31.815Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
     {
       "id": "316351745128",
       "platform": "twitch",
@@ -23,9 +70,9 @@
       "publishedAt": "2026-11-27T13:59:05Z",
       "scheduledStart": "2026-11-27T13:59:05Z",
       "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "live",
+      "actualEnd": "2026-11-27T23:15:31.721Z",
+      "duration": 33386,
+      "status": "past",
       "category": "live",
       "songTitle": null,
       "originalArtist": null,
@@ -45,7 +92,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-27T14:43:52.802Z",
-      "updatedAt": "2026-11-27T14:43:52.802Z",
+      "updatedAt": "2026-11-27T23:15:31.721Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -610,6 +657,53 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "-T4-5BANREg",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UC9urgZLNWgmarAqrjZApRWA",
+      "channelName": "madison pikes",
+      "channelKind": "virtual",
+      "region": "id",
+      "gender": "unknown",
+      "languages": [
+        "id"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "[open lobby] quarreling w/ ur gf simulator | Tekken 8",
+      "description": null,
+      "thumbnail": null,
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "isMember": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": true,
+      "collaborators": [
+        {
+          "channelId": "UC9urgZLNWgmarAqrjZApRWA",
+          "name": "madison pikes",
+          "kind": "virtual",
+          "region": "id"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T23:15:47.118Z",
+      "updatedAt": "2026-11-27T23:15:47.118Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "2l-n8DxrYKw",
       "platform": "youtube",
       "type": "live",
@@ -700,53 +794,6 @@
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.180Z",
       "updatedAt": "2026-11-02T11:59:38.335Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "zOwvCzVs0p0",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCgVejeoa338l2xxgg9cGtoQ",
-      "channelName": "Nazellia Ryoku",
-      "channelKind": "virtual",
-      "region": "id",
-      "gender": "female",
-      "languages": [
-        "id"
-      ],
-      "isAi": false,
-      "variant": "female_vtuber",
-      "title": "💼【 Goose Goose Duck 】 &quot;FITNAAAAHHH!&quot; | Nazellia Ryoku [VTUBER ID]",
-      "description": null,
-      "thumbnail": null,
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "isMember": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "live",
-      "category": "live",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCgVejeoa338l2xxgg9cGtoQ",
-          "name": "Nazellia Ryoku",
-          "kind": "virtual",
-          "region": "id"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-11-27T14:44:11.832Z",
-      "updatedAt": "2026-11-27T14:44:11.832Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

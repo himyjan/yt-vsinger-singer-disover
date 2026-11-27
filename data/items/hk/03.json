@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T15:05:20.498Z",
+  "generatedAt": "2026-11-27T23:35:09.322Z",
   "items": [
     {
       "id": "sRtGwrU6mtc",
@@ -50,6 +50,53 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "UnKq4_gqJT0",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCk6E2jIdJJXz4ch6HvUyzEg",
+      "channelName": "夜瀬ゆうと - Yoruse Yuuto",
+      "channelKind": "virtual",
+      "region": "hk",
+      "gender": "unknown",
+      "languages": [
+        "yue"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "【歌回】Karaoke (AGV)【夜瀬ゆうと/HKVtuber】",
+      "description": null,
+      "thumbnail": null,
+      "publishedAt": "2026-11-27T23:15:34.053Z",
+      "scheduledStart": null,
+      "actualStart": null,
+      "isMember": null,
+      "actualEnd": "2026-11-27T23:15:34.053Z",
+      "duration": 0,
+      "status": "past",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCk6E2jIdJJXz4ch6HvUyzEg",
+          "name": "夜瀬ゆうと - Yoruse Yuuto",
+          "kind": "virtual",
+          "region": "hk"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-26T23:49:45.482Z",
+      "updatedAt": "2026-11-27T23:15:34.053Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "316405136106",
       "platform": "twitch",
       "url": "https://twitch.tv/yuterri",
@@ -70,9 +117,9 @@
       "publishedAt": "2026-11-27T13:48:13Z",
       "scheduledStart": "2026-11-27T13:48:13Z",
       "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "live",
+      "actualEnd": "2026-11-27T23:15:47.118Z",
+      "duration": 34054,
+      "status": "past",
       "category": "live",
       "songTitle": null,
       "originalArtist": null,
@@ -92,7 +139,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-27T14:43:59.055Z",
-      "updatedAt": "2026-11-27T14:43:59.055Z",
+      "updatedAt": "2026-11-27T23:15:47.118Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -1030,53 +1077,6 @@
       "source": "api",
       "addedAt": "2026-11-27T14:43:59.055Z",
       "updatedAt": "2026-11-27T14:43:59.055Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "UnKq4_gqJT0",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCk6E2jIdJJXz4ch6HvUyzEg",
-      "channelName": "夜瀬ゆうと - Yoruse Yuuto",
-      "channelKind": "virtual",
-      "region": "hk",
-      "gender": "unknown",
-      "languages": [
-        "yue"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "【歌回】Karaoke (AGV)【夜瀬ゆうと/HKVtuber】",
-      "description": null,
-      "thumbnail": null,
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "isMember": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "live",
-      "category": "live",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCk6E2jIdJJXz4ch6HvUyzEg",
-          "name": "夜瀬ゆうと - Yoruse Yuuto",
-          "kind": "virtual",
-          "region": "hk"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-11-26T23:49:45.482Z",
-      "updatedAt": "2026-11-27T14:44:02.999Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },

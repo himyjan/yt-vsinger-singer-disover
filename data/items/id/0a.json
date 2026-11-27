@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T15:05:20.498Z",
+  "generatedAt": "2026-11-27T23:35:09.322Z",
   "items": [
     {
       "id": "BsZTghe0qxI",
@@ -50,6 +50,53 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "rT04FEd_c3c",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCDqG-onHdYDniXUL6gUg-ZA",
+      "channelName": "Arusha Pendragon",
+      "channelKind": "virtual",
+      "region": "id",
+      "gender": "unknown",
+      "languages": [
+        "id"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "Learning How to Draw - Day 194",
+      "description": null,
+      "thumbnail": null,
+      "publishedAt": "2026-11-27T23:15:29.995Z",
+      "scheduledStart": null,
+      "actualStart": null,
+      "isMember": null,
+      "actualEnd": "2026-11-27T23:15:29.995Z",
+      "duration": 0,
+      "status": "past",
+      "category": "live",
+      "songTitle": "Learning How to Draw",
+      "originalArtist": "Day 194",
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCDqG-onHdYDniXUL6gUg-ZA",
+          "name": "Arusha Pendragon",
+          "kind": "virtual",
+          "region": "id"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T14:44:02.595Z",
+      "updatedAt": "2026-11-27T23:15:29.995Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "316404989418",
       "platform": "twitch",
       "url": "https://twitch.tv/dodosama_vt",
@@ -70,9 +117,9 @@
       "publishedAt": "2026-11-27T13:16:41Z",
       "scheduledStart": "2026-11-27T13:16:41Z",
       "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "live",
+      "actualEnd": "2026-11-27T23:15:47.118Z",
+      "duration": 35946,
+      "status": "past",
       "category": "live",
       "songTitle": null,
       "originalArtist": null,
@@ -92,7 +139,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-27T14:43:59.055Z",
-      "updatedAt": "2026-11-27T14:43:59.055Z",
+      "updatedAt": "2026-11-27T23:15:47.118Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -117,9 +164,9 @@
       "publishedAt": "2026-11-27T12:34:30Z",
       "scheduledStart": "2026-11-27T12:34:30Z",
       "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "live",
+      "actualEnd": "2026-11-27T23:15:25.843Z",
+      "duration": 38455,
+      "status": "past",
       "category": "live",
       "songTitle": null,
       "originalArtist": null,
@@ -139,7 +186,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-27T14:43:54.264Z",
-      "updatedAt": "2026-11-27T14:43:54.264Z",
+      "updatedAt": "2026-11-27T23:15:25.843Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -1029,7 +1076,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-11-27T14:43:52.802Z",
+      "updatedAt": "2026-11-27T23:15:31.721Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -1124,53 +1171,6 @@
       "source": "api",
       "addedAt": "2026-10-31T03:16:16.423Z",
       "updatedAt": "2026-11-02T11:59:31.129Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "rT04FEd_c3c",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCDqG-onHdYDniXUL6gUg-ZA",
-      "channelName": "Arusha Pendragon",
-      "channelKind": "virtual",
-      "region": "id",
-      "gender": "unknown",
-      "languages": [
-        "id"
-      ],
-      "isAi": false,
-      "variant": "unknown",
-      "title": "Learning How to Draw - Day 194",
-      "description": null,
-      "thumbnail": null,
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "isMember": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "live",
-      "category": "live",
-      "songTitle": "Learning How to Draw",
-      "originalArtist": "Day 194",
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCDqG-onHdYDniXUL6gUg-ZA",
-          "name": "Arusha Pendragon",
-          "kind": "virtual",
-          "region": "id"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-11-27T14:44:02.595Z",
-      "updatedAt": "2026-11-27T14:44:02.595Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

@@ -1,7 +1,54 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T15:05:20.498Z",
+  "generatedAt": "2026-11-27T23:35:09.322Z",
   "items": [
+    {
+      "id": "PoHghGKU55Q",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCwgs92GpoFzAEG4QHLgEuRA",
+      "channelName": "Adelaide Ch.",
+      "channelKind": "virtual",
+      "region": "id",
+      "gender": "female",
+      "languages": [
+        "id"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "CF23 PO BAJU HANDUK MUG HEHE",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/PoHghGKU55Q/hq720.jpg",
+      "publishedAt": "2027-06-16T05:00:00.000Z",
+      "scheduledStart": "2027-06-16T05:00:00.000Z",
+      "actualStart": null,
+      "isMember": null,
+      "actualEnd": "2026-11-27T23:15:34.053Z",
+      "duration": -17300666,
+      "status": "past",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCwgs92GpoFzAEG4QHLgEuRA",
+          "name": "Adelaide Ch.",
+          "kind": "virtual",
+          "region": "id"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-31T03:16:25.456Z",
+      "updatedAt": "2026-11-27T23:15:34.053Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
     {
       "id": "WPJtlxR2uIE",
       "platform": "youtube",
@@ -865,7 +912,7 @@
       "publishedAt": null,
       "scheduledStart": "2027-01-17T13:00:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -888,54 +935,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:19.448Z",
-      "updatedAt": "2026-11-02T11:59:38.249Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "PoHghGKU55Q",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCwgs92GpoFzAEG4QHLgEuRA",
-      "channelName": "Adelaide Ch.",
-      "channelKind": "virtual",
-      "region": "id",
-      "gender": "female",
-      "languages": [
-        "id"
-      ],
-      "isAi": false,
-      "variant": "female_vtuber",
-      "title": "CF23 PO BAJU HANDUK MUG HEHE",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/PoHghGKU55Q/hq720.jpg",
-      "publishedAt": null,
-      "scheduledStart": "2027-06-16T05:00:00.000Z",
-      "actualStart": null,
-      "isMember": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "upcoming",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCwgs92GpoFzAEG4QHLgEuRA",
-          "name": "Adelaide Ch.",
-          "kind": "virtual",
-          "region": "id"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-31T03:16:25.456Z",
-      "updatedAt": "2026-11-27T14:44:02.999Z",
+      "updatedAt": "2026-11-27T23:15:31.872Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -982,7 +982,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.228Z",
-      "updatedAt": "2026-11-27T14:43:54.264Z",
+      "updatedAt": "2026-11-27T23:15:25.843Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -1029,7 +1029,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.256Z",
-      "updatedAt": "2026-11-27T14:43:59.055Z",
+      "updatedAt": "2026-11-27T23:15:47.118Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

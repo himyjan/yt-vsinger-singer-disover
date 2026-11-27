@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T15:05:20.498Z",
+  "generatedAt": "2026-11-27T23:35:09.322Z",
   "items": [
     {
       "id": "316403719786",
@@ -23,9 +23,9 @@
       "publishedAt": "2026-11-27T08:22:44Z",
       "scheduledStart": "2026-11-27T08:22:44Z",
       "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "live",
+      "actualEnd": "2026-11-27T23:15:31.815Z",
+      "duration": 53567,
+      "status": "past",
       "category": "live",
       "songTitle": null,
       "originalArtist": null,
@@ -45,7 +45,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-27T14:44:11.832Z",
-      "updatedAt": "2026-11-27T14:44:11.832Z",
+      "updatedAt": "2026-11-27T23:15:31.815Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -70,9 +70,9 @@
       "publishedAt": "2026-11-27T07:07:21Z",
       "scheduledStart": "2026-11-27T07:07:21Z",
       "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "live",
+      "actualEnd": "2026-11-27T23:15:31.872Z",
+      "duration": 58090,
+      "status": "past",
       "category": "live",
       "songTitle": null,
       "originalArtist": null,
@@ -92,7 +92,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-27T14:43:59.275Z",
-      "updatedAt": "2026-11-27T14:43:59.275Z",
+      "updatedAt": "2026-11-27T23:15:31.872Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
