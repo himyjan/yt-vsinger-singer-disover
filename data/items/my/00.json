@@ -1,7 +1,54 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T05:11:58.713Z",
+  "generatedAt": "2026-11-27T15:05:20.498Z",
   "items": [
+    {
+      "id": "316404915178",
+      "platform": "twitch",
+      "url": "https://twitch.tv/yuzudou",
+      "type": "live",
+      "channelId": "UCU01yoju5rD4GsflNUGdN0A",
+      "channelName": "yuzudou ch.",
+      "channelKind": "virtual",
+      "region": "my",
+      "gender": "female",
+      "languages": [
+        "ms"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "⟡ ݁₊ whoops i unfingered u! |  !discord !socials !leaks !lurk",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_yuzudou-640x360.jpg",
+      "publishedAt": "2026-11-27T12:59:38Z",
+      "scheduledStart": "2026-11-27T12:59:38Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCU01yoju5rD4GsflNUGdN0A",
+          "name": "yuzudou ch.",
+          "kind": "virtual",
+          "region": "my"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 13,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T14:43:59.275Z",
+      "updatedAt": "2026-11-27T14:43:59.275Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
     {
       "id": "322491328986",
       "platform": "twitch",
@@ -23,9 +70,9 @@
       "publishedAt": "2026-11-27T05:01:00Z",
       "scheduledStart": "2026-11-27T05:01:00Z",
       "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "live",
+      "actualEnd": "2026-11-27T14:43:52.802Z",
+      "duration": 34972,
+      "status": "past",
       "category": "live",
       "songTitle": null,
       "originalArtist": null,
@@ -45,7 +92,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-27T04:48:42.502Z",
-      "updatedAt": "2026-11-27T04:48:42.502Z",
+      "updatedAt": "2026-11-27T14:43:52.802Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -185,7 +232,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:21.011Z",
-      "updatedAt": "2026-11-27T04:48:36.197Z",
+      "updatedAt": "2026-11-27T14:44:02.595Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T05:11:58.713Z",
+  "generatedAt": "2026-11-27T15:05:20.498Z",
   "items": [
     {
       "id": "D-9IjSX594I",
@@ -93,6 +93,53 @@
       "source": "api",
       "addedAt": "2026-10-31T03:16:26.922Z",
       "updatedAt": "2026-11-26T23:49:36.908Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "316351661928",
+      "platform": "twitch",
+      "url": "https://twitch.tv/sarawrnyan",
+      "type": "live",
+      "channelId": "UC8aIOmXoudKm1_4cA4fT5QA",
+      "channelName": "🌺Sara Nyan🌺",
+      "channelKind": "virtual",
+      "region": "my",
+      "gender": "female",
+      "languages": [
+        "ms"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "SANBAKA Podcast Season 2 | Episode 7| Would you rather?",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_sarawrnyan-640x360.jpg",
+      "publishedAt": "2026-11-27T13:35:10Z",
+      "scheduledStart": "2026-11-27T13:35:10Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC8aIOmXoudKm1_4cA4fT5QA",
+          "name": "🌺Sara Nyan🌺",
+          "kind": "virtual",
+          "region": "my"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 10,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T14:43:54.264Z",
+      "updatedAt": "2026-11-27T14:43:54.264Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -511,7 +558,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.180Z",
-      "updatedAt": "2026-11-27T04:48:42.671Z",
+      "updatedAt": "2026-11-27T14:44:02.999Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T05:11:58.713Z",
+  "generatedAt": "2026-11-27T15:05:20.498Z",
   "items": [
     {
       "id": "_DETkWcliK0",
@@ -281,6 +281,147 @@
       "source": "api",
       "addedAt": "2026-10-31T03:16:33.129Z",
       "updatedAt": "2026-11-26T23:49:36.908Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "316404933738",
+      "platform": "twitch",
+      "url": "https://twitch.tv/mayumin0426",
+      "type": "live",
+      "channelId": "UC7giliMJeLyow68hd_i0DpA",
+      "channelName": "Mayumin Ch.繭眠",
+      "channelKind": "virtual",
+      "region": "tw",
+      "gender": "unknown",
+      "languages": [
+        "zh-Hant"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "【不一樣的景色】位於史特拉斯堡的哥德式建築超漂亮教堂 #44",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_mayumin0426-640x360.jpg",
+      "publishedAt": "2026-11-27T13:03:38Z",
+      "scheduledStart": "2026-11-27T13:03:38Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC7giliMJeLyow68hd_i0DpA",
+          "name": "Mayumin Ch.繭眠",
+          "kind": "virtual",
+          "region": "tw"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 8,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T14:44:02.999Z",
+      "updatedAt": "2026-11-27T14:44:02.999Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "316842882803",
+      "platform": "twitch",
+      "url": "https://twitch.tv/frost_0314",
+      "type": "live",
+      "channelId": "UCISi8gsc3t_YszQR3E3rqoQ",
+      "channelName": "霜霜花",
+      "channelKind": "virtual",
+      "region": "tw",
+      "gender": "unknown",
+      "languages": [
+        "zh-Hant"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "【霜霜花】明天是我得母難日",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_frost_0314-640x360.jpg",
+      "publishedAt": "2026-11-27T12:55:08Z",
+      "scheduledStart": "2026-11-27T12:55:08Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCISi8gsc3t_YszQR3E3rqoQ",
+          "name": "霜霜花",
+          "kind": "virtual",
+          "region": "tw"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 6,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T14:44:11.832Z",
+      "updatedAt": "2026-11-27T14:44:11.832Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "316378684393",
+      "platform": "twitch",
+      "url": "https://twitch.tv/hulicfox",
+      "type": "live",
+      "channelId": "UCQliAYOoHUlvZJWXbHTv5XA",
+      "channelName": "胡狸Cfox",
+      "channelKind": "virtual",
+      "region": "tw",
+      "gender": "unknown",
+      "languages": [
+        "zh-Hant"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "瓦瓦启动~一周年倒数10天~ | 1127 | 联动欢迎 | 拼紫勾勾 歡迎揪團ヾ(≧▽≦*)o | 头香-包卫",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_hulicfox-640x360.jpg",
+      "publishedAt": "2026-11-27T11:47:49Z",
+      "scheduledStart": "2026-11-27T11:47:49Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCQliAYOoHUlvZJWXbHTv5XA",
+          "name": "胡狸Cfox",
+          "kind": "virtual",
+          "region": "tw"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 4,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T14:44:02.595Z",
+      "updatedAt": "2026-11-27T14:44:02.595Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3314,7 +3455,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.228Z",
-      "updatedAt": "2026-11-27T04:48:49.083Z",
+      "updatedAt": "2026-11-27T14:43:54.264Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3455,7 +3596,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:21.011Z",
-      "updatedAt": "2026-11-27T04:48:36.197Z",
+      "updatedAt": "2026-11-27T14:44:02.595Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3549,7 +3690,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.042Z",
-      "updatedAt": "2026-11-27T04:48:35.090Z",
+      "updatedAt": "2026-11-27T14:44:03.304Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3596,7 +3737,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:27.340Z",
-      "updatedAt": "2026-11-27T04:48:42.502Z",
+      "updatedAt": "2026-11-27T14:43:52.802Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3643,7 +3784,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.042Z",
-      "updatedAt": "2026-11-27T04:48:35.090Z",
+      "updatedAt": "2026-11-27T14:44:03.304Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3996,7 +4137,7 @@
       "publishedAt": null,
       "scheduledStart": "2028-10-23T17:40:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -4019,7 +4160,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-11-02T11:59:34.145Z",
+      "updatedAt": "2026-11-27T14:43:54.264Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4067,6 +4208,53 @@
       "source": "api",
       "addedAt": "2026-11-01T23:32:25.371Z",
       "updatedAt": "2026-11-02T11:59:32.231Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "E4eCUb5LONU",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCINtjxX0IZnen8ixDwiYvTg",
+      "channelName": "Jelena De Lune",
+      "channelKind": "virtual",
+      "region": "tw",
+      "gender": "unknown",
+      "languages": [
+        "zh-Hant"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "Jelena De Lune的即時串流",
+      "description": null,
+      "thumbnail": null,
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "isMember": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCINtjxX0IZnen8ixDwiYvTg",
+          "name": "Jelena De Lune",
+          "kind": "virtual",
+          "region": "tw"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T14:43:59.275Z",
+      "updatedAt": "2026-11-27T14:43:59.275Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4395,7 +4583,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:22.173Z",
-      "updatedAt": "2026-11-27T04:48:32.102Z",
+      "updatedAt": "2026-11-27T14:43:59.275Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4442,7 +4630,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.042Z",
-      "updatedAt": "2026-11-27T04:48:35.090Z",
+      "updatedAt": "2026-11-27T14:44:03.304Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4771,7 +4959,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:27.340Z",
-      "updatedAt": "2026-11-27T04:48:42.502Z",
+      "updatedAt": "2026-11-27T14:43:52.802Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4865,7 +5053,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:16.423Z",
-      "updatedAt": "2026-11-27T04:48:36.197Z",
+      "updatedAt": "2026-11-27T14:44:02.595Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4959,7 +5147,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:27.693Z",
-      "updatedAt": "2026-11-27T04:48:42.671Z",
+      "updatedAt": "2026-11-27T14:44:02.999Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5006,7 +5194,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-11-27T04:48:32.102Z",
+      "updatedAt": "2026-11-27T14:43:59.275Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5429,7 +5617,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-11-27T04:48:45.146Z",
+      "updatedAt": "2026-11-27T14:43:59.055Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },

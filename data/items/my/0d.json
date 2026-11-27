@@ -1,7 +1,154 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T05:11:58.713Z",
+  "generatedAt": "2026-11-27T15:05:20.498Z",
   "items": [
+    {
+      "id": "316351802856",
+      "platform": "twitch",
+      "url": "https://twitch.tv/suyadesu",
+      "type": "live",
+      "channelId": "UCIvN7ayozTvsgsliLeGgVzg",
+      "channelName": "Suya Desu",
+      "channelKind": "virtual",
+      "region": "my",
+      "gender": "unknown",
+      "languages": [
+        "ms"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "[ Donothon Day 2 ] fortnite tonight || !socials !discord !customize !spawn !despawn",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_suyadesu-640x360.jpg",
+      "publishedAt": "2026-11-27T14:15:56Z",
+      "scheduledStart": "2026-11-27T14:15:56Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCIvN7ayozTvsgsliLeGgVzg",
+          "name": "Suya Desu",
+          "kind": "virtual",
+          "region": "my"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 6,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T14:43:59.275Z",
+      "updatedAt": "2026-11-27T14:43:59.275Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "316405139178",
+      "platform": "twitch",
+      "url": "https://twitch.tv/gamebonkerzofficial",
+      "type": "live",
+      "channelId": "UCT3x9xJEIoqSMdcLV94qbyg",
+      "channelName": "GameBonkerz",
+      "channelKind": "virtual",
+      "region": "my",
+      "gender": "unknown",
+      "languages": [
+        "ms"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "[ENG/MY] RIPPING DELTA REIGN BOOSTER BOX + Valheim | !discord | !collab | !voicemail | !cringe | !yt",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_gamebonkerzofficial-640x360.jpg",
+      "publishedAt": "2026-11-27T13:48:57Z",
+      "scheduledStart": "2026-11-27T13:48:57Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": true,
+      "collaborators": [
+        {
+          "channelId": "UCT3x9xJEIoqSMdcLV94qbyg",
+          "name": "GameBonkerz",
+          "kind": "virtual",
+          "region": "my"
+        },
+        {
+          "channelId": null,
+          "name": "+ Valheim",
+          "kind": "unknown",
+          "region": "unknown"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 14,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T14:44:03.304Z",
+      "updatedAt": "2026-11-27T14:44:03.304Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "316404692458",
+      "platform": "twitch",
+      "url": "https://twitch.tv/hazamilee",
+      "type": "live",
+      "channelId": "UCl5107F9RJFwt5MXZS6-pNw",
+      "channelName": "HazamiLee",
+      "channelKind": "virtual",
+      "region": "my",
+      "gender": "unknown",
+      "languages": [
+        "ms"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "[MY,ENG] MAIN DAILY DOSE OF VALHELIM :d",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_hazamilee-640x360.jpg",
+      "publishedAt": "2026-11-27T12:05:00Z",
+      "scheduledStart": "2026-11-27T12:05:00Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCl5107F9RJFwt5MXZS6-pNw",
+          "name": "HazamiLee",
+          "kind": "virtual",
+          "region": "my"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 1,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T14:43:52.802Z",
+      "updatedAt": "2026-11-27T14:43:52.802Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
     {
       "id": "316376673129",
       "platform": "twitch",
@@ -233,7 +380,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-11-27T04:48:49.083Z",
+      "updatedAt": "2026-11-27T14:43:54.264Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -281,6 +428,53 @@
       "source": "api",
       "addedAt": "2026-10-31T03:16:17.489Z",
       "updatedAt": "2026-11-02T11:59:30.862Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "ruh5OCg4V8c",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCdUnhG-sABcsnX5HYojHeOA",
+      "channelName": "Leo 레오 Hyeong",
+      "channelKind": "virtual",
+      "region": "my",
+      "gender": "male",
+      "languages": [
+        "ms"
+      ],
+      "isAi": false,
+      "variant": "male_vtuber",
+      "title": "【Final Fantasy VII REBIRTH】Side quest then Main qust | Part 4 |【Leo 레오 Hyeong】| VTuber EN",
+      "description": null,
+      "thumbnail": null,
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "isMember": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCdUnhG-sABcsnX5HYojHeOA",
+          "name": "Leo 레오 Hyeong",
+          "kind": "virtual",
+          "region": "my"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T14:44:03.304Z",
+      "updatedAt": "2026-11-27T14:44:03.304Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

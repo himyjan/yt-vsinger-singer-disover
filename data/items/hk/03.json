@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T05:11:58.713Z",
+  "generatedAt": "2026-11-27T15:05:20.498Z",
   "items": [
     {
       "id": "sRtGwrU6mtc",
@@ -46,6 +46,53 @@
       "source": "api",
       "addedAt": "2026-10-31T03:16:24.029Z",
       "updatedAt": "2026-11-26T23:49:36.908Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "316405136106",
+      "platform": "twitch",
+      "url": "https://twitch.tv/yuterri",
+      "type": "live",
+      "channelId": "UC7u2PUxY1szSFg0SyST0Dzg",
+      "channelName": "冰雪充名 Ice【Vtuber】",
+      "channelKind": "virtual",
+      "region": "hk",
+      "gender": "unknown",
+      "languages": [
+        "yue"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "🔴 LIVE ❄冰雪充名❄【Vtuber】[粵普EN] [27/11] ❄打新本本❄",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_yuterri-640x360.jpg",
+      "publishedAt": "2026-11-27T13:48:13Z",
+      "scheduledStart": "2026-11-27T13:48:13Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC7u2PUxY1szSFg0SyST0Dzg",
+          "name": "冰雪充名 Ice【Vtuber】",
+          "kind": "virtual",
+          "region": "hk"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 13,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T14:43:59.055Z",
+      "updatedAt": "2026-11-27T14:43:59.055Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -940,6 +987,53 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "TVuikhuU7yQ",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCgj7hrWisDFA4aIYvNVGgjQ",
+      "channelName": "DoWhatAr Ch.",
+      "channelKind": "virtual",
+      "region": "hk",
+      "gender": "unknown",
+      "languages": [
+        "yue"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "【F1一齊睇】卡塔爾 正賽 廣東話 | Qatar Grand Prix | RACE | 香港時間晚上23:45開始",
+      "description": null,
+      "thumbnail": null,
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "isMember": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCgj7hrWisDFA4aIYvNVGgjQ",
+          "name": "DoWhatAr Ch.",
+          "kind": "virtual",
+          "region": "hk"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T14:43:59.055Z",
+      "updatedAt": "2026-11-27T14:43:59.055Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "UnKq4_gqJT0",
       "platform": "youtube",
       "type": "live",
@@ -962,8 +1056,8 @@
       "isMember": null,
       "actualEnd": null,
       "duration": null,
-      "status": "upcoming",
-      "category": "premiere",
+      "status": "live",
+      "category": "live",
       "songTitle": null,
       "originalArtist": null,
       "isCollab": false,
@@ -982,7 +1076,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-26T23:49:45.482Z",
-      "updatedAt": "2026-11-27T04:48:42.671Z",
+      "updatedAt": "2026-11-27T14:44:02.999Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },

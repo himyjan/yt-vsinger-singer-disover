@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T05:11:58.713Z",
+  "generatedAt": "2026-11-27T15:05:20.498Z",
   "items": [
     {
       "id": "D_RjPjD6OUs",
@@ -50,6 +50,53 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "316404689898",
+      "platform": "twitch",
+      "url": "https://twitch.tv/zakurou40",
+      "type": "live",
+      "channelId": "UCdvca9gv6-2HYX9W_BbEGQA",
+      "channelName": "檀裳 zakurou",
+      "channelKind": "virtual",
+      "region": "my",
+      "gender": "unknown",
+      "languages": [
+        "ms"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "【DBD】我需要酷酷的隱城~ 明晚回家有機會再開SF6！",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_zakurou40-640x360.jpg",
+      "publishedAt": "2026-11-27T12:04:24Z",
+      "scheduledStart": "2026-11-27T12:04:24Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCdvca9gv6-2HYX9W_BbEGQA",
+          "name": "檀裳 zakurou",
+          "kind": "virtual",
+          "region": "my"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 13,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T14:43:59.055Z",
+      "updatedAt": "2026-11-27T14:43:59.055Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "316377077481",
       "platform": "twitch",
       "url": "https://twitch.tv/kontonnekohime",
@@ -70,9 +117,9 @@
       "publishedAt": "2026-11-27T04:22:53Z",
       "scheduledStart": "2026-11-27T04:22:53Z",
       "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "live",
+      "actualEnd": "2026-11-27T14:44:03.304Z",
+      "duration": 37270,
+      "status": "past",
       "category": "live",
       "songTitle": null,
       "originalArtist": null,
@@ -92,7 +139,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-27T04:48:35.090Z",
-      "updatedAt": "2026-11-27T04:48:35.090Z",
+      "updatedAt": "2026-11-27T14:44:03.304Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },

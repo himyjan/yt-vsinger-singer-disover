@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T14:18:38.980Z",
+  "generatedAt": "2026-11-27T15:05:20.498Z",
   "items": [
     {
       "id": "YAZKQ8XbOMg",
@@ -46,6 +46,53 @@
       "source": "api",
       "addedAt": "2026-10-31T03:16:24.029Z",
       "updatedAt": "2026-11-26T23:49:36.908Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "316379402985",
+      "platform": "twitch",
+      "url": "https://twitch.tv/wadermelony",
+      "type": "live",
+      "channelId": "UCW1JVDkYiY1jllmH-cy30rA",
+      "channelName": "WaderMelony",
+      "channelKind": "virtual",
+      "region": "id",
+      "gender": "unknown",
+      "languages": [
+        "id"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "[18+] Happy! thanksgiving!!! whats the plan? open party !lurk !donate !fish",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_wadermelony-640x360.jpg",
+      "publishedAt": "2026-11-27T14:20:36Z",
+      "scheduledStart": "2026-11-27T14:20:36Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCW1JVDkYiY1jllmH-cy30rA",
+          "name": "WaderMelony",
+          "kind": "virtual",
+          "region": "id"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 6,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T14:43:59.055Z",
+      "updatedAt": "2026-11-27T14:43:59.055Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },

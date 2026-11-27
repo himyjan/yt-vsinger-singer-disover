@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T05:11:58.713Z",
+  "generatedAt": "2026-11-27T15:05:20.498Z",
   "items": [
     {
       "id": "DdFmuTV0zn0",
@@ -889,6 +889,53 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "-10cbP6tA_A",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCy2EwC2_2_3X3b8Je5XnIMA",
+      "channelName": "伊藤優希【佛系HKVtuber】",
+      "channelKind": "virtual",
+      "region": "hk",
+      "gender": "female",
+      "languages": [
+        "yue"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "《逆轉裁判#10》今天要把最後一章解完！！【佛系Vtuber伊藤優希】｜廣東話/國語配信｜ #hkvtuber #初見歓迎 #優希閒遊中",
+      "description": null,
+      "thumbnail": null,
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "isMember": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCy2EwC2_2_3X3b8Je5XnIMA",
+          "name": "伊藤優希【佛系HKVtuber】",
+          "kind": "virtual",
+          "region": "hk"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T14:44:02.999Z",
+      "updatedAt": "2026-11-27T14:44:02.999Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "Al_J_rZ5_xE",
       "platform": "youtube",
       "type": "live",
@@ -940,7 +987,7 @@
       "platform": "youtube",
       "type": "live",
       "channelId": "UClaUuwjZnkZJczE2A-MFahA",
-      "channelName": "ʚ 織 夢 玖 璃 ɞ",
+      "channelName": "玖璃 × 小築",
       "channelKind": "virtual",
       "region": "hk",
       "gender": "unknown",
@@ -955,7 +1002,7 @@
       "publishedAt": null,
       "scheduledStart": "2027-07-13T16:00:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -966,7 +1013,7 @@
       "collaborators": [
         {
           "channelId": "UClaUuwjZnkZJczE2A-MFahA",
-          "name": "ʚ 織 夢 玖 璃 ɞ",
+          "name": "玖璃 × 小築",
           "kind": "virtual",
           "region": "hk"
         }
@@ -978,7 +1025,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:17.489Z",
-      "updatedAt": "2026-11-02T11:59:30.862Z",
+      "updatedAt": "2026-11-27T14:44:03.304Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -1119,7 +1166,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-26T23:49:34.524Z",
-      "updatedAt": "2026-11-27T04:48:35.090Z",
+      "updatedAt": "2026-11-27T14:44:03.304Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

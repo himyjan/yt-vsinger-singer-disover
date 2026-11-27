@@ -1,7 +1,54 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T05:11:58.713Z",
+  "generatedAt": "2026-11-27T15:05:20.498Z",
   "items": [
+    {
+      "id": "318491772260",
+      "platform": "twitch",
+      "url": "https://twitch.tv/saiiren",
+      "type": "live",
+      "channelId": "UChuTmjfkCd-SP51WR__q5fA",
+      "channelName": "Saiiren",
+      "channelKind": "virtual",
+      "region": "kr",
+      "gender": "female",
+      "languages": [
+        "ko"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "[DROPS] CHAPTER 1 - BABIES FIRST EVER GTA - MY BIRTHDAY TOMORROW !!!  | !cover !gs !badge",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_saiiren-640x360.jpg",
+      "publishedAt": "2026-11-27T11:09:15Z",
+      "scheduledStart": "2026-11-27T11:09:15Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UChuTmjfkCd-SP51WR__q5fA",
+          "name": "Saiiren",
+          "kind": "virtual",
+          "region": "kr"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 1026,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T14:44:02.595Z",
+      "updatedAt": "2026-11-27T14:44:02.595Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
     {
       "id": "0dqyvArSqVk",
       "platform": "youtube",
@@ -231,7 +278,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.228Z",
-      "updatedAt": "2026-11-27T04:48:49.083Z",
+      "updatedAt": "2026-11-27T14:43:54.264Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

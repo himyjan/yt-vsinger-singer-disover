@@ -1,7 +1,101 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T14:18:38.980Z",
+  "generatedAt": "2026-11-27T15:05:20.498Z",
   "items": [
+    {
+      "id": "316379593065",
+      "platform": "twitch",
+      "url": "https://twitch.tv/metsa_drim",
+      "type": "live",
+      "channelId": "UCLaWJqHJ_kySIYiJS6K4UIg",
+      "channelName": "Metsa Drim",
+      "channelKind": "virtual",
+      "region": "id",
+      "gender": "unknown",
+      "languages": [
+        "id"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "mengcukili org || lino cut",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_metsa_drim-640x360.jpg",
+      "publishedAt": "2026-11-27T15:00:52Z",
+      "scheduledStart": "2026-11-27T15:00:52Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCLaWJqHJ_kySIYiJS6K4UIg",
+          "name": "Metsa Drim",
+          "kind": "virtual",
+          "region": "id"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 1,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T14:44:03.304Z",
+      "updatedAt": "2026-11-27T14:44:03.304Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "316404926570",
+      "platform": "twitch",
+      "url": "https://twitch.tv/withetofu",
+      "type": "live",
+      "channelId": "UCsZaCXo7XQUPy_W-Tt97eLQ",
+      "channelName": "Tofu🐈‍⬛ VTuber ID",
+      "channelKind": "virtual",
+      "region": "id",
+      "gender": "unknown",
+      "languages": [
+        "id"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "Working on commission! Let's chit-chat while I draw! [Drawing Stream #18]",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_withetofu-640x360.jpg",
+      "publishedAt": "2026-11-27T13:02:09Z",
+      "scheduledStart": "2026-11-27T13:02:09Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCsZaCXo7XQUPy_W-Tt97eLQ",
+          "name": "Tofu🐈‍⬛ VTuber ID",
+          "kind": "virtual",
+          "region": "id"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 3,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T14:43:59.055Z",
+      "updatedAt": "2026-11-27T14:43:59.055Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
     {
       "id": "RUZpCyo2XTA",
       "platform": "youtube",
@@ -795,7 +889,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:22.173Z",
-      "updatedAt": "2026-11-27T04:48:42.502Z",
+      "updatedAt": "2026-11-27T14:43:52.802Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },

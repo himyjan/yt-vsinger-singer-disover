@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T05:11:58.713Z",
+  "generatedAt": "2026-11-27T15:05:20.498Z",
   "items": [
     {
       "id": "316402019946",
@@ -23,9 +23,9 @@
       "publishedAt": "2026-11-27T00:40:17Z",
       "scheduledStart": "2026-11-27T00:40:17Z",
       "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "live",
+      "actualEnd": "2026-11-27T14:43:59.275Z",
+      "duration": 50622,
+      "status": "past",
       "category": "live",
       "songTitle": null,
       "originalArtist": null,
@@ -45,7 +45,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-27T04:48:32.102Z",
-      "updatedAt": "2026-11-27T04:48:32.102Z",
+      "updatedAt": "2026-11-27T14:43:59.275Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -237,6 +237,53 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "GSN2s1QnRSA",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCwXOSFcPcOzLmY4YgP6LOUg",
+      "channelName": "Tatsuya Rei Ch.竜也レイ",
+      "channelKind": "virtual",
+      "region": "my",
+      "gender": "unknown",
+      "languages": [
+        "ms"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "[REPO] 来一个不同语言且混乱的直播吧！！",
+      "description": null,
+      "thumbnail": null,
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "isMember": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCwXOSFcPcOzLmY4YgP6LOUg",
+          "name": "Tatsuya Rei Ch.竜也レイ",
+          "kind": "virtual",
+          "region": "my"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T14:44:03.304Z",
+      "updatedAt": "2026-11-27T14:44:03.304Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "o1RHHXSxFL0",
       "platform": "youtube",
       "type": "live",
@@ -279,7 +326,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:33.129Z",
-      "updatedAt": "2026-11-27T04:48:42.502Z",
+      "updatedAt": "2026-11-27T14:43:52.802Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },

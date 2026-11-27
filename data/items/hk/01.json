@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T14:18:38.980Z",
+  "generatedAt": "2026-11-27T15:05:20.498Z",
   "items": [
     {
       "id": "25wkOy0dA04",
@@ -46,6 +46,53 @@
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.117Z",
       "updatedAt": "2026-11-26T23:49:36.908Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "316351601640",
+      "platform": "twitch",
+      "url": "https://twitch.tv/kazeshinko",
+      "type": "live",
+      "channelId": "UClkQ6OsjTeVmc8B76YAX-vg",
+      "channelName": "風信子",
+      "channelKind": "virtual",
+      "region": "hk",
+      "gender": "female",
+      "languages": [
+        "yue"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "【雜談】京都旅行分享（上年",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_kazeshinko-640x360.jpg",
+      "publishedAt": "2026-11-27T13:18:12Z",
+      "scheduledStart": "2026-11-27T13:18:12Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UClkQ6OsjTeVmc8B76YAX-vg",
+          "name": "風信子",
+          "kind": "virtual",
+          "region": "hk"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 4,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T14:43:54.264Z",
+      "updatedAt": "2026-11-27T14:43:54.264Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -795,7 +842,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.180Z",
-      "updatedAt": "2026-11-27T04:48:49.083Z",
+      "updatedAt": "2026-11-27T14:43:54.264Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -842,7 +889,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:22.173Z",
-      "updatedAt": "2026-11-27T04:48:42.671Z",
+      "updatedAt": "2026-11-27T14:44:02.999Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -889,7 +936,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:19.448Z",
-      "updatedAt": "2026-11-27T04:48:32.102Z",
+      "updatedAt": "2026-11-27T14:43:59.275Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },

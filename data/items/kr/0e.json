@@ -1,7 +1,54 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T05:11:58.713Z",
+  "generatedAt": "2026-11-27T15:05:20.498Z",
   "items": [
+    {
+      "id": "7QOE455BCqw",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCOUSEYGfRDOO8SNEYIN8u0g",
+      "channelName": "리엘 리프",
+      "channelKind": "virtual",
+      "region": "kr",
+      "gender": "unknown",
+      "languages": [
+        "ko"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "It's been 30 years - Final Fantasy VII Remake (Part 8)",
+      "description": null,
+      "thumbnail": null,
+      "publishedAt": "2026-11-27T14:44:02.999Z",
+      "scheduledStart": null,
+      "actualStart": null,
+      "isMember": null,
+      "actualEnd": "2026-11-27T14:44:02.999Z",
+      "duration": 0,
+      "status": "past",
+      "category": "live",
+      "songTitle": "It's been 30 years",
+      "originalArtist": "Final Fantasy VII Remake (Part 8)",
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCOUSEYGfRDOO8SNEYIN8u0g",
+          "name": "리엘 리프",
+          "kind": "virtual",
+          "region": "kr"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T04:48:42.671Z",
+      "updatedAt": "2026-11-27T14:44:02.999Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
     {
       "id": "DEQ1lzlIKao",
       "platform": "youtube",
@@ -93,53 +140,6 @@
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.042Z",
       "updatedAt": "2026-11-02T11:59:34.145Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "7QOE455BCqw",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCOUSEYGfRDOO8SNEYIN8u0g",
-      "channelName": "리엘 리프",
-      "channelKind": "virtual",
-      "region": "kr",
-      "gender": "unknown",
-      "languages": [
-        "ko"
-      ],
-      "isAi": false,
-      "variant": "unknown",
-      "title": "It's been 30 years - Final Fantasy VII Remake (Part 8)",
-      "description": null,
-      "thumbnail": null,
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "isMember": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "live",
-      "category": "live",
-      "songTitle": "It's been 30 years",
-      "originalArtist": "Final Fantasy VII Remake (Part 8)",
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCOUSEYGfRDOO8SNEYIN8u0g",
-          "name": "리엘 리프",
-          "kind": "virtual",
-          "region": "kr"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-11-27T04:48:42.671Z",
-      "updatedAt": "2026-11-27T04:48:42.671Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }
