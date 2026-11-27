@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T00:11:29.954Z",
+  "generatedAt": "2026-11-27T05:11:58.713Z",
   "items": [
     {
       "id": "g5UwjzVdBk8",
@@ -849,6 +849,53 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "316767156977",
+      "platform": "twitch",
+      "url": "https://twitch.tv/koyuurei",
+      "type": "live",
+      "channelId": "UCr4UTpyj-Awhx05zWIEa_kA",
+      "channelName": "koyuurei",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "female",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "[EN/18+] POV: You're Teaching Your Lame Cousin How to Play FPS | Borderlands 2 | !hellopup !FoF !vocab !tools",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_koyuurei-640x360.jpg",
+      "publishedAt": "2026-11-27T03:54:14Z",
+      "scheduledStart": "2026-11-27T03:54:14Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCr4UTpyj-Awhx05zWIEa_kA",
+          "name": "koyuurei",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 151,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T04:48:32.102Z",
+      "updatedAt": "2026-11-27T04:48:32.102Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "8_yTAIe8dUM",
       "platform": "youtube",
       "type": "live",
@@ -916,9 +963,9 @@
       "publishedAt": "2026-11-26T22:32:20Z",
       "scheduledStart": "2026-11-26T22:32:20Z",
       "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "live",
+      "actualEnd": "2026-11-27T04:48:32.102Z",
+      "duration": 22572,
+      "status": "past",
       "category": "live",
       "songTitle": null,
       "originalArtist": null,
@@ -938,7 +985,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-26T23:49:33.240Z",
-      "updatedAt": "2026-11-26T23:49:33.240Z",
+      "updatedAt": "2026-11-27T04:48:32.102Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -963,9 +1010,9 @@
       "publishedAt": "2026-11-26T16:47:19Z",
       "scheduledStart": "2026-11-26T16:47:19Z",
       "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "live",
+      "actualEnd": "2026-11-27T04:48:45.146Z",
+      "duration": 43286,
+      "status": "past",
       "category": "live",
       "songTitle": null,
       "originalArtist": null,
@@ -985,7 +1032,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-26T23:49:37.860Z",
-      "updatedAt": "2026-11-26T23:49:37.860Z",
+      "updatedAt": "2026-11-27T04:48:45.146Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -13162,7 +13209,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.180Z",
-      "updatedAt": "2026-11-26T23:49:54.532Z",
+      "updatedAt": "2026-11-27T04:48:42.502Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -13256,7 +13303,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-26T23:49:29.115Z",
-      "updatedAt": "2026-11-26T23:49:29.115Z",
+      "updatedAt": "2026-11-27T04:48:49.083Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -13327,7 +13374,7 @@
       "publishedAt": null,
       "scheduledStart": "2026-12-31T14:45:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -13350,7 +13397,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.283Z",
-      "updatedAt": "2026-11-02T11:59:27.253Z",
+      "updatedAt": "2026-11-27T04:48:45.146Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -13444,7 +13491,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:19.448Z",
-      "updatedAt": "2026-11-26T23:49:33.240Z",
+      "updatedAt": "2026-11-27T04:48:32.102Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -13961,7 +14008,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-02T05:53:05.405Z",
-      "updatedAt": "2026-11-26T23:49:34.524Z",
+      "updatedAt": "2026-11-27T04:48:35.090Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -14243,7 +14290,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.180Z",
-      "updatedAt": "2026-11-26T23:49:45.482Z",
+      "updatedAt": "2026-11-27T04:48:42.671Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -14337,7 +14384,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:33.129Z",
-      "updatedAt": "2026-11-26T23:49:33.240Z",
+      "updatedAt": "2026-11-27T04:48:32.102Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -14995,7 +15042,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-02T05:52:58.873Z",
-      "updatedAt": "2026-11-26T23:49:29.115Z",
+      "updatedAt": "2026-11-27T04:48:49.083Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -15536,7 +15583,7 @@
       "publishedAt": null,
       "scheduledStart": "2027-12-29T15:00:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -15559,7 +15606,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.283Z",
-      "updatedAt": "2026-11-02T11:59:27.253Z",
+      "updatedAt": "2026-11-27T04:48:45.146Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -15700,7 +15747,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:17.489Z",
-      "updatedAt": "2026-11-26T23:49:34.524Z",
+      "updatedAt": "2026-11-27T04:48:35.090Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -15841,7 +15888,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:27.340Z",
-      "updatedAt": "2026-11-26T23:49:54.532Z",
+      "updatedAt": "2026-11-27T04:48:42.502Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -16194,7 +16241,7 @@
       "publishedAt": null,
       "scheduledStart": "2027-07-24T21:00:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -16217,7 +16264,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:25.456Z",
-      "updatedAt": "2026-11-02T11:59:30.785Z",
+      "updatedAt": "2026-11-27T04:48:42.671Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -16311,7 +16358,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:25.456Z",
-      "updatedAt": "2026-11-26T23:49:45.482Z",
+      "updatedAt": "2026-11-27T04:48:42.671Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -16687,7 +16734,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:17.489Z",
-      "updatedAt": "2026-11-26T23:49:34.524Z",
+      "updatedAt": "2026-11-27T04:48:35.090Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -18869,7 +18916,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:22.173Z",
-      "updatedAt": "2026-11-26T23:49:54.532Z",
+      "updatedAt": "2026-11-27T04:48:42.502Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -19104,7 +19151,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:27.693Z",
-      "updatedAt": "2026-11-26T23:49:34.524Z",
+      "updatedAt": "2026-11-27T04:48:35.090Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -19198,7 +19245,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-02T05:53:01.935Z",
-      "updatedAt": "2026-11-26T23:49:54.532Z",
+      "updatedAt": "2026-11-27T04:48:42.502Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -19433,7 +19480,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-11-26T23:49:34.524Z",
+      "updatedAt": "2026-11-27T04:48:35.090Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -19720,6 +19767,53 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "w9YA1NxhqJg",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCvML7OJFLaoM04VYnV_3EdQ",
+      "channelName": "蒼乃もち / aono mochi",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "female",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "【雑談】1時間に3曲しか歌えない！？よわよわ月うさぎのゆるすぎるチルめうたざつ☕️🐰 【#蒼乃もち｜星読み月うさぎのゆうびんやさん｜個人勢Vtuber】",
+      "description": null,
+      "thumbnail": null,
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "isMember": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCvML7OJFLaoM04VYnV_3EdQ",
+          "name": "蒼乃もち / aono mochi",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T04:48:42.823Z",
+      "updatedAt": "2026-11-27T04:48:42.823Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "wgUXxG_z5RA",
       "platform": "youtube",
       "type": "live",
@@ -19856,7 +19950,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.228Z",
-      "updatedAt": "2026-11-26T23:49:29.115Z",
+      "updatedAt": "2026-11-27T04:48:49.083Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -19950,7 +20044,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:21.011Z",
-      "updatedAt": "2026-11-26T23:49:32.178Z",
+      "updatedAt": "2026-11-27T04:48:36.197Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -20326,7 +20420,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-02T05:52:58.691Z",
-      "updatedAt": "2026-11-26T23:49:45.482Z",
+      "updatedAt": "2026-11-27T04:48:42.671Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

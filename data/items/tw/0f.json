@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T00:11:29.954Z",
+  "generatedAt": "2026-11-27T05:11:58.713Z",
   "items": [
     {
       "id": "g4jHwGYSBS0",
@@ -144,6 +144,106 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "316402531690",
+      "platform": "twitch",
+      "url": "https://twitch.tv/minagiyui",
+      "type": "live",
+      "channelId": "UC5ZUht79FzrSooG7jnU07cQ",
+      "channelName": "Yui Ch. 水凪ゆい",
+      "channelKind": "virtual",
+      "region": "tw",
+      "gender": "unknown",
+      "languages": [
+        "zh-Hant"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "✧*｡🌊1127 雜遊✨旅人賽季後半&星原主線",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_minagiyui-640x360.jpg",
+      "publishedAt": "2026-11-27T03:30:41Z",
+      "scheduledStart": "2026-11-27T03:30:41Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC5ZUht79FzrSooG7jnU07cQ",
+          "name": "Yui Ch. 水凪ゆい",
+          "kind": "virtual",
+          "region": "tw"
+        },
+        {
+          "channelId": null,
+          "name": "星原主線",
+          "kind": "unknown",
+          "region": "unknown"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 4,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T04:48:42.502Z",
+      "updatedAt": "2026-11-27T04:48:42.502Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "316778631794",
+      "platform": "twitch",
+      "url": "https://twitch.tv/neruru_nekone",
+      "type": "live",
+      "channelId": "UCaoNBAkXhql-IIzY4Mhvoaw",
+      "channelName": "捏嚕嚕ねるる",
+      "channelKind": "virtual",
+      "region": "tw",
+      "gender": "unknown",
+      "languages": [
+        "zh-Hant"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "1127｜啾｜ @neruru_nekone",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_neruru_nekone-640x360.jpg",
+      "publishedAt": "2026-11-27T02:17:54Z",
+      "scheduledStart": "2026-11-27T02:17:54Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCaoNBAkXhql-IIzY4Mhvoaw",
+          "name": "捏嚕嚕ねるる",
+          "kind": "virtual",
+          "region": "tw"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 57,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T04:48:36.197Z",
+      "updatedAt": "2026-11-27T04:48:36.197Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "316765773425",
       "platform": "twitch",
       "url": "https://twitch.tv/ru33r",
@@ -164,9 +264,9 @@
       "publishedAt": "2026-11-26T17:51:13Z",
       "scheduledStart": "2026-11-26T17:51:13Z",
       "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "live",
+      "actualEnd": "2026-11-27T04:48:42.502Z",
+      "duration": 39449,
+      "status": "past",
       "category": "live",
       "songTitle": null,
       "originalArtist": null,
@@ -186,7 +286,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-26T23:49:54.532Z",
-      "updatedAt": "2026-11-26T23:49:54.532Z",
+      "updatedAt": "2026-11-27T04:48:42.502Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -228,12 +328,12 @@
       ],
       "isAcoustic": false,
       "tags": [],
-      "viewCount": 52,
+      "viewCount": 36,
       "likeCount": null,
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-26T23:49:34.524Z",
-      "updatedAt": "2026-11-26T23:49:34.524Z",
+      "updatedAt": "2026-11-27T04:48:35.090Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3224,7 +3324,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-11-26T23:49:34.524Z",
+      "updatedAt": "2026-11-27T04:48:35.090Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3271,7 +3371,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.180Z",
-      "updatedAt": "2026-11-26T23:49:54.532Z",
+      "updatedAt": "2026-11-27T04:48:42.502Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3318,7 +3418,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:21.011Z",
-      "updatedAt": "2026-11-26T23:49:32.178Z",
+      "updatedAt": "2026-11-27T04:48:36.197Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3389,7 +3489,7 @@
       "publishedAt": null,
       "scheduledStart": "2027-01-10T12:00:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -3412,7 +3512,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T05:10:16.208Z",
-      "updatedAt": "2026-11-02T11:59:27.393Z",
+      "updatedAt": "2026-11-27T04:48:45.146Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3459,7 +3559,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-11-26T23:49:29.115Z",
+      "updatedAt": "2026-11-27T04:48:49.083Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3553,7 +3653,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:27.340Z",
-      "updatedAt": "2026-11-26T23:49:54.532Z",
+      "updatedAt": "2026-11-27T04:48:42.502Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3788,7 +3888,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.117Z",
-      "updatedAt": "2026-11-26T23:49:54.532Z",
+      "updatedAt": "2026-11-27T04:48:42.502Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4305,7 +4405,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:17.489Z",
-      "updatedAt": "2026-11-26T23:49:34.524Z",
+      "updatedAt": "2026-11-27T04:48:35.090Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4446,7 +4546,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:22.173Z",
-      "updatedAt": "2026-11-26T23:49:32.178Z",
+      "updatedAt": "2026-11-27T04:48:36.197Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4494,6 +4594,53 @@
       "source": "api",
       "addedAt": "2026-10-31T03:16:16.423Z",
       "updatedAt": "2026-11-02T11:59:31.129Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "hhWtCtCDlTs",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCmjY9GWkKeCC48dOn9msptA",
+      "channelName": "角神莫 Ch.",
+      "channelKind": "virtual",
+      "region": "tw",
+      "gender": "male",
+      "languages": [
+        "zh-Hant"
+      ],
+      "isAi": false,
+      "variant": "male_vtuber",
+      "title": "【角神莫】國際絕伊甸",
+      "description": null,
+      "thumbnail": null,
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "isMember": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCmjY9GWkKeCC48dOn9msptA",
+          "name": "角神莫 Ch.",
+          "kind": "virtual",
+          "region": "tw"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T04:48:36.197Z",
+      "updatedAt": "2026-11-27T04:48:36.197Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4634,7 +4781,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.283Z",
-      "updatedAt": "2026-11-26T23:49:33.240Z",
+      "updatedAt": "2026-11-27T04:48:32.102Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4869,7 +5016,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.117Z",
-      "updatedAt": "2026-11-26T23:49:32.178Z",
+      "updatedAt": "2026-11-27T04:48:36.197Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5198,7 +5345,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.042Z",
-      "updatedAt": "2026-11-26T23:49:34.524Z",
+      "updatedAt": "2026-11-27T04:48:35.090Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5339,7 +5486,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.117Z",
-      "updatedAt": "2026-11-26T23:49:34.524Z",
+      "updatedAt": "2026-11-27T04:48:35.090Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5480,7 +5627,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.283Z",
-      "updatedAt": "2026-11-26T23:49:33.240Z",
+      "updatedAt": "2026-11-27T04:48:32.102Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },

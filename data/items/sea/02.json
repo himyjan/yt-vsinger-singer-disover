@@ -1,7 +1,101 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T00:11:29.954Z",
+  "generatedAt": "2026-11-27T05:11:58.713Z",
   "items": [
+    {
+      "id": "316377017705",
+      "platform": "twitch",
+      "url": "https://twitch.tv/rinwest",
+      "type": "live",
+      "channelId": "UCyb8E2hsbOp3v6MepEDKfPw",
+      "channelName": "米倉江野伊",
+      "channelKind": "virtual",
+      "region": "sea",
+      "gender": "unknown",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "EN/TH「Artist Vtuber」Making Gift Reward",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_rinwest-640x360.jpg",
+      "publishedAt": "2026-11-27T04:05:25Z",
+      "scheduledStart": "2026-11-27T04:05:25Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCyb8E2hsbOp3v6MepEDKfPw",
+          "name": "米倉江野伊",
+          "kind": "virtual",
+          "region": "sea"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 2,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T04:48:42.671Z",
+      "updatedAt": "2026-11-27T04:48:42.671Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "316376712809",
+      "platform": "twitch",
+      "url": "https://twitch.tv/rinrexger",
+      "type": "live",
+      "channelId": "UCOJiQA9afDpohgpxgKIKljA",
+      "channelName": "RinREXGer",
+      "channelKind": "virtual",
+      "region": "sea",
+      "gender": "unknown",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "ลงวินใหม่ ย้ายมา obs เทสไลฟ์ฮะ",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_rinrexger-640x360.jpg",
+      "publishedAt": "2026-11-27T02:16:02Z",
+      "scheduledStart": "2026-11-27T02:16:02Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCOJiQA9afDpohgpxgKIKljA",
+          "name": "RinREXGer",
+          "kind": "virtual",
+          "region": "sea"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 12,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T04:48:42.502Z",
+      "updatedAt": "2026-11-27T04:48:42.502Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
     {
       "id": "DHJk5HmJ0cw",
       "platform": "youtube",
@@ -702,6 +796,53 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "FTE6MAzceME",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UC9owX01ODpgeUePEIdC_qlA",
+      "channelName": "R Y O S H I ch.",
+      "channelKind": "virtual",
+      "region": "sea",
+      "gender": "unknown",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "🔴Arknights Endfield  | 1.7 ฉันฝันถึงวาฟเฟิลน้ำผึ้ง เควสเนื้อเรื่อง Kay",
+      "description": null,
+      "thumbnail": null,
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "isMember": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC9owX01ODpgeUePEIdC_qlA",
+          "name": "R Y O S H I ch.",
+          "kind": "virtual",
+          "region": "sea"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T04:48:42.823Z",
+      "updatedAt": "2026-11-27T04:48:42.823Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "MNmY22MPWd8",
       "platform": "youtube",
       "type": "live",
@@ -838,7 +979,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-26T23:49:32.178Z",
-      "updatedAt": "2026-11-26T23:49:32.178Z",
+      "updatedAt": "2026-11-27T04:48:36.197Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

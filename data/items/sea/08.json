@@ -1,7 +1,101 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T00:11:29.954Z",
+  "generatedAt": "2026-11-27T05:11:58.713Z",
   "items": [
+    {
+      "id": "316655247341",
+      "platform": "twitch",
+      "url": "https://twitch.tv/whiteyevt",
+      "type": "live",
+      "channelId": "UCJ3B0p5NY9rI2TEIZ6-Bybg",
+      "channelName": "WhitEyE",
+      "channelKind": "virtual",
+      "region": "sea",
+      "gender": "unknown",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "˙⋆✮⋆˚ Definitely Chilling Getting over it Pt.3 | Followers Goal:398/400 | !discord !lurk !clip !ko-fi",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_whiteyevt-640x360.jpg",
+      "publishedAt": "2026-11-27T04:20:50Z",
+      "scheduledStart": "2026-11-27T04:20:50Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCJ3B0p5NY9rI2TEIZ6-Bybg",
+          "name": "WhitEyE",
+          "kind": "virtual",
+          "region": "sea"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 5,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T04:48:42.502Z",
+      "updatedAt": "2026-11-27T04:48:42.502Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "316401962986",
+      "platform": "twitch",
+      "url": "https://twitch.tv/praifahz",
+      "type": "live",
+      "channelId": "UC9amqxi9w_0LeINC7h2aP7A",
+      "channelName": "praifahz",
+      "channelKind": "virtual",
+      "region": "sea",
+      "gender": "unknown",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "เมื่อไหร่จะตามทัน",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_praifahz-640x360.jpg",
+      "publishedAt": "2026-11-27T00:20:20Z",
+      "scheduledStart": "2026-11-27T00:20:20Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC9amqxi9w_0LeINC7h2aP7A",
+          "name": "praifahz",
+          "kind": "virtual",
+          "region": "sea"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 21,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T04:48:42.823Z",
+      "updatedAt": "2026-11-27T04:48:42.823Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
     {
       "id": "Dmc8lYsG-Fg",
       "platform": "youtube",
@@ -1050,7 +1144,7 @@
       "publishedAt": null,
       "scheduledStart": "2028-08-31T05:20:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -1073,7 +1167,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.117Z",
-      "updatedAt": "2026-11-02T11:59:27.393Z",
+      "updatedAt": "2026-11-27T04:48:45.146Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -1144,7 +1238,7 @@
       "publishedAt": null,
       "scheduledStart": "2028-02-29T19:40:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -1167,7 +1261,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.256Z",
-      "updatedAt": "2026-11-02T11:59:38.852Z",
+      "updatedAt": "2026-11-27T04:48:45.146Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -1214,7 +1308,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-26T23:49:34.524Z",
-      "updatedAt": "2026-11-26T23:49:34.524Z",
+      "updatedAt": "2026-11-27T04:48:35.090Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

@@ -1,7 +1,54 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T00:11:29.954Z",
+  "generatedAt": "2026-11-27T05:11:58.713Z",
   "items": [
+    {
+      "id": "316376673129",
+      "platform": "twitch",
+      "url": "https://twitch.tv/en_kaien",
+      "type": "live",
+      "channelId": "UCcYxUF_Wev7U7H9F9cSn_TA",
+      "channelName": "閻_En ch.",
+      "channelKind": "virtual",
+      "region": "my",
+      "gender": "unknown",
+      "languages": [
+        "ms"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "伴你伴到底",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_en_kaien-640x360.jpg",
+      "publishedAt": "2026-11-27T01:59:20Z",
+      "scheduledStart": "2026-11-27T01:59:20Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCcYxUF_Wev7U7H9F9cSn_TA",
+          "name": "閻_En ch.",
+          "kind": "virtual",
+          "region": "my"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 20,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T04:48:36.197Z",
+      "updatedAt": "2026-11-27T04:48:36.197Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
     {
       "id": "ZHQ3aj1coGE",
       "platform": "youtube",
@@ -186,7 +233,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-11-26T23:49:29.115Z",
+      "updatedAt": "2026-11-27T04:48:49.083Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },

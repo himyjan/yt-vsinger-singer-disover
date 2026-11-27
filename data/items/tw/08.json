@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T00:11:29.954Z",
+  "generatedAt": "2026-11-27T05:11:58.713Z",
   "items": [
     {
       "id": "wzjk1KfJKSA",
@@ -285,6 +285,53 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "316778833650",
+      "platform": "twitch",
+      "url": "https://twitch.tv/ccsy_vt",
+      "type": "live",
+      "channelId": "UCoLArhKJpB-VQJcSk3k8wQQ",
+      "channelName": "血珀",
+      "channelKind": "virtual",
+      "region": "tw",
+      "gender": "unknown",
+      "languages": [
+        "zh-Hant"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "【血珀】先陪我上班(°▽°)/最近沒睡好 | !++ 周邊 !魔儲 !布丁 !lol",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_ccsy_vt-640x360.jpg",
+      "publishedAt": "2026-11-27T03:39:26Z",
+      "scheduledStart": "2026-11-27T03:39:26Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCoLArhKJpB-VQJcSk3k8wQQ",
+          "name": "血珀",
+          "kind": "virtual",
+          "region": "tw"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 12,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T04:48:42.671Z",
+      "updatedAt": "2026-11-27T04:48:42.671Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "_OmeOLNknDc",
       "platform": "youtube",
       "type": "live",
@@ -399,9 +446,9 @@
       "publishedAt": "2026-11-26T15:43:41Z",
       "scheduledStart": "2026-11-26T15:43:41Z",
       "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "live",
+      "actualEnd": "2026-11-27T04:48:42.502Z",
+      "duration": 47101,
+      "status": "past",
       "category": "live",
       "songTitle": null,
       "originalArtist": null,
@@ -421,7 +468,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-26T23:49:54.532Z",
-      "updatedAt": "2026-11-26T23:49:54.532Z",
+      "updatedAt": "2026-11-27T04:48:42.502Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -2732,7 +2779,7 @@
       "publishedAt": null,
       "scheduledStart": "2027-07-22T03:15:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -2755,7 +2802,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.283Z",
-      "updatedAt": "2026-11-02T11:59:27.253Z",
+      "updatedAt": "2026-11-27T04:48:49.083Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -2943,7 +2990,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:16.423Z",
-      "updatedAt": "2026-11-26T23:49:34.524Z",
+      "updatedAt": "2026-11-27T04:48:35.090Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3108,7 +3155,7 @@
       "publishedAt": null,
       "scheduledStart": "2028-07-31T15:45:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -3131,7 +3178,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:27.693Z",
-      "updatedAt": "2026-11-02T11:59:32.231Z",
+      "updatedAt": "2026-11-27T04:48:45.146Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3178,7 +3225,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-11-26T23:49:32.178Z",
+      "updatedAt": "2026-11-27T04:48:36.197Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3554,7 +3601,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:27.340Z",
-      "updatedAt": "2026-11-26T23:49:54.532Z",
+      "updatedAt": "2026-11-27T04:48:42.502Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3648,7 +3695,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:22.173Z",
-      "updatedAt": "2026-11-26T23:49:54.532Z",
+      "updatedAt": "2026-11-27T04:48:42.502Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3860,7 +3907,7 @@
       "publishedAt": null,
       "scheduledStart": "2026-12-31T16:00:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -3883,7 +3930,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.256Z",
-      "updatedAt": "2026-11-02T11:59:38.852Z",
+      "updatedAt": "2026-11-27T04:48:45.146Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3954,7 +4001,7 @@
       "publishedAt": null,
       "scheduledStart": "2027-10-11T15:11:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -3977,7 +4024,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.256Z",
-      "updatedAt": "2026-11-02T11:59:38.852Z",
+      "updatedAt": "2026-11-27T04:48:45.146Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4024,7 +4071,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-11-26T23:49:54.532Z",
+      "updatedAt": "2026-11-27T04:48:42.502Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4118,7 +4165,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.567Z",
-      "updatedAt": "2026-11-26T23:49:29.115Z",
+      "updatedAt": "2026-11-27T04:48:49.083Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },

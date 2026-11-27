@@ -1,7 +1,101 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T00:11:29.954Z",
+  "generatedAt": "2026-11-27T05:11:58.713Z",
   "items": [
+    {
+      "id": "316402824810",
+      "platform": "twitch",
+      "url": "https://twitch.tv/potaterfry",
+      "type": "live",
+      "channelId": "UCbarNaHFZz4J2FawPHHDkcA",
+      "channelName": "PotaterFryVT",
+      "channelKind": "virtual",
+      "region": "sea",
+      "gender": "unknown",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "so we back in the mines | EN/TAG | !commands | First: @alyxagriche",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_potaterfry-640x360.jpg",
+      "publishedAt": "2026-11-27T04:59:12Z",
+      "scheduledStart": "2026-11-27T04:59:12Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCbarNaHFZz4J2FawPHHDkcA",
+          "name": "PotaterFryVT",
+          "kind": "virtual",
+          "region": "sea"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 1,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T04:48:45.146Z",
+      "updatedAt": "2026-11-27T04:48:45.146Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "316376926185",
+      "platform": "twitch",
+      "url": "https://twitch.tv/kingberzerks",
+      "type": "live",
+      "channelId": "UC0sDtaX-f7oMl-70GtAnszQ",
+      "channelName": "King BerZerks",
+      "channelKind": "virtual",
+      "region": "sea",
+      "gender": "unknown",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "🔴LIVE BDO EP701 [DROP FREE] @KingBerZerks #ตกอับ #ยากจน #ไม่มีงาน #โปรดจ้างคิง",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_kingberzerks-640x360.jpg",
+      "publishedAt": "2026-11-27T03:33:25Z",
+      "scheduledStart": "2026-11-27T03:33:25Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC0sDtaX-f7oMl-70GtAnszQ",
+          "name": "King BerZerks",
+          "kind": "virtual",
+          "region": "sea"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 43,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T04:48:36.197Z",
+      "updatedAt": "2026-11-27T04:48:36.197Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
     {
       "id": "Bdhsk2r7UfI",
       "platform": "youtube",
@@ -654,6 +748,53 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "BY1-tOlgLL4",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCxMjBu1cPzJpPWmGd0UdUhA",
+      "channelName": "Maylyn Ch.【ARP】",
+      "channelKind": "virtual",
+      "region": "sea",
+      "gender": "female",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "【🔴4th Anniversary】 4 ปีก็เรียนจบมหาลัยได้แล้วเนี่ย デビュー4周年です 【Maylyn | #ARProject 】",
+      "description": null,
+      "thumbnail": null,
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "isMember": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCxMjBu1cPzJpPWmGd0UdUhA",
+          "name": "Maylyn Ch.【ARP】",
+          "kind": "virtual",
+          "region": "sea"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T04:48:36.197Z",
+      "updatedAt": "2026-11-27T04:48:36.197Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "c6q_Dv5uHuA",
       "platform": "youtube",
       "type": "live",
@@ -837,7 +978,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-26T23:49:29.115Z",
-      "updatedAt": "2026-11-26T23:49:29.115Z",
+      "updatedAt": "2026-11-27T04:48:49.083Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },

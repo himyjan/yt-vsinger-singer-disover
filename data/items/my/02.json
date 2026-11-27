@@ -1,7 +1,54 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T00:11:29.954Z",
+  "generatedAt": "2026-11-27T05:11:58.713Z",
   "items": [
+    {
+      "id": "316402019946",
+      "platform": "twitch",
+      "url": "https://twitch.tv/suyadesu",
+      "type": "live",
+      "channelId": "UCIvN7ayozTvsgsliLeGgVzg",
+      "channelName": "Suya Desu",
+      "channelKind": "virtual",
+      "region": "my",
+      "gender": "unknown",
+      "languages": [
+        "ms"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "[ Donothon Day 2 ] fortnite, valo, and interactive tiktok  || !socials !discord !customize !spawn !despawn",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_suyadesu-640x360.jpg",
+      "publishedAt": "2026-11-27T00:40:17Z",
+      "scheduledStart": "2026-11-27T00:40:17Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCIvN7ayozTvsgsliLeGgVzg",
+          "name": "Suya Desu",
+          "kind": "virtual",
+          "region": "my"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 3,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T04:48:32.102Z",
+      "updatedAt": "2026-11-27T04:48:32.102Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
     {
       "id": "6l_UHB_wEmc",
       "platform": "youtube",
@@ -232,7 +279,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:33.129Z",
-      "updatedAt": "2026-11-26T23:49:54.532Z",
+      "updatedAt": "2026-11-27T04:48:42.502Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },

@@ -1,7 +1,54 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-02T12:14:00.598Z",
+  "generatedAt": "2026-11-27T05:11:58.713Z",
   "items": [
+    {
+      "id": "322491328986",
+      "platform": "twitch",
+      "url": "https://twitch.tv/tetsuya_shin",
+      "type": "live",
+      "channelId": "UCybUc9A6vIHPNN_pzebSyXw",
+      "channelName": "tetsuya_shin",
+      "channelKind": "virtual",
+      "region": "my",
+      "gender": "unknown",
+      "languages": [
+        "ms"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "🏔️ ⋮ Peak Thanksgiving ✦ Grateful for You ✦ @kazekii ⋮ 1st Playthrough",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_tetsuya_shin-640x360.jpg",
+      "publishedAt": "2026-11-27T05:01:00Z",
+      "scheduledStart": "2026-11-27T05:01:00Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCybUc9A6vIHPNN_pzebSyXw",
+          "name": "tetsuya_shin",
+          "kind": "virtual",
+          "region": "my"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 9,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T04:48:42.502Z",
+      "updatedAt": "2026-11-27T04:48:42.502Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
     {
       "id": "SZZOXdNI4QE",
       "platform": "youtube",
@@ -115,7 +162,7 @@
       "publishedAt": null,
       "scheduledStart": "2027-12-31T04:00:58.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -138,7 +185,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:21.011Z",
-      "updatedAt": "2026-11-02T11:59:28.769Z",
+      "updatedAt": "2026-11-27T04:48:36.197Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

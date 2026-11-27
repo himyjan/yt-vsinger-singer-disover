@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T00:11:29.954Z",
+  "generatedAt": "2026-11-27T05:11:58.713Z",
   "items": [
     {
       "id": "jdH67A9Lf6Y",
@@ -893,6 +893,53 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "NYpdiyYFRaQ",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCSwMHPPYcYMUR36pEUM8NpQ",
+      "channelName": "sorapuff",
+      "channelKind": "virtual",
+      "region": "sea",
+      "gender": "unknown",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "cs2 weeklies",
+      "description": null,
+      "thumbnail": null,
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "isMember": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCSwMHPPYcYMUR36pEUM8NpQ",
+          "name": "sorapuff",
+          "kind": "virtual",
+          "region": "sea"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T04:48:42.823Z",
+      "updatedAt": "2026-11-27T04:48:42.823Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "Qi5lxQGycJA",
       "platform": "youtube",
       "type": "live",
@@ -936,6 +983,53 @@
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.256Z",
       "updatedAt": "2026-11-02T11:59:38.852Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "SeAFVmVnLV8",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UChx_ma9X2iNR4vaNIvG8CKQ",
+      "channelName": "SlimeVenom",
+      "channelKind": "virtual",
+      "region": "sea",
+      "gender": "unknown",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "🔴MY SECOND SPACE ADVENTURE || Outer Wilds - !spoiler",
+      "description": null,
+      "thumbnail": null,
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "isMember": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": "🔴MY SECOND SPACE ADVENTURE || Outer Wilds",
+      "originalArtist": "!spoiler",
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UChx_ma9X2iNR4vaNIvG8CKQ",
+          "name": "SlimeVenom",
+          "kind": "virtual",
+          "region": "sea"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T04:48:49.083Z",
+      "updatedAt": "2026-11-27T04:48:49.083Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -1029,7 +1123,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-27T17:58:40.188Z",
-      "updatedAt": "2026-11-26T23:49:33.240Z",
+      "updatedAt": "2026-11-27T04:48:32.102Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },

@@ -1,7 +1,54 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T00:11:29.954Z",
+  "generatedAt": "2026-11-27T05:11:58.713Z",
   "items": [
+    {
+      "id": "316376846697",
+      "platform": "twitch",
+      "url": "https://twitch.tv/inerchiavtuber",
+      "type": "live",
+      "channelId": "UCdbHkKYIghwYkiJeDLJCpyA",
+      "channelName": "Inerchia",
+      "channelKind": "virtual",
+      "region": "id",
+      "gender": "unknown",
+      "languages": [
+        "id"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "🐺 cat wolf karaoke [EN/ID] ✦ Werewolf VTuber !socials !discord ✦ First: @whhatsshong",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_inerchiavtuber-640x360.jpg",
+      "publishedAt": "2026-11-27T03:06:09Z",
+      "scheduledStart": "2026-11-27T03:06:09Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCdbHkKYIghwYkiJeDLJCpyA",
+          "name": "Inerchia",
+          "kind": "virtual",
+          "region": "id"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 3,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T04:48:42.671Z",
+      "updatedAt": "2026-11-27T04:48:42.671Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
     {
       "id": "316376333289",
       "platform": "twitch",
@@ -23,9 +70,9 @@
       "publishedAt": "2026-11-26T23:09:41Z",
       "scheduledStart": "2026-11-26T23:09:41Z",
       "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "live",
+      "actualEnd": "2026-11-27T04:48:36.197Z",
+      "duration": 20335,
+      "status": "past",
       "category": "live",
       "songTitle": null,
       "originalArtist": null,
@@ -45,7 +92,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-26T23:49:32.178Z",
-      "updatedAt": "2026-11-26T23:49:32.178Z",
+      "updatedAt": "2026-11-27T04:48:36.197Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },

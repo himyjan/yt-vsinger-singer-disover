@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T00:11:29.954Z",
+  "generatedAt": "2026-11-27T05:11:58.713Z",
   "items": [
     {
       "id": "X4-YLkBo52Y",
@@ -97,6 +97,100 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "316613894508",
+      "platform": "twitch",
+      "url": "https://twitch.tv/inspiredred",
+      "type": "live",
+      "channelId": "UC5qP-foCDxIBokctgLgf81w",
+      "channelName": "Inspired Red",
+      "channelKind": "virtual",
+      "region": "sea",
+      "gender": "unknown",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "LETS DRAIN THE OCEANN WHOOOOHHH !",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_inspiredred-640x360.jpg",
+      "publishedAt": "2026-11-27T04:58:01Z",
+      "scheduledStart": "2026-11-27T04:58:01Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC5qP-foCDxIBokctgLgf81w",
+          "name": "Inspired Red",
+          "kind": "virtual",
+          "region": "sea"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 0,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T04:48:45.146Z",
+      "updatedAt": "2026-11-27T04:48:45.146Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "316402411626",
+      "platform": "twitch",
+      "url": "https://twitch.tv/vaderfoottv",
+      "type": "live",
+      "channelId": "UCsMWYMZB38AY-ADtccSAfkQ",
+      "channelName": "VADERFOOTTV",
+      "channelKind": "virtual",
+      "region": "sea",
+      "gender": "male",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "[Viewer Shiyu/DA Help] 🔴 ZZZ v3.4 TALK ~ PC NO AUDIO ~ Dailies > ENDGAME RESET ~ EPIC Creator Code: VADERFOO [ENG/FIL]",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_vaderfoottv-640x360.jpg",
+      "publishedAt": "2026-11-27T02:50:01Z",
+      "scheduledStart": "2026-11-27T02:50:01Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCsMWYMZB38AY-ADtccSAfkQ",
+          "name": "VADERFOOTTV",
+          "kind": "virtual",
+          "region": "sea"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 15,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T04:48:42.502Z",
+      "updatedAt": "2026-11-27T04:48:42.502Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "316401769450",
       "platform": "twitch",
       "url": "https://twitch.tv/sussy_kata",
@@ -117,9 +211,9 @@
       "publishedAt": "2026-11-26T23:07:02Z",
       "scheduledStart": "2026-11-26T23:07:02Z",
       "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "live",
+      "actualEnd": "2026-11-27T04:48:35.090Z",
+      "duration": 20493,
+      "status": "past",
       "category": "live",
       "songTitle": null,
       "originalArtist": null,
@@ -139,7 +233,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-26T23:49:34.524Z",
-      "updatedAt": "2026-11-26T23:49:34.524Z",
+      "updatedAt": "2026-11-27T04:48:35.090Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -859,7 +953,7 @@
       "publishedAt": null,
       "scheduledStart": "2027-06-07T04:00:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -882,7 +976,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:22.173Z",
-      "updatedAt": "2026-11-02T11:59:42.767Z",
+      "updatedAt": "2026-11-27T04:48:45.146Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },

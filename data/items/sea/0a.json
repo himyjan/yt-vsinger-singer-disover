@@ -1,7 +1,54 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T00:11:29.954Z",
+  "generatedAt": "2026-11-27T05:11:58.713Z",
   "items": [
+    {
+      "id": "316402624874",
+      "platform": "twitch",
+      "url": "https://twitch.tv/itsmintyvt",
+      "type": "live",
+      "channelId": "UCwCHw9-D5e9Ol7rRuHJwYwA",
+      "channelName": "MintyVT",
+      "channelKind": "virtual",
+      "region": "sea",
+      "gender": "female",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "🐸 DROPS 🐸 𝜗ৎ Cicia awaits! Infinity Nikki 3.0 is FINALLY here!! | 18+ | ROAD TO 3K | !frog !lurk !discord !kofi !throne",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_itsmintyvt-640x360.jpg",
+      "publishedAt": "2026-11-27T03:57:41Z",
+      "scheduledStart": "2026-11-27T03:57:41Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCwCHw9-D5e9Ol7rRuHJwYwA",
+          "name": "MintyVT",
+          "kind": "virtual",
+          "region": "sea"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 7,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T04:48:42.823Z",
+      "updatedAt": "2026-11-27T04:48:42.823Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
     {
       "id": "316401839338",
       "platform": "twitch",
@@ -23,9 +70,9 @@
       "publishedAt": "2026-11-26T23:34:12Z",
       "scheduledStart": "2026-11-26T23:34:12Z",
       "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "live",
+      "actualEnd": "2026-11-27T04:48:42.823Z",
+      "duration": 18870,
+      "status": "past",
       "category": "live",
       "songTitle": null,
       "originalArtist": null,
@@ -45,7 +92,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-26T23:49:36.908Z",
-      "updatedAt": "2026-11-26T23:49:36.908Z",
+      "updatedAt": "2026-11-27T04:48:42.823Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -511,7 +558,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.042Z",
-      "updatedAt": "2026-11-26T23:49:29.115Z",
+      "updatedAt": "2026-11-27T04:48:49.083Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -605,7 +652,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.567Z",
-      "updatedAt": "2026-11-26T23:49:34.524Z",
+      "updatedAt": "2026-11-27T04:48:35.090Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -699,7 +746,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.042Z",
-      "updatedAt": "2026-11-26T23:49:34.524Z",
+      "updatedAt": "2026-11-27T04:48:35.090Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

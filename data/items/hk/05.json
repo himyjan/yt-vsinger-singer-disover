@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T00:11:29.954Z",
+  "generatedAt": "2026-11-27T05:11:58.713Z",
   "items": [
     {
       "id": "PxFujO0igGE",
@@ -882,7 +882,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:17.489Z",
-      "updatedAt": "2026-11-26T23:49:34.524Z",
+      "updatedAt": "2026-11-27T04:48:35.090Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -1070,7 +1070,54 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.180Z",
-      "updatedAt": "2026-11-26T23:49:34.524Z",
+      "updatedAt": "2026-11-27T04:48:35.090Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "Rzj7rv1_lVo",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCbZTKDpT_FeGnyanuwzUpYw",
+      "channelName": "神崎涼子【香港Vtuber】",
+      "channelKind": "virtual",
+      "region": "hk",
+      "gender": "female",
+      "languages": [
+        "yue"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "縛 / 神崎涼子 cover",
+      "description": null,
+      "thumbnail": null,
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "isMember": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCbZTKDpT_FeGnyanuwzUpYw",
+          "name": "神崎涼子【香港Vtuber】",
+          "kind": "virtual",
+          "region": "hk"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-27T04:48:42.823Z",
+      "updatedAt": "2026-11-27T04:48:42.823Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -1141,7 +1188,7 @@
       "publishedAt": null,
       "scheduledStart": "2027-10-10T02:10:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -1164,7 +1211,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T18:28:42.047Z",
-      "updatedAt": "2026-11-02T11:59:39.129Z",
+      "updatedAt": "2026-11-27T04:48:32.102Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

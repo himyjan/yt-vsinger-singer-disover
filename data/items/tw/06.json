@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T00:11:29.954Z",
+  "generatedAt": "2026-11-27T05:11:58.713Z",
   "items": [
     {
       "id": "DnKuBZ1PzmE",
@@ -46,6 +46,53 @@
       "source": "api",
       "addedAt": "2026-10-31T03:16:24.029Z",
       "updatedAt": "2026-11-26T23:49:36.908Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "aSB7bpS9cpU",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCxSuoaaxXsWYbuFlBaRZX6g",
+      "channelName": "晚晚配音中",
+      "channelKind": "virtual",
+      "region": "tw",
+      "gender": "female",
+      "languages": [
+        "zh-Hant"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "【周表】我努力記得更新這東西。",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/aSB7bpS9cpU/hq720.jpg",
+      "publishedAt": "2026-12-30T19:40:00.000Z",
+      "scheduledStart": "2026-12-30T19:40:00.000Z",
+      "actualStart": null,
+      "isMember": false,
+      "actualEnd": "2026-11-27T04:48:45.146Z",
+      "duration": -2904675,
+      "status": "past",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCxSuoaaxXsWYbuFlBaRZX6g",
+          "name": "晚晚配音中",
+          "kind": "virtual",
+          "region": "tw"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-31T03:16:22.173Z",
+      "updatedAt": "2026-11-27T04:48:45.146Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -2991,53 +3038,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "aSB7bpS9cpU",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCxSuoaaxXsWYbuFlBaRZX6g",
-      "channelName": "晚晚配音中",
-      "channelKind": "virtual",
-      "region": "tw",
-      "gender": "female",
-      "languages": [
-        "zh-Hant"
-      ],
-      "isAi": false,
-      "variant": "female_vtuber",
-      "title": "【周表】我努力記得更新這東西。",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/aSB7bpS9cpU/hq720.jpg",
-      "publishedAt": null,
-      "scheduledStart": "2026-12-30T19:40:00.000Z",
-      "actualStart": null,
-      "isMember": false,
-      "actualEnd": null,
-      "duration": null,
-      "status": "upcoming",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCxSuoaaxXsWYbuFlBaRZX6g",
-          "name": "晚晚配音中",
-          "kind": "virtual",
-          "region": "tw"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-31T03:16:22.173Z",
-      "updatedAt": "2026-11-02T11:59:42.767Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "Bd2yFQZtpXg",
       "platform": "youtube",
       "type": "live",
@@ -3174,7 +3174,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.117Z",
-      "updatedAt": "2026-11-26T23:49:32.178Z",
+      "updatedAt": "2026-11-27T04:48:36.197Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3691,7 +3691,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:17.489Z",
-      "updatedAt": "2026-11-26T23:49:34.524Z",
+      "updatedAt": "2026-11-27T04:48:35.090Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3809,7 +3809,7 @@
       "publishedAt": null,
       "scheduledStart": "2026-12-23T18:35:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -3832,7 +3832,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.256Z",
-      "updatedAt": "2026-11-02T11:59:38.852Z",
+      "updatedAt": "2026-11-27T04:48:45.146Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3950,7 +3950,7 @@
       "publishedAt": null,
       "scheduledStart": "2027-01-31T15:45:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -3973,7 +3973,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-11-02T11:59:32.231Z",
+      "updatedAt": "2026-11-27T04:48:45.146Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4114,7 +4114,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.228Z",
-      "updatedAt": "2026-11-26T23:49:29.115Z",
+      "updatedAt": "2026-11-27T04:48:49.083Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4161,7 +4161,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-11-26T23:49:33.240Z",
+      "updatedAt": "2026-11-27T04:48:32.102Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4517,7 +4517,7 @@
       "publishedAt": null,
       "scheduledStart": "2027-07-21T07:05:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -4540,7 +4540,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.283Z",
-      "updatedAt": "2026-11-02T11:59:27.253Z",
+      "updatedAt": "2026-11-27T04:48:42.823Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4587,7 +4587,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:25.456Z",
-      "updatedAt": "2026-11-26T23:49:45.482Z",
+      "updatedAt": "2026-11-27T04:48:42.671Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4634,7 +4634,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:19.448Z",
-      "updatedAt": "2026-11-26T23:49:33.240Z",
+      "updatedAt": "2026-11-27T04:48:32.102Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4916,7 +4916,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:25.456Z",
-      "updatedAt": "2026-11-26T23:49:45.482Z",
+      "updatedAt": "2026-11-27T04:48:42.671Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5081,7 +5081,7 @@
       "publishedAt": null,
       "scheduledStart": "2028-08-30T15:45:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -5104,7 +5104,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:16.423Z",
-      "updatedAt": "2026-11-02T11:59:31.129Z",
+      "updatedAt": "2026-11-27T04:48:45.146Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
