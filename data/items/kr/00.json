@@ -1,7 +1,54 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-02T12:59:10.795Z",
+  "generatedAt": "2026-11-27T00:11:29.954Z",
   "items": [
+    {
+      "id": "320061571031",
+      "platform": "twitch",
+      "url": "https://twitch.tv/rielle_vt",
+      "type": "live",
+      "channelId": "UCOUSEYGfRDOO8SNEYIN8u0g",
+      "channelName": "리엘 리프",
+      "channelKind": "virtual",
+      "region": "kr",
+      "gender": "unknown",
+      "languages": [
+        "ko"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "ff7r part 8",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_rielle_vt-640x360.jpg",
+      "publishedAt": "2026-11-27T00:02:34Z",
+      "scheduledStart": "2026-11-27T00:02:34Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCOUSEYGfRDOO8SNEYIN8u0g",
+          "name": "리엘 리프",
+          "kind": "virtual",
+          "region": "kr"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 3,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-26T23:49:45.482Z",
+      "updatedAt": "2026-11-26T23:49:45.482Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
     {
       "id": "uunhUl_0DJY",
       "platform": "youtube",
@@ -70,9 +117,9 @@
       "publishedAt": "2026-09-21T19:25:55.000Z",
       "scheduledStart": "2026-09-21T19:25:55.000Z",
       "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "live",
+      "actualEnd": "2026-11-26T23:49:32.178Z",
+      "duration": 5718217,
+      "status": "past",
       "category": "live",
       "songTitle": null,
       "originalArtist": null,
@@ -92,7 +139,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-23T10:02:56.253Z",
-      "updatedAt": "2026-11-02T05:53:05.453Z",
+      "updatedAt": "2026-11-26T23:49:32.178Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

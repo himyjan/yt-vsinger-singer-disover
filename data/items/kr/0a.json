@@ -1,7 +1,101 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-02T12:14:00.598Z",
+  "generatedAt": "2026-11-27T00:11:29.954Z",
   "items": [
+    {
+      "id": "317317969621",
+      "platform": "twitch",
+      "url": "https://twitch.tv/namipew",
+      "type": "live",
+      "channelId": "UCFsJa2a_F4yoJC-xURXYojw",
+      "channelName": "Namipew",
+      "channelKind": "virtual",
+      "region": "kr",
+      "gender": "unknown",
+      "languages": [
+        "ko"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "AK Hangout | ENDFIELD | Follow: @Namipew",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_namipew-640x360.jpg",
+      "publishedAt": "2026-11-26T19:04:18Z",
+      "scheduledStart": "2026-11-26T19:04:18Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCFsJa2a_F4yoJC-xURXYojw",
+          "name": "Namipew",
+          "kind": "virtual",
+          "region": "kr"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 40,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-26T23:49:34.524Z",
+      "updatedAt": "2026-11-26T23:49:34.524Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "a-YhUkrvVyI",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCzCXb9UDkMc2kwnw_9xkImA",
+      "channelName": "Lye Alkaline",
+      "channelKind": "virtual",
+      "region": "kr",
+      "gender": "unknown",
+      "languages": [
+        "ko"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "Sleepy farmer Lye",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/a-YhUkrvVyI/hq720.jpg",
+      "publishedAt": "2026-11-08T21:00:00.000Z",
+      "scheduledStart": "2026-11-08T21:00:00.000Z",
+      "actualStart": null,
+      "isMember": false,
+      "actualEnd": "2026-11-26T23:49:32.178Z",
+      "duration": null,
+      "status": "past",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCzCXb9UDkMc2kwnw_9xkImA",
+          "name": "Lye Alkaline",
+          "kind": "virtual",
+          "region": "kr"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-02T05:53:02.220Z",
+      "updatedAt": "2026-11-26T23:49:32.178Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
     {
       "id": "hr8W9TozJaE",
       "platform": "youtube",
@@ -45,53 +139,6 @@
       "source": "api",
       "addedAt": "2026-10-31T03:16:22.173Z",
       "updatedAt": "2026-10-31T18:28:52.690Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
-      "id": "a-YhUkrvVyI",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCzCXb9UDkMc2kwnw_9xkImA",
-      "channelName": "Lye Alkaline",
-      "channelKind": "virtual",
-      "region": "kr",
-      "gender": "unknown",
-      "languages": [
-        "ko"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "Sleepy farmer Lye",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/a-YhUkrvVyI/hq720.jpg",
-      "publishedAt": null,
-      "scheduledStart": "2026-11-08T21:00:00.000Z",
-      "actualStart": null,
-      "isMember": false,
-      "actualEnd": null,
-      "duration": null,
-      "status": "upcoming",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCzCXb9UDkMc2kwnw_9xkImA",
-          "name": "Lye Alkaline",
-          "kind": "virtual",
-          "region": "kr"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-11-02T05:53:02.220Z",
-      "updatedAt": "2026-11-02T11:59:28.769Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

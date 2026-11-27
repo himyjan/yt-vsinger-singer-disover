@@ -1,7 +1,54 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-02T12:14:00.598Z",
+  "generatedAt": "2026-11-27T00:11:29.954Z",
   "items": [
+    {
+      "id": "0dqyvArSqVk",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCp4CfVSBTpkbahaCRu39cug",
+      "channelName": "MaidYuukiVT",
+      "channelKind": "virtual",
+      "region": "kr",
+      "gender": "female",
+      "languages": [
+        "ko"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "୨୧【 Silent Hill f #2 】 ┊ You're the one getting bonked this time!! 💕┊ ୨୧",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/0dqyvArSqVk/hq720.jpg",
+      "publishedAt": "2026-11-06T19:00:00.000Z",
+      "scheduledStart": "2026-11-06T19:00:00.000Z",
+      "actualStart": null,
+      "isMember": false,
+      "actualEnd": "2026-11-26T23:49:29.115Z",
+      "duration": null,
+      "status": "past",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCp4CfVSBTpkbahaCRu39cug",
+          "name": "MaidYuukiVT",
+          "kind": "virtual",
+          "region": "kr"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-01T23:32:23.823Z",
+      "updatedAt": "2026-11-26T23:49:29.115Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
     {
       "id": "xcaPP_PvC_U",
       "platform": "youtube",
@@ -95,53 +142,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "0dqyvArSqVk",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCp4CfVSBTpkbahaCRu39cug",
-      "channelName": "MaidYuukiVT",
-      "channelKind": "virtual",
-      "region": "kr",
-      "gender": "female",
-      "languages": [
-        "ko"
-      ],
-      "isAi": false,
-      "variant": "female_vtuber",
-      "title": "୨୧【 Silent Hill f #2 】 ┊ You're the one getting bonked this time!! 💕┊ ୨୧",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/0dqyvArSqVk/hq720.jpg",
-      "publishedAt": null,
-      "scheduledStart": "2026-11-06T19:00:00.000Z",
-      "actualStart": null,
-      "isMember": false,
-      "actualEnd": null,
-      "duration": null,
-      "status": "upcoming",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCp4CfVSBTpkbahaCRu39cug",
-          "name": "MaidYuukiVT",
-          "kind": "virtual",
-          "region": "kr"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-11-01T23:32:23.823Z",
-      "updatedAt": "2026-11-02T11:59:34.145Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "7HnHusS7P6Q",
       "platform": "youtube",
       "type": "live",
@@ -208,7 +208,7 @@
       "publishedAt": null,
       "scheduledStart": "2027-12-30T15:00:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -231,7 +231,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.228Z",
-      "updatedAt": "2026-11-02T11:59:25.595Z",
+      "updatedAt": "2026-11-26T23:49:29.115Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

@@ -1,7 +1,54 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-02T12:14:00.598Z",
+  "generatedAt": "2026-11-27T00:11:29.954Z",
   "items": [
+    {
+      "id": "8_DpUuNp9lc",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCYPJKyflH1e8nG3HfQTr6ew",
+      "channelName": "摩西子Moseko ch.",
+      "channelKind": "virtual",
+      "region": "my",
+      "gender": "unknown",
+      "languages": [
+        "ms"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "【 游戲台 | Resident Evil 4 】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/8_DpUuNp9lc/hq720.jpg",
+      "publishedAt": "2026-11-02T14:45:00.000Z",
+      "scheduledStart": "2026-11-02T14:45:00.000Z",
+      "actualStart": null,
+      "isMember": false,
+      "actualEnd": "2026-11-26T23:49:33.240Z",
+      "duration": null,
+      "status": "past",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCYPJKyflH1e8nG3HfQTr6ew",
+          "name": "摩西子Moseko ch.",
+          "kind": "virtual",
+          "region": "my"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-01T23:32:29.379Z",
+      "updatedAt": "2026-11-26T23:49:33.240Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
     {
       "id": "VUbSVXfM2Mw",
       "platform": "youtube",
@@ -330,53 +377,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "8_DpUuNp9lc",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCYPJKyflH1e8nG3HfQTr6ew",
-      "channelName": "摩西子Moseko ch.",
-      "channelKind": "virtual",
-      "region": "my",
-      "gender": "unknown",
-      "languages": [
-        "ms"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "【 游戲台 | Resident Evil 4 】",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/8_DpUuNp9lc/hq720.jpg",
-      "publishedAt": null,
-      "scheduledStart": "2026-11-02T14:45:00.000Z",
-      "actualStart": null,
-      "isMember": false,
-      "actualEnd": null,
-      "duration": null,
-      "status": "upcoming",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCYPJKyflH1e8nG3HfQTr6ew",
-          "name": "摩西子Moseko ch.",
-          "kind": "virtual",
-          "region": "my"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-11-01T23:32:29.379Z",
-      "updatedAt": "2026-11-02T11:59:31.129Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "B9OjGgkPO_8",
       "platform": "youtube",
       "type": "live",
@@ -396,7 +396,7 @@
       "publishedAt": null,
       "scheduledStart": "2026-12-25T12:00:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -419,7 +419,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:16.423Z",
-      "updatedAt": "2026-11-02T11:59:31.129Z",
+      "updatedAt": "2026-11-26T23:49:54.532Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },

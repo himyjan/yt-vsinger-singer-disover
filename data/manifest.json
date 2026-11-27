@@ -1,18 +1,18 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-26T21:43:21.201Z",
+  "generatedAt": "2026-11-27T00:11:29.954Z",
   "counts": {
     "channels": 76275,
     "channelsVirtual": 76235,
     "channelsReal": 40,
     "channelsSinging": 13055,
-    "items": 13956,
-    "itemsLive": 25,
-    "itemsUpcoming": 7787,
+    "items": 14754,
+    "itemsLive": 703,
+    "itemsUpcoming": 3908,
     "itemsVideo": 0,
     "itemsPlaylist": 922,
     "itemsCover": 0,
-    "itemsMv": 6,
+    "itemsMv": 7,
     "itemsOriginal": 1
   },
   "regions": [
@@ -21,70 +21,70 @@
       "label": "Japan",
       "badge": "🇯🇵",
       "channels": 12008,
-      "items": 7398
+      "items": 14880
     },
     {
       "code": "cn",
       "label": "China",
       "badge": "🇨🇳",
       "channels": 8783,
-      "items": 82
+      "items": 171
     },
     {
       "code": "tw",
       "label": "Taiwan",
       "badge": "🇹🇼",
       "channels": 4329,
-      "items": 1803
+      "items": 3621
     },
     {
       "code": "hk",
       "label": "Hong Kong",
       "badge": "🇭🇰",
       "channels": 709,
-      "items": 341
+      "items": 688
     },
     {
       "code": "kr",
       "label": "Korea",
       "badge": "🇰🇷",
       "channels": 414,
-      "items": 31
+      "items": 65
     },
     {
       "code": "en",
       "label": "English",
       "badge": "🌐",
       "channels": 39558,
-      "items": 3312
+      "items": 6971
     },
     {
       "code": "id",
       "label": "Indonesia",
       "badge": "🇮🇩",
       "channels": 1130,
-      "items": 286
+      "items": 577
     },
     {
       "code": "my",
       "label": "Malaysia",
       "badge": "🇲🇾",
       "channels": 619,
-      "items": 106
+      "items": 212
     },
     {
       "code": "sea",
       "label": "SEA",
       "badge": "🌏",
       "channels": 2042,
-      "items": 293
+      "items": 606
     },
     {
       "code": "unknown",
       "label": "Unknown",
       "badge": "❔",
       "channels": 6683,
-      "items": 304
+      "items": 919
     }
   ],
   "quota": {
