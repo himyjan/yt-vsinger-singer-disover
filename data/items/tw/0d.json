@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T23:35:09.322Z",
+  "generatedAt": "2026-11-28T05:11:49.502Z",
   "items": [
     {
       "id": "O6AsvPpnGcY",
@@ -520,6 +520,100 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "316771413489",
+      "platform": "twitch",
+      "url": "https://twitch.tv/harereki",
+      "type": "live",
+      "channelId": "UCaug_P-kOnKGSGRuEMfHYqQ",
+      "channelName": "晴曆 Harereki🌞",
+      "channelKind": "virtual",
+      "region": "tw",
+      "gender": "unknown",
+      "languages": [
+        "zh-Hant"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "早安雜談！",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_harereki-640x360.jpg",
+      "publishedAt": "2026-11-28T02:27:07Z",
+      "scheduledStart": "2026-11-28T02:27:07Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCaug_P-kOnKGSGRuEMfHYqQ",
+          "name": "晴曆 Harereki🌞",
+          "kind": "virtual",
+          "region": "tw"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 5,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-28T04:53:46.749Z",
+      "updatedAt": "2026-11-28T04:53:46.749Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "316353559400",
+      "platform": "twitch",
+      "url": "https://twitch.tv/hameowmeow",
+      "type": "live",
+      "channelId": "UCibme_dt0UlE63LRec_9ogQ",
+      "channelName": "黑貓_凱米洛",
+      "channelKind": "virtual",
+      "region": "tw",
+      "gender": "unknown",
+      "languages": [
+        "zh-Hant"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "〖28^NOV】生活費告急了！來救救他吧！ | 救一下自主訂閱！有訂閱圖！",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_hameowmeow-640x360.jpg",
+      "publishedAt": "2026-11-28T01:54:30Z",
+      "scheduledStart": "2026-11-28T01:54:30Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCibme_dt0UlE63LRec_9ogQ",
+          "name": "黑貓_凱米洛",
+          "kind": "virtual",
+          "region": "tw"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 58,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-28T04:53:46.749Z",
+      "updatedAt": "2026-11-28T04:53:46.749Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "nNYL3tAi5nI",
       "platform": "youtube",
       "type": "live",
@@ -634,9 +728,9 @@
       "publishedAt": "2026-11-27T13:41:19Z",
       "scheduledStart": "2026-11-27T13:41:19Z",
       "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "live",
+      "actualEnd": "2026-11-28T04:53:57.228Z",
+      "duration": 54758,
+      "status": "past",
       "category": "live",
       "songTitle": null,
       "originalArtist": null,
@@ -656,7 +750,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-27T14:43:52.802Z",
-      "updatedAt": "2026-11-27T23:15:31.721Z",
+      "updatedAt": "2026-11-28T04:53:57.228Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3690,7 +3784,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:33.129Z",
-      "updatedAt": "2026-11-27T23:15:32.572Z",
+      "updatedAt": "2026-11-28T04:53:59.935Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4113,7 +4207,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:27.693Z",
-      "updatedAt": "2026-11-27T23:15:34.053Z",
+      "updatedAt": "2026-11-28T04:54:07.453Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4207,7 +4301,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:21.011Z",
-      "updatedAt": "2026-11-27T04:48:36.197Z",
+      "updatedAt": "2026-11-28T04:54:08.052Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4466,7 +4560,7 @@
       "publishedAt": null,
       "scheduledStart": "2027-08-03T12:00:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -4489,7 +4583,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:22.912Z",
-      "updatedAt": "2026-11-02T12:03:06.070Z",
+      "updatedAt": "2026-11-28T04:54:08.052Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4583,7 +4677,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:22.173Z",
-      "updatedAt": "2026-11-27T23:15:47.118Z",
+      "updatedAt": "2026-11-28T04:53:46.749Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4771,7 +4865,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:27.340Z",
-      "updatedAt": "2026-11-27T23:15:31.721Z",
+      "updatedAt": "2026-11-28T04:53:57.228Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4795,7 +4889,7 @@
       "publishedAt": null,
       "scheduledStart": "2028-04-01T15:45:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -4818,7 +4912,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.180Z",
-      "updatedAt": "2026-11-02T11:59:38.335Z",
+      "updatedAt": "2026-11-28T04:53:59.935Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4912,7 +5006,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-27T23:15:31.721Z",
-      "updatedAt": "2026-11-27T23:15:31.721Z",
+      "updatedAt": "2026-11-28T04:53:57.228Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5006,7 +5100,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:33.129Z",
-      "updatedAt": "2026-11-27T04:48:32.102Z",
+      "updatedAt": "2026-11-28T04:54:02.224Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5523,7 +5617,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:17.489Z",
-      "updatedAt": "2026-11-27T23:15:32.572Z",
+      "updatedAt": "2026-11-28T04:53:59.935Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5594,7 +5688,7 @@
       "publishedAt": null,
       "scheduledStart": "2027-01-23T13:00:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -5617,7 +5711,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:27.693Z",
-      "updatedAt": "2026-11-02T11:59:32.231Z",
+      "updatedAt": "2026-11-28T04:53:46.749Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5711,7 +5805,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:26.922Z",
-      "updatedAt": "2026-11-27T23:15:31.721Z",
+      "updatedAt": "2026-11-28T04:53:57.228Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5899,7 +5993,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:19.448Z",
-      "updatedAt": "2026-11-27T23:15:31.872Z",
+      "updatedAt": "2026-11-28T04:54:02.224Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5993,7 +6087,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:27.693Z",
-      "updatedAt": "2026-11-27T23:15:25.843Z",
+      "updatedAt": "2026-11-28T04:54:08.843Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

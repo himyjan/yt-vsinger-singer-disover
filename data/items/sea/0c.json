@@ -1,7 +1,101 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T23:35:09.322Z",
+  "generatedAt": "2026-11-28T05:11:49.502Z",
   "items": [
+    {
+      "id": "316407147242",
+      "platform": "twitch",
+      "url": "https://twitch.tv/inukamigrimzzy",
+      "type": "live",
+      "channelId": "UC443ZuwQUjs_yhenDPO3iOw",
+      "channelName": "InukamiGrimzzy",
+      "channelKind": "virtual",
+      "region": "sea",
+      "gender": "unknown",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "Can Chaos carry? Elyms to the rescue!! #NTE #NTEcreator",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_inukamigrimzzy-640x360.jpg",
+      "publishedAt": "2026-11-28T03:25:49Z",
+      "scheduledStart": "2026-11-28T03:25:49Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC443ZuwQUjs_yhenDPO3iOw",
+          "name": "InukamiGrimzzy",
+          "kind": "virtual",
+          "region": "sea"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 6,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-28T04:53:57.228Z",
+      "updatedAt": "2026-11-28T04:53:57.228Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "315733980143",
+      "platform": "twitch",
+      "url": "https://twitch.tv/geloshun",
+      "type": "live",
+      "channelId": "UCPe2YLhA9R153yT7umaYYwg",
+      "channelName": "GeloShunVODs",
+      "channelKind": "virtual",
+      "region": "sea",
+      "gender": "male",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "[ENG] More hunts, nom nom. MHGU - Village Quest Solo Hunts",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_geloshun-640x360.jpg",
+      "publishedAt": "2026-11-28T02:43:56Z",
+      "scheduledStart": "2026-11-28T02:43:56Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCPe2YLhA9R153yT7umaYYwg",
+          "name": "GeloShunVODs",
+          "kind": "virtual",
+          "region": "sea"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 4,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-28T04:54:02.224Z",
+      "updatedAt": "2026-11-28T04:54:02.224Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
     {
       "id": "_srcLXWNoyM",
       "platform": "youtube",
@@ -70,9 +164,9 @@
       "publishedAt": "2026-11-27T19:08:14Z",
       "scheduledStart": "2026-11-27T19:08:14Z",
       "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "live",
+      "actualEnd": "2026-11-28T04:53:46.749Z",
+      "duration": 35132,
+      "status": "past",
       "category": "live",
       "songTitle": null,
       "originalArtist": null,
@@ -92,7 +186,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-27T23:15:47.118Z",
-      "updatedAt": "2026-11-27T23:15:47.118Z",
+      "updatedAt": "2026-11-28T04:53:46.749Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -894,7 +988,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.180Z",
-      "updatedAt": "2026-11-27T23:15:29.995Z",
+      "updatedAt": "2026-11-28T04:54:08.052Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -1035,7 +1129,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:22.912Z",
-      "updatedAt": "2026-11-27T23:15:25.843Z",
+      "updatedAt": "2026-11-28T04:54:08.843Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

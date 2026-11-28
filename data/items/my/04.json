@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T23:35:09.322Z",
+  "generatedAt": "2026-11-28T05:11:49.502Z",
   "items": [
     {
       "id": "D-9IjSX594I",
@@ -93,6 +93,100 @@
       "source": "api",
       "addedAt": "2026-10-31T03:16:26.922Z",
       "updatedAt": "2026-11-26T23:49:36.908Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "316381705193",
+      "platform": "twitch",
+      "url": "https://twitch.tv/kontonnekohime",
+      "type": "live",
+      "channelId": "UCgkOld7IFvwRY00v3EFhLOw",
+      "channelName": "混沌猫姬",
+      "channelKind": "virtual",
+      "region": "my",
+      "gender": "unknown",
+      "languages": [
+        "ms"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "玩蓝色星原~ 欢迎挂台~（没开麦）~  / Playing Azur Promilia~ Feel free to stay and relax~ （No Mic)",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_kontonnekohime-640x360.jpg",
+      "publishedAt": "2026-11-28T04:30:12Z",
+      "scheduledStart": "2026-11-28T04:30:12Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCgkOld7IFvwRY00v3EFhLOw",
+          "name": "混沌猫姬",
+          "kind": "virtual",
+          "region": "my"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 7,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-28T04:53:59.935Z",
+      "updatedAt": "2026-11-28T04:53:59.935Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "316353721064",
+      "platform": "twitch",
+      "url": "https://twitch.tv/waomeo",
+      "type": "live",
+      "channelId": "UCJH9finOkkcBQe4EoTTgfMQ",
+      "channelName": "waomeo Ch. ワオメオ 🍊",
+      "channelKind": "virtual",
+      "region": "my",
+      "gender": "unknown",
+      "languages": [
+        "ms"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "【Art Stream】Today we rest by drawing MORE!",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_waomeo-640x360.jpg",
+      "publishedAt": "2026-11-28T02:52:18Z",
+      "scheduledStart": "2026-11-28T02:52:18Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCJH9finOkkcBQe4EoTTgfMQ",
+          "name": "waomeo Ch. ワオメオ 🍊",
+          "kind": "virtual",
+          "region": "my"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 32,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-28T04:53:46.749Z",
+      "updatedAt": "2026-11-28T04:53:46.749Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -558,7 +652,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.180Z",
-      "updatedAt": "2026-11-27T23:15:34.053Z",
+      "updatedAt": "2026-11-28T04:54:07.453Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

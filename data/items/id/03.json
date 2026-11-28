@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T23:35:09.322Z",
+  "generatedAt": "2026-11-28T05:11:49.502Z",
   "items": [
     {
       "id": "1wtA7B0gBNo",
@@ -46,6 +46,53 @@
       "source": "api",
       "addedAt": "2026-10-31T03:16:25.456Z",
       "updatedAt": "2026-11-27T23:15:34.053Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "322505363162",
+      "platform": "twitch",
+      "url": "https://twitch.tv/veraxli",
+      "type": "live",
+      "channelId": "UCJuVUm2Bl9gzzLOWPgtPATQ",
+      "channelName": "veraxli",
+      "channelKind": "virtual",
+      "region": "id",
+      "gender": "unknown",
+      "languages": [
+        "id"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "[18+] hidden king vs archmother is just a parental divorce and we are the kids deciding which parent we wanna live with | Deadlock",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_veraxli-640x360.jpg",
+      "publishedAt": "2026-11-28T03:57:11Z",
+      "scheduledStart": "2026-11-28T03:57:11Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": true,
+      "collaborators": [
+        {
+          "channelId": "UCJuVUm2Bl9gzzLOWPgtPATQ",
+          "name": "veraxli",
+          "kind": "virtual",
+          "region": "id"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 14,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-28T04:54:08.052Z",
+      "updatedAt": "2026-11-28T04:54:08.052Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -683,7 +730,7 @@
       "publishedAt": null,
       "scheduledStart": "2027-03-03T13:00:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -706,7 +753,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:21.011Z",
-      "updatedAt": "2026-11-02T11:59:28.769Z",
+      "updatedAt": "2026-11-28T04:54:08.052Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -800,7 +847,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-27T04:48:45.146Z",
-      "updatedAt": "2026-11-27T23:15:47.118Z",
+      "updatedAt": "2026-11-28T04:53:46.749Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T23:35:09.322Z",
+  "generatedAt": "2026-11-28T05:11:49.502Z",
   "items": [
     {
       "id": "6aEdTUbzVkQ",
@@ -943,6 +943,53 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "7u6hOD0lFyM",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCD0bN0kj69RLgRPO-ptshoA",
+      "channelName": "黒江 萬白 / Kuroe Mashiro",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "現在300％達成❕オリソンクラファン実施中❕🎤 【 #VTuber / #黒江萬白】",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/7u6hOD0lFyM/hq720.jpg",
+      "publishedAt": "2026-12-31T15:00:51.000Z",
+      "scheduledStart": "2026-12-31T15:00:51.000Z",
+      "actualStart": null,
+      "isMember": false,
+      "actualEnd": "2026-11-28T04:53:46.749Z",
+      "duration": -2887625,
+      "status": "past",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCD0bN0kj69RLgRPO-ptshoA",
+          "name": "黒江 萬白 / Kuroe Mashiro",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-10-31T03:16:20.256Z",
+      "updatedAt": "2026-11-28T04:53:46.749Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "ah7w3qjTfcw",
       "platform": "youtube",
       "type": "live",
@@ -1178,6 +1225,53 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "319609577846",
+      "platform": "twitch",
+      "url": "https://twitch.tv/furankomori",
+      "type": "live",
+      "channelId": "UCe9VcNDf6wO9TYJOfPfDgoQ",
+      "channelName": "Furan Komori",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "ΦωΦ FOUR ΦωΦ KNIFESZ ?! ΦωΦ (pirate hours tomorrow.)",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_furankomori-640x360.jpg",
+      "publishedAt": "2026-11-28T01:55:31Z",
+      "scheduledStart": "2026-11-28T01:55:31Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCe9VcNDf6wO9TYJOfPfDgoQ",
+          "name": "Furan Komori",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 23,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-28T04:54:02.780Z",
+      "updatedAt": "2026-11-28T04:54:02.780Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "SQNHet8IpFc",
       "platform": "youtube",
       "type": "live",
@@ -1339,9 +1433,9 @@
       "publishedAt": "2026-11-27T23:05:04Z",
       "scheduledStart": "2026-11-27T23:05:04Z",
       "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "live",
+      "actualEnd": "2026-11-28T04:53:46.749Z",
+      "duration": 20922,
+      "status": "past",
       "category": "live",
       "songTitle": null,
       "originalArtist": null,
@@ -1361,7 +1455,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-27T23:15:47.118Z",
-      "updatedAt": "2026-11-27T23:15:47.118Z",
+      "updatedAt": "2026-11-28T04:53:46.749Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -15510,7 +15604,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-02T05:52:58.691Z",
-      "updatedAt": "2026-11-27T23:15:34.053Z",
+      "updatedAt": "2026-11-28T04:54:07.453Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -15604,7 +15698,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:22.912Z",
-      "updatedAt": "2026-11-27T23:15:29.995Z",
+      "updatedAt": "2026-11-28T04:54:08.052Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -15651,7 +15745,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.180Z",
-      "updatedAt": "2026-11-26T23:49:34.524Z",
+      "updatedAt": "2026-11-28T04:53:59.935Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -15698,7 +15792,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:26.922Z",
-      "updatedAt": "2026-11-27T23:15:34.053Z",
+      "updatedAt": "2026-11-28T04:54:07.453Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -15722,7 +15816,7 @@
       "publishedAt": null,
       "scheduledStart": "2028-03-25T23:09:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -15745,7 +15839,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-27T17:58:40.188Z",
-      "updatedAt": "2026-11-02T11:59:31.129Z",
+      "updatedAt": "2026-11-28T04:53:46.749Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -15792,7 +15886,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.117Z",
-      "updatedAt": "2026-11-26T23:49:32.178Z",
+      "updatedAt": "2026-11-28T04:54:08.052Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -15980,7 +16074,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-27T04:48:42.502Z",
-      "updatedAt": "2026-11-27T23:15:31.721Z",
+      "updatedAt": "2026-11-28T04:53:57.228Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -16173,53 +16267,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "7u6hOD0lFyM",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCD0bN0kj69RLgRPO-ptshoA",
-      "channelName": "黒江 萬白 / Kuroe Mashiro",
-      "channelKind": "virtual",
-      "region": "jp",
-      "gender": "unknown",
-      "languages": [
-        "ja"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "現在300％達成❕オリソンクラファン実施中❕🎤 【 #VTuber / #黒江萬白】",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/7u6hOD0lFyM/hq720.jpg",
-      "publishedAt": null,
-      "scheduledStart": "2026-12-31T15:00:51.000Z",
-      "actualStart": null,
-      "isMember": false,
-      "actualEnd": null,
-      "duration": null,
-      "status": "upcoming",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCD0bN0kj69RLgRPO-ptshoA",
-          "name": "黒江 萬白 / Kuroe Mashiro",
-          "kind": "virtual",
-          "region": "jp"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-10-31T03:16:20.256Z",
-      "updatedAt": "2026-11-02T11:59:38.852Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "82YpIu-Xuuk",
       "platform": "youtube",
       "type": "live",
@@ -16239,7 +16286,7 @@
       "publishedAt": null,
       "scheduledStart": "2027-07-31T14:45:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -16262,7 +16309,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T20:46:02.237Z",
-      "updatedAt": "2026-11-02T11:59:42.767Z",
+      "updatedAt": "2026-11-28T04:53:59.935Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -16356,7 +16403,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-02T05:53:00.592Z",
-      "updatedAt": "2026-11-27T23:15:25.843Z",
+      "updatedAt": "2026-11-28T04:54:08.843Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -16638,7 +16685,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:22.173Z",
-      "updatedAt": "2026-11-27T23:15:32.572Z",
+      "updatedAt": "2026-11-28T04:53:59.935Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -16779,7 +16826,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:33.129Z",
-      "updatedAt": "2026-11-27T23:15:32.572Z",
+      "updatedAt": "2026-11-28T04:53:59.935Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -16826,7 +16873,54 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.042Z",
-      "updatedAt": "2026-11-27T23:15:31.721Z",
+      "updatedAt": "2026-11-28T04:53:57.228Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "bqJDugxseN8",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCbmkJqgf928MfiOzBv5UsBQ",
+      "channelName": "パステルC",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "TEKKEN8 風間準(JUN) おお週末の昼鉄拳",
+      "description": null,
+      "thumbnail": null,
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "isMember": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCbmkJqgf928MfiOzBv5UsBQ",
+          "name": "パステルC",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-28T04:54:02.780Z",
+      "updatedAt": "2026-11-28T04:54:02.780Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -16850,7 +16944,7 @@
       "publishedAt": null,
       "scheduledStart": "2027-12-01T02:00:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -16873,7 +16967,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.117Z",
-      "updatedAt": "2026-11-02T11:59:27.393Z",
+      "updatedAt": "2026-11-28T04:53:46.749Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -17023,7 +17117,7 @@
       "platform": "youtube",
       "type": "live",
       "channelId": "UCXW4MqCQn-jCaxlX-nn-BYg",
-      "channelName": "長尾景",
+      "channelName": "長尾 景 / Nagao Kei【にじさんじ】",
       "channelKind": "virtual",
       "region": "jp",
       "gender": "female",
@@ -17038,7 +17132,7 @@
       "publishedAt": null,
       "scheduledStart": "2027-12-31T14:45:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -17049,7 +17143,7 @@
       "collaborators": [
         {
           "channelId": "UCXW4MqCQn-jCaxlX-nn-BYg",
-          "name": "長尾景",
+          "name": "長尾 景 / Nagao Kei【にじさんじ】",
           "kind": "virtual",
           "region": "jp"
         }
@@ -17061,7 +17155,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:25.311Z",
-      "updatedAt": "2026-11-02T11:59:29.225Z",
+      "updatedAt": "2026-11-28T04:53:46.749Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -17296,7 +17390,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-25T11:22:49.894Z",
-      "updatedAt": "2026-11-27T23:15:32.572Z",
+      "updatedAt": "2026-11-28T04:53:59.935Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -17531,7 +17625,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-11-27T23:15:29.995Z",
+      "updatedAt": "2026-11-28T04:54:08.052Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -18236,7 +18330,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-27T23:15:31.815Z",
-      "updatedAt": "2026-11-27T23:15:31.815Z",
+      "updatedAt": "2026-11-28T04:54:02.780Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -18330,7 +18424,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.256Z",
-      "updatedAt": "2026-11-27T23:15:47.118Z",
+      "updatedAt": "2026-11-28T04:53:46.749Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -18401,7 +18495,7 @@
       "publishedAt": null,
       "scheduledStart": "2027-06-18T12:00:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -18424,7 +18518,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.042Z",
-      "updatedAt": "2026-11-02T11:59:34.145Z",
+      "updatedAt": "2026-11-28T04:54:08.052Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -18471,7 +18565,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T05:10:16.208Z",
-      "updatedAt": "2026-11-27T23:15:47.118Z",
+      "updatedAt": "2026-11-28T04:53:46.749Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -18518,7 +18612,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.256Z",
-      "updatedAt": "2026-11-27T23:15:47.118Z",
+      "updatedAt": "2026-11-28T04:53:46.749Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -18566,6 +18660,53 @@
       "source": "api",
       "addedAt": "2026-10-31T03:16:22.912Z",
       "updatedAt": "2026-11-02T12:03:06.070Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "lhr0yZ-cMzs",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCNCqkqRhQ1tLQUQKCF_7SQQ",
+      "channelName": "元海自の管理栄養士V🐾はすきぃCh.",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "female",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "【 7 Days to Die 3.4.0】元JK管理栄養士V、ランサーになる。〇んだら全ロス＆高難易度設定で槍縛り！#29【 7dtd  3.4.0 Stable】",
+      "description": null,
+      "thumbnail": null,
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "isMember": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCNCqkqRhQ1tLQUQKCF_7SQQ",
+          "name": "元海自の管理栄養士V🐾はすきぃCh.",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-28T04:53:57.228Z",
+      "updatedAt": "2026-11-28T04:53:57.228Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -18659,7 +18800,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-27T23:15:32.572Z",
-      "updatedAt": "2026-11-27T23:15:32.572Z",
+      "updatedAt": "2026-11-28T04:53:59.935Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -18753,7 +18894,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-11-27T23:15:25.843Z",
+      "updatedAt": "2026-11-28T04:54:08.843Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -19082,7 +19223,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-11-27T23:15:31.721Z",
+      "updatedAt": "2026-11-28T04:53:57.228Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -21955,7 +22096,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T09:06:25.613Z",
-      "updatedAt": "2026-11-27T23:15:32.572Z",
+      "updatedAt": "2026-11-28T04:53:59.935Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -22120,7 +22261,7 @@
       "publishedAt": null,
       "scheduledStart": "2026-12-31T01:25:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -22143,7 +22284,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-02T05:53:03.849Z",
-      "updatedAt": "2026-11-02T11:59:30.862Z",
+      "updatedAt": "2026-11-28T04:53:59.935Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -22167,7 +22308,7 @@
       "publishedAt": null,
       "scheduledStart": "2027-12-29T23:00:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -22190,7 +22331,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:22.173Z",
-      "updatedAt": "2026-11-02T11:59:42.767Z",
+      "updatedAt": "2026-11-28T04:53:59.935Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -22284,7 +22425,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.117Z",
-      "updatedAt": "2026-11-27T23:15:25.843Z",
+      "updatedAt": "2026-11-28T04:54:08.843Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -22308,7 +22449,7 @@
       "publishedAt": null,
       "scheduledStart": "2027-07-01T07:00:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -22331,7 +22472,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:22.173Z",
-      "updatedAt": "2026-11-02T11:59:42.767Z",
+      "updatedAt": "2026-11-28T04:54:08.052Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -22355,7 +22496,7 @@
       "publishedAt": null,
       "scheduledStart": "2027-03-30T15:00:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -22378,7 +22519,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:22.173Z",
-      "updatedAt": "2026-11-02T11:59:42.767Z",
+      "updatedAt": "2026-11-28T04:54:08.052Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -22848,7 +22989,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-27T23:15:25.843Z",
-      "updatedAt": "2026-11-27T23:15:25.843Z",
+      "updatedAt": "2026-11-28T04:54:08.843Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -22943,6 +23084,53 @@
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.117Z",
       "updatedAt": "2026-11-02T11:59:27.393Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "Trw_Z4-6cjU",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCz17SfelTONfYc5ab3_Lscg",
+      "channelName": "ヤミ金",
+      "channelKind": "virtual",
+      "region": "jp",
+      "gender": "unknown",
+      "languages": [
+        "ja"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "【Slay the Spire2】ドレッドモードへの道のりは長い",
+      "description": null,
+      "thumbnail": null,
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "isMember": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCz17SfelTONfYc5ab3_Lscg",
+          "name": "ヤミ金",
+          "kind": "virtual",
+          "region": "jp"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-28T04:54:08.052Z",
+      "updatedAt": "2026-11-28T04:54:08.052Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -23083,7 +23271,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:27.340Z",
-      "updatedAt": "2026-11-27T23:15:31.721Z",
+      "updatedAt": "2026-11-28T04:53:57.228Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -23224,7 +23412,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:25.311Z",
-      "updatedAt": "2026-11-27T23:15:31.872Z",
+      "updatedAt": "2026-11-28T04:54:02.224Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -23271,7 +23459,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:22.173Z",
-      "updatedAt": "2026-11-27T23:15:25.843Z",
+      "updatedAt": "2026-11-28T04:54:08.843Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -23412,7 +23600,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-27T04:48:49.083Z",
-      "updatedAt": "2026-11-27T04:48:49.083Z",
+      "updatedAt": "2026-11-28T04:54:08.843Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -23459,7 +23647,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-27T23:15:32.572Z",
-      "updatedAt": "2026-11-27T23:15:32.572Z",
+      "updatedAt": "2026-11-28T04:53:59.935Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -23506,7 +23694,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.283Z",
-      "updatedAt": "2026-11-27T23:15:32.572Z",
+      "updatedAt": "2026-11-28T04:53:59.935Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -23577,7 +23765,7 @@
       "publishedAt": null,
       "scheduledStart": "2027-05-19T15:00:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -23600,7 +23788,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-02T05:52:59.449Z",
-      "updatedAt": "2026-11-02T11:59:31.129Z",
+      "updatedAt": "2026-11-28T04:54:08.843Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -23812,7 +24000,7 @@
       "publishedAt": null,
       "scheduledStart": "2027-06-14T15:00:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -23835,7 +24023,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:16.423Z",
-      "updatedAt": "2026-11-02T11:59:31.129Z",
+      "updatedAt": "2026-11-28T04:54:07.453Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -23882,7 +24070,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-25T11:22:49.894Z",
-      "updatedAt": "2026-11-27T23:15:32.572Z",
+      "updatedAt": "2026-11-28T04:53:59.935Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -23976,7 +24164,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:22.912Z",
-      "updatedAt": "2026-11-27T23:15:32.572Z",
+      "updatedAt": "2026-11-28T04:53:59.935Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -24070,7 +24258,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-11-27T23:15:25.843Z",
+      "updatedAt": "2026-11-28T04:54:08.843Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -24305,7 +24493,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:21.011Z",
-      "updatedAt": "2026-11-27T23:15:29.995Z",
+      "updatedAt": "2026-11-28T04:54:08.052Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

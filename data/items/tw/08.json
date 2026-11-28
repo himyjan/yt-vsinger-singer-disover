@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T23:35:09.322Z",
+  "generatedAt": "2026-11-28T05:11:49.502Z",
   "items": [
     {
       "id": "wzjk1KfJKSA",
@@ -328,6 +328,53 @@
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.283Z",
       "updatedAt": "2026-11-26T23:49:36.908Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "316771362289",
+      "platform": "twitch",
+      "url": "https://twitch.tv/kyo1984123",
+      "type": "live",
+      "channelId": "UC0grzMau_ZLzQtKYTonLovg",
+      "channelName": "KYO",
+      "channelKind": "virtual",
+      "region": "tw",
+      "gender": "unknown",
+      "languages": [
+        "zh-Hant"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "大家準備好要火拼了｜11/28【KYO】!VPN !優格 !電熱毯",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_kyo1984123-640x360.jpg",
+      "publishedAt": "2026-11-28T02:08:36Z",
+      "scheduledStart": "2026-11-28T02:08:36Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC0grzMau_ZLzQtKYTonLovg",
+          "name": "KYO",
+          "kind": "virtual",
+          "region": "tw"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 2101,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-28T04:54:02.780Z",
+      "updatedAt": "2026-11-28T04:54:02.780Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3319,7 +3366,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:16.423Z",
-      "updatedAt": "2026-11-27T23:15:32.572Z",
+      "updatedAt": "2026-11-28T04:53:59.935Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3507,7 +3554,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:27.693Z",
-      "updatedAt": "2026-11-27T23:15:47.118Z",
+      "updatedAt": "2026-11-28T04:53:46.749Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3554,7 +3601,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-11-27T23:15:29.995Z",
+      "updatedAt": "2026-11-28T04:54:08.052Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3578,7 +3625,7 @@
       "publishedAt": null,
       "scheduledStart": "2027-06-10T04:00:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -3601,7 +3648,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-11-02T11:59:39.129Z",
+      "updatedAt": "2026-11-28T04:54:08.052Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3719,7 +3766,7 @@
       "publishedAt": null,
       "scheduledStart": "2027-12-30T16:00:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -3742,7 +3789,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.256Z",
-      "updatedAt": "2026-11-02T11:59:38.852Z",
+      "updatedAt": "2026-11-28T04:53:46.749Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3836,7 +3883,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.042Z",
-      "updatedAt": "2026-11-27T23:15:32.572Z",
+      "updatedAt": "2026-11-28T04:53:59.935Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3930,7 +3977,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:27.340Z",
-      "updatedAt": "2026-11-27T23:15:31.721Z",
+      "updatedAt": "2026-11-28T04:53:57.228Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3977,7 +4024,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-01T13:12:46.975Z",
-      "updatedAt": "2026-11-27T23:15:31.721Z",
+      "updatedAt": "2026-11-28T04:53:57.228Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4024,7 +4071,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:22.173Z",
-      "updatedAt": "2026-11-27T23:15:31.721Z",
+      "updatedAt": "2026-11-28T04:53:57.228Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4259,7 +4306,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.256Z",
-      "updatedAt": "2026-11-27T23:15:47.118Z",
+      "updatedAt": "2026-11-28T04:53:46.749Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4353,7 +4400,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.256Z",
-      "updatedAt": "2026-11-27T23:15:47.118Z",
+      "updatedAt": "2026-11-28T04:53:46.749Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4400,7 +4447,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-11-27T23:15:31.721Z",
+      "updatedAt": "2026-11-28T04:53:57.228Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4494,7 +4541,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.567Z",
-      "updatedAt": "2026-11-27T23:15:25.843Z",
+      "updatedAt": "2026-11-28T04:54:08.843Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4542,6 +4589,53 @@
       "source": "api",
       "addedAt": "2026-10-31T03:16:27.340Z",
       "updatedAt": "2026-11-26T23:49:54.532Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "tSsGl8S5EzA",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UC8eRYaUBOu4vqQ57MlBx1IA",
+      "channelName": "綠豆Ryokuto",
+      "channelKind": "virtual",
+      "region": "tw",
+      "gender": "unknown",
+      "languages": [
+        "zh-Hant"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "【段考後談】二段大爆死💀5科發了X科不及格🤓💥⁉️｜綠豆Ryokuto",
+      "description": null,
+      "thumbnail": null,
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "isMember": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC8eRYaUBOu4vqQ57MlBx1IA",
+          "name": "綠豆Ryokuto",
+          "kind": "virtual",
+          "region": "tw"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-28T04:54:08.843Z",
+      "updatedAt": "2026-11-28T04:54:08.843Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },

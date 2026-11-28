@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T23:35:09.322Z",
+  "generatedAt": "2026-11-28T05:11:49.502Z",
   "items": [
     {
       "id": "j9YLON4TSYk",
@@ -379,6 +379,100 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "316783416562",
+      "platform": "twitch",
+      "url": "https://twitch.tv/fatsheep0621",
+      "type": "live",
+      "channelId": "UCtX4DTbLi4nHLi5Wl8V3j2Q",
+      "channelName": "羊咩羊咩",
+      "channelKind": "virtual",
+      "region": "tw",
+      "gender": "male",
+      "languages": [
+        "zh-Hant"
+      ],
+      "isAi": false,
+      "variant": "male_vtuber",
+      "title": "11/28【鳴潮】拯救莉莉大作戰!🎄聖誕節驚喜包開放中🎄",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_fatsheep0621-640x360.jpg",
+      "publishedAt": "2026-11-28T04:00:47Z",
+      "scheduledStart": "2026-11-28T04:00:47Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCtX4DTbLi4nHLi5Wl8V3j2Q",
+          "name": "羊咩羊咩",
+          "kind": "virtual",
+          "region": "tw"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 18,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-28T04:54:07.453Z",
+      "updatedAt": "2026-11-28T04:54:07.453Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "315721979246",
+      "platform": "twitch",
+      "url": "https://twitch.tv/nabiusagi",
+      "type": "live",
+      "channelId": "UCZZxgb4kAZtI2VZhRl4m7-w",
+      "channelName": "Nabi ch. 娜比兔",
+      "channelKind": "virtual",
+      "region": "tw",
+      "gender": "unknown",
+      "languages": [
+        "zh-Hant"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "【娜比】11/28 早起的兔兒 | #佛系拚勾 #初見歡迎 #掛台感謝 @nabiusagi 🧡揪團感謝",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_nabiusagi-640x360.jpg",
+      "publishedAt": "2026-11-28T01:09:31Z",
+      "scheduledStart": "2026-11-28T01:09:31Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCZZxgb4kAZtI2VZhRl4m7-w",
+          "name": "Nabi ch. 娜比兔",
+          "kind": "virtual",
+          "region": "tw"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 51,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-28T04:54:08.052Z",
+      "updatedAt": "2026-11-28T04:54:08.052Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "316843845491",
       "platform": "twitch",
       "url": "https://twitch.tv/hizumi_y",
@@ -399,9 +493,9 @@
       "publishedAt": "2026-11-27T16:51:32Z",
       "scheduledStart": "2026-11-27T16:51:32Z",
       "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "live",
+      "actualEnd": "2026-11-28T04:53:46.749Z",
+      "duration": 43334,
+      "status": "past",
       "category": "live",
       "songTitle": null,
       "originalArtist": null,
@@ -421,7 +515,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-27T23:15:47.118Z",
-      "updatedAt": "2026-11-27T23:15:47.118Z",
+      "updatedAt": "2026-11-28T04:53:46.749Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3417,7 +3511,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:25.311Z",
-      "updatedAt": "2026-11-27T23:15:31.721Z",
+      "updatedAt": "2026-11-28T04:53:57.228Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3605,7 +3699,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:27.693Z",
-      "updatedAt": "2026-11-27T23:15:31.721Z",
+      "updatedAt": "2026-11-28T04:53:57.228Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3652,7 +3746,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.042Z",
-      "updatedAt": "2026-11-27T23:15:25.843Z",
+      "updatedAt": "2026-11-28T04:54:08.843Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3911,7 +4005,7 @@
       "publishedAt": null,
       "scheduledStart": "2028-02-29T12:00:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -3934,7 +4028,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.256Z",
-      "updatedAt": "2026-11-02T11:59:38.852Z",
+      "updatedAt": "2026-11-28T04:53:46.749Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3981,7 +4075,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.256Z",
-      "updatedAt": "2026-11-27T23:15:47.118Z",
+      "updatedAt": "2026-11-28T04:53:46.749Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4028,7 +4122,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:22.912Z",
-      "updatedAt": "2026-11-27T23:15:31.815Z",
+      "updatedAt": "2026-11-28T04:54:02.780Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4122,7 +4216,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:33.129Z",
-      "updatedAt": "2026-11-27T23:15:31.872Z",
+      "updatedAt": "2026-11-28T04:54:02.224Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4216,7 +4310,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:22.912Z",
-      "updatedAt": "2026-11-27T23:15:29.995Z",
+      "updatedAt": "2026-11-28T04:54:08.052Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4263,7 +4357,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-24T05:10:16.208Z",
-      "updatedAt": "2026-11-27T23:15:32.572Z",
+      "updatedAt": "2026-11-28T04:53:59.935Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4404,7 +4498,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:33.129Z",
-      "updatedAt": "2026-11-27T23:15:32.572Z",
+      "updatedAt": "2026-11-28T04:53:59.935Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4428,7 +4522,7 @@
       "publishedAt": null,
       "scheduledStart": "2027-05-16T16:00:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -4451,7 +4545,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-11-02T11:59:27.393Z",
+      "updatedAt": "2026-11-28T04:53:59.935Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4710,7 +4804,7 @@
       "publishedAt": null,
       "scheduledStart": "2028-01-01T09:30:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -4733,7 +4827,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.228Z",
-      "updatedAt": "2026-11-02T11:59:25.595Z",
+      "updatedAt": "2026-11-28T04:54:08.843Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4827,7 +4921,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:25.456Z",
-      "updatedAt": "2026-11-27T23:15:34.053Z",
+      "updatedAt": "2026-11-28T04:54:07.453Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4945,7 +5039,7 @@
       "publishedAt": null,
       "scheduledStart": "2028-01-31T15:45:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -4968,7 +5062,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.256Z",
-      "updatedAt": "2026-11-02T11:59:38.852Z",
+      "updatedAt": "2026-11-28T04:53:46.749Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5015,7 +5109,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:27.340Z",
-      "updatedAt": "2026-11-27T23:15:31.721Z",
+      "updatedAt": "2026-11-28T04:53:57.228Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5109,7 +5203,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.180Z",
-      "updatedAt": "2026-11-27T23:15:31.721Z",
+      "updatedAt": "2026-11-28T04:53:57.228Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5297,7 +5391,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.567Z",
-      "updatedAt": "2026-11-26T23:49:32.178Z",
+      "updatedAt": "2026-11-28T04:54:08.052Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },

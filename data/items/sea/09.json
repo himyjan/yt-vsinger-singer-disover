@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T23:35:09.322Z",
+  "generatedAt": "2026-11-28T05:11:49.502Z",
   "items": [
     {
       "id": "SMMBLZ_evZg",
@@ -46,6 +46,100 @@
       "source": "api",
       "addedAt": "2026-10-31T03:16:22.912Z",
       "updatedAt": "2026-11-26T23:49:36.908Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "V88o1oiKtNk",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCzVku8IXYwuk04hCXUh6nng",
+      "channelName": "Anya Marshall Ch. 【POLYGON】",
+      "channelKind": "virtual",
+      "region": "sea",
+      "gender": "unknown",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "Show (唱) - Ado (cover) ft. @VinXIIIPLG | ANYA 🐘",
+      "description": null,
+      "thumbnail": null,
+      "publishedAt": "2026-11-28T04:53:57.228Z",
+      "scheduledStart": null,
+      "actualStart": null,
+      "isMember": null,
+      "actualEnd": "2026-11-28T04:53:57.228Z",
+      "duration": 0,
+      "status": "past",
+      "category": "premiere",
+      "songTitle": "ft. @VinXIIIPLG | ANYA 🐘",
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCzVku8IXYwuk04hCXUh6nng",
+          "name": "Anya Marshall Ch. 【POLYGON】",
+          "kind": "virtual",
+          "region": "sea"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-26T23:49:54.532Z",
+      "updatedAt": "2026-11-28T04:53:57.228Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "316407092842",
+      "platform": "twitch",
+      "url": "https://twitch.tv/sabertoothstaz",
+      "type": "live",
+      "channelId": "UCJMNG53d-_UizA0H23n8NLQ",
+      "channelName": "SabertoothStaz",
+      "channelKind": "virtual",
+      "region": "sea",
+      "gender": "male",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "male_vtuber",
+      "title": "🦷Long Vacation Stream - Just got back from the hospital and and THANK YOU @Entot1 FOR COMPLETING THE PC GOAL! Let's have some fun for real.",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_sabertoothstaz-640x360.jpg",
+      "publishedAt": "2026-11-28T03:04:57Z",
+      "scheduledStart": "2026-11-28T03:04:57Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCJMNG53d-_UizA0H23n8NLQ",
+          "name": "SabertoothStaz",
+          "kind": "virtual",
+          "region": "sea"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 6,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-28T04:53:46.749Z",
+      "updatedAt": "2026-11-28T04:53:46.749Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -1127,7 +1221,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:33.129Z",
-      "updatedAt": "2026-11-27T23:15:32.572Z",
+      "updatedAt": "2026-11-28T04:53:59.935Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -1179,53 +1273,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "V88o1oiKtNk",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCzVku8IXYwuk04hCXUh6nng",
-      "channelName": "Anya Marshall Ch. 【POLYGON】",
-      "channelKind": "virtual",
-      "region": "sea",
-      "gender": "unknown",
-      "languages": [
-        "en"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "Show (唱) - Ado (cover) ft. @VinXIIIPLG | ANYA 🐘",
-      "description": null,
-      "thumbnail": null,
-      "publishedAt": null,
-      "scheduledStart": null,
-      "actualStart": null,
-      "isMember": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "upcoming",
-      "category": "premiere",
-      "songTitle": "ft. @VinXIIIPLG | ANYA 🐘",
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCzVku8IXYwuk04hCXUh6nng",
-          "name": "Anya Marshall Ch. 【POLYGON】",
-          "kind": "virtual",
-          "region": "sea"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-11-26T23:49:54.532Z",
-      "updatedAt": "2026-11-26T23:49:54.532Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "xSyknLXkvQA",
       "platform": "youtube",
       "type": "live",
@@ -1268,7 +1315,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-27T17:58:40.188Z",
-      "updatedAt": "2026-11-27T23:15:32.572Z",
+      "updatedAt": "2026-11-28T04:53:59.935Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },

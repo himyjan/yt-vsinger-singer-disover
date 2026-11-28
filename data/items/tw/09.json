@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T23:35:09.322Z",
+  "generatedAt": "2026-11-28T05:11:49.502Z",
   "items": [
     {
       "id": "Ua9NY9vs-Dk",
@@ -468,6 +468,53 @@
       "source": "api",
       "addedAt": "2026-10-31T03:16:22.912Z",
       "updatedAt": "2026-11-27T23:15:34.053Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "315722381550",
+      "platform": "twitch",
+      "url": "https://twitch.tv/talatala20",
+      "type": "live",
+      "channelId": "UChCOvYcaS1i0ikxsL0y8Qyg",
+      "channelName": "獺菈",
+      "channelKind": "virtual",
+      "region": "tw",
+      "gender": "unknown",
+      "languages": [
+        "zh-Hant"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "⊱ TaLa 獺菈 ⊰ 1128 手撞到好痛(´;ω;`) 雪國好冷好累睡了(❁´ω`❁) 歡迎追隨掛台(ฅ́ᗜฅ̀*)♡ ⋆",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_talatala20-640x360.jpg",
+      "publishedAt": "2026-11-28T04:24:26Z",
+      "scheduledStart": "2026-11-28T04:24:26Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UChCOvYcaS1i0ikxsL0y8Qyg",
+          "name": "獺菈",
+          "kind": "virtual",
+          "region": "tw"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 5,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-28T04:53:59.935Z",
+      "updatedAt": "2026-11-28T04:53:59.935Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3760,7 +3807,7 @@
       "publishedAt": null,
       "scheduledStart": "2026-12-25T20:44:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -3783,7 +3830,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.283Z",
-      "updatedAt": "2026-11-02T11:59:27.253Z",
+      "updatedAt": "2026-11-28T04:54:08.052Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4159,7 +4206,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:16.423Z",
-      "updatedAt": "2026-11-27T23:15:25.843Z",
+      "updatedAt": "2026-11-28T04:54:08.843Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4347,7 +4394,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.042Z",
-      "updatedAt": "2026-11-27T23:15:34.053Z",
+      "updatedAt": "2026-11-28T04:54:07.453Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4394,7 +4441,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.042Z",
-      "updatedAt": "2026-11-27T23:15:29.995Z",
+      "updatedAt": "2026-11-28T04:54:08.052Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4418,7 +4465,7 @@
       "publishedAt": null,
       "scheduledStart": "2027-01-31T08:30:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -4441,7 +4488,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:27.340Z",
-      "updatedAt": "2026-11-02T11:59:32.996Z",
+      "updatedAt": "2026-11-28T04:53:57.228Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4488,7 +4535,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-11-27T23:15:47.118Z",
+      "updatedAt": "2026-11-28T04:53:46.749Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4606,7 +4653,7 @@
       "publishedAt": null,
       "scheduledStart": "2027-06-09T14:55:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -4629,7 +4676,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:17.489Z",
-      "updatedAt": "2026-11-02T11:59:30.862Z",
+      "updatedAt": "2026-11-28T04:53:59.935Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4770,7 +4817,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:27.340Z",
-      "updatedAt": "2026-11-27T23:15:31.721Z",
+      "updatedAt": "2026-11-28T04:53:57.228Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4864,7 +4911,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-11-27T23:15:47.118Z",
+      "updatedAt": "2026-11-28T04:53:46.749Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4958,7 +5005,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.117Z",
-      "updatedAt": "2026-11-26T23:49:29.115Z",
+      "updatedAt": "2026-11-28T04:54:08.843Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5099,7 +5146,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:27.693Z",
-      "updatedAt": "2026-11-27T14:43:54.264Z",
+      "updatedAt": "2026-11-28T04:54:08.843Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5193,7 +5240,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.567Z",
-      "updatedAt": "2026-11-27T23:15:29.995Z",
+      "updatedAt": "2026-11-28T04:54:08.052Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5240,7 +5287,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:16.423Z",
-      "updatedAt": "2026-11-27T04:48:45.146Z",
+      "updatedAt": "2026-11-28T04:53:46.749Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5593,7 +5640,7 @@
       "publishedAt": null,
       "scheduledStart": "2027-08-29T08:30:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -5616,7 +5663,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:21.011Z",
-      "updatedAt": "2026-11-02T11:59:28.769Z",
+      "updatedAt": "2026-11-28T04:54:08.052Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5663,7 +5710,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:16.423Z",
-      "updatedAt": "2026-11-27T23:15:25.843Z",
+      "updatedAt": "2026-11-28T04:54:08.843Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5710,7 +5757,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-27T23:15:31.815Z",
-      "updatedAt": "2026-11-27T23:15:31.815Z",
+      "updatedAt": "2026-11-28T04:54:02.780Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5757,7 +5804,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:24.029Z",
-      "updatedAt": "2026-11-27T23:15:31.815Z",
+      "updatedAt": "2026-11-28T04:54:02.780Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5781,7 +5828,7 @@
       "publishedAt": null,
       "scheduledStart": "2028-05-17T16:00:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -5804,7 +5851,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.283Z",
-      "updatedAt": "2026-11-02T11:59:27.253Z",
+      "updatedAt": "2026-11-28T04:53:46.749Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5945,7 +5992,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.117Z",
-      "updatedAt": "2026-11-27T23:15:29.995Z",
+      "updatedAt": "2026-11-28T04:54:08.052Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5992,7 +6039,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:22.173Z",
-      "updatedAt": "2026-11-27T23:15:31.815Z",
+      "updatedAt": "2026-11-28T04:54:02.780Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -6016,7 +6063,7 @@
       "publishedAt": null,
       "scheduledStart": "2027-02-22T12:00:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -6039,7 +6086,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:33.129Z",
-      "updatedAt": "2026-11-02T11:59:30.570Z",
+      "updatedAt": "2026-11-28T04:53:59.935Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -6462,7 +6509,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-11-27T23:15:32.572Z",
+      "updatedAt": "2026-11-28T04:53:59.935Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -6486,7 +6533,7 @@
       "publishedAt": null,
       "scheduledStart": "2027-03-31T12:39:47.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -6509,7 +6556,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:17.489Z",
-      "updatedAt": "2026-11-02T11:59:30.862Z",
+      "updatedAt": "2026-11-28T04:53:59.935Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },

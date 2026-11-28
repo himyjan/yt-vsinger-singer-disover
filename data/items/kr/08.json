@@ -1,7 +1,60 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T23:35:09.322Z",
+  "generatedAt": "2026-11-28T05:11:49.502Z",
   "items": [
+    {
+      "id": "318735134040",
+      "platform": "twitch",
+      "url": "https://twitch.tv/iamjg",
+      "type": "live",
+      "channelId": "UCgQ5prZ3gFoWcu3bgoA29_g",
+      "channelName": "iamjg",
+      "channelKind": "virtual",
+      "region": "kr",
+      "gender": "unknown",
+      "languages": [
+        "ko"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "ALL DROPS⭐🩷COZY CHAOS⭐🩷EN|KR|ES⭐!exitlag @iamjg ALBION CODE: IAMJG 35% OFF SUBS #ad",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_iamjg-640x360.jpg",
+      "publishedAt": "2026-11-28T02:33:38Z",
+      "scheduledStart": "2026-11-28T02:33:38Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCgQ5prZ3gFoWcu3bgoA29_g",
+          "name": "iamjg",
+          "kind": "virtual",
+          "region": "kr"
+        },
+        {
+          "channelId": null,
+          "name": "itlag @iamjg ALBION CODE",
+          "kind": "unknown",
+          "region": "unknown"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 12,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-28T04:53:46.749Z",
+      "updatedAt": "2026-11-28T04:53:46.749Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
     {
       "id": "315720934126",
       "platform": "twitch",
@@ -24,9 +77,9 @@
       "publishedAt": "2026-11-27T16:25:26Z",
       "scheduledStart": "2026-11-27T16:25:26Z",
       "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "live",
+      "actualEnd": "2026-11-28T04:54:08.843Z",
+      "duration": 44922,
+      "status": "past",
       "category": "live",
       "songTitle": null,
       "originalArtist": null,
@@ -46,7 +99,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-27T23:15:25.843Z",
-      "updatedAt": "2026-11-27T23:15:25.843Z",
+      "updatedAt": "2026-11-28T04:54:08.843Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },

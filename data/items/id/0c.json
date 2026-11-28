@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T23:35:09.322Z",
+  "generatedAt": "2026-11-28T05:11:49.502Z",
   "items": [
     {
       "id": "BM05TTv7eXM",
@@ -140,6 +140,53 @@
       "source": "api",
       "addedAt": "2026-10-31T03:16:33.129Z",
       "updatedAt": "2026-11-26T23:49:36.908Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "316353579368",
+      "platform": "twitch",
+      "url": "https://twitch.tv/hisetaphinia",
+      "type": "live",
+      "channelId": "UCN84ypKX4Sf2JGoV6rnjiuA",
+      "channelName": "Phinia ch.",
+      "channelKind": "virtual",
+      "region": "id",
+      "gender": "unknown",
+      "languages": [
+        "id"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "KAY Story Cicil dikit-dikit",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_hisetaphinia-640x360.jpg",
+      "publishedAt": "2026-11-28T02:01:48Z",
+      "scheduledStart": "2026-11-28T02:01:48Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCN84ypKX4Sf2JGoV6rnjiuA",
+          "name": "Phinia ch.",
+          "kind": "virtual",
+          "region": "id"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 3,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-28T04:54:08.843Z",
+      "updatedAt": "2026-11-28T04:54:08.843Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -748,7 +795,54 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.567Z",
-      "updatedAt": "2026-11-27T23:15:25.843Z",
+      "updatedAt": "2026-11-28T04:54:08.843Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "MeSiEOzRd10",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCDdiWtibTod_I7OILrCRe8Q",
+      "channelName": "Mannequeen Rozeliya Ch.",
+      "channelKind": "virtual",
+      "region": "id",
+      "gender": "male",
+      "languages": [
+        "id"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "【Debut BOTAK】NAUR, KEMANA RAMBUTKU?! #mediashareon #vtuberid 【Mannequeen Rozeliya】",
+      "description": null,
+      "thumbnail": null,
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "isMember": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCDdiWtibTod_I7OILrCRe8Q",
+          "name": "Mannequeen Rozeliya Ch.",
+          "kind": "virtual",
+          "region": "id"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-28T04:54:02.780Z",
+      "updatedAt": "2026-11-28T04:54:02.780Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -772,7 +866,7 @@
       "publishedAt": null,
       "scheduledStart": "2028-07-31T04:11:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -795,7 +889,54 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-11-02T11:59:34.145Z",
+      "updatedAt": "2026-11-28T04:54:08.843Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "RGMD4qi8Bm0",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCGbzUHV3QvyWXIts9NRYIQQ",
+      "channelName": "Yudistira Yogendra 【PANDAVVA】",
+      "channelKind": "virtual",
+      "region": "id",
+      "gender": "male",
+      "languages": [
+        "id"
+      ],
+      "isAi": false,
+      "variant": "male_vtuber",
+      "title": "Karokoe #18 Yudistira【PANDAVVA】",
+      "description": null,
+      "thumbnail": null,
+      "publishedAt": null,
+      "scheduledStart": null,
+      "actualStart": null,
+      "isMember": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "upcoming",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCGbzUHV3QvyWXIts9NRYIQQ",
+          "name": "Yudistira Yogendra 【PANDAVVA】",
+          "kind": "virtual",
+          "region": "id"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-28T04:54:02.780Z",
+      "updatedAt": "2026-11-28T04:54:02.780Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -889,7 +1030,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.180Z",
-      "updatedAt": "2026-11-27T23:15:32.572Z",
+      "updatedAt": "2026-11-28T04:53:59.935Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -1030,7 +1171,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-27T14:44:03.304Z",
-      "updatedAt": "2026-11-27T23:15:32.572Z",
+      "updatedAt": "2026-11-28T04:53:59.935Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

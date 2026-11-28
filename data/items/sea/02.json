@@ -1,7 +1,54 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T23:35:09.322Z",
+  "generatedAt": "2026-11-28T05:11:49.502Z",
   "items": [
+    {
+      "id": "316406940266",
+      "platform": "twitch",
+      "url": "https://twitch.tv/raianvalerius",
+      "type": "live",
+      "channelId": "UC4WsLE_xdrnd05D05Go9oXw",
+      "channelName": "Raian Valerius Ch.",
+      "channelKind": "virtual",
+      "region": "sea",
+      "gender": "female",
+      "languages": [
+        "en"
+      ],
+      "isAi": false,
+      "variant": "female_vtuber",
+      "title": "【Castlevania: Order of Ecclesia】FIRST TIME ✦ Hello Shanoa!!",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_raianvalerius-640x360.jpg",
+      "publishedAt": "2026-11-28T02:14:03Z",
+      "scheduledStart": "2026-11-28T02:14:03Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC4WsLE_xdrnd05D05Go9oXw",
+          "name": "Raian Valerius Ch.",
+          "kind": "virtual",
+          "region": "sea"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 68,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-28T04:54:02.224Z",
+      "updatedAt": "2026-11-28T04:54:02.224Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
     {
       "id": "W4Jbx9mozFg",
       "platform": "youtube",
@@ -1050,7 +1097,7 @@
       "publishedAt": null,
       "scheduledStart": "2027-06-15T17:00:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -1073,7 +1120,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.228Z",
-      "updatedAt": "2026-11-02T11:59:25.595Z",
+      "updatedAt": "2026-11-28T04:54:08.843Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -1167,7 +1214,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:26.922Z",
-      "updatedAt": "2026-11-27T23:15:47.118Z",
+      "updatedAt": "2026-11-28T04:53:46.749Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

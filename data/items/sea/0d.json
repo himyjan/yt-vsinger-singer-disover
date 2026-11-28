@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T23:35:09.322Z",
+  "generatedAt": "2026-11-28T05:11:49.502Z",
   "items": [
     {
       "id": "Nrpy13GHoRk",
@@ -117,9 +117,9 @@
       "publishedAt": "2026-11-27T22:01:28Z",
       "scheduledStart": "2026-11-27T22:01:28Z",
       "actualStart": null,
-      "actualEnd": null,
-      "duration": null,
-      "status": "live",
+      "actualEnd": "2026-11-28T04:54:08.052Z",
+      "duration": 24760,
+      "status": "past",
       "category": "live",
       "songTitle": null,
       "originalArtist": null,
@@ -139,7 +139,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-27T23:15:29.995Z",
-      "updatedAt": "2026-11-27T23:15:29.995Z",
+      "updatedAt": "2026-11-28T04:54:08.052Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -181,12 +181,12 @@
       ],
       "isAcoustic": false,
       "tags": [],
-      "viewCount": 12,
+      "viewCount": 13,
       "likeCount": null,
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-27T23:15:31.815Z",
-      "updatedAt": "2026-11-27T23:15:31.815Z",
+      "updatedAt": "2026-11-28T04:54:02.780Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -1307,7 +1307,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-27T04:48:42.823Z",
-      "updatedAt": "2026-11-27T23:15:31.815Z",
+      "updatedAt": "2026-11-28T04:54:02.780Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -1354,7 +1354,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.283Z",
-      "updatedAt": "2026-11-27T23:15:32.572Z",
+      "updatedAt": "2026-11-28T04:53:59.935Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }

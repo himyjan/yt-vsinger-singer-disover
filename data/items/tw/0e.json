@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T23:35:09.322Z",
+  "generatedAt": "2026-11-28T05:11:49.502Z",
   "items": [
     {
       "id": "_DETkWcliK0",
@@ -285,6 +285,53 @@
       "lastDetailsFetchedAt": null
     },
     {
+      "id": "E_-Vwxq92y0",
+      "platform": "youtube",
+      "type": "live",
+      "channelId": "UCYRUl2H0hBmazctTbGrVDvQ",
+      "channelName": "杜邊優妮 DBUni ch.【ドビアン・ヨウニ】",
+      "channelKind": "virtual",
+      "region": "tw",
+      "gender": "unknown",
+      "languages": [
+        "zh-Hant"
+      ],
+      "isAi": false,
+      "variant": "vtuber",
+      "title": "【11/2-11/8】直播行程表丨杜邊優妮",
+      "description": null,
+      "thumbnail": "https://i.ytimg.com/vi/E_-Vwxq92y0/hq720.jpg",
+      "publishedAt": "2027-11-01T19:55:00.000Z",
+      "scheduledStart": "2027-11-01T19:55:00.000Z",
+      "actualStart": null,
+      "isMember": false,
+      "actualEnd": "2026-11-28T04:53:59.935Z",
+      "duration": -29257261,
+      "status": "past",
+      "category": "premiere",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCYRUl2H0hBmazctTbGrVDvQ",
+          "name": "杜邊優妮 DBUni ch.【ドビアン・ヨウニ】",
+          "kind": "virtual",
+          "region": "tw"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": null,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-01T23:32:25.371Z",
+      "updatedAt": "2026-11-28T04:53:59.935Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
       "id": "OL2APGLjhR0",
       "platform": "youtube",
       "type": "live",
@@ -375,6 +422,147 @@
       "source": "api",
       "addedAt": "2026-10-31T03:16:33.129Z",
       "updatedAt": "2026-11-26T23:49:36.908Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "315756839408",
+      "platform": "twitch",
+      "url": "https://twitch.tv/vtuberbanana",
+      "type": "live",
+      "channelId": "UCSQWqFoh4IbI4RMxYo35esw",
+      "channelName": "香蕉哈德斯芬",
+      "channelKind": "virtual",
+      "region": "tw",
+      "gender": "male",
+      "languages": [
+        "zh-Hant"
+      ],
+      "isAi": false,
+      "variant": "male_vtuber",
+      "title": "🍌2026-11-28🍌唯一支持謝欣達┃ !簽到 !點歌┃魔獸世界：永恆┃ft. @haruakira0119",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_vtuberbanana-640x360.jpg",
+      "publishedAt": "2026-11-28T04:52:45Z",
+      "scheduledStart": "2026-11-28T04:52:45Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCSQWqFoh4IbI4RMxYo35esw",
+          "name": "香蕉哈德斯芬",
+          "kind": "virtual",
+          "region": "tw"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 6,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-28T04:53:57.228Z",
+      "updatedAt": "2026-11-28T04:53:57.228Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "316845147123",
+      "platform": "twitch",
+      "url": "https://twitch.tv/jihjiao",
+      "type": "live",
+      "channelId": "UC-qj4qkRwAo3pE95eNiaiHg",
+      "channelName": "頭上有犄角",
+      "channelKind": "virtual",
+      "region": "tw",
+      "gender": "unknown",
+      "languages": [
+        "zh-Hant"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "【犄角】投了嗎",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_jihjiao-640x360.jpg",
+      "publishedAt": "2026-11-28T02:04:23Z",
+      "scheduledStart": "2026-11-28T02:04:23Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UC-qj4qkRwAo3pE95eNiaiHg",
+          "name": "頭上有犄角",
+          "kind": "virtual",
+          "region": "tw"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 4,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-28T04:54:08.052Z",
+      "updatedAt": "2026-11-28T04:54:08.052Z",
+      "lastItemsFetchedAt": null,
+      "lastDetailsFetchedAt": null
+    },
+    {
+      "id": "322457384665",
+      "platform": "twitch",
+      "url": "https://twitch.tv/ddcat_desu",
+      "type": "live",
+      "channelId": "UCdqHSKwCRKgBghxH0HCQszw",
+      "channelName": "橘貓多多 Mochi Ch. 🍊",
+      "channelKind": "virtual",
+      "region": "tw",
+      "gender": "unknown",
+      "languages": [
+        "zh-Hant"
+      ],
+      "isAi": false,
+      "variant": "unknown",
+      "title": "【遊雜】繼續和樹木壁咚！！PT.2｜目前死亡次數: 286次🤨 ｜Trees Hate You 🌲 @ddcat_desu !追 !打多多 !好想",
+      "description": null,
+      "thumbnail": "https://static-cdn.jtvnw.net/previews-ttv/live_user_ddcat_desu-640x360.jpg",
+      "publishedAt": "2026-11-28T01:35:30Z",
+      "scheduledStart": "2026-11-28T01:35:30Z",
+      "actualStart": null,
+      "actualEnd": null,
+      "duration": null,
+      "status": "live",
+      "category": "live",
+      "songTitle": null,
+      "originalArtist": null,
+      "isCollab": false,
+      "collaborators": [
+        {
+          "channelId": "UCdqHSKwCRKgBghxH0HCQszw",
+          "name": "橘貓多多 Mochi Ch. 🍊",
+          "kind": "virtual",
+          "region": "tw"
+        }
+      ],
+      "isAcoustic": false,
+      "tags": [],
+      "viewCount": 37,
+      "likeCount": null,
+      "concurrentViewers": null,
+      "source": "api",
+      "addedAt": "2026-11-28T04:54:02.780Z",
+      "updatedAt": "2026-11-28T04:54:02.780Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3596,7 +3784,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.228Z",
-      "updatedAt": "2026-11-27T23:15:25.843Z",
+      "updatedAt": "2026-11-28T04:54:08.843Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3761,7 +3949,7 @@
       "publishedAt": null,
       "scheduledStart": "2027-02-11T15:15:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -3784,7 +3972,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:21.011Z",
-      "updatedAt": "2026-11-02T11:59:28.769Z",
+      "updatedAt": "2026-11-28T04:54:08.052Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3831,7 +4019,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.042Z",
-      "updatedAt": "2026-11-27T23:15:32.572Z",
+      "updatedAt": "2026-11-28T04:53:59.935Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3878,7 +4066,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:27.340Z",
-      "updatedAt": "2026-11-27T23:15:31.721Z",
+      "updatedAt": "2026-11-28T04:53:57.228Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -3925,7 +4113,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.042Z",
-      "updatedAt": "2026-11-27T23:15:32.572Z",
+      "updatedAt": "2026-11-28T04:53:59.935Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4043,7 +4231,7 @@
       "publishedAt": null,
       "scheduledStart": "2028-09-20T15:15:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -4066,7 +4254,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:22.912Z",
-      "updatedAt": "2026-11-02T12:03:06.070Z",
+      "updatedAt": "2026-11-28T04:54:08.843Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4184,7 +4372,7 @@
       "publishedAt": null,
       "scheduledStart": "2026-12-10T16:00:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -4207,7 +4395,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:22.173Z",
-      "updatedAt": "2026-11-02T11:59:42.767Z",
+      "updatedAt": "2026-11-28T04:53:59.935Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4306,53 +4494,6 @@
       "lastDetailsFetchedAt": null
     },
     {
-      "id": "E_-Vwxq92y0",
-      "platform": "youtube",
-      "type": "live",
-      "channelId": "UCYRUl2H0hBmazctTbGrVDvQ",
-      "channelName": "杜邊優妮 DBUni ch.【ドビアン・ヨウニ】",
-      "channelKind": "virtual",
-      "region": "tw",
-      "gender": "unknown",
-      "languages": [
-        "zh-Hant"
-      ],
-      "isAi": false,
-      "variant": "vtuber",
-      "title": "【11/2-11/8】直播行程表丨杜邊優妮",
-      "description": null,
-      "thumbnail": "https://i.ytimg.com/vi/E_-Vwxq92y0/hq720.jpg",
-      "publishedAt": null,
-      "scheduledStart": "2027-11-01T19:55:00.000Z",
-      "actualStart": null,
-      "isMember": false,
-      "actualEnd": null,
-      "duration": null,
-      "status": "upcoming",
-      "category": "premiere",
-      "songTitle": null,
-      "originalArtist": null,
-      "isCollab": false,
-      "collaborators": [
-        {
-          "channelId": "UCYRUl2H0hBmazctTbGrVDvQ",
-          "name": "杜邊優妮 DBUni ch.【ドビアン・ヨウニ】",
-          "kind": "virtual",
-          "region": "tw"
-        }
-      ],
-      "isAcoustic": false,
-      "tags": [],
-      "viewCount": null,
-      "likeCount": null,
-      "concurrentViewers": null,
-      "source": "api",
-      "addedAt": "2026-11-01T23:32:25.371Z",
-      "updatedAt": "2026-11-02T11:59:32.231Z",
-      "lastItemsFetchedAt": null,
-      "lastDetailsFetchedAt": null
-    },
-    {
       "id": "eGbcZHzANxY",
       "platform": "youtube",
       "type": "live",
@@ -4372,7 +4513,7 @@
       "publishedAt": null,
       "scheduledStart": "2028-01-19T13:00:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -4395,7 +4536,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-11-02T11:59:25.595Z",
+      "updatedAt": "2026-11-28T04:54:08.843Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4724,7 +4865,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.042Z",
-      "updatedAt": "2026-11-27T23:15:32.572Z",
+      "updatedAt": "2026-11-28T04:53:59.935Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4771,7 +4912,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-11-26T23:49:29.115Z",
-      "updatedAt": "2026-11-26T23:49:29.115Z",
+      "updatedAt": "2026-11-28T04:54:08.843Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4865,7 +5006,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:23.042Z",
-      "updatedAt": "2026-11-27T23:15:25.843Z",
+      "updatedAt": "2026-11-28T04:54:08.843Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -4912,7 +5053,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.256Z",
-      "updatedAt": "2026-11-27T23:15:47.118Z",
+      "updatedAt": "2026-11-28T04:53:46.749Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5053,7 +5194,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:27.340Z",
-      "updatedAt": "2026-11-27T23:15:31.721Z",
+      "updatedAt": "2026-11-28T04:53:57.228Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5147,7 +5288,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:16.423Z",
-      "updatedAt": "2026-11-27T23:15:29.995Z",
+      "updatedAt": "2026-11-28T04:54:08.052Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5312,7 +5453,7 @@
       "publishedAt": null,
       "scheduledStart": "2027-12-18T13:25:00.000Z",
       "actualStart": null,
-      "isMember": false,
+      "isMember": null,
       "actualEnd": null,
       "duration": null,
       "status": "upcoming",
@@ -5335,7 +5476,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.180Z",
-      "updatedAt": "2026-11-02T11:59:38.335Z",
+      "updatedAt": "2026-11-28T04:54:08.843Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5570,7 +5711,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-31T03:16:20.256Z",
-      "updatedAt": "2026-11-27T23:15:47.118Z",
+      "updatedAt": "2026-11-28T04:53:46.749Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     },
@@ -5664,7 +5805,7 @@
       "concurrentViewers": null,
       "source": "api",
       "addedAt": "2026-10-30T04:35:35.383Z",
-      "updatedAt": "2026-11-27T23:15:47.118Z",
+      "updatedAt": "2026-11-28T04:53:46.749Z",
       "lastItemsFetchedAt": null,
       "lastDetailsFetchedAt": null
     }
